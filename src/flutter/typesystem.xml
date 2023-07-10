@@ -9,10 +9,6 @@
     <primitive-type name="qsizetype"/>
     <primitive-type name="qint64"/>
 
-    <object-type name="QSize" />
-    <object-type name="QRect" />
-    <object-type name="QPoint" />
-
     <object-type name="QString">
         <modify-function signature="swap(QString &amp;)" remove="all"/>
     </object-type>
@@ -41,6 +37,11 @@
         <enum-type name="IconPlace" />
         <enum-type name="LayoutSaverOption" flags="LayoutSaverOptions" />
         <enum-type name="DockWidgetOption" flags="DockWidgetOptions" />
+
+        <value-type name="Size" />
+        <value-type name="Rect" />
+        <value-type name="Point" />
+        <value-type name="Margins" />
 
         <namespace-type name="Core">
             <object-type name="Object" />

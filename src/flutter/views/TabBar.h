@@ -39,10 +39,10 @@ class DOCKS_EXPORT TabBar : public View, public Core::TabBarViewInterface
 {
 public:
     explicit TabBar(Core::TabBar *controller, Core::View *parent = nullptr);
-    int tabAt(QPoint localPos) const override;
+    int tabAt(Point localPos) const override;
 
     QString text(int index) const override;
-    QRect rectForTab(int index) const override;
+    Rect rectForTab(int index) const override;
 
     void moveTabTo(int from, int to) override;
 

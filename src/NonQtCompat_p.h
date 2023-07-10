@@ -29,8 +29,7 @@
 #include <QTimer>
 #include <QObject>
 #else
-#include <QPoint>
-#include <QRect>
+#include "core/geometry_helpers_p.h"
 #include <QList>
 #endif
 
@@ -54,6 +53,12 @@ using HoverEvent = QHoverEvent;
 using DropEvent = QDropEvent;
 using DragEnterEvent = QDragEnterEvent;
 using DragMoveEvent = QDragMoveEvent;
+
+using Point = QT_PREPEND_NAMESPACE(QPoint);
+using PointF = QT_PREPEND_NAMESPACE(QPointF);
+using Size = QT_PREPEND_NAMESPACE(QSize);
+using Rect = QT_PREPEND_NAMESPACE(QRect);
+using Margins = QT_PREPEND_NAMESPACE(QMargins);
 
 template<typename T>
 inline T object_cast(QObject *o)
@@ -145,13 +150,13 @@ class HoverEvent : public Event
 public:
     using Event::Event;
 
-    QPoint pos() const
+    Point pos() const
     {
         return {};
     }
 
     // Qt6 signature
-    QPointF position() const
+    PointF position() const
     {
         return {};
     }
@@ -160,8 +165,8 @@ public:
 class MouseEvent : public Event
 {
 public:
-    explicit MouseEvent(Type type, QPoint localPos, QPoint /*windowPos*/,
-                        QPoint globalPos, Qt::MouseButtons buttons, Qt::MouseButtons, Qt::KeyboardModifiers)
+    explicit MouseEvent(Type type, Point localPos, Point /*windowPos*/,
+                        Point globalPos, Qt::MouseButtons buttons, Qt::MouseButtons, Qt::KeyboardModifiers)
         : Event(type)
         , m_localPos(localPos)
         , m_globalPos(globalPos)
@@ -169,18 +174,18 @@ public:
     {
     }
 
-    QPoint pos() const
+    Point pos() const
     {
         return m_localPos;
     }
 
-    QPoint globalPos() const
+    Point globalPos() const
     {
         return m_globalPos;
     }
 
     // Qt6 signature:
-    QPointF globalPosition() const
+    PointF globalPosition() const
     {
         return m_globalPos;
     }
@@ -199,8 +204,8 @@ public:
         return m_buttons;
     }
 
-    QPoint m_localPos;
-    QPoint m_globalPos;
+    Point m_localPos;
+    Point m_globalPos;
     Qt::MouseButtons m_buttons;
 };
 
@@ -209,13 +214,13 @@ class DropEvent : public Event
 public:
     using Event::Event;
 
-    QPoint pos() const
+    Point pos() const
     {
         return {};
     }
 
     // Qt6 signature
-    QPointF position() const
+    PointF position() const
     {
         return {};
     }
@@ -278,20 +283,20 @@ public:
 };
 
 // Used by segmented indicators controller
-class Polygon : public QList<QPoint>
+class Polygon : public QList<Point>
 {
 public:
     Polygon() = default;
-    Polygon(QVector<QPoint>)
+    Polygon(QVector<Point>)
     {
     }
 
-    QRect boundingRect() const
+    Rect boundingRect() const
     {
-        return {};
+        return Rect();
     }
 
-    bool containsPoint(QPoint, Qt::FillRule) const
+    bool containsPoint(Point, Qt::FillRule) const
     {
         return false;
     }

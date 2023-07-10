@@ -44,18 +44,18 @@ public:
 
     /// Flutter doesn't have a better way of retrieving the cursor position
     /// so save it whenever we get a move event
-    static QPoint s_lastCursorPosition;
+    static Point s_lastCursorPosition;
 
     const char *name() const override;
     bool hasActivePopup() const override;
     Core::ViewFactory *createDefaultViewFactory() override;
-    std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
+    std::shared_ptr<Core::Window> windowAt(Point globalPos) const override;
 
     int screenNumberFor(Core::View *) const override;
-    QSize screenSizeFor(Core::View *) const override;
+    Size screenSizeFor(Core::View *) const override;
 
     Core::View *createView(Core::Controller *controller, Core::View *parent = nullptr) const override;
-    bool inDisallowedDragView(QPoint globalPos) const override;
+    bool inDisallowedDragView(Point globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
     QVector<std::shared_ptr<Core::Screen>> screens() const override;
@@ -83,12 +83,12 @@ public:
     KDDW_QCORO_TASK tests_waitForEvent(Core::View *, Event::Type type, int timeout) const override;
     KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type, int timeout) const override;
 
-    void tests_doubleClickOn(QPoint globalPos, Core::View *receiver) override;
-    void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
-    void tests_pressOn(QPoint globalPos, Core::View *receiver) override;
-    void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) override;
-    KDDW_QCORO_TASK tests_releaseOn(QPoint globalPos, Core::View *receiver) override;
-    KDDW_QCORO_TASK tests_mouseMove(QPoint globalPos, Core::View *receiver) override;
+    void tests_doubleClickOn(Point globalPos, Core::View *receiver) override;
+    void tests_doubleClickOn(Point globalPos, std::shared_ptr<Core::Window> receiver) override;
+    void tests_pressOn(Point globalPos, Core::View *receiver) override;
+    void tests_pressOn(Point globalPos, std::shared_ptr<Core::Window> receiver) override;
+    KDDW_QCORO_TASK tests_releaseOn(Point globalPos, Core::View *receiver) override;
+    KDDW_QCORO_TASK tests_mouseMove(Point globalPos, Core::View *receiver) override;
     std::shared_ptr<Core::Window> tests_createWindow() override;
 
     mutable CoRoutines m_coRoutines;
@@ -143,8 +143,8 @@ public:
     void restoreMouseCursor() override;
     DisplayType displayType() const override;
     bool isLeftMouseButtonPressed() const override;
-    QPoint cursorPos() const override;
-    void setCursorPos(QPoint) override;
+    Point cursorPos() const override;
+    void setCursorPos(Point) override;
     void setFocusedView(std::shared_ptr<Core::View>);
 
     std::shared_ptr<Core::View> m_focusedView;

@@ -19,11 +19,11 @@ import '../LibraryLoader.dart';
 var _dylib = Library.instance().dylib;
 final _finalizerFunc =
     _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
-        'c_QSize_Finalizer');
+        'c_KDDockWidgets__Size_Finalizer');
 final _finalizer = ffi.NativeFinalizer(_finalizerFunc.cast());
 
-class QSize implements ffi.Finalizable {
-  static var s_dartInstanceByCppPtr = Map<int, QSize>();
+class Size implements ffi.Finalizable {
+  static var s_dartInstanceByCppPtr = Map<int, Size>();
   var _thisCpp = null;
   bool _needsAutoDelete = true;
   get thisCpp => _thisCpp;
@@ -37,74 +37,78 @@ class QSize implements ffi.Finalizable {
     return s_dartInstanceByCppPtr.containsKey(cppPointer.address);
   }
 
-  factory QSize.fromCache(var cppPointer, [needsAutoDelete = false]) {
+  factory Size.fromCache(var cppPointer, [needsAutoDelete = false]) {
     return (s_dartInstanceByCppPtr[cppPointer.address] ??
-        QSize.fromCppPointer(cppPointer, needsAutoDelete)) as QSize;
+        Size.fromCppPointer(cppPointer, needsAutoDelete)) as Size;
   }
-  QSize.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
+  Size.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
     thisCpp = cppPointer;
   }
-  QSize.init() {} //QSize()
-  QSize() {
+  Size.init() {} //Size()
+  Size() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
-            'c_QSize__constructor')
+            'c_KDDockWidgets__Size__constructor')
         .asFunction();
     thisCpp = func();
-    QSize.s_dartInstanceByCppPtr[thisCpp.address] = this;
-  } //QSize(int w, int h)
-  QSize.ctor2(int w, int h) {
+    Size.s_dartInstanceByCppPtr[thisCpp.address] = this;
+  } //Size(int width, int height)
+  Size.ctor2(int width, int height) {
     final voidstar_Func_int_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_ffi_Int32_FFI>>(
-            'c_QSize__constructor_int_int')
+            'c_KDDockWidgets__Size__constructor_int_int')
         .asFunction();
-    thisCpp = func(w, h);
-    QSize.s_dartInstanceByCppPtr[thisCpp.address] = this;
-  } // boundedTo(const QSize & arg__1) const
-  QSize boundedTo(QSize? arg__1) {
+    thisCpp = func(width, height);
+    Size.s_dartInstanceByCppPtr[thisCpp.address] = this;
+  } // boundedTo(KDDockWidgets::Size sz) const
+  Size boundedTo(Size sz) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_QSize__boundedTo_QSize')
+            'c_KDDockWidgets__Size__boundedTo_Size')
         .asFunction();
     ffi.Pointer<void> result =
-        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-    return QSize.fromCppPointer(result, true);
-  } // expandedTo(const QSize & arg__1) const
+        func(thisCpp, sz == null ? ffi.nullptr : sz.thisCpp);
+    return Size.fromCppPointer(result, true);
+  } // expandedTo(KDDockWidgets::Size sz) const
 
-  QSize expandedTo(QSize? arg__1) {
+  Size expandedTo(Size sz) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_QSize__expandedTo_QSize')
+            'c_KDDockWidgets__Size__expandedTo_Size')
         .asFunction();
     ffi.Pointer<void> result =
-        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-    return QSize.fromCppPointer(result, true);
+        func(thisCpp, sz == null ? ffi.nullptr : sz.thisCpp);
+    return Size.fromCppPointer(result, true);
   } // height() const
 
   int height() {
     final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QSize__height')
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Size__height')
         .asFunction();
     return func(thisCpp);
   } // isEmpty() const
 
   bool isEmpty() {
     final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>('c_QSize__isEmpty')
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Size__isEmpty')
         .asFunction();
     return func(thisCpp) != 0;
   } // isNull() const
 
   bool isNull() {
     final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>('c_QSize__isNull')
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Size__isNull')
         .asFunction();
     return func(thisCpp) != 0;
   } // isValid() const
 
   bool isValid() {
     final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>('c_QSize__isValid')
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Size__isValid')
         .asFunction();
     return func(thisCpp) != 0;
   } // setHeight(int h)
@@ -112,7 +116,7 @@ class QSize implements ffi.Finalizable {
   setHeight(int h) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QSize__setHeight_int')
+            'c_KDDockWidgets__Size__setHeight_int')
         .asFunction();
     func(thisCpp, h);
   } // setWidth(int w)
@@ -120,31 +124,15 @@ class QSize implements ffi.Finalizable {
   setWidth(int w) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QSize__setWidth_int')
+            'c_KDDockWidgets__Size__setWidth_int')
         .asFunction();
     func(thisCpp, w);
-  } // transpose()
-
-  transpose() {
-    final void_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_QSize__transpose')
-        .asFunction();
-    func(thisCpp);
-  } // transposed() const
-
-  QSize transposed() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_QSize__transposed')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
   } // width() const
 
   int width() {
     final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QSize__width')
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Size__width')
         .asFunction();
     return func(thisCpp);
   }
@@ -152,7 +140,7 @@ class QSize implements ffi.Finalizable {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_QSize__destructor')
+            'c_KDDockWidgets__Size__destructor')
         .asFunction();
     func(thisCpp);
   }

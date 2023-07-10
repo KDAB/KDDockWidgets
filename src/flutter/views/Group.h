@@ -33,12 +33,12 @@ public:
     ~Group() override;
 
     /// @reimp
-    QSize minSize() const override;
+    Size minSize() const override;
 
     /// @reimp
-    QSize maxSizeHint() const override;
+    Size maxSizeHint() const override;
 
-    QRect dragRect() const override;
+    Rect dragRect() const override;
     int currentIndex() const;
 
 protected:

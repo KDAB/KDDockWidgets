@@ -80,7 +80,7 @@ bool Group_wrapper::beingDeletedLater() const
 {
     return ::KDDockWidgets::Core::Group::beingDeletedLater();
 }
-QSize Group_wrapper::biggestDockWidgetMaxSize() const
+KDDockWidgets::Size Group_wrapper::biggestDockWidgetMaxSize() const
 {
     return ::KDDockWidgets::Core::Group::biggestDockWidgetMaxSize();
 }
@@ -88,7 +88,7 @@ bool Group_wrapper::containsDockWidget(KDDockWidgets::Core::DockWidget *w) const
 {
     return ::KDDockWidgets::Core::Group::containsDockWidget(w);
 }
-bool Group_wrapper::containsMouse(QPoint globalPos) const
+bool Group_wrapper::containsMouse(KDDockWidgets::Point globalPos) const
 {
     return ::KDDockWidgets::Core::Group::containsMouse(globalPos);
 }
@@ -120,11 +120,11 @@ int Group_wrapper::dockWidgetCount() const
 {
     return ::KDDockWidgets::Core::Group::dockWidgetCount();
 }
-QSize Group_wrapper::dockWidgetsMinSize() const
+KDDockWidgets::Size Group_wrapper::dockWidgetsMinSize() const
 {
     return ::KDDockWidgets::Core::Group::dockWidgetsMinSize();
 }
-QRect Group_wrapper::dragRect() const
+KDDockWidgets::Rect Group_wrapper::dragRect() const
 {
     if (m_dragRectCallback) {
         const void *thisPtr = this;
@@ -133,7 +133,7 @@ QRect Group_wrapper::dragRect() const
         return ::KDDockWidgets::Core::Group::dragRect();
     }
 }
-QRect Group_wrapper::dragRect_nocallback() const
+KDDockWidgets::Rect Group_wrapper::dragRect_nocallback() const
 {
     return ::KDDockWidgets::Core::Group::dragRect();
 }
@@ -437,7 +437,7 @@ bool c_KDDockWidgets__Core__Group__beingDeletedLater(void *thisObj)
 // biggestDockWidgetMaxSize() const
 void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->biggestDockWidgetMaxSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->biggestDockWidgetMaxSize() };
 }
 // containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_)
@@ -445,11 +445,11 @@ bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, 
     auto w = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(w_);
     return fromPtr(thisObj)->containsDockWidget(w);
 }
-// containsMouse(QPoint globalPos) const
-bool c_KDDockWidgets__Core__Group__containsMouse_QPoint(void *thisObj, void *globalPos_)
+// containsMouse(KDDockWidgets::Point globalPos) const
+bool c_KDDockWidgets__Core__Group__containsMouse_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
+    auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
     return fromPtr(thisObj)->containsMouse(globalPos);
 }
 // currentDockWidget() const
@@ -491,12 +491,12 @@ int c_KDDockWidgets__Core__Group__dockWidgetCount(void *thisObj)
 // dockWidgetsMinSize() const
 void *c_KDDockWidgets__Core__Group__dockWidgetsMinSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->dockWidgetsMinSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->dockWidgetsMinSize() };
 }
 // dragRect() const
 void *c_KDDockWidgets__Core__Group__dragRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragRect_nocallback();} else {    return targetPtr->dragRect();} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragRect_nocallback();} else {    return targetPtr->dragRect();} }() };
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Core__Group__floatingWindow(void *thisObj)
@@ -738,16 +738,16 @@ void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1278:
+    case 1235:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_dragRect>(callback);
         break;
-    case 1280:
+    case 1237:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 1295:
+    case 1252:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 721:
+    case 676:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

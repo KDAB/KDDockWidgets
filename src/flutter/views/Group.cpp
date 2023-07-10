@@ -52,13 +52,13 @@ int Group::currentIndex() const
     return 0;
 }
 
-QSize Group::minSize() const
+Size Group::minSize() const
 {
-    const QSize contentsSize = m_group->dockWidgetsMinSize();
-    return contentsSize + QSize(0, nonContentsHeight());
+    const Size contentsSize = m_group->dockWidgetsMinSize();
+    return contentsSize + Size(0, nonContentsHeight());
 }
 
-QSize Group::maxSizeHint() const
+Size Group::maxSizeHint() const
 {
     return View::maxSizeHint();
 }
@@ -68,7 +68,7 @@ int Group::nonContentsHeight() const
     return 0;
 }
 
-QRect Group::dragRect() const
+Rect Group::dragRect() const
 {
     // Not implemented for flutter
     return {};

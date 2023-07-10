@@ -28,14 +28,14 @@ using namespace KDDockWidgets::Tests;
 
 
 std::unique_ptr<Core::MainWindow>
-KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options,
+KDDockWidgets::Tests::createMainWindow(Size sz, KDDockWidgets::MainWindowOptions options,
                                        const QString &name, bool show)
 {
     static int count = 0;
     count++;
 
     if (!sz.isValid())
-        sz = QSize(1000, 1000);
+        sz = Size(1000, 1000);
 
     const QString mainWindowName =
         name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count) : name;
@@ -66,7 +66,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     dock->setAffinityName(affinityName);
     dock->setGuestView(guest->asWrapper());
     dock->setObjectName(name);
-    dock->view()->setGeometry(QRect(0, 0, 400, 400));
+    dock->view()->setGeometry(Rect(0, 0, 400, 400));
     if (show) {
         dock->open();
         dock->dptr()->morphIntoFloatingWindow();
@@ -105,12 +105,12 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
 
     CreateViewOptions viewOpts;
     viewOpts.isVisible = true;
-    viewOpts.size = QSize(1000, 1000);
+    viewOpts.size = Size(1000, 1000);
     auto m = std::unique_ptr<Core::MainWindow>(Platform::instance()->createMainWindow(
         QStringLiteral("MyMainWindow%1").arg(count), viewOpts, MainWindowOption_None, parent));
     auto layout = m->layout();
     m->show();
-    m->view()->resize(QSize(700, 700));
+    m->view()->resize(Size(700, 700));
 
     int i = 0;
     for (DockDescriptor &desc : docks) {
@@ -144,36 +144,36 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
             QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
 }
 
-void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
+void KDDockWidgets::Tests::doubleClickOn(Point globalPos, Window::Ptr receiver)
 {
     Platform::instance()->tests_doubleClickOn(globalPos, receiver);
 }
 
-void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
+void KDDockWidgets::Tests::pressOn(Point globalPos, View *receiver)
 {
     Platform::instance()->tests_pressOn(globalPos, receiver);
 }
 
-void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
+void KDDockWidgets::Tests::pressOn(Point globalPos, Window::Ptr receiver)
 {
     Platform::instance()->tests_pressOn(globalPos, receiver);
 }
 
-KDDW_QCORO_TASK KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
+KDDW_QCORO_TASK KDDockWidgets::Tests::releaseOn(Point globalPos, View *receiver)
 {
     KDDW_CO_AWAIT Platform::instance()->tests_releaseOn(globalPos, receiver);
     KDDW_CO_RETURN true;
 }
 
-void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)
+void KDDockWidgets::Tests::clickOn(Point globalPos, View *receiver)
 {
     pressOn(globalPos, receiver);
     releaseOn(globalPos, receiver);
 }
 
-KDDW_QCORO_TASK KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
+KDDW_QCORO_TASK KDDockWidgets::Tests::moveMouseTo(Point globalDest, View *receiver)
 {
-    QPoint globalSrc = receiver->mapToGlobal(QPoint(5, 5));
+    Point globalSrc = receiver->mapToGlobal(Point(5, 5));
 
     while (globalSrc != globalDest) {
         if (globalSrc.x() < globalDest.x()) {

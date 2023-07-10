@@ -14,9 +14,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 QT_BEGIN_NAMESPACE
-class QPoint;
-class QRect;
-class QSize;
 class QString;
 QT_END_NAMESPACE
 
@@ -35,12 +32,12 @@ public:
     /// The implementor should:
     /// - Iterate over all visible indicators, if any is under the mouse then it should show
     ///   the "active" icon variant.
-    virtual DropLocation hover(QPoint) = 0;
+    virtual DropLocation hover(Point) = 0;
 
     /// Returns the position for the specified drop indicator
     /// This is used by tests only, so we know where to drop a window
     /// The position is the center of the indicator and is in global coordinates
-    virtual QPoint posForIndicator(DropLocation) const = 0;
+    virtual Point posForIndicator(DropLocation) const = 0;
 
     /// Called by the framework to updates the position of the individual drop indicators
     /// This function is called when the drag first starts and also if the window resizes itself (unlikely during drag though)
@@ -51,8 +48,8 @@ public:
 
     virtual void raise() = 0;
     virtual void setVisible(bool) = 0;
-    virtual void resize(QSize) = 0;
-    virtual void setGeometry(QRect) = 0;
+    virtual void resize(Size) = 0;
+    virtual void setGeometry(Rect) = 0;
     virtual bool isWindow() const = 0;
     virtual void updateIndicatorVisibility() = 0;
 };

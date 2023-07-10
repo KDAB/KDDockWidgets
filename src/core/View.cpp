@@ -117,19 +117,19 @@ void View::setZOrder(int)
 {
 }
 
-QSize View::size() const
+Size View::size() const
 {
     return geometry().size();
 }
 
-QPoint View::pos() const
+Point View::pos() const
 {
     return geometry().topLeft();
 }
 
-QRect View::rect() const
+Rect View::rect() const
 {
-    return QRect(QPoint(0, 0), size());
+    return Rect(Point(0, 0), size());
 }
 
 int View::x() const
@@ -152,17 +152,17 @@ int View::width() const
     return geometry().width();
 }
 
-void View::move(QPoint pt)
+void View::move(Point pt)
 {
     move(pt.x(), pt.y());
 }
 
-void View::resize(QSize sz)
+void View::resize(Size sz)
 {
     setSize(sz.width(), sz.height());
 }
 
-void View::setSize(QSize sz)
+void View::setSize(Size sz)
 {
     setSize(sz.width(), sz.height());
 }
@@ -188,7 +188,7 @@ Controller *View::controller() const
 }
 
 /** static */
-QSize View::hardcodedMinimumSize()
+Size View::hardcodedMinimumSize()
 {
     return Core::Item::hardcodedMinimumSize;
 }
@@ -312,14 +312,14 @@ bool View::Private::isInWindow(std::shared_ptr<Core::Window> window) const
     return false;
 }
 
-QSize View::Private::parentSize() const
+Size View::Private::parentSize() const
 {
     if (auto p = q->parentView())
         return p->size();
     return {};
 }
 
-QRect View::Private::windowGeometry() const
+Rect View::Private::windowGeometry() const
 {
     if (Core::Window::Ptr window = q->window())
         return window->geometry();
@@ -384,11 +384,11 @@ void View::Private::requestClose(CloseEvent *e)
     closeRequested.emit(e);
 }
 
-QRect View::Private::globalGeometry() const
+Rect View::Private::globalGeometry() const
 {
-    QRect geo = q->geometry();
+    Rect geo = q->geometry();
     if (!q->isRootView())
-        geo.moveTopLeft(q->mapToGlobal(QPoint(0, 0)));
+        geo.moveTopLeft(q->mapToGlobal(Point(0, 0)));
     return geo;
 }
 
@@ -408,11 +408,11 @@ std::shared_ptr<Core::Window> View::Private::transientWindow() const
 
 bool View::onResize(int w, int h)
 {
-    d->resized.emit(QSize(w, h));
+    d->resized.emit(Size(w, h));
     return false;
 }
 
-bool View::onResize(QSize sz)
+bool View::onResize(Size sz)
 {
     return onResize(sz.width(), sz.height());
 }

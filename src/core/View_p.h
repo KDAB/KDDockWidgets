@@ -44,7 +44,7 @@ public:
     KDBindings::Signal<> layoutInvalidated;
 
     /// @brief signal emitted when the view is resized
-    KDBindings::Signal<QSize> resized;
+    KDBindings::Signal<Size> resized;
 
     /// @brief signal emitted when the view's debug name has changed
     /// Used for debug only
@@ -54,7 +54,7 @@ public:
     std::vector<EventFilterInterface *> m_viewEventFilters;
 
     /// @brief Returns the views's geometry, but always in global space
-    QRect globalGeometry() const;
+    Rect globalGeometry() const;
 
     /// Returns which screen this view is on
     /// In Qt this is QWindow::screen()
@@ -92,8 +92,8 @@ public:
     bool freed() const;
 
     void closeRootView();
-    QRect windowGeometry() const;
-    QSize parentSize() const;
+    Rect windowGeometry() const;
+    Size parentSize() const;
 
     /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
     std::weak_ptr<View> m_thisWeakPtr;

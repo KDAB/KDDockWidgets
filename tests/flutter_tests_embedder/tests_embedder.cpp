@@ -79,7 +79,7 @@ void GLFWcursorPositionCallback(GLFWwindow *window, double x, double y)
     GLFWcursorPositionCallbackAtPhase(window, FlutterPointerPhase::kMove, x, y);
 }
 
-static std::optional<QPoint> s_requestedPos;
+static std::optional<KDDockWidgets::Point> s_requestedPos;
 void GLFWmouseButtonCallback(GLFWwindow *window,
                              int key,
                              int action,
@@ -110,7 +110,7 @@ void GLFWmouseButtonCallback(GLFWwindow *window,
     }
 }
 
-QCoro::Task<bool> kddw_fakeMouseButton(QPoint globalPos, bool isPress)
+QCoro::Task<bool> kddw_fakeMouseButton(KDDockWidgets::Point globalPos, bool isPress)
 {
     if (!s_window)
         co_return true;
@@ -126,7 +126,7 @@ QCoro::Task<bool> kddw_fakeMouseButton(QPoint globalPos, bool isPress)
     co_return true;
 }
 
-QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos)
+QCoro::Task<bool> kddw_fakeMouseMove(KDDockWidgets::Point globalPos)
 {
     if (!s_window)
         co_return true;

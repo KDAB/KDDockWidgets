@@ -26,7 +26,6 @@
 #include "kddockwidgets/core/Controller.h"
 
 #include <QVector>
-#include <QMargins>
 
 class TestDocks;
 
@@ -238,14 +237,14 @@ public:
 
 
     /// @internal
-    QMargins centerWidgetMargins() const;
+    Margins centerWidgetMargins() const;
 
     /// @internal
     void init(const QString &name);
 
 protected:
     void setUniqueName(const QString &uniqueName);
-    QRect centralAreaGeometry() const;
+    Rect centralAreaGeometry() const;
 
 private:
     class Private;

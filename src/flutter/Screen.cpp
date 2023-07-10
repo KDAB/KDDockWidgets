@@ -11,8 +11,7 @@
 
 #include "Screen.h"
 
-#include <QRect>
-
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 Screen::~Screen() = default;
@@ -22,14 +21,14 @@ QString Screen::name() const
     return QStringLiteral("dummy-screen");
 }
 
-QSize Screen::size() const
+Size Screen::size() const
 {
     return geometry().size();
 }
 
-QRect Screen::geometry() const
+Rect Screen::geometry() const
 {
-    return QRect(0, 0, 1920, 1080);
+    return Rect(0, 0, 1920, 1080);
 }
 
 qreal Screen::devicePixelRatio() const
@@ -37,22 +36,22 @@ qreal Screen::devicePixelRatio() const
     return 1.0;
 }
 
-QSize Screen::availableSize() const
+Size Screen::availableSize() const
 {
     return availableGeometry().size();
 }
 
-QRect Screen::availableGeometry() const
+Rect Screen::availableGeometry() const
 {
     return geometry();
 }
 
-QSize Screen::virtualSize() const
+Size Screen::virtualSize() const
 {
     return size();
 }
 
-QRect Screen::virtualGeometry() const
+Rect Screen::virtualGeometry() const
 {
     return availableGeometry();
 }

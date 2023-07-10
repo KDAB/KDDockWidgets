@@ -17,6 +17,10 @@ export 'src/Core.dart' show Core_ViewType;
 export 'src/Event.dart' show Event, Event_Type;
 export 'src/InitialOption.dart' show InitialOption;
 export 'src/LayoutSaver.dart' show LayoutSaver;
+export 'src/Margins.dart' show Margins;
+export 'src/Point.dart' show Point;
+export 'src/Rect.dart' show Rect;
+export 'src/Size.dart' show Size;
 export 'src/flutter.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
     show
@@ -33,8 +37,5 @@ export 'src/KDDockWidgets.dart'
         KDDockWidgets_InitialVisibilityOption,
         KDDockWidgets_DropLocation;
 export 'src/QByteArray.dart' show QByteArray;
-export 'src/QPoint.dart' show QPoint;
-export 'src/QRect.dart' show QRect;
-export 'src/QSize.dart' show QSize;
 export 'src/QString.dart' show QString;
-export 'src/Qt.dart' show qt_getEnumName, qt_getEnumName, Qt_CursorShape;
+export 'src/Qt.dart' show Qt_CursorShape;

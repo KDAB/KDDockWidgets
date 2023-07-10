@@ -13,6 +13,7 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "core/Logging_p.h"
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
 MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
@@ -27,13 +28,13 @@ MainWindow::~MainWindow()
 {
 }
 
-QMargins MainWindow::centerWidgetMargins() const
+Margins MainWindow::centerWidgetMargins() const
 {
     KDDW_WARN("SideBar hasn't been implemented yet {}", Q_FUNC_INFO);
     return {};
 }
 
-QRect MainWindow::centralAreaGeometry() const
+Rect MainWindow::centralAreaGeometry() const
 {
     KDDW_WARN("MainWindow::centralAreaGeometry hasn't been implemented {}", Q_FUNC_INFO);
     return {};

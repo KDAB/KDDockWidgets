@@ -28,10 +28,10 @@ class DOCKS_EXPORT ClassicDropIndicatorOverlay : public DropIndicatorOverlay
 public:
     explicit ClassicDropIndicatorOverlay(Core::DropArea *dropArea);
     ~ClassicDropIndicatorOverlay() override;
-    DropLocation hover_impl(QPoint globalPos) override;
-    QPoint posForIndicator(DropLocation) const override;
+    DropLocation hover_impl(Point globalPos) override;
+    Point posForIndicator(DropLocation) const override;
 
-    bool onResize(QSize newSize);
+    bool onResize(Size newSize);
     void setCurrentDropLocation(DropLocation) override;
     void updateVisibility() override;
 
@@ -42,7 +42,7 @@ private:
     friend class KDDockWidgets::Indicator;
     bool rubberBandIsTopLevel() const;
     void raiseIndicators();
-    QRect geometryForRubberband(QRect localRect) const;
+    Rect geometryForRubberband(Rect localRect) const;
     void updateWindowPosition();
 
     View *const m_rubberBand;

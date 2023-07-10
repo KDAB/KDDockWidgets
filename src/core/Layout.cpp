@@ -113,17 +113,17 @@ void Layout::setRootItem(Core::ItemContainer *root)
         d->m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
 }
 
-QSize Layout::layoutMinimumSize() const
+Size Layout::layoutMinimumSize() const
 {
     return d->m_rootItem->minSize();
 }
 
-QSize Layout::layoutMaximumSizeHint() const
+Size Layout::layoutMaximumSizeHint() const
 {
     return d->m_rootItem->maxSizeHint();
 }
 
-void Layout::setLayoutMinimumSize(QSize sz)
+void Layout::setLayoutMinimumSize(Size sz)
 {
     if (sz != d->m_rootItem->minSize()) {
         setLayoutSize(layoutSize().expandedTo(d->m_rootItem->minSize())); // Increase size in case we
@@ -132,7 +132,7 @@ void Layout::setLayoutMinimumSize(QSize sz)
     }
 }
 
-QSize Layout::layoutSize() const
+Size Layout::layoutSize() const
 {
     return d->m_rootItem->size();
 }
@@ -180,7 +180,7 @@ void Layout::unrefOldPlaceholders(const Core::Group::List &groupsBeingAdded) con
     }
 }
 
-void Layout::setLayoutSize(QSize size)
+void Layout::setLayoutSize(Size size)
 {
     if (size != layoutSize()) {
         d->m_rootItem->setSize_recursive(size);
@@ -276,7 +276,7 @@ void Layout::removeItem(Core::Item *item)
 
 void Layout::updateSizeConstraints()
 {
-    const QSize newMinSize = d->m_rootItem->minSize();
+    const Size newMinSize = d->m_rootItem->minSize();
     setLayoutMinimumSize(newMinSize);
 }
 
@@ -295,14 +295,14 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 
     // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
     // as some sizing is async
-    const QSize newLayoutSize = view()->size().expandedTo(d->m_rootItem->minSize());
+    const Size newLayoutSize = view()->size().expandedTo(d->m_rootItem->minSize());
 
     d->m_rootItem->setSize_recursive(newLayoutSize);
 
     return true;
 }
 
-bool Layout::onResize(QSize newSize)
+bool Layout::onResize(Size newSize)
 {
     ScopedValueRollback resizeGuard(d->m_inResizeEvent, true); // to avoid re-entrancy
 

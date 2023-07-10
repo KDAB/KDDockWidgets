@@ -14,11 +14,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-QT_BEGIN_NAMESPACE
-class QMargins;
-class QRect;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -33,8 +28,8 @@ class DOCKS_EXPORT MainWindowViewInterface
 public:
     explicit MainWindowViewInterface(MainWindow *);
     virtual ~MainWindowViewInterface();
-    virtual QMargins centerWidgetMargins() const = 0;
-    virtual QRect centralAreaGeometry() const = 0;
+    virtual Margins centerWidgetMargins() const = 0;
+    virtual Rect centralAreaGeometry() const = 0;
     virtual void setContentsMargins(int left, int top, int right, int bottom) = 0;
 
     /// @brief Returns the main window controller

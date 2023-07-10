@@ -29,15 +29,15 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as FloatingWindow;
     }
     return FloatingWindow.fromCppPointer(cppPointer, needsAutoDelete);
-  } //FloatingWindow(KDDockWidgets::Core::Group * group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
-  FloatingWindow(KDDWBindingsCore.Group? group, QRect suggestedGeometry,
+  } //FloatingWindow(KDDockWidgets::Core::Group * group, KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
+  FloatingWindow(KDDWBindingsCore.Group? group, Rect suggestedGeometry,
       {required KDDWBindingsCore.MainWindow? parent})
       : super.init() {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow')
+            'c_KDDockWidgets__Core__FloatingWindow__constructor_Group_Rect_MainWindow')
         .asFunction();
     thisCpp = func(
         group == null ? ffi.nullptr : group.thisCpp,
@@ -45,13 +45,13 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
         parent == null ? ffi.nullptr : parent.thisCpp);
     KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } //FloatingWindow(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
-  FloatingWindow.ctor2(QRect suggestedGeometry,
+  } //FloatingWindow(KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
+  FloatingWindow.ctor2(Rect suggestedGeometry,
       {required KDDWBindingsCore.MainWindow? parent})
       : super.init() {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow')
+            'c_KDDockWidgets__Core__FloatingWindow__constructor_Rect_MainWindow')
         .asFunction();
     thisCpp = func(
         suggestedGeometry == null ? ffi.nullptr : suggestedGeometry.thisCpp,
@@ -130,15 +130,24 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__FloatingWindow__beingDeleted')
         .asFunction();
     return func(thisCpp) != 0;
+  } // contentMargins() const
+
+  Margins contentMargins() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__FloatingWindow__contentMargins')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return Margins.fromCppPointer(result, true);
   } // dragRect() const
 
-  QRect dragRect() {
+  Rect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__FloatingWindow__dragRect')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QRect.fromCppPointer(result, true);
+    return Rect.fromCppPointer(result, true);
   } // dropArea() const
 
   KDDWBindingsCore.DropArea dropArea() {
@@ -150,11 +159,11 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
     return KDDWBindingsCore.DropArea.fromCppPointer(result, false);
   }
 
-  static // ensureRectIsOnScreen(QRect & geometry)
-      ensureRectIsOnScreen(QRect? geometry) {
+  static // ensureRectIsOnScreen(KDDockWidgets::Rect & geometry)
+      ensureRectIsOnScreen(Rect geometry) {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_QRect')
+            'c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect')
         .asFunction();
     func(geometry == null ? ffi.nullptr : geometry.thisCpp);
   } // hasSingleDockWidget() const
@@ -173,12 +182,12 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame')
         .asFunction();
     return func(thisCpp) != 0;
-  } // isInDragArea(QPoint globalPoint) const
+  } // isInDragArea(KDDockWidgets::Point globalPoint) const
 
-  bool isInDragArea(QPoint globalPoint) {
+  bool isInDragArea(Point globalPoint) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__FloatingWindow__isInDragArea_QPoint')
+            'c_KDDockWidgets__Core__FloatingWindow__isInDragArea_Point')
         .asFunction();
     return func(
             thisCpp, globalPoint == null ? ffi.nullptr : globalPoint.thisCpp) !=
@@ -188,7 +197,7 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
   bool isMDI() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1362))
+            cFunctionSymbolName(1320))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -216,7 +225,7 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1365))
+            cFunctionSymbolName(1323))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -251,13 +260,13 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
     return KDDWBindingsCore.MainWindow.fromCppPointer(result, false);
   } // maxSizeHint() const
 
-  QSize maxSizeHint() {
+  Size maxSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__FloatingWindow__maxSizeHint')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // maybeCreateResizeHandler()
 
   maybeCreateResizeHandler() {
@@ -313,12 +322,12 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
     dartInstance.setParentView_impl((parent == null || parent.address == 0)
         ? null
         : KDDWBindingsCore.View.fromCppPointer(parent));
-  } // setSuggestedGeometry(QRect suggestedRect)
+  } // setSuggestedGeometry(KDDockWidgets::Rect suggestedRect)
 
-  setSuggestedGeometry(QRect suggestedRect) {
+  setSuggestedGeometry(Rect suggestedRect) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_QRect')
+            'c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_Rect')
         .asFunction();
     func(thisCpp, suggestedRect == null ? ffi.nullptr : suggestedRect.thisCpp);
   } // singleDockWidget() const
@@ -326,7 +335,7 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
   KDDWBindingsCore.DockWidget singleDockWidget() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1381))
+            cFunctionSymbolName(1339))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.DockWidget.fromCppPointer(result, false);
@@ -421,13 +430,13 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 1362:
+      case 1320:
         return "c_KDDockWidgets__Core__FloatingWindow__isMDI";
-      case 1365:
+      case 1323:
         return "c_KDDockWidgets__Core__FloatingWindow__isWindow";
-      case 721:
+      case 676:
         return "c_KDDockWidgets__Core__FloatingWindow__setParentView_impl_View";
-      case 1381:
+      case 1339:
         return "c_KDDockWidgets__Core__FloatingWindow__singleDockWidget";
     }
     return super.cFunctionSymbolName(methodId);
@@ -435,13 +444,13 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 1362:
+      case 1320:
         return "isMDI";
-      case 1365:
+      case 1323:
         return "isWindow";
-      case 721:
+      case 676:
         return "setParentView_impl";
-      case 1381:
+      case 1339:
         return "singleDockWidget";
     }
     throw Error();
@@ -453,21 +462,21 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept1362 = 0;
-    final callback1362 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        KDDWBindingsCore.FloatingWindow.isMDI_calledFromC, callbackExcept1362);
-    registerCallback(thisCpp, callback1362, 1362);
-    const callbackExcept1365 = 0;
-    final callback1365 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+    const callbackExcept1320 = 0;
+    final callback1320 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        KDDWBindingsCore.FloatingWindow.isMDI_calledFromC, callbackExcept1320);
+    registerCallback(thisCpp, callback1320, 1320);
+    const callbackExcept1323 = 0;
+    final callback1323 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
         KDDWBindingsCore.FloatingWindow.isWindow_calledFromC,
-        callbackExcept1365);
-    registerCallback(thisCpp, callback1365, 1365);
-    final callback721 =
+        callbackExcept1323);
+    registerCallback(thisCpp, callback1323, 1323);
+    final callback676 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback721, 721);
-    final callback1381 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback676, 676);
+    final callback1339 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.FloatingWindow.singleDockWidget_calledFromC);
-    registerCallback(thisCpp, callback1381, 1381);
+    registerCallback(thisCpp, callback1339, 1339);
   }
 }

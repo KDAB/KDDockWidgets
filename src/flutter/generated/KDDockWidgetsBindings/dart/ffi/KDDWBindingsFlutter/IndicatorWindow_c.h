@@ -12,9 +12,7 @@
 #include <ClassicIndicatorsWindow.h>
 #include <ClassicDropIndicatorOverlay.h>
 #include <core/View.h>
-#include <qpoint.h>
-#include <qrect.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 #include <qstring.h>
 #include <core/Group.h>
 
@@ -33,18 +31,18 @@ public:
     virtual void createPlatformWindow_nocallback();
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
-    virtual QRect geometry() const;
-    virtual QRect geometry_nocallback() const;
+    virtual KDDockWidgets::Rect geometry() const;
+    virtual KDDockWidgets::Rect geometry_nocallback() const;
     virtual void grabMouse();
     virtual void grabMouse_nocallback();
     virtual bool hasFocus() const;
     virtual bool hasFocus_nocallback() const;
     virtual void hide();
     virtual void hide_nocallback();
-    virtual KDDockWidgets::DropLocation hover(QPoint globalPos);
-    virtual KDDockWidgets::DropLocation hover_nocallback(QPoint globalPos);
-    virtual KDDockWidgets::DropLocation hover_flutter(QPoint globalPos);
-    virtual KDDockWidgets::DropLocation hover_flutter_nocallback(QPoint globalPos);
+    virtual KDDockWidgets::DropLocation hover(KDDockWidgets::Point globalPos);
+    virtual KDDockWidgets::DropLocation hover_nocallback(KDDockWidgets::Point globalPos);
+    virtual KDDockWidgets::DropLocation hover_flutter(KDDockWidgets::Point globalPos);
+    virtual KDDockWidgets::DropLocation hover_flutter_nocallback(KDDockWidgets::Point globalPos);
     KDDockWidgets::Core::Group *hoveredGroup() const;
     virtual void init();
     virtual void init_nocallback();
@@ -66,20 +64,20 @@ public:
     virtual bool isVisible_nocallback() const;
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
-    virtual QPoint mapFromGlobal(QPoint globalPt) const;
-    virtual QPoint mapFromGlobal_nocallback(QPoint globalPt) const;
-    virtual QPoint mapTo(KDDockWidgets::Core::View *parent, QPoint pos) const;
-    virtual QPoint mapTo_nocallback(KDDockWidgets::Core::View *parent, QPoint pos) const;
-    virtual QPoint mapToGlobal(QPoint localPt) const;
-    virtual QPoint mapToGlobal_nocallback(QPoint localPt) const;
-    virtual QSize maxSizeHint() const;
-    virtual QSize maxSizeHint_nocallback() const;
-    virtual QSize minSize() const;
-    virtual QSize minSize_nocallback() const;
+    virtual KDDockWidgets::Point mapFromGlobal(KDDockWidgets::Point globalPt) const;
+    virtual KDDockWidgets::Point mapFromGlobal_nocallback(KDDockWidgets::Point globalPt) const;
+    virtual KDDockWidgets::Point mapTo(KDDockWidgets::Core::View *parent, KDDockWidgets::Point pos) const;
+    virtual KDDockWidgets::Point mapTo_nocallback(KDDockWidgets::Core::View *parent, KDDockWidgets::Point pos) const;
+    virtual KDDockWidgets::Point mapToGlobal(KDDockWidgets::Point localPt) const;
+    virtual KDDockWidgets::Point mapToGlobal_nocallback(KDDockWidgets::Point localPt) const;
+    virtual KDDockWidgets::Size maxSizeHint() const;
+    virtual KDDockWidgets::Size maxSizeHint_nocallback() const;
+    virtual KDDockWidgets::Size minSize() const;
+    virtual KDDockWidgets::Size minSize_nocallback() const;
     virtual void move(int x, int y);
     virtual void move_nocallback(int x, int y);
-    virtual QRect normalGeometry() const;
-    virtual QRect normalGeometry_nocallback() const;
+    virtual KDDockWidgets::Rect normalGeometry() const;
+    virtual KDDockWidgets::Rect normalGeometry_nocallback() const;
     virtual void onChildAdded(KDDockWidgets::Core::View *childView);
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
@@ -92,10 +90,10 @@ public:
     virtual void onRebuildRequested_nocallback();
     virtual bool onResize(int h, int w);
     virtual bool onResize_nocallback(int h, int w);
-    virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
-    virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
-    virtual QPoint posForIndicator_flutter(KDDockWidgets::DropLocation arg__1) const;
-    virtual QPoint posForIndicator_flutter_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator_flutter(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator_flutter_nocallback(KDDockWidgets::DropLocation arg__1) const;
     virtual void raise();
     virtual void raise_nocallback();
     virtual void raiseAndActivate();
@@ -108,8 +106,8 @@ public:
     virtual void releaseKeyboard_nocallback();
     virtual void releaseMouse();
     virtual void releaseMouse_nocallback();
-    virtual void resize(QSize arg__1);
-    virtual void resize_nocallback(QSize arg__1);
+    virtual void resize(KDDockWidgets::Size arg__1);
+    virtual void resize_nocallback(KDDockWidgets::Size arg__1);
     KDDockWidgets::Core::View *rubberBand() const;
     virtual void setCursor(Qt::CursorShape shape);
     virtual void setCursor_nocallback(Qt::CursorShape shape);
@@ -117,14 +115,14 @@ public:
     virtual void setFixedHeight_nocallback(int h);
     virtual void setFixedWidth(int w);
     virtual void setFixedWidth_nocallback(int w);
-    virtual void setGeometry(QRect arg__1);
-    virtual void setGeometry_nocallback(QRect arg__1);
+    virtual void setGeometry(KDDockWidgets::Rect arg__1);
+    virtual void setGeometry_nocallback(KDDockWidgets::Rect arg__1);
     virtual void setHeight(int h);
     virtual void setHeight_nocallback(int h);
-    virtual void setMaximumSize(QSize sz);
-    virtual void setMaximumSize_nocallback(QSize sz);
-    virtual void setMinimumSize(QSize sz);
-    virtual void setMinimumSize_nocallback(QSize sz);
+    virtual void setMaximumSize(KDDockWidgets::Size sz);
+    virtual void setMaximumSize_nocallback(KDDockWidgets::Size sz);
+    virtual void setMinimumSize(KDDockWidgets::Size sz);
+    virtual void setMinimumSize_nocallback(KDDockWidgets::Size sz);
     virtual void setMouseTracking(bool enable);
     virtual void setMouseTracking_nocallback(bool enable);
     virtual void setObjectName(const QString &arg__1);
@@ -171,7 +169,7 @@ public:
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
-    typedef QRect *(*Callback_geometry)(void *);
+    typedef KDDockWidgets::Rect *(*Callback_geometry)(void *);
     Callback_geometry m_geometryCallback = nullptr;
     typedef void (*Callback_grabMouse)(void *);
     Callback_grabMouse m_grabMouseCallback = nullptr;
@@ -179,9 +177,9 @@ public:
     Callback_hasFocus m_hasFocusCallback = nullptr;
     typedef void (*Callback_hide)(void *);
     Callback_hide m_hideCallback = nullptr;
-    typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, QPoint *globalPos);
+    typedef KDDockWidgets::DropLocation (*Callback_hover)(void *, KDDockWidgets::Point *globalPos);
     Callback_hover m_hoverCallback = nullptr;
-    typedef KDDockWidgets::DropLocation (*Callback_hover_flutter)(void *, QPoint *globalPos);
+    typedef KDDockWidgets::DropLocation (*Callback_hover_flutter)(void *, KDDockWidgets::Point *globalPos);
     Callback_hover_flutter m_hover_flutterCallback = nullptr;
     typedef void (*Callback_init)(void *);
     Callback_init m_initCallback = nullptr;
@@ -203,19 +201,19 @@ public:
     Callback_isVisible m_isVisibleCallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
-    typedef QPoint *(*Callback_mapFromGlobal)(void *, QPoint *globalPt);
+    typedef KDDockWidgets::Point *(*Callback_mapFromGlobal)(void *, KDDockWidgets::Point *globalPt);
     Callback_mapFromGlobal m_mapFromGlobalCallback = nullptr;
-    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::Core::View *parent, QPoint *pos);
+    typedef KDDockWidgets::Point *(*Callback_mapTo)(void *, KDDockWidgets::Core::View *parent, KDDockWidgets::Point *pos);
     Callback_mapTo m_mapToCallback = nullptr;
-    typedef QPoint *(*Callback_mapToGlobal)(void *, QPoint *localPt);
+    typedef KDDockWidgets::Point *(*Callback_mapToGlobal)(void *, KDDockWidgets::Point *localPt);
     Callback_mapToGlobal m_mapToGlobalCallback = nullptr;
-    typedef QSize *(*Callback_maxSizeHint)(void *);
+    typedef KDDockWidgets::Size *(*Callback_maxSizeHint)(void *);
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
-    typedef QSize *(*Callback_minSize)(void *);
+    typedef KDDockWidgets::Size *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
     typedef void (*Callback_move_2)(void *, int x, int y);
     Callback_move_2 m_move_2Callback = nullptr;
-    typedef QRect *(*Callback_normalGeometry)(void *);
+    typedef KDDockWidgets::Rect *(*Callback_normalGeometry)(void *);
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
@@ -229,9 +227,9 @@ public:
     Callback_onRebuildRequested m_onRebuildRequestedCallback = nullptr;
     typedef bool (*Callback_onResize_2)(void *, int h, int w);
     Callback_onResize_2 m_onResize_2Callback = nullptr;
-    typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
+    typedef KDDockWidgets::Point *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
-    typedef QPoint *(*Callback_posForIndicator_flutter)(void *, KDDockWidgets::DropLocation arg__1);
+    typedef KDDockWidgets::Point *(*Callback_posForIndicator_flutter)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator_flutter m_posForIndicator_flutterCallback = nullptr;
     typedef void (*Callback_raise)(void *);
     Callback_raise m_raiseCallback = nullptr;
@@ -245,7 +243,7 @@ public:
     Callback_releaseKeyboard m_releaseKeyboardCallback = nullptr;
     typedef void (*Callback_releaseMouse)(void *);
     Callback_releaseMouse m_releaseMouseCallback = nullptr;
-    typedef void (*Callback_resize)(void *, QSize *arg__1);
+    typedef void (*Callback_resize)(void *, KDDockWidgets::Size *arg__1);
     Callback_resize m_resizeCallback = nullptr;
     typedef void (*Callback_setCursor)(void *, Qt::CursorShape shape);
     Callback_setCursor m_setCursorCallback = nullptr;
@@ -253,13 +251,13 @@ public:
     Callback_setFixedHeight m_setFixedHeightCallback = nullptr;
     typedef void (*Callback_setFixedWidth)(void *, int w);
     Callback_setFixedWidth m_setFixedWidthCallback = nullptr;
-    typedef void (*Callback_setGeometry)(void *, QRect *arg__1);
+    typedef void (*Callback_setGeometry)(void *, KDDockWidgets::Rect *arg__1);
     Callback_setGeometry m_setGeometryCallback = nullptr;
     typedef void (*Callback_setHeight)(void *, int h);
     Callback_setHeight m_setHeightCallback = nullptr;
-    typedef void (*Callback_setMaximumSize)(void *, QSize *sz);
+    typedef void (*Callback_setMaximumSize)(void *, KDDockWidgets::Size *sz);
     Callback_setMaximumSize m_setMaximumSizeCallback = nullptr;
-    typedef void (*Callback_setMinimumSize)(void *, QSize *sz);
+    typedef void (*Callback_setMinimumSize)(void *, KDDockWidgets::Size *sz);
     Callback_setMinimumSize m_setMinimumSizeCallback = nullptr;
     typedef void (*Callback_setMouseTracking)(void *, bool enable);
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
@@ -321,10 +319,10 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__gra
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__hasFocus(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hide()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__hide(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::hover(QPoint globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_QPoint(void *thisObj, void *globalPos_);
-// KDDockWidgets::flutter::IndicatorWindow::hover_flutter(QPoint globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::flutter::IndicatorWindow::hover(KDDockWidgets::Point globalPos)
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_Point(void *thisObj, void *globalPos_);
+// KDDockWidgets::flutter::IndicatorWindow::hover_flutter(KDDockWidgets::Point globalPos)
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::IndicatorWindow::hoveredGroup() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__hoveredGroup(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::init()
@@ -347,12 +345,12 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isR
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isVisible(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isWindow(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::mapFromGlobal(QPoint globalPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
-// KDDockWidgets::flutter::IndicatorWindow::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
-// KDDockWidgets::flutter::IndicatorWindow::mapToGlobal(QPoint localPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapToGlobal_QPoint(void *thisObj, void *localPt_);
+// KDDockWidgets::flutter::IndicatorWindow::mapFromGlobal(KDDockWidgets::Point globalPt) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapFromGlobal_Point(void *thisObj, void *globalPt_);
+// KDDockWidgets::flutter::IndicatorWindow::mapTo(KDDockWidgets::Core::View * parent, KDDockWidgets::Point pos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapTo_View_Point(void *thisObj, void *parent_, void *pos_);
+// KDDockWidgets::flutter::IndicatorWindow::mapToGlobal(KDDockWidgets::Point localPt) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapToGlobal_Point(void *thisObj, void *localPt_);
 // KDDockWidgets::flutter::IndicatorWindow::maxSizeHint() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::minSize() const
@@ -389,8 +387,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__rai
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::releaseMouse()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse(void *thisObj);
-// KDDockWidgets::flutter::IndicatorWindow::resize(QSize arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__resize_QSize(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::resize(KDDockWidgets::Size arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::IndicatorWindow::rubberBand() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__rubberBand(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::setCursor(Qt::CursorShape shape)
@@ -399,14 +397,14 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__set
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::flutter::IndicatorWindow::setFixedWidth(int w)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::flutter::IndicatorWindow::setGeometry(QRect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_QRect(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::IndicatorWindow::setGeometry(KDDockWidgets::Rect arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::IndicatorWindow::setHeight(int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setHeight_int(void *thisObj, int h);
-// KDDockWidgets::flutter::IndicatorWindow::setMaximumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMaximumSize_QSize(void *thisObj, void *sz_);
-// KDDockWidgets::flutter::IndicatorWindow::setMinimumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMinimumSize_QSize(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::IndicatorWindow::setMaximumSize(KDDockWidgets::Size sz)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMaximumSize_Size(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::IndicatorWindow::setMinimumSize(KDDockWidgets::Size sz)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMinimumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::IndicatorWindow::setMouseTracking(bool enable)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::flutter::IndicatorWindow::setObjectName(const QString & arg__1)

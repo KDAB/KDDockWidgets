@@ -28,11 +28,11 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
-FloatingWindow_wrapper::FloatingWindow_wrapper(KDDockWidgets::Core::Group *group, QRect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent)
+FloatingWindow_wrapper::FloatingWindow_wrapper(KDDockWidgets::Core::Group *group, KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent)
     : ::KDDockWidgets::Core::FloatingWindow(group, suggestedGeometry, parent)
 {
 }
-FloatingWindow_wrapper::FloatingWindow_wrapper(QRect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent)
+FloatingWindow_wrapper::FloatingWindow_wrapper(KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent)
     : ::KDDockWidgets::Core::FloatingWindow(suggestedGeometry, parent)
 {
 }
@@ -68,7 +68,11 @@ bool FloatingWindow_wrapper::beingDeleted() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::beingDeleted();
 }
-QRect FloatingWindow_wrapper::dragRect() const
+KDDockWidgets::Margins FloatingWindow_wrapper::contentMargins() const
+{
+    return ::KDDockWidgets::Core::FloatingWindow::contentMargins();
+}
+KDDockWidgets::Rect FloatingWindow_wrapper::dragRect() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::dragRect();
 }
@@ -76,7 +80,7 @@ KDDockWidgets::Core::DropArea *FloatingWindow_wrapper::dropArea() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::dropArea();
 }
-void FloatingWindow_wrapper::ensureRectIsOnScreen(QRect &geometry)
+void FloatingWindow_wrapper::ensureRectIsOnScreen(KDDockWidgets::Rect &geometry)
 {
     ::KDDockWidgets::Core::FloatingWindow::ensureRectIsOnScreen(geometry);
 }
@@ -88,7 +92,7 @@ bool FloatingWindow_wrapper::hasSingleFrame() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::hasSingleFrame();
 }
-bool FloatingWindow_wrapper::isInDragArea(QPoint globalPoint) const
+bool FloatingWindow_wrapper::isInDragArea(KDDockWidgets::Point globalPoint) const
 {
     return ::KDDockWidgets::Core::FloatingWindow::isInDragArea(globalPoint);
 }
@@ -155,7 +159,7 @@ void FloatingWindow_wrapper::setParentView_impl_nocallback(KDDockWidgets::Core::
 {
     ::KDDockWidgets::Core::FloatingWindow::setParentView_impl(parent);
 }
-void FloatingWindow_wrapper::setSuggestedGeometry(QRect suggestedRect)
+void FloatingWindow_wrapper::setSuggestedGeometry(KDDockWidgets::Rect suggestedRect)
 {
     ::KDDockWidgets::Core::FloatingWindow::setSuggestedGeometry(suggestedRect);
 }
@@ -219,19 +223,19 @@ void c_KDDockWidgets__Core__FloatingWindow_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper *>(cppObj);
 }
-void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_QRect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_)
+void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_Rect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_)
 {
     auto group = reinterpret_cast<KDDockWidgets::Core::Group *>(group_);
     assert(suggestedGeometry_);
-    auto &suggestedGeometry = *reinterpret_cast<QRect *>(suggestedGeometry_);
+    auto &suggestedGeometry = *reinterpret_cast<KDDockWidgets::Rect *>(suggestedGeometry_);
     auto parent = reinterpret_cast<KDDockWidgets::Core::MainWindow *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper(group, suggestedGeometry, parent);
     return reinterpret_cast<void *>(ptr);
 }
-void *c_KDDockWidgets__Core__FloatingWindow__constructor_QRect_MainWindow(void *suggestedGeometry_, void *parent_)
+void *c_KDDockWidgets__Core__FloatingWindow__constructor_Rect_MainWindow(void *suggestedGeometry_, void *parent_)
 {
     assert(suggestedGeometry_);
-    auto &suggestedGeometry = *reinterpret_cast<QRect *>(suggestedGeometry_);
+    auto &suggestedGeometry = *reinterpret_cast<KDDockWidgets::Rect *>(suggestedGeometry_);
     auto parent = reinterpret_cast<KDDockWidgets::Core::MainWindow *>(parent_);
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper(suggestedGeometry, parent);
     return reinterpret_cast<void *>(ptr);
@@ -280,21 +284,26 @@ bool c_KDDockWidgets__Core__FloatingWindow__beingDeleted(void *thisObj)
 {
     return fromPtr(thisObj)->beingDeleted();
 }
+// contentMargins() const
+void *c_KDDockWidgets__Core__FloatingWindow__contentMargins(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Margins> { fromPtr(thisObj)->contentMargins() };
+}
 // dragRect() const
 void *c_KDDockWidgets__Core__FloatingWindow__dragRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->dragRect() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->dragRect() };
 }
 // dropArea() const
 void *c_KDDockWidgets__Core__FloatingWindow__dropArea(void *thisObj)
 {
     return fromPtr(thisObj)->dropArea();
 }
-// ensureRectIsOnScreen(QRect & geometry)
-void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_QRect(void *geometry_)
+// ensureRectIsOnScreen(KDDockWidgets::Rect & geometry)
+void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect(void *geometry_)
 {
     assert(geometry_);
-    auto &geometry = *reinterpret_cast<QRect *>(geometry_);
+    auto &geometry = *reinterpret_cast<KDDockWidgets::Rect *>(geometry_);
     KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::ensureRectIsOnScreen(geometry);
 }
 // hasSingleDockWidget() const
@@ -307,11 +316,11 @@ bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj)
 {
     return fromPtr(thisObj)->hasSingleFrame();
 }
-// isInDragArea(QPoint globalPoint) const
-bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_QPoint(void *thisObj, void *globalPoint_)
+// isInDragArea(KDDockWidgets::Point globalPoint) const
+bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_Point(void *thisObj, void *globalPoint_)
 {
     assert(globalPoint_);
-    auto &globalPoint = *reinterpret_cast<QPoint *>(globalPoint_);
+    auto &globalPoint = *reinterpret_cast<KDDockWidgets::Point *>(globalPoint_);
     return fromPtr(thisObj)->isInDragArea(globalPoint);
 }
 // isMDI() const
@@ -360,11 +369,11 @@ void c_KDDockWidgets__Core__FloatingWindow__setParentView_impl_View(void *thisOb
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     fromWrapperPtr(thisObj)->setParentView_impl_nocallback(parent);
 }
-// setSuggestedGeometry(QRect suggestedRect)
-void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_QRect(void *thisObj, void *suggestedRect_)
+// setSuggestedGeometry(KDDockWidgets::Rect suggestedRect)
+void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_Rect(void *thisObj, void *suggestedRect_)
 {
     assert(suggestedRect_);
-    auto &suggestedRect = *reinterpret_cast<QRect *>(suggestedRect_);
+    auto &suggestedRect = *reinterpret_cast<KDDockWidgets::Rect *>(suggestedRect_);
     fromPtr(thisObj)->setSuggestedGeometry(suggestedRect);
 }
 // singleDockWidget() const
@@ -415,16 +424,16 @@ void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1362:
+    case 1320:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1365:
+    case 1323:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 721:
+    case 676:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1381:
+    case 1339:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

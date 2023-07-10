@@ -37,9 +37,9 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
     Q_OBJECT
 public:
     explicit FloatingWindow(
-        QRect suggestedGeometry, MainWindow *parent = nullptr,
+        Rect suggestedGeometry, MainWindow *parent = nullptr,
         FloatingWindowFlags requestedFlags = FloatingWindowFlag::FromGlobalConfig);
-    explicit FloatingWindow(Core::Group *group, QRect suggestedGeometry,
+    explicit FloatingWindow(Core::Group *group, Rect suggestedGeometry,
                             MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
@@ -61,7 +61,7 @@ public:
     /// Tool windows don't usually appear in the task bar
     bool isUtilityWindow() const;
 
-    static void ensureRectIsOnScreen(QRect &geometry);
+    static void ensureRectIsOnScreen(Rect &geometry);
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     void setLastHitTest(int hitTest)
@@ -87,7 +87,7 @@ public:
      * @param preserveCenter, if true, then the center is preserved
      *
      */
-    void setSuggestedGeometry(QRect suggestedRect,
+    void setSuggestedGeometry(Rect suggestedRect,
                               SuggestedGeometryHints = SuggestedGeometryHint_None);
 
     bool anyNonClosable() const;
@@ -137,7 +137,7 @@ public:
      * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar,
      * the draggable empty area of a tab bar)
      */
-    bool isInDragArea(QPoint globalPoint) const;
+    bool isInDragArea(Point globalPoint) const;
 
     bool isMDI() const override;
 
@@ -152,7 +152,7 @@ public:
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
      * background. Returns global coordinates.
      */
-    QRect dragRect() const;
+    Rect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
     bool allDockWidgetsHave(DockWidgetOption) const;
@@ -176,7 +176,7 @@ public:
     MainWindow *mainWindow() const;
 
     ///@brief Returns the contents margins
-    QMargins contentMargins() const;
+    Margins contentMargins() const;
 
     // The state reported by QWidget is not always the same as what the
     // window manager thinks, due to the async nature. This method
@@ -212,7 +212,7 @@ protected:
 
 private:
     KDDW_DELETE_COPY_CTOR(FloatingWindow)
-    QSize maxSizeHint() const;
+    Size maxSizeHint() const;
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
     void onCloseEvent(CloseEvent *);

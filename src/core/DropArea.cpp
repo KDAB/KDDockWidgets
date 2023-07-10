@@ -146,7 +146,7 @@ Core::Group::List DropArea::groups() const
     return groups;
 }
 
-Core::Group *DropArea::groupContainingPos(QPoint globalPos) const
+Core::Group *DropArea::groupContainingPos(Point globalPos) const
 {
     const Core::Item::List &items = this->items();
     for (Core::Item *item : items) {
@@ -278,7 +278,7 @@ void DropArea::layoutParentContainerEqually(Core::DockWidget *dw)
     layoutEqually(item->parentBoxContainer());
 }
 
-DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
+DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, Point globalPos)
 {
     if (Config::self().dropIndicatorsInhibited() || !validateAffinity(draggedWindow))
         return DropLocation_None;
@@ -310,7 +310,7 @@ static bool isOutterLocation(DropLocation location)
     }
 }
 
-bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
+bool DropArea::drop(WindowBeingDragged *droppedWindow, Point globalPos)
 {
     // fv might be null, if on wayland
     Core::View *fv = droppedWindow->floatingWindowView();
@@ -646,7 +646,7 @@ int DropArea::availableLengthForOrientation(Qt::Orientation orientation) const
         return availableSize().width();
 }
 
-QSize DropArea::availableSize() const
+Size DropArea::availableSize() const
 {
     return d->m_rootItem->availableSize();
 }
@@ -681,8 +681,8 @@ Core::ItemBoxContainer *DropArea::rootItem() const
     return d->m_rootItem;
 }
 
-QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
-                            const Core::Item *relativeTo) const
+Rect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
+                           const Core::Item *relativeTo) const
 {
     Core::Item item(nullptr);
     if (!wbd)

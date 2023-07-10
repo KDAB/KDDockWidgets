@@ -25,33 +25,33 @@ public:
     ~Window() override;
     std::shared_ptr<Core::View> rootView() const override;
     Window::Ptr transientParent() const override;
-    void setGeometry(QRect) override;
+    void setGeometry(Rect) override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
 
     void setWindowState(WindowState) override;
-    QRect geometry() const override;
+    Rect geometry() const override;
     bool isVisible() const override;
     Core::WId handle() const override;
     bool equals(std::shared_ptr<Core::Window> other) const override;
-    void setFramePosition(QPoint targetPos) override;
-    QRect frameGeometry() const override;
+    void setFramePosition(Point targetPos) override;
+    Rect frameGeometry() const override;
     void resize(int width, int height) override;
     bool isActive() const override;
     WindowState windowState() const override;
-    QPoint mapFromGlobal(QPoint globalPos) const override;
-    QPoint mapToGlobal(QPoint localPos) const override;
+    Point mapFromGlobal(Point globalPos) const override;
+    Point mapToGlobal(Point localPos) const override;
     Core::Screen::Ptr screen() const override;
     void destroy() override;
-    QSize minSize() const override;
-    QSize maxSize() const override;
-    QPoint fromNativePixels(QPoint) const override;
+    Size minSize() const override;
+    Size maxSize() const override;
+    Point fromNativePixels(Point) const override;
     bool isFullScreen() const override;
     void onScreenChanged(Core::Object *context, WindowScreenChangedCallback) override;
 
 private:
     std::shared_ptr<Core::View> m_rootView;
     bool m_isVisible = true;
-    QRect m_geometry;
+    Rect m_geometry;
 };
 }

@@ -17,9 +17,7 @@
 #include <SideBar.h>
 #include "core/DropArea.h"
 #include <core/Layout.h>
-#include <qrect.h>
-#include <qpoint.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -31,7 +29,8 @@ public:
     void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo = nullptr, KDDockWidgets::InitialOption initialOption = {});
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget);
     bool anySideBarIsVisible() const;
-    QRect centralAreaGeometry() const;
+    KDDockWidgets::Margins centerWidgetMargins() const;
+    KDDockWidgets::Rect centralAreaGeometry() const;
     void clearSideBarOverlay(bool deleteFrame = true);
     bool closeDockWidgets(bool force = false);
     KDDockWidgets::Core::DropArea *dropArea() const;
@@ -69,6 +68,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidg
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *thisObj, void *dockwidget_);
 // KDDockWidgets::Core::MainWindow::anySideBarIsVisible() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj);
+// KDDockWidgets::Core::MainWindow::centerWidgetMargins() const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__centerWidgetMargins(void *thisObj);
 // KDDockWidgets::Core::MainWindow::centralAreaGeometry() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj);
 // KDDockWidgets::Core::MainWindow::clearSideBarOverlay(bool deleteFrame)

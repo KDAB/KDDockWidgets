@@ -61,7 +61,7 @@ KDDW_QCORO_TASK tst_handle()
 KDDW_QCORO_TASK tst_resize()
 {
     auto window = Platform::instance()->tests_createWindow();
-    const QSize newSize(501, 502);
+    const KDDockWidgets::Size newSize(501, 502);
     window->resize(newSize.width(), newSize.height());
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
@@ -104,7 +104,7 @@ KDDW_QCORO_TASK tst_geometry()
 {
     auto window = Platform::instance()->tests_createWindow();
 
-    const QRect geo = QRect(100, 100, 1000, 1000);
+    const auto geo = KDDockWidgets::Rect(100, 100, 1000, 1000);
     window->setGeometry(geo);
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);

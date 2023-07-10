@@ -23,7 +23,7 @@ class DOCKS_EXPORT Stack : public View, public Core::StackViewInterface
 public:
     explicit Stack(Core::Stack *controller, Core::View *parent = nullptr);
 
-    bool isPositionDraggable(QPoint p) const override;
+    bool isPositionDraggable(Point p) const override;
     void setDocumentMode(bool) override;
 
 private:

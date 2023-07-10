@@ -17,7 +17,7 @@
 #include <spdlog/spdlog.h>
 
 template<>
-struct fmt::formatter<QSize>
+struct fmt::formatter<KDDockWidgets::Size>
 {
     constexpr auto parse(format_parse_context &ctx)
     {
@@ -25,14 +25,14 @@ struct fmt::formatter<QSize>
     }
 
     template<typename FormatContext>
-    auto format(QSize size, FormatContext &ctx)
+    auto format(KDDockWidgets::Size size, FormatContext &ctx)
     {
         return fmt::format_to(ctx.out(), "{}x{}", size.width(), size.height());
     }
 };
 
 template<>
-struct fmt::formatter<QPoint>
+struct fmt::formatter<KDDockWidgets::Point>
 {
     constexpr auto parse(format_parse_context &ctx)
     {
@@ -40,14 +40,14 @@ struct fmt::formatter<QPoint>
     }
 
     template<typename FormatContext>
-    auto format(QPoint point, FormatContext &ctx)
+    auto format(KDDockWidgets::Point point, FormatContext &ctx)
     {
         return fmt::format_to(ctx.out(), "{}x{}", point.x(), point.y());
     }
 };
 
 template<>
-struct fmt::formatter<QRect>
+struct fmt::formatter<KDDockWidgets::Rect>
 {
     constexpr auto parse(format_parse_context &ctx)
     {
@@ -55,7 +55,7 @@ struct fmt::formatter<QRect>
     }
 
     template<typename FormatContext>
-    auto format(QRect r, FormatContext &ctx)
+    auto format(KDDockWidgets::Rect r, FormatContext &ctx)
     {
         return fmt::format_to(ctx.out(), "Rect({},{} {}x{})", r.x(), r.y(), r.width(), r.height());
     }

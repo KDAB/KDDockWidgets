@@ -197,7 +197,7 @@ DropIndicatorAllowedFunc Config::dropIndicatorAllowedFunc() const
     return d->m_dropIndicatorAllowedFunc;
 }
 
-void Config::setAbsoluteWidgetMinSize(QSize size)
+void Config::setAbsoluteWidgetMinSize(Size size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         std::cerr
@@ -209,12 +209,12 @@ void Config::setAbsoluteWidgetMinSize(QSize size)
     Item::hardcodedMinimumSize = size;
 }
 
-QSize Config::absoluteWidgetMinSize() const
+Size Config::absoluteWidgetMinSize() const
 {
     return Item::hardcodedMinimumSize;
 }
 
-void Config::setAbsoluteWidgetMaxSize(QSize size)
+void Config::setAbsoluteWidgetMaxSize(Size size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         std::cerr
@@ -226,7 +226,7 @@ void Config::setAbsoluteWidgetMaxSize(QSize size)
     Item::hardcodedMaximumSize = size;
 }
 
-QSize Config::absoluteWidgetMaxSize() const
+Size Config::absoluteWidgetMaxSize() const
 {
     return Item::hardcodedMaximumSize;
 }

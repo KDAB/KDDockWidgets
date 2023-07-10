@@ -51,17 +51,17 @@ ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay()
     delete m_indicatorWindow;
 }
 
-DropLocation ClassicDropIndicatorOverlay::hover_impl(QPoint globalPos)
+DropLocation ClassicDropIndicatorOverlay::hover_impl(Point globalPos)
 {
     return m_indicatorWindow->hover(globalPos);
 }
 
-QPoint ClassicDropIndicatorOverlay::posForIndicator(DropLocation loc) const
+Point ClassicDropIndicatorOverlay::posForIndicator(DropLocation loc) const
 {
     return m_indicatorWindow->posForIndicator(loc);
 }
 
-bool ClassicDropIndicatorOverlay::onResize(QSize)
+bool ClassicDropIndicatorOverlay::onResize(Size)
 {
     m_indicatorWindow->resize(window()->size());
     return false;
@@ -163,8 +163,8 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 
     auto windowBeingDragged = DragController::instance()->windowBeingDragged();
 
-    QRect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
-                                         m_dropArea->itemForFrame(relativeToFrame));
+    Rect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
+                                        m_dropArea->itemForFrame(relativeToFrame));
 
     m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);
@@ -176,11 +176,11 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 
 void ClassicDropIndicatorOverlay::updateWindowPosition()
 {
-    QRect rect = this->rect();
+    Rect rect = this->rect();
     if (m_indicatorWindow->isWindow()) {
         // On all non-wayland platforms it's a top-level.
 
-        const QPoint pos = m_dropArea->mapToGlobal(QPoint(0, 0));
+        const Point pos = m_dropArea->mapToGlobal(Point(0, 0));
         rect.moveTo(pos);
     }
     m_indicatorWindow->setGeometry(rect);
@@ -191,13 +191,13 @@ bool ClassicDropIndicatorOverlay::rubberBandIsTopLevel() const
     return Config::self().internalFlags() & Config::InternalFlag_TopLevelIndicatorRubberBand;
 }
 
-QRect ClassicDropIndicatorOverlay::geometryForRubberband(QRect localRect) const
+Rect ClassicDropIndicatorOverlay::geometryForRubberband(Rect localRect) const
 {
     if (!rubberBandIsTopLevel())
         return localRect;
 
-    QPoint topLeftLocal = localRect.topLeft();
-    QPoint topLeftGlobal = m_dropArea->mapToGlobal(topLeftLocal);
+    Point topLeftLocal = localRect.topLeft();
+    Point topLeftGlobal = m_dropArea->mapToGlobal(topLeftLocal);
 
     localRect.moveTopLeft(topLeftGlobal);
 

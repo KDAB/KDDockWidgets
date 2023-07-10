@@ -11,9 +11,7 @@
 #include "KDDockWidgetsBindings_exports.h"
 #include <Separator.h>
 #include <core/View.h>
-#include <qrect.h>
-#include <qpoint.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -27,11 +25,11 @@ public:
     void move(int p);
     static int numSeparators();
     void onMouseDoubleClick();
-    void onMouseMove(QPoint pos);
+    void onMouseMove(KDDockWidgets::Point pos);
     void onMousePress();
     void onMouseReleased();
     int position() const;
-    void setGeometry(QRect r);
+    void setGeometry(KDDockWidgets::Rect r);
     void setGeometry(int pos, int pos2, int length);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
@@ -53,16 +51,16 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__move_int(voi
 KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Core__Separator__numSeparators();
 // KDDockWidgets::Core::Separator::onMouseDoubleClick()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseDoubleClick(void *thisObj);
-// KDDockWidgets::Core::Separator::onMouseMove(QPoint pos)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseMove_QPoint(void *thisObj, void *pos_);
+// KDDockWidgets::Core::Separator::onMouseMove(KDDockWidgets::Point pos)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseMove_Point(void *thisObj, void *pos_);
 // KDDockWidgets::Core::Separator::onMousePress()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMousePress(void *thisObj);
 // KDDockWidgets::Core::Separator::onMouseReleased()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__onMouseReleased(void *thisObj);
 // KDDockWidgets::Core::Separator::position() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Separator__position(void *thisObj);
-// KDDockWidgets::Core::Separator::setGeometry(QRect r)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_QRect(void *thisObj, void *r_);
+// KDDockWidgets::Core::Separator::setGeometry(KDDockWidgets::Rect r)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_Rect(void *thisObj, void *r_);
 // KDDockWidgets::Core::Separator::setGeometry(int pos, int pos2, int length)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length);
 // KDDockWidgets::Core::Separator::setParentView_impl(KDDockWidgets::Core::View * parent)

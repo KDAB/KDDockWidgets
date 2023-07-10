@@ -34,7 +34,7 @@ TabBar::TabBar(Core::TabBar *controller, Core::View *parent)
 {
 }
 
-int TabBar::tabAt(QPoint) const
+int TabBar::tabAt(Point) const
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return -1;
@@ -46,7 +46,7 @@ QString TabBar::text(int) const
     return {};
 }
 
-QRect TabBar::rectForTab(int) const
+Rect TabBar::rectForTab(int) const
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};

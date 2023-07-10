@@ -13,10 +13,8 @@
 #include <core/DockWidget.h>
 #include <TabBar.h>
 #include <core/Group.h>
-#include <qpoint.h>
-#include <qrect.h>
+#include <core/geometry_helpers_p.h>
 #include <core/View.h>
-#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -30,12 +28,12 @@ public:
     bool insertDockWidget(KDDockWidgets::Core::DockWidget *dockwidget, int index);
     virtual bool isMDI() const;
     virtual bool isMDI_nocallback() const;
-    virtual bool isPositionDraggable(QPoint p) const;
-    virtual bool isPositionDraggable_nocallback(QPoint p) const;
+    virtual bool isPositionDraggable(KDDockWidgets::Point p) const;
+    virtual bool isPositionDraggable_nocallback(KDDockWidgets::Point p) const;
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
     int numDockWidgets() const;
-    bool onMouseDoubleClick(QPoint localPos);
+    bool onMouseDoubleClick(KDDockWidgets::Point localPos);
     void setDocumentMode(bool arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
@@ -46,7 +44,7 @@ public:
     bool tabBarAutoHide() const;
     typedef bool (*Callback_isMDI)(void *);
     Callback_isMDI m_isMDICallback = nullptr;
-    typedef bool (*Callback_isPositionDraggable)(void *, QPoint *p);
+    typedef bool (*Callback_isPositionDraggable)(void *, KDDockWidgets::Point *p);
     Callback_isPositionDraggable m_isPositionDraggableCallback = nullptr;
     typedef bool (*Callback_isWindow)(void *);
     Callback_isWindow m_isWindowCallback = nullptr;
@@ -68,14 +66,14 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Stack__group(void *thi
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__insertDockWidget_DockWidget_int(void *thisObj, void *dockwidget_, int index);
 // KDDockWidgets::Core::Stack::isMDI() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__isMDI(void *thisObj);
-// KDDockWidgets::Core::Stack::isPositionDraggable(QPoint p) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__isPositionDraggable_QPoint(void *thisObj, void *p_);
+// KDDockWidgets::Core::Stack::isPositionDraggable(KDDockWidgets::Point p) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__isPositionDraggable_Point(void *thisObj, void *p_);
 // KDDockWidgets::Core::Stack::isWindow() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__isWindow(void *thisObj);
 // KDDockWidgets::Core::Stack::numDockWidgets() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Stack__numDockWidgets(void *thisObj);
-// KDDockWidgets::Core::Stack::onMouseDoubleClick(QPoint localPos)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__onMouseDoubleClick_QPoint(void *thisObj, void *localPos_);
+// KDDockWidgets::Core::Stack::onMouseDoubleClick(KDDockWidgets::Point localPos)
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Stack__onMouseDoubleClick_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::Stack::setDocumentMode(bool arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Stack__setDocumentMode_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Stack::setParentView_impl(KDDockWidgets::Core::View * parent)

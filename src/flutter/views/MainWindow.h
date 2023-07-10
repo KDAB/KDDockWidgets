@@ -27,8 +27,8 @@ public:
     ~MainWindow() override;
 
 protected:
-    QMargins centerWidgetMargins() const override;
-    QRect centralAreaGeometry() const override;
+    Margins centerWidgetMargins() const override;
+    Rect centralAreaGeometry() const override;
     void setContentsMargins(int left, int top, int right, int bottom) override;
 };
 

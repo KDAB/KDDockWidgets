@@ -47,7 +47,7 @@ bool Core::TabBar::tabsAreMovable() const
     return Config::self().flags() & Config::Flag_AllowReorderTabs;
 }
 
-bool Core::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
+bool Core::TabBar::dragCanStart(Point pressPos, Point pos) const
 {
     // Here we allow the user to re-order tabs instead of dragging them off.
     // To do that we just return false here, and QTabBar will handle the mouse event, assuming
@@ -92,7 +92,7 @@ Core::DockWidget *Core::TabBar::dockWidgetAt(int index) const
     return const_cast<DockWidget *>(d->m_dockWidgets.value(index));
 }
 
-Core::DockWidget *Core::TabBar::dockWidgetAt(QPoint localPos) const
+Core::DockWidget *Core::TabBar::dockWidgetAt(Point localPos) const
 {
     return dockWidgetAt(dynamic_cast<Core::TabBarViewInterface *>(view())->tabAt(localPos));
 }
@@ -202,7 +202,7 @@ bool Core::TabBar::isWindow() const
     return d->m_stack->isWindow();
 }
 
-void Core::TabBar::onMousePress(QPoint localPos)
+void Core::TabBar::onMousePress(Point localPos)
 {
     d->m_lastPressedDockWidget = dockWidgetAt(localPos);
     Group *group = this->group();
@@ -213,7 +213,7 @@ void Core::TabBar::onMousePress(QPoint localPos)
     }
 }
 
-void Core::TabBar::onMouseDoubleClick(QPoint localPos)
+void Core::TabBar::onMouseDoubleClick(Point localPos)
 {
     if (DockWidget *dw = dockWidgetAt(localPos))
         dw->setFloating(true);
@@ -262,7 +262,7 @@ QString Core::TabBar::text(int index) const
     return dynamic_cast<Core::TabBarViewInterface *>(view())->text(index);
 }
 
-QRect Core::TabBar::rectForTab(int index) const
+Rect Core::TabBar::rectForTab(int index) const
 {
     return dynamic_cast<Core::TabBarViewInterface *>(view())->rectForTab(index);
 }

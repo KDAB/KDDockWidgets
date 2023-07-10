@@ -12,9 +12,7 @@
 #include <Group.h>
 #include <core/Group.h>
 #include <core/View.h>
-#include <qsize.h>
-#include <qrect.h>
-#include <qpoint.h>
+#include <core/geometry_helpers_p.h>
 #include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -31,12 +29,12 @@ public:
     virtual void createPlatformWindow();
     virtual void createPlatformWindow_nocallback();
     int currentIndex() const;
-    virtual QRect dragRect() const;
-    virtual QRect dragRect_nocallback() const;
+    virtual KDDockWidgets::Rect dragRect() const;
+    virtual KDDockWidgets::Rect dragRect_nocallback() const;
     virtual Qt::WindowFlags flags() const;
     virtual Qt::WindowFlags flags_nocallback() const;
-    virtual QRect geometry() const;
-    virtual QRect geometry_nocallback() const;
+    virtual KDDockWidgets::Rect geometry() const;
+    virtual KDDockWidgets::Rect geometry_nocallback() const;
     virtual void grabMouse();
     virtual void grabMouse_nocallback();
     virtual bool hasFocus() const;
@@ -61,22 +59,22 @@ public:
     virtual bool isRootView_nocallback() const;
     virtual bool isVisible() const;
     virtual bool isVisible_nocallback() const;
-    virtual QPoint mapFromGlobal(QPoint globalPt) const;
-    virtual QPoint mapFromGlobal_nocallback(QPoint globalPt) const;
-    virtual QPoint mapTo(KDDockWidgets::Core::View *parent, QPoint pos) const;
-    virtual QPoint mapTo_nocallback(KDDockWidgets::Core::View *parent, QPoint pos) const;
-    virtual QPoint mapToGlobal(QPoint localPt) const;
-    virtual QPoint mapToGlobal_nocallback(QPoint localPt) const;
-    virtual QSize maxSizeHint() const;
-    virtual QSize maxSizeHint_nocallback() const;
-    virtual QSize minSize() const;
-    virtual QSize minSize_nocallback() const;
+    virtual KDDockWidgets::Point mapFromGlobal(KDDockWidgets::Point globalPt) const;
+    virtual KDDockWidgets::Point mapFromGlobal_nocallback(KDDockWidgets::Point globalPt) const;
+    virtual KDDockWidgets::Point mapTo(KDDockWidgets::Core::View *parent, KDDockWidgets::Point pos) const;
+    virtual KDDockWidgets::Point mapTo_nocallback(KDDockWidgets::Core::View *parent, KDDockWidgets::Point pos) const;
+    virtual KDDockWidgets::Point mapToGlobal(KDDockWidgets::Point localPt) const;
+    virtual KDDockWidgets::Point mapToGlobal_nocallback(KDDockWidgets::Point localPt) const;
+    virtual KDDockWidgets::Size maxSizeHint() const;
+    virtual KDDockWidgets::Size maxSizeHint_nocallback() const;
+    virtual KDDockWidgets::Size minSize() const;
+    virtual KDDockWidgets::Size minSize_nocallback() const;
     virtual void move(int x, int y);
     virtual void move_nocallback(int x, int y);
     virtual int nonContentsHeight() const;
     virtual int nonContentsHeight_nocallback() const;
-    virtual QRect normalGeometry() const;
-    virtual QRect normalGeometry_nocallback() const;
+    virtual KDDockWidgets::Rect normalGeometry() const;
+    virtual KDDockWidgets::Rect normalGeometry_nocallback() const;
     virtual void onChildAdded(KDDockWidgets::Core::View *childView);
     virtual void onChildAdded_nocallback(KDDockWidgets::Core::View *childView);
     virtual void onChildRemoved(KDDockWidgets::Core::View *childView);
@@ -107,14 +105,14 @@ public:
     virtual void setFixedHeight_nocallback(int h);
     virtual void setFixedWidth(int w);
     virtual void setFixedWidth_nocallback(int w);
-    virtual void setGeometry(QRect geometry);
-    virtual void setGeometry_nocallback(QRect geometry);
+    virtual void setGeometry(KDDockWidgets::Rect geometry);
+    virtual void setGeometry_nocallback(KDDockWidgets::Rect geometry);
     virtual void setHeight(int h);
     virtual void setHeight_nocallback(int h);
-    virtual void setMaximumSize(QSize sz);
-    virtual void setMaximumSize_nocallback(QSize sz);
-    virtual void setMinimumSize(QSize sz);
-    virtual void setMinimumSize_nocallback(QSize sz);
+    virtual void setMaximumSize(KDDockWidgets::Size sz);
+    virtual void setMaximumSize_nocallback(KDDockWidgets::Size sz);
+    virtual void setMinimumSize(KDDockWidgets::Size sz);
+    virtual void setMinimumSize_nocallback(KDDockWidgets::Size sz);
     virtual void setMouseTracking(bool enable);
     virtual void setMouseTracking_nocallback(bool enable);
     virtual void setParent(KDDockWidgets::Core::View *parent);
@@ -151,11 +149,11 @@ public:
     Callback_close m_closeCallback = nullptr;
     typedef void (*Callback_createPlatformWindow)(void *);
     Callback_createPlatformWindow m_createPlatformWindowCallback = nullptr;
-    typedef QRect *(*Callback_dragRect)(void *);
+    typedef KDDockWidgets::Rect *(*Callback_dragRect)(void *);
     Callback_dragRect m_dragRectCallback = nullptr;
     typedef Qt::WindowFlags (*Callback_flags)(void *);
     Callback_flags m_flagsCallback = nullptr;
-    typedef QRect *(*Callback_geometry)(void *);
+    typedef KDDockWidgets::Rect *(*Callback_geometry)(void *);
     Callback_geometry m_geometryCallback = nullptr;
     typedef void (*Callback_grabMouse)(void *);
     Callback_grabMouse m_grabMouseCallback = nullptr;
@@ -181,21 +179,21 @@ public:
     Callback_isRootView m_isRootViewCallback = nullptr;
     typedef bool (*Callback_isVisible)(void *);
     Callback_isVisible m_isVisibleCallback = nullptr;
-    typedef QPoint *(*Callback_mapFromGlobal)(void *, QPoint *globalPt);
+    typedef KDDockWidgets::Point *(*Callback_mapFromGlobal)(void *, KDDockWidgets::Point *globalPt);
     Callback_mapFromGlobal m_mapFromGlobalCallback = nullptr;
-    typedef QPoint *(*Callback_mapTo)(void *, KDDockWidgets::Core::View *parent, QPoint *pos);
+    typedef KDDockWidgets::Point *(*Callback_mapTo)(void *, KDDockWidgets::Core::View *parent, KDDockWidgets::Point *pos);
     Callback_mapTo m_mapToCallback = nullptr;
-    typedef QPoint *(*Callback_mapToGlobal)(void *, QPoint *localPt);
+    typedef KDDockWidgets::Point *(*Callback_mapToGlobal)(void *, KDDockWidgets::Point *localPt);
     Callback_mapToGlobal m_mapToGlobalCallback = nullptr;
-    typedef QSize *(*Callback_maxSizeHint)(void *);
+    typedef KDDockWidgets::Size *(*Callback_maxSizeHint)(void *);
     Callback_maxSizeHint m_maxSizeHintCallback = nullptr;
-    typedef QSize *(*Callback_minSize)(void *);
+    typedef KDDockWidgets::Size *(*Callback_minSize)(void *);
     Callback_minSize m_minSizeCallback = nullptr;
     typedef void (*Callback_move_2)(void *, int x, int y);
     Callback_move_2 m_move_2Callback = nullptr;
     typedef int (*Callback_nonContentsHeight)(void *);
     Callback_nonContentsHeight m_nonContentsHeightCallback = nullptr;
-    typedef QRect *(*Callback_normalGeometry)(void *);
+    typedef KDDockWidgets::Rect *(*Callback_normalGeometry)(void *);
     Callback_normalGeometry m_normalGeometryCallback = nullptr;
     typedef void (*Callback_onChildAdded)(void *, KDDockWidgets::Core::View *childView);
     Callback_onChildAdded m_onChildAddedCallback = nullptr;
@@ -227,13 +225,13 @@ public:
     Callback_setFixedHeight m_setFixedHeightCallback = nullptr;
     typedef void (*Callback_setFixedWidth)(void *, int w);
     Callback_setFixedWidth m_setFixedWidthCallback = nullptr;
-    typedef void (*Callback_setGeometry)(void *, QRect *geometry);
+    typedef void (*Callback_setGeometry)(void *, KDDockWidgets::Rect *geometry);
     Callback_setGeometry m_setGeometryCallback = nullptr;
     typedef void (*Callback_setHeight)(void *, int h);
     Callback_setHeight m_setHeightCallback = nullptr;
-    typedef void (*Callback_setMaximumSize)(void *, QSize *sz);
+    typedef void (*Callback_setMaximumSize)(void *, KDDockWidgets::Size *sz);
     Callback_setMaximumSize m_setMaximumSizeCallback = nullptr;
-    typedef void (*Callback_setMinimumSize)(void *, QSize *sz);
+    typedef void (*Callback_setMinimumSize)(void *, KDDockWidgets::Size *sz);
     Callback_setMinimumSize m_setMinimumSizeCallback = nullptr;
     typedef void (*Callback_setMouseTracking)(void *, bool enable);
     Callback_setMouseTracking m_setMouseTrackingCallback = nullptr;
@@ -309,12 +307,12 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isNull(void *
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isRootView(void *thisObj);
 // KDDockWidgets::flutter::Group::isVisible() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Group__isVisible(void *thisObj);
-// KDDockWidgets::flutter::Group::mapFromGlobal(QPoint globalPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__mapFromGlobal_QPoint(void *thisObj, void *globalPt_);
-// KDDockWidgets::flutter::Group::mapTo(KDDockWidgets::Core::View * parent, QPoint pos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__mapTo_View_QPoint(void *thisObj, void *parent_, void *pos_);
-// KDDockWidgets::flutter::Group::mapToGlobal(QPoint localPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__mapToGlobal_QPoint(void *thisObj, void *localPt_);
+// KDDockWidgets::flutter::Group::mapFromGlobal(KDDockWidgets::Point globalPt) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__mapFromGlobal_Point(void *thisObj, void *globalPt_);
+// KDDockWidgets::flutter::Group::mapTo(KDDockWidgets::Core::View * parent, KDDockWidgets::Point pos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__mapTo_View_Point(void *thisObj, void *parent_, void *pos_);
+// KDDockWidgets::flutter::Group::mapToGlobal(KDDockWidgets::Point localPt) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__mapToGlobal_Point(void *thisObj, void *localPt_);
 // KDDockWidgets::flutter::Group::maxSizeHint() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Group__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::Group::minSize() const
@@ -355,14 +353,14 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setCursor_Cur
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::flutter::Group::setFixedWidth(int w)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setFixedWidth_int(void *thisObj, int w);
-// KDDockWidgets::flutter::Group::setGeometry(QRect geometry)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setGeometry_QRect(void *thisObj, void *geometry_);
+// KDDockWidgets::flutter::Group::setGeometry(KDDockWidgets::Rect geometry)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setGeometry_Rect(void *thisObj, void *geometry_);
 // KDDockWidgets::flutter::Group::setHeight(int h)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setHeight_int(void *thisObj, int h);
-// KDDockWidgets::flutter::Group::setMaximumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setMaximumSize_QSize(void *thisObj, void *sz_);
-// KDDockWidgets::flutter::Group::setMinimumSize(QSize sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setMinimumSize_QSize(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::Group::setMaximumSize(KDDockWidgets::Size sz)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setMaximumSize_Size(void *thisObj, void *sz_);
+// KDDockWidgets::flutter::Group::setMinimumSize(KDDockWidgets::Size sz)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setMinimumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::Group::setMouseTracking(bool enable)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Group__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::flutter::Group::setParent(KDDockWidgets::Core::View * parent)

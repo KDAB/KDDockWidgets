@@ -60,7 +60,7 @@ void DockWidget::init()
 }
 
 
-QSize DockWidget::minSize() const
+Size DockWidget::minSize() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests min-size is the same as the widget's, there's no spacing or margins.
@@ -70,7 +70,7 @@ QSize DockWidget::minSize() const
     return View::minSize();
 }
 
-QSize DockWidget::maxSizeHint() const
+Size DockWidget::maxSizeHint() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
         // The guests max-size is the same as the widget's, there's no spacing or margins.

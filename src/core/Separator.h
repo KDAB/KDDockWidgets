@@ -15,11 +15,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include <QVector>
-#include <QPoint>
-
-QT_BEGIN_NAMESPACE
-class QRect;
-QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 class Config;
@@ -42,7 +37,7 @@ public:
     void move(int p);
     int position() const;
     Qt::Orientation orientation() const;
-    void setGeometry(QRect r);
+    void setGeometry(Rect r);
     void setGeometry(int pos, int pos2, int length);
     Core::ItemBoxContainer *parentContainer() const;
 
@@ -58,7 +53,7 @@ public:
     void onMousePress();
     void onMouseReleased();
     void onMouseDoubleClick();
-    void onMouseMove(QPoint pos);
+    void onMouseMove(Point pos);
 
 private:
     friend class KDDockWidgets::Config;

@@ -52,11 +52,11 @@ bool DropIndicatorOverlay_wrapper::dropIndicatorVisible_nocallback(KDDockWidgets
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::dropIndicatorVisible(arg__1);
 }
-KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover(QPoint globalPos)
+KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover(KDDockWidgets::Point globalPos)
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::hover(globalPos);
 }
-KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover_impl(QPoint globalPos)
+KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover_impl(KDDockWidgets::Point globalPos)
 {
     if (m_hover_implCallback) {
         const void *thisPtr = this;
@@ -66,7 +66,7 @@ KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover_impl(QPoint glob
         return {};
     }
 }
-KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover_impl_nocallback(QPoint globalPos)
+KDDockWidgets::DropLocation DropIndicatorOverlay_wrapper::hover_impl_nocallback(KDDockWidgets::Point globalPos)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
@@ -75,7 +75,7 @@ KDDockWidgets::Core::Group *DropIndicatorOverlay_wrapper::hoveredGroup() const
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroup();
 }
-QRect DropIndicatorOverlay_wrapper::hoveredGroupRect() const
+KDDockWidgets::Rect DropIndicatorOverlay_wrapper::hoveredGroupRect() const
 {
     return ::KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRect();
 }
@@ -100,7 +100,7 @@ void DropIndicatorOverlay_wrapper::onHoveredGroupChanged_nocallback(KDDockWidget
 {
     ::KDDockWidgets::Core::DropIndicatorOverlay::onHoveredGroupChanged(arg__1);
 }
-QPoint DropIndicatorOverlay_wrapper::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+KDDockWidgets::Point DropIndicatorOverlay_wrapper::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 {
     if (m_posForIndicatorCallback) {
         const void *thisPtr = this;
@@ -110,7 +110,7 @@ QPoint DropIndicatorOverlay_wrapper::posForIndicator(KDDockWidgets::DropLocation
         return {};
     }
 }
-QPoint DropIndicatorOverlay_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
+KDDockWidgets::Point DropIndicatorOverlay_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
@@ -207,18 +207,18 @@ bool c_KDDockWidgets__Core__DropIndicatorOverlay__dropIndicatorVisible_DropLocat
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dropIndicatorVisible_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->dropIndicatorVisible(static_cast<KDDockWidgets::DropLocation>(arg__1));} }();
 }
-// hover(QPoint globalPos)
-int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_QPoint(void *thisObj, void *globalPos_)
+// hover(KDDockWidgets::Point globalPos)
+int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
+    auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
     return int(fromPtr(thisObj)->hover(globalPos));
 }
-// hover_impl(QPoint globalPos)
-int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_QPoint(void *thisObj, void *globalPos_)
+// hover_impl(KDDockWidgets::Point globalPos)
+int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
-    auto &globalPos = *reinterpret_cast<QPoint *>(globalPos_);
+    auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
     return fromWrapperPtr(thisObj)->hover_impl_nocallback(globalPos);
 }
 // hoveredGroup() const
@@ -229,7 +229,7 @@ void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup(void *thisObj)
 // hoveredGroupRect() const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QRect> { fromPtr(thisObj)->hoveredGroupRect() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->hoveredGroupRect() };
 }
 // isHovered() const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__isHovered(void *thisObj)
@@ -250,7 +250,7 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group(vo
 // posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1)
 {
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
 }
 // removeHover()
 void c_KDDockWidgets__Core__DropIndicatorOverlay__removeHover(void *thisObj)
@@ -292,25 +292,25 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__registerVirtualMethodCallback(
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1401:
+    case 1359:
         wrapper->m_dropIndicatorVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_dropIndicatorVisible>(callback);
         break;
-    case 1405:
+    case 1363:
         wrapper->m_hover_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_hover_impl>(callback);
         break;
-    case 1415:
+    case 1373:
         wrapper->m_onHoveredGroupChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_onHoveredGroupChanged>(callback);
         break;
-    case 1417:
+    case 1375:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1420:
+    case 1378:
         wrapper->m_setCurrentDropLocationCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setCurrentDropLocation>(callback);
         break;
-    case 721:
+    case 676:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1429:
+    case 1387:
         wrapper->m_updateVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::Callback_updateVisibility>(callback);
         break;
     }

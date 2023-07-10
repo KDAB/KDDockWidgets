@@ -13,9 +13,7 @@
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <core/Group.h>
-#include <qrect.h>
-#include <qpoint.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DropIndicatorOverlay_wrapper : public ::KDDockWidgets::Core::DropIndicatorOverlay
@@ -27,17 +25,17 @@ public:
     KDDockWidgets::DropLocation currentDropLocation() const;
     virtual bool dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const;
     virtual bool dropIndicatorVisible_nocallback(KDDockWidgets::DropLocation arg__1) const;
-    KDDockWidgets::DropLocation hover(QPoint globalPos);
-    virtual KDDockWidgets::DropLocation hover_impl(QPoint globalPos);
-    virtual KDDockWidgets::DropLocation hover_impl_nocallback(QPoint globalPos);
+    KDDockWidgets::DropLocation hover(KDDockWidgets::Point globalPos);
+    virtual KDDockWidgets::DropLocation hover_impl(KDDockWidgets::Point globalPos);
+    virtual KDDockWidgets::DropLocation hover_impl_nocallback(KDDockWidgets::Point globalPos);
     KDDockWidgets::Core::Group *hoveredGroup() const;
-    QRect hoveredGroupRect() const;
+    KDDockWidgets::Rect hoveredGroupRect() const;
     bool isHovered() const;
     static KDDockWidgets::Location multisplitterLocationFor(KDDockWidgets::DropLocation arg__1);
     virtual void onHoveredGroupChanged(KDDockWidgets::Core::Group *arg__1);
     virtual void onHoveredGroupChanged_nocallback(KDDockWidgets::Core::Group *arg__1);
-    virtual QPoint posForIndicator(KDDockWidgets::DropLocation arg__1) const;
-    virtual QPoint posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator(KDDockWidgets::DropLocation arg__1) const;
+    virtual KDDockWidgets::Point posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const;
     void removeHover();
     virtual void setCurrentDropLocation(KDDockWidgets::DropLocation arg__1);
     virtual void setCurrentDropLocation_nocallback(KDDockWidgets::DropLocation arg__1);
@@ -49,11 +47,11 @@ public:
     virtual void updateVisibility_nocallback();
     typedef bool (*Callback_dropIndicatorVisible)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_dropIndicatorVisible m_dropIndicatorVisibleCallback = nullptr;
-    typedef KDDockWidgets::DropLocation (*Callback_hover_impl)(void *, QPoint *globalPos);
+    typedef KDDockWidgets::DropLocation (*Callback_hover_impl)(void *, KDDockWidgets::Point *globalPos);
     Callback_hover_impl m_hover_implCallback = nullptr;
     typedef void (*Callback_onHoveredGroupChanged)(void *, KDDockWidgets::Core::Group *arg__1);
     Callback_onHoveredGroupChanged m_onHoveredGroupChangedCallback = nullptr;
-    typedef QPoint *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
+    typedef KDDockWidgets::Point *(*Callback_posForIndicator)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_posForIndicator m_posForIndicatorCallback = nullptr;
     typedef void (*Callback_setCurrentDropLocation)(void *, KDDockWidgets::DropLocation arg__1);
     Callback_setCurrentDropLocation m_setCurrentDropLocationCallback = nullptr;
@@ -72,10 +70,10 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropIndicatorOverlay__
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropIndicatorOverlay__currentDropLocation(void *thisObj);
 // KDDockWidgets::Core::DropIndicatorOverlay::dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropIndicatorOverlay__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1);
-// KDDockWidgets::Core::DropIndicatorOverlay::hover(QPoint globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_QPoint(void *thisObj, void *globalPos_);
-// KDDockWidgets::Core::DropIndicatorOverlay::hover_impl(QPoint globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::DropIndicatorOverlay::hover(KDDockWidgets::Point globalPos)
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_Point(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::DropIndicatorOverlay::hover_impl(KDDockWidgets::Point globalPos)
+KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroup() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup(void *thisObj);
 // KDDockWidgets::Core::DropIndicatorOverlay::hoveredGroupRect() const

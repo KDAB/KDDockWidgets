@@ -27,11 +27,11 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-QSize Config_wrapper::absoluteWidgetMaxSize() const
+KDDockWidgets::Size Config_wrapper::absoluteWidgetMaxSize() const
 {
     return ::KDDockWidgets::Config::absoluteWidgetMaxSize();
 }
-QSize Config_wrapper::absoluteWidgetMinSize() const
+KDDockWidgets::Size Config_wrapper::absoluteWidgetMinSize() const
 {
     return ::KDDockWidgets::Config::absoluteWidgetMinSize();
 }
@@ -59,11 +59,11 @@ int Config_wrapper::separatorThickness() const
 {
     return ::KDDockWidgets::Config::separatorThickness();
 }
-void Config_wrapper::setAbsoluteWidgetMaxSize(QSize size)
+void Config_wrapper::setAbsoluteWidgetMaxSize(KDDockWidgets::Size size)
 {
     ::KDDockWidgets::Config::setAbsoluteWidgetMaxSize(size);
 }
-void Config_wrapper::setAbsoluteWidgetMinSize(QSize size)
+void Config_wrapper::setAbsoluteWidgetMinSize(KDDockWidgets::Size size)
 {
     ::KDDockWidgets::Config::setAbsoluteWidgetMinSize(size);
 }
@@ -127,12 +127,12 @@ void c_KDDockWidgets__Config_Finalizer(void *cppObj)
 } // absoluteWidgetMaxSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->absoluteWidgetMaxSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMaxSize() };
 }
 // absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->absoluteWidgetMinSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMinSize() };
 }
 // draggedWindowOpacity() const
 qreal c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj)
@@ -164,18 +164,18 @@ int c_KDDockWidgets__Config__separatorThickness(void *thisObj)
 {
     return fromPtr(thisObj)->separatorThickness();
 }
-// setAbsoluteWidgetMaxSize(QSize size)
-void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize(void *thisObj, void *size_)
+// setAbsoluteWidgetMaxSize(KDDockWidgets::Size size)
+void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_Size(void *thisObj, void *size_)
 {
     assert(size_);
-    auto &size = *reinterpret_cast<QSize *>(size_);
+    auto &size = *reinterpret_cast<KDDockWidgets::Size *>(size_);
     fromPtr(thisObj)->setAbsoluteWidgetMaxSize(size);
 }
-// setAbsoluteWidgetMinSize(QSize size)
-void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize(void *thisObj, void *size_)
+// setAbsoluteWidgetMinSize(KDDockWidgets::Size size)
+void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size(void *thisObj, void *size_)
 {
     assert(size_);
-    auto &size = *reinterpret_cast<QSize *>(size_);
+    auto &size = *reinterpret_cast<KDDockWidgets::Size *>(size_);
     fromPtr(thisObj)->setAbsoluteWidgetMinSize(size);
 }
 // setDraggedWindowOpacity(qreal opacity)

@@ -32,7 +32,7 @@ ClassicIndicatorWindowViewInterface_wrapper::ClassicIndicatorWindowViewInterface
     : ::KDDockWidgets::Core::ClassicIndicatorWindowViewInterface()
 {
 }
-KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover(QPoint arg__1)
+KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover(KDDockWidgets::Point arg__1)
 {
     if (m_hoverCallback) {
         const void *thisPtr = this;
@@ -42,7 +42,7 @@ KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover(Q
         return {};
     }
 }
-KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover_nocallback(QPoint arg__1)
+KDDockWidgets::DropLocation ClassicIndicatorWindowViewInterface_wrapper::hover_nocallback(KDDockWidgets::Point arg__1)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
@@ -62,7 +62,7 @@ bool ClassicIndicatorWindowViewInterface_wrapper::isWindow_nocallback() const
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
 }
-QPoint ClassicIndicatorWindowViewInterface_wrapper::posForIndicator(KDDockWidgets::DropLocation arg__1) const
+KDDockWidgets::Point ClassicIndicatorWindowViewInterface_wrapper::posForIndicator(KDDockWidgets::DropLocation arg__1) const
 {
     if (m_posForIndicatorCallback) {
         const void *thisPtr = this;
@@ -72,7 +72,7 @@ QPoint ClassicIndicatorWindowViewInterface_wrapper::posForIndicator(KDDockWidget
         return {};
     }
 }
-QPoint ClassicIndicatorWindowViewInterface_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
+KDDockWidgets::Point ClassicIndicatorWindowViewInterface_wrapper::posForIndicator_nocallback(KDDockWidgets::DropLocation arg__1) const
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return {};
@@ -92,7 +92,7 @@ void ClassicIndicatorWindowViewInterface_wrapper::raise_nocallback()
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void ClassicIndicatorWindowViewInterface_wrapper::resize(QSize arg__1)
+void ClassicIndicatorWindowViewInterface_wrapper::resize(KDDockWidgets::Size arg__1)
 {
     if (m_resizeCallback) {
         const void *thisPtr = this;
@@ -102,12 +102,12 @@ void ClassicIndicatorWindowViewInterface_wrapper::resize(QSize arg__1)
         return;
     }
 }
-void ClassicIndicatorWindowViewInterface_wrapper::resize_nocallback(QSize arg__1)
+void ClassicIndicatorWindowViewInterface_wrapper::resize_nocallback(KDDockWidgets::Size arg__1)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
 }
-void ClassicIndicatorWindowViewInterface_wrapper::setGeometry(QRect arg__1)
+void ClassicIndicatorWindowViewInterface_wrapper::setGeometry(KDDockWidgets::Rect arg__1)
 {
     if (m_setGeometryCallback) {
         const void *thisPtr = this;
@@ -117,7 +117,7 @@ void ClassicIndicatorWindowViewInterface_wrapper::setGeometry(QRect arg__1)
         return;
     }
 }
-void ClassicIndicatorWindowViewInterface_wrapper::setGeometry_nocallback(QRect arg__1)
+void ClassicIndicatorWindowViewInterface_wrapper::setGeometry_nocallback(KDDockWidgets::Rect arg__1)
 {
     std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
     return;
@@ -206,11 +206,11 @@ void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__constructor()
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper();
     return reinterpret_cast<void *>(ptr);
 }
-// hover(QPoint arg__1)
-int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_QPoint(void *thisObj, void *arg__1_)
+// hover(KDDockWidgets::Point arg__1)
+int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QPoint *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hover_nocallback(arg__1);} else {    return targetPtr->hover(arg__1);} }();
 }
 // isWindow() const
@@ -221,25 +221,25 @@ bool c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__isWindow(void *
 // posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation(void *thisObj, int arg__1)
 {
-    return new Dartagnan::ValueWrapper<QPoint> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
 }
 // raise()
 void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__raise(void *thisObj)
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->raise_nocallback();} else {    return targetPtr->raise();} }();
 }
-// resize(QSize arg__1)
-void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_QSize(void *thisObj, void *arg__1_)
+// resize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->resize_nocallback(arg__1);} else {    return targetPtr->resize(arg__1);} }();
 }
-// setGeometry(QRect arg__1)
-void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_QRect(void *thisObj, void *arg__1_)
+// setGeometry(KDDockWidgets::Rect arg__1)
+void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_Rect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QRect *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_nocallback(arg__1);} else {    return targetPtr->setGeometry(arg__1);} }();
 }
 // setObjectName(const QString & arg__1)
@@ -271,34 +271,34 @@ void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtual
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1498:
+    case 1456:
         wrapper->m_hoverCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_hover>(callback);
         break;
-    case 1499:
+    case 1457:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_isWindow>(callback);
         break;
-    case 1500:
+    case 1458:
         wrapper->m_posForIndicatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_posForIndicator>(callback);
         break;
-    case 1501:
+    case 1459:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_raise>(callback);
         break;
-    case 1502:
+    case 1460:
         wrapper->m_resizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_resize>(callback);
         break;
-    case 1503:
+    case 1461:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setGeometry>(callback);
         break;
-    case 1504:
+    case 1462:
         wrapper->m_setObjectNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setObjectName>(callback);
         break;
-    case 1505:
+    case 1463:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_setVisible>(callback);
         break;
-    case 1506:
+    case 1464:
         wrapper->m_updateIndicatorVisibilityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_updateIndicatorVisibility>(callback);
         break;
-    case 1507:
+    case 1465:
         wrapper->m_updatePositionsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::ClassicIndicatorWindowViewInterface_wrapper::Callback_updatePositions>(callback);
         break;
     }

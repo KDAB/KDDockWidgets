@@ -61,7 +61,7 @@ static std::unique_ptr<ItemBoxContainer> createRoot()
     return std::unique_ptr<ItemBoxContainer>(root);
 }
 
-static Item *createItem(QSize minSz = {}, QSize maxSz = {})
+static Item *createItem(Size minSz = {}, Size maxSz = {})
 {
     static int count = 0;
     count++;
@@ -69,7 +69,7 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
     hostWidget->setViewName("HostWidget");
     hostWidget->show();
     auto item = new Item(hostWidget);
-    item->setGeometry(QRect(0, 0, 200, 200));
+    item->setGeometry(Rect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
     Core::CreateViewOptions opts;
     if (minSz.isValid())
@@ -101,7 +101,7 @@ KDDW_QCORO_TASK tst_createRoot()
     CHECK(root->isRoot());
     CHECK(root->isContainer());
     CHECK(root->hasOrientation());
-    CHECK_EQ(root->size(), QSize(1000, 1000));
+    CHECK_EQ(root->size(), Size(1000, 1000));
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
 
@@ -116,9 +116,9 @@ KDDW_QCORO_TASK tst_insertOne()
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 1);
     CHECK(!item->isContainer());
-    CHECK_EQ(root->size(), QSize(1000, 1000));
+    CHECK_EQ(root->size(), Size(1000, 1000));
     CHECK_EQ(item->size(), root->size());
-    CHECK_EQ(item->pos(), QPoint());
+    CHECK_EQ(item->pos(), Point());
     CHECK_EQ(item->pos(), root->pos());
     CHECK(root->hasChildren());
     CHECK(serializeDeserializeTest(root));
@@ -258,7 +258,7 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem1DifferentOrientation()
     CHECK_EQ(item31->parentBoxContainer(), container3);
     CHECK_EQ(item3->parentBoxContainer(), container3);
     CHECK_EQ(container3->parentBoxContainer(), root.get());
-    CHECK_EQ(QPoint(0, 0), item3->pos());
+    CHECK_EQ(Point(0, 0), item3->pos());
     CHECK_EQ(container3->width(), item3->width());
     CHECK_EQ(container3->height(), item3->height() + st + item31->height());
 
@@ -301,7 +301,7 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem2DifferentOrientation()
     CHECK_EQ(container3Parent->numChildren(), 2);
 
     CHECK(item1->x() < item2->x());
-    CHECK_EQ(container3->pos(), QPoint(0, 0l));
+    CHECK_EQ(container3->pos(), Point(0, 0l));
     CHECK_EQ(item3->pos(), container3->pos());
     CHECK(container3Parent->x() > item2->x());
     CHECK_EQ(item3->y(), item2->y());
@@ -379,7 +379,7 @@ KDDW_QCORO_TASK tst_removeItem1()
     CHECK_EQ(root->numChildren(), 1);
 
     auto c1 = item1->parentBoxContainer();
-    CHECK_EQ(c1->pos(), QPoint(0, 0));
+    CHECK_EQ(c1->pos(), Point(0, 0));
     CHECK_EQ(c1->width(), root->width());
     CHECK_EQ(c1->height(), item1->height());
     CHECK_EQ(c1->height(), root->height());
@@ -436,10 +436,10 @@ KDDW_QCORO_TASK tst_minSize()
     root->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item22, item2, Location_OnBottom);
 
-    CHECK_EQ(item2->minSize(), QSize(200, 300));
-    CHECK_EQ(item2->parentBoxContainer()->minSize(), QSize(200, 300 + 100 + st));
+    CHECK_EQ(item2->minSize(), Size(200, 300));
+    CHECK_EQ(item2->parentBoxContainer()->minSize(), Size(200, 300 + 100 + st));
 
-    CHECK_EQ(root->minSize(), QSize(101 + 200 + st, 300 + 100 + st));
+    CHECK_EQ(root->minSize(), Size(101 + 200 + st, 300 + 100 + st));
     CHECK(root->checkSanity());
 
     CHECK(serializeDeserializeTest(root));
@@ -495,12 +495,12 @@ KDDW_QCORO_TASK tst_resizeWithConstraints()
 
         auto root = createRoot();
         auto item1 = createItem();
-        item1->setMinSize(QSize(500, 500));
+        item1->setMinSize(Size(500, 500));
         root->insertItem(item1, Location_OnLeft);
         CHECK(root->checkSanity());
 
         root->setSize_recursive(item1->minSize()); // Still fits
-        root->setSize_recursive(item1->minSize() - QSize(1, 0)); // wouldn't fit
+        root->setSize_recursive(item1->minSize() - Size(1, 0)); // wouldn't fit
         CHECK_EQ(root->size(), item1->size()); // still has the old size
         CHECK(serializeDeserializeTest(root));
     }
@@ -512,10 +512,10 @@ KDDW_QCORO_TASK tst_resizeWithConstraints()
         auto item1 = createItem();
         auto item2 = createItem();
         auto item3 = createItem();
-        root->setSize_recursive(QSize(2000, 500));
-        item1->setMinSize(QSize(500, 500));
-        item2->setMinSize(QSize(500, 500));
-        item3->setMinSize(QSize(500, 500));
+        root->setSize_recursive(Size(2000, 500));
+        item1->setMinSize(Size(500, 500));
+        item2->setMinSize(Size(500, 500));
+        item3->setMinSize(Size(500, 500));
         root->insertItem(item1, Location_OnLeft);
         root->insertItem(item2, Location_OnRight);
         root->insertItem(item3, Location_OnRight);
@@ -529,8 +529,8 @@ KDDW_QCORO_TASK tst_resizeWithConstraints()
 KDDW_QCORO_TASK tst_availableSize()
 {
     auto root = createRoot();
-    CHECK_EQ(root->availableSize(), QSize(1000, 1000));
-    CHECK_EQ(root->minSize(), QSize(0, 0));
+    CHECK_EQ(root->availableSize(), Size(1000, 1000));
+    CHECK_EQ(root->minSize(), Size(0, 0));
 
     auto item1 = createItem();
     auto item2 = createItem();
@@ -540,8 +540,8 @@ KDDW_QCORO_TASK tst_availableSize()
     item3->m_sizingInfo.minSize = { 100, 100 };
 
     root->insertItem(item1, Location_OnLeft);
-    CHECK_EQ(root->availableSize(), QSize(900, 900));
-    CHECK_EQ(root->minSize(), QSize(100, 100));
+    CHECK_EQ(root->availableSize(), Size(900, 900));
+    CHECK_EQ(root->minSize(), Size(100, 100));
     CHECK_EQ(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), 0);
     CHECK_EQ(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
     CHECK_EQ(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), 0);
@@ -553,8 +553,8 @@ KDDW_QCORO_TASK tst_availableSize()
     CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     root->insertItem(item2, Location_OnLeft);
-    CHECK_EQ(root->availableSize(), QSize(800 - st, 900));
-    CHECK_EQ(root->minSize(), QSize(200 + st, 100));
+    CHECK_EQ(root->availableSize(), Size(800 - st, 900));
+    CHECK_EQ(root->minSize(), Size(200 + st, 100));
     CHECK_EQ(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), item2->width());
     CHECK_EQ(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
     CHECK_EQ(root->neighboursLengthFor(item2, Side1, Qt::Horizontal), 0);
@@ -570,8 +570,8 @@ KDDW_QCORO_TASK tst_availableSize()
     CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     root->insertItem(item3, Location_OnBottom);
-    CHECK_EQ(root->availableSize(), QSize(800 - st, 800 - st));
-    CHECK_EQ(root->minSize(), QSize(200 + st, 100 + 100 + st));
+    CHECK_EQ(root->availableSize(), Size(800 - st, 800 - st));
+    CHECK_EQ(root->minSize(), Size(200 + st, 100 + 100 + st));
     CHECK_EQ(item3->parentBoxContainer()->neighboursMinLengthFor(item3, Side1, Qt::Vertical),
              item1->minSize().height());
 
@@ -612,8 +612,8 @@ KDDW_QCORO_TASK tst_availableSize()
 KDDW_QCORO_TASK tst_missingSize()
 {
     auto root = createRoot();
-    CHECK_EQ(root->size(), QSize(1000, 1000));
-    CHECK_EQ(root->availableSize(), QSize(1000, 1000));
+    CHECK_EQ(root->size(), Size(1000, 1000));
+    CHECK_EQ(root->availableSize(), Size(1000, 1000));
 
     Item *item1 = createItem();
     item1->setMinSize({ 100, 100 });
@@ -622,7 +622,7 @@ KDDW_QCORO_TASK tst_missingSize()
     item2->setMinSize(root->size());
 
     Item *item3 = createItem();
-    item3->setMinSize(root->size() + QSize(100, 200));
+    item3->setMinSize(root->size() + Size(100, 200));
 
     // Test with an existing item
     root->insertItem(item1, Location_OnTop);
@@ -645,8 +645,8 @@ KDDW_QCORO_TASK tst_ensureEnoughSize()
     // Insert to empty layout:
 
     root->insertItem(item1, Location_OnLeft);
-    CHECK_EQ(root->size(), QSize(2000, 1000));
-    CHECK_EQ(item1->size(), QSize(2000, 1000));
+    CHECK_EQ(root->size(), Size(2000, 1000));
+    CHECK_EQ(item1->size(), Size(2000, 1000));
     CHECK_EQ(item1->minSize(), root->minSize());
     CHECK(root->checkSanity());
 
@@ -657,7 +657,7 @@ KDDW_QCORO_TASK tst_ensureEnoughSize()
     CHECK(root->checkSanity());
     CHECK_EQ(
         root->size(),
-        QSize(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
+        Size(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
     CHECK(serializeDeserializeTest(root));
 
     KDDW_TEST_RETURN(true);
@@ -704,22 +704,22 @@ KDDW_QCORO_TASK tst_turnIntoPlaceholder()
 KDDW_QCORO_TASK tst_suggestedRect()
 {
     auto root = createRoot();
-    root->setSize(QSize(2000, 1000));
-    const QSize minSize(100, 100);
+    root->setSize(Size(2000, 1000));
+    const Size minSize(100, 100);
     Item itemBeingDropped(nullptr);
     itemBeingDropped.setMinSize(minSize);
 
-    QRect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
-    QRect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
-    QRect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
-    QRect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
+    Rect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
+    Rect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
+    Rect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
+    Rect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
 
     // Test relative to root:
     CHECK(leftRect.width() >= minSize.width());
     CHECK(topRect.height() >= minSize.height());
     CHECK(bottomRect.height() >= minSize.height());
     CHECK(rightRect.width() >= minSize.width());
-    CHECK_EQ(leftRect.topLeft(), QPoint(0, 0));
+    CHECK_EQ(leftRect.topLeft(), Point(0, 0));
     CHECK_EQ(leftRect.bottomLeft(), root->rect().bottomLeft());
     CHECK_EQ(rightRect.topRight(), root->rect().topRight());
     CHECK_EQ(rightRect.bottomRight(), root->rect().bottomRight());
@@ -730,7 +730,7 @@ KDDW_QCORO_TASK tst_suggestedRect()
 
     // Test relative to an item
     Item *item1 = createItem();
-    item1->setMinSize(QSize(100, 100));
+    item1->setMinSize(Size(100, 100));
     root->insertItem(item1, Location_OnLeft);
     leftRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnLeft);
     topRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnTop);
@@ -740,7 +740,7 @@ KDDW_QCORO_TASK tst_suggestedRect()
     CHECK(topRect.height() >= minSize.height());
     CHECK(bottomRect.height() >= minSize.height());
     CHECK(rightRect.width() >= minSize.width());
-    CHECK_EQ(leftRect.topLeft(), QPoint(0, 0));
+    CHECK_EQ(leftRect.topLeft(), Point(0, 0));
     CHECK_EQ(leftRect.bottomLeft(), root->rect().bottomLeft());
     CHECK_EQ(rightRect.topRight(), root->rect().topRight());
     CHECK_EQ(rightRect.bottomRight(), root->rect().bottomRight());
@@ -749,10 +749,9 @@ KDDW_QCORO_TASK tst_suggestedRect()
     CHECK_EQ(bottomRect.bottomLeft(), root->rect().bottomLeft());
     CHECK_EQ(bottomRect.bottomRight(), root->rect().bottomRight());
 
-
     // Insert another item:
     Item *item2 = createItem();
-    item1->setMinSize(QSize(100, 100));
+    item1->setMinSize(Size(100, 100));
     root->insertItem(item2, Location_OnRight);
     leftRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnLeft);
     topRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnTop);
@@ -781,7 +780,7 @@ KDDW_QCORO_TASK tst_suggestedRect2()
     auto root2 = createRoot();
 
     Item itemBeingDropped(nullptr);
-    itemBeingDropped.setMinSize(QSize(100, 100));
+    itemBeingDropped.setMinSize(Size(100, 100));
 
     Item *item = createItem();
 
@@ -1009,22 +1008,22 @@ KDDW_QCORO_TASK tst_minSizeChanges()
     Item *item1 = createItem();
     root->insertItem(item1, Location_OnLeft);
 
-    root->setSize_recursive(QSize(200, 200));
+    root->setSize_recursive(Size(200, 200));
     CHECK(root->checkSanity());
 
     auto w1 = item1;
-    w1->setMinSize(QSize(300, 300));
+    w1->setMinSize(Size(300, 300));
     CHECK(root->checkSanity());
-    CHECK_EQ(root->size(), QSize(300, 300));
+    CHECK_EQ(root->size(), Size(300, 300));
 
     Item *item2 = createItem();
     root->insertItem(item2, Location_OnTop);
     CHECK(root->checkSanity());
 
-    root->setSize_recursive(QSize(1000, 1000));
+    root->setSize_recursive(Size(1000, 1000));
     CHECK(root->checkSanity());
 
-    w1->setMinSize(QSize(700, 700));
+    w1->setMinSize(Size(700, 700));
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
 
@@ -1077,8 +1076,8 @@ KDDW_QCORO_TASK tst_separatorMinMax()
     Item *item2 = createItem();
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnLeft);
-    item1->setMinSize(QSize(200, 200));
-    item2->setMinSize(QSize(200, 200));
+    item1->setMinSize(Size(200, 200));
+    item2->setMinSize(Size(200, 200));
 
     auto separator = root->separators_recursive().at(0);
     CHECK_EQ(root->minPosForSeparator(separator), 200);
@@ -1163,14 +1162,14 @@ KDDW_QCORO_TASK tst_availableOnSide()
     // Tests that items are available to squeeze a certain amount (without violating their min-size)
 
     auto root = createRoot();
-    Item *item1 = createItem(/*min=*/QSize(100, 100));
-    root->setSize(QSize(1000, 1000));
+    Item *item1 = createItem(/*min=*/Size(100, 100));
+    root->setSize(Size(1000, 1000));
     root->insertItem(item1, Location_OnLeft);
 
     CHECK_EQ(root->availableToSqueezeOnSide(item1, Side1), 0);
     CHECK_EQ(root->availableToSqueezeOnSide(item1, Side2), 0);
 
-    Item *item2 = createItem(/*min=*/QSize(200, 200));
+    Item *item2 = createItem(/*min=*/Size(200, 200));
     root->insertItem(item2, Location_OnRight);
     auto separator = root->separators_recursive()[0];
     CHECK_EQ(root->minPosForSeparator_global(separator), item1->minSize().width());
@@ -1184,7 +1183,7 @@ KDDW_QCORO_TASK tst_availableOnSide()
              item1->width() - item1->minSize().width());
     CHECK_EQ(root->availableToSqueezeOnSide(item2, Side2), 0);
 
-    Item *item3 = createItem(/*min=*/QSize(200, 200));
+    Item *item3 = createItem(/*min=*/Size(200, 200));
     root->insertItem(item3, Location_OnRight);
     CHECK(root->checkSanity());
     CHECK_EQ(root->availableToSqueezeOnSide(item3, Side1),
@@ -1198,7 +1197,7 @@ KDDW_QCORO_TASK tst_availableOnSide()
     CHECK_EQ(root->maxPosForSeparator_global(separator2),
              root->width() - item3->minSize().width() - Item::separatorThickness);
 
-    Item *item4 = createItem(/*min=*/QSize(200, 200));
+    Item *item4 = createItem(/*min=*/Size(200, 200));
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
 
     auto c = item3->parentBoxContainer();
@@ -1214,7 +1213,7 @@ KDDW_QCORO_TASK tst_availableOnSide()
              (item3->height() - item3->minSize().height()));
     CHECK_EQ(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Vertical), 0);
 
-    Item *item31 = createItem(/*min=*/QSize(100, 100));
+    Item *item31 = createItem(/*min=*/Size(100, 100));
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnRight);
     auto container31 = item31->parentBoxContainer();
     auto separator31 = container31->separators().at(0);
@@ -1236,18 +1235,18 @@ KDDW_QCORO_TASK tst_availableToGrowOnSide()
 {
     // Tests that items are available to grow a certain amount (without violating their max-size)
     auto root = createRoot();
-    Item *item1 = createItem(/*min=*/QSize(100, 100), /*max=*/QSize(230, 230));
-    root->setSize(QSize(1000, 1000));
+    Item *item1 = createItem(/*min=*/Size(100, 100), /*max=*/Size(230, 230));
+    root->setSize(Size(1000, 1000));
     root->insertItem(item1, Location_OnLeft);
 
     CHECK_EQ(root->availableToGrowOnSide(item1, Side1), 0);
     CHECK_EQ(root->availableToGrowOnSide(item1, Side2), 0);
 
-    Item *item2 = createItem(/*min=*/QSize(200, 200));
+    Item *item2 = createItem(/*min=*/Size(200, 200));
     root->insertItem(item2, Location_OnRight);
 
     // give a resize, so item1 gets smaller than its max-size. Will be unneeded soon
-    root->setSize_recursive(QSize(1001, 1001));
+    root->setSize_recursive(Size(1001, 1001));
 
     CHECK_EQ(root->availableToGrowOnSide(item1, Side1), 0);
     CHECK_EQ(root->availableToGrowOnSide(item2, Side2), 0);
@@ -1259,7 +1258,7 @@ KDDW_QCORO_TASK tst_availableToGrowOnSide()
     CHECK_EQ(root->minPosForSeparator_global(separator, true), item1->minSize().width());
     CHECK_EQ(root->maxPosForSeparator_global(separator, true), item1->maxSizeHint().width());
 
-    Item *item3 = createItem(/*min=*/QSize(200, 200), /*max=*/QSize(200, 200));
+    Item *item3 = createItem(/*min=*/Size(200, 200), /*max=*/Size(200, 200));
     root->insertItem(item3, Location_OnRight);
     CHECK(root->checkSanity());
 
@@ -1277,9 +1276,9 @@ KDDW_QCORO_TASK tst_availableToGrowOnSide()
 KDDW_QCORO_TASK tst_resizeViaSeparator()
 {
     auto root = createRoot();
-    Item *item1 = createItem(/*min=*/QSize(100, 100));
-    Item *item2 = createItem(/*min=*/QSize(100, 100));
-    root->setSize(QSize(1000, 1000));
+    Item *item1 = createItem(/*min=*/Size(100, 100));
+    Item *item2 = createItem(/*min=*/Size(100, 100));
+    root->setSize(Size(1000, 1000));
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
 
@@ -1296,8 +1295,8 @@ KDDW_QCORO_TASK tst_resizeViaSeparator()
     CHECK_EQ(separator->position(), oldPos - delta);
 
 
-    Item *item3 = createItem(/*min=*/QSize(100, 100));
-    Item *item4 = createItem(/*min=*/QSize(100, 100));
+    Item *item3 = createItem(/*min=*/Size(100, 100));
+    Item *item4 = createItem(/*min=*/Size(100, 100));
     root->insertItem(item4, Location_OnLeft);
     root->insertItem(item3, Location_OnRight);
     item2->turnIntoPlaceholder();
@@ -1332,7 +1331,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator2()
         for (auto item : qAsConst(children)) {
             item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
         }
-        root->setSize_recursive(QSize(4000 + Item::separatorThickness * (numChildren - 1), 1000));
+        root->setSize_recursive(Size(4000 + Item::separatorThickness * (numChildren - 1), 1000));
     };
 
     const int delta = 100;
@@ -1386,7 +1385,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator3()
     ItemBoxContainer::insertItemRelativeTo(item4, item1, Location_OnBottom);
 
     // Make some room, so each item has enough space to shrink without hitting constraints
-    root->setSize_recursive(QSize(1000, 4000));
+    root->setSize_recursive(Size(1000, 4000));
 
     // Our horizontal separator
     const auto separators = root->separators();
@@ -1439,9 +1438,9 @@ KDDW_QCORO_TASK tst_mapToRoot()
     CHECK(root->checkSanity());
 
     auto c = item22->parentBoxContainer();
-    QPoint rootPt = c->mapToRoot(QPoint(0, 0));
-    CHECK_EQ(rootPt, QPoint(0, item1->height() + st));
-    CHECK_EQ(c->mapFromRoot(rootPt), QPoint(0, 0));
+    Point rootPt = c->mapToRoot(Point(0, 0));
+    CHECK_EQ(rootPt, Point(0, item1->height() + st));
+    CHECK_EQ(c->mapFromRoot(rootPt), Point(0, 0));
 
     KDDW_TEST_RETURN(true);
 }
@@ -1492,10 +1491,10 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
 
     root->insertItem(item1, Location_OnTop);
     root->insertItem(item2, Location_OnBottom);
-    const QSize originalSize2 = item2->size();
+    const Size originalSize2 = item2->size();
 
     auto guest2 = item2->guestView();
-    const QSize newMinSize = originalSize2 + QSize(10, 10);
+    const Size newMinSize = originalSize2 + Size(10, 10);
 
     item2->turnIntoPlaceholder();
     guest2->setMinimumSize(newMinSize);
@@ -1538,7 +1537,7 @@ KDDW_QCORO_TASK tst_separatorMoveHonoursMax()
     const int maxWidth = 250;
     auto root = createRoot();
     auto item1 = createItem();
-    auto item2 = createItem({}, QSize(maxWidth, 250));
+    auto item2 = createItem({}, Size(maxWidth, 250));
     auto item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
@@ -1582,12 +1581,12 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
     auto item1 = createItem();
     auto item2 = createItem();
     root->insertItem(item1, Location_OnTop);
-    root->setSize_recursive(QSize(3000, 3000));
+    root->setSize_recursive(Size(3000, 3000));
 
     auto guest2 = item2->guestView();
     const int maxHeight = 250;
     CHECK_EQ(guest2->size(), item2->size());
-    guest2->setMaximumSize(QSize(250, maxHeight));
+    guest2->setMaximumSize(Size(250, maxHeight));
     CHECK_EQ(guest2->size(), item2->size());
     CHECK_EQ(item2->maxSizeHint(), guest2->maxSizeHint());
 
@@ -1617,7 +1616,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured2()
     root2->insertItem(item3, Location_OnLeft);
     root2->removeItem(item3, /*hardRemove=*/false);
 
-    item2->setMaxSizeHint(QSize(200, 200));
+    item2->setMaxSizeHint(Size(200, 200));
 
     root1->insertItem(root2.release(), Location_OnBottom);
     CHECK_EQ(item2->parentBoxContainer()->maxSizeHint(), item2->maxSizeHint());
@@ -1632,9 +1631,9 @@ KDDW_QCORO_TASK tst_maxSizeHonoured3()
         auto root = createRoot();
         const int minHeight = 100;
         const int maxHeight = 200;
-        auto item1 = createItem(QSize(100, minHeight), QSize(200, maxHeight));
+        auto item1 = createItem(Size(100, minHeight), Size(200, maxHeight));
         auto item2 = createItem();
-        root->setSize(QSize(2000, 2000));
+        root->setSize(Size(2000, 2000));
 
         root->insertItem(item2, Location_OnBottom);
         root->insertItem(item1, Location_OnTop);
@@ -1644,7 +1643,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured3()
         CHECK(item1->height() >= minHeight);
 
         // Now resize the window
-        root->setSize_recursive(QSize(200, 8000));
+        root->setSize_recursive(Size(200, 8000));
 
         // and we respected max-size too
         CHECK(item1->height() <= maxHeight);
@@ -1657,10 +1656,10 @@ KDDW_QCORO_TASK tst_maxSizeHonoured3()
         auto root2 = createRoot();
         const int minHeight = 100;
         const int maxHeight = 200;
-        auto item1 = createItem(QSize(100, minHeight), QSize(200, maxHeight));
+        auto item1 = createItem(Size(100, minHeight), Size(200, maxHeight));
         auto item2 = createItem();
-        root1->setSize(QSize(2000, 2000));
-        root2->setSize(QSize(2000, 2000));
+        root1->setSize(Size(2000, 2000));
+        root2->setSize(Size(2000, 2000));
 
         root2->insertItem(item2, Location_OnBottom);
         root1->insertItem(item1, Location_OnTop);
@@ -1671,7 +1670,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured3()
         CHECK(item1->height() >= minHeight);
 
         // Now resize the window
-        root2->setSize_recursive(QSize(200, 8000));
+        root2->setSize_recursive(Size(200, 8000));
 
         // and we respected max-size too
         CHECK(item1->height() <= maxHeight);
@@ -1710,7 +1709,7 @@ KDDW_QCORO_TASK tst_requestEqualSize()
         auto root = createRoot();
         const int minWidth1 = 100;
         const int maxWidth1 = 200;
-        auto item1 = createItem(QSize(minWidth1, 100), QSize(maxWidth1, 200));
+        auto item1 = createItem(Size(minWidth1, 100), Size(maxWidth1, 200));
         auto item2 = createItem();
         root->insertItem(item2, Location_OnRight);
         root->insertItem(item1, Location_OnLeft);
@@ -1754,11 +1753,11 @@ KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
     // we don't violate the space of item 1
 
     auto root = createRoot();
-    root->setSize(QSize(300, 3000));
+    root->setSize(Size(300, 3000));
     auto item1 = createItem();
     const int minHeight = 100;
     const int maxHeight = 200;
-    auto item2 = createItem(QSize(100, minHeight), QSize(200, maxHeight));
+    auto item2 = createItem(Size(100, minHeight), Size(200, maxHeight));
     auto item3 = createItem();
     root->insertItem(item1, Location_OnTop);
     root->insertItem(item2, Location_OnBottom);

@@ -83,9 +83,8 @@ class SeparatorPositionedWidgetState extends PositionedWidgetState {
         trans.invert(); // global to local
         final localPos = event.transformed(trans).localPosition;
 
-        separatorView.m_controller.onMouseMove(
-            KDDockWidgetBindings.QPoint.ctor2(
-                localPos.dx.toInt(), localPos.dy.toInt()));
+        separatorView.m_controller.onMouseMove(KDDockWidgetBindings.Point.ctor2(
+            localPos.dx.toInt(), localPos.dy.toInt()));
       },
       child: MouseRegion(
           child: defaultContainer,

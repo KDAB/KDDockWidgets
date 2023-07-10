@@ -12,11 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-
-
-QT_BEGIN_NAMESPACE
-class QRect;
-QT_END_NAMESPACE
+#include "kddockwidgets/NonQtCompat_p.h"
 
 namespace KDDockWidgets {
 
@@ -42,7 +38,7 @@ public:
     /// @brief the rect that should start a drag.
     /// Only relevant if the title bar isn't visible. For normal KDDW usage this method doesn't
     /// need to be reimplemented.
-    virtual QRect dragRect() const;
+    virtual Rect dragRect() const;
 
     bool isMDI() const;
     Group *group() const;

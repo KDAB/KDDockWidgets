@@ -45,22 +45,22 @@ class Config implements ffi.Finalizable {
     thisCpp = cppPointer;
   }
   Config.init() {} // absoluteWidgetMaxSize() const
-  QSize absoluteWidgetMaxSize() {
+  Size absoluteWidgetMaxSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Config__absoluteWidgetMaxSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // absoluteWidgetMinSize() const
 
-  QSize absoluteWidgetMinSize() {
+  Size absoluteWidgetMinSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Config__absoluteWidgetMinSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // draggedWindowOpacity() const
 
   double draggedWindowOpacity() {
@@ -111,20 +111,20 @@ class Config implements ffi.Finalizable {
             'c_KDDockWidgets__Config__separatorThickness')
         .asFunction();
     return func(thisCpp);
-  } // setAbsoluteWidgetMaxSize(QSize size)
+  } // setAbsoluteWidgetMaxSize(KDDockWidgets::Size size)
 
-  setAbsoluteWidgetMaxSize(QSize size) {
+  setAbsoluteWidgetMaxSize(Size size) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_QSize')
+            'c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_Size')
         .asFunction();
     func(thisCpp, size == null ? ffi.nullptr : size.thisCpp);
-  } // setAbsoluteWidgetMinSize(QSize size)
+  } // setAbsoluteWidgetMinSize(KDDockWidgets::Size size)
 
-  setAbsoluteWidgetMinSize(QSize size) {
+  setAbsoluteWidgetMinSize(Size size) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_QSize')
+            'c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size')
         .asFunction();
     func(thisCpp, size == null ? ffi.nullptr : size.thisCpp);
   } // setDraggedWindowOpacity(qreal opacity)
