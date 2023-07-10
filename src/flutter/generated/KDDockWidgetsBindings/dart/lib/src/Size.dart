@@ -60,24 +60,24 @@ class Size implements ffi.Finalizable {
         .asFunction();
     thisCpp = func(width, height);
     Size.s_dartInstanceByCppPtr[thisCpp.address] = this;
-  } // boundedTo(KDDockWidgets::Size arg__1) const
-  Size boundedTo(Size arg__1) {
+  } // boundedTo(KDDockWidgets::Size sz) const
+  Size boundedTo(Size sz) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Size__boundedTo_Size')
         .asFunction();
     ffi.Pointer<void> result =
-        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+        func(thisCpp, sz == null ? ffi.nullptr : sz.thisCpp);
     return Size.fromCppPointer(result, true);
-  } // expandedTo(KDDockWidgets::Size arg__1) const
+  } // expandedTo(KDDockWidgets::Size sz) const
 
-  Size expandedTo(Size arg__1) {
+  Size expandedTo(Size sz) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Size__expandedTo_Size')
         .asFunction();
     ffi.Pointer<void> result =
-        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+        func(thisCpp, sz == null ? ffi.nullptr : sz.thisCpp);
     return Size.fromCppPointer(result, true);
   } // height() const
 

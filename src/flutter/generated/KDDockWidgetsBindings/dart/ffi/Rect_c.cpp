@@ -39,13 +39,13 @@ Rect_wrapper::Rect_wrapper(int x, int y, int width, int height)
     : ::KDDockWidgets::Rect(x, y, width, height)
 {
 }
-void Rect_wrapper::adjust(int arg__1, int arg__2, int arg__3, int arg__4) const
+void Rect_wrapper::adjust(int l, int t, int r, int b)
 {
-    ::KDDockWidgets::Rect::adjust(arg__1, arg__2, arg__3, arg__4);
+    ::KDDockWidgets::Rect::adjust(l, t, r, b);
 }
-KDDockWidgets::Rect Rect_wrapper::adjusted(int arg__1, int arg__2, int arg__3, int arg__4) const
+KDDockWidgets::Rect Rect_wrapper::adjusted(int l, int t, int r, int b) const
 {
-    return ::KDDockWidgets::Rect::adjusted(arg__1, arg__2, arg__3, arg__4);
+    return ::KDDockWidgets::Rect::adjusted(l, t, r, b);
 }
 int Rect_wrapper::bottom() const
 {
@@ -67,21 +67,21 @@ bool Rect_wrapper::contains(KDDockWidgets::Point pt) const
 {
     return ::KDDockWidgets::Rect::contains(pt);
 }
-bool Rect_wrapper::contains(KDDockWidgets::Rect arg__1) const
+bool Rect_wrapper::contains(KDDockWidgets::Rect other) const
 {
-    return ::KDDockWidgets::Rect::contains(arg__1);
+    return ::KDDockWidgets::Rect::contains(other);
 }
 int Rect_wrapper::height() const
 {
     return ::KDDockWidgets::Rect::height();
 }
-KDDockWidgets::Rect Rect_wrapper::intersected(KDDockWidgets::Rect arg__1) const
+KDDockWidgets::Rect Rect_wrapper::intersected(KDDockWidgets::Rect other) const
 {
-    return ::KDDockWidgets::Rect::intersected(arg__1);
+    return ::KDDockWidgets::Rect::intersected(other);
 }
-bool Rect_wrapper::intersects(KDDockWidgets::Rect arg__1) const
+bool Rect_wrapper::intersects(KDDockWidgets::Rect other) const
 {
-    return ::KDDockWidgets::Rect::intersects(arg__1);
+    return ::KDDockWidgets::Rect::intersects(other);
 }
 bool Rect_wrapper::isEmpty() const
 {
@@ -99,29 +99,29 @@ int Rect_wrapper::left() const
 {
     return ::KDDockWidgets::Rect::left();
 }
-void Rect_wrapper::moveBottom(int arg__1)
+void Rect_wrapper::moveBottom(int b)
 {
-    ::KDDockWidgets::Rect::moveBottom(arg__1);
+    ::KDDockWidgets::Rect::moveBottom(b);
 }
-void Rect_wrapper::moveCenter(KDDockWidgets::Point arg__1)
+void Rect_wrapper::moveCenter(KDDockWidgets::Point pt)
 {
-    ::KDDockWidgets::Rect::moveCenter(arg__1);
+    ::KDDockWidgets::Rect::moveCenter(pt);
 }
 void Rect_wrapper::moveLeft(int x)
 {
     ::KDDockWidgets::Rect::moveLeft(x);
 }
-void Rect_wrapper::moveRight(int arg__1)
+void Rect_wrapper::moveRight(int r)
 {
-    ::KDDockWidgets::Rect::moveRight(arg__1);
+    ::KDDockWidgets::Rect::moveRight(r);
 }
-void Rect_wrapper::moveTo(KDDockWidgets::Point arg__1)
+void Rect_wrapper::moveTo(KDDockWidgets::Point pt)
 {
-    ::KDDockWidgets::Rect::moveTo(arg__1);
+    ::KDDockWidgets::Rect::moveTo(pt);
 }
-void Rect_wrapper::moveTo(int arg__1, int arg__2)
+void Rect_wrapper::moveTo(int x, int y)
 {
-    ::KDDockWidgets::Rect::moveTo(arg__1, arg__2);
+    ::KDDockWidgets::Rect::moveTo(x, y);
 }
 void Rect_wrapper::moveTop(int y)
 {
@@ -139,9 +139,9 @@ int Rect_wrapper::right() const
 {
     return ::KDDockWidgets::Rect::right();
 }
-void Rect_wrapper::setBottom(int arg__1)
+void Rect_wrapper::setBottom(int b)
 {
-    ::KDDockWidgets::Rect::setBottom(arg__1);
+    ::KDDockWidgets::Rect::setBottom(b);
 }
 void Rect_wrapper::setHeight(int h)
 {
@@ -159,25 +159,25 @@ void Rect_wrapper::setSize(KDDockWidgets::Size sz)
 {
     ::KDDockWidgets::Rect::setSize(sz);
 }
-void Rect_wrapper::setTop(int arg__1)
+void Rect_wrapper::setTop(int y)
 {
-    ::KDDockWidgets::Rect::setTop(arg__1);
+    ::KDDockWidgets::Rect::setTop(y);
 }
-void Rect_wrapper::setTopLeft(KDDockWidgets::Point arg__1)
+void Rect_wrapper::setTopLeft(KDDockWidgets::Point pt)
 {
-    ::KDDockWidgets::Rect::setTopLeft(arg__1);
+    ::KDDockWidgets::Rect::setTopLeft(pt);
 }
 void Rect_wrapper::setWidth(int w)
 {
     ::KDDockWidgets::Rect::setWidth(w);
 }
-void Rect_wrapper::setX(int arg__1)
+void Rect_wrapper::setX(int x)
 {
-    ::KDDockWidgets::Rect::setX(arg__1);
+    ::KDDockWidgets::Rect::setX(x);
 }
-void Rect_wrapper::setY(int arg__1)
+void Rect_wrapper::setY(int y)
 {
-    ::KDDockWidgets::Rect::setY(arg__1);
+    ::KDDockWidgets::Rect::setY(y);
 }
 KDDockWidgets::Size Rect_wrapper::size() const
 {
@@ -195,9 +195,9 @@ KDDockWidgets::Point Rect_wrapper::topRight() const
 {
     return ::KDDockWidgets::Rect::topRight();
 }
-void Rect_wrapper::translate(KDDockWidgets::Point arg__1)
+void Rect_wrapper::translate(KDDockWidgets::Point pt)
 {
-    ::KDDockWidgets::Rect::translate(arg__1);
+    ::KDDockWidgets::Rect::translate(pt);
 }
 int Rect_wrapper::width() const
 {
@@ -248,15 +248,15 @@ void *c_KDDockWidgets__Rect__constructor_int_int_int_int(int x, int y, int width
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Rect_wrapper(x, y, width, height);
     return reinterpret_cast<void *>(ptr);
 }
-// adjust(int arg__1, int arg__2, int arg__3, int arg__4) const
-void c_KDDockWidgets__Rect__adjust_int_int_int_int(void *thisObj, int arg__1, int arg__2, int arg__3, int arg__4)
+// adjust(int l, int t, int r, int b)
+void c_KDDockWidgets__Rect__adjust_int_int_int_int(void *thisObj, int l, int t, int r, int b)
 {
-    fromPtr(thisObj)->adjust(arg__1, arg__2, arg__3, arg__4);
+    fromPtr(thisObj)->adjust(l, t, r, b);
 }
-// adjusted(int arg__1, int arg__2, int arg__3, int arg__4) const
-void *c_KDDockWidgets__Rect__adjusted_int_int_int_int(void *thisObj, int arg__1, int arg__2, int arg__3, int arg__4)
+// adjusted(int l, int t, int r, int b) const
+void *c_KDDockWidgets__Rect__adjusted_int_int_int_int(void *thisObj, int l, int t, int r, int b)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->adjusted(arg__1, arg__2, arg__3, arg__4) };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->adjusted(l, t, r, b) };
 }
 // bottom() const
 int c_KDDockWidgets__Rect__bottom(void *thisObj)
@@ -285,31 +285,31 @@ bool c_KDDockWidgets__Rect__contains_Point(void *thisObj, void *pt_)
     auto &pt = *reinterpret_cast<KDDockWidgets::Point *>(pt_);
     return fromPtr(thisObj)->contains(pt);
 }
-// contains(KDDockWidgets::Rect arg__1) const
-bool c_KDDockWidgets__Rect__contains_Rect(void *thisObj, void *arg__1_)
+// contains(KDDockWidgets::Rect other) const
+bool c_KDDockWidgets__Rect__contains_Rect(void *thisObj, void *other_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
-    return fromPtr(thisObj)->contains(arg__1);
+    assert(other_);
+    auto &other = *reinterpret_cast<KDDockWidgets::Rect *>(other_);
+    return fromPtr(thisObj)->contains(other);
 }
 // height() const
 int c_KDDockWidgets__Rect__height(void *thisObj)
 {
     return fromPtr(thisObj)->height();
 }
-// intersected(KDDockWidgets::Rect arg__1) const
-void *c_KDDockWidgets__Rect__intersected_Rect(void *thisObj, void *arg__1_)
+// intersected(KDDockWidgets::Rect other) const
+void *c_KDDockWidgets__Rect__intersected_Rect(void *thisObj, void *other_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->intersected(arg__1) };
+    assert(other_);
+    auto &other = *reinterpret_cast<KDDockWidgets::Rect *>(other_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->intersected(other) };
 }
-// intersects(KDDockWidgets::Rect arg__1) const
-bool c_KDDockWidgets__Rect__intersects_Rect(void *thisObj, void *arg__1_)
+// intersects(KDDockWidgets::Rect other) const
+bool c_KDDockWidgets__Rect__intersects_Rect(void *thisObj, void *other_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
-    return fromPtr(thisObj)->intersects(arg__1);
+    assert(other_);
+    auto &other = *reinterpret_cast<KDDockWidgets::Rect *>(other_);
+    return fromPtr(thisObj)->intersects(other);
 }
 // isEmpty() const
 bool c_KDDockWidgets__Rect__isEmpty(void *thisObj)
@@ -331,39 +331,39 @@ int c_KDDockWidgets__Rect__left(void *thisObj)
 {
     return fromPtr(thisObj)->left();
 }
-// moveBottom(int arg__1)
-void c_KDDockWidgets__Rect__moveBottom_int(void *thisObj, int arg__1)
+// moveBottom(int b)
+void c_KDDockWidgets__Rect__moveBottom_int(void *thisObj, int b)
 {
-    fromPtr(thisObj)->moveBottom(arg__1);
+    fromPtr(thisObj)->moveBottom(b);
 }
-// moveCenter(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__moveCenter_Point(void *thisObj, void *arg__1_)
+// moveCenter(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__moveCenter_Point(void *thisObj, void *pt_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    fromPtr(thisObj)->moveCenter(arg__1);
+    assert(pt_);
+    auto &pt = *reinterpret_cast<KDDockWidgets::Point *>(pt_);
+    fromPtr(thisObj)->moveCenter(pt);
 }
 // moveLeft(int x)
 void c_KDDockWidgets__Rect__moveLeft_int(void *thisObj, int x)
 {
     fromPtr(thisObj)->moveLeft(x);
 }
-// moveRight(int arg__1)
-void c_KDDockWidgets__Rect__moveRight_int(void *thisObj, int arg__1)
+// moveRight(int r)
+void c_KDDockWidgets__Rect__moveRight_int(void *thisObj, int r)
 {
-    fromPtr(thisObj)->moveRight(arg__1);
+    fromPtr(thisObj)->moveRight(r);
 }
-// moveTo(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__moveTo_Point(void *thisObj, void *arg__1_)
+// moveTo(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__moveTo_Point(void *thisObj, void *pt_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    fromPtr(thisObj)->moveTo(arg__1);
+    assert(pt_);
+    auto &pt = *reinterpret_cast<KDDockWidgets::Point *>(pt_);
+    fromPtr(thisObj)->moveTo(pt);
 }
-// moveTo(int arg__1, int arg__2)
-void c_KDDockWidgets__Rect__moveTo_int_int(void *thisObj, int arg__1, int arg__2)
+// moveTo(int x, int y)
+void c_KDDockWidgets__Rect__moveTo_int_int(void *thisObj, int x, int y)
 {
-    fromPtr(thisObj)->moveTo(arg__1, arg__2);
+    fromPtr(thisObj)->moveTo(x, y);
 }
 // moveTop(int y)
 void c_KDDockWidgets__Rect__moveTop_int(void *thisObj, int y)
@@ -387,10 +387,10 @@ int c_KDDockWidgets__Rect__right(void *thisObj)
 {
     return fromPtr(thisObj)->right();
 }
-// setBottom(int arg__1)
-void c_KDDockWidgets__Rect__setBottom_int(void *thisObj, int arg__1)
+// setBottom(int b)
+void c_KDDockWidgets__Rect__setBottom_int(void *thisObj, int b)
 {
-    fromPtr(thisObj)->setBottom(arg__1);
+    fromPtr(thisObj)->setBottom(b);
 }
 // setHeight(int h)
 void c_KDDockWidgets__Rect__setHeight_int(void *thisObj, int h)
@@ -414,32 +414,32 @@ void c_KDDockWidgets__Rect__setSize_Size(void *thisObj, void *sz_)
     auto &sz = *reinterpret_cast<KDDockWidgets::Size *>(sz_);
     fromPtr(thisObj)->setSize(sz);
 }
-// setTop(int arg__1)
-void c_KDDockWidgets__Rect__setTop_int(void *thisObj, int arg__1)
+// setTop(int y)
+void c_KDDockWidgets__Rect__setTop_int(void *thisObj, int y)
 {
-    fromPtr(thisObj)->setTop(arg__1);
+    fromPtr(thisObj)->setTop(y);
 }
-// setTopLeft(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__setTopLeft_Point(void *thisObj, void *arg__1_)
+// setTopLeft(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__setTopLeft_Point(void *thisObj, void *pt_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    fromPtr(thisObj)->setTopLeft(arg__1);
+    assert(pt_);
+    auto &pt = *reinterpret_cast<KDDockWidgets::Point *>(pt_);
+    fromPtr(thisObj)->setTopLeft(pt);
 }
 // setWidth(int w)
 void c_KDDockWidgets__Rect__setWidth_int(void *thisObj, int w)
 {
     fromPtr(thisObj)->setWidth(w);
 }
-// setX(int arg__1)
-void c_KDDockWidgets__Rect__setX_int(void *thisObj, int arg__1)
+// setX(int x)
+void c_KDDockWidgets__Rect__setX_int(void *thisObj, int x)
 {
-    fromPtr(thisObj)->setX(arg__1);
+    fromPtr(thisObj)->setX(x);
 }
-// setY(int arg__1)
-void c_KDDockWidgets__Rect__setY_int(void *thisObj, int arg__1)
+// setY(int y)
+void c_KDDockWidgets__Rect__setY_int(void *thisObj, int y)
 {
-    fromPtr(thisObj)->setY(arg__1);
+    fromPtr(thisObj)->setY(y);
 }
 // size() const
 void *c_KDDockWidgets__Rect__size(void *thisObj)
@@ -461,12 +461,12 @@ void *c_KDDockWidgets__Rect__topRight(void *thisObj)
 {
     return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->topRight() };
 }
-// translate(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__translate_Point(void *thisObj, void *arg__1_)
+// translate(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__translate_Point(void *thisObj, void *pt_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    fromPtr(thisObj)->translate(arg__1);
+    assert(pt_);
+    auto &pt = *reinterpret_cast<KDDockWidgets::Point *>(pt_);
+    fromPtr(thisObj)->translate(pt);
 }
 // width() const
 int c_KDDockWidgets__Rect__width(void *thisObj)

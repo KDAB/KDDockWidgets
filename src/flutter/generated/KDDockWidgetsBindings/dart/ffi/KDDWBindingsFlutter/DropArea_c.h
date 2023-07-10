@@ -13,8 +13,8 @@
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <View.h>
-#include <qstring.h>
 #include <core/geometry_helpers_p.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

@@ -5105,21 +5105,122 @@ KDDW_QCORO_TASK tst_scopedValueRollback()
 
 KDDW_QCORO_TASK tst_point()
 {
+    Point pt;
+    CHECK(pt.isNull());
+    CHECK_EQ(pt, Point(0, 0));
+
+    pt = { 1, 0 };
+    CHECK(!pt.isNull());
+
+    pt = { -5, 5 };
+    CHECK_EQ(pt.manhattanLength(), 10);
+
     KDDW_TEST_RETURN(true);
 }
 
 KDDW_QCORO_TASK tst_size()
 {
     Size sz;
-    CHECK(sz.isNull());
+    CHECK_EQ(sz, Size(-1, -1));
+    CHECK(!sz.isNull());
+    CHECK(!sz.isValid());
     CHECK(sz.isEmpty());
 
+    sz = { 1, 1 };
+    CHECK(!sz.isNull());
+    CHECK(sz.isValid());
+    CHECK(!sz.isEmpty());
+
+    sz = { 1, 0 };
+    CHECK(!sz.isNull());
+    CHECK(sz.isValid());
+    CHECK(sz.isEmpty());
+
+    sz = { 0, 0 };
+    CHECK(sz.isNull());
+    CHECK(sz.isValid());
+    CHECK(sz.isEmpty());
+
+    CHECK_EQ(Size(100, 100).expandedTo(Size(50, 200)), Size(100, 200));
+    CHECK_EQ(Size(100, 100).boundedTo(Size(50, 200)), Size(50, 100));
 
     KDDW_TEST_RETURN(true);
 }
 
 KDDW_QCORO_TASK tst_rect()
 {
+    Rect r;
+
+    CHECK(!r.isValid());
+    CHECK(r.isEmpty());
+    CHECK(r.isNull());
+
+    r = { 0, 1, 100, 50 };
+    CHECK(r.isValid());
+    CHECK(!r.isEmpty());
+    CHECK(!r.isNull());
+    CHECK_EQ(r.width(), 100);
+    CHECK_EQ(r.height(), 50);
+    CHECK_EQ(r.y(), 1);
+    CHECK_EQ(r.x(), 0);
+    CHECK_EQ(r.size(), Size(100, 50));
+    CHECK_EQ(r.topLeft(), Point(0, 1));
+    CHECK_EQ(r.bottomLeft(), Point(0, 50));
+    CHECK_EQ(r.bottomRight(), Point(99, 50));
+    CHECK_EQ(r.bottom(), 50);
+    CHECK_EQ(r.right(), 99);
+    CHECK_EQ(r.left(), 0);
+    CHECK_EQ(Rect(0, 0, 50, 50).center(), Point(24, 24));
+
+    r.moveTop(200);
+    r.moveLeft(300);
+    CHECK_EQ(r.topLeft(), Point(300, 200));
+    CHECK_EQ(r.size(), Size(100, 50));
+
+    r.moveBottom(200);
+    r.moveRight(200);
+    CHECK_EQ(r, Rect(101, 151, 100, 50));
+
+    r.moveTo(0, 0);
+    CHECK_EQ(r, Rect(0, 0, 100, 50));
+    CHECK_EQ(r.center(), Point(49, 24));
+    Point newCenter(50, 50);
+    r.moveCenter(newCenter);
+    CHECK_EQ(r.center(), Point(50, 50));
+
+    r = { 100, 100, 100, 100 };
+    r.setLeft(0);
+    CHECK_EQ(r.topLeft(), Point(0, 100));
+    CHECK_EQ(r.size(), Size(200, 100));
+    r.setTop(0);
+    CHECK_EQ(r.topLeft(), Point(0, 0));
+    CHECK_EQ(r.size(), Size(200, 200));
+
+    r.setRight(99);
+    CHECK_EQ(r.size(), Size(100, 200));
+
+    r.setBottom(99);
+    CHECK_EQ(r.size(), Size(100, 100));
+
+    r = { 100, 100, 100, 100 };
+    r = r.marginsAdded({ 1, 2, 3, 4 });
+    CHECK_EQ(r, Rect(99, 98, 104, 106));
+
+    r = { 100, 100, 100, 100 };
+    const Rect r2 = { 100, 100, 200, 200 };
+
+    CHECK_EQ(r.intersected(r2), Rect(100, 100, 100, 100));
+    CHECK(r.intersects(r2));
+
+    CHECK(Rect(0, 0, 100, 100).contains({ 99, 99, 1, 1 }));
+    CHECK(!Rect(0, 0, 100, 100).contains({ 99, 99, 2, 2 }));
+    CHECK(!Rect(0, 0, 100, 100).contains({ 99, 100, 1, 1 }));
+
+    r = { 0, 0, 100, 100 };
+    CHECK_EQ(r.adjusted(1, 2, 3, 4), Rect(1, 2, 102, 102));
+    r.adjust(1, 2, 3, 4);
+    CHECK_EQ(r, Rect(1, 2, 102, 102));
+
     KDDW_TEST_RETURN(true);
 }
 

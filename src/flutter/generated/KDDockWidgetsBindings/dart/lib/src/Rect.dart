@@ -71,25 +71,25 @@ class Rect implements ffi.Finalizable {
         .asFunction();
     thisCpp = func(x, y, width, height);
     Rect.s_dartInstanceByCppPtr[thisCpp.address] = this;
-  } // adjust(int arg__1, int arg__2, int arg__3, int arg__4) const
-  adjust(int arg__1, int arg__2, int arg__3, int arg__4) {
+  } // adjust(int l, int t, int r, int b)
+  adjust(int l, int t, int r, int b) {
     final void_Func_voidstar_int_int_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__adjust_int_int_int_int')
         .asFunction();
-    func(thisCpp, arg__1, arg__2, arg__3, arg__4);
-  } // adjusted(int arg__1, int arg__2, int arg__3, int arg__4) const
+    func(thisCpp, l, t, r, b);
+  } // adjusted(int l, int t, int r, int b) const
 
-  Rect adjusted(int arg__1, int arg__2, int arg__3, int arg__4) {
+  Rect adjusted(int l, int t, int r, int b) {
     final voidstar_Func_voidstar_int_int_int_int func = _dylib
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__adjusted_int_int_int_int')
         .asFunction();
-    ffi.Pointer<void> result = func(thisCpp, arg__1, arg__2, arg__3, arg__4);
+    ffi.Pointer<void> result = func(thisCpp, l, t, r, b);
     return Rect.fromCppPointer(result, true);
   } // bottom() const
 
@@ -134,14 +134,14 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__contains_Point')
         .asFunction();
     return func(thisCpp, pt == null ? ffi.nullptr : pt.thisCpp) != 0;
-  } // contains(KDDockWidgets::Rect arg__1) const
+  } // contains(KDDockWidgets::Rect other) const
 
-  bool contains_2(Rect arg__1) {
+  bool contains_2(Rect other) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__contains_Rect')
         .asFunction();
-    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
+    return func(thisCpp, other == null ? ffi.nullptr : other.thisCpp) != 0;
   } // height() const
 
   int height() {
@@ -150,24 +150,24 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__height')
         .asFunction();
     return func(thisCpp);
-  } // intersected(KDDockWidgets::Rect arg__1) const
+  } // intersected(KDDockWidgets::Rect other) const
 
-  Rect intersected(Rect arg__1) {
+  Rect intersected(Rect other) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__intersected_Rect')
         .asFunction();
     ffi.Pointer<void> result =
-        func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+        func(thisCpp, other == null ? ffi.nullptr : other.thisCpp);
     return Rect.fromCppPointer(result, true);
-  } // intersects(KDDockWidgets::Rect arg__1) const
+  } // intersects(KDDockWidgets::Rect other) const
 
-  bool intersects(Rect arg__1) {
+  bool intersects(Rect other) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__intersects_Rect')
         .asFunction();
-    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
+    return func(thisCpp, other == null ? ffi.nullptr : other.thisCpp) != 0;
   } // isEmpty() const
 
   bool isEmpty() {
@@ -200,22 +200,22 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__left')
         .asFunction();
     return func(thisCpp);
-  } // moveBottom(int arg__1)
+  } // moveBottom(int b)
 
-  moveBottom(int arg__1) {
+  moveBottom(int b) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__moveBottom_int')
         .asFunction();
-    func(thisCpp, arg__1);
-  } // moveCenter(KDDockWidgets::Point arg__1)
+    func(thisCpp, b);
+  } // moveCenter(KDDockWidgets::Point pt)
 
-  moveCenter(Point arg__1) {
+  moveCenter(Point pt) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__moveCenter_Point')
         .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+    func(thisCpp, pt == null ? ffi.nullptr : pt.thisCpp);
   } // moveLeft(int x)
 
   moveLeft(int x) {
@@ -224,30 +224,30 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__moveLeft_int')
         .asFunction();
     func(thisCpp, x);
-  } // moveRight(int arg__1)
+  } // moveRight(int r)
 
-  moveRight(int arg__1) {
+  moveRight(int r) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__moveRight_int')
         .asFunction();
-    func(thisCpp, arg__1);
-  } // moveTo(KDDockWidgets::Point arg__1)
+    func(thisCpp, r);
+  } // moveTo(KDDockWidgets::Point pt)
 
-  moveTo(Point arg__1) {
+  moveTo(Point pt) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__moveTo_Point')
         .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // moveTo(int arg__1, int arg__2)
+    func(thisCpp, pt == null ? ffi.nullptr : pt.thisCpp);
+  } // moveTo(int x, int y)
 
-  moveTo_2(int arg__1, int arg__2) {
+  moveTo_2(int x, int y) {
     final void_Func_voidstar_int_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__moveTo_int_int')
         .asFunction();
-    func(thisCpp, arg__1, arg__2);
+    func(thisCpp, x, y);
   } // moveTop(int y)
 
   moveTop(int y) {
@@ -281,14 +281,14 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__right')
         .asFunction();
     return func(thisCpp);
-  } // setBottom(int arg__1)
+  } // setBottom(int b)
 
-  setBottom(int arg__1) {
+  setBottom(int b) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__setBottom_int')
         .asFunction();
-    func(thisCpp, arg__1);
+    func(thisCpp, b);
   } // setHeight(int h)
 
   setHeight(int h) {
@@ -321,22 +321,22 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__setSize_Size')
         .asFunction();
     func(thisCpp, sz == null ? ffi.nullptr : sz.thisCpp);
-  } // setTop(int arg__1)
+  } // setTop(int y)
 
-  setTop(int arg__1) {
+  setTop(int y) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__setTop_int')
         .asFunction();
-    func(thisCpp, arg__1);
-  } // setTopLeft(KDDockWidgets::Point arg__1)
+    func(thisCpp, y);
+  } // setTopLeft(KDDockWidgets::Point pt)
 
-  setTopLeft(Point arg__1) {
+  setTopLeft(Point pt) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__setTopLeft_Point')
         .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+    func(thisCpp, pt == null ? ffi.nullptr : pt.thisCpp);
   } // setWidth(int w)
 
   setWidth(int w) {
@@ -345,22 +345,22 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__setWidth_int')
         .asFunction();
     func(thisCpp, w);
-  } // setX(int arg__1)
+  } // setX(int x)
 
-  setX(int arg__1) {
+  setX(int x) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__setX_int')
         .asFunction();
-    func(thisCpp, arg__1);
-  } // setY(int arg__1)
+    func(thisCpp, x);
+  } // setY(int y)
 
-  setY(int arg__1) {
+  setY(int y) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Rect__setY_int')
         .asFunction();
-    func(thisCpp, arg__1);
+    func(thisCpp, y);
   } // size() const
 
   Size size() {
@@ -396,14 +396,14 @@ class Rect implements ffi.Finalizable {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Point.fromCppPointer(result, true);
-  } // translate(KDDockWidgets::Point arg__1)
+  } // translate(KDDockWidgets::Point pt)
 
-  translate(Point arg__1) {
+  translate(Point pt) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Rect__translate_Point')
         .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+    func(thisCpp, pt == null ? ffi.nullptr : pt.thisCpp);
   } // width() const
 
   int width() {

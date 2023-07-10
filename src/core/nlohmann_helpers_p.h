@@ -81,6 +81,29 @@ inline void to_json(nlohmann::json &j, const QStringList &stringList)
         j.push_back(s);
     }
 }
+#ifdef KDDW_FRONTEND_QT
+
+inline void to_json(nlohmann::json &j, const QSize &size)
+{
+    KDDockWidgets::to_json(j, size);
+}
+
+inline void from_json(const nlohmann::json &j, QSize &size)
+{
+    KDDockWidgets::from_json(j, size);
+}
+
+inline void to_json(nlohmann::json &j, const QRect &rect)
+{
+    KDDockWidgets::to_json(j, rect);
+}
+
+inline void from_json(const nlohmann::json &j, QRect &rect)
+{
+    KDDockWidgets::from_json(j, rect);
+}
+
+#endif
 
 QT_END_NAMESPACE
 

@@ -12,8 +12,8 @@
 #include <core/Controller.h>
 #include <core/View.h>
 #include <core/geometry_helpers_p.h>
-#include <qstring.h>
 #include <Object_p.h>
+#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

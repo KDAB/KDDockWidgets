@@ -401,10 +401,10 @@ void c_KDDockWidgets__flutter__Window_Finalizer(void *cppObj); // KDDockWidgets:
 void *c_KDDockWidgets__Size__constructor();
 // KDDockWidgets::Size::Size(int width, int height)
 void *c_KDDockWidgets__Size__constructor_int_int(int width, int height);
-// KDDockWidgets::Size::boundedTo(KDDockWidgets::Size arg__1) const
-void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *arg__1_);
-// KDDockWidgets::Size::expandedTo(KDDockWidgets::Size arg__1) const
-void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *arg__1_);
+// KDDockWidgets::Size::boundedTo(KDDockWidgets::Size sz) const
+void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *sz_);
+// KDDockWidgets::Size::expandedTo(KDDockWidgets::Size sz) const
+void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *sz_);
 // KDDockWidgets::Size::height() const
 int c_KDDockWidgets__Size__height(void *thisObj);
 // KDDockWidgets::Size::isEmpty() const
@@ -426,10 +426,10 @@ void *c_KDDockWidgets__Rect__constructor();
 void *c_KDDockWidgets__Rect__constructor_Point_Size(void *pos_, void *size_);
 // KDDockWidgets::Rect::Rect(int x, int y, int width, int height)
 void *c_KDDockWidgets__Rect__constructor_int_int_int_int(int x, int y, int width, int height);
-// KDDockWidgets::Rect::adjust(int arg__1, int arg__2, int arg__3, int arg__4) const
-void c_KDDockWidgets__Rect__adjust_int_int_int_int(void *thisObj, int arg__1, int arg__2, int arg__3, int arg__4);
-// KDDockWidgets::Rect::adjusted(int arg__1, int arg__2, int arg__3, int arg__4) const
-void *c_KDDockWidgets__Rect__adjusted_int_int_int_int(void *thisObj, int arg__1, int arg__2, int arg__3, int arg__4);
+// KDDockWidgets::Rect::adjust(int l, int t, int r, int b)
+void c_KDDockWidgets__Rect__adjust_int_int_int_int(void *thisObj, int l, int t, int r, int b);
+// KDDockWidgets::Rect::adjusted(int l, int t, int r, int b) const
+void *c_KDDockWidgets__Rect__adjusted_int_int_int_int(void *thisObj, int l, int t, int r, int b);
 // KDDockWidgets::Rect::bottom() const
 int c_KDDockWidgets__Rect__bottom(void *thisObj);
 // KDDockWidgets::Rect::bottomLeft() const
@@ -440,14 +440,14 @@ void *c_KDDockWidgets__Rect__bottomRight(void *thisObj);
 void *c_KDDockWidgets__Rect__center(void *thisObj);
 // KDDockWidgets::Rect::contains(KDDockWidgets::Point pt) const
 bool c_KDDockWidgets__Rect__contains_Point(void *thisObj, void *pt_);
-// KDDockWidgets::Rect::contains(KDDockWidgets::Rect arg__1) const
-bool c_KDDockWidgets__Rect__contains_Rect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Rect::contains(KDDockWidgets::Rect other) const
+bool c_KDDockWidgets__Rect__contains_Rect(void *thisObj, void *other_);
 // KDDockWidgets::Rect::height() const
 int c_KDDockWidgets__Rect__height(void *thisObj);
-// KDDockWidgets::Rect::intersected(KDDockWidgets::Rect arg__1) const
-void *c_KDDockWidgets__Rect__intersected_Rect(void *thisObj, void *arg__1_);
-// KDDockWidgets::Rect::intersects(KDDockWidgets::Rect arg__1) const
-bool c_KDDockWidgets__Rect__intersects_Rect(void *thisObj, void *arg__1_);
+// KDDockWidgets::Rect::intersected(KDDockWidgets::Rect other) const
+void *c_KDDockWidgets__Rect__intersected_Rect(void *thisObj, void *other_);
+// KDDockWidgets::Rect::intersects(KDDockWidgets::Rect other) const
+bool c_KDDockWidgets__Rect__intersects_Rect(void *thisObj, void *other_);
 // KDDockWidgets::Rect::isEmpty() const
 bool c_KDDockWidgets__Rect__isEmpty(void *thisObj);
 // KDDockWidgets::Rect::isNull() const
@@ -456,18 +456,18 @@ bool c_KDDockWidgets__Rect__isNull(void *thisObj);
 bool c_KDDockWidgets__Rect__isValid(void *thisObj);
 // KDDockWidgets::Rect::left() const
 int c_KDDockWidgets__Rect__left(void *thisObj);
-// KDDockWidgets::Rect::moveBottom(int arg__1)
-void c_KDDockWidgets__Rect__moveBottom_int(void *thisObj, int arg__1);
-// KDDockWidgets::Rect::moveCenter(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__moveCenter_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Rect::moveBottom(int b)
+void c_KDDockWidgets__Rect__moveBottom_int(void *thisObj, int b);
+// KDDockWidgets::Rect::moveCenter(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__moveCenter_Point(void *thisObj, void *pt_);
 // KDDockWidgets::Rect::moveLeft(int x)
 void c_KDDockWidgets__Rect__moveLeft_int(void *thisObj, int x);
-// KDDockWidgets::Rect::moveRight(int arg__1)
-void c_KDDockWidgets__Rect__moveRight_int(void *thisObj, int arg__1);
-// KDDockWidgets::Rect::moveTo(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__moveTo_Point(void *thisObj, void *arg__1_);
-// KDDockWidgets::Rect::moveTo(int arg__1, int arg__2)
-void c_KDDockWidgets__Rect__moveTo_int_int(void *thisObj, int arg__1, int arg__2);
+// KDDockWidgets::Rect::moveRight(int r)
+void c_KDDockWidgets__Rect__moveRight_int(void *thisObj, int r);
+// KDDockWidgets::Rect::moveTo(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__moveTo_Point(void *thisObj, void *pt_);
+// KDDockWidgets::Rect::moveTo(int x, int y)
+void c_KDDockWidgets__Rect__moveTo_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::Rect::moveTop(int y)
 void c_KDDockWidgets__Rect__moveTop_int(void *thisObj, int y);
 // KDDockWidgets::Rect::moveTopLeft(KDDockWidgets::Point pt)
@@ -476,8 +476,8 @@ void c_KDDockWidgets__Rect__moveTopLeft_Point(void *thisObj, void *pt_);
 void *c_KDDockWidgets__Rect__pos(void *thisObj);
 // KDDockWidgets::Rect::right() const
 int c_KDDockWidgets__Rect__right(void *thisObj);
-// KDDockWidgets::Rect::setBottom(int arg__1)
-void c_KDDockWidgets__Rect__setBottom_int(void *thisObj, int arg__1);
+// KDDockWidgets::Rect::setBottom(int b)
+void c_KDDockWidgets__Rect__setBottom_int(void *thisObj, int b);
 // KDDockWidgets::Rect::setHeight(int h)
 void c_KDDockWidgets__Rect__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::Rect::setLeft(int x)
@@ -486,16 +486,16 @@ void c_KDDockWidgets__Rect__setLeft_int(void *thisObj, int x);
 void c_KDDockWidgets__Rect__setRight_int(void *thisObj, int r);
 // KDDockWidgets::Rect::setSize(KDDockWidgets::Size sz)
 void c_KDDockWidgets__Rect__setSize_Size(void *thisObj, void *sz_);
-// KDDockWidgets::Rect::setTop(int arg__1)
-void c_KDDockWidgets__Rect__setTop_int(void *thisObj, int arg__1);
-// KDDockWidgets::Rect::setTopLeft(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__setTopLeft_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Rect::setTop(int y)
+void c_KDDockWidgets__Rect__setTop_int(void *thisObj, int y);
+// KDDockWidgets::Rect::setTopLeft(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__setTopLeft_Point(void *thisObj, void *pt_);
 // KDDockWidgets::Rect::setWidth(int w)
 void c_KDDockWidgets__Rect__setWidth_int(void *thisObj, int w);
-// KDDockWidgets::Rect::setX(int arg__1)
-void c_KDDockWidgets__Rect__setX_int(void *thisObj, int arg__1);
-// KDDockWidgets::Rect::setY(int arg__1)
-void c_KDDockWidgets__Rect__setY_int(void *thisObj, int arg__1);
+// KDDockWidgets::Rect::setX(int x)
+void c_KDDockWidgets__Rect__setX_int(void *thisObj, int x);
+// KDDockWidgets::Rect::setY(int y)
+void c_KDDockWidgets__Rect__setY_int(void *thisObj, int y);
 // KDDockWidgets::Rect::size() const
 void *c_KDDockWidgets__Rect__size(void *thisObj);
 // KDDockWidgets::Rect::top() const
@@ -504,8 +504,8 @@ int c_KDDockWidgets__Rect__top(void *thisObj);
 void *c_KDDockWidgets__Rect__topLeft(void *thisObj);
 // KDDockWidgets::Rect::topRight() const
 void *c_KDDockWidgets__Rect__topRight(void *thisObj);
-// KDDockWidgets::Rect::translate(KDDockWidgets::Point arg__1)
-void c_KDDockWidgets__Rect__translate_Point(void *thisObj, void *arg__1_);
+// KDDockWidgets::Rect::translate(KDDockWidgets::Point pt)
+void c_KDDockWidgets__Rect__translate_Point(void *thisObj, void *pt_);
 // KDDockWidgets::Rect::width() const
 int c_KDDockWidgets__Rect__width(void *thisObj);
 // KDDockWidgets::Rect::x() const

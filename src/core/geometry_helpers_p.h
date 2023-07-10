@@ -62,14 +62,14 @@ public:
         return m_width >= 0 && m_height >= 0;
     }
 
-    Size expandedTo(Size) const
+    Size expandedTo(Size sz) const
     {
-        return {};
+        return { std::max(m_width, sz.m_width), std::max(m_height, sz.height()) };
     }
 
-    Size boundedTo(Size) const
+    Size boundedTo(Size sz) const
     {
-        return {};
+        return { std::min(m_width, sz.m_width), std::min(m_height, sz.height()) };
     }
 
     bool operator==(Size other) const
@@ -78,8 +78,8 @@ public:
     }
 
 private:
-    int m_width = 0;
-    int m_height = 0;
+    int m_width = -1;
+    int m_height = -1;
 };
 
 class Point
@@ -242,12 +242,12 @@ public:
 
     int bottom() const
     {
-        return y() + height();
+        return y() + height() - 1;
     }
 
     int right() const
     {
-        return x() + width();
+        return x() + width() - 1;
     }
 
     bool isNull() const
@@ -262,7 +262,7 @@ public:
 
     bool isEmpty() const
     {
-        return m_size.width() > 0 && m_size.height() > 0;
+        return m_size.isEmpty();
     }
 
     void moveTop(int y)
@@ -280,12 +280,14 @@ public:
         m_pos = pt;
     }
 
-    void moveTo(Point)
+    void moveTo(Point pt)
     {
+        moveTopLeft(pt);
     }
 
-    void moveTo(int, int)
+    void moveTo(int x, int y)
     {
+        moveTopLeft({ x, y });
     }
 
     void setLeft(int x)
@@ -298,39 +300,64 @@ public:
 
     void setRight(int r)
     {
-        const int delta = r - m_pos.x();
+        const int delta = r - right();
         const int width = m_size.width();
         m_size.setWidth(width + delta);
     }
 
-    void setTop(int)
+    void setTop(int y)
     {
+        const int delta = m_pos.y() - y;
+        const int height = m_size.height();
+        m_pos.setY(y);
+        m_size.setHeight(height + delta);
     }
 
-    void setTopLeft(Point)
+    void setTopLeft(Point pt)
     {
+        setLeft(pt.x());
+        setTop(pt.y());
     }
 
-    void setBottom(int)
+    void setBottom(int b)
     {
+        const int delta = b - bottom();
+        const int height = m_size.height();
+        m_size.setHeight(height + delta);
     }
 
-    void setX(int)
+    void setX(int x)
     {
+        setLeft(x);
     }
 
-    void setY(int)
+    void setY(int y)
     {
+        setTop(y);
     }
 
-    Rect marginsAdded(QMargins) const
+    Rect marginsAdded(QMargins m) const
     {
-        return {};
+        Rect result = *this;
+        result.adjust(-m.left(), -m.top(), m.right(), m.bottom());
+        return result;
     }
 
-    Rect intersected(Rect) const
+    Rect intersected(Rect other) const
     {
-        return Rect();
+        const int maxLeft = std::max(x(), other.x());
+        const int minRight = std::min(right(), other.right());
+        if (maxLeft > minRight)
+            return Rect();
+
+        const int maxTop = std::max(y(), other.y());
+        const int minBottom = std::min(bottom(), other.bottom());
+        if (maxTop > minBottom)
+            return Rect();
+
+        const int w = minRight - maxLeft + 1;
+        const int h = minBottom - maxTop + 1;
+        return Rect(maxLeft, maxTop, w, h);
     }
 
     int left() const
@@ -340,17 +367,17 @@ public:
 
     Point bottomLeft() const
     {
-        return {};
+        return { left(), bottom() };
     }
 
     Point bottomRight() const
     {
-        return {};
+        return { right(), bottom() };
     }
 
     Point topRight() const
     {
-        return {};
+        return { right(), top() };
     }
 
     bool contains(Point pt) const
@@ -358,45 +385,46 @@ public:
         return pt.x() >= x() && pt.y() >= y() && pt.x() < width() && pt.y() < height();
     }
 
-    bool contains(Rect) const
+    bool contains(Rect other) const
     {
-        return false;
+        return contains(other.topLeft()) && contains(other.bottomRight());
     }
 
-    Rect adjusted(int, int, int, int) const
+    Rect adjusted(int l, int t, int r, int b) const
     {
-        return Rect();
+        Rect result = *this;
+        result.adjust(l, t, r, b);
+        return result;
     }
 
-    void adjust(int, int, int, int) const
-    {
-    }
+    void adjust(int l, int t, int r, int b);
+
 
     Point center() const
     {
-        return {};
+        return { left() + ((right() - left()) / 2), top() + ((bottom() - top()) / 2) };
     }
 
-    void moveCenter(Point)
+    void moveCenter(Point pt);
+
+    void moveRight(int r)
     {
+        const int delta = r - right();
+        moveLeft(left() + delta);
     }
 
-    void moveRight(int)
+    void moveBottom(int b)
     {
+        const int delta = b - bottom();
+        moveTop(top() + delta);
     }
 
-    void moveBottom(int)
+    bool intersects(Rect other) const
     {
+        return !intersected(other).isNull();
     }
 
-    bool intersects(Rect) const
-    {
-        return false;
-    }
-
-    void translate(Point)
-    {
-    }
+    void translate(Point pt);
 
     bool operator==(Rect other) const
     {
@@ -405,7 +433,7 @@ public:
 
 private:
     Point m_pos;
-    Size m_size;
+    Size m_size = { 0, 0 };
 };
 
 inline const Point operator-(Point pt1, Point pt2)
@@ -426,6 +454,25 @@ inline const Size operator+(Size sz1, Size sz2)
 inline const Size operator-(Size sz1, Size sz2)
 {
     return { sz1.width() - sz2.width(), sz1.height() - sz2.height() };
+}
+
+inline void Rect::translate(Point pt)
+{
+    moveTopLeft(topLeft() + pt);
+}
+
+inline void Rect::moveCenter(Point pt)
+{
+    const Point delta = pt - center();
+    moveTopLeft(topLeft() + delta);
+}
+
+inline void Rect::adjust(int l, int t, int r, int b)
+{
+    setLeft(left() + l);
+    setTop(top() + t);
+    setRight(right() + r);
+    setBottom(bottom() + b);
 }
 
 }

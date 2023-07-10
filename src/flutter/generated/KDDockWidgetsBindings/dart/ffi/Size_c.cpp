@@ -35,13 +35,13 @@ Size_wrapper::Size_wrapper(int width, int height)
     : ::KDDockWidgets::Size(width, height)
 {
 }
-KDDockWidgets::Size Size_wrapper::boundedTo(KDDockWidgets::Size arg__1) const
+KDDockWidgets::Size Size_wrapper::boundedTo(KDDockWidgets::Size sz) const
 {
-    return ::KDDockWidgets::Size::boundedTo(arg__1);
+    return ::KDDockWidgets::Size::boundedTo(sz);
 }
-KDDockWidgets::Size Size_wrapper::expandedTo(KDDockWidgets::Size arg__1) const
+KDDockWidgets::Size Size_wrapper::expandedTo(KDDockWidgets::Size sz) const
 {
-    return ::KDDockWidgets::Size::expandedTo(arg__1);
+    return ::KDDockWidgets::Size::expandedTo(sz);
 }
 int Size_wrapper::height() const
 {
@@ -99,19 +99,19 @@ void *c_KDDockWidgets__Size__constructor_int_int(int width, int height)
     auto ptr = new KDDockWidgetsBindings_wrappersNS::Size_wrapper(width, height);
     return reinterpret_cast<void *>(ptr);
 }
-// boundedTo(KDDockWidgets::Size arg__1) const
-void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *arg__1_)
+// boundedTo(KDDockWidgets::Size sz) const
+void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *sz_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->boundedTo(arg__1) };
+    assert(sz_);
+    auto &sz = *reinterpret_cast<KDDockWidgets::Size *>(sz_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->boundedTo(sz) };
 }
-// expandedTo(KDDockWidgets::Size arg__1) const
-void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *arg__1_)
+// expandedTo(KDDockWidgets::Size sz) const
+void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *sz_)
 {
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->expandedTo(arg__1) };
+    assert(sz_);
+    auto &sz = *reinterpret_cast<KDDockWidgets::Size *>(sz_);
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->expandedTo(sz) };
 }
 // height() const
 int c_KDDockWidgets__Size__height(void *thisObj)

@@ -176,10 +176,10 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
 )
 
 set(KDDW_FRONTEND_DARTBINDINGS_SRCS
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QRect_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QSize_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Rect_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Point_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Size_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp

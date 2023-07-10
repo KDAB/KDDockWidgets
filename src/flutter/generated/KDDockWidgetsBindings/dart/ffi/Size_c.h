@@ -18,8 +18,8 @@ public:
     ~Size_wrapper();
     Size_wrapper();
     Size_wrapper(int width, int height);
-    KDDockWidgets::Size boundedTo(KDDockWidgets::Size arg__1) const;
-    KDDockWidgets::Size expandedTo(KDDockWidgets::Size arg__1) const;
+    KDDockWidgets::Size boundedTo(KDDockWidgets::Size sz) const;
+    KDDockWidgets::Size expandedTo(KDDockWidgets::Size sz) const;
     int height() const;
     bool isEmpty() const;
     bool isNull() const;
@@ -34,10 +34,10 @@ extern "C" {
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Size__constructor();
 // KDDockWidgets::Size::Size(int width, int height)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Size__constructor_int_int(int width, int height);
-// KDDockWidgets::Size::boundedTo(KDDockWidgets::Size arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *arg__1_);
-// KDDockWidgets::Size::expandedTo(KDDockWidgets::Size arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *arg__1_);
+// KDDockWidgets::Size::boundedTo(KDDockWidgets::Size sz) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *sz_);
+// KDDockWidgets::Size::expandedTo(KDDockWidgets::Size sz) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *sz_);
 // KDDockWidgets::Size::height() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Size__height(void *thisObj);
 // KDDockWidgets::Size::isEmpty() const

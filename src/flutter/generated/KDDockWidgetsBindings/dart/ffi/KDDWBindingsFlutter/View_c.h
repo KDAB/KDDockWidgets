@@ -14,16 +14,16 @@
 #include <core/View.h>
 #include <core/geometry_helpers_p.h>
 #include <qstring.h>
-#include <TabBar.h>
-#include "core/TitleBar.h"
-#include <NonQtCompat_p.h>
-#include <core/Group.h>
 #include "core/MainWindow.h"
-#include "core/Stack.h"
 #include <FloatingWindow.h>
-#include <core/Layout.h>
+#include "core/TitleBar.h"
 #include "core/DropArea.h"
+#include <core/Layout.h>
+#include "core/Stack.h"
 #include <core/DockWidget.h>
+#include <core/Group.h>
+#include <NonQtCompat_p.h>
+#include <TabBar.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
