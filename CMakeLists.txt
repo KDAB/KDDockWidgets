@@ -279,7 +279,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
         fetchcontent_declare(
             qcoro
             GIT_REPOSITORY https://github.com/iamsergio/qcoro
-            GIT_TAG d98cc226477da98999464def4f069b4575e8c881
+            GIT_TAG b97035c5525cbaed03260be6f335af7d6ef2f3ab
         )
         fetchcontent_makeavailable(qcoro)
 
