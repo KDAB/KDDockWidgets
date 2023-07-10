@@ -36,19 +36,19 @@ public:
     /// This excludes any native window frame and title bar.
     /// The top-left of this rect is in screen coordinates.
     /// @sa setGeometry, resize, size
-    virtual QRect geometry() const = 0;
+    virtual Rect geometry() const = 0;
 
     /// @brief Sets the geometry of the client area of the window
     /// This excludes any native window frame and title bar.
     /// The top-left of this rect is in screen coordinates.
-    virtual void setGeometry(QRect) = 0;
+    virtual void setGeometry(Rect) = 0;
 
     /// @brief Sets the position of the window to pos
     /// Unlike setPosition, this position includes the native frame
-    virtual void setFramePosition(QPoint pos) = 0;
+    virtual void setFramePosition(Point pos) = 0;
 
     /// @brief Returns the geometry of the window including its frame (window decos)
-    virtual QRect frameGeometry() const = 0;
+    virtual Rect frameGeometry() const = 0;
 
 
     /// @brief Resizes the client-area of the window, excluding any native frame
@@ -88,11 +88,11 @@ public:
     virtual Window::Ptr transientParent() const = 0;
 
     /// @brief Receives a point in screen coordinates and returns it in window coordinates
-    virtual QPoint mapFromGlobal(QPoint globalPos) const = 0;
+    virtual Point mapFromGlobal(Point globalPos) const = 0;
 
     /// @brief Receives a point in local coordinates and returns it in global coordinates
     /// The top-left of the window's client area is 0,0 in local coordinates
-    virtual QPoint mapToGlobal(QPoint localPos) const = 0;
+    virtual Point mapToGlobal(Point localPos) const = 0;
 
     /// @brief Returns the screen this window is on
     virtual Screen::Ptr screen() const = 0;
@@ -117,10 +117,10 @@ public:
     virtual bool supportsHonouringLayoutMinSize() const = 0;
 
     /// @brief Returns the window's minimum size
-    virtual QSize minSize() const = 0;
+    virtual Size minSize() const = 0;
 
     /// @brief Returns the window's maximum size
-    virtual QSize maxSize() const = 0;
+    virtual Size maxSize() const = 0;
 
     /// @brief Receives a point in native global space and returns in logical global space.
     /// This is relevant only when there's HDPI scaling applied.
@@ -128,7 +128,7 @@ public:
     /// with. By logical it's meant that there might be an HDPI factor applied. Both returned and
     /// received points are in global space (screen space). Implement if your frontend will run on
     /// Windows, otherwise it's unused.
-    virtual QPoint fromNativePixels(QPoint) const = 0;
+    virtual Point fromNativePixels(Point) const = 0;
 
     /// @brief Starts a native window move
     /// Only needed on Windows. The difference between a a native move and a client move is that we
@@ -136,14 +136,14 @@ public:
     virtual void startSystemMove();
 
     /// @brief Returns the client size of this window.
-    QSize size() const;
+    Size size() const;
 
     /// @brif Returns the position of the top-left corner, including native frame
-    QPoint framePosition() const;
+    Point framePosition() const;
 
     /// @brief Sets the position of the window at targetPos
     /// This ignores any frame (native decos the window has)
-    void setPosition(QPoint targetPos);
+    void setPosition(Point targetPos);
 
     /// Convenience API
     /// @sa minSize, maxSize

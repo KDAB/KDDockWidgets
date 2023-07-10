@@ -33,7 +33,7 @@ Group *GroupViewInterface::group() const
     return m_group;
 }
 
-QRect GroupViewInterface::dragRect() const
+Rect GroupViewInterface::dragRect() const
 {
     return {};
 }

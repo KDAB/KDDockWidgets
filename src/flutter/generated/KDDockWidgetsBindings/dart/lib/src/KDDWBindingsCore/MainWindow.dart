@@ -74,15 +74,24 @@ class MainWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible')
         .asFunction();
     return func(thisCpp) != 0;
+  } // centerWidgetMargins() const
+
+  Margins centerWidgetMargins() {
+    final voidstar_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__MainWindow__centerWidgetMargins')
+        .asFunction();
+    ffi.Pointer<void> result = func(thisCpp);
+    return Margins.fromCppPointer(result, true);
   } // centralAreaGeometry() const
 
-  QRect centralAreaGeometry() {
+  Rect centralAreaGeometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__centralAreaGeometry')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QRect.fromCppPointer(result, true);
+    return Rect.fromCppPointer(result, true);
   } // clearSideBarOverlay(bool deleteFrame)
 
   clearSideBarOverlay({bool deleteFrame = true}) {
@@ -287,7 +296,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 721:
+      case 676:
         return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -295,7 +304,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 721:
+      case 676:
         return "setParentView_impl";
     }
     throw Error();
@@ -307,9 +316,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback721 =
+    final callback676 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback721, 721);
+    registerCallback(thisCpp, callback676, 676);
   }
 }

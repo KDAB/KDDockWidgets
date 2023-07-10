@@ -41,7 +41,7 @@ void Window::startSystemMove()
     qFatal("Not needed in this platform");
 }
 
-QPoint Window::framePosition() const
+Point Window::framePosition() const
 {
     return frameGeometry().topLeft();
 }
@@ -62,14 +62,14 @@ bool Window::containsView(Controller *c) const
     return containsView(c->view());
 }
 
-QSize Window::size() const
+Size Window::size() const
 {
     return geometry().size();
 }
 
-void Window::setPosition(QPoint pos)
+void Window::setPosition(Point pos)
 {
-    QRect geo = geometry();
+    Rect geo = geometry();
     geo.moveTopLeft(pos);
     setGeometry(geo);
 }

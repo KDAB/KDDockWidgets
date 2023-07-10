@@ -19,11 +19,11 @@ import '../LibraryLoader.dart';
 var _dylib = Library.instance().dylib;
 final _finalizerFunc =
     _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
-        'c_QPoint_Finalizer');
+        'c_KDDockWidgets__Point_Finalizer');
 final _finalizer = ffi.NativeFinalizer(_finalizerFunc.cast());
 
-class QPoint implements ffi.Finalizable {
-  static var s_dartInstanceByCppPtr = Map<int, QPoint>();
+class Point implements ffi.Finalizable {
+  static var s_dartInstanceByCppPtr = Map<int, Point>();
   var _thisCpp = null;
   bool _needsAutoDelete = true;
   get thisCpp => _thisCpp;
@@ -37,43 +37,34 @@ class QPoint implements ffi.Finalizable {
     return s_dartInstanceByCppPtr.containsKey(cppPointer.address);
   }
 
-  factory QPoint.fromCache(var cppPointer, [needsAutoDelete = false]) {
+  factory Point.fromCache(var cppPointer, [needsAutoDelete = false]) {
     return (s_dartInstanceByCppPtr[cppPointer.address] ??
-        QPoint.fromCppPointer(cppPointer, needsAutoDelete)) as QPoint;
+        Point.fromCppPointer(cppPointer, needsAutoDelete)) as Point;
   }
-  QPoint.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
+  Point.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
     thisCpp = cppPointer;
   }
-  QPoint.init() {} //QPoint()
-  QPoint() {
+  Point.init() {} //Point()
+  Point() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
-            'c_QPoint__constructor')
+            'c_KDDockWidgets__Point__constructor')
         .asFunction();
     thisCpp = func();
-    QPoint.s_dartInstanceByCppPtr[thisCpp.address] = this;
-  } //QPoint(int xpos, int ypos)
-  QPoint.ctor2(int xpos, int ypos) {
+    Point.s_dartInstanceByCppPtr[thisCpp.address] = this;
+  } //Point(int x, int y)
+  Point.ctor2(int x, int y) {
     final voidstar_Func_int_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_ffi_Int32_FFI>>(
-            'c_QPoint__constructor_int_int')
+            'c_KDDockWidgets__Point__constructor_int_int')
         .asFunction();
-    thisCpp = func(xpos, ypos);
-    QPoint.s_dartInstanceByCppPtr[thisCpp.address] = this;
-  }
-  static // dotProduct(const QPoint & p1, const QPoint & p2)
-      int dotProduct(QPoint? p1, QPoint? p2) {
-    final int_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            'c_static_QPoint__dotProduct_QPoint_QPoint')
-        .asFunction();
-    return func(p1 == null ? ffi.nullptr : p1.thisCpp,
-        p2 == null ? ffi.nullptr : p2.thisCpp);
+    thisCpp = func(x, y);
+    Point.s_dartInstanceByCppPtr[thisCpp.address] = this;
   } // isNull() const
-
   bool isNull() {
     final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>('c_QPoint__isNull')
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Point__isNull')
         .asFunction();
     return func(thisCpp) != 0;
   } // manhattanLength() const
@@ -81,7 +72,7 @@ class QPoint implements ffi.Finalizable {
   int manhattanLength() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            'c_QPoint__manhattanLength')
+            'c_KDDockWidgets__Point__manhattanLength')
         .asFunction();
     return func(thisCpp);
   } // setX(int x)
@@ -89,7 +80,7 @@ class QPoint implements ffi.Finalizable {
   setX(int x) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QPoint__setX_int')
+            'c_KDDockWidgets__Point__setX_int')
         .asFunction();
     func(thisCpp, x);
   } // setY(int y)
@@ -97,30 +88,23 @@ class QPoint implements ffi.Finalizable {
   setY(int y) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_QPoint__setY_int')
+            'c_KDDockWidgets__Point__setY_int')
         .asFunction();
     func(thisCpp, y);
-  } // transposed() const
-
-  QPoint transposed() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_QPoint__transposed')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QPoint.fromCppPointer(result, true);
   } // x() const
 
   int x() {
     final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QPoint__x')
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Point__x')
         .asFunction();
     return func(thisCpp);
   } // y() const
 
   int y() {
     final int_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>('c_QPoint__y')
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Point__y')
         .asFunction();
     return func(thisCpp);
   }
@@ -128,7 +112,7 @@ class QPoint implements ffi.Finalizable {
   void release() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            'c_QPoint__destructor')
+            'c_KDDockWidgets__Point__destructor')
         .asFunction();
     func(thisCpp);
   }

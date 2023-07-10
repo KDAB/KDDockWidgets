@@ -30,7 +30,7 @@ View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent
 {
     m_minSize = Core::Item::hardcodedMinimumSize;
     m_maxSize = Core::Item::hardcodedMaximumSize;
-    m_geometry = QRect(0, 0, 400, 400);
+    m_geometry = Rect(0, 0, 400, 400);
 
     setParent(parent);
     m_inCtor = false;
@@ -47,7 +47,7 @@ View::~View()
     }
 }
 
-void View::setGeometry(QRect geo)
+void View::setGeometry(Rect geo)
 {
     if (geo != m_geometry) {
         m_geometry = geo;
@@ -57,8 +57,8 @@ void View::setGeometry(QRect geo)
 
 void View::move(int x, int y)
 {
-    if (m_geometry.topLeft() != QPoint(x, y)) {
-        m_geometry.moveTopLeft(QPoint(x, y));
+    if (m_geometry.topLeft() != Point(x, y)) {
+        m_geometry.moveTopLeft(Point(x, y));
         onGeometryChanged();
     }
 }
@@ -115,7 +115,7 @@ bool View::isExplicitlyHidden() const
 
 void View::setSize(int w, int h)
 {
-    m_geometry.setSize(QSize(w, h));
+    m_geometry.setSize(Size(w, h));
     onGeometryChanged();
 }
 
@@ -145,31 +145,31 @@ Qt::WindowFlags View::flags() const
     return {};
 }
 
-QSize View::minSize() const
+Size View::minSize() const
 {
     return m_minSize;
 }
 
-QSize View::maxSizeHint() const
+Size View::maxSizeHint() const
 {
     return m_maxSize;
 }
 
-QRect View::geometry() const
+Rect View::geometry() const
 {
     return m_geometry;
 }
 
-QRect View::normalGeometry() const
+Rect View::normalGeometry() const
 {
     return m_geometry;
 }
 
-void View::setNormalGeometry(QRect)
+void View::setNormalGeometry(Rect)
 {
 }
 
-void View::setMaximumSize(QSize s)
+void View::setMaximumSize(Size s)
 {
     s = s.boundedTo(Core::Item::hardcodedMaximumSize);
     if (s != m_maxSize) {
@@ -289,19 +289,19 @@ bool View::isRootView() const
     return m_parentView == nullptr;
 }
 
-QPoint View::mapToGlobal(QPoint) const
+Point View::mapToGlobal(Point) const
 {
     KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
     return {};
 }
 
-QPoint View::mapFromGlobal(QPoint) const
+Point View::mapFromGlobal(Point) const
 {
     KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
     return {};
 }
 
-QPoint View::mapTo(Core::View *other, QPoint pt) const
+Point View::mapTo(Core::View *other, Point pt) const
 {
     if (!other)
         return {};
@@ -309,7 +309,7 @@ QPoint View::mapTo(Core::View *other, QPoint pt) const
     if (other->equals(this))
         return pt;
 
-    const QPoint global = mapToGlobal(pt);
+    const Point global = mapToGlobal(pt);
     return other->mapFromGlobal(global);
 }
 
@@ -359,12 +359,12 @@ std::shared_ptr<Core::Window> View::window() const
     return std::shared_ptr<Core::Window>(window);
 }
 
-std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
+std::shared_ptr<Core::View> View::childViewAt(Point localPos) const
 {
     if (!isMounted())
         return nullptr;
 
-    const QPoint globalPt = mapToGlobal(localPos);
+    const Point globalPt = mapToGlobal(localPos);
 
     for (auto child : m_childViews) {
         // Needs to be mounted (i.e. being shown by flutter's render tree, otherwise there's no geometry)
@@ -438,7 +438,7 @@ QString View::viewName() const
     return m_name;
 }
 
-void View::setMinimumSize(QSize s)
+void View::setMinimumSize(Size s)
 {
     s = s.expandedTo(Core::Item::hardcodedMinimumSize);
     if (s != m_minSize) {
@@ -523,7 +523,7 @@ void View::raiseWindow(Core::View *)
     KDDW_ERROR("Derived class should be called instead");
 }
 
-void View::onMouseEvent(Event::Type eventType, QPoint localPos, QPoint globalPos, bool leftIsPressed)
+void View::onMouseEvent(Event::Type eventType, Point localPos, Point globalPos, bool leftIsPressed)
 {
     Qt::MouseButtons buttons = Qt::NoButton;
     buttons.setFlag(Qt::LeftButton, leftIsPressed);

@@ -140,7 +140,7 @@ MainWindow *actualParent(MainWindow *candidate)
         : candidate;
 }
 
-FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
+FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
                                FloatingWindowFlags requestedFlags)
     : Controller(ViewType::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(
@@ -198,7 +198,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
     });
 }
 
-FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
+FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
                                MainWindow *parent)
     : FloatingWindow({}, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
@@ -326,9 +326,9 @@ const Core::Group::List FloatingWindow::groups() const
     return d->m_dropArea->groups();
 }
 
-QSize FloatingWindow::maxSizeHint() const
+Size FloatingWindow::maxSizeHint() const
 {
-    QSize result = Core::Item::hardcodedMaximumSize;
+    Size result = Core::Item::hardcodedMaximumSize;
 
     if (!d->m_dropArea) {
         // Still early, no layout set
@@ -343,8 +343,8 @@ QSize FloatingWindow::maxSizeHint() const
         // let's do that first, it's also easy.
         Core::Group *group = groups[0];
         if (group->dockWidgetCount() == 1) { // We don't support if there's tabbing
-            const QSize waste =
-                (view()->minSize() - group->view()->minSize()).expandedTo(QSize(0, 0));
+            const Size waste =
+                (view()->minSize() - group->view()->minSize()).expandedTo(Size(0, 0));
             result = group->view()->maxSizeHint() + waste;
         }
     }
@@ -355,18 +355,18 @@ QSize FloatingWindow::maxSizeHint() const
     return result.boundedTo(Core::Item::hardcodedMaximumSize);
 }
 
-void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
+void FloatingWindow::setSuggestedGeometry(Rect suggestedRect, SuggestedGeometryHints hint)
 {
-    const QSize maxSize = maxSizeHint();
+    const Size maxSize = maxSizeHint();
     const bool hasMaxSize = maxSize != Core::Item::hardcodedMaximumSize;
     if (hasMaxSize) {
         // Resize to new size but preserve center
-        const QPoint originalCenter = suggestedRect.center();
+        const Point originalCenter = suggestedRect.center();
         suggestedRect.setSize(maxSize.boundedTo(suggestedRect.size()));
 
         if ((hint & SuggestedGeometryHint_GeometryIsFromDocked)
             && (d->m_flags & FloatingWindowFlag::NativeTitleBar)) {
-            const QMargins margins = contentMargins();
+            const auto margins = contentMargins();
             suggestedRect.setHeight(suggestedRect.height() - m_titleBar->view()->height()
                                     + margins.top() + margins.bottom());
         }
@@ -398,7 +398,7 @@ Layout *FloatingWindow::layout() const
     return d->m_dropArea;
 }
 
-bool FloatingWindow::isInDragArea(QPoint globalPoint) const
+bool FloatingWindow::isInDragArea(Point globalPoint) const
 {
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     // A click near the border will still send a Qt::NonClientMousePressEvent. We shouldn't
@@ -605,12 +605,12 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     return fw;
 }
 
-QRect FloatingWindow::dragRect() const
+Rect FloatingWindow::dragRect() const
 {
-    QRect rect;
+    Rect rect;
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->rect();
-        rect.moveTopLeft(m_titleBar->view()->mapToGlobal(QPoint(0, 0)));
+        rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));
     } else if (hasSingleFrame()) {
         rect = groups().constFirst()->dragRect();
     } else {
@@ -673,7 +673,7 @@ MainWindow *FloatingWindow::mainWindow() const
     return view()->parentView()->asMainWindowController();
 }
 
-QMargins FloatingWindow::contentMargins() const
+Margins FloatingWindow::contentMargins() const
 {
     return { 4, 4, 4, 4 };
 }
@@ -704,7 +704,7 @@ void FloatingWindow::updateSizeConstraints()
 #endif
 }
 
-void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
+void FloatingWindow::ensureRectIsOnScreen(Rect &geometry)
 {
     const auto screens = Platform::instance()->screens();
     if (screens.empty())
@@ -715,14 +715,14 @@ void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
 
     const int screenCount = screens.count();
     for (int i = 0; i < screenCount; i++) {
-        const QRect scrGeom = screens[i]->geometry();
+        const Rect scrGeom = screens[i]->geometry();
 
         // If the rectangle is visible at all, we need do nothing
         if (scrGeom.intersects(geometry))
             return;
 
         // Find the nearest screen, so we can move the geometry onto it
-        const QPoint dist2D = geometry.center() - scrGeom.center();
+        const Point dist2D = geometry.center() - scrGeom.center();
         const int distSq = (dist2D.x() * dist2D.x()) + (dist2D.y() * dist2D.y());
         if (distSq < nearestDistSq) {
             nearestDistSq = distSq;

@@ -107,13 +107,13 @@ class DockWidget extends KDDWBindingsCore.Controller {
     func(thisCpp);
   } // groupGeometry() const
 
-  QRect groupGeometry() {
+  Rect groupGeometry() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__groupGeometry')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QRect.fromCppPointer(result, true);
+    return Rect.fromCppPointer(result, true);
   } // hasPreviousDockedLocation() const
 
   bool hasPreviousDockedLocation() {
@@ -212,13 +212,13 @@ class DockWidget extends KDDWBindingsCore.Controller {
     return func(thisCpp) != 0;
   } // lastOverlayedSize() const
 
-  QSize lastOverlayedSize() {
+  Size lastOverlayedSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__lastOverlayedSize')
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
-    return QSize.fromCppPointer(result, true);
+    return Size.fromCppPointer(result, true);
   } // layoutSaverOptions() const
 
   int layoutSaverOptions() {
@@ -244,12 +244,12 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__moveToSideBar')
         .asFunction();
     func(thisCpp);
-  } // onResize(QSize newSize)
+  } // onResize(KDDockWidgets::Size newSize)
 
-  onResize(QSize newSize) {
+  onResize(Size newSize) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__onResize_QSize')
+            'c_KDDockWidgets__Core__DockWidget__onResize_Size')
         .asFunction();
     func(thisCpp, newSize == null ? ffi.nullptr : newSize.thisCpp);
   } // open()
@@ -300,28 +300,28 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__setFloating_bool')
         .asFunction();
     return func(thisCpp, floats ? 1 : 0) != 0;
-  } // setFloatingGeometry(QRect geo)
+  } // setFloatingGeometry(KDDockWidgets::Rect geo)
 
-  setFloatingGeometry(QRect geo) {
+  setFloatingGeometry(Rect geo) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__setFloatingGeometry_QRect')
+            'c_KDDockWidgets__Core__DockWidget__setFloatingGeometry_Rect')
         .asFunction();
     func(thisCpp, geo == null ? ffi.nullptr : geo.thisCpp);
-  } // setMDIPosition(QPoint pos)
+  } // setMDIPosition(KDDockWidgets::Point pos)
 
-  setMDIPosition(QPoint pos) {
+  setMDIPosition(Point pos) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__setMDIPosition_QPoint')
+            'c_KDDockWidgets__Core__DockWidget__setMDIPosition_Point')
         .asFunction();
     func(thisCpp, pos == null ? ffi.nullptr : pos.thisCpp);
-  } // setMDISize(QSize size)
+  } // setMDISize(KDDockWidgets::Size size)
 
-  setMDISize(QSize size) {
+  setMDISize(Size size) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__DockWidget__setMDISize_QSize')
+            'c_KDDockWidgets__Core__DockWidget__setMDISize_Size')
         .asFunction();
     func(thisCpp, size == null ? ffi.nullptr : size.thisCpp);
   } // setMDIZ(int z)
@@ -441,7 +441,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 721:
+      case 676:
         return "c_KDDockWidgets__Core__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -449,7 +449,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 721:
+      case 676:
         return "setParentView_impl";
     }
     throw Error();
@@ -461,9 +461,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback')
         .asFunction();
-    final callback721 =
+    final callback676 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback721, 721);
+    registerCallback(thisCpp, callback676, 676);
   }
 }

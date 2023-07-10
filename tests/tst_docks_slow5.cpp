@@ -43,7 +43,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     auto func = [](QVector<DockDescriptor> docksToCreate, QVector<int> docksToHide) -> KDDW_QCORO_TASK {
         // Tests a case that used to cause negative anchor position when turning into placeholder
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dropArea = m->dropArea();
         Core::DropArea *layout = dropArea;
 

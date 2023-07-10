@@ -14,11 +14,9 @@
 #include <qstring.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
-#include <qrect.h>
+#include <core/geometry_helpers_p.h>
 #include "core/TitleBar.h"
 #include "core/MainWindow.h"
-#include <qsize.h>
-#include <qpoint.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -33,7 +31,7 @@ public:
     int currentTabIndex() const;
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
     void forceClose();
-    QRect groupGeometry() const;
+    KDDockWidgets::Rect groupGeometry() const;
     bool hasPreviousDockedLocation() const;
     void init();
     bool isCurrentTab() const;
@@ -46,20 +44,20 @@ public:
     bool isOverlayed() const;
     bool isPersistentCentralDockWidget() const;
     bool isTabbed() const;
-    QSize lastOverlayedSize() const;
+    KDDockWidgets::Size lastOverlayedSize() const;
     QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions() const;
     KDDockWidgets::Core::MainWindow *mainWindow() const;
     void moveToSideBar();
-    void onResize(QSize newSize);
+    void onResize(KDDockWidgets::Size newSize);
     void open();
     QFlags<KDDockWidgets::DockWidgetOption> options() const;
     void raise();
     void setAffinityName(const QString &name);
     void setAsCurrentTab();
     bool setFloating(bool floats);
-    void setFloatingGeometry(QRect geo);
-    void setMDIPosition(QPoint pos);
-    void setMDISize(QSize size);
+    void setFloatingGeometry(KDDockWidgets::Rect geo);
+    void setMDIPosition(KDDockWidgets::Point pos);
+    void setMDISize(KDDockWidgets::Size size);
     void setMDIZ(int z);
     void setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
@@ -127,8 +125,8 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DockWidget__layoutSaverO
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DockWidget__mainWindow(void *thisObj);
 // KDDockWidgets::Core::DockWidget::moveToSideBar()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__moveToSideBar(void *thisObj);
-// KDDockWidgets::Core::DockWidget::onResize(QSize newSize)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__onResize_QSize(void *thisObj, void *newSize_);
+// KDDockWidgets::Core::DockWidget::onResize(KDDockWidgets::Size newSize)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__onResize_Size(void *thisObj, void *newSize_);
 // KDDockWidgets::Core::DockWidget::open()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__open(void *thisObj);
 // KDDockWidgets::Core::DockWidget::options() const
@@ -141,12 +139,12 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setAffinity
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setAsCurrentTab(void *thisObj);
 // KDDockWidgets::Core::DockWidget::setFloating(bool floats)
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DockWidget__setFloating_bool(void *thisObj, bool floats);
-// KDDockWidgets::Core::DockWidget::setFloatingGeometry(QRect geo)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setFloatingGeometry_QRect(void *thisObj, void *geo_);
-// KDDockWidgets::Core::DockWidget::setMDIPosition(QPoint pos)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setMDIPosition_QPoint(void *thisObj, void *pos_);
-// KDDockWidgets::Core::DockWidget::setMDISize(QSize size)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setMDISize_QSize(void *thisObj, void *size_);
+// KDDockWidgets::Core::DockWidget::setFloatingGeometry(KDDockWidgets::Rect geo)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setFloatingGeometry_Rect(void *thisObj, void *geo_);
+// KDDockWidgets::Core::DockWidget::setMDIPosition(KDDockWidgets::Point pos)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setMDIPosition_Point(void *thisObj, void *pos_);
+// KDDockWidgets::Core::DockWidget::setMDISize(KDDockWidgets::Size size)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setMDISize_Size(void *thisObj, void *size_);
 // KDDockWidgets::Core::DockWidget::setMDIZ(int z)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DockWidget__setMDIZ_int(void *thisObj, int z);
 // KDDockWidgets::Core::DockWidget::setOptions(QFlags<KDDockWidgets::DockWidgetOption> arg__1)

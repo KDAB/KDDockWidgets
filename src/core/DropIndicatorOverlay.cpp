@@ -78,7 +78,7 @@ void DropIndicatorOverlay::setWindowBeingDragged(bool is)
     updateVisibility();
 }
 
-QRect DropIndicatorOverlay::hoveredGroupRect() const
+Rect DropIndicatorOverlay::hoveredGroupRect() const
 {
     return m_hoveredGroupRect;
 }
@@ -96,7 +96,7 @@ void DropIndicatorOverlay::setHoveredGroup(Core::Group *group)
         d->groupConnection = group->Controller::dptr()->aboutToBeDeleted.connect([this] { onGroupDestroyed(); });
         setHoveredGroupRect(m_hoveredGroup->view()->geometry());
     } else {
-        setHoveredGroupRect(QRect());
+        setHoveredGroupRect(Rect());
     }
 
     updateVisibility();
@@ -220,14 +220,14 @@ void DropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
     }
 }
 
-DropLocation DropIndicatorOverlay::hover(QPoint globalPos)
+DropLocation DropIndicatorOverlay::hover(Point globalPos)
 {
     const DropLocation loc = hover_impl(globalPos);
     setCurrentDropLocation(loc);
     return loc;
 }
 
-void DropIndicatorOverlay::setHoveredGroupRect(QRect rect)
+void DropIndicatorOverlay::setHoveredGroupRect(Rect rect)
 {
     if (m_hoveredGroupRect != rect) {
         m_hoveredGroupRect = rect;

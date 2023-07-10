@@ -28,17 +28,18 @@ using QEnterEvent = QEnterEvent;
 using qintptr = ::qintptr;
 using qhashtype = size_t;
 
-inline QPoint eventPos(DropEvent *ev)
+inline Point eventPos(DropEvent *ev)
 {
     return ev->position().toPoint();
 }
 
-inline QPoint eventGlobalPos(MouseEvent *ev)
+inline Point eventGlobalPos(MouseEvent *ev)
 {
     return ev->globalPosition().toPoint();
 }
 
-inline QPoint eventPos(HoverEvent *ev)
+// TODOm4: Rename to QPoint once flutter doesnt depend on Qt
+inline Point eventPos(HoverEvent *ev)
 {
     return ev->position().toPoint();
 }
@@ -51,17 +52,17 @@ using QEnterEvent = KDDockWidgets::Event;
 using qintptr = long;
 using qhashtype = uint;
 
-inline QPoint eventPos(DropEvent *ev)
+inline Point eventPos(DropEvent *ev)
 {
     return ev->pos();
 }
 
-inline QPoint eventPos(HoverEvent *ev)
+inline Point eventPos(HoverEvent *ev)
 {
     return ev->pos();
 }
 
-inline QPoint eventGlobalPos(MouseEvent *ev)
+inline Point eventGlobalPos(MouseEvent *ev)
 {
     return ev->globalPos();
 }

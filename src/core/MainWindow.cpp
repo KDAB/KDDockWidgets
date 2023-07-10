@@ -208,16 +208,16 @@ CursorPositions MainWindow::Private::allowedResizeSides(SideBarLocation loc) con
     return CursorPosition_Undefined;
 }
 
-QRect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation location) const
+Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation location) const
 {
     Core::SideBar *sb = q->sideBar(location);
     if (!sb)
         return {};
 
-    const QRect centralAreaGeo = q->centralAreaGeometry();
-    const QMargins centerWidgetMargins = q->centerWidgetMargins();
+    const Rect centralAreaGeo = q->centralAreaGeometry();
+    const Margins centerWidgetMargins = q->centerWidgetMargins();
 
-    QRect rect;
+    Rect rect;
     const int margin = m_overlayMargin;
     switch (location) {
     case SideBarLocation::North:
@@ -251,7 +251,7 @@ QRect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation lo
         rect.setWidth(qMax(300, group->view()->minSize().width()));
         rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight
                        - centerWidgetMargins.top() - centerWidgetMargins.bottom());
-        rect.moveTop(sb->view()->mapTo(q->view(), QPoint(0, 0)).y() + topSideBarHeight - 1);
+        rect.moveTop(sb->view()->mapTo(q->view(), Point(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
             rect.moveLeft(centralAreaGeo.x() + centralAreaGeo.width() - rect.width() - sb->width()
                           - centerWidgetMargins.right() - margin);
@@ -376,7 +376,7 @@ SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) cons
     return aspectRatio > 1.0 ? SideBarLocation::South : SideBarLocation::West;
 }
 
-void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
+void MainWindow::Private::updateOverlayGeometry(Size suggestedSize)
 {
     if (!m_overlayedDockWidget)
         return;
@@ -387,8 +387,8 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
         return;
     }
 
-    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->group(), sb->location());
-    QRect newGeometry = defaultGeometry;
+    const Rect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->group(), sb->location());
+    Rect newGeometry = defaultGeometry;
 
     Core::Group *group = m_overlayedDockWidget->d->group();
 
@@ -438,7 +438,7 @@ void MainWindow::Private::clearSideBars()
     }
 }
 
-QRect MainWindow::Private::windowGeometry() const
+Rect MainWindow::Private::windowGeometry() const
 {
     /// @brief Returns the window geometry
     /// This is usually the same as the view's geometry()
@@ -753,7 +753,7 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     v->setContentsMargins(left, top, right, bottom);
 }
 
-QMargins MainWindow::centerWidgetMargins() const
+Margins MainWindow::centerWidgetMargins() const
 {
     auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centerWidgetMargins();
@@ -765,7 +765,7 @@ Core::SideBar *MainWindow::sideBar(SideBarLocation loc) const
     return it == d->m_sideBars.cend() ? nullptr : it->second;
 }
 
-QRect MainWindow::centralAreaGeometry() const
+Rect MainWindow::centralAreaGeometry() const
 {
     auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centralAreaGeometry();

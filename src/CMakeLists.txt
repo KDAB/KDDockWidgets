@@ -176,10 +176,11 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
 )
 
 set(KDDW_FRONTEND_DARTBINDINGS_SRCS
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QRect_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QSize_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QPoint_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Rect_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Point_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Size_c.cpp
+    flutter/generated/KDDockWidgetsBindings/dart/ffi/Margins_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp
@@ -435,14 +436,16 @@ if(KDDW_FRONTEND_FLUTTER)
             message(FATAL_ERROR "icudtl.dat not found!")
         endif()
 
-        # Build our dart code for the tests embedder
-        add_custom_command(
-            TARGET kddockwidgets
-            PRE_BUILD
-            COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
-            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
-            COMMENT "Running flutter build bundle flutter_tests_embedder"
-        )
+        if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
+            # Build our dart code for the tests embedder
+            add_custom_command(
+                TARGET kddockwidgets
+                PRE_BUILD
+                COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
+                WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
+                COMMENT "Running flutter build bundle flutter_tests_embedder"
+            )
+        endif()
 
         include_directories($ENV{FLUTTER_ENGINE_FOLDER})
         target_link_libraries(kddockwidgets PRIVATE glfw $ENV{FLUTTER_ENGINE_FOLDER}/${FLUTTER_ENGINE_LIBRARY})

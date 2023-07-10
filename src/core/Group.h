@@ -98,7 +98,7 @@ public:
     void onDockWidgetTitleChanged(DockWidget *);
     void updateTitleBarVisibility();
     void updateFloatingActions();
-    bool containsMouse(QPoint globalPos) const;
+    bool containsMouse(Point globalPos) const;
     Core::TitleBar *titleBar() const;
     Core::TitleBar *actualTitleBar() const;
     QString title() const;
@@ -240,7 +240,7 @@ public:
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
      * background. Returns global coordinates.
      */
-    virtual QRect dragRect() const;
+    virtual Rect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
     bool allDockWidgetsHave(DockWidgetOption) const;
@@ -313,7 +313,7 @@ public:
      * This might be slightly smaller than Frame::minSize() due to the QTabWidget having some
      * margins and tab bar.
      */
-    QSize dockWidgetsMinSize() const;
+    Size dockWidgetsMinSize() const;
 
     /**
      * @brief Returns the biggest combined maxSize of all dock widgets.
@@ -327,7 +327,7 @@ public:
      * Any widget having 16777215x16777215 is ignored (represents not having a max-size,
      * QWIDGETSIZE_MAX)
      */
-    QSize biggestDockWidgetMaxSize() const;
+    Size biggestDockWidgetMaxSize() const;
     int nonContentsHeight() const;
 
     class Private;

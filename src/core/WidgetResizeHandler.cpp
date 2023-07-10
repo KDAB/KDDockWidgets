@@ -123,7 +123,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
                 // EGLFS doesn't support storing mouse cursor shape per window, so we need to use
                 // global filter do detect mouse leaving the window
                 if (!m_resizingInProgress) {
-                    const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(me);
+                    const Point globalPos = Qt5Qt6Compat::eventGlobalPos(me);
                     updateCursor(cursorPosition(globalPos));
                 }
             }
@@ -172,8 +172,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
             return false;
 
         const int m = widgetResizeHandlerMargin();
-        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
-        const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
+        const Rect widgetRect = mTarget->rect().marginsAdded(Margins(m, m, m, m));
+        const Point cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
         if (!widgetRect.contains(cursorPoint) || e->button() != Qt::LeftButton)
             return false;
 
@@ -231,17 +231,17 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
 bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
 {
-    const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
+    const Point globalPos = Qt5Qt6Compat::eventGlobalPos(e);
     if (!m_resizingInProgress) {
         const CursorPosition pos = cursorPosition(globalPos);
         updateCursor(pos);
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = mTarget->d->globalGeometry();
-    QRect newGeometry = oldGeometry;
+    const Rect oldGeometry = mTarget->d->globalGeometry();
+    Rect newGeometry = oldGeometry;
 
-    QRect parentGeometry;
+    Rect parentGeometry;
     if (!mTarget->isRootView()) {
         auto parent = mTarget->parentView();
         parentGeometry = parent->d->globalGeometry();
@@ -358,7 +358,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
             return false;
         }
 
-        const QRect htCaptionRect = fw->dragRect();
+        const Rect htCaptionRect = fw->dragRect();
         const bool ret = handleWindowsNativeEvent(fw->view()->window(), msg, result, htCaptionRect);
 
         fw->setLastHitTest(*result);
@@ -425,9 +425,9 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg
                    && features.hasResize()) {
             *result = HTRIGHT;
         } else if (features.hasDrag()) {
-            const QPoint globalPosQt = w->fromNativePixels(QPoint(xPos, yPos));
+            const Point globalPosQt = w->fromNativePixels(Point(xPos, yPos));
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
-            const QRect htCaptionRect = features.htCaptionRect;
+            const Rect htCaptionRect = features.htCaptionRect;
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom()
                 && globalPosQt.x() >= htCaptionRect.left()
                 && globalPosQt.x() <= htCaptionRect.right()) {
@@ -461,7 +461,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg
 
         DefWindowProc(msg->hwnd, msg->message, msg->wParam, msg->lParam);
 
-        const QRect availableGeometry = screen->availableGeometry();
+        const Rect availableGeometry = screen->availableGeometry();
 
         auto mmi = reinterpret_cast<MINMAXINFO *>(msg->lParam);
         const qreal dpr = screen->devicePixelRatio();
@@ -555,7 +555,7 @@ void WidgetResizeHandler::restoreMouseCursor()
         mTarget->setCursor(Qt::ArrowCursor);
 }
 
-CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
+CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
 {
     if (!mTarget)
         return CursorPosition_Undefined;
@@ -571,7 +571,7 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
     }
 #endif
 
-    QPoint pos = mTarget->mapFromGlobal(globalPos);
+    Point pos = mTarget->mapFromGlobal(globalPos);
 
     const int x = pos.x();
     const int y = pos.y();

@@ -16,15 +16,13 @@
 #include <FloatingWindow.h>
 #include "core/Stack.h"
 #include <TabBar.h>
-#include <qpoint.h>
+#include <core/geometry_helpers_p.h>
 #include "core/TitleBar.h"
 #include <qstring.h>
 #include "core/MainWindow.h"
 #include <Item_p.h>
-#include <qrect.h>
 #include "core/DropArea.h"
 #include <core/Layout.h>
-#include <qsize.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -45,9 +43,9 @@ public:
     bool anyNonClosable() const;
     bool anyNonDockable() const;
     bool beingDeletedLater() const;
-    QSize biggestDockWidgetMaxSize() const;
+    KDDockWidgets::Size biggestDockWidgetMaxSize() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *w) const;
-    bool containsMouse(QPoint globalPos) const;
+    bool containsMouse(KDDockWidgets::Point globalPos) const;
     KDDockWidgets::Core::DockWidget *currentDockWidget() const;
     int currentIndex() const;
     int currentTabIndex() const;
@@ -55,9 +53,9 @@ public:
     KDDockWidgets::Core::FloatingWindow *detachTab(KDDockWidgets::Core::DockWidget *arg__1);
     KDDockWidgets::Core::DockWidget *dockWidgetAt(int index) const;
     int dockWidgetCount() const;
-    QSize dockWidgetsMinSize() const;
-    virtual QRect dragRect() const;
-    virtual QRect dragRect_nocallback() const;
+    KDDockWidgets::Size dockWidgetsMinSize() const;
+    virtual KDDockWidgets::Rect dragRect() const;
+    virtual KDDockWidgets::Rect dragRect_nocallback() const;
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
     virtual void focusedWidgetChangedCallback();
     virtual void focusedWidgetChangedCallback_nocallback();
@@ -105,7 +103,7 @@ public:
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
     int userType() const;
-    typedef QRect *(*Callback_dragRect)(void *);
+    typedef KDDockWidgets::Rect *(*Callback_dragRect)(void *);
     Callback_dragRect m_dragRectCallback = nullptr;
     typedef void (*Callback_focusedWidgetChangedCallback)(void *);
     Callback_focusedWidgetChangedCallback m_focusedWidgetChangedCallbackCallback = nullptr;
@@ -147,8 +145,8 @@ KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__beingDeletedLate
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Core::Group::containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_);
-// KDDockWidgets::Core::Group::containsMouse(QPoint globalPos) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__containsMouse_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::Group::containsMouse(KDDockWidgets::Point globalPos) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Group__containsMouse_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::Group::currentDockWidget() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Group__currentDockWidget(void *thisObj);
 // KDDockWidgets::Core::Group::currentIndex() const

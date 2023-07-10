@@ -76,15 +76,15 @@ int Layout_wrapper::layoutHeight() const
 {
     return ::KDDockWidgets::Core::Layout::layoutHeight();
 }
-QSize Layout_wrapper::layoutMaximumSizeHint() const
+KDDockWidgets::Size Layout_wrapper::layoutMaximumSizeHint() const
 {
     return ::KDDockWidgets::Core::Layout::layoutMaximumSizeHint();
 }
-QSize Layout_wrapper::layoutMinimumSize() const
+KDDockWidgets::Size Layout_wrapper::layoutMinimumSize() const
 {
     return ::KDDockWidgets::Core::Layout::layoutMinimumSize();
 }
-QSize Layout_wrapper::layoutSize() const
+KDDockWidgets::Size Layout_wrapper::layoutSize() const
 {
     return ::KDDockWidgets::Core::Layout::layoutSize();
 }
@@ -108,11 +108,11 @@ void Layout_wrapper::restorePlaceholder(KDDockWidgets::Core::DockWidget *dw, KDD
 {
     ::KDDockWidgets::Core::Layout::restorePlaceholder(dw, arg__2, tabIndex);
 }
-void Layout_wrapper::setLayoutMinimumSize(QSize arg__1)
+void Layout_wrapper::setLayoutMinimumSize(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::Layout::setLayoutMinimumSize(arg__1);
 }
-void Layout_wrapper::setLayoutSize(QSize arg__1)
+void Layout_wrapper::setLayoutSize(KDDockWidgets::Size arg__1)
 {
     ::KDDockWidgets::Core::Layout::setLayoutSize(arg__1);
 }
@@ -227,17 +227,17 @@ int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj)
 // layoutMaximumSizeHint() const
 void *c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->layoutMaximumSizeHint() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutMaximumSizeHint() };
 }
 // layoutMinimumSize() const
 void *c_KDDockWidgets__Core__Layout__layoutMinimumSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->layoutMinimumSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutMinimumSize() };
 }
 // layoutSize() const
 void *c_KDDockWidgets__Core__Layout__layoutSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->layoutSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutSize() };
 }
 // layoutWidth() const
 int c_KDDockWidgets__Core__Layout__layoutWidth(void *thisObj)
@@ -267,18 +267,18 @@ void c_KDDockWidgets__Core__Layout__restorePlaceholder_DockWidget_Item_int(void 
     auto arg__2 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__2_);
     fromPtr(thisObj)->restorePlaceholder(dw, arg__2, tabIndex);
 }
-// setLayoutMinimumSize(QSize arg__1)
-void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_QSize(void *thisObj, void *arg__1_)
+// setLayoutMinimumSize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromWrapperPtr(thisObj)->setLayoutMinimumSize(arg__1);
 }
-// setLayoutSize(QSize arg__1)
-void c_KDDockWidgets__Core__Layout__setLayoutSize_QSize(void *thisObj, void *arg__1_)
+// setLayoutSize(KDDockWidgets::Size arg__1)
+void c_KDDockWidgets__Core__Layout__setLayoutSize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QSize *>(arg__1_);
+    auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
     fromPtr(thisObj)->setLayoutSize(arg__1);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
@@ -310,7 +310,7 @@ void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 721:
+    case 676:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

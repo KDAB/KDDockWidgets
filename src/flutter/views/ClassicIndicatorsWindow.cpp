@@ -34,12 +34,12 @@ IndicatorWindow::~IndicatorWindow()
     Platform::platformFlutter()->onDropIndicatorOverlayDestroyed(this);
 }
 
-QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
+Point IndicatorWindow::posForIndicator(DropLocation loc) const
 {
     return posForIndicator_flutter(loc);
 }
 
-DropLocation IndicatorWindow::hover(QPoint globalPos)
+DropLocation IndicatorWindow::hover(Point globalPos)
 {
     if (!isMounted())
         return DropLocation_None;
@@ -47,7 +47,7 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
     if (m_updatePending)
         updatePositions();
 
-    const QPoint localPos = mapFromGlobal(globalPos);
+    const Point localPos = mapFromGlobal(globalPos);
     return hover_flutter(localPos);
 }
 
@@ -64,7 +64,7 @@ void IndicatorWindow::raise()
     // Nothing to do for flutter, it's raised
 }
 
-void IndicatorWindow::setGeometry(QRect geo)
+void IndicatorWindow::setGeometry(Rect geo)
 {
     flutter::View::setGeometry(geo);
 }
@@ -83,7 +83,7 @@ void IndicatorWindow::setVisible(bool is)
     Platform::platformFlutter()->rebuildWindowOverlay();
 }
 
-void IndicatorWindow::resize(QSize size)
+void IndicatorWindow::resize(Size size)
 {
     flutter::View::resize(size);
 }
@@ -98,13 +98,13 @@ Core::Group *IndicatorWindow::hoveredGroup() const
     return classicIndicators->hoveredGroup();
 }
 
-QPoint IndicatorWindow::posForIndicator_flutter(DropLocation) const
+Point IndicatorWindow::posForIndicator_flutter(DropLocation) const
 {
     KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
     return {};
 }
 
-DropLocation IndicatorWindow::hover_flutter(QPoint)
+DropLocation IndicatorWindow::hover_flutter(Point)
 {
     KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
     return {};

@@ -48,7 +48,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
 
     auto dock1 = createDockWidget("doc1");
     auto fw1 = dock1->floatingWindow();
-    fw1->view()->setGeometry(QRect(500, 500, 400, 400));
+    fw1->view()->setGeometry(Rect(500, 500, 400, 400));
     CHECK(dock1);
     ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
 
@@ -58,8 +58,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     CHECK(dock1->isFloating());
     CHECK(dock2->isFloating());
 
-    QPoint finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    KDDW_CO_AWAIT drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
+    Point finalPoint = dock2->window()->geometry().center() + Point(7, 7);
+    KDDW_CO_AWAIT drag(titlebar1->view(), titlebar1->mapToGlobal(Point(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
     ObjectGuard<Core::Group> group2 = dock2->dptr()->group();
@@ -75,11 +75,11 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1));
 
     // 2.3 Detach tab1 to empty space
-    QPoint globalPressPos = dragPointForWidget(group2.data(), 0);
+    Point globalPressPos = dragPointForWidget(group2.data(), 0);
     Core::TabBar *tabBar = group2->stack()->tabBar();
     CHECK(tabBar);
     KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos,
-                       group2->view()->d->windowGeometry().bottomRight() + QPoint(10, 10));
+                       group2->view()->d->windowGeometry().bottomRight() + Point(10, 10));
 
     CHECK(group2->dockWidgetCount() == 1);
     CHECK(dock1->floatingWindow());
@@ -88,8 +88,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     group1 = dock1->dptr()->group();
     group2 = dock2->dptr()->group();
     fw1 = dock1->floatingWindow();
-    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100, 5));
-    finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    globalPressPos = fw1->titleBar()->mapToGlobal(Point(100, 5));
+    finalPoint = dock2->window()->geometry().center() + Point(7, 7);
     KDDW_CO_AWAIT drag(fw1->titleBar()->view(), globalPressPos, finalPoint);
 
     CHECK_EQ(group2->dockWidgetCount(), 2);
@@ -98,7 +98,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     globalPressPos = dragPointForWidget(group2.data(), 0);
     tabBar = group2->stack()->tabBar();
 
-    finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    finalPoint = dock2->window()->geometry().center() + Point(7, 7);
     KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, finalPoint);
     CHECK_EQ(group2->dockWidgetCount(), 2);
 
@@ -107,8 +107,8 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Test is flaky otherwise
 
     auto fw2 = dock2->floatingWindow();
-    finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
-    KDDW_CO_AWAIT drag(fw2->titleBar()->view(), group2->mapToGlobal(QPoint(10, 10)), finalPoint);
+    finalPoint = dock3->window()->geometry().center() + Point(7, 7);
+    KDDW_CO_AWAIT drag(fw2->titleBar()->view(), group2->mapToGlobal(Point(10, 10)), finalPoint);
 
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1));
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group2));
@@ -123,10 +123,10 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
     {
         auto m = createMainWindow();
         m->show();
-        m->view()->setGeometry(QRect(500, 300, 300, 300));
+        m->view()->setGeometry(Rect(500, 300, 300, 300));
         CHECK(!dock3->isFloating());
         auto fw3 = dock3->floatingWindow();
-        KDDW_CO_AWAIT drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(QPoint(10, 10)),
+        KDDW_CO_AWAIT drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(Point(10, 10)),
                            m->geometry().center());
         CHECK(!dock3->isFloating());
         CHECK(dock3->window()->equals(m->view()));
@@ -148,7 +148,7 @@ KDDW_QCORO_TASK tst_restoreSimple()
     EnsureTopLevelsDeleted e;
     // Tests restoring a very simple layout, composed of just 1 docked widget
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto layout = m->multiSplitter();
     auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
     auto dock2 = createDockWidget("two", Platform::instance()->tests_createFocusableView({ true }));
@@ -158,20 +158,20 @@ KDDW_QCORO_TASK tst_restoreSimple()
     m->addDockWidget(dock1, Location_OnTop);
 
     // Dock2 floats at 150,150
-    const QPoint dock2FloatingPoint = QPoint(150, 150);
+    const Point dock2FloatingPoint = Point(150, 150);
     dock2->view()->window()->setFramePosition(dock2FloatingPoint);
     CHECK(dock2->isVisible());
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
 
-    const QPoint dock3FloatingPoint = QPoint(200, 200);
+    const Point dock3FloatingPoint = Point(200, 200);
     dock3->view()->window()->setFramePosition(dock3FloatingPoint);
     dock3->close();
 
     LayoutSaver saver;
     CHECK(saver.saveToFile(QStringLiteral("layout_tst_restoreSimple.json")));
     auto f1 = dock1->dptr()->group();
-    dock2->window()->move(QPoint(0, 0)); // Move *after* we saved.
-    dock3->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock2->window()->move(Point(0, 0)); // Move *after* we saved.
+    dock3->window()->move(Point(0, 0)); // Move *after* we saved.
     dock1->close();
     dock2->close();
     CHECK(!dock2->isVisible());
@@ -221,7 +221,7 @@ KDDW_QCORO_TASK tst_restoreSimplest()
 {
     EnsureTopLevelsDeleted e;
     // Tests restoring a very simple layout, composed of just 1 docked widget
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto layout = m->multiSplitter();
     auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
     m->addDockWidget(dock1, Location_OnTop);

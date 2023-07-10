@@ -13,13 +13,13 @@
 #include <ViewFactory.h>
 #include <core/View.h>
 #include <NonQtCompat_p.h>
-#include <qsize.h>
+#include <core/geometry_helpers_p.h>
 #include <core/Controller.h>
-#include <qpoint.h>
 #include <DelayedCall_p.h>
 #include <qstring.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <qbytearray.h>
 #include <vector>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -37,14 +37,14 @@ public:
     virtual KDDockWidgets::Core::MainWindow *createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options = KDDockWidgets::MainWindowOption::MainWindowOption_HasCentralFrame, KDDockWidgets::Core::View *parent = nullptr, Qt::WindowFlags arg__5 = {}) const;
     virtual KDDockWidgets::Core::View *createView(KDDockWidgets::Core::Controller *arg__1, KDDockWidgets::Core::View *parent = nullptr) const;
     virtual KDDockWidgets::Core::View *createView_nocallback(KDDockWidgets::Core::Controller *arg__1, KDDockWidgets::Core::View *parent = nullptr) const;
-    virtual QPoint cursorPos() const;
-    virtual QPoint cursorPos_nocallback() const;
+    virtual KDDockWidgets::Point cursorPos() const;
+    virtual KDDockWidgets::Point cursorPos_nocallback() const;
     virtual void dumpManagedBacktrace();
     virtual void dumpManagedBacktrace_nocallback();
     virtual bool hasActivePopup() const;
     virtual bool hasActivePopup_nocallback() const;
-    virtual bool inDisallowedDragView(QPoint globalPos) const;
-    virtual bool inDisallowedDragView_nocallback(QPoint globalPos) const;
+    virtual bool inDisallowedDragView(KDDockWidgets::Point globalPos) const;
+    virtual bool inDisallowedDragView_nocallback(KDDockWidgets::Point globalPos) const;
     virtual void installMessageHandler();
     virtual void installMessageHandler_nocallback();
     static KDDockWidgets::Core::Platform *instance();
@@ -74,12 +74,12 @@ public:
     virtual void runDelayed_nocallback(int ms, KDDockWidgets::Core::DelayedCall *c);
     virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
     virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
-    virtual QSize screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
-    virtual QSize screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
+    virtual KDDockWidgets::Size screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
+    virtual KDDockWidgets::Size screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual void sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
     virtual void sendEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
-    virtual void setCursorPos(QPoint arg__1);
-    virtual void setCursorPos_nocallback(QPoint arg__1);
+    virtual void setCursorPos(KDDockWidgets::Point arg__1);
+    virtual void setCursorPos_nocallback(KDDockWidgets::Point arg__1);
     virtual void setMouseCursor(Qt::CursorShape arg__1);
     virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1);
     int startDragDistance() const;
@@ -110,13 +110,13 @@ public:
     Callback_createMainWindow m_createMainWindowCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_createView)(void *, KDDockWidgets::Core::Controller *arg__1, KDDockWidgets::Core::View *parent);
     Callback_createView m_createViewCallback = nullptr;
-    typedef QPoint *(*Callback_cursorPos)(void *);
+    typedef KDDockWidgets::Point *(*Callback_cursorPos)(void *);
     Callback_cursorPos m_cursorPosCallback = nullptr;
     typedef void (*Callback_dumpManagedBacktrace)(void *);
     Callback_dumpManagedBacktrace m_dumpManagedBacktraceCallback = nullptr;
     typedef bool (*Callback_hasActivePopup)(void *);
     Callback_hasActivePopup m_hasActivePopupCallback = nullptr;
-    typedef bool (*Callback_inDisallowedDragView)(void *, QPoint *globalPos);
+    typedef bool (*Callback_inDisallowedDragView)(void *, KDDockWidgets::Point *globalPos);
     Callback_inDisallowedDragView m_inDisallowedDragViewCallback = nullptr;
     typedef void (*Callback_installMessageHandler)(void *);
     Callback_installMessageHandler m_installMessageHandlerCallback = nullptr;
@@ -142,11 +142,11 @@ public:
     Callback_runDelayed m_runDelayedCallback = nullptr;
     typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenNumberFor m_screenNumberForCallback = nullptr;
-    typedef QSize *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
+    typedef KDDockWidgets::Size *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenSizeFor m_screenSizeForCallback = nullptr;
     typedef void (*Callback_sendEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2);
     Callback_sendEvent m_sendEventCallback = nullptr;
-    typedef void (*Callback_setCursorPos)(void *, QPoint *arg__1);
+    typedef void (*Callback_setCursorPos)(void *, KDDockWidgets::Point *arg__1);
     Callback_setCursorPos m_setCursorPosCallback = nullptr;
     typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
@@ -188,8 +188,8 @@ KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__cursorPos(vo
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::Core::Platform::hasActivePopup() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__hasActivePopup(void *thisObj);
-// KDDockWidgets::Core::Platform::inDisallowedDragView(QPoint globalPos) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__inDisallowedDragView_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::Platform::inDisallowedDragView(KDDockWidgets::Point globalPos) const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__inDisallowedDragView_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::Platform::installMessageHandler()
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::Core::Platform::instance()
@@ -228,8 +228,8 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberFo
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
-// KDDockWidgets::Core::Platform::setCursorPos(QPoint arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setCursorPos_QPoint(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::setCursorPos(KDDockWidgets::Point arg__1)
+KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1)
 KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::Platform::startDragDistance() const

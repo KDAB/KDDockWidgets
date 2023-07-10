@@ -22,8 +22,6 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "ObjectGuard_p.h"
 
-#include <QRect>
-
 #include <kdbindings/signal.h>
 
 #include <memory>
@@ -124,7 +122,7 @@ public:
         m_wasFloating = isFloating;
     }
 
-    void setLastFloatingGeometry(QRect geo)
+    void setLastFloatingGeometry(Rect geo)
     {
         m_lastFloatingGeometry = geo;
     }
@@ -134,7 +132,7 @@ public:
         return m_wasFloating;
     }
 
-    QRect lastFloatingGeometry() const
+    Rect lastFloatingGeometry() const
     {
         return m_lastFloatingGeometry;
     }
@@ -149,13 +147,13 @@ public:
         return m_tabIndex;
     }
 
-    QRect lastOverlayedGeometry(SideBarLocation loc) const
+    Rect lastOverlayedGeometry(SideBarLocation loc) const
     {
         auto it = m_lastOverlayedGeometries.find(loc);
-        return it == m_lastOverlayedGeometries.cend() ? QRect() : it->second;
+        return it == m_lastOverlayedGeometries.cend() ? Rect() : it->second;
     }
 
-    void setLastOverlayedGeometry(SideBarLocation loc, QRect rect)
+    void setLastOverlayedGeometry(SideBarLocation loc, Rect rect)
     {
         m_lastOverlayedGeometries[loc] = rect;
     }
@@ -164,8 +162,8 @@ private:
     // The last places where this dock widget was (or is), so it can be restored when
     // setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
-    QRect m_lastFloatingGeometry;
-    std::unordered_map<SideBarLocation, QRect> m_lastOverlayedGeometries;
+    Rect m_lastFloatingGeometry;
+    std::unordered_map<SideBarLocation, Rect> m_lastOverlayedGeometries;
     bool m_clearing = false; // to prevent re-entrancy
 };
 

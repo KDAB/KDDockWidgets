@@ -22,7 +22,7 @@ StackViewInterface::StackViewInterface(Stack *controller)
 
 StackViewInterface::~StackViewInterface() = default;
 
-bool StackViewInterface::isPositionDraggable(QPoint) const
+bool StackViewInterface::isPositionDraggable(Point) const
 {
     return true;
 }

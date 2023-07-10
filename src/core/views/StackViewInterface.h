@@ -12,10 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-
-QT_BEGIN_NAMESPACE
-class QPoint;
-QT_END_NAMESPACE
+#include "kddockwidgets/NonQtCompat_p.h"
 
 namespace KDDockWidgets {
 
@@ -35,7 +32,7 @@ public:
     /// Instead of reimplementing this, consider reimplementing
     /// TabBarViewInterface::isPositionDraggable() instead. This exists only because the background
     /// of QTabBar is the QTabWidget, which probably isn't true for other frontends.
-    virtual bool isPositionDraggable(QPoint p) const;
+    virtual bool isPositionDraggable(Point p) const;
 
     /// @brief Sets QTabWidget::documentMode(). Only implemented for QtWidgets.
     /// Probably not interesting for other frontends to implement, therefore it's not pure-virtual.

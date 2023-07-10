@@ -304,11 +304,11 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
 
     dockWidget->d->saveTabIndex();
 
-    QRect r = dockWidget->geometry();
+    Rect r = dockWidget->geometry();
     removeWidget(dockWidget);
 
     auto newFrame = new Group();
-    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
+    const Point globalPoint = mapToGlobal(Point(0, 0));
     newFrame->addTab(dockWidget);
 
     // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't
@@ -470,7 +470,7 @@ void Group::updateFloatingActions()
         dw->d->updateFloatAction();
 }
 
-bool Group::containsMouse(QPoint globalPos) const
+bool Group::containsMouse(Point globalPos) const
 {
     return rect().contains(view()->mapFromGlobal(globalPos));
 }
@@ -771,9 +771,9 @@ void Group::scheduleDeleteLater()
     destroyLater();
 }
 
-QSize Group::dockWidgetsMinSize() const
+Size Group::dockWidgetsMinSize() const
 {
-    QSize size = Item::hardcodedMinimumSize;
+    Size size = Item::hardcodedMinimumSize;
     for (DockWidget *dw : dockWidgets()) {
         if (!dw->inDtor())
             size = size.expandedTo(dw->view()->minSize());
@@ -783,13 +783,13 @@ QSize Group::dockWidgetsMinSize() const
     return size;
 }
 
-QSize Group::biggestDockWidgetMaxSize() const
+Size Group::biggestDockWidgetMaxSize() const
 {
-    QSize size = Item::hardcodedMaximumSize;
+    Size size = Item::hardcodedMaximumSize;
     for (DockWidget *dw : dockWidgets()) {
         if (dw->inDtor())
             continue;
-        const QSize dwMax = dw->view()->maxSizeHint();
+        const Size dwMax = dw->view()->maxSizeHint();
         if (size == Item::hardcodedMaximumSize) {
             size = dwMax;
             continue;
@@ -809,12 +809,12 @@ QSize Group::biggestDockWidgetMaxSize() const
     return size;
 }
 
-QRect Group::dragRect() const
+Rect Group::dragRect() const
 {
-    QRect rect;
+    Rect rect;
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->view()->rect();
-        rect.moveTopLeft(m_titleBar->view()->mapToGlobal(QPoint(0, 0)));
+        rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));
     }
 
     if (rect.isValid())

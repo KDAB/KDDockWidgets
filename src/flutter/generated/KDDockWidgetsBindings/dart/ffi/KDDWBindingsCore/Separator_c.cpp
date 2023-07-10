@@ -52,7 +52,7 @@ void Separator_wrapper::onMouseDoubleClick()
 {
     ::KDDockWidgets::Core::Separator::onMouseDoubleClick();
 }
-void Separator_wrapper::onMouseMove(QPoint pos)
+void Separator_wrapper::onMouseMove(KDDockWidgets::Point pos)
 {
     ::KDDockWidgets::Core::Separator::onMouseMove(pos);
 }
@@ -68,7 +68,7 @@ int Separator_wrapper::position() const
 {
     return ::KDDockWidgets::Core::Separator::position();
 }
-void Separator_wrapper::setGeometry(QRect r)
+void Separator_wrapper::setGeometry(KDDockWidgets::Rect r)
 {
     ::KDDockWidgets::Core::Separator::setGeometry(r);
 }
@@ -139,11 +139,11 @@ void c_KDDockWidgets__Core__Separator__onMouseDoubleClick(void *thisObj)
 {
     fromPtr(thisObj)->onMouseDoubleClick();
 }
-// onMouseMove(QPoint pos)
-void c_KDDockWidgets__Core__Separator__onMouseMove_QPoint(void *thisObj, void *pos_)
+// onMouseMove(KDDockWidgets::Point pos)
+void c_KDDockWidgets__Core__Separator__onMouseMove_Point(void *thisObj, void *pos_)
 {
     assert(pos_);
-    auto &pos = *reinterpret_cast<QPoint *>(pos_);
+    auto &pos = *reinterpret_cast<KDDockWidgets::Point *>(pos_);
     fromPtr(thisObj)->onMouseMove(pos);
 }
 // onMousePress()
@@ -161,11 +161,11 @@ int c_KDDockWidgets__Core__Separator__position(void *thisObj)
 {
     return fromPtr(thisObj)->position();
 }
-// setGeometry(QRect r)
-void c_KDDockWidgets__Core__Separator__setGeometry_QRect(void *thisObj, void *r_)
+// setGeometry(KDDockWidgets::Rect r)
+void c_KDDockWidgets__Core__Separator__setGeometry_Rect(void *thisObj, void *r_)
 {
     assert(r_);
-    auto &r = *reinterpret_cast<QRect *>(r_);
+    auto &r = *reinterpret_cast<KDDockWidgets::Rect *>(r_);
     fromPtr(thisObj)->setGeometry(r);
 }
 // setGeometry(int pos, int pos2, int length)
@@ -187,7 +187,7 @@ void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 721:
+    case 676:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

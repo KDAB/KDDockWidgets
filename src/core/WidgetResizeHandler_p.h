@@ -19,8 +19,6 @@
 #include "kddockwidgets/core/Window.h"
 #include "core/ViewGuard.h"
 
-#include <QPoint>
-
 #if defined(Q_OS_WIN)
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -57,7 +55,7 @@ public:
     {
         NativeFeatures() = default;
 
-        NativeFeatures(QRect r)
+        NativeFeatures(Rect r)
             : htCaptionRect(r)
         {
         }
@@ -72,7 +70,7 @@ public:
         {
         }
 
-        QRect htCaptionRect; // in global coordinates
+        Rect htCaptionRect; // in global coordinates
         Features features = Feature_All;
         bool hasFeatures() const
         {
@@ -167,11 +165,11 @@ private:
     void updateCursor(CursorPosition);
     void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();
-    CursorPosition cursorPosition(QPoint) const;
+    CursorPosition cursorPosition(Point) const;
     Core::View *mTarget = nullptr;
     Core::ViewGuard mTargetGuard = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
-    QPoint mNewPosition;
+    Point mNewPosition;
     bool m_resizingInProgress = false;
     const bool m_usesGlobalEventFilter;
     const bool m_isTopLevelWindowResizer;

@@ -22,8 +22,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "Qt5Qt6Compat_p.h"
 
-#include <QSize>
-
 #ifdef Q_OS_WIN
 // Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested
 // on macOS.
@@ -174,12 +172,12 @@ struct InitialOption
     {
     }
 
-    InitialOption(QSize size)
+    InitialOption(Size size)
         : preferredSize(size)
     {
     }
 
-    InitialOption(InitialVisibilityOption v, QSize size)
+    InitialOption(InitialVisibilityOption v, Size size)
         : visibility(v)
         , preferredSize(size)
     {
@@ -222,7 +220,7 @@ struct InitialOption
      * dock widget to the left then only the preferred width will be taken into account, as the
      * height will simply fill the whole layout.
      */
-    QSize preferredSize;
+    Size preferredSize;
 
     /// @internal
     InitialOption(DefaultSizeMode mode)

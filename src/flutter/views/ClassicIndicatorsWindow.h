@@ -30,19 +30,19 @@ public:
     explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent);
     ~IndicatorWindow() override;
 
-    DropLocation hover(QPoint globalPos) override;
+    DropLocation hover(Point globalPos) override;
     void updatePositions() override;
-    QPoint posForIndicator(DropLocation) const override;
+    Point posForIndicator(DropLocation) const override;
     void raise() override;
     void setVisible(bool) override;
     bool isWindow() const override;
-    void setGeometry(QRect) override;
-    void resize(QSize) override;
+    void setGeometry(Rect) override;
+    void resize(Size) override;
     void setObjectName(const QString &) override;
 
     /// implemented in dart. workaround for multi-inheritance binding limitations
-    virtual QPoint posForIndicator_flutter(DropLocation) const;
-    virtual DropLocation hover_flutter(QPoint globalPos);
+    virtual Point posForIndicator_flutter(DropLocation) const;
+    virtual DropLocation hover_flutter(Point globalPos);
     virtual bool updatePositions_flutter(int overlayWidth, int overlayHeight,
                                          Core::Group *hoveredGroup, int visibleLocations);
 

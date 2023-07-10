@@ -32,7 +32,7 @@ void Stack::setDocumentMode(bool)
 {
 }
 
-bool Stack::isPositionDraggable(QPoint) const
+bool Stack::isPositionDraggable(Point) const
 {
     return true;
 }

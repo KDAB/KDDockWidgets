@@ -157,7 +157,7 @@ private:
 
     Private *const d;
 
-    QPoint m_pressPos;
+    Point m_pressPos;
     QString m_title;
     Icon m_icon;
 

@@ -15,8 +15,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include <QVector>
-#include <QRect>
-#include <QSize>
 
 #include "kdbindings/signal.h"
 #include "nlohmann/json.hpp"
@@ -82,12 +80,12 @@ enum LayoutBorderLocation {
 };
 Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
 
-inline int pos(QPoint p, Qt::Orientation o)
+inline int pos(Point p, Qt::Orientation o)
 {
     return o == Qt::Vertical ? p.y() : p.x();
 }
 
-inline int length(QSize sz, Qt::Orientation o)
+inline int length(Size sz, Qt::Orientation o)
 {
     return o == Qt::Vertical ? sz.height() : sz.width();
 }
@@ -96,12 +94,12 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
 {
     SizingInfo();
 
-    QSize size() const
+    Size size() const
     {
         return geometry.size();
     }
 
-    void setSize(QSize sz)
+    void setSize(Size sz)
     {
         geometry.setSize(sz);
     }
@@ -131,7 +129,7 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
         return qMax(0, minLength(o) - length(o));
     }
 
-    QPoint pos() const
+    Point pos() const
     {
         return geometry.topLeft();
     }
@@ -175,7 +173,7 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
         return geometry.isNull();
     }
 
-    void setGeometry(QRect geo)
+    void setGeometry(Rect geo)
     {
         geometry = geo;
     }
@@ -196,9 +194,9 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
     }
 
     typedef QVector<SizingInfo> List;
-    QRect geometry;
-    QSize minSize;
-    QSize maxSizeHint;
+    Rect geometry;
+    Size minSize;
+    Size maxSizeHint;
     double percentageWithinParent = 0.0;
     bool isBeingInserted = false;
 };
@@ -224,34 +222,34 @@ public:
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
      */
-    static QSize hardcodedMinimumSize;
-    static QSize hardcodedMaximumSize;
+    static Size hardcodedMinimumSize;
+    static Size hardcodedMaximumSize;
     static int separatorThickness;
 
     int x() const;
     int y() const;
     int width() const;
     int height() const;
-    QSize size() const;
-    void setSize(QSize);
-    QPoint pos() const;
+    Size size() const;
+    void setSize(Size);
+    Point pos() const;
     int pos(Qt::Orientation) const;
-    QRect geometry() const;
-    QRect rect() const;
+    Rect geometry() const;
+    Rect rect() const;
     bool isContainer() const;
     ItemContainer *parentContainer() const;
     ItemBoxContainer *parentBoxContainer() const;
-    void setMinSize(QSize);
-    void setMaxSizeHint(QSize);
+    void setMinSize(Size);
+    void setMaxSizeHint(Size);
     bool isPlaceholder() const;
-    void setGeometry(QRect rect);
+    void setGeometry(Rect rect);
     ItemBoxContainer *root() const;
-    QRect mapToRoot(QRect) const;
-    QPoint mapToRoot(QPoint) const;
+    Rect mapToRoot(Rect) const;
+    Point mapToRoot(Point) const;
     int mapToRoot(int p, Qt::Orientation) const;
-    QPoint mapFromRoot(QPoint) const;
-    QRect mapFromRoot(QRect) const;
-    QPoint mapFromParent(QPoint) const;
+    Point mapFromRoot(Point) const;
+    Rect mapFromRoot(Rect) const;
+    Point mapFromParent(Point) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
     KDDockWidgets::Core::Group *asGroupController() const;
@@ -279,13 +277,13 @@ public:
 
     static bool s_silenceSanityChecks;
 
-    virtual QSize minSize() const;
-    virtual QSize maxSizeHint() const;
+    virtual Size minSize() const;
+    virtual Size maxSizeHint() const;
     virtual void
-    setSize_recursive(QSize newSize,
+    setSize_recursive(Size newSize,
                       ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);
     virtual bool isVisible(bool excludeBeingInserted = false) const;
-    virtual void setGeometry_recursive(QRect rect);
+    virtual void setGeometry_recursive(Rect rect);
     virtual void dumpLayout(int level = 0);
     virtual void setHostView(KDDockWidgets::Core::View *);
     virtual void to_json(nlohmann::json &) const;
@@ -314,7 +312,7 @@ public:
     explicit Item(bool isContainer, KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
-    void setPos(QPoint);
+    void setPos(Point);
     void setPos(int pos, Qt::Orientation);
     const ItemContainer *asContainer() const;
     ItemContainer *asContainer();
@@ -323,7 +321,7 @@ public:
     virtual void setLength_recursive(int length, Qt::Orientation);
     int length(Qt::Orientation) const;
     int availableLength(Qt::Orientation) const;
-    QSize missingSize() const;
+    Size missingSize() const;
     virtual void updateWidgetGeometries();
     virtual void setIsVisible(bool);
     bool isBeingInserted() const;
@@ -428,17 +426,17 @@ public:
     void layoutEqually();
     void layoutEqually_recursive();
     void removeItem(Item *, bool hardRemove = true) override;
-    QSize minSize() const override;
-    QSize maxSizeHint() const override;
-    QSize availableSize() const;
+    Size minSize() const override;
+    Size maxSizeHint() const override;
+    Size availableSize() const;
     Q_REQUIRED_RESULT bool checkSanity() override;
     void dumpLayout(int level = 0) override;
     void setSize_recursive(
-        QSize newSize,
+        Size newSize,
         ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
     bool hostSupportsHonouringLayoutMinSize() const;
-    QRect suggestedDropRect(const Item *item, const Item *relativeTo,
-                            KDDockWidgets::Location) const;
+    Rect suggestedDropRect(const Item *item, const Item *relativeTo,
+                           KDDockWidgets::Location) const;
     void to_json(nlohmann::json &) const override;
     void fillFromJson(const nlohmann::json &,
                       const std::unordered_map<QString, KDDockWidgets::Core::View *> &) override;
@@ -472,7 +470,7 @@ private:
                       NeighbourSqueezeStrategy neighbourSqueezeStrategy =
                           NeighbourSqueezeStrategy::AllNeighbours);
 
-    void setGeometry_recursive(QRect rect) override;
+    void setGeometry_recursive(Rect rect) override;
 
     ItemBoxContainer *convertChildToContainer(Item *leaf);
     bool hasOrientationFor(KDDockWidgets::Location) const;
@@ -521,10 +519,10 @@ private:
     QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin,
                                    SizingInfo::List::ConstIterator end, int needed,
                                    NeighbourSqueezeStrategy, bool reversed = false) const;
-    QRect suggestedDropRectFallback(const Item *item, const Item *relativeTo,
-                                    KDDockWidgets::Location) const;
-    Item *itemAt(QPoint p) const;
-    Item *itemAt_recursive(QPoint p) const;
+    Rect suggestedDropRectFallback(const Item *item, const Item *relativeTo,
+                                   KDDockWidgets::Location) const;
+    Item *itemAt(Point p) const;
+    Item *itemAt_recursive(Point p) const;
     void setHostView(KDDockWidgets::Core::View *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;

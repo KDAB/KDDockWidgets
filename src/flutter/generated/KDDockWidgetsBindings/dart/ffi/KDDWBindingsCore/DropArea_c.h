@@ -16,8 +16,7 @@
 #include <core/DockWidget.h>
 #include <KDDockWidgets.h>
 #include <core/Group.h>
-#include <qsize.h>
-#include <qpoint.h>
+#include <core/geometry_helpers_p.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 
@@ -31,7 +30,7 @@ public:
     void addDockWidget(KDDockWidgets::Core::DockWidget *dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption = {});
     void addMultiSplitter(KDDockWidgets::Core::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     void addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    QSize availableSize() const;
+    KDDockWidgets::Size availableSize() const;
     KDDockWidgets::Core::Item *centralFrame() const;
     KDDockWidgets::Core::Group *centralGroup() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *arg__1) const;
@@ -39,7 +38,7 @@ public:
     KDDockWidgets::DropLocation currentDropLocation() const;
     bool drop(KDDockWidgets::Core::View *droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo);
     KDDockWidgets::Core::DropIndicatorOverlay *dropIndicatorOverlay() const;
-    KDDockWidgets::Core::Group *groupContainingPos(QPoint globalPos) const;
+    KDDockWidgets::Core::Group *groupContainingPos(KDDockWidgets::Point globalPos) const;
     bool hasSingleFloatingFrame() const;
     bool hasSingleFrame() const;
     bool isMDIWrapper() const;
@@ -81,8 +80,8 @@ KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__DropArea__currentDropLoc
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__drop_View_Location_Group(void *thisObj, void *droppedwindow_, int location, void *relativeTo_);
 // KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
-// KDDockWidgets::Core::DropArea::groupContainingPos(QPoint globalPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__groupContainingPos_QPoint(void *thisObj, void *globalPos_);
+// KDDockWidgets::Core::DropArea::groupContainingPos(KDDockWidgets::Point globalPos) const
+KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DropArea__groupContainingPos_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
 KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
 // KDDockWidgets::Core::DropArea::hasSingleFrame() const

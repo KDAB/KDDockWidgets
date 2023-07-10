@@ -85,7 +85,7 @@ public:
         return m_layout->asDropArea();
     }
 
-    void onResized(QSize)
+    void onResized(Size)
     {
         if (m_overlayedDockWidget)
             updateOverlayGeometry(m_overlayedDockWidget->d->group()->size());
@@ -102,11 +102,11 @@ public:
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
-    QRect rectForOverlay(Core::Group *, SideBarLocation) const;
+    Rect rectForOverlay(Core::Group *, SideBarLocation) const;
     SideBarLocation preferredSideBar(Core::DockWidget *) const;
-    void updateOverlayGeometry(QSize suggestedSize);
+    void updateOverlayGeometry(Size suggestedSize);
     void clearSideBars();
-    QRect windowGeometry() const;
+    Rect windowGeometry() const;
 
     QString name;
     QStringList affinities;

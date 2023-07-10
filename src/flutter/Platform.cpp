@@ -31,7 +31,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-QPoint Platform::s_lastCursorPosition = { -1, -1 };
+Point Platform::s_lastCursorPosition = { -1, -1 };
 
 Platform::Platform()
 {
@@ -78,7 +78,7 @@ Core::ViewFactory *Platform::createDefaultViewFactory()
     return new ViewFactory();
 }
 
-Core::Window::Ptr Platform::windowAt(QPoint) const
+Core::Window::Ptr Platform::windowAt(Point) const
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
@@ -131,7 +131,7 @@ bool Platform::isLeftMouseButtonPressed() const
     return {};
 }
 
-QSize Platform::screenSizeFor(Core::View *) const
+Size Platform::screenSizeFor(Core::View *) const
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};
@@ -148,7 +148,7 @@ bool Platform::usesFallbackMouseGrabber() const
     return false;
 }
 
-bool Platform::inDisallowedDragView(QPoint) const
+bool Platform::inDisallowedDragView(Point) const
 {
     return false;
 }
@@ -209,12 +209,12 @@ void Platform::runDelayed(int, Core::DelayedCall *)
     Q_UNREACHABLE(); // Platform.dart gets called instead
 }
 
-QPoint Platform::cursorPos() const
+Point Platform::cursorPos() const
 {
     return flutter::Platform::s_lastCursorPosition;
 }
 
-void Platform::setCursorPos(QPoint)
+void Platform::setCursorPos(Point)
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
 }
@@ -249,7 +249,7 @@ public:
 
     ~TestView_flutter();
 
-    QSize maxSizeHint() const override
+    Size maxSizeHint() const override
     {
         return {};
     }
@@ -269,7 +269,7 @@ public:
 
     ~FocusableTestView_flutter();
 
-    QSize maxSizeHint() const override
+    Size maxSizeHint() const override
     {
         return {};
     }
@@ -459,36 +459,36 @@ std::shared_ptr<Core::Window> Platform::tests_createWindow()
     return std::shared_ptr<Core::Window>(window);
 }
 
-void Platform::tests_doubleClickOn(QPoint, Core::View *)
+void Platform::tests_doubleClickOn(Point, Core::View *)
 {
     KDDW_WARN("Not implemented yet {}", Q_FUNC_INFO);
 }
 
-void Platform::tests_doubleClickOn(QPoint, std::shared_ptr<Core::Window>)
+void Platform::tests_doubleClickOn(Point, std::shared_ptr<Core::Window>)
 {
     KDDW_WARN("Not implemented yet {}", Q_FUNC_INFO);
 }
 
-QCoro::Task<bool> kddw_fakeMouseMove(QPoint globalPos);
-QCoro::Task<bool> kddw_fakeMouseButton(QPoint globalPos, bool isPress);
+QCoro::Task<bool> kddw_fakeMouseMove(Point globalPos);
+QCoro::Task<bool> kddw_fakeMouseButton(Point globalPos, bool isPress);
 
-void Platform::tests_pressOn(QPoint globalPos, Core::View *)
+void Platform::tests_pressOn(Point globalPos, Core::View *)
 {
     kddw_fakeMouseButton(globalPos, /*isPress=*/true);
 }
 
-void Platform::tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window>)
+void Platform::tests_pressOn(Point globalPos, std::shared_ptr<Core::Window>)
 {
     kddw_fakeMouseButton(globalPos, /*isPress=*/true);
 }
 
-KDDW_QCORO_TASK Platform::tests_releaseOn(QPoint globalPos, Core::View *)
+KDDW_QCORO_TASK Platform::tests_releaseOn(Point globalPos, Core::View *)
 {
     co_await kddw_fakeMouseButton(globalPos, /*isPress=*/false);
     co_return true;
 }
 
-KDDW_QCORO_TASK Platform::tests_mouseMove(QPoint globalPos, Core::View *)
+KDDW_QCORO_TASK Platform::tests_mouseMove(Point globalPos, Core::View *)
 {
     co_await kddw_fakeMouseMove(globalPos);
     co_return true;

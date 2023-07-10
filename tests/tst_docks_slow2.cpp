@@ -129,7 +129,7 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
     {
         // 2. Tests a case where restoring a dock widget wouldn't make it use all its available
         // space
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
@@ -174,7 +174,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(fw2->view()->window(), Event::Move);
 
     auto da2 = fw2->dropArea();
-    const QPoint dragDestPos = da2->mapToGlobal(da2->rect().center());
+    const Point dragDestPos = da2->mapToGlobal(da2->rect().center());
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, dragDestPos);
     CHECK(fw2->dropArea()->checkSanity());
     CHECK_EQ(fw2->groups().size(), 1);

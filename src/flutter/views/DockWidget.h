@@ -58,10 +58,10 @@ public:
     ~DockWidget() override;
 
     /// @reimp
-    QSize minSize() const override;
+    Size minSize() const override;
 
     /// @reimp
-    QSize maxSizeHint() const override;
+    Size maxSizeHint() const override;
 
     Core::DockWidget *dockWidget() const;
 

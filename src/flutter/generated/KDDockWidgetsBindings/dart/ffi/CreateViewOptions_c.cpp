@@ -31,15 +31,15 @@ CreateViewOptions_wrapper::CreateViewOptions_wrapper()
     : ::KDDockWidgets::Core::CreateViewOptions()
 {
 }
-QSize CreateViewOptions_wrapper::getMaxSize() const
+KDDockWidgets::Size CreateViewOptions_wrapper::getMaxSize() const
 {
     return ::KDDockWidgets::Core::CreateViewOptions::getMaxSize();
 }
-QSize CreateViewOptions_wrapper::getMinSize() const
+KDDockWidgets::Size CreateViewOptions_wrapper::getMinSize() const
 {
     return ::KDDockWidgets::Core::CreateViewOptions::getMinSize();
 }
-QSize CreateViewOptions_wrapper::getSize() const
+KDDockWidgets::Size CreateViewOptions_wrapper::getSize() const
 {
     return ::KDDockWidgets::Core::CreateViewOptions::getSize();
 }
@@ -69,17 +69,17 @@ void *c_KDDockWidgets__Core__CreateViewOptions__constructor()
 // getMaxSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->getMaxSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getMaxSize() };
 }
 // getMinSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->getMinSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getMinSize() };
 }
 // getSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QSize> { fromPtr(thisObj)->getSize() };
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getSize() };
 }
 void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj)
 {

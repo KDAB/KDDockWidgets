@@ -29,7 +29,7 @@ ItemFreeContainer::~ItemFreeContainer()
 {
 }
 
-void ItemFreeContainer::addDockWidget(Item *item, QPoint localPt)
+void ItemFreeContainer::addDockWidget(Item *item, Point localPt)
 {
     Q_ASSERT(item != this);
     if (contains(item)) {

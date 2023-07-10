@@ -45,20 +45,20 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-inline int lengthForSize(QSize sz, Qt::Orientation o)
+inline int lengthForSize(Size sz, Qt::Orientation o)
 {
     return o == Qt::Vertical ? sz.height() : sz.width();
 }
 
 inline int widgetMinLength(View *view, Qt::Orientation o)
 {
-    const QSize sz = view->minSize();
+    const Size sz = view->minSize();
     return lengthForSize(sz, o);
 }
 
 inline int widgetMinLength(Core::Group *group, Qt::Orientation o)
 {
-    const QSize sz = group->view()->minSize();
+    const Size sz = group->view()->minSize();
     return lengthForSize(sz, o);
 }
 
@@ -78,7 +78,7 @@ KDDW_QCORO_TASK tst_simple2()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dw = createDockWidget(
-        "dw", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dw", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
     auto fw = dw->floatingWindow();
     m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
     m->layout()->checkSanity();
@@ -113,7 +113,7 @@ KDDW_QCORO_TASK tst_resizeWindow2()
     // Tests that resizing the width of the main window will never move horizontal anchors
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
     auto dock2 = createDockWidget("2");
 
@@ -125,7 +125,7 @@ KDDW_QCORO_TASK tst_resizeWindow2()
     auto layout = m->multiSplitter();
     Core::Separator *anchor = layout->separators().at(0);
     const int oldPosY = anchor->position();
-    m->view()->resize(QSize(m->width() + 10, m->height()));
+    m->view()->resize(Size(m->width() + 10, m->height()));
     CHECK_EQ(anchor->position(), oldPosY);
     layout->checkSanity();
 
@@ -140,7 +140,7 @@ KDDW_QCORO_TASK tst_hasLastDockedLocation()
     // Tests Core::DockWidget::hasPreviousDockedLocation()
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
     m->layout()->checkSanity();
     m->multiSplitter()->setObjectName("mainWindow-dropArea");
@@ -174,7 +174,7 @@ KDDW_QCORO_TASK tst_ghostSeparator()
 {
     // Tests a situation where a separator wouldn't be removed after a widget had been removed
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
     auto dock2 = createDockWidget("2");
     auto dock3 = createDockWidget("3");
@@ -206,7 +206,7 @@ KDDW_QCORO_TASK tst_detachFromMainWindow()
 {
     // Tests a situation where clicking the float button wouldn't work on QtQuick
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
     auto fw1 = dock1->window();
     m->addDockWidget(dock1, Location_OnTop);
@@ -225,13 +225,13 @@ KDDW_QCORO_TASK tst_detachPos()
 {
     // Tests a situation where detaching a dock widget would send it to a bogus position
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(
-        "1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }), {}, {},
+        "1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }), {}, {},
         /** show = */ false); // we're creating the dock widgets without showing them as floating
                               // initially, so it doesn't record the previous floating position
     auto dock2 =
-        createDockWidget("2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }),
+        createDockWidget("2", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }),
                          {}, {}, /** show = */ false);
 
     CHECK(!dock1->isVisible());
@@ -256,7 +256,7 @@ KDDW_QCORO_TASK tst_detachPos()
 KDDW_QCORO_TASK tst_floatingWindowSize()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
     auto fw1 = dock1->window();
 
@@ -273,7 +273,7 @@ KDDW_QCORO_TASK tst_tabbingWithAffinities()
     EnsureTopLevelsDeleted e;
     // Tests that dock widgets with different affinities should not tab together
 
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m1 = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     m1->setAffinities({ "af1", "af2" });
 
     auto dw1 = newDockWidget("1");
@@ -316,7 +316,7 @@ KDDW_QCORO_TASK tst_sizeAfterRedock()
     auto dw1 = newDockWidget(QStringLiteral("1"));
     auto dw2 = newDockWidget(QStringLiteral("2"));
     dw2->setGuestView(
-        Platform::instance()->tests_createView({ true, {}, QSize(100, 100) })->asWrapper());
+        Platform::instance()->tests_createView({ true, {}, Size(100, 100) })->asWrapper());
 
     dw1->addDockWidgetToContainingWindow(dw2, Location_OnBottom);
     const int height2 = dw2->dptr()->group()->height();
@@ -334,7 +334,7 @@ KDDW_QCORO_TASK tst_sizeAfterRedock()
     Core::DropArea *ms1 = fw1->multiSplitter();
     {
         WindowBeingDragged wbd2(oldFw2);
-        const QRect suggestedDropRect = ms1->rectForDrop(&wbd2, Location_OnBottom, nullptr);
+        const Rect suggestedDropRect = ms1->rectForDrop(&wbd2, Location_OnBottom, nullptr);
         CHECK_EQ(suggestedDropRect.height(), height2);
     }
 
@@ -350,11 +350,11 @@ KDDW_QCORO_TASK tst_sizeAfterRedock()
 KDDW_QCORO_TASK tst_honourUserGeometry()
 {
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m1 = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dw1 = newDockWidget(QStringLiteral("1"));
     CHECK(!dw1->view()->hasAttribute(Qt::WA_PendingMoveEvent));
 
-    const QPoint pt(10, 10);
+    const Point pt(10, 10);
     dw1->view()->move(pt);
     dw1->open();
     Core::FloatingWindow *fw1 = dw1->floatingWindow();
@@ -392,7 +392,7 @@ KDDW_QCORO_TASK tst_restoreTwice()
     EnsureTopLevelsDeleted e;
 
     auto m =
-        createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+        createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
 
@@ -429,10 +429,10 @@ KDDW_QCORO_TASK tst_restoreEmpty()
     EnsureTopLevelsDeleted e;
 
     // Create an empty main window, save it to disk.
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto layout = m->multiSplitter();
     LayoutSaver saver;
-    const QSize oldSize = m->size();
+    const Size oldSize = m->size();
     CHECK(saver.saveToFile(QStringLiteral("layout_tst_restoreEmpty.json")));
     saver.restoreFromFile(QStringLiteral("layout_tst_restoreEmpty.json"));
     CHECK(m->layout()->checkSanity());
@@ -447,7 +447,7 @@ KDDW_QCORO_TASK tst_restoreEmpty()
 KDDW_QCORO_TASK tst_restoreCentralFrame()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500));
+    auto m = createMainWindow(Size(800, 500));
     auto layout = m->multiSplitter();
 
     CHECK_EQ(layout->count(), 1);
@@ -495,7 +495,7 @@ KDDW_QCORO_TASK tst_restoreFloatingMinimizedState()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
     dock1->floatingWindow()->view()->showMinimized();
 
     CHECK_EQ(dock1->floatingWindow()->view()->window()->windowState(), WindowState::Minimized);
@@ -515,7 +515,7 @@ KDDW_QCORO_TASK tst_restoreNonExistingDockWidget()
     // before restoring the MainWindow's layout
 
     QByteArray saved;
-    const QSize defaultMainWindowSize = { 500, 500 };
+    const Size defaultMainWindowSize = { 500, 500 };
 
     {
         EnsureTopLevelsDeleted e;
@@ -527,7 +527,7 @@ KDDW_QCORO_TASK tst_restoreNonExistingDockWidget()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(defaultMainWindowSize, MainWindowOption_None, "mainwindow1");
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
     m->addDockWidget(dock2, Location_OnBottom);
     LayoutSaver restorer;
     SetExpectedWarning sew("Couldn't find dock widget");
@@ -547,7 +547,7 @@ KDDW_QCORO_TASK tst_setFloatingSimple()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
     m->addDockWidget(dock1, Location_OnTop);
     auto l = m->multiSplitter();
     dock1->setFloating(true);
@@ -594,7 +594,7 @@ KDDW_QCORO_TASK tst_closeDockWidgets()
     auto dock1 = createDockWidget("hello1");
     auto dock2 = createDockWidget("hello2");
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnBottom);
 
@@ -609,15 +609,15 @@ KDDW_QCORO_TASK tst_layoutEqually()
     EnsureTopLevelsDeleted e;
 
     const QString mainWindowId = "{7829427d-88e3-402e-9120-50c628dfd0bc}";
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, mainWindowId);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None, mainWindowId);
     m->setAffinities({ mainWindowId });
 
     auto dock1 = createDockWidget(
-        "Favorite-481", Platform::instance()->tests_createView({ true, {}, QSize(536, 438) }));
+        "Favorite-481", Platform::instance()->tests_createView({ true, {}, Size(536, 438) }));
     auto dock2 = createDockWidget(
-        "Favorite-482", Platform::instance()->tests_createView({ true, {}, QSize(229, 118) }));
+        "Favorite-482", Platform::instance()->tests_createView({ true, {}, Size(229, 118) }));
     auto dock3 = createDockWidget(
-        "Favorite-483", Platform::instance()->tests_createView({ true, {}, QSize(356, 90) }));
+        "Favorite-483", Platform::instance()->tests_createView({ true, {}, Size(356, 90) }));
     dock1->setAffinities({ mainWindowId });
     dock2->setAffinities({ mainWindowId });
     dock3->setAffinities({ mainWindowId });
@@ -798,7 +798,7 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
     {
         // Stack 1, 2, 3, close 2, close 1
 
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
@@ -820,7 +820,7 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
 KDDW_QCORO_TASK tst_addAsPlaceholder()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 =
         createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {}, {}, false);
     auto dock2 =
@@ -855,7 +855,7 @@ KDDW_QCORO_TASK tst_removeItem()
 {
     // Tests that MultiSplitterLayout::removeItem() works
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 =
         createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, {}, false);
@@ -959,7 +959,7 @@ KDDW_QCORO_TASK tst_clear()
     EnsureTopLevelsDeleted e;
     CHECK_EQ(Core::Group::dbg_numFrames(), 0);
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
@@ -989,7 +989,7 @@ KDDW_QCORO_TASK tst_clear()
 KDDW_QCORO_TASK tst_samePositionAfterHideRestore()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
@@ -997,7 +997,7 @@ KDDW_QCORO_TASK tst_samePositionAfterHideRestore()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
-    QRect geo2 = dock2->dptr()->group()->view()->geometry();
+    Rect geo2 = dock2->dptr()->group()->view()->geometry();
     dock2->setFloating(true);
 
     auto fw2 = dock2->floatingWindow();
@@ -1011,7 +1011,7 @@ KDDW_QCORO_TASK tst_samePositionAfterHideRestore()
 KDDW_QCORO_TASK tst_startClosed()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
@@ -1045,7 +1045,7 @@ KDDW_QCORO_TASK tst_crash()
 
     EnsureTopLevelsDeleted e;
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     auto layout = m->multiSplitter();
@@ -1205,7 +1205,7 @@ KDDW_QCORO_TASK tst_availableLengthForOrientation()
 
     // 1. Test a completely empty window, it's available space is its size minus the static
     // separators thickness
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
     auto dropArea = m->dropArea();
     Core::DropArea *layout = dropArea;
 
@@ -1271,7 +1271,7 @@ KDDW_QCORO_TASK tst_placeholderDisappearsOnReadd()
     // should have been deleted and anchors properly positioned
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
     Core::DropArea *layout = m->multiSplitter();
 
     ObjectGuard<Core::DockWidget> dock1 =
@@ -1305,7 +1305,7 @@ KDDW_QCORO_TASK tst_placeholderDisappearsOnReadd()
 KDDW_QCORO_TASK tst_placeholdersAreRemovedProperly()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
     Core::DropArea *layout = m->multiSplitter();
     ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -1363,10 +1363,10 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
     EnsureTopLevelsDeleted e;
     auto dw1 = newDockWidget("1");
     auto dw2 = newDockWidget("2");
-    auto m = createMainWindow(QSize(1200, 1200), MainWindowOption_None);
+    auto m = createMainWindow(Size(1200, 1200), MainWindowOption_None);
 
     m->addDockWidget(dw1, Location_OnTop);
-    m->addDockWidget(dw2, Location_OnBottom, nullptr, QSize(0, 200));
+    m->addDockWidget(dw2, Location_OnBottom, nullptr, Size(0, 200));
 
     CHECK_EQ(dw2->dptr()->group()->height(), 200);
     KDDW_TEST_RETURN(true);
@@ -1436,7 +1436,7 @@ KDDW_QCORO_TASK tst_toggleMiddleDockCrash()
     // tests some crash I got
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central group
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
     Core::DropArea *layout = m->multiSplitter();
     ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -1469,11 +1469,11 @@ KDDW_QCORO_TASK tst_stealFrame()
 {
     // Tests using addWidget() with dock widgets which are already in a layout
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m1 = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
-    auto m2 = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m2 = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
     auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
 
@@ -1734,7 +1734,7 @@ KDDW_QCORO_TASK tst_honourGeometryOfHiddenWindow()
     // Clear had a bug where it saved the position of all dock widgets being closed
     DockRegistry::self()->clear();
 
-    const QRect suggestedGeo(150, 150, 300, 500);
+    const Rect suggestedGeo(150, 150, 300, 500);
     d1->view()->setGeometry(suggestedGeo);
 
     d1->open();
@@ -1766,9 +1766,9 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
         CHECK(fw->dropArea()->checkSanity());
         // When dragging the right one there was a bug where it jumped
-        const QPoint globalSrc = dock2->mapToGlobal(QPoint(0, 0));
+        const Point globalSrc = dock2->mapToGlobal(Point(0, 0));
         const int offset = 10;
-        const QPoint globalDest = globalSrc + QPoint(offset, 0);
+        const Point globalDest = globalSrc + Point(offset, 0);
         CHECK(dock2->isVisible());
 
         // Flutter is a bit slower showing stuff, needs 1 event loop
@@ -1776,7 +1776,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
 
         KDDW_CO_AWAIT drag(dock2->view(), globalDest);
         CHECK(fw->dropArea()->checkSanity());
-        const QPoint actualEndPos = dock2->mapToGlobal(QPoint(0, 0));
+        const Point actualEndPos = dock2->mapToGlobal(Point(0, 0));
         CHECK(actualEndPos.x() - globalSrc.x()
               < offset + 5); // 5px so we have margin for window system fluctuations. The actual
                              // bug was a very big jump like 50px, so a 5 margin is fine to test
@@ -1794,9 +1794,9 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
         CHECK(fw->dropArea()->checkSanity());
 
-        const int originalX = dock2->mapToGlobal(QPoint(0, 0)).x();
+        const int originalX = dock2->mapToGlobal(Point(0, 0)).x();
         dock2->dptr()->group()->titleBar()->makeWindow();
-        const int finalX = dock2->mapToGlobal(QPoint(0, 0)).x();
+        const int finalX = dock2->mapToGlobal(Point(0, 0)).x();
 
         CHECK(finalX - originalX < 10); // 10 or some other small number that is less than say 200
 
@@ -1816,7 +1816,7 @@ KDDW_QCORO_TASK tst_preventClose()
     dock1->setGuestView(nonClosableWidget->asWrapper());
 
     // 1. Test a floating dock widget
-    dock1->view()->resize(QSize(200, 200));
+    dock1->view()->resize(Size(200, 200));
     dock1->open();
     CHECK(dock1->isVisible());
     dock1->close();
@@ -1924,9 +1924,9 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow1()
     m->view()->window()->resize(mainWindowLength, mainWindowLength);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
-    dock1->view()->resize(QSize(800, 800));
-    dock2->view()->resize(QSize(800, 800));
-    dock3->view()->resize(QSize(800, 800));
+    dock1->view()->resize(Size(800, 800));
+    dock2->view()->resize(Size(800, 800));
+    dock3->view()->resize(Size(800, 800));
 
     // Add as tabbed:
     m->addDockWidgetAsTab(dock1);
@@ -1961,9 +1961,9 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
     auto m = createMainWindow();
     auto dropArea = m->dropArea();
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
     m->addDockWidgetAsTab(dock1);
     m->view()->window()->resize(osWindowMinWidth(), 200);
 
@@ -1980,7 +1980,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
 
 
     CHECK(dropArea->layoutWidth() > osWindowMinWidth());
-    QMargins margins = m->centerWidgetMargins();
+    Margins margins = m->centerWidgetMargins();
     CHECK_EQ(dropArea->layoutWidth(), m->width() - margins.left() - margins.right());
     CHECK(m->dropArea()->checkSanity());
     KDDW_TEST_RETURN(true);
@@ -2014,16 +2014,16 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow3()
 KDDW_QCORO_TASK tst_addToSmallMainWindow4()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(100, 100), MainWindowOption_None);
+    auto m = createMainWindow(Size(100, 100), MainWindowOption_None);
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
     CHECK_EQ(m->height(), 100);
 
     auto dropArea = m->dropArea();
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(50, 50) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(50, 50) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
     Core::DropArea *layout = dropArea;
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
     KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
@@ -2044,11 +2044,11 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow5()
     EnsureTopLevelsDeleted e;
     // Test test shouldn't spit any warnings
 
-    auto m = createMainWindow(QSize(100, 100), MainWindowOption_None);
+    auto m = createMainWindow(Size(100, 100), MainWindowOption_None);
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(50, 240) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(50, 240) }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
     CHECK(m->dropArea()->checkSanity());
@@ -2109,7 +2109,7 @@ KDDW_QCORO_TASK tst_restoreNonClosable()
         // Basic case:
 
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 =
             createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }),
                              DockWidgetOption_NotClosable);
@@ -2123,7 +2123,7 @@ KDDW_QCORO_TASK tst_restoreNonClosable()
 
     {
         // Case from issue #137
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
 
         auto dock1 =
             createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
@@ -2164,13 +2164,13 @@ KDDW_QCORO_TASK tst_restoreRestoresMainWindowPosition()
     // Tests that MainWindow position is restored by LayoutSaver
     {
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        const QPoint originalPos = m->pos();
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+        const Point originalPos = m->pos();
 
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
 
-        m->view()->move(originalPos + QPoint(100, 100));
+        m->view()->move(originalPos + Point(100, 100));
 
         saver.restoreLayout(saved);
         CHECK_EQ(originalPos, m->pos());
@@ -2184,7 +2184,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
 
     // Stack 1, 2, 3, close 2, close 2
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         Core::DropArea *layout = m->multiSplitter();
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
@@ -2204,7 +2204,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
     }
 
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
@@ -2257,13 +2257,13 @@ KDDW_QCORO_TASK tst_rectForDropCrash()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow();
-    m->view()->resize(QSize(500, 500));
+    m->view()->resize(Size(500, 500));
     m->show();
 
     auto layout = m->multiSplitter();
 
-    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
-    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w1 = Platform::instance()->tests_createView({ true, {}, Size(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, Size(400, 400) });
 
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
@@ -2283,15 +2283,15 @@ KDDW_QCORO_TASK tst_restoreAfterResize()
     // Tests a crash I got when the layout received a resize event *while* restoring
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreAfterResize");
+    auto m = createMainWindow(Size(500, 500), {}, "tst_restoreAfterResize");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitter();
-    const QSize oldContentsSize = layout->layoutSize();
-    const QSize oldWindowSize = m->size();
+    const Size oldContentsSize = layout->layoutSize();
+    const Size oldWindowSize = m->size();
     LayoutSaver saver;
     CHECK(saver.saveToFile(QStringLiteral("layout_tst_restoreAfterResize.json")));
-    m->view()->resize(QSize(1000, 1000));
+    m->view()->resize(Size(1000, 1000));
     CHECK(saver.restoreFromFile(QStringLiteral("layout_tst_restoreAfterResize.json")));
 
     if (oldContentsSize != layout->layoutSize()) {
@@ -2308,7 +2308,7 @@ KDDW_QCORO_TASK tst_restoreAfterResize()
 KDDW_QCORO_TASK tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithNonClosableWidget");
+    auto m = createMainWindow(Size(500, 500), {}, "tst_restoreWithNonClosableWidget");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createNonClosableView(),
                                   DockWidgetOption_NotClosable);
     m->addDockWidget(dock1, Location_OnLeft);
@@ -2325,12 +2325,12 @@ KDDW_QCORO_TASK tst_restoreNestedAndTabbed()
 {
     // Just a more involved test
 
-    QPoint oldFW4Pos;
-    QRect oldGeo;
+    Point oldFW4Pos;
+    Rect oldGeo;
     {
         EnsureTopLevelsDeleted e;
         auto m =
-            createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
+            createMainWindow(Size(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
         m->view()->move(500, 500);
         oldGeo = m->geometry();
         auto layout = m->multiSplitter();
@@ -2362,7 +2362,7 @@ KDDW_QCORO_TASK tst_restoreNestedAndTabbed()
     }
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
     auto layout = m->multiSplitter();
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
@@ -2422,12 +2422,12 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
     // Save a layout that has a floating window with nesting
     EnsureTopLevelsDeleted e;
 
-    QSize item2MinSize;
+    Size item2MinSize;
     {
         EnsureTopLevelsDeleted e1;
         // MainWindow:
         auto m =
-            createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+            createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidgetAsTab(dock1);
         auto layout = m->multiSplitter();
@@ -2445,7 +2445,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
 
     {
         auto m =
-            createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+            createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
@@ -2464,7 +2464,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     auto m =
-        createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+        createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
@@ -2486,7 +2486,7 @@ KDDW_QCORO_TASK tst_restoreWithPlaceholder()
 
     EnsureTopLevelsDeleted e;
     {
-        auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithPlaceholder");
+        auto m = createMainWindow(Size(500, 500), {}, "tst_restoreWithPlaceholder");
 
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnLeft);
@@ -2516,7 +2516,7 @@ KDDW_QCORO_TASK tst_restoreWithPlaceholder()
     }
 
     // Try again, but on a different main window
-    auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithPlaceholder");
+    auto m = createMainWindow(Size(500, 500), {}, "tst_restoreWithPlaceholder");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto layout = m->multiSplitter();
 
@@ -2542,9 +2542,9 @@ KDDW_QCORO_TASK tst_restoreWithAffinity()
 {
     EnsureTopLevelsDeleted e;
 
-    auto m1 = createMainWindow(QSize(500, 500));
+    auto m1 = createMainWindow(Size(500, 500));
     m1->setAffinities({ "a1" });
-    auto m2 = createMainWindow(QSize(500, 500));
+    auto m2 = createMainWindow(Size(500, 500));
     m2->setAffinities({ "a2" });
 
     auto dock1 =
@@ -2589,7 +2589,7 @@ KDDW_QCORO_TASK tst_marginsAfterRestore()
     {
         EnsureTopLevelsDeleted e1;
         // MainWindow:
-        auto m = createMainWindow(QSize(500, 500), {}, "tst_marginsAfterRestore");
+        auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnLeft);
         auto layout = m->multiSplitter();
@@ -2634,7 +2634,7 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory()
     // a factory
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitter();
@@ -2681,7 +2681,7 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory2()
     // For example, if id "foo" is missing, the factory can return a
     // dock widget with id "bar" if it feels like it
 
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
 
     auto dock1 = createDockWidget("dw1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
@@ -2824,7 +2824,7 @@ KDDW_QCORO_TASK tst_dragOverTitleBar()
     {
         WindowBeingDragged wbd(fw2, fw2);
 
-        const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
+        const Point titleBarPoint = fw1->titleBar()->mapToGlobal(Point(5, 5));
 
         auto loc = da->hover(&wbd, titleBarPoint);
         CHECK_EQ(loc, DropLocation_None);
@@ -2839,17 +2839,17 @@ KDDW_QCORO_TASK tst_setFloatingGeometry()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
 
     CHECK(dock1->isVisible());
-    const QRect requestedGeo = QRect(70, 70, 400, 400);
+    const Rect requestedGeo = Rect(70, 70, 400, 400);
     dock1->setFloatingGeometry(requestedGeo);
     CHECK_EQ(dock1->window()->geometry(), requestedGeo);
 
     dock1->close();
     CHECK(!dock1->isVisible());
 
-    const QRect requestedGeo2 = QRect(80, 80, 400, 400);
+    const Rect requestedGeo2 = Rect(80, 80, 400, 400);
     dock1->setFloatingGeometry(requestedGeo2);
     dock1->open();
 
@@ -2861,7 +2861,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
 {
     EnsureTopLevelsDeleted e;
     {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dropArea = m->dropArea();
@@ -2887,7 +2887,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         // 2. Try again, but now detach from tab before putting it on the bottom. What was happening
         // was that MultiSplitterLayout::addWidget() called with a MultiSplitter as widget wasn't
         // setting the layout items for the dock widgets
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dropArea = m->dropArea();
@@ -3162,7 +3162,7 @@ KDDW_QCORO_TASK tst_isInMainWindow()
     dw->open();
     auto fw = dw->window();
     CHECK(!dw->isInMainWindow());
-    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    auto m1 = createMainWindow(Size(2560, 809), MainWindowOption_None, "MainWindow1");
     m1->addDockWidget(dw, KDDockWidgets::Location_OnLeft);
     CHECK(dw->isInMainWindow());
 
@@ -3352,7 +3352,7 @@ KDDW_QCORO_TASK tst_stuckSeparator()
     const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/stuck-separator.json"));
 
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    auto m1 = createMainWindow(Size(2560, 809), MainWindowOption_None, "MainWindow1");
     const int numDockWidgets = 26;
     Core::DockWidget *dw25 = nullptr;
     for (int i = 0; i < numDockWidgets; ++i) {
@@ -3386,11 +3386,11 @@ KDDW_QCORO_TASK tst_stuckSeparator()
 KDDW_QCORO_TASK tst_titlebar_getter()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame);
-    m->view()->resize(QSize(500, 500));
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralFrame);
+    m->view()->resize(Size(500, 500));
     m->show();
 
-    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w1 = Platform::instance()->tests_createView({ true, {}, Size(400, 400) });
     auto d1 = createDockWidget("1", w1);
 
     m->addDockWidget(d1, Location_OnTop);
@@ -3406,8 +3406,8 @@ KDDW_QCORO_TASK tst_titlebar_getter()
 KDDW_QCORO_TASK tst_dockNotFillingSpace()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000));
-    m->view()->resize(QSize(500, 500));
+    auto m = createMainWindow(Size(1000, 1000));
+    m->view()->resize(Size(500, 500));
     m->show();
 
     auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
@@ -3438,7 +3438,7 @@ KDDW_QCORO_TASK tst_lastFloatingPositionIsRestored()
     auto m1 = createMainWindow();
     auto dock1 = createDockWidget("dock1");
     dock1->open();
-    QPoint targetPos = QPoint(340, 340);
+    Point targetPos = Point(340, 340);
     dock1->window()->window()->setFramePosition(targetPos);
     CHECK_EQ(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
@@ -3494,7 +3494,7 @@ KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
     auto oldFw2 = dock2->window();
     auto oldFw3 = dock3->window();
 
-    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    auto m1 = createMainWindow(Size(2560, 809), MainWindowOption_None, "MainWindow1");
 
     m1->addDockWidget(dock1, Location_OnLeft);
     m1->addDockWidget(dock2, Location_OnRight);
@@ -3512,8 +3512,8 @@ KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
     Core::TabBar *tb2 = group2->tabBar();
     CHECK_EQ(tb2->currentIndex(), 1); // Was the last to be added
 
-    const QRect rect0 = tb2->rectForTab(0);
-    const QPoint globalPos = tb2->view()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
+    const Rect rect0 = tb2->rectForTab(0);
+    const Point globalPos = tb2->view()->mapToGlobal(rect0.topLeft()) + Point(5, 5);
     Tests::clickOn(globalPos, tb2->view());
 
     CHECK(!titleBar1->isFocused());
@@ -4058,7 +4058,7 @@ KDDW_QCORO_TASK tst_doubleClickTabToDetach()
     CHECK_EQ(group->currentIndex(), 1);
 
     auto tb = group->stack()->view();
-    Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), group->view()->window());
+    Tests::doubleClickOn(tb->mapToGlobal(Point(20, 20)), group->view()->window());
 
     CHECK(dock1->isFloating());
     CHECK(dock2->isFloating());
@@ -4069,7 +4069,7 @@ KDDW_QCORO_TASK tst_doubleClickTabToDetach()
 KDDW_QCORO_TASK tst_addingOptionHiddenTabbed()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnTop);
@@ -4089,7 +4089,7 @@ KDDW_QCORO_TASK tst_flagDoubleClick()
     {
         EnsureTopLevelsDeleted e;
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_DoubleClickMaximizes);
-        auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(500, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnTop);
@@ -4098,14 +4098,14 @@ KDDW_QCORO_TASK tst_flagDoubleClick()
         CHECK(!fw2->view()->isMaximized());
         Core::TitleBar *t2 = dock2->titleBar();
 
-        QPoint pos = t2->mapToGlobal(QPoint(5, 5));
+        Point pos = t2->mapToGlobal(Point(5, 5));
         Platform::instance()->tests_doubleClickOn(pos, t2->view());
         CHECK(fw2->view()->isMaximized());
         delete fw2;
 
         Core::TitleBar *t1 = dock1->titleBar();
         CHECK(!t1->isFloating());
-        pos = t1->mapToGlobal(QPoint(5, 5));
+        pos = t1->mapToGlobal(Point(5, 5));
         Platform::instance()->tests_doubleClickOn(pos, t1->view());
         CHECK(t1->isFloating());
         CHECK(!dock1->window()->isMaximized());
@@ -4113,20 +4113,20 @@ KDDW_QCORO_TASK tst_flagDoubleClick()
 
     {
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(500, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
 
         m->addDockWidget(dock1, Location_OnTop);
 
         Core::TitleBar *t1 = dock1->titleBar();
         CHECK(!t1->isFloating());
-        QPoint pos = t1->mapToGlobal(QPoint(5, 5));
+        Point pos = t1->mapToGlobal(Point(5, 5));
         Platform::instance()->tests_doubleClickOn(pos, t1->view());
         CHECK(t1->isFloating());
         CHECK(dock1->isFloating());
         CHECK(!dock1->window()->isMaximized());
 
-        pos = t1->mapToGlobal(QPoint(5, 5));
+        pos = t1->mapToGlobal(Point(5, 5));
         Platform::instance()->tests_doubleClickOn(pos, t1->view());
         CHECK(!dock1->isFloating());
     }
@@ -4136,13 +4136,13 @@ KDDW_QCORO_TASK tst_flagDoubleClick()
 KDDW_QCORO_TASK tst_maxSizedHonouredAfterRemoved()
 {
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m1 = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dock1 = newDockWidget("dock1");
     dock1->open();
 
-    auto w = Platform::instance()->tests_createView({ true, {}, QSize(100, 100) });
-    w->setMinimumSize(QSize(120, 100));
-    w->setMaximumSize(QSize(300, 150));
+    auto w = Platform::instance()->tests_createView({ true, {}, Size(100, 100) });
+    w->setMinimumSize(Size(120, 100));
+    w->setMaximumSize(Size(300, 150));
     dock1->setGuestView(w->asWrapper());
     m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnLeft);
 
@@ -4284,7 +4284,7 @@ KDDW_QCORO_TASK tst_closeTabHidesDockWidget()
 
     {
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("doc1");
         auto dock2 = createDockWidget("doc2");
         auto dock3 = createDockWidget("doc3");
@@ -4376,12 +4376,12 @@ KDDW_QCORO_TASK tst_constraintsPropagateUp()
     EnsureTopLevelsDeleted e;
     const int minWidth = 500;
     const int minHeight = 400;
-    const QSize minSz = { minWidth, minHeight };
+    const Size minSz = { minWidth, minHeight };
     auto guestWidget =
-        Platform::instance()->tests_createView({ true, {}, QSize(minWidth, minHeight) });
+        Platform::instance()->tests_createView({ true, {}, Size(minWidth, minHeight) });
     auto dock1 = createDockWidget("dock1", guestWidget);
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(minWidth, minHeight) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(minWidth, minHeight) }));
 
     CHECK_EQ(widgetMinLength(guestWidget, Qt::Vertical), minHeight);
     CHECK_EQ(widgetMinLength(guestWidget, Qt::Horizontal), minWidth);
@@ -4407,14 +4407,14 @@ KDDW_QCORO_TASK tst_constraintsPropagateUp()
 KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_None);
     const int minHeight = 400;
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, minHeight) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(400, minHeight) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
     auto dock3 = createDockWidget(
-        "dock3", Platform::instance()->tests_createView({ true, {}, QSize(400, minHeight) }));
+        "dock3", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
     auto dropArea = m->dropArea();
     Core::DropArea *layout = dropArea;
 
@@ -4436,7 +4436,7 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
     Item *item2 = layout->itemForFrame(dock2->dptr()->group());
     Item *item3 = layout->itemForFrame(dock3->dptr()->group());
 
-    QMargins margins = m->centerWidgetMargins();
+    Margins margins = m->centerWidgetMargins();
     const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical)
         + 1 * Item::separatorThickness + margins.top() + margins.bottom();
 
@@ -4453,17 +4453,17 @@ KDDW_QCORO_TASK tst_dragBySingleTab()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AlwaysShowTabs);
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     dock1->open();
 
     auto group1 = dock1->dptr()->group();
 
-    QPoint globalPressPos = dragPointForWidget(group1, 0);
+    Point globalPressPos = dragPointForWidget(group1, 0);
     Core::TabBar *tabBar = group1->stack()->tabBar();
     CHECK(tabBar);
     SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing
                                                            // in this case
-    KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, QPoint(0, 0));
+    KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, Point(0, 0));
 
     delete dock1;
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1);
@@ -4476,7 +4476,7 @@ KDDW_QCORO_TASK tst_deleteOnClose()
         EnsureTopLevelsDeleted e;
         // Tests that DockWidget::close() deletes itself if Option_DeleteOnClose is set
         ObjectGuard<Core::DockWidget> dock1 = createDockWidget(
-            "1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+            "1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }),
             DockWidgetOption_DeleteOnClose);
         dock1->open();
         dock1->close();
@@ -4490,10 +4490,10 @@ KDDW_QCORO_TASK tst_deleteOnClose()
         EnsureTopLevelsDeleted e;
 
         ObjectGuard<Core::DockWidget> dock1 = createDockWidget(
-            "1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+            "1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }),
             DockWidgetOption_DeleteOnClose, {}, /*show=*/false);
         ObjectGuard<Core::DockWidget> dock2 = createDockWidget(
-            "2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), {}, {},
+            "2", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }), {}, {},
             /*show=*/false);
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
@@ -4516,13 +4516,13 @@ KDDW_QCORO_TASK tst_deleteOnClose()
 KDDW_QCORO_TASK tst_toggleAction()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock2", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     auto dock3 = createDockWidget(
-        "dock3", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock3", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
@@ -4551,11 +4551,11 @@ KDDW_QCORO_TASK tst_redocksToPreviousTabIndex()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AllowReorderTabs);
 
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     m->addDockWidget(dock0, Location_OnLeft);
     dock0->addDockWidgetAsTab(dock1);
 
@@ -4597,11 +4597,11 @@ KDDW_QCORO_TASK tst_toggleTabbed()
     // Testing the weird bugs reported in #211
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
 
     m->addDockWidget(dock0, Location_OnBottom);
     dock0->addDockWidgetAsTab(dock1);
@@ -4637,9 +4637,9 @@ KDDW_QCORO_TASK tst_toggleTabbed2()
     // Testing the weird bugs reported in #215
     EnsureTopLevelsDeleted e;
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     dock0->addDockWidgetAsTab(dock1);
 
     dock0->setAsCurrentTab();
@@ -4666,7 +4666,7 @@ KDDW_QCORO_TASK tst_resizePropagatesEvenly()
     // times then one dock widget is getting too small. Not repro with all layouts, but the
     // following one reproduced it:
 
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true }));
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
@@ -4677,9 +4677,9 @@ KDDW_QCORO_TASK tst_resizePropagatesEvenly()
 
     CHECK(qAbs(dock2->height() - dock1->height()) < 2);
 
-    m->view()->resize(m->size() + QSize(0, 500));
+    m->view()->resize(m->size() + Size(0, 500));
     for (int i = 1; i < 10; ++i)
-        m->view()->resize(m->size() - QSize(0, i));
+        m->view()->resize(m->size() - Size(0, i));
 
     CHECK(qAbs(dock2->height() - dock1->height()) < 3);
     KDDW_TEST_RETURN(true);
@@ -4690,10 +4690,10 @@ KDDW_QCORO_TASK tst_addMDIDockWidget()
     EnsureTopLevelsDeleted e;
 
     // Test that adding a MDI dock widget doesn't produce any warning
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-    m->layout()->asMDILayout()->addDockWidget(dock0, QPoint(0, 0), {});
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
 
     // MDI doesn't support LayoutSaver yet, but it was crashing, so add a test
     // to catch further crashes
@@ -4707,25 +4707,25 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     // Tests that setFloating(false) puts the dock widget where it was before floating
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
 
     auto layout = m->layout()->asMDILayout();
-    const QPoint initialPoint = QPoint(500, 500);
+    const Point initialPoint = Point(500, 500);
     layout->addDockWidget(dock0, initialPoint, {});
 
     Core::Group *group = dock0->DockWidget::d->group();
     CHECK_EQ(group->view()->pos(), initialPoint);
 
-    const QSize initialSize = group->size();
+    const Size initialSize = group->size();
 
     dock0->setFloating(true);
     dock0->setFloating(false);
     group = dock0->DockWidget::d->group();
     CHECK_EQ(group->view()->pos(), initialPoint);
 
-    const QPoint anotherPos = QPoint(250, 250);
+    const Point anotherPos = Point(250, 250);
     dock0->setMDIPosition(anotherPos);
 
     dock0->setFloating(true);
@@ -4738,7 +4738,7 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     CHECK_EQ(group->view()->pos(), anotherPos);
     CHECK_EQ(group->size(), initialSize);
 
-    const QSize anotherSize = QSize(500, 500);
+    const Size anotherSize = Size(500, 500);
     dock0->setMDISize(anotherSize);
     CHECK_EQ(group->size(), anotherSize);
     item = layout->itemForFrame(group);
@@ -4753,7 +4753,7 @@ KDDW_QCORO_TASK tst_restoreWithNativeTitleBar()
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_NativeTitleBar);
 
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
     dock0->window()->move(100, 100);
 
     CHECK(!dock0->titleBar()->isVisible());
@@ -4773,7 +4773,7 @@ KDDW_QCORO_TASK tst_restoreWithNativeTitleBar()
 KDDW_QCORO_TASK tst_closeTabOfCentralFrame()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame,
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame,
                               "tst_closeTabOfCentralFrame");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
@@ -4790,7 +4790,7 @@ KDDW_QCORO_TASK tst_centralGroupAffinity()
     EnsureTopLevelsDeleted e;
 
     auto m =
-        createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
+        createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
     const QStringList affinities = { "a" };
     m->setAffinities(affinities);
 
@@ -4802,7 +4802,7 @@ KDDW_QCORO_TASK tst_centralGroupAffinity()
 KDDW_QCORO_TASK tst_persistentCentralWidget()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget);
     auto dockwidgets = m->dropArea()->dockWidgets();
     CHECK_EQ(dockwidgets.size(), 1);
 
@@ -4830,7 +4830,7 @@ KDDW_QCORO_TASK tst_unfloatTabbedFloatingWidgets()
     /// Tests that we're able to float the entire tab group and
     /// put it back into the main window when float button is pressed again.
 
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock0, Location_OnLeft);
@@ -4883,7 +4883,7 @@ KDDW_QCORO_TASK tst_currentTabMatchesDockWidget()
     // Tests that if a dock widget is current, then it's also visible. And vice-versa.
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
@@ -4916,7 +4916,7 @@ KDDW_QCORO_TASK tst_currentTabMatchesDockWidget()
 KDDW_QCORO_TASK tst_titlebarNumDockWidgetsChanged()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
 
@@ -4950,7 +4950,7 @@ KDDW_QCORO_TASK tst_titlebarNumDockWidgetsChanged()
 KDDW_QCORO_TASK tst_closed()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
     auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
 
@@ -5024,7 +5024,7 @@ KDDW_QCORO_TASK tst_restoreFlagsFromVersion16()
 KDDW_QCORO_TASK tst_map()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
     auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
 
@@ -5032,8 +5032,8 @@ KDDW_QCORO_TASK tst_map()
     m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
-    const QPoint localPt = { 10, 10 };
-    QPoint global = dockA->view()->mapToGlobal(localPt);
+    const Point localPt = { 10, 10 };
+    Point global = dockA->view()->mapToGlobal(localPt);
     CHECK_EQ(dockA->view()->mapFromGlobal(global), localPt);
 
     global = dockB->view()->mapToGlobal(localPt);
@@ -5045,7 +5045,7 @@ KDDW_QCORO_TASK tst_map()
 KDDW_QCORO_TASK tst_childViewAt()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
     auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
     auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
 
@@ -5054,7 +5054,7 @@ KDDW_QCORO_TASK tst_childViewAt()
     m->show();
 
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
-    const QPoint localPt = { 100, 200 };
+    const Point localPt = { 100, 200 };
     auto child = m->view()->childViewAt(localPt);
     CHECK(child);
     CHECK(!child->equals(m->view()));
@@ -5099,6 +5099,127 @@ KDDW_QCORO_TASK tst_scopedValueRollback()
 
     CHECK(!v1);
     CHECK(v2);
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_point()
+{
+    Point pt;
+    CHECK(pt.isNull());
+    CHECK_EQ(pt, Point(0, 0));
+
+    pt = { 1, 0 };
+    CHECK(!pt.isNull());
+
+    pt = { -5, 5 };
+    CHECK_EQ(pt.manhattanLength(), 10);
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_size()
+{
+    Size sz;
+    CHECK_EQ(sz, Size(-1, -1));
+    CHECK(!sz.isNull());
+    CHECK(!sz.isValid());
+    CHECK(sz.isEmpty());
+
+    sz = { 1, 1 };
+    CHECK(!sz.isNull());
+    CHECK(sz.isValid());
+    CHECK(!sz.isEmpty());
+
+    sz = { 1, 0 };
+    CHECK(!sz.isNull());
+    CHECK(sz.isValid());
+    CHECK(sz.isEmpty());
+
+    sz = { 0, 0 };
+    CHECK(sz.isNull());
+    CHECK(sz.isValid());
+    CHECK(sz.isEmpty());
+
+    CHECK_EQ(Size(100, 100).expandedTo(Size(50, 200)), Size(100, 200));
+    CHECK_EQ(Size(100, 100).boundedTo(Size(50, 200)), Size(50, 100));
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_rect()
+{
+    Rect r;
+
+    CHECK(!r.isValid());
+    CHECK(r.isEmpty());
+    CHECK(r.isNull());
+
+    r = { 0, 1, 100, 50 };
+    CHECK(r.isValid());
+    CHECK(!r.isEmpty());
+    CHECK(!r.isNull());
+    CHECK_EQ(r.width(), 100);
+    CHECK_EQ(r.height(), 50);
+    CHECK_EQ(r.y(), 1);
+    CHECK_EQ(r.x(), 0);
+    CHECK_EQ(r.size(), Size(100, 50));
+    CHECK_EQ(r.topLeft(), Point(0, 1));
+    CHECK_EQ(r.bottomLeft(), Point(0, 50));
+    CHECK_EQ(r.bottomRight(), Point(99, 50));
+    CHECK_EQ(r.bottom(), 50);
+    CHECK_EQ(r.right(), 99);
+    CHECK_EQ(r.left(), 0);
+    CHECK_EQ(Rect(0, 0, 50, 50).center(), Point(24, 24));
+
+    r.moveTop(200);
+    r.moveLeft(300);
+    CHECK_EQ(r.topLeft(), Point(300, 200));
+    CHECK_EQ(r.size(), Size(100, 50));
+
+    r.moveBottom(200);
+    r.moveRight(200);
+    CHECK_EQ(r, Rect(101, 151, 100, 50));
+
+    r.moveTo(0, 0);
+    CHECK_EQ(r, Rect(0, 0, 100, 50));
+    CHECK_EQ(r.center(), Point(49, 24));
+    Point newCenter(50, 50);
+    r.moveCenter(newCenter);
+    CHECK_EQ(r.center(), Point(50, 50));
+
+    r = { 100, 100, 100, 100 };
+    r.setLeft(0);
+    CHECK_EQ(r.topLeft(), Point(0, 100));
+    CHECK_EQ(r.size(), Size(200, 100));
+    r.setTop(0);
+    CHECK_EQ(r.topLeft(), Point(0, 0));
+    CHECK_EQ(r.size(), Size(200, 200));
+
+    r.setRight(99);
+    CHECK_EQ(r.size(), Size(100, 200));
+
+    r.setBottom(99);
+    CHECK_EQ(r.size(), Size(100, 100));
+
+    r = { 100, 100, 100, 100 };
+    r = r.marginsAdded({ 1, 2, 3, 4 });
+    CHECK_EQ(r, Rect(99, 98, 104, 106));
+
+    r = { 100, 100, 100, 100 };
+    const Rect r2 = { 100, 100, 200, 200 };
+
+    CHECK_EQ(r.intersected(r2), Rect(100, 100, 100, 100));
+    CHECK(r.intersects(r2));
+
+    CHECK(Rect(0, 0, 100, 100).contains({ 99, 99, 1, 1 }));
+    CHECK(!Rect(0, 0, 100, 100).contains({ 99, 99, 2, 2 }));
+    CHECK(!Rect(0, 0, 100, 100).contains({ 99, 100, 1, 1 }));
+
+    r = { 0, 0, 100, 100 };
+    CHECK_EQ(r.adjusted(1, 2, 3, 4), Rect(1, 2, 102, 102));
+    r.adjust(1, 2, 3, 4);
+    CHECK_EQ(r, Rect(1, 2, 102, 102));
 
     KDDW_TEST_RETURN(true);
 }
@@ -5208,6 +5329,9 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_detachPos),
         TEST(tst_floatMaintainsSize),
         TEST(tst_scopedValueRollback),
+        TEST(tst_size),
+        TEST(tst_point),
+        TEST(tst_rect),
 #if !defined(KDDW_FRONTEND_FLUTTER)
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),

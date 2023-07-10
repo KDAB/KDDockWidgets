@@ -36,7 +36,7 @@ public:
     DockWidget *dockWidgetAt(int index) const;
 
     ///@overload
-    DockWidget *dockWidgetAt(QPoint localPos) const;
+    DockWidget *dockWidgetAt(Point localPos) const;
 
     /// @brief Returns the current dock widget
     DockWidget *currentDockWidget() const;
@@ -53,12 +53,12 @@ public:
                           const QString &title);
 
     // Draggable
-    bool dragCanStart(QPoint pressPos, QPoint pos) const override;
+    bool dragCanStart(Point pressPos, Point pos) const override;
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     bool isWindow() const override;
 
-    void onMousePress(QPoint localPos);
-    void onMouseDoubleClick(QPoint localPos);
+    void onMousePress(Point localPos);
+    void onMouseDoubleClick(Point localPos);
 
     ///@brief returns whether there's only 1 tab
     bool hasSingleDockWidget() const;
@@ -77,7 +77,7 @@ public:
 
     void moveTabTo(int from, int to);
     QString text(int index) const;
-    QRect rectForTab(int index) const;
+    Rect rectForTab(int index) const;
     ///@brief rename's the tab's text
     void renameTab(int index, const QString &);
 

@@ -12,10 +12,9 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/NonQtCompat_p.h"
 
 QT_BEGIN_NAMESPACE
-class QPoint;
-class QRect;
 class Icon;
 class QString;
 QT_END_NAMESPACE
@@ -42,9 +41,9 @@ public:
     /// This is only used by tests, to make sure your tab's text is correct
     virtual QString text(int index) const = 0;
 
-    virtual int tabAt(QPoint localPt) const = 0;
+    virtual int tabAt(Point localPt) const = 0;
     virtual void moveTabTo(int from, int to) = 0;
-    virtual QRect rectForTab(int index) const = 0;
+    virtual Rect rectForTab(int index) const = 0;
     virtual void setCurrentIndex(int index) = 0;
 
     virtual void renameTab(int index, const QString &) = 0;

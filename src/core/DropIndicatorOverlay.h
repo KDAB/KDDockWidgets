@@ -16,8 +16,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Controller.h"
 
-#include <QRect>
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -53,21 +51,21 @@ public:
 
     void setHoveredGroup(Group *);
     void setWindowBeingDragged(bool);
-    QRect hoveredGroupRect() const;
+    Rect hoveredGroupRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
     Group *hoveredGroup() const;
 
     virtual void setCurrentDropLocation(DropLocation);
 
-    KDDockWidgets::DropLocation hover(QPoint globalPos);
+    KDDockWidgets::DropLocation hover(Point globalPos);
 
     /// Clears and hides drop indicators
     void removeHover();
 
     /// @brief returns the position of the specified drop location
     /// The return is in global coordinates
-    virtual QPoint posForIndicator(DropLocation) const = 0;
+    virtual Point posForIndicator(DropLocation) const = 0;
 
     /// @brief Returns whether the specified drop indicator should be visible
     virtual bool dropIndicatorVisible(DropLocation) const;
@@ -79,13 +77,13 @@ public:
 
 private:
     void onGroupDestroyed();
-    void setHoveredGroupRect(QRect);
-    QRect m_hoveredGroupRect;
+    void setHoveredGroupRect(Rect);
+    Rect m_hoveredGroupRect;
     DropLocation m_currentDropLocation = DropLocation_None;
     Private *const d;
 
 protected:
-    virtual DropLocation hover_impl(QPoint globalPos) = 0;
+    virtual DropLocation hover_impl(Point globalPos) = 0;
     virtual void onHoveredGroupChanged(Group *);
     virtual void updateVisibility();
 

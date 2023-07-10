@@ -18,8 +18,6 @@
 #include "core/Window.h"
 #include "nlohmann_helpers_p.h"
 
-#include <QRect>
-
 #include <memory>
 #include <unordered_map>
 
@@ -69,7 +67,7 @@ struct LayoutSaver::Placeholder
 struct LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
-    explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex);
+    explicit ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo, int screenIndex);
 
     bool isValid() const
     {
@@ -77,14 +75,14 @@ struct LayoutSaver::ScalingInfo
             && !((qFuzzyCompare(widthFactor, 1) && qFuzzyCompare(heightFactor, 1)));
     }
 
-    void translatePos(QPoint &) const;
-    void applyFactorsTo(QPoint &) const;
-    void applyFactorsTo(QSize &) const;
-    void applyFactorsTo(QRect &) const;
+    void translatePos(Point &) const;
+    void applyFactorsTo(Point &) const;
+    void applyFactorsTo(Size &) const;
+    void applyFactorsTo(Rect &) const;
 
     QString mainWindowName;
-    QRect savedMainWindowGeometry;
-    QRect realMainWindowGeometry;
+    Rect savedMainWindowGeometry;
+    Rect realMainWindowGeometry;
     double heightFactor = -1;
     double widthFactor = -1;
     bool mainWindowChangedScreen = false;
@@ -92,11 +90,11 @@ struct LayoutSaver::ScalingInfo
 
 struct LayoutSaver::Position
 {
-    QRect lastFloatingGeometry;
+    Rect lastFloatingGeometry;
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
-    std::unordered_map<SideBarLocation, QRect> lastOverlayedGeometries;
+    std::unordered_map<SideBarLocation, Rect> lastOverlayedGeometries;
 
     /// Iterates through the layout and patches all absolute sizes. See
     /// RestoreOption_RelativeToMainWindow.
@@ -164,7 +162,7 @@ struct LayoutSaver::Group
 
     bool isNull = true;
     QString objectName;
-    QRect geometry;
+    Rect geometry;
     QFlags<FrameOption>::Int options;
     int currentTabIndex;
     QString id; // for coorelation purposes
@@ -205,11 +203,11 @@ struct LayoutSaver::FloatingWindow
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QStringList affinities;
     int parentIndex = -1;
-    QRect geometry;
-    QRect normalGeometry;
+    Rect geometry;
+    Rect normalGeometry;
     int screenIndex;
     int flags = -1;
-    QSize screenSize; // for relative-size restoring
+    Size screenSize; // for relative-size restoring
     bool isVisible = true;
 
     // The instance that was created during a restore:
@@ -235,10 +233,10 @@ public:
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;
     QStringList affinities;
-    QRect geometry;
-    QRect normalGeometry;
+    Rect geometry;
+    Rect normalGeometry;
     int screenIndex;
-    QSize screenSize; // for relative-size restoring
+    Size screenSize; // for relative-size restoring
     bool isVisible;
     KDDockWidgets::WindowState windowState = KDDockWidgets::WindowState::None;
 
@@ -253,7 +251,7 @@ struct LayoutSaver::ScreenInfo
     typedef QVector<LayoutSaver::ScreenInfo> List;
 
     int index;
-    QRect geometry;
+    Rect geometry;
     QString name;
     double devicePixelRatio;
 };
