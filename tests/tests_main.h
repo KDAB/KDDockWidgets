@@ -21,7 +21,7 @@
 #ifdef KDDW_FRONTEND_FLUTTER
 #include "../flutter/Platform.h"
 #include "flutter_tests_embedder/tests_embedder.h"
-#include "qcoro/core/qcorocore.h"
+#include "flutter/qcoro.h"
 #endif
 
 #include <iostream>
