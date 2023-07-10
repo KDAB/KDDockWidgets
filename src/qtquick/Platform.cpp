@@ -10,6 +10,7 @@
 */
 
 #include "Platform.h"
+#include "core/Utils_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/qtcommon/View.h"
 #include "Config.h"
@@ -102,6 +103,15 @@ const char *Platform::name() const
 
 std::shared_ptr<Core::View> Platform::qobjectAsView(QObject *obj) const
 {
+    if (obj && isWayland()) {
+        if (auto dropArea = obj->property("dropAreaCpp").value<QObject *>()) {
+            // This is a special case for QtQuick on wayland
+            // The receiver of QDrag events needs to be a View. Which for QtWidgets is straightforward
+            // but for QtQuick it's the .qml item receiving it
+            obj = dropArea;
+        }
+    }
+
     return ViewWrapper::create(obj);
 }
 
