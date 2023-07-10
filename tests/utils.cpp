@@ -96,7 +96,7 @@ Core::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
                             Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
 }
 
-std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
+std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<DockDescriptor> &docks)
 {
     static int count = 0;
     count++;

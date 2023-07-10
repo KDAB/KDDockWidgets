@@ -34,6 +34,8 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
+#include <vector>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
@@ -182,7 +184,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = {
+    std::vector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -208,7 +210,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name =
     // "left") KDDockWidgets::MainWindow(0x55e726beb8d0)
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = {
+    std::vector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -242,7 +244,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
 KDDW_QCORO_TASK tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = {
+    std::vector<DockDescriptor> docks = {
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -351,15 +353,15 @@ KDDW_QCORO_TASK tst_crash2()
             for (int i = 0; i < num; ++i)
                 docks << newDockWidget(QString::number(i));
 
-            QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnRight,
-                                                           Location_OnRight, Location_OnRight };
+            std::vector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnRight,
+                                                               Location_OnRight, Location_OnRight };
 
-            QVector<KDDockWidgets::InitialVisibilityOption> options = {
+            std::vector<KDDockWidgets::InitialVisibilityOption> options = {
                 InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
                 InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden
             };
 
-            QVector<bool> floatings = { true, false, false, false };
+            std::vector<bool> floatings = { true, false, false, false };
 
             for (int i = 0; i < num; ++i) {
 
@@ -383,15 +385,15 @@ KDDW_QCORO_TASK tst_crash2()
             for (int i = 0; i < num; ++i)
                 docks << newDockWidget(QString::number(i));
 
-            QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft,
-                                                           Location_OnRight };
+            std::vector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft,
+                                                               Location_OnRight };
 
-            QVector<KDDockWidgets::InitialVisibilityOption> options = {
+            std::vector<KDDockWidgets::InitialVisibilityOption> options = {
                 InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
                 InitialVisibilityOption::StartHidden
             };
 
-            QVector<bool> floatings = { true, false, false };
+            std::vector<bool> floatings = { true, false, false };
 
             for (int i = 0; i < num; ++i) {
                 m->addDockWidget(docks[i], locations[i], nullptr, options[i]);

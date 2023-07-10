@@ -40,7 +40,7 @@ using namespace KDDockWidgets::Tests;
 
 KDDW_QCORO_TASK tst_28NestedWidgets()
 {
-    auto func = [](QVector<DockDescriptor> docksToCreate, QVector<int> docksToHide) -> KDDW_QCORO_TASK {
+    auto func = [](std::vector<DockDescriptor> docksToCreate, std::vector<int> docksToHide) -> KDDW_QCORO_TASK {
         // Tests a case that used to cause negative anchor position when turning into placeholder
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -107,7 +107,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         KDDW_TEST_RETURN(true);
     };
 
-    QVector<DockDescriptor> docks = {
+    std::vector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
@@ -138,7 +138,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
     if (Platform::instance()->isQtWidgets()) {
-        if (!KDDW_CO_AWAIT func(docks, QVector<int> { 11, 0 })) {
+        if (!KDDW_CO_AWAIT func(docks, std::vector<int> { 11, 0 })) {
             KDDW_TEST_RETURN(false);
         }
     }
@@ -152,9 +152,9 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
     };
 
-    QVector<int> docksToHide;
-    for (int i = 0; i < docks.size(); ++i) {
-        docksToHide << i;
+    std::vector<int> docksToHide;
+    for (size_t i = 0; i < docks.size(); ++i) {
+        docksToHide.push_back(i);
     }
 
     if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
@@ -238,7 +238,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
     for (int i = 0; i < 28; ++i) {
         if (i != 16 && i != 17 && i != 18 && i != 27)
-            docksToHide << i;
+            docksToHide.push_back(i);
     }
     if (Platform::instance()->isQtWidgets()) {
         // bug_with_holes

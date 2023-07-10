@@ -2992,19 +2992,19 @@ KDDW_QCORO_TASK tst_availableSizeWithPlaceholders()
     // the same.
 
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks1 = {
+    std::vector<DockDescriptor> docks1 = {
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
     };
 
-    QVector<DockDescriptor> docks2 = {
+    std::vector<DockDescriptor> docks2 = {
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 
-    QVector<DockDescriptor> empty;
+    std::vector<DockDescriptor> empty;
 
     auto m1 = createMainWindow(docks1);
     auto m2 = createMainWindow(docks2);
@@ -3062,7 +3062,7 @@ KDDW_QCORO_TASK tst_anchorFollowingItselfAssert()
     // 1. Tests that we don't assert in Anchor::setFollowee()
     //  ASSERT: "this != m_followee" in file ../src/layouting/Anchor.cpp
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = {
+    std::vector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -3181,101 +3181,101 @@ KDDW_QCORO_TASK tst_sizeConstraintWarning()
     SetExpectedWarning sew("Dock widget already exists in the layout");
 
     auto window = createMainWindow();
-    QList<Core::DockWidget *> listDockWidget;
+    std::vector<Core::DockWidget *> listDockWidget;
     {
         auto dock = newDockWidget("foo-0");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-1");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-2");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-3");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-4");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-5");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-6");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-7");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-8");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-9");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-10");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-11");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-12");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-13");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-14");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-15");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-16");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-17");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
     {
         auto dock = newDockWidget("foo-18");
         dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
-        listDockWidget.append(dock);
+        listDockWidget.push_back(dock);
     }
 
     auto dropArea = window->dropArea();

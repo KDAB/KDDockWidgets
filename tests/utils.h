@@ -33,8 +33,7 @@
 #include "kddockwidgets/core/Window.h"
 #include "kddockwidgets/core/Platform.h"
 
-#include <QVector>
-
+#include <vector>
 #include <memory>
 
 #ifdef Q_OS_WIN
@@ -124,7 +123,7 @@ createMainWindow(Size sz = { 1000, 1000 },
 
 
 
-std::unique_ptr<Core::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
+std::unique_ptr<Core::MainWindow> createMainWindow(std::vector<DockDescriptor> &docks);
 
 Core::DockWidget *createDockWidget(const QString &name, Core::View *guest,
                                    DockWidgetOptions options = {},
