@@ -28,7 +28,7 @@ StateDraggingWayland::~StateDraggingWayland()
 
 void StateDraggingWayland::onEntry()
 {
-    KDDW_DEBUG("StateDragging entered");
+    KDDW_DEBUG("StateDraggingWayland entered");
 
     if (m_inQDrag) {
         // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
@@ -46,7 +46,10 @@ void StateDraggingWayland::onEntry()
     drag.setPixmap(q->m_windowBeingDragged->pixmap());
 
     Platform::instance()->installGlobalEventFilter(q);
+    KDDW_DEBUG("Started QDrag");
     const Qt::DropAction result = drag.exec();
+    KDDW_DEBUG("QDrag finished with result={}", result);
+
     Platform::instance()->removeGlobalEventFilter(q);
     if (result == Qt::IgnoreAction)
         q->dragCanceled.emit();
@@ -114,6 +117,7 @@ bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
 
 bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
 {
+    KDDW_DEBUG("StateDraggingWayland::handleDragMove");
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.

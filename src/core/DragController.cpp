@@ -665,6 +665,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
 
     // Wayland is very different. It uses QDrag for the dragging of a window.
     if (view) {
+        KDDW_DEBUG("DragController::onDnDEvent: ev={}, dropArea=", e->type(), ( void * )view->asDropAreaController());
         if (auto dropArea = view->asDropAreaController()) {
             switch (int(e->type())) {
             case Event::DragEnter:
@@ -687,7 +688,10 @@ bool DragController::onDnDEvent(View *view, Event *e)
         }
     } else if (e->type() == Event::DragEnter && isDragging()) {
         // We're dragging a window. Be sure user code doesn't accept DragEnter events.
+        KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.")
         return true;
+    } else {
+        KDDW_DEBUG("DragController::onDnDEvent: No view");
     }
 
     return false;

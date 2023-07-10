@@ -83,6 +83,7 @@ public:
 
     bool handleDnDEvent(QObject *o, QEvent *ev)
     {
+        KDDW_DEBUG("Platform_qt::handleDnDEvent numFilters={}", q->d->m_globalEventFilters.size());
         if (q->d->m_globalEventFilters.empty())
             return false;
 
