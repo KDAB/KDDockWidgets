@@ -298,7 +298,7 @@ FocusableTestView_flutter::~FocusableTestView_flutter() = default;
 static QMutex m_mutex;
 void Platform::runTests()
 {
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef KDDW_FLUTTER_HAS_COROUTINES
     // Called from Flutter, so C++ tests run in the ui thread
     Q_ASSERT(s_runTestsFunc);
 
@@ -314,7 +314,7 @@ void Platform::runTests()
 
 void Platform::resumeCoRoutines()
 {
-#ifdef DOCKS_DEVELOPER_MODE
+#ifdef KDDW_FLUTTER_HAS_COROUTINES
     m_coRoutines.resume();
 #endif
 }
@@ -372,7 +372,7 @@ void Platform::setFocusedView(std::shared_ptr<Core::View> view)
     m_focusedView = view;
 }
 
-#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+#ifdef KDDW_FLUTTER_HAS_COROUTINES
 
 Platform::RunTestsFunc Platform::s_runTestsFunc = nullptr;
 

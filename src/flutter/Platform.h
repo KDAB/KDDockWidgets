@@ -15,7 +15,7 @@
 
 #include <optional>
 
-#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+#ifdef KDDW_FLUTTER_HAS_COROUTINES
 #include "CoRoutines.h"
 #endif
 
@@ -71,7 +71,7 @@ public:
 
     void runDelayed(int ms, Core::DelayedCall *c) override;
 
-#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+#ifdef KDDW_FLUTTER_HAS_COROUTINES
     // Stuff required by the tests only and not used by dart bindings.
     KDDW_QCORO_TASK tests_wait(int ms) const override;
     KDDW_QCORO_TASK tests_waitForResize(Core::View *, int timeout) const override;

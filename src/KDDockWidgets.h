@@ -419,17 +419,6 @@ inline T *findAncestor(QWidget *widget)
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
 
-
-#if defined(KDDW_FRONTEND_FLUTTER) && defined(DOCKS_DEVELOPER_MODE)
-#define KDDW_QCORO_TASK QCoro::Task<bool>
-#define KDDW_CO_AWAIT co_await
-#define KDDW_CO_RETURN co_return
-#else
-#define KDDW_QCORO_TASK bool
-#define KDDW_CO_AWAIT
-#define KDDW_CO_RETURN return
-#endif
-
 #define KDDW_DELETE_COPY_CTOR(NAME)         \
     NAME(const NAME &) = delete;            \
     NAME(const NAME &&) = delete;           \
