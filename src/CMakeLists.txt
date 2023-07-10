@@ -238,16 +238,21 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/views/ClassicIndicatorsWindow.cpp
 )
 
-if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
+if(KDDockWidgets_FLUTTER_NO_BINDINGS)
+    # For a special build that just builds core/ and flutter/, but not generated/
+    add_definitions(-DKDDW_NO_FLUTTER_BINDINGS)
+else()
     set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_DARTBINDINGS_SRCS})
 endif()
 
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/CoRoutines.cpp
-                                   ../tests/flutter_tests_embedder/tests_embedder.cpp
-    )
+    if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
+        set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/CoRoutines.cpp
+                                       ../tests/flutter_tests_embedder/tests_embedder.cpp
+        )
+    endif()
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
