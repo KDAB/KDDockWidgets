@@ -19,8 +19,6 @@
 #include "core/View_p.h"
 #include "NonQtCompat_p.h"
 
-#include <QString>
-
 namespace KDDockWidgets {
 
 namespace Core {

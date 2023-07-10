@@ -20,6 +20,9 @@
 #define KDDW_QCORO_TASK QCoro::Task<bool>
 #define KDDW_CO_AWAIT co_await
 #define KDDW_CO_RETURN co_return
+#ifdef QStringLiteral
+#undef QStringLiteral
+#endif
 #else
 #define KDDW_QCORO_TASK bool
 #define KDDW_CO_AWAIT

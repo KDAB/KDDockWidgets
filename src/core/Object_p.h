@@ -17,8 +17,6 @@
 
 #include <vector>
 
-#include <QString>
-
 #include <kdbindings/signal.h>
 
 #include "flutter/qcoro.h"

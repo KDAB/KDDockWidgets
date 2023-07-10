@@ -26,8 +26,10 @@
 #include <QDrag>
 #include <QTimer>
 #include <QObject>
+#include <QString>
 #else
 #include "core/geometry_helpers_p.h"
+#include "core/String_p.h"
 #include <QList>
 #endif
 
@@ -57,6 +59,7 @@ using PointF = QT_PREPEND_NAMESPACE(QPointF);
 using Size = QT_PREPEND_NAMESPACE(QSize);
 using Rect = QT_PREPEND_NAMESPACE(QRect);
 using Margins = QT_PREPEND_NAMESPACE(QMargins);
+using String = QT_PREPEND_NAMESPACE(QString);
 
 template<typename T>
 inline T object_cast(QObject *o)

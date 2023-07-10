@@ -16,8 +16,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "DockWidget.h"
 
-#include <QString>
-
 namespace KDDockWidgets {
 namespace QtWidgets {
 class TitleBar;
