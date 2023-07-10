@@ -13,9 +13,7 @@
 
 // The goal of this file is to provide fallback types when QtGui isn't present
 
-#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
-#include "qcoro/core/qcorocore.h"
-#endif
+#include "flutter/qcoro.h"
 
 #ifdef QT_GUI_LIB
 #include <QCloseEvent>

@@ -21,14 +21,12 @@
 #include "KDDockWidgets.h"
 #include "core/Platform.h"
 #include "core/Logging_p.h"
+#include "flutter/qcoro.h"
 
 #include <string>
 #include <functional>
 #include <iostream>
 
-#ifdef KDDW_FRONTEND_FLUTTER
-#include "qcoro/core/qcorocore.h"
-#endif
 
 #define KDDW_TEST_RETURN(res)                                        \
     if (!res)                                                        \

@@ -21,9 +21,7 @@
 
 #include <kdbindings/signal.h>
 
-#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
-#include "qcoro/core/qcorocore.h"
-#endif
+#include "flutter/qcoro.h"
 
 #if defined(Q_OBJECT) // TODOm4: Remove this ifdef and the undef
 #undef Q_OBJECT
