@@ -143,6 +143,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             if (index == -1) {
                 continue; // Skip
             } else {
+                Q_ASSERT(LayoutSaver::Layout::s_currentLayoutBeingRestored);
                 auto serializedFw =
                     LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(
                         index);
