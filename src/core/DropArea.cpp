@@ -137,7 +137,7 @@ Core::Group::List DropArea::groups() const
         if (auto view = child->guestView()) {
             if (!view->d->freed()) {
                 if (auto group = view->asGroupController()) {
-                    groups << group;
+                    groups.push_back(group);
                 }
             }
         }

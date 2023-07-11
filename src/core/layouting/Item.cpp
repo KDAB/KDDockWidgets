@@ -2205,7 +2205,7 @@ QVector<double> ItemBoxContainer::Private::childPercentages() const
 
     for (Item *item : qAsConst(q->m_children)) {
         if (item->isVisible() && !item->isBeingInserted())
-            percentages << item->m_sizingInfo.percentageWithinParent;
+            percentages.push_back(item->m_sizingInfo.percentageWithinParent);
     }
 
     return percentages;
@@ -2978,7 +2978,7 @@ SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
             item->m_sizingInfo.minSize = item->minSize();
             item->m_sizingInfo.maxSizeHint = item->maxSizeHint();
         }
-        result << item->m_sizingInfo;
+        result.push_back(item->m_sizingInfo);
     }
 
     return result;
@@ -2991,7 +2991,7 @@ QVector<int> ItemBoxContainer::calculateSqueezes(
 {
     QVector<int> availabilities;
     for (auto it = begin; it < end; ++it) {
-        availabilities << it->availableLength(d->m_orientation);
+        availabilities.push_back(it->availableLength(d->m_orientation));
     }
 
     const auto count = availabilities.count();
@@ -3099,7 +3099,7 @@ QVector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
 
         if (item->isVisible()) {
             const int localPos = item->m_sizingInfo.edge(m_orientation) + 1;
-            positions << q->mapToRoot(localPos, m_orientation);
+            positions.push_back(q->mapToRoot(localPos, m_orientation));
         }
     }
 
@@ -3424,7 +3424,7 @@ QVector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators_recursive
 
     for (Item *item : qAsConst(m_children)) {
         if (auto c = item->asBoxContainer())
-            separators << c->separators_recursive();
+            separators.append(c->separators_recursive());
     }
 
     return separators;
@@ -3752,10 +3752,10 @@ Item::List ItemContainer::visibleChildren(bool includeBeingInserted) const
     for (Item *item : qAsConst(m_children)) {
         if (includeBeingInserted) {
             if (item->isVisible() || item->isBeingInserted())
-                items << item;
+                items.push_back(item);
         } else {
             if (item->isVisible() && !item->isBeingInserted())
-                items << item;
+                items.push_back(item);
         }
     }
 
@@ -3768,9 +3768,9 @@ Item::List ItemContainer::items_recursive() const
     items.reserve(30); // sounds like a good upper number to minimize allocations
     for (Item *item : qAsConst(m_children)) {
         if (auto c = item->asContainer()) {
-            items << c->items_recursive();
+            items.append(c->items_recursive());
         } else {
-            items << item;
+            items.push_back(item);
         }
     }
 

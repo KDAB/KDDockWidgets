@@ -47,7 +47,7 @@ static void travelTree(WId current, Display *disp, Window::List &remaining, Wind
             });
 
         if (it != remaining.end()) {
-            result << *it;
+            result.push_back(*it);
             remaining.erase(it);
         }
 

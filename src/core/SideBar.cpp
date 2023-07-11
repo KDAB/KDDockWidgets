@@ -68,7 +68,7 @@ void SideBar::addDockWidget(DockWidget *dw)
     KDBindings::ScopedConnection conn = dw->d->aboutToDelete.connect([this](auto dock) { removeDockWidget(dock); });
     d->connections[dw] = std::move(conn);
 
-    m_dockWidgets << dw;
+    m_dockWidgets.push_back(dw);
     dynamic_cast<Core::SideBarViewInterface *>(view())->addDockWidget_Impl(dw);
     updateSize();
 }
@@ -137,7 +137,7 @@ QStringList SideBar::serialize() const
     QStringList ids;
     ids.reserve(m_dockWidgets.size());
     for (DockWidget *dw : m_dockWidgets)
-        ids << dw->uniqueName();
+        ids.push_back(dw->uniqueName());
 
     return ids;
 }

@@ -588,7 +588,7 @@ DragController *DragController::instance()
 
 void DragController::registerDraggable(Draggable *drg)
 {
-    m_draggables << drg;
+    m_draggables.push_back(drg);
     drg->asView()->installViewEventFilter(this);
 }
 

@@ -260,7 +260,7 @@ DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
     for (auto mw : m_mainWindows) {
         const QStringList mwAffinities = mw->affinities();
         if (affinitiesMatch(mwAffinities, affinities))
-            result << mw;
+            result.push_back(mw);
     }
 
     return result;
@@ -302,7 +302,7 @@ void DockRegistry::registerDockWidget(Core::DockWidget *dock)
         KDDW_ERROR("Another DockWidget {} with name {} already exists.", ( void * )other, dock->uniqueName(), ( void * )dock);
     }
 
-    m_dockWidgets << dock;
+    m_dockWidgets.push_back(dock);
 }
 
 void DockRegistry::unregisterDockWidget(Core::DockWidget *dock)
@@ -322,7 +322,7 @@ void DockRegistry::registerMainWindow(Core::MainWindow *mainWindow)
         KDDW_ERROR("Another MainWindow {} with name {} already exists {}", ( void * )other, mainWindow->uniqueName(), ( void * )mainWindow);
     }
 
-    m_mainWindows << mainWindow;
+    m_mainWindows.push_back(mainWindow);
     Platform::instance()->onMainWindowCreated(mainWindow);
 }
 
@@ -335,7 +335,7 @@ void DockRegistry::unregisterMainWindow(Core::MainWindow *mainWindow)
 
 void DockRegistry::registerFloatingWindow(Core::FloatingWindow *fw)
 {
-    m_floatingWindows << fw;
+    m_floatingWindows.push_back(fw);
     Platform::instance()->onFloatingWindowCreated(fw);
 }
 
@@ -348,7 +348,7 @@ void DockRegistry::unregisterFloatingWindow(Core::FloatingWindow *fw)
 
 void DockRegistry::registerLayout(Core::Layout *layout)
 {
-    m_layouts << layout;
+    m_layouts.push_back(layout);
 }
 
 void DockRegistry::unregisterLayout(Core::Layout *layout)
@@ -358,7 +358,7 @@ void DockRegistry::unregisterLayout(Core::Layout *layout)
 
 void DockRegistry::registerGroup(Core::Group *group)
 {
-    m_groups << group;
+    m_groups.push_back(group);
 }
 
 void DockRegistry::unregisterGroup(Core::Group *group)
@@ -517,7 +517,7 @@ const QList<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() co
     for (auto mw : m_mainWindows) {
         if (View *view = mw->view()) {
             auto viewInterface = dynamic_cast<Core::MainWindowViewInterface *>(view);
-            areas << viewInterface;
+            areas.push_back(viewInterface);
         }
     }
 
@@ -614,7 +614,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
         for (Core::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
                 if (Core::Window::Ptr window = fw->view()->window()) {
-                    windows << window;
+                    windows.push_back(window);
                 } else {
                     KDDW_ERROR("FloatingWindow doesn't have QWindow");
                 }
@@ -625,7 +625,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     for (Core::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
             if (Core::Window::Ptr window = m->view()->window()) {
-                windows << window;
+                windows.push_back(window);
             } else {
                 KDDW_ERROR("MainWindow doesn't have QWindow");
             }

@@ -232,7 +232,7 @@ Core::DockWidget::List Layout::dockWidgets() const
     Core::DockWidget::List dockWidgets;
     const Core::Group::List groups = this->groups();
     for (Core::Group *group : groups)
-        dockWidgets << group->dockWidgets();
+        dockWidgets.append(group->dockWidgets());
 
     return dockWidgets;
 }

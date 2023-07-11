@@ -514,7 +514,7 @@ const Core::DockWidget::List Group::dockWidgets() const
     const int count = dockWidgetCount();
     dockWidgets.reserve(count);
     for (int i = 0; i < count; ++i)
-        dockWidgets << dockWidgetAt(i);
+        dockWidgets.push_back(dockWidgetAt(i));
 
     return dockWidgets;
 }

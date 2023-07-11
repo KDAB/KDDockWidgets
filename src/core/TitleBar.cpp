@@ -569,7 +569,7 @@ Core::DockWidget::List TitleBar::dockWidgets() const
     if (m_floatingWindow) {
         DockWidget::List result;
         for (Group *group : m_floatingWindow->groups()) {
-            result << group->dockWidgets();
+            result.append(group->dockWidgets());
         }
         return result;
     }
