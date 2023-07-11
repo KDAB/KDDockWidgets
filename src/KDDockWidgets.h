@@ -308,12 +308,6 @@ enum DropLocation {
 Q_ENUM_NS(DropLocation)
 
 ///@internal
-inline Qt5Qt6Compat::qhashtype qHash(SideBarLocation loc, Qt5Qt6Compat::qhashtype seed)
-{
-    return ::qHash(static_cast<uint>(loc), seed);
-}
-
-///@internal
 enum CursorPosition {
     CursorPosition_Undefined = 0,
     CursorPosition_Left = 1,
