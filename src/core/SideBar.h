@@ -60,7 +60,7 @@ public:
 
     /// @brief returns a serialization of this sidebar's state
     /// Currently it's just a list of dock widget ids
-    QStringList serialize() const;
+    Vector<QString> serialize() const;
 
     /// @brief clears the sidebar (removes all dock widgets from it)
     void clear();

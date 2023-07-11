@@ -131,7 +131,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     bool skipsRestore() const;
 
     QString uniqueName;
-    QStringList affinities;
+    Vector<QString> affinities;
     LayoutSaver::Position lastPosition;
 
 private:
@@ -140,9 +140,9 @@ private:
     }
 };
 
-inline QStringList dockWidgetNames(const LayoutSaver::DockWidget::List &list)
+inline Vector<QString> dockWidgetNames(const LayoutSaver::DockWidget::List &list)
 {
-    QStringList result;
+    Vector<QString> result;
     result.reserve(list.size());
     for (auto &dw : list)
         result.push_back(dw->uniqueName);
@@ -201,7 +201,7 @@ struct LayoutSaver::FloatingWindow
     void scaleSizes(const ScalingInfo &);
 
     LayoutSaver::MultiSplitter multiSplitterLayout;
-    QStringList affinities;
+    Vector<QString> affinities;
     int parentIndex = -1;
     Rect geometry;
     Rect normalGeometry;
@@ -226,13 +226,13 @@ public:
     /// RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
-    QStringList dockWidgetsForSideBar(SideBarLocation) const;
+    Vector<QString> dockWidgetsForSideBar(SideBarLocation) const;
 
-    std::unordered_map<SideBarLocation, QStringList> dockWidgetsPerSideBar;
+    std::unordered_map<SideBarLocation, Vector<QString>> dockWidgetsPerSideBar;
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;
-    QStringList affinities;
+    Vector<QString> affinities;
     Rect geometry;
     Rect normalGeometry;
     int screenIndex;
@@ -295,9 +295,9 @@ public:
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
     LayoutSaver::FloatingWindow floatingWindowForIndex(int index) const;
 
-    QStringList mainWindowNames() const;
-    QStringList dockWidgetNames() const;
-    QStringList dockWidgetsToClose() const;
+    Vector<QString> mainWindowNames() const;
+    Vector<QString> dockWidgetNames() const;
+    Vector<QString> dockWidgetsToClose() const;
     bool containsDockWidget(const QString &uniqueName) const;
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
@@ -323,8 +323,8 @@ public:
 
     explicit Private(RestoreOptions options);
 
-    bool matchesAffinity(const QStringList &affinities) const;
-    void floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames);
+    bool matchesAffinity(const Vector<QString> &affinities) const;
+    void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 
     template<typename T>
@@ -334,7 +334,7 @@ public:
 
     DockRegistry *const m_dockRegistry;
     InternalRestoreOptions m_restoreOptions = {};
-    QStringList m_affinityNames;
+    Vector<QString> m_affinityNames;
 
     static bool s_restoreInProgress;
 };

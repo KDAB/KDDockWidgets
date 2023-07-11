@@ -128,12 +128,12 @@ public:
      *
      * @p name The affinity names.
      */
-    void setAffinities(const QStringList &names);
+    void setAffinities(const Vector<QString> &names);
 
     /**
      * @brief Returns the list of affinity names. Empty by default.
      */
-    QStringList affinities() const;
+    Vector<QString> affinities() const;
 
     /// @brief layouts all the widgets so they have an equal size within their parent container
     ///

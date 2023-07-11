@@ -109,7 +109,7 @@ public:
     Rect windowGeometry() const;
 
     QString name;
-    QStringList affinities;
+    Vector<QString> affinities;
     const MainWindowOptions m_options;
     MainWindow *const q;
     ObjectGuard<Core::DockWidget> m_overlayedDockWidget;

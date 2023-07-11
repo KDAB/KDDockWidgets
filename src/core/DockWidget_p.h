@@ -237,7 +237,7 @@ public:
     KDBindings::Signal<bool> isOpenChanged;
 
     const QString name;
-    QStringList affinities;
+    Vector<QString> affinities;
     QString title;
     Icon titleBarIcon;
     Icon tabBarIcon;

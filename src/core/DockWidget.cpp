@@ -406,7 +406,7 @@ bool DockWidget::isOpen() const
     return d->m_isOpen;
 }
 
-QStringList DockWidget::affinities() const
+Vector<QString> DockWidget::affinities() const
 {
     return d->affinities;
 }
@@ -472,9 +472,9 @@ void DockWidget::setAffinityName(const QString &affinity)
     setAffinities({ affinity });
 }
 
-void DockWidget::setAffinities(const QStringList &affinityNames)
+void DockWidget::setAffinities(const Vector<QString> &affinityNames)
 {
-    QStringList affinities = affinityNames;
+    Vector<QString> affinities = affinityNames;
     affinities.removeAll(QString());
 
     if (d->affinities == affinities)

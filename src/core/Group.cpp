@@ -646,7 +646,7 @@ bool Group::hasTabsVisible() const
     return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
-QStringList Group::affinities() const
+Vector<QString> Group::affinities() const
 {
     if (isEmpty()) {
         if (auto m = mainWindow())

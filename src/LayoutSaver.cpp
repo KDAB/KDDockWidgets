@@ -178,7 +178,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
                                  SideBarLocation::West, SideBarLocation::South }) {
-        const QStringList dockWidgets = mw.dockWidgetsForSideBar(loc);
+        const Vector<QString> dockWidgets = mw.dockWidgetsForSideBar(loc);
         if (!dockWidgets.isEmpty()) {
             std::string key = std::string("sidebar-") + std::to_string(( int )loc);
             json[key] = dockWidgets;
@@ -196,7 +196,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     mw.screenIndex = json.value("screenIndex", 0);
     mw.screenSize = json.value("screenSize", Size(800, 600));
     mw.isVisible = json.value("isVisible", false);
-    mw.affinities = json.value("affinities", QStringList());
+    mw.affinities = json.value("affinities", Vector<QString>());
     mw.windowState = ( WindowState )json.value("windowState", 0);
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
@@ -216,7 +216,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
             continue;
         auto &val = *it;
         if (val.is_array() && !val.empty()) {
-            mw.dockWidgetsPerSideBar[loc] = val.get<QStringList>();
+            mw.dockWidgetsPerSideBar[loc] = val.get<Vector<QString>>();
         }
     }
 }
@@ -249,7 +249,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
     window.isVisible = json.value("isVisible", false);
     window.flags = json.value("flags", int(FloatingWindowFlag::FromGlobalConfig));
     window.windowState = ( WindowState )json.value("windowState", 0);
-    window.affinities = json.value("affinities", QStringList());
+    window.affinities = json.value("affinities", Vector<QString>());
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
     // list:
@@ -321,7 +321,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 {
     auto it = json.find("affinities");
     if (it != json.end())
-        dw.affinities = it->get<QStringList>();
+        dw.affinities = it->get<Vector<QString>>();
 
     dw.uniqueName = json.value("uniqueName", QString());
     if (dw.uniqueName.isEmpty())
@@ -558,12 +558,12 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     return true;
 }
 
-void LayoutSaver::setAffinityNames(const QStringList &affinityNames)
+void LayoutSaver::setAffinityNames(const Vector<QString> &affinityNames)
 {
     d->m_affinityNames = affinityNames;
     if (affinityNames.contains(QString())) {
         // Any window with empty affinity will also be subject to save/restore
-        d->m_affinityNames << QString();
+        d->m_affinityNames.push_back(QString());
     }
 }
 
@@ -618,13 +618,13 @@ LayoutSaver::Private::Private(RestoreOptions options)
 {
 }
 
-bool LayoutSaver::Private::matchesAffinity(const QStringList &affinities) const
+bool LayoutSaver::Private::matchesAffinity(const Vector<QString> &affinities) const
 {
     return m_affinityNames.isEmpty() || affinities.isEmpty()
         || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
 }
 
-void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames)
+void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames)
 {
     // Widgets with the LayoutSaverOptions::Skip flag skip restore completely.
     // If they were visible before they need to remain visible now.
@@ -724,7 +724,7 @@ void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 
     layout.closedDockWidgets.clear();
 
-    for (const QString &name : j.value("closedDockWidgets", QStringList())) {
+    for (const QString &name : j.value("closedDockWidgets", Vector<QString>())) {
         layout.closedDockWidgets.push_back(
             LayoutSaver::DockWidget::dockWidgetForName(name));
     }
@@ -809,34 +809,34 @@ LayoutSaver::FloatingWindow LayoutSaver::Layout::floatingWindowForIndex(int inde
     return floatingWindows.at(index);
 }
 
-QStringList LayoutSaver::Layout::mainWindowNames() const
+Vector<QString> LayoutSaver::Layout::mainWindowNames() const
 {
-    QStringList names;
+    Vector<QString> names;
     names.reserve(mainWindows.size());
     for (const auto &mw : mainWindows) {
-        names << mw.uniqueName;
+        names.push_back(mw.uniqueName);
     }
 
     return names;
 }
 
-QStringList LayoutSaver::Layout::dockWidgetNames() const
+Vector<QString> LayoutSaver::Layout::dockWidgetNames() const
 {
-    QStringList names;
+    Vector<QString> names;
     names.reserve(allDockWidgets.size());
     for (const auto &dw : allDockWidgets) {
-        names << dw->uniqueName;
+        names.push_back(dw->uniqueName);
     }
 
     return names;
 }
 
-QStringList LayoutSaver::Layout::dockWidgetsToClose() const
+Vector<QString> LayoutSaver::Layout::dockWidgetsToClose() const
 {
     // Before restoring a layout we close all dock widgets, unless they're a floating window with
     // the DontCloseBeforeRestore flag
 
-    QStringList names;
+    Vector<QString> names;
     names.reserve(allDockWidgets.size());
     auto registry = DockRegistry::self();
     for (const auto &dw : allDockWidgets) {
@@ -855,7 +855,7 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
             }
 
             if (doClose)
-                names << dw->uniqueName;
+                names.push_back(dw->uniqueName);
         }
     }
 
@@ -976,10 +976,10 @@ bool LayoutSaver::MainWindow::isValid() const
     return multiSplitterLayout.isValid();
 }
 
-QStringList LayoutSaver::MainWindow::dockWidgetsForSideBar(SideBarLocation loc) const
+Vector<QString> LayoutSaver::MainWindow::dockWidgetsForSideBar(SideBarLocation loc) const
 {
     auto it = dockWidgetsPerSideBar.find(loc);
-    return it == dockWidgetsPerSideBar.cend() ? QStringList() : it->second;
+    return it == dockWidgetsPerSideBar.cend() ? Vector<QString>() : it->second;
 }
 
 void LayoutSaver::MainWindow::scaleSizes()

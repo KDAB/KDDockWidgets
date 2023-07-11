@@ -29,7 +29,6 @@
 #else
 #include "core/geometry_helpers_p.h"
 #include "kdtoolbox/KDStlContainerAdaptor.h"
-#include <QList>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -285,7 +284,7 @@ public:
 };
 
 // Used by segmented indicators controller
-class Polygon : public QList<Point>
+class Polygon : public Vector<Point>
 {
 public:
     Polygon() = default;

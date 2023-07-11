@@ -35,12 +35,12 @@ QString MainWindowViewInterface::uniqueName() const
     return m_mainWindow->uniqueName();
 }
 
-QStringList MainWindowViewInterface::affinities() const
+Vector<QString> MainWindowViewInterface::affinities() const
 {
     return m_mainWindow->affinities();
 }
 
-void MainWindowViewInterface::setAffinities(const QStringList &names)
+void MainWindowViewInterface::setAffinities(const Vector<QString> &names)
 {
     m_mainWindow->setAffinities(names);
 }

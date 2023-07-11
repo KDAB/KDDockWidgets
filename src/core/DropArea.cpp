@@ -256,7 +256,7 @@ bool DropArea::hasSingleFrame() const
     return visibleCount() == 1;
 }
 
-QStringList DropArea::affinities() const
+Vector<QString> DropArea::affinities() const
 {
     if (auto mw = mainWindow()) {
         return mw->affinities();

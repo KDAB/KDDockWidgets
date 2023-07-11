@@ -61,7 +61,7 @@ public:
     DropLocation hover(WindowBeingDragged *draggedWindow, Point globalPos);
     ///@brief Called when a user drops a widget via DND
     bool drop(WindowBeingDragged *droppedWindow, Point globalPos);
-    QList<Core::Group *> groups() const;
+    Vector<Core::Group *> groups() const;
 
     Core::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const;
@@ -78,7 +78,7 @@ public:
     /// See further explanation in FloatingWindow::hasSingleFrame()
     bool hasSingleFrame() const;
 
-    QStringList affinities() const;
+    Vector<QString> affinities() const;
     void layoutParentContainerEqually(DockWidget *);
 
     /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside

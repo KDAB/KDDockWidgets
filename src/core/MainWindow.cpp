@@ -154,9 +154,9 @@ MDILayout *MainWindow::mdiLayout() const
     return d->m_layout->asMDILayout();
 }
 
-void MainWindow::setAffinities(const QStringList &affinityNames)
+void MainWindow::setAffinities(const Vector<QString> &affinityNames)
 {
-    QStringList affinities = affinityNames;
+    Vector<QString> affinities = affinityNames;
     affinities.removeAll(QString());
 
     if (d->affinities == affinities)
@@ -171,7 +171,7 @@ void MainWindow::setAffinities(const QStringList &affinityNames)
     d->affinities = affinities;
 }
 
-QStringList MainWindow::affinities() const
+Vector<QString> MainWindow::affinities() const
 {
     return d->affinities;
 }
@@ -674,7 +674,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         if (!sb)
             continue;
 
-        const QStringList dockWidgets = mw.dockWidgetsForSideBar(loc);
+        const Vector<QString> dockWidgets = mw.dockWidgetsForSideBar(loc);
         for (const QString &uniqueName : dockWidgets) {
 
             Core::DockWidget *dw = DockRegistry::self()->dockByName(
@@ -715,7 +715,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
                                  SideBarLocation::West, SideBarLocation::South }) {
         if (Core::SideBar *sb = sideBar(loc)) {
-            const QStringList dockwidgets = sb->serialize();
+            const Vector<QString> dockwidgets = sb->serialize();
             if (!dockwidgets.isEmpty())
                 m.dockWidgetsPerSideBar[loc] = dockwidgets;
         }

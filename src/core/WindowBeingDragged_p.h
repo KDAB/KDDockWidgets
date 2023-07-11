@@ -52,7 +52,7 @@ public:
     bool contains(Layout *) const;
 
     ///@brief returns the affinities of the window being dragged
-    virtual QStringList affinities() const;
+    virtual Vector<QString> affinities() const;
 
     ///@brief size of the window being dragged contents
     virtual Size size() const;
@@ -93,7 +93,7 @@ public:
     Size minSize() const override;
     Size maxSize() const override;
     Pixmap pixmap() const override;
-    QStringList affinities() const override;
+    Vector<QString> affinities() const override;
     Vector<DockWidget *> dockWidgets() const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no

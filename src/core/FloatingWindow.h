@@ -145,7 +145,7 @@ public:
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
 
-    QStringList affinities() const;
+    Vector<QString> affinities() const;
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.

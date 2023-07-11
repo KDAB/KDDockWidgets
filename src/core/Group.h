@@ -40,7 +40,7 @@ class DOCKS_EXPORT Group : public Controller, public FocusScope
 {
     Q_OBJECT
 public:
-    typedef QList<Group *> List;
+    typedef Vector<Group *> List;
 
     explicit Group(View *parent = nullptr, FrameOptions = FrameOption_None, int userType = 0);
     virtual ~Group() override;
@@ -228,7 +228,7 @@ public:
      **/
     bool hasTabsVisible() const;
 
-    QStringList affinities() const;
+    Vector<QString> affinities() const;
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
     void setLayoutItem(Core::Item *item);

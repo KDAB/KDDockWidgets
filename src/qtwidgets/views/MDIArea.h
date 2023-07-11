@@ -61,7 +61,7 @@ public:
 
     /// @brief Returns the list of groups in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area
-    QList<Core::Group *> groups() const;
+    QVector<Core::Group *> groups() const;
 
 private:
     class Private;

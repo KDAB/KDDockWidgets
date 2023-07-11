@@ -4791,7 +4791,7 @@ KDDW_QCORO_TASK tst_centralGroupAffinity()
 
     auto m =
         createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
-    const QStringList affinities = { "a" };
+    const Vector<QString> affinities = { "a" };
     m->setAffinities(affinities);
 
     Group *centralGroup = m->dropArea()->centralGroup();

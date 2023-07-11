@@ -121,7 +121,7 @@ static MainWindow *hackFindParentHarder(Core::Group *group, MainWindow *candidat
     if (windows.size() == 1)
         return windows.first();
 
-    const QStringList affinities = group ? group->affinities() : QStringList();
+    const Vector<QString> affinities = group ? group->affinities() : Vector<QString>();
     const MainWindow::List mainWindows =
         DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
@@ -526,10 +526,10 @@ void FloatingWindow::updateTitleBarVisibility()
     m_titleBar->setVisible(visible);
 }
 
-QStringList FloatingWindow::affinities() const
+Vector<QString> FloatingWindow::affinities() const
 {
     auto groups = this->groups();
-    return groups.isEmpty() ? QStringList() : groups.constFirst()->affinities();
+    return groups.isEmpty() ? Vector<QString>() : groups.constFirst()->affinities();
 }
 
 void FloatingWindow::updateTitleAndIcon()

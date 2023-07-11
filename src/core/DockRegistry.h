@@ -90,7 +90,7 @@ public:
     const Vector<Core::DockWidget *> dockwidgets() const;
 
     ///@brief overload returning only the ones with the specified names
-    const Vector<Core::DockWidget *> dockWidgets(const QStringList &names);
+    const Vector<Core::DockWidget *> dockWidgets(const Vector<QString> &names);
 
     ///@brief returns all closed DockWidget instances
     const Vector<Core::DockWidget *> closedDockwidgets() const;
@@ -101,16 +101,16 @@ public:
     /// @brief returns all MainWindow instances
     /// Like mainwindows(), but with better suited for QtQuick and better terminology
     /// as we're phasing out the "MainWindow" name there
-    const QList<Core::MainWindowViewInterface *> mainDockingAreas() const;
+    const Vector<Core::MainWindowViewInterface *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
-    const Vector<Core::MainWindow *> mainWindows(const QStringList &names);
+    const Vector<Core::MainWindow *> mainWindows(const Vector<QString> &names);
 
     ///@brief returns the list of Layout instances
     const Vector<Core::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    const QList<Core::Group *> groups() const;
+    const Vector<Core::Group *> groups() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
@@ -153,14 +153,14 @@ public:
      * @param affinities if specified only closes dock widgets and main windows with the specified
      * affinities
      */
-    Q_INVOKABLE void clear(const QStringList &affinities = {});
+    Q_INVOKABLE void clear(const Vector<QString> &affinities = {});
 
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
     void clear(const Vector<Core::DockWidget *> &dockWidgets,
                const Vector<Core::MainWindow *> &mainWindows,
-               const QStringList &affinities);
+               const Vector<QString> &affinities);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
@@ -190,7 +190,7 @@ public:
     /**
      * @brief Returns all main windows which match at least one of the @p affinities
      */
-    Vector<Core::MainWindow *> mainWindowsWithAffinity(const QStringList &affinities) const;
+    Vector<Core::MainWindow *> mainWindowsWithAffinity(const Vector<QString> &affinities) const;
 
     /// @brief Returns the Layout where the specified item is in
     Core::Layout *layoutForItem(const Core::Item *) const;
@@ -199,13 +199,13 @@ public:
     /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
     bool itemIsInMainWindow(const Core::Item *) const;
 
-    bool affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const;
+    bool affinitiesMatch(const Vector<QString> &affinities1, const Vector<QString> &affinities2) const;
 
     /// @brief Returns a list of all known main window unique names
-    QStringList mainWindowsNames() const;
+    Vector<QString> mainWindowsNames() const;
 
     /// @brief Returns a list of all known dock widget unique names
-    QStringList dockWidgetNames() const;
+    Vector<QString> dockWidgetNames() const;
 
     /// @brief returns if the specified window has some other window on top (with higher Z)
     /// This is an approximation, as we don't have ways to compare Z, so we mostly intersect
@@ -248,7 +248,7 @@ private:
 
     Vector<Core::DockWidget *> m_dockWidgets;
     Vector<Core::MainWindow *> m_mainWindows;
-    QList<Core::Group *> m_groups;
+    Vector<Core::Group *> m_groups;
     Vector<Core::FloatingWindow *> m_floatingWindows;
     Vector<Core::Layout *> m_layouts;
 

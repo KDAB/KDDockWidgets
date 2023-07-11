@@ -77,21 +77,6 @@ struct fmt::formatter<QString>
     }
 };
 
-template<>
-struct fmt::formatter<QStringList>
-{
-    constexpr auto parse(format_parse_context &ctx)
-    {
-        return ctx.begin();
-    }
-
-    template<typename FormatContext>
-    auto format(const QStringList &strings, FormatContext &ctx)
-    {
-        return fmt::format_to(ctx.out(), "{}", strings.join(QLatin1Char(',')));
-    }
-};
-
 #ifdef KDDW_FRONTEND_QT
 template<typename T>
 struct fmt::formatter<QVector<T>>

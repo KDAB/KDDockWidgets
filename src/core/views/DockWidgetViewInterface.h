@@ -47,9 +47,9 @@ public:
     void setIcon(const Icon &icon, IconPlaces places = IconPlace::All);
     Icon icon(IconPlace place = IconPlace::TitleBar) const;
 
-    void setAffinities(const QStringList &);
+    void setAffinities(const Vector<QString> &);
     void setAffinityName(const QString &name);
-    QStringList affinities() const;
+    Vector<QString> affinities() const;
 
     void addDockWidgetAsTab(DockWidgetViewInterface *other,
                             KDDockWidgets::InitialOption initialOption = {});

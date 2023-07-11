@@ -919,7 +919,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
 }
 
 static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, Point globalPos,
-                                           const QStringList &affinities)
+                                           const Vector<QString> &affinities)
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
     auto view = topLevel->childViewAt(localPos);
@@ -946,7 +946,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         return nullptr;
     }
 
-    const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
+    const Vector<QString> affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
     if (auto fw = topLevel->asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {

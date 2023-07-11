@@ -52,9 +52,9 @@ void MainWindowInstantiator::setOptions(MainWindowOptions options)
     }
 }
 
-QStringList MainWindowInstantiator::affinities() const
+QVector<QString> MainWindowInstantiator::affinities() const
 {
-    return m_mainWindow ? m_mainWindow->affinities() : QStringList();
+    return m_mainWindow ? m_mainWindow->affinities() : QVector<QString>();
 }
 
 bool MainWindowInstantiator::isMDI() const

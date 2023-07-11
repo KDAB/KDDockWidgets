@@ -113,7 +113,7 @@ public:
      * Any window with empty affinity will also be subject to save/restore, regardless of @p
      * affinityNames.
      */
-    void setAffinityNames(const QStringList &affinityNames);
+    void setAffinityNames(const Vector<QString> &affinityNames);
 
     /// @internal Returns the private-impl. Not intended for public use.
     class Private;

@@ -41,9 +41,9 @@ void MDIDockingAreaInstantiator::setUniqueName(const QString &name)
     }
 }
 
-QStringList MDIDockingAreaInstantiator::affinities() const
+QVector<QString> MDIDockingAreaInstantiator::affinities() const
 {
-    return m_mainWindow ? m_mainWindow->affinities() : QStringList();
+    return m_mainWindow ? m_mainWindow->affinities() : QVector<QString>();
 }
 
 void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,

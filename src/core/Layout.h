@@ -30,8 +30,6 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 
-#include <QList>
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -168,7 +166,7 @@ public:
     /**
      * @brief Returns this list of Group objects contained in this layout
      */
-    QList<Core::Group *> groups() const;
+    Vector<Core::Group *> groups() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
     Vector<Core::DockWidget *> dockWidgets() const;
@@ -215,14 +213,14 @@ protected:
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const QList<Core::Group *> &groupsBeingAdded) const;
+    void unrefOldPlaceholders(const Vector<Core::Group *> &groupsBeingAdded) const;
 
     /**
      * @brief returns the groups contained in @p groupOrMultiSplitter-
      * If groupOrMultiSplitter- is a Group, it returns a list of 1 element, with that group
      * If groupOrMultiSplitter- is a MultiSplitter then it returns a list of all groups it contains
      */
-    QList<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
+    Vector<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
 
 private:
     Private *const d;

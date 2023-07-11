@@ -142,9 +142,9 @@ void WindowBeingDragged::grabMouse(bool grab)
         DragController::instance()->releaseMouse(m_draggableView);
 }
 
-QStringList WindowBeingDragged::affinities() const
+Vector<QString> WindowBeingDragged::affinities() const
 {
-    return m_floatingWindow ? m_floatingWindow->affinities() : QStringList();
+    return m_floatingWindow ? m_floatingWindow->affinities() : Vector<QString>();
 }
 
 Size WindowBeingDragged::size() const
@@ -280,7 +280,7 @@ Pixmap WindowBeingDraggedWayland::pixmap() const
 #endif
 }
 
-QStringList WindowBeingDraggedWayland::affinities() const
+Vector<QString> WindowBeingDraggedWayland::affinities() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::affinities();

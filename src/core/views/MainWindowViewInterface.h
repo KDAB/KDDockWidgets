@@ -38,8 +38,8 @@ public:
 
     // controllers/MainWindow.h public interface:
     QString uniqueName() const;
-    QStringList affinities() const;
-    void setAffinities(const QStringList &names);
+    Vector<QString> affinities() const;
+    void setAffinities(const Vector<QString> &names);
     MainWindowOptions options() const;
     bool isMDI() const;
     bool closeDockWidgets(bool force = false);

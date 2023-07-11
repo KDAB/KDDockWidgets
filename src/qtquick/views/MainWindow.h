@@ -36,7 +36,7 @@ namespace QtQuick {
 class DOCKS_EXPORT MainWindow : public QtQuick::View, public Core::MainWindowViewInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
+    Q_PROPERTY(QVector<QString> affinities READ affinities CONSTANT)
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)

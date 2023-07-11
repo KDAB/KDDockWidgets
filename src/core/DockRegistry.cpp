@@ -126,8 +126,8 @@ void DockRegistry::checkSanityAll(bool dumpLayout)
     }
 }
 
-bool DockRegistry::affinitiesMatch(const QStringList &affinities1,
-                                   const QStringList &affinities2) const
+bool DockRegistry::affinitiesMatch(const Vector<QString> &affinities1,
+                                   const Vector<QString> &affinities2) const
 {
     if (affinities1.isEmpty() && affinities2.isEmpty())
         return true;
@@ -142,9 +142,9 @@ bool DockRegistry::affinitiesMatch(const QStringList &affinities1,
     return false;
 }
 
-QStringList DockRegistry::mainWindowsNames() const
+Vector<QString> DockRegistry::mainWindowsNames() const
 {
-    QStringList names;
+    Vector<QString> names;
     names.reserve(m_mainWindows.size());
     for (auto mw : m_mainWindows)
         names.push_back(mw->uniqueName());
@@ -152,9 +152,9 @@ QStringList DockRegistry::mainWindowsNames() const
     return names;
 }
 
-QStringList DockRegistry::dockWidgetNames() const
+Vector<QString> DockRegistry::dockWidgetNames() const
 {
-    QStringList names;
+    Vector<QString> names;
     names.reserve(m_dockWidgets.size());
     for (auto dw : m_dockWidgets)
         names.push_back(dw->uniqueName());
@@ -234,7 +234,7 @@ Core::Group *DockRegistry::groupInMDIResize() const
             continue;
 
         Layout *layout = mw->layout();
-        const QList<Core::Group *> groups = layout->groups();
+        const Vector<Core::Group *> groups = layout->groups();
         for (Core::Group *group : groups) {
             if (WidgetResizeHandler *wrh = group->resizeHandler()) {
                 if (wrh->isResizing())
@@ -252,13 +252,13 @@ DockRegistry::Private *DockRegistry::dptr() const
 }
 
 Core::MainWindow::List
-DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
+DockRegistry::mainWindowsWithAffinity(const Vector<QString> &affinities) const
 {
     Core::MainWindow::List result;
     result.reserve(m_mainWindows.size());
 
     for (auto mw : m_mainWindows) {
-        const QStringList mwAffinities = mw->affinities();
+        const Vector<QString> mwAffinities = mw->affinities();
         if (affinitiesMatch(mwAffinities, affinities))
             result.push_back(mw);
     }
@@ -466,7 +466,7 @@ const Core::DockWidget::List DockRegistry::dockwidgets() const
     return m_dockWidgets;
 }
 
-const Core::DockWidget::List DockRegistry::dockWidgets(const QStringList &names)
+const Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &names)
 {
     Core::DockWidget::List result;
     result.reserve(names.size());
@@ -479,7 +479,7 @@ const Core::DockWidget::List DockRegistry::dockWidgets(const QStringList &names)
     return result;
 }
 
-const Core::MainWindow::List DockRegistry::mainWindows(const QStringList &names)
+const Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &names)
 {
     Core::MainWindow::List result;
     result.reserve(names.size());
@@ -510,9 +510,9 @@ const Core::MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-const QList<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
+const Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
 {
-    QList<Core::MainWindowViewInterface *> areas;
+    Vector<Core::MainWindowViewInterface *> areas;
 
     for (auto mw : m_mainWindows) {
         if (View *view = mw->view()) {
@@ -635,7 +635,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     return windows;
 }
 
-void DockRegistry::clear(const QStringList &affinities)
+void DockRegistry::clear(const Vector<QString> &affinities)
 {
     // Clears everything
     clear(m_dockWidgets, m_mainWindows, affinities);
@@ -643,7 +643,7 @@ void DockRegistry::clear(const QStringList &affinities)
 
 void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
                          const Core::MainWindow::List &mainWindows,
-                         const QStringList &affinities)
+                         const Vector<QString> &affinities)
 {
     for (auto dw : qAsConst(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {

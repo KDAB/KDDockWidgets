@@ -31,7 +31,7 @@ class DOCKS_EXPORT MDIDockingAreaInstantiator : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
+    Q_PROPERTY(QVector<QString> affinities READ affinities CONSTANT)
 public:
     ///@brief ctor, called by QML engine
     MDIDockingAreaInstantiator();
@@ -39,7 +39,7 @@ public:
     QString uniqueName() const;
     void setUniqueName(const QString &);
 
-    QStringList affinities() const;
+    QVector<QString> affinities() const;
 
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, QPoint localPos,
                                    KDDockWidgets::InitialOption addingOption = {});

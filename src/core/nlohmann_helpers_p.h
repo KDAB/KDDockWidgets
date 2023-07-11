@@ -62,7 +62,7 @@ inline void to_json(nlohmann::json &j, const QString &s)
     j = s.toStdString();
 }
 
-inline void from_json(const nlohmann::json &j, QStringList &stringList)
+inline void from_json(const nlohmann::json &j, KDDockWidgets::Vector<QString> &stringList)
 {
     if (!j.is_null() && !j.is_array()) {
         KDDW_ERROR("This is not an array, fix the code");
@@ -75,7 +75,7 @@ inline void from_json(const nlohmann::json &j, QStringList &stringList)
     }
 }
 
-inline void to_json(nlohmann::json &j, const QStringList &stringList)
+inline void to_json(nlohmann::json &j, const KDDockWidgets::Vector<QString> &stringList)
 {
     for (const auto &s : stringList) {
         j.push_back(s);

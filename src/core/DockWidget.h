@@ -297,7 +297,7 @@ public:
      *
      * @p names the affinity names
      */
-    void setAffinities(const QStringList &);
+    void setAffinities(const Vector<QString> &);
 
     /// @deprecated @overload
     /// @param name the affinity name
@@ -306,7 +306,7 @@ public:
     /**
      * @brief Returns the affinity name. Empty by default.
      */
-    QStringList affinities() const;
+    Vector<QString> affinities() const;
 
     /// @brief Opens this dock widget.
     /// Does nothing if already open.

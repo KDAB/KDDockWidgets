@@ -113,7 +113,7 @@ void MDIArea::resizeDockWidget(Core::DockWidgetViewInterface *dwView, QSize size
     resizeDockWidget(dw, size);
 }
 
-QList<Core::Group *> MDIArea::groups() const
+QVector<Core::Group *> MDIArea::groups() const
 {
     return d->layout->groups();
 }
