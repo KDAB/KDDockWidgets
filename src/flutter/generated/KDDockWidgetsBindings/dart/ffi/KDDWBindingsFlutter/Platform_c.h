@@ -8,21 +8,20 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <Platform.h>
 #include <ViewFactory.h>
 #include <core/View.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 #include <core/Controller.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <ClassicIndicatorsWindow.h>
 #include <DelayedCall_p.h>
 #include <core/Platform.h>
-#include <qstring.h>
+#include <string_p.h>
 #include <NonQtCompat_p.h>
 #include <vector>
-#include <qbytearray.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -196,94 +195,94 @@ public:
 }
 extern "C" {
 // KDDockWidgets::flutter::Platform::Platform()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__constructor();
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__constructor();
 // KDDockWidgets::flutter::Platform::applicationName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__applicationName(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__applicationName(void *thisObj);
 // KDDockWidgets::flutter::Platform::createDefaultViewFactory()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__createDefaultViewFactory(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::flutter::Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::Core::CreateViewOptions viewOpts, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags flags) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *viewOpts_, int options_, void *parent_, int flags);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *viewOpts_, int options_, void *parent_, int flags);
 // KDDockWidgets::flutter::Platform::createView(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__createView_Controller_View(void *thisObj, void *controller_, void *parent_);
 // KDDockWidgets::flutter::Platform::cursorPos() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__cursorPos(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__cursorPos(void *thisObj);
 // KDDockWidgets::flutter::Platform::dumpManagedBacktrace()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__dumpManagedBacktrace(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::flutter::Platform::hasActivePopup() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__hasActivePopup(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Platform__hasActivePopup(void *thisObj);
 // KDDockWidgets::flutter::Platform::inDisallowedDragView(KDDockWidgets::Point globalPos) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__inDisallowedDragView_Point(void *thisObj, void *globalPos_);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Platform__inDisallowedDragView_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::Platform::init()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__init(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__init(void *thisObj);
 // KDDockWidgets::flutter::Platform::installMessageHandler()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__installMessageHandler(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::flutter::Platform::isLeftMouseButtonPressed() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isLeftMouseButtonPressed(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::flutter::Platform::isProcessingAppQuitEvent() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Platform__isProcessingAppQuitEvent(void *thisObj);
 // KDDockWidgets::flutter::Platform::name() const
-KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
+DOCKS_EXPORT const char *c_KDDockWidgets__flutter__Platform__name(void *thisObj);
 // KDDockWidgets::flutter::Platform::onDropIndicatorOverlayCreated(KDDockWidgets::flutter::IndicatorWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayCreated_IndicatorWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayCreated_IndicatorWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onDropIndicatorOverlayDestroyed(KDDockWidgets::flutter::IndicatorWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayDestroyed_IndicatorWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onDropIndicatorOverlayDestroyed_IndicatorWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::pauseForDartDebugger()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDebugger()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::platformFlutter()
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
+DOCKS_EXPORT void *c_static_KDDockWidgets__flutter__Platform__platformFlutter();
 // KDDockWidgets::flutter::Platform::rebuildWindowOverlay()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__rebuildWindowOverlay(void *thisObj);
 // KDDockWidgets::flutter::Platform::restoreMouseCursor()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::flutter::Platform::resumeCoRoutines()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__resumeCoRoutines(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__resumeCoRoutines(void *thisObj);
 // KDDockWidgets::flutter::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::flutter::Platform::runTests()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(int ms) const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *thisObj, int ms);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *thisObj, int ms);
 // KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+DOCKS_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::flutter::Platform::setCursorPos(KDDockWidgets::Point arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::setMouseCursor(Qt::CursorShape arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::Platform::startDragDistance_impl() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__Platform__startDragDistance_impl(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__flutter__Platform__startDragDistance_impl(void *thisObj);
 // KDDockWidgets::flutter::Platform::supportsAeroSnap() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__supportsAeroSnap(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Platform__supportsAeroSnap(void *thisObj);
 // KDDockWidgets::flutter::Platform::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::Platform::tests_createNonClosableView(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::Platform::tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::Platform::tests_deinitPlatform_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_deinitPlatform_impl(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__tests_deinitPlatform_impl(void *thisObj);
 // KDDockWidgets::flutter::Platform::tests_initPlatform_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::flutter::Platform::ungrabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__ungrabMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::flutter::Platform::uninstallMessageHandler()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__uninstallMessageHandler(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__uninstallMessageHandler(void *thisObj);
 // KDDockWidgets::flutter::Platform::usesFallbackMouseGrabber() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Platform__usesFallbackMouseGrabber(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Platform_Finalizer(void *cppObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Platform__usesFallbackMouseGrabber(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform_Finalizer(void *cppObj);
 }

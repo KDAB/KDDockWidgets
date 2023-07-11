@@ -8,12 +8,12 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <ClassicIndicatorsWindow.h>
 #include <ClassicDropIndicatorOverlay.h>
 #include <core/View.h>
-#include <core/geometry_helpers_p.h>
-#include <qstring.h>
+#include <geometry_helpers_p.h>
+#include <string_p.h>
 #include <core/Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -302,148 +302,148 @@ public:
 }
 extern "C" {
 // KDDockWidgets::flutter::IndicatorWindow::IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay_View(void *arg__1_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__constructor_ClassicDropIndicatorOverlay_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::activateWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__activateWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__activateWindow(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::close()
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__close(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__close(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::createPlatformWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__createPlatformWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::flags() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__flags(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__flags(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__geometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__geometry(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::grabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__grabMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__grabMouse(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hasFocus() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__hasFocus(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__hasFocus(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hide()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__hide(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__hide(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::hover(KDDockWidgets::Point globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_Point(void *thisObj, void *globalPos_);
+DOCKS_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::IndicatorWindow::hover_flutter(KDDockWidgets::Point globalPos)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_Point(void *thisObj, void *globalPos_);
+DOCKS_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::IndicatorWindow::hoveredGroup() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__hoveredGroup(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__hoveredGroup(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::init()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__init(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__init(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isActiveWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isActiveWindow(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isActiveWindow(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isExplicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isExplicitlyHidden(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isMaximized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMaximized(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isMinimized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMinimized(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMinimized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isMounted() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMounted(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isMounted(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isNull() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isNull(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isNull(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isRootView() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isRootView(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isRootView(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isVisible(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::isWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isWindow(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__isWindow(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::mapFromGlobal(KDDockWidgets::Point globalPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapFromGlobal_Point(void *thisObj, void *globalPt_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapFromGlobal_Point(void *thisObj, void *globalPt_);
 // KDDockWidgets::flutter::IndicatorWindow::mapTo(KDDockWidgets::Core::View * parent, KDDockWidgets::Point pos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapTo_View_Point(void *thisObj, void *parent_, void *pos_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapTo_View_Point(void *thisObj, void *parent_, void *pos_);
 // KDDockWidgets::flutter::IndicatorWindow::mapToGlobal(KDDockWidgets::Point localPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapToGlobal_Point(void *thisObj, void *localPt_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__mapToGlobal_Point(void *thisObj, void *localPt_);
 // KDDockWidgets::flutter::IndicatorWindow::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__maxSizeHint(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::minSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__minSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__minSize(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::move(int x, int y)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int x, int y);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::IndicatorWindow::normalGeometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__normalGeometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__normalGeometry(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onChildAdded(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildAdded_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onChildRemoved(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildRemoved_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::onGeometryChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onGeometryChanged(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onRebuildRequested()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::onResize(int h, int w)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(void *thisObj, int arg__1);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::posForIndicator_flutter(KDDockWidgets::DropLocation arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_flutter_DropLocation(void *thisObj, int arg__1);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_flutter_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::raise()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raise(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::raiseAndActivate()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseAndActivate(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseAndActivate(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::raiseChild(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseChild_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseChild_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::IndicatorWindow::raiseWindow(KDDockWidgets::Core::View * rootView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseWindow_View(void *thisObj, void *rootView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::IndicatorWindow::releaseKeyboard()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::releaseMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::resize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__resize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::IndicatorWindow::rubberBand() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__rubberBand(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__rubberBand(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::setCursor(Qt::CursorShape shape)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape(void *thisObj, int shape);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape(void *thisObj, int shape);
 // KDDockWidgets::flutter::IndicatorWindow::setFixedHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setFixedHeight_int(void *thisObj, int h);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::flutter::IndicatorWindow::setFixedWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setFixedWidth_int(void *thisObj, int w);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setFixedWidth_int(void *thisObj, int w);
 // KDDockWidgets::flutter::IndicatorWindow::setGeometry(KDDockWidgets::Rect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_Rect(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::IndicatorWindow::setHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setHeight_int(void *thisObj, int h);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::flutter::IndicatorWindow::setMaximumSize(KDDockWidgets::Size sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMaximumSize_Size(void *thisObj, void *sz_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMaximumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::IndicatorWindow::setMinimumSize(KDDockWidgets::Size sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMinimumSize_Size(void *thisObj, void *sz_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMinimumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::IndicatorWindow::setMouseTracking(bool enable)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMouseTracking_bool(void *thisObj, bool enable);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::flutter::IndicatorWindow::setObjectName(const QString & arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString(void *thisObj, const char *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::flutter::IndicatorWindow::setParent(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setParent_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::IndicatorWindow::setSize(int w, int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int(void *thisObj, int w, int h);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::IndicatorWindow::setViewName(const QString & name)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setViewName_QString(void *thisObj, const char *name_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::IndicatorWindow::setVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::flutter::IndicatorWindow::setWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setWidth_int(void *thisObj, int w);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setWidth_int(void *thisObj, int w);
 // KDDockWidgets::flutter::IndicatorWindow::setWindowOpacity(double v)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setWindowOpacity_double(void *thisObj, double v);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setWindowOpacity_double(void *thisObj, double v);
 // KDDockWidgets::flutter::IndicatorWindow::setWindowTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setWindowTitle_QString(void *thisObj, const char *title_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setWindowTitle_QString(void *thisObj, const char *title_);
 // KDDockWidgets::flutter::IndicatorWindow::setZOrder(int z)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setZOrder_int(void *thisObj, int z);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::flutter::IndicatorWindow::show()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__show(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__show(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::showMaximized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showMaximized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showMaximized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::showMinimized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showMinimized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::showNormal()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__showNormal(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::update()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__update(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updateIndicatorVisibility()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updateIndicatorVisibility(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updateIndicatorVisibility(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(void *thisObj);
 // KDDockWidgets::flutter::IndicatorWindow::updatePositions_flutter(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group * hoveredGroup, int visibleLocations)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
 // KDDockWidgets::flutter::IndicatorWindow::viewName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *cppObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *cppObj);
 }

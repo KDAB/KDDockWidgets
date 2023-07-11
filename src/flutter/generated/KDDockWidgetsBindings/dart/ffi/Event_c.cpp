@@ -13,6 +13,8 @@
 
 #include <iostream>
 
+#include <cassert>
+
 
 namespace Dartagnan {
 

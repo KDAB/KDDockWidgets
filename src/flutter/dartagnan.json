@@ -1,7 +1,10 @@
 {
     "createCMakeLists": false,
     "supportsQtSignals": false,
-    "bindingsLibrary": "kddockwidgets-qt6",
+    "exportsHeaderName": "kddockwidgets_export.h",
+    "exportsMacroName": "DOCKS_EXPORT",
+    "bindingsLibrary": "kddockwidgets",
+    "QStringToDartCode": "return data();",
     "pureVirtualClassOverrides": [
         "KDDockWidgets::Core::View"
     ],

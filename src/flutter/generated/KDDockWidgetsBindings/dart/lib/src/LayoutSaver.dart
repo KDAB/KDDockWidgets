@@ -68,14 +68,6 @@ class LayoutSaver implements ffi.Finalizable {
             'c_static_KDDockWidgets__LayoutSaver__restoreInProgress')
         .asFunction();
     return func() != 0;
-  } // restoreLayout(const QByteArray & arg__1)
-
-  bool restoreLayout(QByteArray? arg__1) {
-    final bool_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__LayoutSaver__restoreLayout_QByteArray')
-        .asFunction();
-    return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // saveToFile(const QString & jsonFilename)
 
   bool saveToFile(String? jsonFilename) {
@@ -84,15 +76,6 @@ class LayoutSaver implements ffi.Finalizable {
             'c_KDDockWidgets__LayoutSaver__saveToFile_QString')
         .asFunction();
     return func(thisCpp, jsonFilename?.toNativeUtf8() ?? ffi.nullptr) != 0;
-  } // serializeLayout() const
-
-  QByteArray serializeLayout() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__LayoutSaver__serializeLayout')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return QByteArray.fromCppPointer(result, true);
   }
 
   void release() {

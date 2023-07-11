@@ -55,7 +55,6 @@
 #include "../core/Layout.h"
 #include "../core/DropArea.h"
 #include "../core/Group.h"
-#include "../core/Object_p.h"
 #include "../core/Stack.h"
 #include "../core/TabBar.h"
 #include "../core/TitleBar.h"
@@ -71,3 +70,7 @@
 
 #include "../KDDockWidgets.h"
 #include "../Config.h"
+
+#include "../qtcompat/string_p.h"
+#include "../qtcompat/Object_p.h"
+#include "../qtcompat/geometry_helpers_p.h"

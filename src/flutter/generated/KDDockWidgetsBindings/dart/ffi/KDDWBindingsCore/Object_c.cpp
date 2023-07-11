@@ -13,6 +13,8 @@
 
 #include <iostream>
 
+#include <cassert>
+
 
 namespace Dartagnan {
 
@@ -48,7 +50,7 @@ void Object_wrapper::setParent(KDDockWidgets::Core::Object *parent)
 {
     ::KDDockWidgets::Core::Object::setParent(parent);
 }
-QString Object_wrapper::tr(const char *arg__1) const
+QString Object_wrapper::tr(const char *arg__1)
 {
     return ::KDDockWidgets::Core::Object::tr(arg__1);
 }
@@ -99,10 +101,10 @@ void c_KDDockWidgets__Core__Object__setParent_Object(void *thisObj, void *parent
     auto parent = reinterpret_cast<KDDockWidgets::Core::Object *>(parent_);
     fromPtr(thisObj)->setParent(parent);
 }
-// tr(const char * arg__1) const
-void *c_KDDockWidgets__Core__Object__tr_char(void *thisObj, const char *arg__1)
+// tr(const char * arg__1)
+void *c_static_KDDockWidgets__Core__Object__tr_char(const char *arg__1)
 {
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->tr(arg__1) };
+    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Object_wrapper::tr(arg__1) };
 }
 void c_KDDockWidgets__Core__Object__destructor(void *thisObj)
 {

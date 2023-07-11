@@ -230,6 +230,17 @@ public:
     /// @brief Creates a Window. For the sole purpose of unit-testing Window.
     /// The created window should be visible.
     virtual std::shared_ptr<Core::Window> tests_createWindow() = 0;
+
+    /// @brief Creates the platform. Called by the tests at startup.
+    /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
+    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType);
+
+    /// @brief Deletes the platform. Called at end of tests.
+    /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
+    static void tests_deinitPlatform();
+
+    static std::string s_expectedWarning;
+    static int s_logicalDpiFactorOverride;
 #endif
 
 #ifdef DOCKS_TESTING_METHODS
@@ -242,14 +253,6 @@ public:
         virtual ~WarningObserver();
         virtual void onFatal() = 0;
     };
-
-    /// @brief Creates the platform. Called by the tests at startup.
-    /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
-    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType);
-
-    /// @brief Deletes the platform. Called at end of tests.
-    /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
-    static void tests_deinitPlatform();
 
     /// @brief Returns whether the Platform was already initialized
     static bool isInitialized();
@@ -278,9 +281,6 @@ public:
 
     virtual void pauseForDebugger();
 
-    static std::string s_expectedWarning;
-    static int s_logicalDpiFactorOverride;
-
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any
     /// Override in derived classes for custom behavior.
@@ -305,7 +305,9 @@ protected:
     Platform();
 };
 
-#ifdef DOCKS_TESTING_METHODS
+#if defined(DOCKS_DEVELOPER_MODE)
+
+#if !defined(DARTAGNAN_BINDINGS_RUN)
 
 struct SetExpectedWarning
 {
@@ -322,6 +324,12 @@ struct SetExpectedWarning
 
     KDDW_DELETE_COPY_CTOR(SetExpectedWarning)
 };
+
+#endif // bindings
+
+#endif // dev-mode
+
+#if defined(DOCKS_TESTING_METHODS)
 
 struct CreateViewOptions
 {
@@ -350,6 +358,6 @@ struct CreateViewOptions
 
 #endif
 
-}
+} // Core
 
-}
+} // KDDockWidgets

@@ -43,7 +43,7 @@ static Platform *s_platform = nullptr;
 
 EventFilterInterface::~EventFilterInterface() = default;
 
-#ifdef DOCKS_DEVELOPER_MODE
+#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
 int Platform::s_logicalDpiFactorOverride = 0;
 std::string Platform::s_expectedWarning = {};
 #endif
@@ -156,6 +156,15 @@ void Platform::pauseForDebugger()
 
 Platform::WarningObserver::~WarningObserver() = default;
 
+/*static */
+bool Platform::isInitialized()
+{
+    return s_platform != nullptr;
+}
+
+#endif
+
+#ifdef DOCKS_DEVELOPER_MODE
 /*static*/
 void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type)
 {
@@ -212,13 +221,6 @@ void Platform::tests_deinitPlatform()
     plat->tests_deinitPlatform_impl();
     delete plat;
 }
-
-/*static */
-bool Platform::isInitialized()
-{
-    return s_platform != nullptr;
-}
-
 #endif
 
 void Platform::installGlobalEventFilter(EventFilterInterface *filter)

@@ -8,11 +8,11 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <core/View.h>
 #include <core/Controller.h>
-#include <core/geometry_helpers_p.h>
-#include <qstring.h>
+#include <geometry_helpers_p.h>
+#include <string_p.h>
 #include <NonQtCompat_p.h>
 #include <FloatingWindow.h>
 #include <core/Group.h>
@@ -266,168 +266,168 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::View::activateWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__activateWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__activateWindow(void *thisObj);
 // KDDockWidgets::Core::View::asDockWidgetController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asDockWidgetController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asDockWidgetController(void *thisObj);
 // KDDockWidgets::Core::View::asDropAreaController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asDropAreaController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asDropAreaController(void *thisObj);
 // KDDockWidgets::Core::View::asFloatingWindowController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asFloatingWindowController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asFloatingWindowController(void *thisObj);
 // KDDockWidgets::Core::View::asGroupController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asGroupController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asGroupController(void *thisObj);
 // KDDockWidgets::Core::View::asLayout() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asLayout(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asLayout(void *thisObj);
 // KDDockWidgets::Core::View::asMainWindowController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asMainWindowController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asMainWindowController(void *thisObj);
 // KDDockWidgets::Core::View::asStackController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asStackController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asStackController(void *thisObj);
 // KDDockWidgets::Core::View::asTabBarController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asTabBarController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asTabBarController(void *thisObj);
 // KDDockWidgets::Core::View::asTitleBarController() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__asTitleBarController(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__asTitleBarController(void *thisObj);
 // KDDockWidgets::Core::View::close()
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__close(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__close(void *thisObj);
 // KDDockWidgets::Core::View::controller() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__controller(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__controller(void *thisObj);
 // KDDockWidgets::Core::View::createPlatformWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj);
 // KDDockWidgets::Core::View::deliverViewEventToFilters(KDDockWidgets::Event * e)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_);
 // KDDockWidgets::Core::View::dumpDebug()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * one, const KDDockWidgets::Core::View * two)
-KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__View__equals_View_View(void *one_, void *two_);
+DOCKS_EXPORT bool c_static_KDDockWidgets__Core__View__equals_View_View(void *one_, void *two_);
 // KDDockWidgets::Core::View::equals(const KDDockWidgets::Core::View * other) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__equals_View(void *thisObj, void *other_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__equals_View(void *thisObj, void *other_);
 // KDDockWidgets::Core::View::firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Core::ViewType arg__2)
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__View__firstParentOfType_View_ViewType(void *view_, int arg__2);
+DOCKS_EXPORT void *c_static_KDDockWidgets__Core__View__firstParentOfType_View_ViewType(void *view_, int arg__2);
 // KDDockWidgets::Core::View::flags() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__flags(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__flags(void *thisObj);
 // KDDockWidgets::Core::View::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__geometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__geometry(void *thisObj);
 // KDDockWidgets::Core::View::grabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__grabMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__grabMouse(void *thisObj);
 // KDDockWidgets::Core::View::hardcodedMinimumSize()
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize();
+DOCKS_EXPORT void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize();
 // KDDockWidgets::Core::View::hasFocus() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj);
 // KDDockWidgets::Core::View::height() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__height(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__height(void *thisObj);
 // KDDockWidgets::Core::View::hide()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__hide(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__hide(void *thisObj);
 // KDDockWidgets::Core::View::inDtor() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__inDtor(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__inDtor(void *thisObj);
 // KDDockWidgets::Core::View::init()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__init(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__init(void *thisObj);
 // KDDockWidgets::Core::View::isActiveWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isActiveWindow(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isActiveWindow(void *thisObj);
 // KDDockWidgets::Core::View::isExplicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isExplicitlyHidden(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::Core::View::isMaximized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isMaximized(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isMaximized(void *thisObj);
 // KDDockWidgets::Core::View::isMinimized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isMinimized(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isMinimized(void *thisObj);
 // KDDockWidgets::Core::View::isNull() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isNull(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isNull(void *thisObj);
 // KDDockWidgets::Core::View::isRootView() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isRootView(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isRootView(void *thisObj);
 // KDDockWidgets::Core::View::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__isVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isVisible(void *thisObj);
 // KDDockWidgets::Core::View::mapFromGlobal(KDDockWidgets::Point arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__mapFromGlobal_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__mapFromGlobal_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::mapTo(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Point arg__2) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__mapTo_View_Point(void *thisObj, void *arg__1_, void *arg__2_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__mapTo_View_Point(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::View::mapToGlobal(KDDockWidgets::Point arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__mapToGlobal_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__mapToGlobal_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj);
 // KDDockWidgets::Core::View::minSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__minSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__minSize(void *thisObj);
 // KDDockWidgets::Core::View::minimumHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj);
 // KDDockWidgets::Core::View::minimumWidth() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj);
 // KDDockWidgets::Core::View::move(KDDockWidgets::Point arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__move_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__move_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::move(int x, int y)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::Core::View::normalGeometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj);
 // KDDockWidgets::Core::View::onResize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__onResize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__onResize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::onResize(int h, int w)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::Core::View::pos() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__pos(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__pos(void *thisObj);
 // KDDockWidgets::Core::View::raise()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__raise(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__raise(void *thisObj);
 // KDDockWidgets::Core::View::raiseAndActivate()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj);
 // KDDockWidgets::Core::View::rect() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__rect(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__rect(void *thisObj);
 // KDDockWidgets::Core::View::releaseKeyboard()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj);
 // KDDockWidgets::Core::View::releaseMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj);
 // KDDockWidgets::Core::View::resize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__resize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::resize(int w, int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::Core::View::setCursor(Qt::CursorShape arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setFixedHeight(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setFixedHeight_int(void *thisObj, int arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setFixedHeight_int(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setFixedWidth(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setFixedWidth_int(void *thisObj, int arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setFixedWidth_int(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setGeometry(KDDockWidgets::Rect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setGeometry_Rect(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setGeometry_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setHeight(int height)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setHeight_int(void *thisObj, int height);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setHeight_int(void *thisObj, int height);
 // KDDockWidgets::Core::View::setMaximumSize(KDDockWidgets::Size sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setMaximumSize_Size(void *thisObj, void *sz_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setMaximumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::Core::View::setMinimumSize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setMinimumSize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setMinimumSize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setMouseTracking(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setMouseTracking_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setMouseTracking_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::View::setParent(KDDockWidgets::Core::View * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setParent_View(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setParent_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setSize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setSize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setSize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::setSize(int width, int height)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setSize_int_int(void *thisObj, int width, int height);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setSize_int_int(void *thisObj, int width, int height);
 // KDDockWidgets::Core::View::setViewName(const QString & arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setViewName_QString(void *thisObj, const char *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setViewName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::View::setVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setVisible_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::View::setWidth(int width)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setWidth_int(void *thisObj, int width);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setWidth_int(void *thisObj, int width);
 // KDDockWidgets::Core::View::setWindowOpacity(double arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setWindowOpacity_double(void *thisObj, double arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setWindowOpacity_double(void *thisObj, double arg__1);
 // KDDockWidgets::Core::View::setWindowTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setWindowTitle_QString(void *thisObj, const char *title_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setWindowTitle_QString(void *thisObj, const char *title_);
 // KDDockWidgets::Core::View::setZOrder(int arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__setZOrder_int(void *thisObj, int arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__setZOrder_int(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::show()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__show(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__show(void *thisObj);
 // KDDockWidgets::Core::View::showMaximized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__showMaximized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__showMaximized(void *thisObj);
 // KDDockWidgets::Core::View::showMinimized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__showMinimized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__showMinimized(void *thisObj);
 // KDDockWidgets::Core::View::showNormal()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__showNormal(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__showNormal(void *thisObj);
 // KDDockWidgets::Core::View::size() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__size(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__size(void *thisObj);
 // KDDockWidgets::Core::View::update()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__update(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__update(void *thisObj);
 // KDDockWidgets::Core::View::viewName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__View__viewName(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__viewName(void *thisObj);
 // KDDockWidgets::Core::View::width() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__width(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__width(void *thisObj);
 // KDDockWidgets::Core::View::x() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__x(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__x(void *thisObj);
 // KDDockWidgets::Core::View::y() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__View__y(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__View_Finalizer(void *cppObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__y(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__View_Finalizer(void *cppObj);
 }

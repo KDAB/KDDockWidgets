@@ -8,12 +8,12 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <core/Layout.h>
 #include <core/View.h>
 #include "core/MainWindow.h"
 #include <FloatingWindow.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 #include <core/DockWidget.h>
 #include <Item_p.h>
 #include <core/Group.h>
@@ -59,58 +59,58 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::Layout::Layout(KDDockWidgets::Core::ViewType arg__1, KDDockWidgets::Core::View * arg__2)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__constructor_ViewType_View(int arg__1, void *arg__2_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__constructor_ViewType_View(int arg__1, void *arg__2_);
 // KDDockWidgets::Core::Layout::asDropArea() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj);
 // KDDockWidgets::Core::Layout::checkSanity() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj);
 // KDDockWidgets::Core::Layout::clearLayout()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj);
 // KDDockWidgets::Core::Layout::containsFrame(const KDDockWidgets::Core::Group * arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::containsItem(const KDDockWidgets::Core::Item * arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::count() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__count(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__count(void *thisObj);
 // KDDockWidgets::Core::Layout::dumpLayout() const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj);
 // KDDockWidgets::Core::Layout::floatingWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Layout::isInMainWindow(bool honourNesting) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Core::Layout::itemForFrame(const KDDockWidgets::Core::Group * group) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_);
 // KDDockWidgets::Core::Layout::layoutHeight() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj);
 // KDDockWidgets::Core::Layout::layoutMaximumSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint(void *thisObj);
 // KDDockWidgets::Core::Layout::layoutMinimumSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__layoutMinimumSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__layoutMinimumSize(void *thisObj);
 // KDDockWidgets::Core::Layout::layoutSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__layoutSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__layoutSize(void *thisObj);
 // KDDockWidgets::Core::Layout::layoutWidth() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__layoutWidth(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__layoutWidth(void *thisObj);
 // KDDockWidgets::Core::Layout::mainWindow(bool honourNesting) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__mainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Core::Layout::placeholderCount() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__placeholderCount(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__placeholderCount(void *thisObj);
 // KDDockWidgets::Core::Layout::removeItem(KDDockWidgets::Core::Item * item)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__removeItem_Item(void *thisObj, void *item_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__removeItem_Item(void *thisObj, void *item_);
 // KDDockWidgets::Core::Layout::restorePlaceholder(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Core::Item * arg__2, int tabIndex)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__restorePlaceholder_DockWidget_Item_int(void *thisObj, void *dw_, void *arg__2_, int tabIndex);
 // KDDockWidgets::Core::Layout::setLayoutMinimumSize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutMinimumSize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::setLayoutSize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutSize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__setLayoutSize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__setParentView_impl_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Layout::updateSizeConstraints()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__updateSizeConstraints(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__updateSizeConstraints(void *thisObj);
 // KDDockWidgets::Core::Layout::viewAboutToBeDeleted()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted(void *thisObj);
 // KDDockWidgets::Core::Layout::visibleCount() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Layout__visibleCount(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Layout_Finalizer(void *cppObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__visibleCount(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Layout_Finalizer(void *cppObj);
 }

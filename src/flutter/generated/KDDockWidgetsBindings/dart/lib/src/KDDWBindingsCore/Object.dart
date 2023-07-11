@@ -102,15 +102,15 @@ class Object implements ffi.Finalizable {
             'c_KDDockWidgets__Core__Object__setParent_Object')
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
-  } // tr(const char * arg__1) const
+  }
 
-  QString tr(String? arg__1) {
-    final voidstar_Func_voidstar_string func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_string_FFI>>(
-            'c_KDDockWidgets__Core__Object__tr_char')
+  static // tr(const char * arg__1)
+      QString tr(String? arg__1) {
+    final voidstar_Func_string func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_string_FFI>>(
+            'c_static_KDDockWidgets__Core__Object__tr_char')
         .asFunction();
-    ffi.Pointer<void> result =
-        func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
+    ffi.Pointer<void> result = func(arg__1?.toNativeUtf8() ?? ffi.nullptr);
     return QString.fromCppPointer(result, true);
   }
 

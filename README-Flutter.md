@@ -7,8 +7,6 @@
 
 - Flutter >= 3.10 && Dart 3
 
-- Qt 6.5 (Only QtCore. To be removed soon)
-
 - CMake, Ninja
 
 - KDDW (git clone <https://github.com/KDAB/KDDockWidgets.git>)
@@ -24,7 +22,6 @@ Adjust paths as needed.
 Preparatives:
 
 ```bash
-export PATH=/home/user/Qt/6.5.1/gcc_64/bin/:$PATH
 export KDDW_SOURCE_DIR=/home/user/somewhere/kddockwidgets/
 ```
 

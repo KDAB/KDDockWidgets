@@ -9,19 +9,19 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-/// Implements a QObject replacement, for Flutter
+/// Implements a QObject replacement for Flutter
+/// Objects in core/ still use QObject, so we minimize changes for existing Qt users
+/// but for flutter, we use this replacement
 
 #pragma once
 
 #include "docks_export.h"
+#include "enums_p.h"
+#include "string_p.h"
 
 #include <vector>
 
-#include <QString>
-
 #include <kdbindings/signal.h>
-
-#include "flutter/qcoro.h"
 
 #if defined(Q_OBJECT) // TODOm4: Remove this ifdef and the undef
 #undef Q_OBJECT

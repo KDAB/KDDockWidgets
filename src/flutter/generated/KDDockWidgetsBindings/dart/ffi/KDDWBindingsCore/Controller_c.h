@@ -8,12 +8,12 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <core/Controller.h>
 #include <core/View.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
+#include <string_p.h>
 #include <Object_p.h>
-#include <qstring.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -49,46 +49,46 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::Controller::Controller(KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__2)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__constructor_ViewType_View(int type, void *arg__2_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__constructor_ViewType_View(int type, void *arg__2_);
 // KDDockWidgets::Core::Controller::close()
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__close(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__close(void *thisObj);
 // KDDockWidgets::Core::Controller::destroyLater()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj);
 // KDDockWidgets::Core::Controller::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj);
 // KDDockWidgets::Core::Controller::height() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__height(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Controller__height(void *thisObj);
 // KDDockWidgets::Core::Controller::inDtor() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj);
 // KDDockWidgets::Core::Controller::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj);
 // KDDockWidgets::Core::Controller::mapToGlobal(KDDockWidgets::Point arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__mapToGlobal_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__mapToGlobal_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Controller::pos() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__pos(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__pos(void *thisObj);
 // KDDockWidgets::Core::Controller::rect() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__rect(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__rect(void *thisObj);
 // KDDockWidgets::Core::Controller::setParentView(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__setParentView_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__setParentView_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Controller::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__setParentView_impl_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Controller::setVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__setVisible_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Controller::show() const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__show(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__show(void *thisObj);
 // KDDockWidgets::Core::Controller::size() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__size(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__size(void *thisObj);
 // KDDockWidgets::Core::Controller::type() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__type(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Controller__type(void *thisObj);
 // KDDockWidgets::Core::Controller::view() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Controller__view(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__view(void *thisObj);
 // KDDockWidgets::Core::Controller::width() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__width(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Controller__width(void *thisObj);
 // KDDockWidgets::Core::Controller::x() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__x(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Controller__x(void *thisObj);
 // KDDockWidgets::Core::Controller::y() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Controller__y(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Controller_Finalizer(void *cppObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Controller__y(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Controller_Finalizer(void *cppObj);
 }

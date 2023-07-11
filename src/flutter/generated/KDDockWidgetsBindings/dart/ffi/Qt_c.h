@@ -8,9 +8,9 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
-#include <qnamespace.h>
+#include "kddockwidgets_export.h"
+#include <qtcompat/enums_p.h>
 
 extern "C" {
-KDDockWidgetsBindings_EXPORT void c_Qt_Finalizer(void *cppObj);
+DOCKS_EXPORT void c_Qt_Finalizer(void *cppObj);
 }

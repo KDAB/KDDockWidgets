@@ -8,11 +8,11 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <SideBar.h>
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -39,26 +39,26 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::SideBar::addDockWidget(KDDockWidgets::Core::DockWidget * dw)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__addDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::SideBar::clear()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__clear(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__clear(void *thisObj);
 // KDDockWidgets::Core::SideBar::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__SideBar__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__SideBar__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::SideBar::isEmpty() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__SideBar__isEmpty(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__SideBar__isEmpty(void *thisObj);
 // KDDockWidgets::Core::SideBar::isVertical() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__SideBar__isVertical(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__SideBar__isVertical(void *thisObj);
 // KDDockWidgets::Core::SideBar::mainWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__SideBar__mainWindow(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__SideBar__mainWindow(void *thisObj);
 // KDDockWidgets::Core::SideBar::onButtonClicked(KDDockWidgets::Core::DockWidget * dw)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::SideBar::removeDockWidget(KDDockWidgets::Core::DockWidget * dw)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__removeDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::SideBar::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::SideBar::toggleOverlay(KDDockWidgets::Core::DockWidget * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj);
 }

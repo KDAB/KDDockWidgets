@@ -137,11 +137,9 @@ endif()
 if(KDDockWidgets_QT6)
     set(Qt_VERSION_MAJOR 6)
     set(QT_MIN_VERSION "6.2.0")
-    set(KDDockWidgets_LIBRARY_QTID "-qt6")
 else()
     set(Qt_VERSION_MAJOR 5)
     set(QT_MIN_VERSION "5.15")
-    set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 
 # BEGIN frontend enabling
@@ -175,8 +173,6 @@ if(KDDockWidgets_FRONTENDS)
 
     # flutter
     if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
-        # For now flutter still depends on Qt
-        find_package(Qt${Qt_VERSION_MAJOR} 6.5.0 NO_MODULE REQUIRED COMPONENTS Gui)
         set(KDDW_FRONTEND_FLUTTER ON)
     endif()
 
@@ -226,7 +222,15 @@ if(KDDW_FRONTEND_FLUTTER)
 endif()
 
 # END frontend enabling
-include(KDQtInstallPaths) # to set QT_INSTALL_FOO variables
+
+set(KDDockWidgets_LIBRARY_QTID "")
+
+if(KDDW_FRONTEND_QT)
+    include(KDQtInstallPaths) # to set QT_INSTALL_FOO variables
+    if(KDDockWidgets_QT6)
+        set(KDDockWidgets_LIBRARY_QTID "-qt6")
+    endif()
+endif()
 
 add_definitions(-DQT_NO_KEYWORDS)
 

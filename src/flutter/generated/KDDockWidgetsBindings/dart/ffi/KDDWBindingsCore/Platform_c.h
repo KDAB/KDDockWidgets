@@ -8,18 +8,17 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <core/Platform.h>
 #include <ViewFactory.h>
 #include <core/View.h>
 #include <NonQtCompat_p.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 #include <core/Controller.h>
 #include <DelayedCall_p.h>
-#include <qstring.h>
+#include <string_p.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
-#include <qbytearray.h>
 #include <vector>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -93,7 +92,6 @@ public:
     virtual KDDockWidgets::Core::View *tests_createNonClosableView_nocallback(KDDockWidgets::Core::View *parent = nullptr);
     virtual KDDockWidgets::Core::View *tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
     virtual KDDockWidgets::Core::View *tests_createView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
-    static void tests_deinitPlatform();
     virtual void tests_deinitPlatform_impl();
     virtual void tests_deinitPlatform_impl_nocallback();
     virtual void tests_initPlatform_impl();
@@ -177,92 +175,88 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::Platform::Platform()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__constructor();
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__constructor();
 // KDDockWidgets::Core::Platform::applicationName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__applicationName(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__applicationName(void *thisObj);
 // KDDockWidgets::Core::Platform::createDefaultViewFactory()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__createDefaultViewFactory(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__createDefaultViewFactory(void *thisObj);
 // KDDockWidgets::Core::Platform::createMainWindow(const QString & uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View * parent, Qt::WindowFlags arg__5) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__createMainWindow_QString_CreateViewOptions_MainWindowOptions_View_WindowFlags(void *thisObj, const char *uniqueName_, void *arg__2_, int options_, void *parent_, int arg__5);
 // KDDockWidgets::Core::Platform::createView(KDDockWidgets::Core::Controller * arg__1, KDDockWidgets::Core::View * parent) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__createView_Controller_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Core::Platform::cursorPos() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__cursorPos(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__cursorPos(void *thisObj);
 // KDDockWidgets::Core::Platform::dumpManagedBacktrace()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__dumpManagedBacktrace(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::Core::Platform::hasActivePopup() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__hasActivePopup(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__hasActivePopup(void *thisObj);
 // KDDockWidgets::Core::Platform::inDisallowedDragView(KDDockWidgets::Point globalPos) const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__inDisallowedDragView_Point(void *thisObj, void *globalPos_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__inDisallowedDragView_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::Platform::installMessageHandler()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__installMessageHandler(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__installMessageHandler(void *thisObj);
 // KDDockWidgets::Core::Platform::instance()
-KDDockWidgetsBindings_EXPORT void *c_static_KDDockWidgets__Core__Platform__instance();
+DOCKS_EXPORT void *c_static_KDDockWidgets__Core__Platform__instance();
 // KDDockWidgets::Core::Platform::isInitialized()
-KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__Core__Platform__isInitialized();
+DOCKS_EXPORT bool c_static_KDDockWidgets__Core__Platform__isInitialized();
 // KDDockWidgets::Core::Platform::isLeftMouseButtonPressed() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__isLeftMouseButtonPressed(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__isLeftMouseButtonPressed(void *thisObj);
 // KDDockWidgets::Core::Platform::isProcessingAppQuitEvent() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__isProcessingAppQuitEvent(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__isProcessingAppQuitEvent(void *thisObj);
 // KDDockWidgets::Core::Platform::isQt() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__isQt(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__isQt(void *thisObj);
 // KDDockWidgets::Core::Platform::isQtQuick() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__isQtQuick(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__isQtQuick(void *thisObj);
 // KDDockWidgets::Core::Platform::isQtWidgets() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__isQtWidgets(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__isQtWidgets(void *thisObj);
 // KDDockWidgets::Core::Platform::name() const
-KDDockWidgetsBindings_EXPORT const char *c_KDDockWidgets__Core__Platform__name(void *thisObj);
+DOCKS_EXPORT const char *c_KDDockWidgets__Core__Platform__name(void *thisObj);
 // KDDockWidgets::Core::Platform::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowCreated_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onFloatingWindowDestroyed(KDDockWidgets::Core::FloatingWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onMainWindowCreated(KDDockWidgets::Core::MainWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::pauseForDebugger()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::Core::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
 // KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Platform::setCursorPos(KDDockWidgets::Point arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::Platform::startDragDistance() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance(void *thisObj);
 // KDDockWidgets::Core::Platform::startDragDistance_impl() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance_impl(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::supportsAeroSnap() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__supportsAeroSnap(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__supportsAeroSnap(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Core::Platform::tests_createNonClosableView(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createNonClosableView_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::Platform::tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
-// KDDockWidgets::Core::Platform::tests_deinitPlatform()
-KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Platform__tests_deinitPlatform();
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Core::Platform::tests_deinitPlatform_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_deinitPlatform_impl(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__tests_deinitPlatform_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_initPlatform_impl()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__tests_initPlatform_impl(void *thisObj);
 // KDDockWidgets::Core::Platform::ungrabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__ungrabMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__ungrabMouse(void *thisObj);
 // KDDockWidgets::Core::Platform::uninstallMessageHandler()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__uninstallMessageHandler(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__uninstallMessageHandler(void *thisObj);
 // KDDockWidgets::Core::Platform::usesFallbackMouseGrabber() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__usesFallbackMouseGrabber(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT int c_static_KDDockWidgets__Core__Platform___get_s_logicalDpiFactorOverride();
-KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__Core__Platform___set_s_logicalDpiFactorOverride_int(int s_logicalDpiFactorOverride_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform_Finalizer(void *cppObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__usesFallbackMouseGrabber(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform_Finalizer(void *cppObj);
 }

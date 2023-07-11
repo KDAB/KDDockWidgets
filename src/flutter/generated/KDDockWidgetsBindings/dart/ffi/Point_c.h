@@ -8,8 +8,8 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
-#include <core/geometry_helpers_p.h>
+#include "kddockwidgets_export.h"
+#include <geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Point_wrapper : public ::KDDockWidgets::Point
@@ -28,21 +28,21 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Point::Point()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Point__constructor();
+DOCKS_EXPORT void *c_KDDockWidgets__Point__constructor();
 // KDDockWidgets::Point::Point(int x, int y)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Point__constructor_int_int(int x, int y);
+DOCKS_EXPORT void *c_KDDockWidgets__Point__constructor_int_int(int x, int y);
 // KDDockWidgets::Point::isNull() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Point__isNull(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Point__isNull(void *thisObj);
 // KDDockWidgets::Point::manhattanLength() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Point__manhattanLength(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Point__manhattanLength(void *thisObj);
 // KDDockWidgets::Point::setX(int x)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Point__setX_int(void *thisObj, int x);
+DOCKS_EXPORT void c_KDDockWidgets__Point__setX_int(void *thisObj, int x);
 // KDDockWidgets::Point::setY(int y)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Point__setY_int(void *thisObj, int y);
+DOCKS_EXPORT void c_KDDockWidgets__Point__setY_int(void *thisObj, int y);
 // KDDockWidgets::Point::x() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Point__x(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__Point__x(void *thisObj);
 // KDDockWidgets::Point::y() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Point__y(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Point__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Point_Finalizer(void *cppObj);
+DOCKS_EXPORT int c_KDDockWidgets__Point__y(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Point__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Point_Finalizer(void *cppObj);
 }

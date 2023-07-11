@@ -8,16 +8,16 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include "core/TitleBar.h"
 #include <FloatingWindow.h>
 #include <core/Group.h>
 #include <core/View.h>
 #include <core/DockWidget.h>
-#include <qstring.h>
+#include <string_p.h>
 #include "core/MainWindow.h"
 #include <TabBar.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -82,86 +82,86 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::FloatingWindow * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow(void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_FloatingWindow(void *parent_);
 // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::Group * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_Group(void *parent_);
 // KDDockWidgets::Core::TitleBar::TitleBar(KDDockWidgets::Core::View * arg__1)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_View(void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__constructor_View(void *arg__1_);
 // KDDockWidgets::Core::TitleBar::closeButtonEnabled() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj);
 // KDDockWidgets::Core::TitleBar::floatButtonToolTip() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__floatButtonToolTip(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__floatButtonToolTip(void *thisObj);
 // KDDockWidgets::Core::TitleBar::floatButtonVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__floatButtonVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__floatButtonVisible(void *thisObj);
 // KDDockWidgets::Core::TitleBar::floatingWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__floatingWindow(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::TitleBar::group() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__group(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__group(void *thisObj);
 // KDDockWidgets::Core::TitleBar::hasIcon() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__hasIcon(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__hasIcon(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isCloseButtonEnabled() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isCloseButtonEnabled(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isCloseButtonEnabled(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isCloseButtonVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isCloseButtonVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isCloseButtonVisible(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isFloatButtonVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isFloatButtonVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isFloatButtonVisible(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isFloating() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isFloating(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isFloating(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isFocused() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isFocused(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isFocused(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isMDI() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isOverlayed() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isStandalone() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isStandalone(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isStandalone(void *thisObj);
 // KDDockWidgets::Core::TitleBar::isWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj);
 // KDDockWidgets::Core::TitleBar::mainWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__mainWindow(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__mainWindow(void *thisObj);
 // KDDockWidgets::Core::TitleBar::maximizeButtonVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible(void *thisObj);
 // KDDockWidgets::Core::TitleBar::onAutoHideClicked()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__onAutoHideClicked(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onAutoHideClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::onCloseClicked()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__onCloseClicked(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onCloseClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::onDoubleClicked()
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__onDoubleClicked(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__onDoubleClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::onFloatClicked()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__onFloatClicked(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onFloatClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::onMaximizeClicked()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__onMaximizeClicked(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onMaximizeClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::onMinimizeClicked()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__onMinimizeClicked(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onMinimizeClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::setCloseButtonEnabled(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::TitleBar::setFloatButtonVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::TitleBar::setParentView_impl(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__setParentView_impl_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::TitleBar::setTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__setTitle_QString(void *thisObj, const char *title_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setTitle_QString(void *thisObj, const char *title_);
 // KDDockWidgets::Core::TitleBar::singleDockWidget() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__singleDockWidget(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__singleDockWidget(void *thisObj);
 // KDDockWidgets::Core::TitleBar::supportsAutoHideButton() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton(void *thisObj);
 // KDDockWidgets::Core::TitleBar::supportsFloatingButton() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsFloatingButton(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsFloatingButton(void *thisObj);
 // KDDockWidgets::Core::TitleBar::supportsMaximizeButton() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsMaximizeButton(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsMaximizeButton(void *thisObj);
 // KDDockWidgets::Core::TitleBar::supportsMinimizeButton() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsMinimizeButton(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__supportsMinimizeButton(void *thisObj);
 // KDDockWidgets::Core::TitleBar::tabBar() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__tabBar(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__tabBar(void *thisObj);
 // KDDockWidgets::Core::TitleBar::title() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__TitleBar__title(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__TitleBar__title(void *thisObj);
 // KDDockWidgets::Core::TitleBar::titleBarIsFocusable() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable(void *thisObj);
 // KDDockWidgets::Core::TitleBar::toggleMaximized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj);
 // KDDockWidgets::Core::TitleBar::updateButtons()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__updateButtons(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__TitleBar_Finalizer(void *cppObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__updateButtons(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar_Finalizer(void *cppObj);
 }

@@ -26,6 +26,7 @@
 #include <string>
 #include <functional>
 #include <iostream>
+#include <cassert>
 
 #if defined(_MSC_VER)
 #define KDDW_FUNC_INFO __FUNCSIG__

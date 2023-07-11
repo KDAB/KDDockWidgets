@@ -8,10 +8,10 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <ClassicIndicatorWindowViewInterface.h>
-#include <qstring.h>
-#include <core/geometry_helpers_p.h>
+#include <string_p.h>
+#include <geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -65,28 +65,28 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__constructor();
+DOCKS_EXPORT void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__constructor();
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::hover(KDDockWidgets::Point arg__1)
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT int c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__hover_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::isWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__isWindow(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__isWindow(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::posForIndicator(KDDockWidgets::DropLocation arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation(void *thisObj, int arg__1);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__posForIndicator_DropLocation(void *thisObj, int arg__1);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::raise()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__raise(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__raise(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::resize(KDDockWidgets::Size arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_Size(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setGeometry(KDDockWidgets::Rect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_Rect(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setGeometry_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setObjectName(const QString & arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setObjectName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::setVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::updateIndicatorVisibility()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updateIndicatorVisibility(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updateIndicatorVisibility(void *thisObj);
 // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::updatePositions()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *cppObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__updatePositions(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__ClassicIndicatorWindowViewInterface_Finalizer(void *cppObj);
 }

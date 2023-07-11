@@ -99,7 +99,6 @@ struct fmt::formatter<QVector<T>>
         return out;
     }
 };
-#endif
 
 template<typename F>
 struct fmt::formatter<QFlags<F>>
@@ -118,6 +117,8 @@ struct fmt::formatter<QFlags<F>>
         return out;
     }
 };
+
+#endif
 
 // using enable_if_t = typename std::enable_if<B, T>::type;
 

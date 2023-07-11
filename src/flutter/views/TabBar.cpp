@@ -22,8 +22,6 @@
 #include "kddockwidgets/core/Stack.h"
 #include "core/Logging_p.h"
 
-#include <QMetaObject>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 

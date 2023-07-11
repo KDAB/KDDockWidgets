@@ -123,7 +123,7 @@ class Item extends KDDWBindingsCore.Object {
   bool checkSanity() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(601))
+            cFunctionSymbolName(255))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -143,7 +143,7 @@ class Item extends KDDWBindingsCore.Object {
   dumpLayout({int level = 0}) {
     final void_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(602))
+            cFunctionSymbolName(256))
         .asFunction();
     func(thisCpp, level);
   }
@@ -237,7 +237,7 @@ class Item extends KDDWBindingsCore.Object {
   bool isVisible({bool excludeBeingInserted = false}) {
     final bool_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(612))
+            cFunctionSymbolName(266))
         .asFunction();
     return func(thisCpp, excludeBeingInserted ? 1 : 0) != 0;
   }
@@ -309,7 +309,7 @@ class Item extends KDDWBindingsCore.Object {
   Size maxSizeHint() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(618))
+            cFunctionSymbolName(272))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Size.fromCppPointer(result, true);
@@ -330,7 +330,7 @@ class Item extends KDDWBindingsCore.Object {
   Size minSize() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(619))
+            cFunctionSymbolName(273))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Size.fromCppPointer(result, true);
@@ -434,7 +434,7 @@ class Item extends KDDWBindingsCore.Object {
   setGeometry_recursive(Rect rect) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(633))
+            cFunctionSymbolName(287))
         .asFunction();
     func(thisCpp, rect == null ? ffi.nullptr : rect.thisCpp);
   }
@@ -462,7 +462,7 @@ class Item extends KDDWBindingsCore.Object {
   setHostView(KDDWBindingsCore.View? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(635))
+            cFunctionSymbolName(289))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -484,7 +484,7 @@ class Item extends KDDWBindingsCore.Object {
   setIsVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(636))
+            cFunctionSymbolName(290))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -568,7 +568,7 @@ class Item extends KDDWBindingsCore.Object {
   updateWidgetGeometries() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(648))
+            cFunctionSymbolName(302))
         .asFunction();
     func(thisCpp);
   }
@@ -587,7 +587,7 @@ class Item extends KDDWBindingsCore.Object {
   int visibleCount_recursive() {
     final int_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
-            cFunctionSymbolName(649))
+            cFunctionSymbolName(303))
         .asFunction();
     return func(thisCpp);
   }
@@ -638,25 +638,25 @@ class Item extends KDDWBindingsCore.Object {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 601:
+      case 255:
         return "c_KDDockWidgets__Core__Item__checkSanity";
-      case 602:
+      case 256:
         return "c_KDDockWidgets__Core__Item__dumpLayout_int";
-      case 612:
+      case 266:
         return "c_KDDockWidgets__Core__Item__isVisible_bool";
-      case 618:
+      case 272:
         return "c_KDDockWidgets__Core__Item__maxSizeHint";
-      case 619:
+      case 273:
         return "c_KDDockWidgets__Core__Item__minSize";
-      case 633:
+      case 287:
         return "c_KDDockWidgets__Core__Item__setGeometry_recursive_Rect";
-      case 635:
+      case 289:
         return "c_KDDockWidgets__Core__Item__setHostView_View";
-      case 636:
+      case 290:
         return "c_KDDockWidgets__Core__Item__setIsVisible_bool";
-      case 648:
+      case 302:
         return "c_KDDockWidgets__Core__Item__updateWidgetGeometries";
-      case 649:
+      case 303:
         return "c_KDDockWidgets__Core__Item__visibleCount_recursive";
     }
     return super.cFunctionSymbolName(methodId);
@@ -664,25 +664,25 @@ class Item extends KDDWBindingsCore.Object {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 601:
+      case 255:
         return "checkSanity";
-      case 602:
+      case 256:
         return "dumpLayout";
-      case 612:
+      case 266:
         return "isVisible";
-      case 618:
+      case 272:
         return "maxSizeHint";
-      case 619:
+      case 273:
         return "minSize";
-      case 633:
+      case 287:
         return "setGeometry_recursive";
-      case 635:
+      case 289:
         return "setHostView";
-      case 636:
+      case 290:
         return "setIsVisible";
-      case 648:
+      case 302:
         return "updateWidgetGeometries";
-      case 649:
+      case 303:
         return "visibleCount_recursive";
     }
     throw Error();
@@ -694,43 +694,43 @@ class Item extends KDDWBindingsCore.Object {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Item__registerVirtualMethodCallback')
         .asFunction();
-    const callbackExcept601 = 0;
-    final callback601 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
-        Item.checkSanity_calledFromC, callbackExcept601);
-    registerCallback(thisCpp, callback601, 601);
-    final callback602 =
+    const callbackExcept255 = 0;
+    final callback255 = ffi.Pointer.fromFunction<bool_Func_voidstar_FFI>(
+        Item.checkSanity_calledFromC, callbackExcept255);
+    registerCallback(thisCpp, callback255, 255);
+    final callback256 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int32_FFI>(
             Item.dumpLayout_calledFromC);
-    registerCallback(thisCpp, callback602, 602);
-    const callbackExcept612 = 0;
-    final callback612 =
+    registerCallback(thisCpp, callback256, 256);
+    const callbackExcept266 = 0;
+    final callback266 =
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int8_FFI>(
-            Item.isVisible_calledFromC, callbackExcept612);
-    registerCallback(thisCpp, callback612, 612);
-    final callback618 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+            Item.isVisible_calledFromC, callbackExcept266);
+    registerCallback(thisCpp, callback266, 266);
+    final callback272 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Item.maxSizeHint_calledFromC);
-    registerCallback(thisCpp, callback618, 618);
-    final callback619 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback272, 272);
+    final callback273 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         Item.minSize_calledFromC);
-    registerCallback(thisCpp, callback619, 619);
-    final callback633 =
+    registerCallback(thisCpp, callback273, 273);
+    final callback287 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Item.setGeometry_recursive_calledFromC);
-    registerCallback(thisCpp, callback633, 633);
-    final callback635 =
+    registerCallback(thisCpp, callback287, 287);
+    final callback289 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             Item.setHostView_calledFromC);
-    registerCallback(thisCpp, callback635, 635);
-    final callback636 =
+    registerCallback(thisCpp, callback289, 289);
+    final callback290 =
         ffi.Pointer.fromFunction<void_Func_voidstar_ffi_Int8_FFI>(
             Item.setIsVisible_calledFromC);
-    registerCallback(thisCpp, callback636, 636);
-    final callback648 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback290, 290);
+    final callback302 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         Item.updateWidgetGeometries_calledFromC);
-    registerCallback(thisCpp, callback648, 648);
-    const callbackExcept649 = 0;
-    final callback649 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
-        Item.visibleCount_recursive_calledFromC, callbackExcept649);
-    registerCallback(thisCpp, callback649, 649);
+    registerCallback(thisCpp, callback302, 302);
+    const callbackExcept303 = 0;
+    final callback303 = ffi.Pointer.fromFunction<int_Func_voidstar_FFI>(
+        Item.visibleCount_recursive_calledFromC, callbackExcept303);
+    registerCallback(thisCpp, callback303, 303);
   }
 }

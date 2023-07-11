@@ -8,7 +8,7 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <DelayedCall_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
@@ -27,10 +27,10 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::DelayedCall::DelayedCall()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__DelayedCall__constructor();
+DOCKS_EXPORT void *c_KDDockWidgets__Core__DelayedCall__constructor();
 // KDDockWidgets::Core::DelayedCall::call()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall__call(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *cppObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__DelayedCall__call(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__DelayedCall__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__Core__DelayedCall_Finalizer(void *cppObj);
 }

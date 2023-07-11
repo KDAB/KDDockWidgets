@@ -28,11 +28,11 @@
 #include <QObject>
 #include <QString>
 #else
-#include "core/geometry_helpers_p.h"
+#include "qtcompat/geometry_helpers_p.h"
+#include "qtcompat/enums_p.h"
+#include "qtcompat/string_p.h"
 #include "kdtoolbox/KDStlContainerAdaptor.h"
-#include <qnamespace.h>
-#include <qhashfunctions.h>
-#include <QString>
+#include <cstdint>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -78,6 +78,7 @@ inline T object_cast(const QObject *o)
 }
 
 #else
+
 
 class Event
 {
@@ -322,7 +323,7 @@ using Object = QT_PREPEND_NAMESPACE(QObject);
 
 #else
 
-#include "core/Object_p.h"
+#include "qtcompat/Object_p.h"
 
 #ifndef Q_NAMESPACE
 #define Q_NAMESPACE
@@ -346,6 +347,19 @@ using Object = QT_PREPEND_NAMESPACE(QObject);
 #define Q_SLOTS
 #endif
 
+#define qAsConst(name) name
 #define QT_DOCKS_EXPORT
+#define Q_DECLARE_OPERATORS_FOR_FLAGS(name)
+
+using quintptr = unsigned long long int;
+using qint64 = int64_t;
+
+namespace Qt5Qt6Compat {
+inline KDDockWidgets::Point eventGlobalPos(KDDockWidgets::MouseEvent *ev)
+{
+    return ev->globalPos();
+}
+
+}
 
 #endif

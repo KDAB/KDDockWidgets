@@ -210,8 +210,7 @@ void TestsEmbedder::init(const std::string &projectPath, const std::string &icud
         std::abort();
     }
 
-
-#if defined(Q_OS_LINUX)
+#ifdef __linux__
     glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
 #endif
 

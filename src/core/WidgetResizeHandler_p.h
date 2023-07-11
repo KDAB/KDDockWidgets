@@ -13,7 +13,6 @@
 #define KD_WIDGET_RESIZE_HANDLER_P_H
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "kddockwidgets/core/Window.h"

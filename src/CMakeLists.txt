@@ -181,7 +181,6 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Point_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Size_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Margins_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QByteArray_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp
     flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
@@ -220,7 +219,7 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 )
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
-    core/Object.cpp
+    qtcompat/Object.cpp
     flutter/Action.cpp
     flutter/ViewFactory.cpp
     flutter/Window.cpp
@@ -396,6 +395,7 @@ if(KDDW_FRONTEND_FLUTTER)
         PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtcompat>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/layouting>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/views>
@@ -527,14 +527,11 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
-
     include(GenerateExportHeader)
     generate_export_header(
         kddockwidgets EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/kddockwidgets_export.h" EXPORT_MACRO_NAME DOCKS_EXPORT
     )
 
-    # TODOm3: Remove Qt::Core
-    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 

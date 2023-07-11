@@ -37,6 +37,5 @@ export 'src/KDDockWidgets.dart'
         KDDockWidgets_AddingOption,
         KDDockWidgets_InitialVisibilityOption,
         KDDockWidgets_DropLocation;
-export 'src/QByteArray.dart' show QByteArray;
 export 'src/QString.dart' show QString;
 export 'src/Qt.dart' show Qt_CursorShape;

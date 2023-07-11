@@ -13,7 +13,9 @@ if(POLICY CMP0043)
     cmake_policy(SET CMP0043 NEW)
 endif()
 
-find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
+if(KDDW_FRONTEND_QT)
+    find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
+endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

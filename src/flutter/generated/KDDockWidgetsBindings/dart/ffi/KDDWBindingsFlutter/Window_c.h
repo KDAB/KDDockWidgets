@@ -8,9 +8,9 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <Window.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -87,38 +87,38 @@ public:
 }
 extern "C" {
 // KDDockWidgets::flutter::Window::destroy()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__destroy(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__destroy(void *thisObj);
 // KDDockWidgets::flutter::Window::frameGeometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__frameGeometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__frameGeometry(void *thisObj);
 // KDDockWidgets::flutter::Window::fromNativePixels(KDDockWidgets::Point arg__1) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__fromNativePixels_Point(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__fromNativePixels_Point(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Window::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__geometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__geometry(void *thisObj);
 // KDDockWidgets::flutter::Window::isActive() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Window__isActive(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Window__isActive(void *thisObj);
 // KDDockWidgets::flutter::Window::isFullScreen() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Window__isFullScreen(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Window__isFullScreen(void *thisObj);
 // KDDockWidgets::flutter::Window::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Window__isVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Window__isVisible(void *thisObj);
 // KDDockWidgets::flutter::Window::mapFromGlobal(KDDockWidgets::Point globalPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__mapFromGlobal_Point(void *thisObj, void *globalPos_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__mapFromGlobal_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::flutter::Window::mapToGlobal(KDDockWidgets::Point localPos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__mapToGlobal_Point(void *thisObj, void *localPos_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__mapToGlobal_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::flutter::Window::maxSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__maxSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__maxSize(void *thisObj);
 // KDDockWidgets::flutter::Window::minSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__Window__minSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__Window__minSize(void *thisObj);
 // KDDockWidgets::flutter::Window::resize(int width, int height)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__resize_int_int(void *thisObj, int width, int height);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__resize_int_int(void *thisObj, int width, int height);
 // KDDockWidgets::flutter::Window::setFramePosition(KDDockWidgets::Point targetPos)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__setFramePosition_Point(void *thisObj, void *targetPos_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__setFramePosition_Point(void *thisObj, void *targetPos_);
 // KDDockWidgets::flutter::Window::setGeometry(KDDockWidgets::Rect arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__setGeometry_Rect(void *thisObj, void *arg__1_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__setGeometry_Rect(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Window::setVisible(bool arg__1)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__setVisible_bool(void *thisObj, bool arg__1);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__setVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::flutter::Window::supportsHonouringLayoutMinSize() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__Window__supportsHonouringLayoutMinSize(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__Window_Finalizer(void *cppObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__Window__supportsHonouringLayoutMinSize(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Window_Finalizer(void *cppObj);
 }

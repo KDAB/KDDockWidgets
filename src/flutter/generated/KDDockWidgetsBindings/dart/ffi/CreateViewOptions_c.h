@@ -8,9 +8,9 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <core/Platform.h>
-#include <core/geometry_helpers_p.h>
+#include <geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class CreateViewOptions_wrapper : public ::KDDockWidgets::Core::CreateViewOptions
@@ -25,17 +25,17 @@ public:
 }
 extern "C" {
 // KDDockWidgets::Core::CreateViewOptions::CreateViewOptions()
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__constructor();
+DOCKS_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__constructor();
 // KDDockWidgets::Core::CreateViewOptions::getMaxSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj);
 // KDDockWidgets::Core::CreateViewOptions::getMinSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj);
 // KDDockWidgets::Core::CreateViewOptions::getSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_isVisible(void *thisObj);
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *cppObj);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_isVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__CreateViewOptions___get_createWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__Core__CreateViewOptions___set_isVisible_bool(void *thisObj, bool isVisible_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__CreateViewOptions___set_createWindow_bool(void *thisObj, bool createWindow_);
+DOCKS_EXPORT void c_KDDockWidgets__Core__CreateViewOptions_Finalizer(void *cppObj);
 }

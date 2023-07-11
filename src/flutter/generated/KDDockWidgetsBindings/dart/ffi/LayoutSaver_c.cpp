@@ -13,6 +13,8 @@
 
 #include <iostream>
 
+#include <cassert>
+
 
 namespace Dartagnan {
 
@@ -39,17 +41,9 @@ bool LayoutSaver_wrapper::restoreInProgress()
 {
     return ::KDDockWidgets::LayoutSaver::restoreInProgress();
 }
-bool LayoutSaver_wrapper::restoreLayout(const QByteArray &arg__1)
-{
-    return ::KDDockWidgets::LayoutSaver::restoreLayout(arg__1);
-}
 bool LayoutSaver_wrapper::saveToFile(const QString &jsonFilename)
 {
     return ::KDDockWidgets::LayoutSaver::saveToFile(jsonFilename);
-}
-QByteArray LayoutSaver_wrapper::serializeLayout() const
-{
-    return ::KDDockWidgets::LayoutSaver::serializeLayout();
 }
 LayoutSaver_wrapper::~LayoutSaver_wrapper()
 {
@@ -85,23 +79,11 @@ bool c_static_KDDockWidgets__LayoutSaver__restoreInProgress()
 {
     return KDDockWidgetsBindings_wrappersNS::LayoutSaver_wrapper::restoreInProgress();
 }
-// restoreLayout(const QByteArray & arg__1)
-bool c_KDDockWidgets__LayoutSaver__restoreLayout_QByteArray(void *thisObj, void *arg__1_)
-{
-    assert(arg__1_);
-    auto &arg__1 = *reinterpret_cast<QByteArray *>(arg__1_);
-    return fromPtr(thisObj)->restoreLayout(arg__1);
-}
 // saveToFile(const QString & jsonFilename)
 bool c_KDDockWidgets__LayoutSaver__saveToFile_QString(void *thisObj, const char *jsonFilename_)
 {
     const auto jsonFilename = QString::fromUtf8(jsonFilename_);
     return fromPtr(thisObj)->saveToFile(jsonFilename);
-}
-// serializeLayout() const
-void *c_KDDockWidgets__LayoutSaver__serializeLayout(void *thisObj)
-{
-    return new Dartagnan::ValueWrapper<QByteArray> { fromPtr(thisObj)->serializeLayout() };
 }
 void c_KDDockWidgets__LayoutSaver__destructor(void *thisObj)
 {

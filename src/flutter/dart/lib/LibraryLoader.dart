@@ -13,9 +13,9 @@ import 'dart:io';
 import 'package:KDDockWidgetsBindings/LibraryLoader.dart';
 
 String bindingsLibraryName() {
-  String name = "kddockwidgets-qt6";
+  String name = "kddockwidgets";
   if (Platform.isWindows) {
-    return "${name}2.dll";
+    return "${name}.dll";
   } else if (Platform.isMacOS) {
     return "lib${name}.dylib";
   } else {

@@ -14,6 +14,10 @@
 #include <cmath>
 #include <algorithm>
 
+/// QSize, QPoint and QRect replacements for Flutter
+/// The goal is that Qt users can still use Qt's classes, to avoid porting churn.
+/// For Flutter, we use these classes, which have the same API (or at least a subset) as Qt's
+
 namespace KDDockWidgets {
 
 class Size

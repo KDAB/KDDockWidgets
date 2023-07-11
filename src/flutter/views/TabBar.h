@@ -22,8 +22,6 @@
 #include "View.h"
 #include "core/views/TabBarViewInterface.h"
 
-#include <QHash>
-
 #include "kdbindings/signal.h"
 
 namespace KDDockWidgets::Core {

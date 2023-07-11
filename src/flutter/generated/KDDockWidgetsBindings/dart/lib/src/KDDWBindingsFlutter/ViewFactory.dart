@@ -68,7 +68,7 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(597))
+            cFunctionSymbolName(251))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -304,29 +304,29 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 579:
+      case 233:
         return "c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
-      case 597:
+      case 251:
         return "c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_flutter_ClassicDropIndicatorOverlay_View";
-      case 580:
+      case 234:
         return "c_KDDockWidgets__flutter__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
-      case 581:
+      case 235:
         return "c_KDDockWidgets__flutter__ViewFactory__createDropArea_DropArea_View";
-      case 582:
+      case 236:
         return "c_KDDockWidgets__flutter__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
-      case 583:
+      case 237:
         return "c_KDDockWidgets__flutter__ViewFactory__createGroup_Group_View";
-      case 584:
+      case 238:
         return "c_KDDockWidgets__flutter__ViewFactory__createRubberBand_View";
-      case 585:
+      case 239:
         return "c_KDDockWidgets__flutter__ViewFactory__createSeparator_Separator_View";
-      case 586:
+      case 240:
         return "c_KDDockWidgets__flutter__ViewFactory__createSideBar_SideBar_View";
-      case 587:
+      case 241:
         return "c_KDDockWidgets__flutter__ViewFactory__createStack_Stack_View";
-      case 588:
+      case 242:
         return "c_KDDockWidgets__flutter__ViewFactory__createTabBar_TabBar_View";
-      case 589:
+      case 243:
         return "c_KDDockWidgets__flutter__ViewFactory__createTitleBar_TitleBar_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -334,29 +334,29 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 579:
+      case 233:
         return "createClassicIndicatorWindow";
-      case 597:
+      case 251:
         return "createClassicIndicatorWindow_flutter";
-      case 580:
+      case 234:
         return "createDockWidget";
-      case 581:
+      case 235:
         return "createDropArea";
-      case 582:
+      case 236:
         return "createFloatingWindow";
-      case 583:
+      case 237:
         return "createGroup";
-      case 584:
+      case 238:
         return "createRubberBand";
-      case 585:
+      case 239:
         return "createSeparator";
-      case 586:
+      case 240:
         return "createSideBar";
-      case 587:
+      case 241:
         return "createStack";
-      case 588:
+      case 242:
         return "createTabBar";
-      case 589:
+      case 243:
         return "createTitleBar";
     }
     throw Error();
@@ -368,55 +368,55 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
-    final callback579 =
+    final callback233 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter
                 .ViewFactory.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback579, 579);
-    final callback597 =
+    registerCallback(thisCpp, callback233, 233);
+    final callback251 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter
                 .ViewFactory.createClassicIndicatorWindow_flutter_calledFromC);
-    registerCallback(thisCpp, callback597, 597);
-    final callback580 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback251, 251);
+    final callback234 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
         KDDWBindingsFlutter.ViewFactory.createDockWidget_calledFromC);
-    registerCallback(thisCpp, callback580, 580);
-    final callback581 =
+    registerCallback(thisCpp, callback234, 234);
+    final callback235 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createDropArea_calledFromC);
-    registerCallback(thisCpp, callback581, 581);
-    final callback582 = ffi.Pointer.fromFunction<
+    registerCallback(thisCpp, callback235, 235);
+    final callback236 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>(
         KDDWBindingsFlutter.ViewFactory.createFloatingWindow_calledFromC);
-    registerCallback(thisCpp, callback582, 582);
-    final callback583 =
+    registerCallback(thisCpp, callback236, 236);
+    final callback237 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createGroup_calledFromC);
-    registerCallback(thisCpp, callback583, 583);
-    final callback584 =
+    registerCallback(thisCpp, callback237, 237);
+    final callback238 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createRubberBand_calledFromC);
-    registerCallback(thisCpp, callback584, 584);
-    final callback585 =
+    registerCallback(thisCpp, callback238, 238);
+    final callback239 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createSeparator_calledFromC);
-    registerCallback(thisCpp, callback585, 585);
-    final callback586 =
+    registerCallback(thisCpp, callback239, 239);
+    final callback240 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createSideBar_calledFromC);
-    registerCallback(thisCpp, callback586, 586);
-    final callback587 =
+    registerCallback(thisCpp, callback240, 240);
+    final callback241 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createStack_calledFromC);
-    registerCallback(thisCpp, callback587, 587);
-    final callback588 =
+    registerCallback(thisCpp, callback241, 241);
+    final callback242 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createTabBar_calledFromC);
-    registerCallback(thisCpp, callback588, 588);
-    final callback589 =
+    registerCallback(thisCpp, callback242, 242);
+    final callback243 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.ViewFactory.createTitleBar_calledFromC);
-    registerCallback(thisCpp, callback589, 589);
+    registerCallback(thisCpp, callback243, 243);
   }
 }

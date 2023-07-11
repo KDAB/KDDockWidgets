@@ -22,8 +22,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include <qnamespace.h>
-
 namespace KDDockWidgets::Core {
 
 class View;

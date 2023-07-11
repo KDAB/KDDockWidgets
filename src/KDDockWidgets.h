@@ -20,20 +20,23 @@
 #define KD_KDDOCKWIDGETS_H
 
 #include "kddockwidgets/docks_export.h"
+
+#include "NonQtCompat_p.h"
+
+#ifdef KDDW_FRONTEND_QT
 #include "Qt5Qt6Compat_p.h"
 
 #ifdef Q_OS_WIN
 // Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested
 // on macOS.
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
-
-#ifdef KDDW_FRONTEND_QT
 #define KDDW_FRONTEND_QT_WINDOWS
-#endif
 #endif
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include <QWidget>
+#endif
+
 #endif
 
 namespace KDDockWidgets::QtQuick {

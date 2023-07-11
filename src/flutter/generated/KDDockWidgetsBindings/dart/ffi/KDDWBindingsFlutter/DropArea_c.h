@@ -8,13 +8,13 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#include "KDDockWidgetsBindings_exports.h"
+#include "kddockwidgets_export.h"
 #include <DropArea.h>
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <View.h>
-#include <core/geometry_helpers_p.h>
-#include <qstring.h>
+#include <geometry_helpers_p.h>
+#include <string_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -261,126 +261,126 @@ public:
 }
 extern "C" {
 // KDDockWidgets::flutter::DropArea::DropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__constructor_DropArea_View(void *arg__1_, void *parent_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__constructor_DropArea_View(void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::DropArea::activateWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__activateWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__activateWindow(void *thisObj);
 // KDDockWidgets::flutter::DropArea::close()
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__close(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__close(void *thisObj);
 // KDDockWidgets::flutter::DropArea::createPlatformWindow()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__createPlatformWindow(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__createPlatformWindow(void *thisObj);
 // KDDockWidgets::flutter::DropArea::flags() const
-KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__flutter__DropArea__flags(void *thisObj);
+DOCKS_EXPORT int c_KDDockWidgets__flutter__DropArea__flags(void *thisObj);
 // KDDockWidgets::flutter::DropArea::geometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__geometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__geometry(void *thisObj);
 // KDDockWidgets::flutter::DropArea::grabMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__grabMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__grabMouse(void *thisObj);
 // KDDockWidgets::flutter::DropArea::hasFocus() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__hasFocus(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__hasFocus(void *thisObj);
 // KDDockWidgets::flutter::DropArea::hide()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__hide(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__hide(void *thisObj);
 // KDDockWidgets::flutter::DropArea::indicatorWindow() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__indicatorWindow(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__indicatorWindow(void *thisObj);
 // KDDockWidgets::flutter::DropArea::init()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__init(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__init(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isActiveWindow() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isActiveWindow(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isActiveWindow(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isExplicitlyHidden() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isExplicitlyHidden(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isExplicitlyHidden(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isMaximized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMaximized(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMaximized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isMinimized() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMinimized(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMinimized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isMounted() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMounted(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isMounted(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isNull() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isNull(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isNull(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isRootView() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isRootView(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isRootView(void *thisObj);
 // KDDockWidgets::flutter::DropArea::isVisible() const
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__isVisible(void *thisObj);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__isVisible(void *thisObj);
 // KDDockWidgets::flutter::DropArea::mapFromGlobal(KDDockWidgets::Point globalPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__mapFromGlobal_Point(void *thisObj, void *globalPt_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__mapFromGlobal_Point(void *thisObj, void *globalPt_);
 // KDDockWidgets::flutter::DropArea::mapTo(KDDockWidgets::Core::View * parent, KDDockWidgets::Point pos) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__mapTo_View_Point(void *thisObj, void *parent_, void *pos_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__mapTo_View_Point(void *thisObj, void *parent_, void *pos_);
 // KDDockWidgets::flutter::DropArea::mapToGlobal(KDDockWidgets::Point localPt) const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__mapToGlobal_Point(void *thisObj, void *localPt_);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__mapToGlobal_Point(void *thisObj, void *localPt_);
 // KDDockWidgets::flutter::DropArea::maxSizeHint() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__maxSizeHint(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__maxSizeHint(void *thisObj);
 // KDDockWidgets::flutter::DropArea::minSize() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__minSize(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__minSize(void *thisObj);
 // KDDockWidgets::flutter::DropArea::move(int x, int y)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__move_int_int(void *thisObj, int x, int y);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__move_int_int(void *thisObj, int x, int y);
 // KDDockWidgets::flutter::DropArea::normalGeometry() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__normalGeometry(void *thisObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__normalGeometry(void *thisObj);
 // KDDockWidgets::flutter::DropArea::onChildAdded(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildAdded_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildAdded_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::onChildRemoved(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildRemoved_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildRemoved_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::onChildVisibilityChanged(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildVisibilityChanged_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__onChildVisibilityChanged_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::onGeometryChanged()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onGeometryChanged(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__onGeometryChanged(void *thisObj);
 // KDDockWidgets::flutter::DropArea::onRebuildRequested()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__onRebuildRequested(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__onRebuildRequested(void *thisObj);
 // KDDockWidgets::flutter::DropArea::onResize(int h, int w)
-KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int h, int w);
+DOCKS_EXPORT bool c_KDDockWidgets__flutter__DropArea__onResize_int_int(void *thisObj, int h, int w);
 // KDDockWidgets::flutter::DropArea::raise()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__raise(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__raise(void *thisObj);
 // KDDockWidgets::flutter::DropArea::raiseAndActivate()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__raiseAndActivate(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__raiseAndActivate(void *thisObj);
 // KDDockWidgets::flutter::DropArea::raiseChild(KDDockWidgets::Core::View * childView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__raiseChild_View(void *thisObj, void *childView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__raiseChild_View(void *thisObj, void *childView_);
 // KDDockWidgets::flutter::DropArea::raiseWindow(KDDockWidgets::Core::View * rootView)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__raiseWindow_View(void *thisObj, void *rootView_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__raiseWindow_View(void *thisObj, void *rootView_);
 // KDDockWidgets::flutter::DropArea::releaseKeyboard()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__releaseKeyboard(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__releaseKeyboard(void *thisObj);
 // KDDockWidgets::flutter::DropArea::releaseMouse()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__releaseMouse(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__releaseMouse(void *thisObj);
 // KDDockWidgets::flutter::DropArea::setCursor(Qt::CursorShape shape)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setCursor_CursorShape(void *thisObj, int shape);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setCursor_CursorShape(void *thisObj, int shape);
 // KDDockWidgets::flutter::DropArea::setFixedHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setFixedHeight_int(void *thisObj, int h);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setFixedHeight_int(void *thisObj, int h);
 // KDDockWidgets::flutter::DropArea::setFixedWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setFixedWidth_int(void *thisObj, int w);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setFixedWidth_int(void *thisObj, int w);
 // KDDockWidgets::flutter::DropArea::setGeometry(KDDockWidgets::Rect geometry)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setGeometry_Rect(void *thisObj, void *geometry_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setGeometry_Rect(void *thisObj, void *geometry_);
 // KDDockWidgets::flutter::DropArea::setHeight(int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setHeight_int(void *thisObj, int h);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setHeight_int(void *thisObj, int h);
 // KDDockWidgets::flutter::DropArea::setMaximumSize(KDDockWidgets::Size sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setMaximumSize_Size(void *thisObj, void *sz_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setMaximumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::DropArea::setMinimumSize(KDDockWidgets::Size sz)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setMinimumSize_Size(void *thisObj, void *sz_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setMinimumSize_Size(void *thisObj, void *sz_);
 // KDDockWidgets::flutter::DropArea::setMouseTracking(bool enable)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setMouseTracking_bool(void *thisObj, bool enable);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setMouseTracking_bool(void *thisObj, bool enable);
 // KDDockWidgets::flutter::DropArea::setParent(KDDockWidgets::Core::View * parent)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setParent_View(void *thisObj, void *parent_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setParent_View(void *thisObj, void *parent_);
 // KDDockWidgets::flutter::DropArea::setSize(int w, int h)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setSize_int_int(void *thisObj, int w, int h);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setSize_int_int(void *thisObj, int w, int h);
 // KDDockWidgets::flutter::DropArea::setViewName(const QString & name)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setViewName_QString(void *thisObj, const char *name_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setViewName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::flutter::DropArea::setVisible(bool visible)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setVisible_bool(void *thisObj, bool visible);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setVisible_bool(void *thisObj, bool visible);
 // KDDockWidgets::flutter::DropArea::setWidth(int w)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setWidth_int(void *thisObj, int w);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setWidth_int(void *thisObj, int w);
 // KDDockWidgets::flutter::DropArea::setWindowOpacity(double v)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setWindowOpacity_double(void *thisObj, double v);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setWindowOpacity_double(void *thisObj, double v);
 // KDDockWidgets::flutter::DropArea::setWindowTitle(const QString & title)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setWindowTitle_QString(void *thisObj, const char *title_);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setWindowTitle_QString(void *thisObj, const char *title_);
 // KDDockWidgets::flutter::DropArea::setZOrder(int z)
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__setZOrder_int(void *thisObj, int z);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__setZOrder_int(void *thisObj, int z);
 // KDDockWidgets::flutter::DropArea::show()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__show(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__show(void *thisObj);
 // KDDockWidgets::flutter::DropArea::showMaximized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__showMaximized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__showMaximized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::showMinimized()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__showMinimized(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__showMinimized(void *thisObj);
 // KDDockWidgets::flutter::DropArea::showNormal()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__showNormal(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__showNormal(void *thisObj);
 // KDDockWidgets::flutter::DropArea::update()
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__update(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__update(void *thisObj);
 // KDDockWidgets::flutter::DropArea::viewName() const
-KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__flutter__DropArea__viewName(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__destructor(void *thisObj);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__flutter__DropArea_Finalizer(void *cppObj);
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__DropArea__viewName(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__destructor(void *thisObj);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
+DOCKS_EXPORT void c_KDDockWidgets__flutter__DropArea_Finalizer(void *cppObj);
 }
