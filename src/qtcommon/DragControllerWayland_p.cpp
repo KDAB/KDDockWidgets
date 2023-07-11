@@ -48,7 +48,7 @@ void StateDraggingWayland::onEntry()
     Platform::instance()->installGlobalEventFilter(q);
     KDDW_DEBUG("Started QDrag");
     const Qt::DropAction result = drag.exec();
-    KDDW_DEBUG("QDrag finished with result={}", result);
+    KDDW_DEBUG("QDrag finished with result={}", int(result));
 
     Platform::instance()->removeGlobalEventFilter(q);
     if (result == Qt::IgnoreAction)
