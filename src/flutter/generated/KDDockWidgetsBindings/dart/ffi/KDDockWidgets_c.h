@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "KDDockWidgetsBindings_exports.h"
-#include "KDDockWidgets_p.h"
+#include "KDDockWidgets.h"
 #include <core/geometry_helpers_p.h>
 
 extern "C" {
