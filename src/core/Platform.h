@@ -60,7 +60,7 @@ public:
     virtual std::shared_ptr<View> focusedView() const = 0;
 
     /// @brief Returns all windows
-    virtual QVector<std::shared_ptr<Core::Window>> windows() const = 0;
+    virtual Vector<std::shared_ptr<Core::Window>> windows() const = 0;
 
     /// @brief Creates and returns the default ViewFactory
     virtual ViewFactory *createDefaultViewFactory() = 0;
@@ -146,7 +146,7 @@ public:
     virtual bool isLeftMouseButtonPressed() const = 0;
 
     /// @brief Returns all available screens
-    virtual QVector<std::shared_ptr<Screen>> screens() const = 0;
+    virtual Vector<std::shared_ptr<Screen>> screens() const = 0;
 
     virtual std::shared_ptr<Screen> primaryScreen() const = 0;
 

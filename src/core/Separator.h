@@ -14,8 +14,6 @@
 #include "Controller.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include <QVector>
-
 namespace KDDockWidgets {
 class Config;
 }
@@ -27,7 +25,7 @@ class ItemBoxContainer;
 class DOCKS_EXPORT Separator : public Controller
 {
 public:
-    typedef QVector<Separator *> List;
+    typedef Vector<Separator *> List;
 
     explicit Separator(View *host);
     virtual ~Separator() override;

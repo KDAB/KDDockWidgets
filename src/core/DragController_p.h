@@ -140,7 +140,7 @@ private:
     Point m_pressPos;
     Point m_offset;
 
-    QVector<Core::Draggable *> m_draggables;
+    Vector<Core::Draggable *> m_draggables;
     Core::Draggable *m_draggable = nullptr;
     Core::ViewGuard m_draggableGuard =
         nullptr; // Just so we know if the draggable was destroyed for some reason

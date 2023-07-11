@@ -74,22 +74,22 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
     const Point bottomLeft = { left + halfPenWidth, bottom };
     const Point bottomRight = { right, bottom };
 
-    const QVector<Point> leftPoints = { topLeft, bottomLeft, Point(left, bottom) + Point(l, -l),
-                                        topLeft + Point(l, l), topLeft };
+    const Vector<Point> leftPoints = { topLeft, bottomLeft, Point(left, bottom) + Point(l, -l),
+                                       topLeft + Point(l, l), topLeft };
 
-    const QVector<Point> rightPoints = { topRight, bottomRight, bottomRight + Point(-l, -l),
-                                         topRight + Point(-l, l) };
+    const Vector<Point> rightPoints = { topRight, bottomRight, bottomRight + Point(-l, -l),
+                                        topRight + Point(-l, l) };
 
-    const QVector<Point> topPoints = { topLeft, topRight, topRight + Point(-l, l),
-                                       topLeft + Point(l, l) };
+    const Vector<Point> topPoints = { topLeft, topRight, topRight + Point(-l, l),
+                                      topLeft + Point(l, l) };
 
-    const QVector<Point> bottomPoints = { bottomLeft, bottomRight, bottomRight + Point(-l, -l),
-                                          bottomLeft + Point(l, -l) };
+    const Vector<Point> bottomPoints = { bottomLeft, bottomRight, bottomRight + Point(-l, -l),
+                                         bottomLeft + Point(l, -l) };
 
     if (inner) {
         Polygon bounds =
-            QVector<Point> { topLeft + Point(l, l), topRight + Point(-l, l),
-                             bottomRight + Point(-l, -l), bottomLeft + Point(l, -l) };
+            Vector<Point> { topLeft + Point(l, l), topRight + Point(-l, l),
+                            bottomRight + Point(-l, -l), bottomLeft + Point(l, -l) };
         const int maxWidth = bounds.boundingRect().width();
         const Point centerPos = bounds.boundingRect().center();
 
@@ -104,7 +104,7 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
         const int centerRectTop = centerPos.y() - indicatorHeight / 2;
 
 
-        const auto center = QVector<Point> {
+        const auto center = Vector<Point> {
             { centerRectLeft, centerRectTop },
             { centerRectLeft + tabWidth, centerRectTop },
             { centerRectLeft + tabWidth, centerRectTop + tabHeight },

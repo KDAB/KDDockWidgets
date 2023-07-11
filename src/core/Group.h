@@ -19,8 +19,6 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/docks_export.h"
 
-#include <QVector>
-
 class TestDocks;
 
 namespace KDDockWidgets {
@@ -103,7 +101,7 @@ public:
     Core::TitleBar *actualTitleBar() const;
     QString title() const;
     Icon icon() const;
-    const QVector<DockWidget *> dockWidgets() const;
+    const Vector<DockWidget *> dockWidgets() const;
 
     bool isTheOnlyGroup() const;
 

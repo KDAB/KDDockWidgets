@@ -459,9 +459,9 @@ void View::setMouseTracking(bool)
 {
 }
 
-QVector<std::shared_ptr<Core::View>> View::childViews() const
+Vector<std::shared_ptr<Core::View>> View::childViews() const
 {
-    QVector<std::shared_ptr<Core::View>> children;
+    Vector<std::shared_ptr<Core::View>> children;
     children.reserve(m_childViews.size());
     for (auto child : m_childViews)
         children.append(ViewWrapper::create(static_cast<flutter::View *>(child)));

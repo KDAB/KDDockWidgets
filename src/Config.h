@@ -49,8 +49,8 @@ typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString 
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
-                                         const QVector<Core::DockWidget *> &source,
-                                         const QVector<Core::DockWidget *> &target,
+                                         const Vector<Core::DockWidget *> &source,
+                                         const Vector<Core::DockWidget *> &target,
                                          Core::DropArea *dropArea);
 
 /// @deprecated Use DropIndicatorAllowedFunc instead.
@@ -59,8 +59,8 @@ typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
 /// @param target The dock widgets within an existing docked tab group
 /// @return true if the docking is allowed.
 /// @sa setTabbingAllowedFunc
-typedef bool (*TabbingAllowedFunc)(const QVector<Core::DockWidget *> &source,
-                                   const QVector<Core::DockWidget *> &target);
+typedef bool (*TabbingAllowedFunc)(const Vector<Core::DockWidget *> &source,
+                                   const Vector<Core::DockWidget *> &target);
 
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.

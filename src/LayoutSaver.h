@@ -104,7 +104,7 @@ public:
      * Useful since some dock widgets can be new, and hence not be included in the last saved
      * layout.
      */
-    QVector<Core::DockWidget *> restoredDockWidgets() const;
+    Vector<Core::DockWidget *> restoredDockWidgets() const;
 
     /**
      * @brief Sets the list of affinity names for which restore and save will be applied on.

@@ -47,7 +47,7 @@ std::shared_ptr<Core::View> Platform::focusedView() const
     return m_focusedView;
 }
 
-QVector<std::shared_ptr<Core::Window>> Platform::windows() const
+Vector<std::shared_ptr<Core::Window>> Platform::windows() const
 {
     KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
     return {};

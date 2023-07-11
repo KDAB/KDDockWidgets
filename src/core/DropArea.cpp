@@ -633,7 +633,7 @@ void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location lo
     updateFloatingActions();
 }
 
-QVector<Core::Separator *> DropArea::separators() const
+Vector<Core::Separator *> DropArea::separators() const
 {
     return d->m_rootItem->separators_recursive();
 }

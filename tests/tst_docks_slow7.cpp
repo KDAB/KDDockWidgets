@@ -351,7 +351,7 @@ KDDW_QCORO_TASK tst_crash2()
             Core::DockWidget::List docks;
             const int num = 4;
             for (int i = 0; i < num; ++i)
-                docks << newDockWidget(QString::number(i));
+                docks.push_back(newDockWidget(QString::number(i)));
 
             std::vector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnRight,
                                                                Location_OnRight, Location_OnRight };
@@ -383,7 +383,7 @@ KDDW_QCORO_TASK tst_crash2()
             const int num = 3;
             Core::DockWidget::List docks;
             for (int i = 0; i < num; ++i)
-                docks << newDockWidget(QString::number(i));
+                docks.push_back(newDockWidget(QString::number(i)));
 
             std::vector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft,
                                                                Location_OnRight };

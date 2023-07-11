@@ -66,7 +66,7 @@ public:
     void clear();
 
     /// @brief returns the list of dock widgets in this sidebar
-    QVector<DockWidget *> dockWidgets() const;
+    Vector<DockWidget *> dockWidgets() const;
 
     void onButtonClicked(DockWidget *dw);
 
@@ -77,7 +77,7 @@ private:
     Private *const d;
 
     MainWindow *const m_mainWindow;
-    QVector<DockWidget *> m_dockWidgets;
+    Vector<DockWidget *> m_dockWidgets;
     const SideBarLocation m_location;
     const Qt::Orientation m_orientation;
 };

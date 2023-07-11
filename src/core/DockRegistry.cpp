@@ -524,7 +524,7 @@ const QList<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() co
     return areas;
 }
 
-const QVector<Core::Layout *> DockRegistry::layouts() const
+const Vector<Core::Layout *> DockRegistry::layouts() const
 {
     return m_layouts;
 }
@@ -534,11 +534,11 @@ const Core::Group::List DockRegistry::groups() const
     return m_groups;
 }
 
-const QVector<Core::FloatingWindow *>
+const Vector<Core::FloatingWindow *>
 DockRegistry::floatingWindows(bool includeBeingDeleted) const
 {
     // Returns all the FloatingWindow which aren't being deleted
-    QVector<Core::FloatingWindow *> result;
+    Vector<Core::FloatingWindow *> result;
     result.reserve(m_floatingWindows.size());
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (includeBeingDeleted || !fw->beingDeleted())

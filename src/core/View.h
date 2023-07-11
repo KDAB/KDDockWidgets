@@ -183,7 +183,7 @@ public:
     virtual void setZOrder(int);
 
     /// @Returns a list of child views
-    virtual QVector<std::shared_ptr<View>> childViews() const = 0;
+    virtual Vector<std::shared_ptr<View>> childViews() const = 0;
 
     /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor
     /// false, as the implementation of free() is free to delay it (with deleteLater() for example)
@@ -261,7 +261,7 @@ protected:
     // and different bugs. Let's keep both frontends consistent predictable.
 
     // No shared pointers, as lifetime is managed by parent-children relationship (as in QObject)
-    QVector<Core::View *> m_childViews;
+    Vector<Core::View *> m_childViews;
 #endif
 };
 

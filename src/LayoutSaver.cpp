@@ -409,7 +409,7 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<Core::FloatingWindow *> floatingWindows =
+    const Vector<Core::FloatingWindow *> floatingWindows =
         d->m_dockRegistry->floatingWindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (Core::FloatingWindow *floatingWindow : floatingWindows) {

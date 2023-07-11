@@ -100,7 +100,7 @@ public:
     void render(QPainter *) override;
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
-    QVector<std::shared_ptr<Core::View>> childViews() const override;
+    Vector<std::shared_ptr<Core::View>> childViews() const override;
     void setZOrder(int z) override;
     Core::HANDLE handle() const override;
 

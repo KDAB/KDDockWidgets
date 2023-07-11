@@ -3368,7 +3368,7 @@ KDDW_QCORO_TASK tst_stuckSeparator()
     ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item25 = root->itemForView(group25->view());
     ItemBoxContainer *container25 = item25->parentBoxContainer();
-    QVector<Core::Separator *> separators = container25->separators();
+    Vector<Core::Separator *> separators = container25->separators();
     CHECK_EQ(separators.size(), 1);
 
     Core::Separator *separator25 = separators.constFirst();

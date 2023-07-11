@@ -318,7 +318,7 @@ void Item::restore(View *guest)
     }
 }
 
-QVector<int> Item::pathFromRoot() const
+Vector<int> Item::pathFromRoot() const
 {
     // Returns the list of indexes to get to this item, starting from the root container
     // Example [0, 1, 3] would mean that the item is the 4th child of the 2nd child of the 1st child
@@ -326,7 +326,7 @@ QVector<int> Item::pathFromRoot() const
     // [] would mean 'this' is the root item
     // [0] would mean the 1st child of root
 
-    QVector<int> path;
+    Vector<int> path;
     path.reserve(10); // random big number, good to bootstrap it
 
     const Item *it = this;
@@ -728,7 +728,7 @@ std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> 
 }
 
 template<typename CharT, typename Traits>
-std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const QVector<double> &vec)
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const Vector<double> &vec)
 {
     os << "{ ";
     for (double v : vec) {
@@ -947,7 +947,7 @@ struct ItemBoxContainer::Private
     int defaultLengthFor(Item *item, InitialOption option) const;
     bool isOverflowing() const;
     void relayoutIfNeeded();
-    const Item *itemFromPath(const QVector<int> &path) const;
+    const Item *itemFromPath(const Vector<int> &path) const;
     void resizeChildren(Size oldSize, Size newSize, SizingInfo::List &sizes,
                         ChildrenResizeStrategy);
     void honourMaxSizes(SizingInfo::List &sizes);
@@ -959,11 +959,11 @@ struct ItemBoxContainer::Private
     void updateWidgets_recursive();
     /// Returns the positions that each separator should have (x position if Qt::Horizontal, y
     /// otherwise)
-    QVector<int> requiredSeparatorPositions() const;
+    Vector<int> requiredSeparatorPositions() const;
     void updateSeparators();
     void deleteSeparators();
     KDDockWidgets::Core::Separator *separatorAt(int p) const;
-    QVector<double> childPercentages() const;
+    Vector<double> childPercentages() const;
     bool isDummy() const;
     void deleteSeparators_recursive();
     void updateSeparators_recursive();
@@ -971,7 +971,7 @@ struct ItemBoxContainer::Private
     int excessLength() const;
 
     mutable bool m_checkSanityScheduled = false;
-    QVector<KDDockWidgets::Core::Separator *> m_separators;
+    Vector<KDDockWidgets::Core::Separator *> m_separators;
     bool m_convertingItemToContainer = false;
     bool m_blockUpdatePercentages = false;
     bool m_isDeserializing = false;
@@ -1116,7 +1116,7 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        const QVector<double> percentages = d->childPercentages();
+        const Vector<double> percentages = d->childPercentages();
         const double totalPercentage = std::accumulate(percentages.begin(), percentages.end(), 0.0);
         const double expectedPercentage = visibleChildren.isEmpty() ? 0.0 : 1.0;
         if (!qFuzzyCompare(totalPercentage, expectedPercentage)) {
@@ -1881,7 +1881,7 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
     // The new sizes are applied to @p childSizes, which will be applied to the widgets when we're
     // done
 
-    const QVector<double> childPercentages = this->childPercentages();
+    const Vector<double> childPercentages = this->childPercentages();
     const auto count = childSizes.count();
     const bool widthChanged = oldSize.width() != newSize.width();
     const bool heightChanged = oldSize.height() != newSize.height();
@@ -1977,8 +1977,8 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
 
     int amountNeededToShrink = 0;
     int amountAvailableToGrow = 0;
-    QVector<int> indexesOfShrinkers;
-    QVector<int> indexesOfGrowers;
+    Vector<int> indexesOfShrinkers;
+    Vector<int> indexesOfGrowers;
 
     for (int i = 0; i < sizes.count(); ++i) {
         SizingInfo &info = sizes[i];
@@ -2198,9 +2198,9 @@ void ItemBoxContainer::updateChildPercentages_recursive()
     }
 }
 
-QVector<double> ItemBoxContainer::Private::childPercentages() const
+Vector<double> ItemBoxContainer::Private::childPercentages() const
 {
-    QVector<double> percentages;
+    Vector<double> percentages;
     percentages.reserve(q->m_children.size());
 
     for (Item *item : qAsConst(q->m_children)) {
@@ -2458,7 +2458,7 @@ void ItemBoxContainer::layoutEqually()
 void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
 {
     const auto numItems = sizes.count();
-    QVector<int> satisfiedIndexes;
+    Vector<int> satisfiedIndexes;
     satisfiedIndexes.reserve(numItems);
 
     auto lengthToGive = length() - (d->m_separators.size() * Item::separatorThickness);
@@ -2984,19 +2984,19 @@ SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
     return result;
 }
 
-QVector<int> ItemBoxContainer::calculateSqueezes(
+Vector<int> ItemBoxContainer::calculateSqueezes(
     SizingInfo::List::const_iterator begin, // clazy:exclude=function-args-by-ref
     SizingInfo::List::const_iterator end, int needed, // clazy:exclude=function-args-by-ref
     NeighbourSqueezeStrategy strategy, bool reversed) const
 {
-    QVector<int> availabilities;
+    Vector<int> availabilities;
     for (auto it = begin; it < end; ++it) {
         availabilities.push_back(it->availableLength(d->m_orientation));
     }
 
     const auto count = availabilities.count();
 
-    QVector<int> squeezes;
+    Vector<int> squeezes;
     squeezes.resize(count);
     std::fill(squeezes.begin(), squeezes.end(), 0);
 
@@ -3063,7 +3063,7 @@ void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int 
         auto begin = sizes.cbegin();
         auto end = sizes.cbegin() + index;
         const bool reversed = strategy == NeighbourSqueezeStrategy::ImmediateNeighboursFirst;
-        const QVector<int> squeezes =
+        const Vector<int> squeezes =
             calculateSqueezes(begin, end, side1Amount, strategy, reversed);
         for (int i = 0; i < squeezes.size(); ++i) {
             const int squeeze = squeezes.at(i);
@@ -3078,7 +3078,7 @@ void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int 
         auto begin = sizes.cbegin() + index + 1;
         auto end = sizes.cend();
 
-        const QVector<int> squeezes = calculateSqueezes(begin, end, side2Amount, strategy);
+        const Vector<int> squeezes = calculateSqueezes(begin, end, side2Amount, strategy);
         for (int i = 0; i < squeezes.size(); ++i) {
             const int squeeze = squeezes.at(i);
             SizingInfo &sizing = sizes[i + index + 1];
@@ -3087,10 +3087,10 @@ void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int 
     }
 }
 
-QVector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
+Vector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
 {
     const int numSeparators = qMax(0, q->numVisibleChildren() - 1);
-    QVector<int> positions;
+    Vector<int> positions;
     positions.reserve(numSeparators);
 
     for (Item *item : qAsConst(q->m_children)) {
@@ -3111,7 +3111,7 @@ void ItemBoxContainer::Private::updateSeparators()
     if (!q->hostView())
         return;
 
-    const QVector<int> positions = requiredSeparatorPositions();
+    const Vector<int> positions = requiredSeparatorPositions();
     const auto requiredNumSeparators = positions.size();
 
     const bool numSeparatorsChanged = requiredNumSeparators != m_separators.size();
@@ -3418,7 +3418,7 @@ bool ItemBoxContainer::test_suggestedRect()
 }
 #endif
 
-QVector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators_recursive() const
+Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators_recursive() const
 {
     KDDockWidgets::Core::Separator::List separators = d->m_separators;
 
@@ -3430,7 +3430,7 @@ QVector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators_recursive
     return separators;
 }
 
-QVector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators() const
+Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators() const
 {
     return d->m_separators;
 }
@@ -3478,7 +3478,7 @@ void ItemBoxContainer::Private::relayoutIfNeeded()
     }
 }
 
-const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) const
+const Item *ItemBoxContainer::Private::itemFromPath(const Vector<int> &path) const
 {
     const ItemBoxContainer *container = q;
 

@@ -92,6 +92,7 @@ struct fmt::formatter<QStringList>
     }
 };
 
+#ifdef KDDW_FRONTEND_QT
 template<typename T>
 struct fmt::formatter<QVector<T>>
 {
@@ -113,6 +114,7 @@ struct fmt::formatter<QVector<T>>
         return out;
     }
 };
+#endif
 
 template<typename F>
 struct fmt::formatter<QFlags<F>>
@@ -226,3 +228,28 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
         return fmt::format_to(ctx.out(), "[InitialOption: preferredSize={}, visibility={}]", opt.preferredSize, ( int )opt.visibility);
     }
 };
+
+#ifdef KDDW_FRONTEND_FLUTTER
+template<typename T>
+struct fmt::formatter<KDDockWidgets::Vector<T>>
+{
+    constexpr auto parse(format_parse_context &ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename FormatContext>
+    auto format(const KDDockWidgets::Vector<T> &vec, FormatContext &ctx)
+    {
+
+        auto out = ctx.out();
+        out = fmt::format_to(out, "{}", "{ ");
+        for (const auto &element : vec)
+            out = fmt::format_to(out, "{}, ", element);
+        out = fmt::format_to(out, "{}", " }");
+
+        return out;
+    }
+};
+
+#endif

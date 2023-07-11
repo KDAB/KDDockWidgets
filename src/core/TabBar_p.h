@@ -19,8 +19,6 @@
 
 #include <kdbindings/signal.h>
 
-#include <QVector>
-
 #include <unordered_map>
 
 namespace KDDockWidgets {
@@ -41,7 +39,7 @@ public:
     Core::Stack *const m_stack;
     ObjectGuard<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
-    QVector<const DockWidget *> m_dockWidgets;
+    Vector<const DockWidget *> m_dockWidgets;
     bool m_removeGuard = false;
     std::unordered_map<KDDockWidgets::Core::DockWidget *, KDBindings::ScopedConnection> aboutToDeleteConnections;
 

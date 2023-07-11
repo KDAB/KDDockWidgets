@@ -329,7 +329,7 @@ void ViewWrapper::setMouseTracking(bool tracking)
     m_wrappedView->setMouseTracking(tracking);
 }
 
-QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
+Vector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
     return m_wrappedView->childViews();
 }

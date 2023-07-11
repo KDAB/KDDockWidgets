@@ -26,8 +26,6 @@
 #include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/core/Action.h"
 
-#include <QVector>
-
 #include <memory>
 
 // clazy:excludeall=ctor-missing-parent-argument
@@ -59,7 +57,7 @@ class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
 public:
-    typedef QVector<DockWidget *> List;
+    typedef Vector<DockWidget *> List;
 
     /**
      * @brief constructs a new DockWidget

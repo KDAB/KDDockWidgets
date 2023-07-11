@@ -51,7 +51,7 @@ public:
     Core::DockWidget *singleDockWidget() const override;
     bool isWindow() const override;
 
-    const QVector<DockWidget *> dockWidgets() const;
+    const Vector<DockWidget *> dockWidgets() const;
     const Core::Group::List groups() const;
     DropArea *dropArea() const;
 

@@ -28,6 +28,7 @@
 #include <QObject>
 #else
 #include "core/geometry_helpers_p.h"
+#include "kdtoolbox/KDStlContainerAdaptor.h"
 #include <QList>
 #endif
 
@@ -57,6 +58,9 @@ using PointF = QT_PREPEND_NAMESPACE(QPointF);
 using Size = QT_PREPEND_NAMESPACE(QSize);
 using Rect = QT_PREPEND_NAMESPACE(QRect);
 using Margins = QT_PREPEND_NAMESPACE(QMargins);
+
+template<typename T>
+using Vector = QVector<T>;
 
 template<typename T>
 inline T object_cast(QObject *o)
@@ -285,7 +289,7 @@ class Polygon : public QList<Point>
 {
 public:
     Polygon() = default;
-    Polygon(QVector<Point>)
+    Polygon(Vector<Point>)
     {
     }
 

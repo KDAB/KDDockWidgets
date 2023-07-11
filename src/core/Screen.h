@@ -14,8 +14,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/NonQtCompat_p.h"
 
-#include <QVector>
-
 #include <memory>
 
 namespace KDDockWidgets::Core {
@@ -26,7 +24,7 @@ class DOCKS_EXPORT Screen
 {
 public:
     using Ptr = std::shared_ptr<Screen>;
-    using List = QVector<Ptr>;
+    using List = Vector<Ptr>;
 
     virtual ~Screen();
 

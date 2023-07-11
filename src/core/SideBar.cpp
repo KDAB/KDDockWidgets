@@ -148,7 +148,7 @@ void SideBar::clear()
         removeDockWidget(dw);
 }
 
-QVector<DockWidget *> SideBar::dockWidgets() const
+Vector<DockWidget *> SideBar::dockWidgets() const
 {
     return m_dockWidgets;
 }

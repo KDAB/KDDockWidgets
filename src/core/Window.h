@@ -14,8 +14,6 @@
 #include "View.h"
 #include "Screen.h"
 
-#include <QVector>
-
 namespace KDDockWidgets::Core {
 
 /// @brief Represents a top-level window
@@ -26,7 +24,7 @@ class DOCKS_EXPORT Window
 {
 public:
     using Ptr = std::shared_ptr<Core::Window>;
-    using List = QVector<Ptr>;
+    using List = Vector<Ptr>;
     typedef void (*WindowScreenChangedCallback)(Core::Object *context, Ptr window);
 
     virtual ~Window();

@@ -58,7 +58,7 @@ public:
     bool inDisallowedDragView(Point globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
     void ungrabMouse() override;
-    QVector<std::shared_ptr<Core::Screen>> screens() const override;
+    Vector<std::shared_ptr<Core::Screen>> screens() const override;
     std::shared_ptr<Core::Screen> primaryScreen() const override;
 
     void onFloatingWindowCreated(Core::FloatingWindow *) override;
@@ -134,7 +134,7 @@ protected:
     // Platform interface
 public:
     std::shared_ptr<Core::View> focusedView() const override;
-    QVector<std::shared_ptr<Core::Window>> windows() const override;
+    Vector<std::shared_ptr<Core::Window>> windows() const override;
     void sendEvent(Core::View *, Event *) const override;
     int screenNumberFor(std::shared_ptr<Core::Window>) const override;
     bool isProcessingAppQuitEvent() const override;

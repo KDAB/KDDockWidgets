@@ -188,7 +188,7 @@ bool WindowBeingDragged::contains(Layout *layout) const
     return false;
 }
 
-QVector<DockWidget *> WindowBeingDragged::dockWidgets() const
+Vector<DockWidget *> WindowBeingDragged::dockWidgets() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->dockWidgets();
@@ -292,7 +292,7 @@ QStringList WindowBeingDraggedWayland::affinities() const
     return {};
 }
 
-QVector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
+Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::dockWidgets();

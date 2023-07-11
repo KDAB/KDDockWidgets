@@ -14,8 +14,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include <QVector>
-
 #include "kdbindings/signal.h"
 #include "nlohmann/json.hpp"
 
@@ -193,7 +191,7 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
         return availableToGrow(o) >= 0;
     }
 
-    typedef QVector<SizingInfo> List;
+    typedef Vector<SizingInfo> List;
     Rect geometry;
     Size minSize;
     Size maxSizeHint;
@@ -205,7 +203,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public Core::Object
 {
     Q_OBJECT
 public:
-    typedef QVector<Item *> List;
+    typedef Vector<Item *> List;
 
     explicit Item(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
@@ -270,7 +268,7 @@ public:
     KDDockWidgets::Core::View *hostView() const;
     void restore(KDDockWidgets::Core::View *guestView);
 
-    QVector<int> pathFromRoot() const;
+    Vector<int> pathFromRoot() const;
 
     Q_REQUIRED_RESULT virtual bool checkSanity();
     bool isMDI() const;
@@ -516,9 +514,9 @@ private:
     void onChildVisibleChanged(Item *child, bool visible) override;
     void updateSizeConstraints();
     SizingInfo::List sizes(bool ignoreBeingInserted = false) const;
-    QVector<int> calculateSqueezes(SizingInfo::List::const_iterator begin,
-                                   SizingInfo::List::const_iterator end, int needed,
-                                   NeighbourSqueezeStrategy, bool reversed = false) const;
+    Vector<int> calculateSqueezes(SizingInfo::List::const_iterator begin,
+                                  SizingInfo::List::const_iterator end, int needed,
+                                  NeighbourSqueezeStrategy, bool reversed = false) const;
     Rect suggestedDropRectFallback(const Item *item, const Item *relativeTo,
                                    KDDockWidgets::Location) const;
     Item *itemAt(Point p) const;
@@ -539,8 +537,8 @@ private:
 #endif
 
 public:
-    QVector<KDDockWidgets::Core::Separator *> separators_recursive() const;
-    QVector<KDDockWidgets::Core::Separator *> separators() const;
+    Vector<KDDockWidgets::Core::Separator *> separators_recursive() const;
+    Vector<KDDockWidgets::Core::Separator *> separators() const;
 
 #ifdef DOCKS_DEVELOPER_MODE
 public:

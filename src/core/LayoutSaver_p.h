@@ -54,7 +54,7 @@ Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
 
 struct LayoutSaver::Placeholder
 {
-    typedef QVector<LayoutSaver::Placeholder> List;
+    typedef Vector<LayoutSaver::Placeholder> List;
 
     bool isFloatingWindow;
     int indexOfFloatingWindow;
@@ -105,7 +105,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 {
     // Using shared ptr, as we need to modify shared instances
     typedef std::shared_ptr<LayoutSaver::DockWidget> Ptr;
-    typedef QVector<Ptr> List;
+    typedef Vector<Ptr> List;
     static std::unordered_map<QString, Ptr> s_dockWidgets;
 
     bool isValid() const;
@@ -188,7 +188,7 @@ struct LayoutSaver::MultiSplitter
 
 struct LayoutSaver::FloatingWindow
 {
-    typedef QVector<LayoutSaver::FloatingWindow> List;
+    typedef Vector<LayoutSaver::FloatingWindow> List;
 
     bool isValid() const;
 
@@ -218,7 +218,7 @@ struct LayoutSaver::FloatingWindow
 struct LayoutSaver::MainWindow
 {
 public:
-    typedef QVector<LayoutSaver::MainWindow> List;
+    typedef Vector<LayoutSaver::MainWindow> List;
 
     bool isValid() const;
 
@@ -248,7 +248,7 @@ public:
 /// Not used currently, but nice to have in the json already
 struct LayoutSaver::ScreenInfo
 {
-    typedef QVector<LayoutSaver::ScreenInfo> List;
+    typedef Vector<LayoutSaver::ScreenInfo> List;
 
     int index;
     Rect geometry;

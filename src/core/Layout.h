@@ -127,7 +127,7 @@ public:
     /**
      * @brief The list of items in this layout.
      */
-    const QVector<Core::Item *> items() const;
+    const Vector<Core::Item *> items() const;
 
     /**
      * @brief Returns true if this layout contains the specified item.
@@ -171,7 +171,7 @@ public:
     QList<Core::Group *> groups() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
-    QVector<Core::DockWidget *> dockWidgets() const;
+    Vector<Core::DockWidget *> dockWidgets() const;
 
     /**
      * @brief Removes an item from this MultiSplitter.

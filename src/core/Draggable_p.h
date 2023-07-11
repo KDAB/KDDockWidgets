@@ -15,8 +15,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include <QVector>
-
 #include <memory>
 
 namespace KDDockWidgets {
@@ -42,7 +40,7 @@ class View;
 class DOCKS_EXPORT Draggable
 {
 public:
-    typedef QVector<Draggable *> List;
+    typedef Vector<Draggable *> List;
 
     explicit Draggable(View *thisView, bool enabled = true);
     virtual ~Draggable();

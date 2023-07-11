@@ -25,8 +25,6 @@
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/core/Controller.h"
 
-#include <QVector>
-
 class TestDocks;
 
 namespace KDDockWidgets {
@@ -64,7 +62,7 @@ class DOCKS_EXPORT MainWindow : public Controller
 {
     Q_OBJECT
 public:
-    typedef QVector<MainWindow *> List;
+    typedef Vector<MainWindow *> List;
 
     explicit MainWindow(View *view, const QString &uniqueName, MainWindowOptions options);
 

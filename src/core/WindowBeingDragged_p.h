@@ -67,7 +67,7 @@ public:
     virtual Pixmap pixmap() const;
 
     /// @brief Returns the list of dock widgets being dragged
-    virtual QVector<DockWidget *> dockWidgets() const;
+    virtual Vector<DockWidget *> dockWidgets() const;
 
     /// @brief Returns the draggable
     Draggable *draggable() const;
@@ -94,7 +94,7 @@ public:
     Size maxSize() const override;
     Pixmap pixmap() const override;
     QStringList affinities() const override;
-    QVector<DockWidget *> dockWidgets() const override;
+    Vector<DockWidget *> dockWidgets() const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no
     // way to position it) So we're dragging either a group with multiple dock widgets or a single

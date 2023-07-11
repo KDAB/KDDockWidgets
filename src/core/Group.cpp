@@ -465,7 +465,7 @@ void Group::updateTitleBarVisibility()
 
 void Group::updateFloatingActions()
 {
-    const QVector<DockWidget *> widgets = dockWidgets();
+    const Vector<DockWidget *> widgets = dockWidgets();
     for (DockWidget *dw : widgets)
         dw->d->updateFloatAction();
 }
