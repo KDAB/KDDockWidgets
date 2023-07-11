@@ -87,8 +87,8 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        qDeleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/true));
-        qDeleteAll(DockRegistry::self()->dockwidgets());
+        deleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/true));
+        deleteAll(DockRegistry::self()->dockwidgets());
 
         if (!DockRegistry::self()->isEmpty()) {
             auto dr = DockRegistry::self();

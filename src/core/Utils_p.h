@@ -184,6 +184,13 @@ inline bool scalingFactorIsSupported(qreal factor)
 #endif
 }
 
+template<typename T>
+void deleteAll(const T &vec)
+{
+    for (const auto &e : vec)
+        delete e;
+}
+
 }
 
 #endif

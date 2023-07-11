@@ -19,6 +19,7 @@
 #include "core/Platform.h"
 #include "core/View.h"
 #include "core/View_p.h"
+#include "core/Utils_p.h"
 #include "core/Controller_p.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
@@ -940,7 +941,7 @@ struct ItemBoxContainer::Private
 
     ~Private()
     {
-        qDeleteAll(m_separators);
+        deleteAll(m_separators);
         m_separators.clear();
     }
 
@@ -3155,7 +3156,7 @@ void ItemBoxContainer::Private::updateSeparators()
 
 void ItemBoxContainer::Private::deleteSeparators()
 {
-    qDeleteAll(m_separators);
+    deleteAll(m_separators);
     m_separators.clear();
 }
 

@@ -370,8 +370,8 @@ KDDW_QCORO_TASK tst_crash2()
                 docks[i]->setFloating(floatings[i]);
             }
 
-            qDeleteAll(docks);
-            qDeleteAll(DockRegistry::self()->groups());
+            deleteAll(docks);
+            deleteAll(DockRegistry::self()->groups());
         }
 
         {
@@ -407,8 +407,8 @@ KDDW_QCORO_TASK tst_crash2()
             }
             layout->checkSanity();
 
-            qDeleteAll(docks);
-            qDeleteAll(DockRegistry::self()->groups());
+            deleteAll(docks);
+            deleteAll(DockRegistry::self()->groups());
         }
 
         KDDW_TEST_RETURN(true);
