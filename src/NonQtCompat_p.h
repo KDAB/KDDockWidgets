@@ -26,9 +26,12 @@
 #include <QDrag>
 #include <QTimer>
 #include <QObject>
+#include <QString>
 #else
 #include "core/geometry_helpers_p.h"
 #include "kdtoolbox/KDStlContainerAdaptor.h"
+#include <qnamespace.h>
+#include <QString>
 #endif
 
 QT_BEGIN_NAMESPACE
