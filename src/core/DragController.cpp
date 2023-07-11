@@ -688,7 +688,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
         }
     } else if (e->type() == Event::DragEnter && isDragging()) {
         // We're dragging a window. Be sure user code doesn't accept DragEnter events.
-        KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.")
+        KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.");
         return true;
     } else {
         KDDW_DEBUG("DragController::onDnDEvent: No view");
