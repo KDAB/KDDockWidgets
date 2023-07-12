@@ -31,6 +31,7 @@
 #include "core/geometry_helpers_p.h"
 #include "kdtoolbox/KDStlContainerAdaptor.h"
 #include <qnamespace.h>
+#include <qhashfunctions.h>
 #include <QString>
 #endif
 
