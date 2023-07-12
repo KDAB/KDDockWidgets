@@ -604,7 +604,7 @@ void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
     // Does some minor setup on our QWindow.
     // Like adding the drop shadow on Windows and two other workarounds.
 
-#if defined(Q_OS_WIN)
+#ifdef KDDW_FRONTEND_QT_WINDOWS
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         const auto wid = HWND(window->handle());
         window->onScreenChanged(nullptr, [](QObject *, Window::Ptr win) {
