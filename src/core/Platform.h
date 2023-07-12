@@ -185,6 +185,9 @@ public:
     /// uses QFile, as it needs to support QRC
     virtual QByteArray readFile(const QString &, bool &ok) const;
 
+    /// Only supported on Qt, for windows
+    virtual bool supportsAeroSnap() const;
+
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 

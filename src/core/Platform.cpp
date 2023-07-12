@@ -273,3 +273,8 @@ QByteArray Platform::readFile(const QString &fileName, bool &ok) const
 
     return data;
 }
+
+bool Platform::supportsAeroSnap() const
+{
+    return false;
+}

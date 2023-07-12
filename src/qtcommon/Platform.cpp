@@ -26,6 +26,7 @@
 #include <QScreen>
 #include <QTimer>
 #include <QFile>
+#include <QOperatingSystemVersion>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtCommon;
@@ -324,4 +325,13 @@ QByteArray Platform_qt::readFile(const QString &fileName, bool &ok) const
     }
 
     return f.readAll();
+}
+
+bool Platform_qt::supportsAeroSnap() const
+{
+#if defined(Q_OS_WIN)
+    // Aero-snap requires Windows 10
+    return QOperatingSystemVersion::current().majorVersion() >= 10;
+#endif
+    return false;
 }

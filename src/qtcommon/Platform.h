@@ -71,6 +71,8 @@ public:
 
     QByteArray readFile(const QString &fileName, bool &ok) const override;
 
+    bool supportsAeroSnap() const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     /// Theses methods are implemented in TestHelpers_qt.cpp

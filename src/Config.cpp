@@ -27,8 +27,6 @@
 #include "core/Platform.h"
 #include "core/View.h"
 
-#include <QOperatingSystemVersion>
-
 #include <iostream>
 
 using namespace KDDockWidgets::Core;
@@ -243,13 +241,11 @@ void Config::setInternalFlags(InternalFlags flags)
 
 void Config::Private::fixFlags()
 {
-#if defined(KDDW_FRONTEND_QT_WINDOWS)
-    if (QOperatingSystemVersion::current().majorVersion() < 10) {
-        // Aero-snap requires Windows 10
-        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
-    } else {
+    if (Platform::instance()->supportsAeroSnap()) {
         // Unconditional now
         m_flags |= Flag_AeroSnapWithClientDecos;
+    } else {
+        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
     }
 
     // These are mutually exclusive:
@@ -257,21 +253,17 @@ void Config::Private::fixFlags()
         // We're either using native or client decorations, let's use native.
         m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
     }
-#elif defined(Q_OS_MACOS)
-    // Not supported on macOS:
-    m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
-#else
+
+#if defined(Q_OS_LINUX)
     if (KDDockWidgets::isWayland()) {
         // Native title bar is forced on Wayland. Needed for moving the window.
         // The inner KDDW title bar is used for DnD.
         m_flags |= Flag_NativeTitleBar;
     } else {
-        // Not supported on linux/X11
         // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
         // at least with KWin anyway. We can make this more granular and allow it for other
         // X11 window managers
         m_flags = m_flags & ~Flag_NativeTitleBar;
-        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
     }
 #endif
 
