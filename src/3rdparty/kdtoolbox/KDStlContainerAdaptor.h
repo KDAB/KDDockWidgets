@@ -33,6 +33,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <iterator>
 
 namespace KDToolBox {
 namespace StlContainerAdaptor {
