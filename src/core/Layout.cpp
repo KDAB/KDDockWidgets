@@ -293,8 +293,6 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
     d->m_rootItem->fillFromJson(l.layout, groups);
     updateSizeConstraints();
 
-    // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
-    // as some sizing is async
     const Size newLayoutSize = view()->size().expandedTo(d->m_rootItem->minSize());
 
     d->m_rootItem->setSize_recursive(newLayoutSize);

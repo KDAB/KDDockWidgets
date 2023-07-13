@@ -36,6 +36,7 @@
 #endif
 #endif
 
+#include <algorithm>
 
 #if defined(Q_OS_WIN)
 #include <windows.h>
@@ -523,9 +524,9 @@ bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
 
     // Let's not allow the MDI window to go outside of its parent
 
-    Point newLocalPosBounded = { qMax(0, newLocalPos.x()), qMax(0, newLocalPos.y()) };
-    newLocalPosBounded.setX(qMin(newLocalPosBounded.x(), parentSize.width() - group->width()));
-    newLocalPosBounded.setY(qMin(newLocalPosBounded.y(), parentSize.height() - group->height()));
+    Point newLocalPosBounded = { std::max(0, newLocalPos.x()), std::max(0, newLocalPos.y()) };
+    newLocalPosBounded.setX(std::min(newLocalPosBounded.x(), parentSize.width() - group->width()));
+    newLocalPosBounded.setY(std::min(newLocalPosBounded.y(), parentSize.height() - group->height()));
 
     auto layout = group->mdiLayout();
     Q_ASSERT(layout);

@@ -114,17 +114,17 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
 
     int maxLengthHint(Qt::Orientation o) const
     {
-        return qMax(minLength(o), Core::length(maxSizeHint, o));
+        return std::max(minLength(o), Core::length(maxSizeHint, o));
     }
 
     int availableLength(Qt::Orientation o) const
     {
-        return qMax(0, length(o) - minLength(o));
+        return std::max(0, length(o) - minLength(o));
     }
 
     int missingLength(Qt::Orientation o) const
     {
-        return qMax(0, minLength(o) - length(o));
+        return std::max(0, minLength(o) - length(o));
     }
 
     Point pos() const
@@ -183,7 +183,7 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS SizingInfo
 
     int neededToShrink(Qt::Orientation o) const
     {
-        return qMax(0, length(o) - maxLengthHint(o));
+        return std::max(0, length(o) - maxLengthHint(o));
     }
 
     bool isPastMax(Qt::Orientation o) const

@@ -14,6 +14,8 @@
 #include "Config.h"
 #include "core/ViewFactory.h"
 
+#include <algorithm>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -94,8 +96,8 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
         const Point centerPos = bounds.boundingRect().center();
 
         // Build the center
-        const int indicatorWidth = qMin(s_centralIndicatorMaxWidth, maxWidth - 100);
-        const int indicatorHeight = qMin(s_centralIndicatorMaxHeight, int(indicatorWidth * 0.60));
+        const int indicatorWidth = std::min(s_centralIndicatorMaxWidth, maxWidth - 100);
+        const int indicatorHeight = std::min(s_centralIndicatorMaxHeight, int(indicatorWidth * 0.60));
         const int tabWidth = int(indicatorWidth * 0.267);
         const int tabHeight = int(indicatorHeight * 0.187);
         const int centerRectLeft = centerPos.x() - indicatorWidth / 2;

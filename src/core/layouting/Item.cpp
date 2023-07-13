@@ -28,6 +28,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <algorithm>
 
 #ifdef Q_CC_MSVC
 #pragma warning(push)
@@ -100,12 +101,12 @@ struct LengthOnSide
 
     int available() const
     {
-        return qMax(0, length - minLength);
+        return std::max(0, length - minLength);
     }
 
     int missing() const
     {
-        return qMax(0, minLength - length);
+        return std::max(0, minLength - length);
     }
 };
 
@@ -364,8 +365,8 @@ void Item::setSize_recursive(Size newSize, ChildrenResizeStrategy)
 Size Item::missingSize() const
 {
     Size missing = minSize() - this->size();
-    missing.setWidth(qMax(missing.width(), 0));
-    missing.setHeight(qMax(missing.height(), 0));
+    missing.setWidth(std::max(missing.width(), 0));
+    missing.setHeight(std::max(missing.height(), 0));
 
     return missing;
 }
@@ -572,10 +573,10 @@ void Item::setLength(int length, Qt::Orientation o)
 {
     Q_ASSERT(length > 0);
     if (o == Qt::Vertical) {
-        const int w = qMax(width(), hardcodedMinimumSize.width());
+        const int w = std::max(width(), hardcodedMinimumSize.width());
         setSize(Size(w, length));
     } else {
-        const int h = qMax(height(), hardcodedMinimumSize.height());
+        const int h = std::max(height(), hardcodedMinimumSize.height());
         setSize(Size(length, h));
     }
 }
@@ -1015,9 +1016,9 @@ int ItemBoxContainer::numSideBySide_recursive(Qt::Orientation o) const
         // Example: Container is vertical and we want to know how many layouted horizontally
         for (Item *child : m_children) {
             if (ItemBoxContainer *container = child->asBoxContainer()) {
-                num = qMax(num, container->numSideBySide_recursive(o));
+                num = std::max(num, container->numSideBySide_recursive(o));
             } else if (!child->isPlaceholder()) {
-                num = qMax(num, 1);
+                num = std::max(num, 1);
             }
         }
     }
@@ -1106,7 +1107,7 @@ bool ItemBoxContainer::checkSanity()
     const Item::List visibleChildren = this->visibleChildren();
     const bool isEmptyRoot = isRoot() && visibleChildren.isEmpty();
     if (!isEmptyRoot) {
-        auto occupied = qMax(0, Item::separatorThickness * (visibleChildren.size() - 1));
+        auto occupied = std::max(0, Item::separatorThickness * (visibleChildren.size() - 1));
         for (Item *item : visibleChildren) {
             occupied += item->length(d->m_orientation);
         }
@@ -1130,7 +1131,7 @@ bool ItemBoxContainer::checkSanity()
     }
 
     const auto numVisibleChildren = visibleChildren.size();
-    if (d->m_separators.size() != qMax(0, numVisibleChildren - 1)) {
+    if (d->m_separators.size() != std::max(0, numVisibleChildren - 1)) {
         root()->dumpLayout();
         KDDW_ERROR("Unexpected number of separators sz={}, numVisibleChildren={}", d->m_separators.size(), numVisibleChildren);
         return false;
@@ -1572,7 +1573,7 @@ Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *r
         // Relative to the window itself
         Rect rect = this->rect();
         const int oneThird = length() / 3;
-        const int suggestedLength = qMax(qMin(available, oneThird), itemMin);
+        const int suggestedLength = std::max(std::min(available, oneThird), itemMin);
 
         switch (loc) {
         case Location_OnLeft:
@@ -1811,15 +1812,15 @@ Size ItemBoxContainer::Private::minSize(const Item::List &items) const
                 continue;
             numVisible++;
             if (q->isVertical()) {
-                minW = qMax(minW, item->minSize().width());
+                minW = std::max(minW, item->minSize().width());
                 minH += item->minSize().height();
             } else {
-                minH = qMax(minH, item->minSize().height());
+                minH = std::max(minH, item->minSize().height());
                 minW += item->minSize().width();
             }
         }
 
-        const int separatorWaste = qMax(0, (numVisible - 1) * separatorThickness);
+        const int separatorWaste = std::max(0, (numVisible - 1) * separatorThickness);
         if (q->isVertical())
             minH += separatorWaste;
         else
@@ -1848,19 +1849,19 @@ Size ItemBoxContainer::maxSizeHint() const
             const int itemMaxWidth = itemMaxSz.width();
             const int itemMaxHeight = itemMaxSz.height();
             if (isVertical()) {
-                maxW = qMin(maxW, itemMaxWidth);
-                maxH = qMin(maxH + itemMaxHeight, hardcodedMaximumSize.height());
+                maxW = std::min(maxW, itemMaxWidth);
+                maxH = std::min(maxH + itemMaxHeight, hardcodedMaximumSize.height());
             } else {
-                maxH = qMin(maxH, itemMaxHeight);
-                maxW = qMin(maxW + itemMaxWidth, hardcodedMaximumSize.width());
+                maxH = std::min(maxH, itemMaxHeight);
+                maxW = std::min(maxW + itemMaxWidth, hardcodedMaximumSize.width());
             }
         }
 
         const auto separatorWaste = (visibleChildren.size() - 1) * separatorThickness;
         if (isVertical()) {
-            maxH = qMin(maxH + separatorWaste, hardcodedMaximumSize.height());
+            maxH = std::min(maxH + separatorWaste, hardcodedMaximumSize.height());
         } else {
-            maxW = qMin(maxW + separatorWaste, hardcodedMaximumSize.width());
+            maxW = std::min(maxW + separatorWaste, hardcodedMaximumSize.width());
         }
     }
 
@@ -1959,7 +1960,7 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
                 remaining = 0; // and we're done, the first one got everything
             } else {
                 const int availableToGive = size.availableLength(m_orientation);
-                const int took = qMin(availableToGive, remaining);
+                const int took = std::min(availableToGive, remaining);
                 size.incrementLength(-took, m_orientation);
                 remaining -= took;
             }
@@ -1990,16 +1991,16 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
             amountNeededToShrink += neededToShrink;
             indexesOfShrinkers.push_back(i); // clazy:exclude=reserve-candidates
         } else if (availableToGrow > 0) {
-            amountAvailableToGrow = qMin(amountAvailableToGrow + availableToGrow, q->length());
+            amountAvailableToGrow = std::min(amountAvailableToGrow + availableToGrow, q->length());
             indexesOfGrowers.push_back(i); // clazy:exclude=reserve-candidates
         }
     }
 
     // Don't grow more than what's needed
-    amountAvailableToGrow = qMin(amountNeededToShrink, amountAvailableToGrow);
+    amountAvailableToGrow = std::min(amountNeededToShrink, amountAvailableToGrow);
 
     // Don't shrink more than what's available to grow
-    amountNeededToShrink = qMin(amountAvailableToGrow, amountNeededToShrink);
+    amountNeededToShrink = std::min(amountAvailableToGrow, amountNeededToShrink);
 
     if (amountNeededToShrink == 0 || amountAvailableToGrow == 0)
         return;
@@ -2010,12 +2011,12 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
     // Do the growing:
     while (amountAvailableToGrow > 0) {
         // Each grower will grow a bit (round-robin)
-        auto toGrow = qMax(1, amountAvailableToGrow / indexesOfGrowers.size());
+        auto toGrow = std::max(1, amountAvailableToGrow / indexesOfGrowers.size());
 
         for (auto it = indexesOfGrowers.begin(); it != indexesOfGrowers.end();) {
             const int index = *it;
             SizingInfo &sizing = sizes[index];
-            const auto grew = qMin(sizing.availableToGrow(m_orientation), toGrow);
+            const auto grew = std::min(sizing.availableToGrow(m_orientation), toGrow);
             sizing.incrementLength(grew, m_orientation);
             amountAvailableToGrow -= grew;
 
@@ -2036,12 +2037,12 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
     // Do the shrinking:
     while (amountNeededToShrink > 0) {
         // Each shrinker will shrink a bit (round-robin)
-        auto toShrink = qMax(1, amountNeededToShrink / indexesOfShrinkers.size());
+        auto toShrink = std::max(1, amountNeededToShrink / indexesOfShrinkers.size());
 
         for (auto it = indexesOfShrinkers.begin(); it != indexesOfShrinkers.end();) {
             const int index = *it;
             SizingInfo &sizing = sizes[index];
-            const auto shrunk = qMin(sizing.neededToShrink(m_orientation), toShrink);
+            const auto shrunk = std::min(sizing.neededToShrink(m_orientation), toShrink);
             sizing.incrementLength(-shrunk, m_orientation);
             amountNeededToShrink -= shrunk;
 
@@ -2247,7 +2248,7 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
     const int available = availableToSqueezeOnSide(item, Side1)
         + availableToSqueezeOnSide(item, Side2) - Item::separatorThickness;
 
-    const int max = qMin(available, item->maxLengthHint(d->m_orientation));
+    const int max = std::min(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
 
     /*
@@ -2258,8 +2259,8 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
      * layouts, in the nesting hierarchy. The excess goes away when inserting a widget that can grow
      * indefinitely, it eats all the current excess.
      */
-    const int proposed = qMax(Core::length(item->size(), d->m_orientation),
-                              excessLength - Item::separatorThickness);
+    const int proposed = std::max(Core::length(item->size(), d->m_orientation),
+                                  excessLength - Item::separatorThickness);
     const int newLength = qBound(min, proposed, max);
 
     Q_ASSERT(item->isVisible());
@@ -2341,8 +2342,8 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
 
         // This is the available within our container, which we can use without bothering other
         // separators
-        tookLocally = qMin(availableSqueeze1, remainingToTake);
-        tookLocally = qMin(tookLocally, availableGrow2);
+        tookLocally = std::min(availableSqueeze1, remainingToTake);
+        tookLocally = std::min(tookLocally, availableGrow2);
 
         if (tookLocally != 0) {
             growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only,
@@ -2359,8 +2360,8 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
         const int availableGrow1 = availableToGrowOnSide(side2Neighbour, Side1);
 
         // Separator is moving right (or bottom if horizontal)
-        tookLocally = qMin(availableSqueeze2, remainingToTake);
-        tookLocally = qMin(tookLocally, availableGrow1);
+        tookLocally = std::min(availableSqueeze2, remainingToTake);
+        tookLocally = std::min(tookLocally, availableGrow1);
 
         if (tookLocally != 0) {
             growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only,
@@ -2471,7 +2472,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
 
     while (satisfiedIndexes.count() < sizes.count()) {
         const auto remainingItems = sizes.count() - satisfiedIndexes.count();
-        auto suggestedToGive = qMax(1, lengthToGive / remainingItems);
+        auto suggestedToGive = std::max(1, lengthToGive / remainingItems);
         const auto oldLengthToGive = lengthToGive;
 
         for (int i = 0; i < numItems; ++i) {
@@ -2498,8 +2499,8 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
                 - size.missingLength(d->m_orientation);
 
             const auto maxLength =
-                qMin(size.length(d->m_orientation) + lengthToGive - othersMissing,
-                     size.maxLengthHint(d->m_orientation));
+                std::min(size.length(d->m_orientation) + lengthToGive - othersMissing,
+                         size.maxLengthHint(d->m_orientation));
 
             const auto newItemLenght =
                 qBound(size.minLength(d->m_orientation),
@@ -2697,8 +2698,8 @@ int ItemBoxContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Or
 
         for (int i = start; i <= end; ++i)
             neighbourMaxLength =
-                qMin(Core::length(root()->size(), d->m_orientation),
-                     neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
+                std::min(Core::length(root()->size(), d->m_orientation),
+                         neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
 
         return neighbourMaxLength;
     } else {
@@ -2884,22 +2885,22 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
                 break;
             }
 
-            const int toTake = qMax(1, toSteal / 2);
-            const int took1 = qMin(toTake, available1);
+            const int toTake = std::max(1, toSteal / 2);
+            const int took1 = std::min(toTake, available1);
             toSteal -= took1;
             available1 -= took1;
             side1Growth += took1;
             if (toSteal == 0)
                 break;
 
-            const int took2 = qMin(toTake, available2);
+            const int took2 = std::min(toTake, available2);
             toSteal -= took2;
             side2Growth += took2;
             available2 -= took2;
         }
         shrinkNeighbours(index, sizes, side1Growth, side2Growth, neighbourSqueezeStrategy);
     } else if (growthStrategy == GrowthStrategy::Side1Only) {
-        side1Growth = qMin(missing, sizingInfo.availableToGrow(d->m_orientation));
+        side1Growth = std::min(missing, sizingInfo.availableToGrow(d->m_orientation));
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side1Growth, d->m_orientation);
         if (side1Growth > 0)
             shrinkNeighbours(index, sizes, side1Growth, /*side2Growth=*/0,
@@ -2917,7 +2918,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         }
 
     } else if (growthStrategy == GrowthStrategy::Side2Only) {
-        side2Growth = qMin(missing, sizingInfo.availableToGrow(d->m_orientation));
+        side2Growth = std::min(missing, sizingInfo.availableToGrow(d->m_orientation));
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side2Growth, d->m_orientation);
 
         if (side2Growth > 0)
@@ -3022,7 +3023,7 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
                 const int available = availabilities.at(i);
                 if (available == 0)
                     continue;
-                const int took = qMin(missing, qMin(toTake, available));
+                const int took = std::min(missing, std::min(toTake, available));
                 availabilities[i] -= took;
                 missing -= took;
                 squeezes[i] += took;
@@ -3036,7 +3037,7 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
 
             const int available = availabilities.at(index);
             if (available > 0) {
-                const int took = qMin(missing, available);
+                const int took = std::min(missing, available);
                 missing -= took;
                 squeezes[index] += took;
             }
@@ -3090,7 +3091,7 @@ void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int 
 
 Vector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
 {
-    const int numSeparators = qMax(0, q->numVisibleChildren() - 1);
+    const int numSeparators = std::max(0, q->numVisibleChildren() - 1);
     Vector<int> positions;
     positions.reserve(numSeparators);
 
@@ -3186,7 +3187,7 @@ void ItemBoxContainer::Private::updateSeparators_recursive()
 int ItemBoxContainer::Private::excessLength() const
 {
     // Returns how much bigger this layout is than its max-size
-    return qMax(0, Core::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
+    return std::max(0, Core::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
 }
 
 void ItemBoxContainer::simplify()
@@ -3294,7 +3295,7 @@ int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Core::Separator *
         // Side2
         Item *item1 = children.at(separatorIndex);
         const int availabletoGrow = availableToGrowOnSide_recursive(item1, Side2, d->m_orientation);
-        return separator->position() - qMin(availabletoGrow, availableToSqueeze);
+        return separator->position() - std::min(availabletoGrow, availableToSqueeze);
     }
 
     return separator->position() - availableToSqueeze;
@@ -3317,7 +3318,7 @@ int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Core::Separator *
         // of Side1
         Item *item2 = children.at(separatorIndex + 1);
         const int availabletoGrow = availableToGrowOnSide_recursive(item2, Side1, d->m_orientation);
-        return separator->position() + qMin(availabletoGrow, availableToSqueeze);
+        return separator->position() + std::min(availabletoGrow, availableToSqueeze);
     }
 
     return separator->position() + availableToSqueeze;
@@ -3450,7 +3451,7 @@ bool ItemBoxContainer::Private::isOverflowing() const
         }
     }
 
-    contentsLength += qMax(0, Item::separatorThickness * (numVisible - 1));
+    contentsLength += std::max(0, Item::separatorThickness * (numVisible - 1));
     return contentsLength > q->length();
 }
 
@@ -3627,7 +3628,7 @@ int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option
         }
         case DefaultSizeMode::FairButFloor: {
             int length = defaultLengthFor(item, DefaultSizeMode::Fair);
-            result = qMin(length, item->length(m_orientation));
+            result = std::min(length, item->length(m_orientation));
             break;
         }
         case DefaultSizeMode::ItemSize:
@@ -3636,7 +3637,7 @@ int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option
         }
     }
 
-    result = qMax(item->minLength(m_orientation), result); // bound with max-size too
+    result = std::max(item->minLength(m_orientation), result); // bound with max-size too
     return result;
 }
 

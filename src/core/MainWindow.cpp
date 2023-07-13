@@ -38,6 +38,7 @@
 #include "kddockwidgets/core/views/MainWindowViewInterface.h"
 
 #include <unordered_map>
+#include <algorithm>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -229,7 +230,7 @@ Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation loc
             (leftSideBar && leftSideBar->isVisible()) ? leftSideBar->width() : 0;
         const int rightSideBarWidth =
             (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width() : 0;
-        rect.setHeight(qMax(300, group->view()->minSize().height()));
+        rect.setHeight(std::max(300, group->view()->minSize().height()));
         rect.setWidth(centralAreaGeo.width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
@@ -248,7 +249,7 @@ Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation loc
             (topSideBar && topSideBar->isVisible()) ? topSideBar->height() : 0;
         const int bottomSideBarHeight =
             (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height() : 0;
-        rect.setWidth(qMax(300, group->view()->minSize().width()));
+        rect.setWidth(std::max(300, group->view()->minSize().width()));
         rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight
                        - centerWidgetMargins.top() - centerWidgetMargins.bottom());
         rect.moveTop(sb->view()->mapTo(q->view(), Point(0, 0)).y() + topSideBarHeight - 1);
@@ -397,26 +398,26 @@ void MainWindow::Private::updateOverlayGeometry(Size suggestedSize)
         switch (sb->location()) {
         case SideBarLocation::North: {
             const int maxHeight = q->height() - group->pos().y() - 10; // gap
-            newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
+            newGeometry.setHeight(std::min(suggestedSize.height(), maxHeight));
             break;
         }
         case SideBarLocation::South: {
             const int maxHeight = sb->pos().y() - m_layout->view()->pos().y() - 10; // gap
             const int bottom = newGeometry.bottom();
-            newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
+            newGeometry.setHeight(std::min(suggestedSize.height(), maxHeight));
             newGeometry.moveBottom(bottom);
             break;
         }
         case SideBarLocation::East: {
             const int maxWidth = sb->pos().x() - m_layout->view()->pos().x() - 10; // gap
             const int right = newGeometry.right();
-            newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
+            newGeometry.setWidth(std::min(suggestedSize.width(), maxWidth));
             newGeometry.moveRight(right);
             break;
         }
         case SideBarLocation::West: {
             const int maxWidth = q->width() - group->pos().x() - 10; // gap
-            newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
+            newGeometry.setWidth(std::min(suggestedSize.width(), maxWidth));
             break;
         }
         case SideBarLocation::None:
