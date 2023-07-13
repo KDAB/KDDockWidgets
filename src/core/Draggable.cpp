@@ -27,7 +27,7 @@ public:
         : thisView(_thisView)
         , enabled(_enabled)
     {
-        Q_ASSERT(thisView);
+        assert(thisView);
     }
 
     ObjectGuard<WidgetResizeHandler> widgetResizeHandler;
@@ -71,7 +71,7 @@ bool Draggable::dragCanStart(Point pressPos, Point globalPos) const
 
 void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
 {
-    Q_ASSERT(!d->widgetResizeHandler);
-    Q_ASSERT(w);
+    assert(!d->widgetResizeHandler);
+    assert(w);
     d->widgetResizeHandler = w;
 }

@@ -73,7 +73,7 @@ inline bool usesNativeDraggingAndResizing()
 {
     // a native title bar implies native resizing and dragging
     // Windows Aero-Snap also implies native dragging, and implies no native-title bar
-    Q_ASSERT(!(usesNativeTitleBar() && usesAeroSnapWithCustomDecos()));
+    assert(!(usesNativeTitleBar() && usesAeroSnapWithCustomDecos()));
     return usesNativeTitleBar() || usesAeroSnapWithCustomDecos();
 }
 

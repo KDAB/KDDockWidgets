@@ -30,8 +30,8 @@ public:
 
     void await_suspend(std::coroutine_handle<> h) const noexcept
     {
-        // Q_ASSERT(!s_task);
-        // Q_ASSERT(!m_handle);
+        // assert(!s_task);
+        // assert(!m_handle);
         m_handle = h.address();
         s_task = const_cast<SuspendTask *>(this);
     }

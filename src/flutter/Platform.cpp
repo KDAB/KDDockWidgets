@@ -300,13 +300,13 @@ void Platform::runTests()
 {
 #ifdef KDDW_FLUTTER_HAS_COROUTINES
     // Called from Flutter, so C++ tests run in the ui thread
-    Q_ASSERT(s_runTestsFunc);
+    assert(s_runTestsFunc);
 
     // The tests run in a co-routine, meaning they can be interrupted (due to a C++ wait or deleteLater)
     // and the Flutter event loop keeps running. When they are actually finished, the "then()" block is run.
     s_runTestsFunc().then([this](auto result) {
         QMutexLocker locker(&m_mutex);
-        Q_ASSERT(!m_testsResult.has_value());
+        assert(!m_testsResult.has_value());
         m_testsResult = result ? 0 : 1;
     });
 #endif

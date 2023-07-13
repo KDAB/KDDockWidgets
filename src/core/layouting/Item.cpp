@@ -176,7 +176,7 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
 
 void Item::setGuestView(View *guest)
 {
-    Q_ASSERT(!guest || !m_guest);
+    assert(!guest || !m_guest);
 
     m_guest = guest;
     m_parentChangedConnection.disconnect();
@@ -193,7 +193,7 @@ void Item::setGuestView(View *guest)
             if (!View::equals(parent, hostView())) {
                 // Frame was detached into floating window. Turn
                 // into placeholder
-                Q_ASSERT(isVisible());
+                assert(isVisible());
                 turnIntoPlaceholder();
             }
         });
@@ -262,7 +262,7 @@ void Item::fillFromJson(const nlohmann::json &j,
             m_guest->controller()->setParentView(hostView());
         } else if (hostView()) {
             KDDW_ERROR("Couldn't find group to restore for item={}", ( void * )this);
-            Q_ASSERT(false);
+            assert(false);
         }
     }
 }
@@ -282,10 +282,10 @@ void Item::ref()
 
 void Item::unref()
 {
-    Q_ASSERT(m_refCount > 0);
+    assert(m_refCount > 0);
     m_refCount--;
     if (m_refCount == 0) {
-        Q_ASSERT(!isRoot());
+        assert(!isRoot());
         parentContainer()->removeItem(this);
     }
 }
@@ -304,7 +304,7 @@ void Item::restore(View *guest)
 {
     if (isVisible() || m_guest) {
         KDDW_ERROR("Hitting assert. visible={}, guest={}", isVisible(), ( void * )this);
-        Q_ASSERT(false);
+        assert(false);
     }
 
     if (isContainer()) {
@@ -571,7 +571,7 @@ int Item::maxLengthHint(Qt::Orientation o) const
 
 void Item::setLength(int length, Qt::Orientation o)
 {
-    Q_ASSERT(length > 0);
+    assert(length > 0);
     if (o == Qt::Vertical) {
         const int w = std::max(width(), hardcodedMinimumSize.width());
         setSize(Size(w, length));
@@ -685,7 +685,7 @@ void Item::setGeometry(Rect rect)
                 if (c->hasVisibleChildren()) {
                     if (auto r = root())
                         r->dumpLayout();
-                    Q_ASSERT(false);
+                    assert(false);
                 }
             } else {
                 KDDW_ERROR("Empty rect");
@@ -797,7 +797,7 @@ Item::~Item()
 
 void Item::turnIntoPlaceholder()
 {
-    Q_ASSERT(!isContainer());
+    assert(!isContainer());
 
     // Turning into placeholder just means hiding it. So we can show it again in its original
     // position. Call removeItem() so we share the code for making the neighbours grow into the
@@ -986,7 +986,7 @@ ItemBoxContainer::ItemBoxContainer(View *hostWidget, ItemContainer *parent)
     : ItemContainer(hostWidget, parent)
     , d(new Private(this))
 {
-    Q_ASSERT(parent);
+    assert(parent);
 }
 
 ItemBoxContainer::ItemBoxContainer(View *hostWidget)
@@ -1238,7 +1238,7 @@ void ItemBoxContainer::restore(Item *child)
 
 void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
 {
-    Q_ASSERT(!item->isRoot());
+    assert(!item->isRoot());
 
     if (!contains(item)) {
         // Not ours, ask parent
@@ -1303,7 +1303,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
     ScopedValueRollback converting(d->m_convertingItemToContainer, true);
 
     const auto index = m_children.indexOf(leaf);
-    Q_ASSERT(index != -1);
+    assert(index != -1);
     auto container = new ItemBoxContainer(hostView(), this);
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
@@ -1322,7 +1322,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Location loc,
                                             KDDockWidgets::InitialOption option)
 {
-    Q_ASSERT(item != relativeTo);
+    assert(item != relativeTo);
 
     if (auto asContainer = relativeTo->asBoxContainer()) {
         asContainer->insertItem(item, loc, option);
@@ -1330,7 +1330,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
     }
 
     item->setIsVisible(!option.startsHidden());
-    Q_ASSERT(!(option.startsHidden() && item->isContainer()));
+    assert(!(option.startsHidden() && item->isContainer()));
 
     ItemBoxContainer *parent = relativeTo->parentBoxContainer();
     if (!parent) {
@@ -1346,7 +1346,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
 
         const Qt::Orientation orientation = orientationForLocation(loc);
         if (orientation != parent->orientation()) {
-            Q_ASSERT(parent->visibleChildren().size() == 1);
+            assert(parent->visibleChildren().size() == 1);
             // This is the case where the container only has one item, so it's both vertical and
             // horizontal Now its orientation gets defined
             parent->setOrientation(orientation);
@@ -1362,14 +1362,14 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
 void ItemBoxContainer::insertItem(Item *item, Location loc,
                                   KDDockWidgets::InitialOption initialOption)
 {
-    Q_ASSERT(item != this);
+    assert(item != this);
     if (contains(item)) {
         KDDW_ERROR("Item already exists");
         return;
     }
 
     item->setIsVisible(!initialOption.startsHidden());
-    Q_ASSERT(!(initialOption.startsHidden() && item->isContainer()));
+    assert(!(initialOption.startsHidden() && item->isContainer()));
 
     const Qt::Orientation locOrientation = orientationForLocation(loc);
 
@@ -1383,7 +1383,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         insertItem(item, index, initialOption);
     } else {
         // Inserting directly in a container ? Only if it's root.
-        Q_ASSERT(isRoot());
+        assert(isRoot());
         auto container = new ItemBoxContainer(hostView(), this);
         container->setGeometry(rect());
         container->setChildren(m_children, d->m_orientation);
@@ -1556,7 +1556,7 @@ Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *r
             suggestedPos = relativeToGeo.bottom() - suggestedLength + 1;
             break;
         default:
-            Q_ASSERT(false);
+            assert(false);
         }
 
         Rect rect;
@@ -1625,7 +1625,7 @@ void ItemBoxContainer::applyPositions(const SizingInfo::List &sizes)
 {
     const Item::List items = visibleChildren();
     const auto count = items.size();
-    Q_ASSERT(count == sizes.size());
+    assert(count == sizes.size());
     for (int i = 0; i < count; ++i) {
         Item *item = items.at(i);
         const SizingInfo &sizing = sizes[i];
@@ -1910,7 +1910,7 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
             if (newItemLength <= 0) {
                 q->root()->dumpLayout();
                 KDDW_ERROR("Invalid resize newItemLength={}", newItemLength);
-                Q_ASSERT(false);
+                assert(false);
                 return;
             }
 
@@ -2215,7 +2215,7 @@ Vector<double> ItemBoxContainer::Private::childPercentages() const
 
 void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourSqueezeStrategy)
 {
-    Q_ASSERT(contains(item));
+    assert(contains(item));
 
     const bool hadVisibleChildren = hasVisibleChildren(/*excludeBeingInserted=*/true);
 
@@ -2263,7 +2263,7 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
                                   excessLength - Item::separatorThickness);
     const int newLength = bound(min, proposed, max);
 
-    Q_ASSERT(item->isVisible());
+    assert(item->isVisible());
 
     // growItem() will make it grow by the same amount it steals from the neighbours, so we can't
     // start the growing without zeroing it
@@ -2508,7 +2508,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
             const auto toGive = newItemLenght - size.length(d->m_orientation);
 
             if (toGive == 0) {
-                Q_ASSERT(false);
+                assert(false);
                 satisfiedIndexes.push_back(i);
             } else {
                 lengthToGive -= toGive;
@@ -2716,7 +2716,7 @@ int ItemBoxContainer::availableToSqueezeOnSide(const Item *child, Side side) con
     const int available = length - min;
     if (available < 0) {
         root()->dumpLayout();
-        Q_ASSERT(false);
+        assert(false);
     }
     return available;
 }
@@ -2839,7 +2839,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
     if (accountForNewSeparator)
         toSteal += Item::separatorThickness;
 
-    Q_ASSERT(index != -1);
+    assert(index != -1);
     if (toSteal == 0)
         return;
 
@@ -2871,16 +2871,16 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 
         if (toSteal > available1 + available2) {
             root()->dumpLayout();
-            Q_ASSERT(false);
+            assert(false);
         }
 
         while (toSteal > 0) {
             if (available1 == 0) {
-                Q_ASSERT(available2 >= toSteal);
+                assert(available2 >= toSteal);
                 side2Growth += toSteal;
                 break;
             } else if (available2 == 0) {
-                Q_ASSERT(available1 >= toSteal);
+                assert(available1 >= toSteal);
                 side1Growth += toSteal;
                 break;
             }
@@ -2958,7 +2958,7 @@ void ItemBoxContainer::applyGeometries(const SizingInfo::List &sizes,
 {
     const Item::List items = visibleChildren();
     const auto count = items.size();
-    Q_ASSERT(count == sizes.size());
+    assert(count == sizes.size());
 
     for (int i = 0; i < count; ++i) {
         Item *item = items.at(i);
@@ -3011,7 +3011,7 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
 
             if (numDonors == 0) {
                 root()->dumpLayout();
-                Q_ASSERT(false);
+                assert(false);
                 return {};
             }
 
@@ -3058,8 +3058,8 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
 void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount,
                                         int side2Amount, NeighbourSqueezeStrategy strategy)
 {
-    Q_ASSERT(side1Amount > 0 || side2Amount > 0);
-    Q_ASSERT(side1Amount >= 0 && side2Amount >= 0); // never negative
+    assert(side1Amount > 0 || side2Amount > 0);
+    assert(side1Amount >= 0 && side2Amount >= 0); // never negative
 
     if (side1Amount > 0) {
         auto begin = sizes.cbegin();
@@ -3281,10 +3281,10 @@ int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Core::Separator *
                                                 bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
-    Q_ASSERT(separatorIndex != -1);
+    assert(separatorIndex != -1);
 
     const Item::List children = visibleChildren();
-    Q_ASSERT(separatorIndex + 1 < children.size());
+    assert(separatorIndex + 1 < children.size());
     Item *item2 = children.at(separatorIndex + 1);
 
     const int availableToSqueeze =
@@ -3305,7 +3305,7 @@ int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Core::Separator *
                                                 bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
-    Q_ASSERT(separatorIndex != -1);
+    assert(separatorIndex != -1);
 
     const Item::List children = visibleChildren();
     Item *item1 = children.at(separatorIndex);

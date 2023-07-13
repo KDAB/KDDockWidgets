@@ -22,7 +22,7 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
     : flutter::View(dropArea, Core::ViewType::DropArea, parent)
     , m_dropArea(dropArea)
 {
-    Q_ASSERT(dropArea);
+    assert(dropArea);
 }
 
 DropArea::~DropArea()

@@ -319,7 +319,7 @@ const Core::DockWidget::List FloatingWindow::dockWidgets() const
 
 const Core::Group::List FloatingWindow::groups() const
 {
-    Q_ASSERT(d->m_dropArea);
+    assert(d->m_dropArea);
     return d->m_dropArea->groups();
 }
 

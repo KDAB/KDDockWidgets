@@ -72,7 +72,7 @@ Separator::Separator(View *host)
     : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, host))
     , d(new Private(host))
 {
-    Q_ASSERT(view());
+    assert(view());
     view()->show();
 }
 

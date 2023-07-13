@@ -62,7 +62,7 @@ void Stack::addDockWidget(DockWidget *dock)
 
 bool Stack::insertDockWidget(DockWidget *dock, int index)
 {
-    Q_ASSERT(dock);
+    assert(dock);
     KDDW_DEBUG("dock={}; count before={}", ( void * )dock, numDockWidgets());
 
     if (index < 0)

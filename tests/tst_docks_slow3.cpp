@@ -70,7 +70,7 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     dw1->window()->activateWindow();
 
     dw1->d->isFocusedChanged.connect([dw1](bool focused) {
-        Q_ASSERT(focused == dw1->isFocused());
+        assert(focused == dw1->isFocused());
     });
 
     le1->setFocus(Qt::MouseFocusReason);

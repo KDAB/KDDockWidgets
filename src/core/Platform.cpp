@@ -51,7 +51,7 @@ QString Platform::s_expectedWarning = {};
 Platform::Platform()
     : d(new Private())
 {
-    Q_ASSERT(!s_platform);
+    assert(!s_platform);
     s_platform = this;
 }
 

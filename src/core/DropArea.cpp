@@ -214,7 +214,7 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
     if (containsDockWidget(dw)) {
         Core::Group *oldFrame = dw->d->group();
         if (oldFrame->hasSingleDockWidget()) {
-            Q_ASSERT(oldFrame->containsDockWidget(dw));
+            assert(oldFrame->containsDockWidget(dw));
             // The group only has this dock widget, and the group is already in the layout. So move
             // the group instead
             group = oldFrame;
@@ -616,7 +616,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
         return;
     }
 
-    Q_ASSERT(!newItem->geometry().isEmpty());
+    assert(!newItem->geometry().isEmpty());
     Core::ItemBoxContainer::insertItemRelativeTo(newItem, relativeTo, location, option);
 
     if (dw && option.startsHidden())

@@ -986,7 +986,7 @@ void LayoutSaver::MainWindow::scaleSizes()
 {
     if (scalingInfo.isValid()) {
         // Doesn't happen, it's called only once
-        Q_ASSERT(false);
+        assert(false);
         return;
     }
 

@@ -79,7 +79,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 {
-    Q_ASSERT(widget);
+    assert(widget);
     KDDW_DEBUG("dock={}", ( void * )widget);
 
     if (!DockRegistry::self()->affinitiesMatch(d->affinities, widget->affinities())) {

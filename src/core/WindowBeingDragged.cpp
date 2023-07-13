@@ -78,7 +78,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
 {
     if (!isWayland()) {
         KDDW_ERROR("Wrong ctor called."); // Doesn't happen
-        Q_ASSERT(false);
+        assert(false);
         return;
     }
 }
@@ -103,7 +103,7 @@ WindowBeingDragged::~WindowBeingDragged()
 
 void WindowBeingDragged::init()
 {
-    Q_ASSERT(m_floatingWindow);
+    assert(m_floatingWindow);
     grabMouse(true);
     m_floatingWindow->view()->raise();
 }
@@ -227,7 +227,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     if (!isWayland()) {
         // Doesn't happen
         KDDW_ERROR("This CTOR is only called on Wayland");
-        Q_ASSERT(false);
+        assert(false);
         return;
     }
 

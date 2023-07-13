@@ -57,7 +57,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
                                        LayoutSaverOptions layoutSaverOptions, bool show,
                                        const QString &affinityName)
 {
-    Q_ASSERT(guest);
+    assert(guest);
     guest->setFocusPolicy(Qt::StrongFocus);
     auto dock = Config::self()
                     .viewFactory()
@@ -70,9 +70,9 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     if (show) {
         dock->open();
         dock->dptr()->morphIntoFloatingWindow();
-        Q_ASSERT(dock->floatingWindow());
+        assert(dock->floatingWindow());
         dock->view()->activateWindow();
-        Q_ASSERT(dock->view()->window());
+        assert(dock->view()->window());
 #if defined(KDDW_FRONTEND_FLUTTER)
         // Wait for window activation once we have flutter multi window
         return dock;
@@ -83,7 +83,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
 #endif
 
         KDDW_INFO("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
-        Q_ASSERT(false);
+        assert(false);
         return nullptr;
     } else {
         return dock;
@@ -202,5 +202,5 @@ void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *drop
     dock->d->group()->setObjectName(dock->objectName());
 
     dropArea->addWidget(group->view(), location, relativeTo);
-    Q_ASSERT(dropArea->checkSanity());
+    assert(dropArea->checkSanity());
 }

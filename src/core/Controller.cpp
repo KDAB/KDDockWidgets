@@ -23,7 +23,7 @@ using namespace KDDockWidgets::Core;
 Controller::Controller(ViewType type, View *view)
     : d(new Private(type, view))
 {
-    Q_ASSERT(view);
+    assert(view);
 }
 
 Controller::~Controller()

@@ -68,7 +68,7 @@ struct DockDescriptor
 inline Point dragPointForWidget(Core::Group *group, int index)
 {
     if (group->hasSingleDockWidget()) {
-        Q_ASSERT(index == 0);
+        assert(index == 0);
         return group->titleBar()->mapToGlobal(Point(5, 5));
     } else {
         Rect rect = group->stack()->tabBar()->rectForTab(index);
@@ -205,11 +205,11 @@ inline KDDW_QCORO_TASK drag(Core::View *sourceView, Point globalDest,
                             ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
                                 | ButtonAction_Release)
 {
-    Q_ASSERT(sourceView && sourceView->controller()->isVisible());
+    assert(sourceView && sourceView->controller()->isVisible());
 
     Core::View *draggable = draggableFor(sourceView);
 
-    Q_ASSERT(draggable && draggable->controller()->isVisible());
+    assert(draggable && draggable->controller()->isVisible());
     const Point pressGlobalPos = draggable->mapToGlobal(Point(15, 15));
 
     auto result = KDDW_CO_AWAIT drag(draggable, pressGlobalPos, globalDest, buttonActions);
@@ -221,8 +221,8 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Point glob
                                                 | ButtonAction_Release)
 {
     Core::View *draggable = draggableFor(fw->view());
-    Q_ASSERT(draggable);
-    Q_ASSERT(draggable->controller()->isVisible());
+    assert(draggable);
+    assert(draggable->controller()->isVisible());
     auto result = KDDW_CO_AWAIT drag(draggable, draggable->mapToGlobal(Point(10, 10)), globalDest, buttonActions);
     KDDW_CO_RETURN result;
 }
@@ -234,7 +234,7 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::Drop
     KDDW_CO_AWAIT Core::Platform::instance()->tests_wait(100);
 
     auto draggable = draggableFor(fw->view());
-    Q_ASSERT(draggable);
+    assert(draggable);
 
     // First we drag over it, so the drop indicators appear:
     KDDW_CO_AWAIT drag(draggable, draggable->mapToGlobal(Point(10, 10)),

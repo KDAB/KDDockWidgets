@@ -36,7 +36,7 @@ Position::~Position()
 
 void Position::addPlaceholderItem(Core::Item *placeholder)
 {
-    Q_ASSERT(placeholder);
+    assert(placeholder);
 
     // 1. Already exists, nothing to do
     if (containsPlaceholder(placeholder))
@@ -143,7 +143,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             if (index == -1) {
                 continue; // Skip
             } else {
-                Q_ASSERT(LayoutSaver::Layout::s_currentLayoutBeingRestored);
+                assert(LayoutSaver::Layout::s_currentLayoutBeingRestored);
                 auto serializedFw =
                     LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(
                         index);
@@ -191,7 +191,7 @@ LayoutSaver::Position Position::serialize() const
 
         auto fw = layout->floatingWindow();
         auto mainWindow = layout->mainWindow(/*honourNesting=*/true);
-        Q_ASSERT(mainWindow || fw);
+        assert(mainWindow || fw);
         p.isFloatingWindow = fw;
 
         if (p.isFloatingWindow) {
@@ -202,7 +202,7 @@ LayoutSaver::Position Position::serialize() const
                          // would be better
         } else {
             p.mainWindowUniqueName = mainWindow->uniqueName();
-            Q_ASSERT(!p.mainWindowUniqueName.isEmpty());
+            assert(!p.mainWindowUniqueName.isEmpty());
         }
 
         p.itemIndex = itemIndex;

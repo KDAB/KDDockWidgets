@@ -181,7 +181,7 @@ TestsEmbedder::TestsEmbedder(int &argc, char **argv)
     // Just so it works through ssh
     setenv("DISPLAY", ":0", 0);
 
-    Q_ASSERT(!s_testsEmbedder);
+    assert(!s_testsEmbedder);
     s_testsEmbedder = this;
 
     init(QStringLiteral(FLUTTER_TEST_MAIN), QStringLiteral("%1/icudtl.dat").arg(QLatin1String(FLUTTER_ICUDTL_DIR)));

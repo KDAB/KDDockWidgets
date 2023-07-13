@@ -56,7 +56,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         newItem->setGuestView(group->view());
     }
 
-    Q_ASSERT(!newItem->geometry().isEmpty());
+    assert(!newItem->geometry().isEmpty());
     m_rootItem->addDockWidget(newItem, localPt);
 
     if (addingOption.startsHidden()) {

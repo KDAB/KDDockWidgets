@@ -123,7 +123,7 @@ MainWindowFactoryFunc Config::mainWindowFactoryFunc() const
 
 void Config::setViewFactory(ViewFactory *wf)
 {
-    Q_ASSERT(wf);
+    assert(wf);
     delete d->m_viewFactory;
     d->m_viewFactory = wf;
 }

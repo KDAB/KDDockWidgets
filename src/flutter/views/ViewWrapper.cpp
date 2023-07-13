@@ -22,7 +22,7 @@ ViewWrapper::ViewWrapper(flutter::View *wrapped)
     : View(wrapped->controller(), Core::ViewType::ViewWrapper)
     , m_wrappedView(wrapped)
 {
-    Q_ASSERT(wrapped);
+    assert(wrapped);
 }
 
 ViewWrapper::~ViewWrapper()

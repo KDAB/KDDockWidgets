@@ -32,7 +32,7 @@ ItemFreeContainer::~ItemFreeContainer()
 
 void ItemFreeContainer::addDockWidget(Item *item, Point localPt)
 {
-    Q_ASSERT(item != this);
+    assert(item != this);
     if (contains(item)) {
         KDDW_ERROR("Item already exists");
         return;

@@ -3627,12 +3627,12 @@ KDDW_QCORO_TASK tst_floatingAction()
         bool dock2IsFloating = dock2->floatAction()->isChecked();
 
         KDBindings::ScopedConnection conn1 = dock1->floatAction()->d->toggled.connect([&dock1IsFloating](bool t) {
-            Q_ASSERT(dock1IsFloating != t);
+            assert(dock1IsFloating != t);
             dock1IsFloating = t;
         });
 
         KDBindings::ScopedConnection conn2 = dock2->floatAction()->d->toggled.connect([&dock2IsFloating](bool t) {
-            Q_ASSERT(dock2IsFloating != t);
+            assert(dock2IsFloating != t);
             dock2IsFloating = t;
         });
 

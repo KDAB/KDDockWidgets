@@ -530,7 +530,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
             KDDW_ERROR("Has floating window with titlebar={}, isVisible={}", ( void * )m_floatingWindow->titleBar(), m_floatingWindow->isVisible());
         }
 
-        Q_ASSERT(false);
+        assert(false);
         return {};
     }
 

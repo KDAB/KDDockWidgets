@@ -121,7 +121,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
             // Doesn't have a group yet
             d->morphIntoFloatingWindow();
             group = d->group();
-            Q_ASSERT(group);
+            assert(group);
         } else {
             // Doesn't happen
             KDDW_ERROR("null group");
@@ -221,7 +221,7 @@ bool DockWidget::setFloating(bool floats)
             auto group = d->group();
             if (!group) {
                 KDDW_ERROR("DockWidget::setFloating: Tabbed but no group exists", ( void * )this);
-                Q_ASSERT(false);
+                assert(false);
                 return false;
             }
 
@@ -263,7 +263,7 @@ QString DockWidget::title() const
         // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real
         // dock widget we're hosting.
         auto dropAreaGuest = d->guest ? guestView()->asDropAreaController() : nullptr;
-        Q_ASSERT(dropAreaGuest);
+        assert(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->groups().constFirst()->title();
         } else {
@@ -812,7 +812,7 @@ bool DockWidget::Private::restoreToPreviousPosition()
     Core::Item *item = m_lastPosition->lastItem();
 
     Layout *layout = DockRegistry::self()->layoutForItem(item);
-    Q_ASSERT(layout);
+    assert(layout);
     layout->restorePlaceholder(q, item, m_lastPosition->lastTabIndex());
     return true;
 }
@@ -1009,7 +1009,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
 
 void DockWidget::Private::addPlaceholderItem(Core::Item *item)
 {
-    Q_ASSERT(item);
+    assert(item);
     m_lastPosition->addPlaceholderItem(item);
 }
 

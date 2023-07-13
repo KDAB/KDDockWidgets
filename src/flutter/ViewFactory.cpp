@@ -46,7 +46,7 @@ Core::View *ViewFactory::createDockWidget(const QString &, DockWidgetOptions, La
 
 Core::View *ViewFactory::createGroup(Core::Group *, Core::View *) const
 {
-    Q_ASSERT(false);
+    assert(false);
     return {};
 }
 

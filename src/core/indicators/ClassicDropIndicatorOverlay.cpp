@@ -147,7 +147,7 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
     case DropLocation_Bottom:
         if (!m_hoveredGroup) {
             KDDW_ERROR("ClassicIndicators::setCurrentDropLocation: group is null. location={}, isHovered={}, dropArea->widgets={}", location, isHovered(), m_dropArea->items().size());
-            Q_ASSERT(false);
+            assert(false);
             return;
         }
         relativeToFrame = m_hoveredGroup;

@@ -38,7 +38,7 @@ Layout::Layout(ViewType type, View *view)
     : Controller(type, view)
     , d(new Private())
 {
-    Q_ASSERT(view);
+    assert(view);
     view->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
     view->d->resized.connect(&Layout::onResize, this);
@@ -160,7 +160,7 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
     }
 
     auto group = item->asGroupController();
-    Q_ASSERT(group);
+    assert(group);
 
     if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {
         group->insertWidget(dw, tabIndex);
@@ -286,7 +286,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
     for (auto it : l.groups) {
         const LayoutSaver::Group &group = it.second;
         Core::Group *f = Core::Group::deserialize(group);
-        Q_ASSERT(!group.id.isEmpty());
+        assert(!group.id.isEmpty());
         groups[group.id] = f->view();
     }
 

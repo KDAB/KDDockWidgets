@@ -529,7 +529,7 @@ bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
     newLocalPosBounded.setY(std::min(newLocalPosBounded.y(), parentSize.height() - group->height()));
 
     auto layout = group->mdiLayout();
-    Q_ASSERT(layout);
+    assert(layout);
     layout->moveDockWidget(group, newLocalPosBounded);
 
     // Check if we need to pop out the MDI window (make it float)
@@ -733,7 +733,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
         // title area, in the background
         if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isRootView()) {
-            Q_ASSERT(activeState());
+            assert(activeState());
             return activeState()->handleMouseButtonPress(
                 draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
         } else
@@ -957,7 +957,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     if (topLevel->viewName() == QStringLiteral("_docks_IndicatorWindow")) {
         KDDW_ERROR("Indicator window should be hidden {} isVisible={}", ( void * )topLevel.get(), topLevel->isVisible());
-        Q_ASSERT(false);
+        assert(false);
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, Platform::instance()->cursorPos(), affinities)) {
