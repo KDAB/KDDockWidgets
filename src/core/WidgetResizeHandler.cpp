@@ -258,7 +258,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_BottomLeft: {
             parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaWidth = oldGeometry.left() - globalPos.x();
-            newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
+            newWidth = bound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
             if (deltaWidth != 0) {
                 newGeometry.setLeft(newGeometry.left() - deltaWidth);
@@ -272,7 +272,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_BottomRight: {
             parentGeometry = parentGeometry.adjusted(0, 0, -m_resizeGap, 0);
             deltaWidth = globalPos.x() - newGeometry.right();
-            newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
+            newWidth = bound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
             if (deltaWidth != 0) {
                 newGeometry.setRight(oldGeometry.right() + deltaWidth);
@@ -295,7 +295,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_TopRight: {
             parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaHeight = oldGeometry.top() - globalPos.y();
-            newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
+            newHeight = bound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
             if (deltaHeight != 0) {
                 newGeometry.setTop(newGeometry.top() - deltaHeight);
@@ -309,7 +309,7 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
         case CursorPosition_BottomRight: {
             parentGeometry = parentGeometry.adjusted(0, 0, 0, -m_resizeGap);
             deltaHeight = globalPos.y() - newGeometry.bottom();
-            newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
+            newHeight = bound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
             if (deltaHeight != 0) {
                 newGeometry.setBottom(oldGeometry.bottom() + deltaHeight);

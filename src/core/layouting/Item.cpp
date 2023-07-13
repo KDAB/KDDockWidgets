@@ -2261,7 +2261,7 @@ void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbo
      */
     const int proposed = std::max(Core::length(item->size(), d->m_orientation),
                                   excessLength - Item::separatorThickness);
-    const int newLength = qBound(min, proposed, max);
+    const int newLength = bound(min, proposed, max);
 
     Q_ASSERT(item->isVisible());
 
@@ -2439,7 +2439,7 @@ void ItemBoxContainer::requestEqualSize(KDDockWidgets::Core::Separator *separato
     // Do some bounds checking, to respect min-size and max-size
     const int min = minPosForSeparator_global(separator, true);
     const int max = maxPosForSeparator_global(separator, true);
-    const int newPos = qBound(min, separator->position() + delta, max);
+    const int newPos = bound(min, separator->position() + delta, max);
 
     // correct the delta
     delta = newPos - separator->position();
@@ -2503,7 +2503,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
                          size.maxLengthHint(d->m_orientation));
 
             const auto newItemLenght =
-                qBound(size.minLength(d->m_orientation),
+                bound(size.minLength(d->m_orientation),
                        size.length(d->m_orientation) + suggestedToGive, maxLength);
             const auto toGive = newItemLenght - size.length(d->m_orientation);
 

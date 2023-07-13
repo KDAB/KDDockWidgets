@@ -408,6 +408,11 @@ inline T *findAncestor(QWidget *widget)
 }
 #endif
 
+template <typename T>
+T bound(T minVal, T value, T maxVal) {
+    return std::max(minVal, std::min(value, maxVal));
+}
+
 } // end namespace
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
