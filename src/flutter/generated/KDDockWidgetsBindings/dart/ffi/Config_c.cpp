@@ -35,7 +35,7 @@ KDDockWidgets::Size Config_wrapper::absoluteWidgetMinSize() const
 {
     return ::KDDockWidgets::Config::absoluteWidgetMinSize();
 }
-qreal Config_wrapper::draggedWindowOpacity() const
+double Config_wrapper::draggedWindowOpacity() const
 {
     return ::KDDockWidgets::Config::draggedWindowOpacity();
 }
@@ -67,7 +67,7 @@ void Config_wrapper::setAbsoluteWidgetMinSize(KDDockWidgets::Size size)
 {
     ::KDDockWidgets::Config::setAbsoluteWidgetMinSize(size);
 }
-void Config_wrapper::setDraggedWindowOpacity(qreal opacity)
+void Config_wrapper::setDraggedWindowOpacity(double opacity)
 {
     ::KDDockWidgets::Config::setDraggedWindowOpacity(opacity);
 }
@@ -135,7 +135,7 @@ void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj)
     return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMinSize() };
 }
 // draggedWindowOpacity() const
-qreal c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj)
+double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj)
 {
     return fromPtr(thisObj)->draggedWindowOpacity();
 }
@@ -178,8 +178,8 @@ void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size(void *thisObj, void 
     auto &size = *reinterpret_cast<KDDockWidgets::Size *>(size_);
     fromPtr(thisObj)->setAbsoluteWidgetMinSize(size);
 }
-// setDraggedWindowOpacity(qreal opacity)
-void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity)
+// setDraggedWindowOpacity(double opacity)
+void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *thisObj, double opacity)
 {
     fromPtr(thisObj)->setDraggedWindowOpacity(opacity);
 }

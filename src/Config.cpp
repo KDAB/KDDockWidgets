@@ -56,7 +56,7 @@ public:
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
-    qreal m_draggedWindowOpacity = Q_QNAN;
+    double m_draggedWindowOpacity = Q_QNAN;
     bool m_transparencyOnlyOverDropIndicator = false;
     int m_mdiPopupThreshold = 250;
     int m_startDragDistance = -1;
@@ -155,7 +155,7 @@ void Config::setSeparatorThickness(int value)
     Item::separatorThickness = value;
 }
 
-void Config::setDraggedWindowOpacity(qreal opacity)
+void Config::setDraggedWindowOpacity(double opacity)
 {
     d->m_draggedWindowOpacity = opacity;
 }
@@ -165,7 +165,7 @@ void Config::setTransparencyOnlyOverDropIndicator(bool only)
     d->m_transparencyOnlyOverDropIndicator = only;
 }
 
-qreal Config::draggedWindowOpacity() const
+double Config::draggedWindowOpacity() const
 {
     return d->m_draggedWindowOpacity;
 }

@@ -3140,7 +3140,7 @@ void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj);
 // KDDockWidgets::Config::absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);
 // KDDockWidgets::Config::draggedWindowOpacity() const
-qreal c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
+double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
 // KDDockWidgets::Config::dropIndicatorsInhibited() const
 bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
@@ -3155,8 +3155,8 @@ int c_KDDockWidgets__Config__separatorThickness(void *thisObj);
 void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_Size(void *thisObj, void *size_);
 // KDDockWidgets::Config::setAbsoluteWidgetMinSize(KDDockWidgets::Size size)
 void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size(void *thisObj, void *size_);
-// KDDockWidgets::Config::setDraggedWindowOpacity(qreal opacity)
-void c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal(void *thisObj, qreal opacity);
+// KDDockWidgets::Config::setDraggedWindowOpacity(double opacity)
+void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *thisObj, double opacity);
 // KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
 void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)

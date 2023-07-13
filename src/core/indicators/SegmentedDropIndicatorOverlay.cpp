@@ -19,7 +19,7 @@ using namespace KDDockWidgets::Core;
 
 int SegmentedDropIndicatorOverlay::s_segmentGirth = 50;
 int SegmentedDropIndicatorOverlay::s_segmentPenWidth = 4;
-qreal SegmentedDropIndicatorOverlay::s_draggedWindowOpacity = 0.7;
+double SegmentedDropIndicatorOverlay::s_draggedWindowOpacity = 0.7;
 int SegmentedDropIndicatorOverlay::s_centralIndicatorMaxWidth = 300;
 int SegmentedDropIndicatorOverlay::s_centralIndicatorMaxHeight = 160;
 

@@ -87,7 +87,7 @@ Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
-Icon ViewFactory::iconForButtonType(TitleBarButtonType, qreal) const
+Icon ViewFactory::iconForButtonType(TitleBarButtonType, double) const
 {
     return {};
 }

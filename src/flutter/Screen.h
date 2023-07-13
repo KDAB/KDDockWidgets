@@ -25,7 +25,7 @@ public:
     QString name() const override;
     Size size() const override;
     Rect geometry() const override;
-    qreal devicePixelRatio() const override;
+    double devicePixelRatio() const override;
     Size availableSize() const override;
     Rect availableGeometry() const override;
     Size virtualSize() const override;

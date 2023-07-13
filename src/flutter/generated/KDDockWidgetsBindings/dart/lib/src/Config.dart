@@ -127,12 +127,12 @@ class Config implements ffi.Finalizable {
             'c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size')
         .asFunction();
     func(thisCpp, size == null ? ffi.nullptr : size.thisCpp);
-  } // setDraggedWindowOpacity(qreal opacity)
+  } // setDraggedWindowOpacity(double opacity)
 
   setDraggedWindowOpacity(double opacity) {
     final void_Func_voidstar_double func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Double_FFI>>(
-            'c_KDDockWidgets__Config__setDraggedWindowOpacity_qreal')
+            'c_KDDockWidgets__Config__setDraggedWindowOpacity_double')
         .asFunction();
     func(thisCpp, opacity);
   } // setDropIndicatorsInhibited(bool inhibit) const

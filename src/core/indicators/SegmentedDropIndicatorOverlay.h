@@ -37,7 +37,7 @@ public:
     static int s_segmentPenWidth;
     static int s_centralIndicatorMaxWidth;
     static int s_centralIndicatorMaxHeight;
-    static qreal s_draggedWindowOpacity;
+    static double s_draggedWindowOpacity;
 
 protected:
     Point posForIndicator(DropLocation) const override;

@@ -38,7 +38,7 @@ public:
 
     /// @brief returns the ratio between physical pixels and
     /// device-independent pixels for the screen.
-    virtual qreal devicePixelRatio() const = 0;
+    virtual double devicePixelRatio() const = 0;
 
     /// @brief returns the screen's available size in pixels
     /// The available size is the size excluding window manager

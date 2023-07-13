@@ -5,7 +5,6 @@
     <primitive-type name="char"/>
     <primitive-type name="float"/>
     <primitive-type name="double"/>
-    <primitive-type name="qreal"/>
     <primitive-type name="qsizetype"/>
     <primitive-type name="qint64"/>
 

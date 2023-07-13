@@ -31,7 +31,7 @@ Rect Screen::geometry() const
     return Rect(0, 0, 1920, 1080);
 }
 
-qreal Screen::devicePixelRatio() const
+double Screen::devicePixelRatio() const
 {
     return 1.0;
 }

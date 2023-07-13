@@ -112,7 +112,7 @@ void WindowBeingDragged::updateTransparency(bool enable)
     if (isWayland() || !m_floatingWindow)
         return;
 
-    qreal opacity = Config::self().draggedWindowOpacity();
+    double opacity = Config::self().draggedWindowOpacity();
     const bool transparencySupported = !qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity);
     if (transparencySupported) {
         // We're using transparency, set it or unset it:

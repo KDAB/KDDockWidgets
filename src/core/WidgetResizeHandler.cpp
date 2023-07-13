@@ -463,7 +463,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg
         const Rect availableGeometry = screen->availableGeometry();
 
         auto mmi = reinterpret_cast<MINMAXINFO *>(msg->lParam);
-        const qreal dpr = screen->devicePixelRatio();
+        const double dpr = screen->devicePixelRatio();
 
         mmi->ptMaxSize.y = int(availableGeometry.height() * dpr);
         mmi->ptMaxSize.x =

@@ -1901,7 +1901,7 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
 
             SizingInfo &itemSize = childSizes[i];
 
-            const qreal childPercentage = childPercentages.at(i);
+            const double childPercentage = childPercentages.at(i);
             const int newItemLength = lengthChanged
                 ? (isLast ? remaining : int(childPercentage * totalNewLength))
                 : itemSize.length(m_orientation);

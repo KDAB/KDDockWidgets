@@ -172,7 +172,7 @@ inline bool isDnDEvent(const Event *e)
 /// This is a workaround against a bug in older Qt (QTBUG-86170).
 /// Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in
 /// which case it will affect other OSes too.
-inline bool scalingFactorIsSupported(qreal factor)
+inline bool scalingFactorIsSupported(double factor)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
     // We don't support fractional factors in older Qt.
