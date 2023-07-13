@@ -3580,6 +3580,26 @@ void SizingInfo::setOppositeLength(int l, Qt::Orientation o)
     setLength(l, oppositeOrientation(o));
 }
 
+int SizingInfo::maxLengthHint(Qt::Orientation o) const
+{
+    return std::max(minLength(o), Core::length(maxSizeHint, o));
+}
+
+int SizingInfo::availableLength(Qt::Orientation o) const
+{
+    return std::max(0, length(o) - minLength(o));
+}
+
+int SizingInfo::missingLength(Qt::Orientation o) const
+{
+    return std::max(0, minLength(o) - length(o));
+}
+
+int SizingInfo::neededToShrink(Qt::Orientation o) const
+{
+    return std::max(0, length(o) - maxLengthHint(o));
+}
+
 void Core::to_json(nlohmann::json &j, const SizingInfo &info)
 {
     j["geometry"] = info.geometry;

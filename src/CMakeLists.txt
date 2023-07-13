@@ -489,6 +489,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     endif()
 endif()
 
+if(MSVC)
+    # To unbreak std::min/max
+    target_compile_definitions(kddockwidgets PRIVATE NOMINMAX)
+endif()
+
 # BEGIN coverage
 add_library(kddw_coverage_options INTERFACE)
 

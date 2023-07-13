@@ -20,9 +20,6 @@
 #include "core/ViewGuard.h"
 
 #if defined(Q_OS_WIN)
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
 #include <windows.h>
 
 #ifdef KDDW_FRONTEND_QTWIDGETS

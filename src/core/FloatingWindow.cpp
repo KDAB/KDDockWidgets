@@ -39,9 +39,6 @@
 
 #if defined(KDDW_FRONTEND_QT_WINDOWS)
 #include <QGuiApplication>
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
 #include <Windows.h>
 #endif
 
