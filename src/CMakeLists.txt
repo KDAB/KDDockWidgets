@@ -403,6 +403,7 @@ if(KDDW_FRONTEND_FLUTTER)
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/views>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/indicators>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
     )
 
     # So bindings are exported
@@ -523,6 +524,12 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
+
+    include(GenerateExportHeader)
+    generate_export_header(
+        kddockwidgets EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/kddockwidgets_export.h" EXPORT_MACRO_NAME DOCKS_EXPORT
+    )
+
     # TODOm3: Remove Qt::Core
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
 

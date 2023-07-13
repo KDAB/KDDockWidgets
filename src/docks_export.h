@@ -9,8 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_DOCKS_EXPORT_H
-#define KD_DOCKS_EXPORT_H
+#pragma once
+
+#ifdef KDDW_FRONTEND_QT // TODOm4: Let CMake generate this
 
 #include <QtCore/QtGlobal>
 
@@ -33,6 +34,18 @@
 #define DOCKS_EXPORT_FOR_UNIT_TESTS Q_DECL_IMPORT
 #endif
 #endif
+#endif
+
+#else // non-Qt
+
+// Auto-generated in build directory, defines DOCKS_EXPORT
+#include "kddockwidgets_export.h"
+
+// DOCKS_EXPORT_FOR_UNIT_TESTS
+#if defined(DOCKS_DEVELOPER_MODE)
+#define DOCKS_EXPORT_FOR_UNIT_TESTS DOCKS_EXPORT
+#else
+#define DOCKS_EXPORT_FOR_UNIT_TESTS
 #endif
 
 #endif
