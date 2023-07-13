@@ -15,6 +15,7 @@
 #include "core/ViewFactory.h"
 
 #include <algorithm>
+#include <cmath>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -32,7 +33,7 @@ SegmentedDropIndicatorOverlay::SegmentedDropIndicatorOverlay(Core::DropArea *dro
     // ClassicIndicators works fine with an opaque dragged window because the indicators have higher
     // Z, However for SegmentedIndicators the indicators are in the main window, so lower Z. Make
     // the dragged window translucent a bit, so we can see the indicators
-    const bool userChoseOpacity = !qIsNaN(Config::self().draggedWindowOpacity());
+    const bool userChoseOpacity = !std::isnan(Config::self().draggedWindowOpacity());
     if (!userChoseOpacity)
         Config::self().setDraggedWindowOpacity(s_draggedWindowOpacity);
 }

@@ -22,6 +22,8 @@
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 
+#include <cmath>
+
 #ifdef QT_GUI_LIB
 #include <QPainter>
 #endif
@@ -113,7 +115,7 @@ void WindowBeingDragged::updateTransparency(bool enable)
         return;
 
     double opacity = Config::self().draggedWindowOpacity();
-    const bool transparencySupported = !qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity);
+    const bool transparencySupported = !std::isnan(opacity) && !qFuzzyCompare(1.0, opacity);
     if (transparencySupported) {
         // We're using transparency, set it or unset it:
         if (enable) {
