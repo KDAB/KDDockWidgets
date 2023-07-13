@@ -1121,7 +1121,7 @@ bool ItemBoxContainer::checkSanity()
         const Vector<double> percentages = d->childPercentages();
         const double totalPercentage = std::accumulate(percentages.begin(), percentages.end(), 0.0);
         const double expectedPercentage = visibleChildren.isEmpty() ? 0.0 : 1.0;
-        if (!qFuzzyCompare(totalPercentage, expectedPercentage)) {
+        if (!fuzzyCompare(totalPercentage, expectedPercentage)) {
             root()->dumpLayout();
             KDDW_ERROR("Percentages don't add up", totalPercentage, percentages, ( void * )this);
             const_cast<ItemBoxContainer *>(this)->d->updateSeparators_recursive();

@@ -115,7 +115,7 @@ void WindowBeingDragged::updateTransparency(bool enable)
         return;
 
     double opacity = Config::self().draggedWindowOpacity();
-    const bool transparencySupported = !std::isnan(opacity) && !qFuzzyCompare(1.0, opacity);
+    const bool transparencySupported = !std::isnan(opacity) && !fuzzyCompare(1.0, opacity);
     if (transparencySupported) {
         // We're using transparency, set it or unset it:
         if (enable) {

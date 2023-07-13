@@ -72,7 +72,7 @@ struct LayoutSaver::ScalingInfo
     bool isValid() const
     {
         return heightFactor > 0 && widthFactor > 0
-            && !((qFuzzyCompare(widthFactor, 1) && qFuzzyCompare(heightFactor, 1)));
+            && !((fuzzyCompare(widthFactor, 1) && fuzzyCompare(heightFactor, 1)));
     }
 
     void translatePos(Point &) const;
