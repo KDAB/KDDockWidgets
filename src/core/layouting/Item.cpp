@@ -1107,7 +1107,7 @@ bool ItemBoxContainer::checkSanity()
     const Item::List visibleChildren = this->visibleChildren();
     const bool isEmptyRoot = isRoot() && visibleChildren.isEmpty();
     if (!isEmptyRoot) {
-        auto occupied = std::max(0, Item::separatorThickness * (visibleChildren.size() - 1));
+        auto occupied = std::max(0, Item::separatorThickness * (int(visibleChildren.size()) - 1));
         for (Item *item : visibleChildren) {
             occupied += item->length(d->m_orientation);
         }
@@ -1130,7 +1130,7 @@ bool ItemBoxContainer::checkSanity()
         }
     }
 
-    const auto numVisibleChildren = visibleChildren.size();
+    const auto numVisibleChildren = int(visibleChildren.size());
     if (d->m_separators.size() != std::max(0, numVisibleChildren - 1)) {
         root()->dumpLayout();
         KDDW_ERROR("Unexpected number of separators sz={}, numVisibleChildren={}", d->m_separators.size(), numVisibleChildren);
@@ -1857,7 +1857,7 @@ Size ItemBoxContainer::maxSizeHint() const
             }
         }
 
-        const auto separatorWaste = (visibleChildren.size() - 1) * separatorThickness;
+        const auto separatorWaste = (int(visibleChildren.size()) - 1) * separatorThickness;
         if (isVertical()) {
             maxH = std::min(maxH + separatorWaste, hardcodedMaximumSize.height());
         } else {
@@ -2011,7 +2011,7 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
     // Do the growing:
     while (amountAvailableToGrow > 0) {
         // Each grower will grow a bit (round-robin)
-        auto toGrow = std::max(1, amountAvailableToGrow / indexesOfGrowers.size());
+        auto toGrow = std::max(1, amountAvailableToGrow / int(indexesOfGrowers.size()));
 
         for (auto it = indexesOfGrowers.begin(); it != indexesOfGrowers.end();) {
             const int index = *it;
@@ -2037,7 +2037,7 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
     // Do the shrinking:
     while (amountNeededToShrink > 0) {
         // Each shrinker will shrink a bit (round-robin)
-        auto toShrink = std::max(1, amountNeededToShrink / indexesOfShrinkers.size());
+        auto toShrink = std::max(1, amountNeededToShrink / int(indexesOfShrinkers.size()));
 
         for (auto it = indexesOfShrinkers.begin(); it != indexesOfShrinkers.end();) {
             const int index = *it;
@@ -2463,7 +2463,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
     Vector<int> satisfiedIndexes;
     satisfiedIndexes.reserve(numItems);
 
-    auto lengthToGive = length() - (d->m_separators.size() * Item::separatorThickness);
+    int lengthToGive = length() - (d->m_separators.size() * Item::separatorThickness);
 
     // clear the sizes before we start distributing
     for (SizingInfo &size : sizes) {
@@ -2471,8 +2471,8 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
     }
 
     while (satisfiedIndexes.count() < sizes.count()) {
-        const auto remainingItems = sizes.count() - satisfiedIndexes.count();
-        auto suggestedToGive = std::max(1, lengthToGive / remainingItems);
+        const int remainingItems = int(sizes.count() - satisfiedIndexes.count());
+        const int suggestedToGive = std::max(1, lengthToGive / remainingItems);
         const auto oldLengthToGive = lengthToGive;
 
         for (int i = 0; i < numItems; ++i) {
@@ -2504,7 +2504,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
 
             const auto newItemLenght =
                 bound(size.minLength(d->m_orientation),
-                       size.length(d->m_orientation) + suggestedToGive, maxLength);
+                      size.length(d->m_orientation) + suggestedToGive, maxLength);
             const auto toGive = newItemLenght - size.length(d->m_orientation);
 
             if (toGive == 0) {
