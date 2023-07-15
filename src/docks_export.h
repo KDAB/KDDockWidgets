@@ -38,6 +38,15 @@
 
 #else // non-Qt
 
+
+#ifdef DARTAGNAN_BINDINGS_RUN
+
+// no-op if bindings are being generated
+#define DOCKS_EXPORT
+#define DOCKS_EXPORT_FOR_UNIT_TESTS
+
+#else
+
 // Auto-generated in build directory, defines DOCKS_EXPORT
 #include "kddockwidgets_export.h"
 
@@ -46,6 +55,8 @@
 #define DOCKS_EXPORT_FOR_UNIT_TESTS DOCKS_EXPORT
 #else
 #define DOCKS_EXPORT_FOR_UNIT_TESTS
+#endif
+
 #endif
 
 #endif
