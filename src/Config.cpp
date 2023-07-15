@@ -28,6 +28,7 @@
 #include "core/View.h"
 
 #include <iostream>
+#include <limits>
 
 using namespace KDDockWidgets::Core;
 
@@ -56,7 +57,7 @@ public:
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
-    double m_draggedWindowOpacity = Q_QNAN;
+    double m_draggedWindowOpacity = std::numeric_limits<double>::quiet_NaN();
     bool m_transparencyOnlyOverDropIndicator = false;
     int m_mdiPopupThreshold = 250;
     int m_startDragDistance = -1;
