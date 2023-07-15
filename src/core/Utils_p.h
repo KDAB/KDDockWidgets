@@ -9,8 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_UTILS_P_H
-#define KD_UTILS_P_H
+#pragma once
 
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/core/View.h"
@@ -182,10 +181,10 @@ inline int envVarIntValue(const char *variableName, bool &ok)
 {
     ok = true;
 
-#if KDDW_FRONTEND_QT
+#ifdef KDDW_FRONTEND_QT
     return qEnvironmentVariableIntValue(variableName, &ok);
-#endif
 
+#else
     // Flutter:
 
 #ifdef _MSC_VER
@@ -198,7 +197,7 @@ inline int envVarIntValue(const char *variableName, bool &ok)
     }
 #else
     auto value = std::getenv(variableName);
-#endif
+#endif // msvc
 
     if (value) {
         try {
@@ -209,7 +208,8 @@ inline int envVarIntValue(const char *variableName, bool &ok)
 
     ok = false;
     return -1;
-}
-#endif
 
-#endif
+#endif // KDDW_FRONTEND_QT
+}
+
+#endif // dev mode
