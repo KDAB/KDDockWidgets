@@ -22,8 +22,6 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include <qglobal.h>
-
 namespace KDDockWidgets {
 
 namespace Core {

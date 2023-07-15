@@ -29,8 +29,6 @@
 
 #include "Config.h"
 
-#include <qglobal.h>
-
 #include "kdbindings/signal.h"
 
 #include <iostream>
