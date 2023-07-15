@@ -121,7 +121,7 @@ ViewFactory::createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *con
 flutter::IndicatorWindow *
 ViewFactory::createClassicIndicatorWindow_flutter(Core::ClassicDropIndicatorOverlay *, Core::View *) const
 {
-    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("ViewFactory::createClassicIndicatorWindow_flutter: Implemented in dart");
     return nullptr;
 }
 

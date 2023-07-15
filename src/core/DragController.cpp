@@ -942,7 +942,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     std::shared_ptr<View> topLevel = qtTopLevelUnderCursor();
     if (!topLevel) {
-        KDDW_DEBUG("No drop area under cursor {}", Q_FUNC_INFO);
+        KDDW_DEBUG("DragController::dropAreaUnderCursor: No drop area under cursor");
         return nullptr;
     }
 
@@ -950,7 +950,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     if (auto fw = topLevel->asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {
-            KDDW_DEBUG("Found drop area in floating window {}", Q_FUNC_INFO);
+            KDDW_DEBUG("DragController::dropAreaUnderCursor: Found drop area in floating window");
             return fw->dropArea();
         }
     }
@@ -961,7 +961,7 @@ DropArea *DragController::dropAreaUnderCursor() const
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, Platform::instance()->cursorPos(), affinities)) {
-        KDDW_DEBUG("Found drop area {} {} {}", ( void * )dt, ( void * )dt->view()->rootView().get(), Q_FUNC_INFO);
+        KDDW_DEBUG("DragController::dropAreaUnderCursor: Found drop area {} {}", ( void * )dt, ( void * )dt->view()->rootView().get());
         return dt;
     }
 

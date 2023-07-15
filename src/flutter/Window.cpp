@@ -59,7 +59,7 @@ bool Window::supportsHonouringLayoutMinSize() const
 
 void Window::setWindowState(WindowState)
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::setWindowState: Not implemented yet");
 }
 
 Rect Window::geometry() const
@@ -107,64 +107,64 @@ void Window::resize(int w, int h)
 
 bool Window::isActive() const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::isActive: Not implemented yet");
     return {};
 }
 
 WindowState Window::windowState() const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::windowState: Not implemented yet");
     return {};
 }
 
 Point Window::mapFromGlobal(Point) const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::mapFromGlobal: Not implemented yet");
     return {};
 }
 
 Point Window::mapToGlobal(Point) const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::mapToGlobal: Not implemented yet");
     return {};
 }
 
 void Window::destroy()
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::destroy: Not implemented yet");
 }
 
 Size Window::minSize() const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::minSize: Not implemented yet");
     return {};
 }
 
 Size Window::maxSize() const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::maxSize: Not implemented yet");
     return {};
 }
 
 Point Window::fromNativePixels(Point) const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::fromNativePixels: Not implemented yet");
     return {};
 }
 
 bool Window::isFullScreen() const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::isFullScreen: Not implemented yet");
     return {};
 }
 
 Core::Screen::Ptr Window::screen() const
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::screen: Not implemented yet");
     return {};
 }
 
 void Window::onScreenChanged(Core::Object *, WindowScreenChangedCallback)
 {
-    KDDW_WARN("{}, Not implemented yet", Q_FUNC_INFO);
+    KDDW_WARN("Window::onScreenChange: Not implemented yet");
 }

@@ -562,14 +562,14 @@ void Group::restoreToPreviousPosition()
     }
 
     if (!d->m_layoutItem) {
-        KDDW_DEBUG("{} There's no previous position known", Q_FUNC_INFO);
+        KDDW_DEBUG("Group::restoreToPreviousPosition: There's no previous position known");
         return;
     }
 
     if (!d->m_layoutItem->isPlaceholder()) {
         // Maybe in this case just fold the group into the placeholder, which probably has other
         // dockwidgets which were added meanwhile. TODO
-        KDDW_DEBUG("{} Previous position isn't a placeholder", Q_FUNC_INFO);
+        KDDW_DEBUG("Group::restoreToPreviousPosition: Previous position isn't a placeholder");
         return;
     }
 
@@ -763,7 +763,7 @@ LayoutSaver::Group Group::serialize() const
 
 void Group::scheduleDeleteLater()
 {
-    KDDW_TRACE("{} {}", Q_FUNC_INFO, ( void * )this);
+    KDDW_TRACE("Group::scheduleDeleteLater: {}", ( void * )this);
     m_beingDeleted = true;
 
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if

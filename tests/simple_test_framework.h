@@ -27,7 +27,6 @@
 #include <functional>
 #include <iostream>
 
-
 #define KDDW_TEST_RETURN(res)                                        \
     if (!res)                                                        \
         KDDW_WARN("FAILED: at={} ; line={}", Q_FUNC_INFO, __LINE__); \

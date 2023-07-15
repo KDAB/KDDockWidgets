@@ -100,19 +100,19 @@ Core::Group *IndicatorWindow::hoveredGroup() const
 
 Point IndicatorWindow::posForIndicator_flutter(DropLocation) const
 {
-    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("IndicatorWindow::posForIndicator_flutter: Implemented in dart instead");
     return {};
 }
 
 DropLocation IndicatorWindow::hover_flutter(Point)
 {
-    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("IndicatorWindow::hover_flutter: Implemented in dart instead");
     return {};
 }
 
 bool IndicatorWindow::updatePositions_flutter(int, int, Core::Group *, int)
 {
-    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("IndicatorWindow::updatePositions_flutter: Implemented in dart instead");
     return false;
 }
 

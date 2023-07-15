@@ -840,7 +840,7 @@ void Item::onWidgetLayoutRequested()
     if (View *w = guestView()) {
         if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
                                                // mouse
-            std::cerr << Q_FUNC_INFO
+            std::cerr << "Item::onWidgetLayoutRequested"
                       << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                       << "View.size=" << w->size() << "Item.size=" << size() << m_sizingInfo.geometry
                       << m_sizingInfo.isBeingInserted << "\n";

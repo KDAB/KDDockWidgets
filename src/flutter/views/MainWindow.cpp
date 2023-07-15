@@ -30,13 +30,13 @@ MainWindow::~MainWindow()
 
 Margins MainWindow::centerWidgetMargins() const
 {
-    KDDW_WARN("SideBar hasn't been implemented yet {}", Q_FUNC_INFO);
+    KDDW_WARN("MainWindow::centerWidgetMargins: SideBar hasn't been implemented yet");
     return {};
 }
 
 Rect MainWindow::centralAreaGeometry() const
 {
-    KDDW_WARN("MainWindow::centralAreaGeometry hasn't been implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("MainWindow::centralAreaGeometry: hasn't been implemented");
     return {};
 }
 
@@ -46,5 +46,5 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     KDDW_UNUSED(right);
     KDDW_UNUSED(top);
     KDDW_UNUSED(bottom);
-    KDDW_WARN("MainWindow::setContentsMargins hasn't been implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("MainWindow::setContentsMargins: hasn't been implemented");
 }

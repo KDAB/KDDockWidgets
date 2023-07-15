@@ -90,7 +90,7 @@ void Config::setFlags(Flags f)
     auto dr = DockRegistry::self();
     if (!dr->isEmpty(/*excludeBeingDeleted=*/true)) {
         std::cerr
-            << Q_FUNC_INFO
+            << "Config::setFlags: "
             << "Only use this function at startup before creating any DockWidget or MainWindow"
             << "; These are already created: " << dr->mainWindowsNames().size() << dr->dockWidgetNames().size()
             << dr->floatingWindows().size() << "\n";
@@ -142,13 +142,12 @@ void Config::setSeparatorThickness(int value)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
         std::cerr
-            << Q_FUNC_INFO
-            << "Only use this function at startup before creating any DockWidget or MainWindow\n";
+            << "Config::setSeparatorThickness: Only use this function at startup before creating any DockWidget or MainWindow\n";
         return;
     }
 
     if (value < 0 || value >= 100) {
-        std::cerr << Q_FUNC_INFO << "Invalid value" << value << "\n";
+        std::cerr << "Config::setSeparatorThickness: Invalid value" << value << "\n";
         return;
     }
 
@@ -199,8 +198,7 @@ void Config::setAbsoluteWidgetMinSize(Size size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         std::cerr
-            << Q_FUNC_INFO
-            << "Only use this function at startup before creating any DockWidget or MainWindow\n";
+            << "Config::setAbsoluteWidgetMinSize: Only use this function at startup before creating any DockWidget or MainWindow\n";
         return;
     }
 
@@ -216,8 +214,7 @@ void Config::setAbsoluteWidgetMaxSize(Size size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         std::cerr
-            << Q_FUNC_INFO
-            << "Only use this function at startup before creating any DockWidget or MainWindow\n";
+            << "Config::setAbsoluteWidgetMinSize: Only use this function at startup before creating any DockWidget or MainWindow\n";
         return;
     }
 

@@ -41,7 +41,7 @@ void TitleBar::init()
 
 void TitleBar::onTitleBarChanged(const QString &)
 {
-    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("TitleBar::onTitleBarChanged: Implemented in dart instead");
 }
 
 #ifdef DOCKS_TESTING_METHODS

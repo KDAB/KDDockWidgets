@@ -237,7 +237,7 @@ void Separator::onMouseMove(Point pos)
         // pressed
         if (!Platform::instance()->isLeftMouseButtonPressed()) {
             KDDW_DEBUG(
-                "{} Ignoring spurious mouse event. Someone ate our ReleaseEvent", Q_FUNC_INFO);
+                "Separator::onMouseMove: Ignoring spurious mouse event. Someone ate our ReleaseEvent");
             onMouseReleased();
             return;
         }
@@ -248,7 +248,7 @@ void Separator::onMouseMove(Point pos)
             (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
         if (!mouseButtonIsReallyDown) {
             KDDW_DEBUG(
-                "{} Ignoring spurious mouse event. Someone ate our ReleaseEvent", Q_FUNC_INFO);
+                "Separator::onMouseMove: Ignoring spurious mouse event. Someone ate our ReleaseEvent");
             onMouseReleased();
             return;
         }

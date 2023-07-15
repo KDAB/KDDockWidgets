@@ -21,9 +21,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
 
-#define PRINT_UNEXPECTED_CALL_MESSAGE \
-    KDDW_WARN("Unexpected call {} {} {}", static_cast<void*>(m_controller), int(m_controller->type(), Q_FUNC_INFO);
-
 View::View(Core::Controller *controller, Core::ViewType type, Core::View *parent,
            Qt::WindowFlags)
     : Core::View(controller, type)
@@ -291,13 +288,13 @@ bool View::isRootView() const
 
 Point View::mapToGlobal(Point) const
 {
-    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("View::mapToGlobal: Implemented in dart");
     return {};
 }
 
 Point View::mapFromGlobal(Point) const
 {
-    KDDW_WARN("Implemented in dart {}", Q_FUNC_INFO);
+    KDDW_WARN("View::mapFromGlobal: Implemented in dart");
     return {};
 }
 
@@ -548,12 +545,12 @@ void View::onMouseEvent(Event::Type eventType, Point localPos, Point globalPos, 
 
 bool View::isMounted() const
 {
-    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("View::isMounted: Implemented in dart instead");
     return false;
 }
 
 
 void View::onRebuildRequested()
 {
-    KDDW_WARN("Implemented in dart instead {}", Q_FUNC_INFO);
+    KDDW_WARN("View::onRebuildRequested: Implemented in dart instead");
 }

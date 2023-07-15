@@ -36,19 +36,19 @@ TabBar::TabBar(Core::TabBar *controller, Core::View *parent)
 
 int TabBar::tabAt(Point) const
 {
-    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("TabBar::tabAt: Not implemented");
     return -1;
 }
 
 QString TabBar::text(int) const
 {
-    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("TabBar::text: Not implemented");
     return {};
 }
 
 Rect TabBar::rectForTab(int) const
 {
-    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("TabBar::rectForTab: Not implemented");
     return {};
 }
 
@@ -56,12 +56,12 @@ void TabBar::moveTabTo(int from, int to)
 {
     KDDW_UNUSED(from);
     KDDW_UNUSED(to);
-    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("TabBar::moveTabTo: Not implemented");
 }
 
 void TabBar::changeTabIcon(int, const Icon &)
 {
-    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("TabBar::changeTabIcon: Not implemented");
 }
 
 void TabBar::removeDockWidget(Core::DockWidget *)
@@ -86,7 +86,7 @@ void TabBar::insertDockWidget(int, Core::DockWidget *dw, const Icon &,
 
 void TabBar::renameTab(int, const QString &)
 {
-    KDDW_WARN("Not implemented {}", Q_FUNC_INFO);
+    KDDW_WARN("TabBar::renameTab: Not implemented");
 }
 
 void TabBar::setCurrentIndex(int)
