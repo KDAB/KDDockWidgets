@@ -67,7 +67,7 @@ public:
             return nullptr;
 
         auto dockView = Config::self().viewFactory()->createDockWidget(
-            QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
+            uniqueName + QStringLiteral("-persistentCentralDockWidget"));
         auto dw = dockView->asDockWidgetController();
         dw->dptr()->m_isPersistentCentralDockWidget = true;
         Core::Group *group = dropArea()->centralGroup();
