@@ -37,6 +37,7 @@
 #include <QtTest/QTest>
 
 #include <iostream>
+#include <cstdlib>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -113,7 +114,7 @@ void TestDocks::tst_resizeWindow()
     const int maximizedWidth2 = dock2->width();
 
     const double relativeDifference =
-        qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->layoutWidth()));
+        std::abs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->layoutWidth()));
 
     QVERIFY(relativeDifference <= 0.01);
 

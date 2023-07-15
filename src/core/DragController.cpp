@@ -37,6 +37,7 @@
 #endif
 
 #include <algorithm>
+#include <cstdlib>
 
 #if defined(Q_OS_WIN)
 #include <windows.h>
@@ -537,7 +538,7 @@ bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
     const int threshold = Config::self().mdiPopupThreshold();
     if (threshold != -1) {
         const Point overflow = newLocalPosBounded - newLocalPos;
-        if (qAbs(overflow.x()) > threshold || qAbs(overflow.y()) > threshold)
+        if (std::abs(overflow.x()) > threshold || std::abs(overflow.y()) > threshold)
             q->mdiPopOut.emit();
     }
 

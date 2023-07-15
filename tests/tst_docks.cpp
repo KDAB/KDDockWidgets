@@ -37,6 +37,8 @@
 #include "kddockwidgets/core/SideBar.h"
 #include "kddockwidgets/core/Platform.h"
 
+#include <cstdlib>
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
@@ -247,8 +249,8 @@ KDDW_QCORO_TASK tst_detachPos()
     dock1->setFloating(true);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(400); // Needed for QtQuick
 
-    CHECK(qAbs(previousWidth - dock1->width()) < 15); // 15px of difference when floating is fine,
-                                                      // due to margins and what not.
+    CHECK(std::abs(previousWidth - dock1->width()) < 15); // 15px of difference when floating is fine,
+                                                          // due to margins and what not.
 
     KDDW_TEST_RETURN(true);
 }
@@ -1354,7 +1356,7 @@ KDDW_QCORO_TASK tst_floatMaintainsSize()
     dw2->setFloating(true);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
-    CHECK(qAbs(dw2->width() - oldWidth2) < 16); // 15px for margins
+    CHECK(std::abs(dw2->width() - oldWidth2) < 16); // 15px for margins
     KDDW_TEST_RETURN(true);
 }
 
@@ -1969,9 +1971,9 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
 
     KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
-    CHECK(qAbs(m->width() - osWindowMinWidth()) < 30); // Not very important verification. Anyway,
-                                                       // using 15 to account for margins and what
-                                                       // not.
+    CHECK(std::abs(m->width() - osWindowMinWidth()) < 30); // Not very important verification. Anyway,
+                                                           // using 15 to account for margins and what
+                                                           // not.
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
     if (Platform::instance()->isQtWidgets())
         CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m.get()));
@@ -1998,9 +2000,9 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow3()
     m->addDockWidgetAsTab(dock1);
     m->view()->window()->resize(osWindowMinWidth(), 200);
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
-    CHECK(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway,
-                                                       // using 15 to account for margins and what
-                                                       // not.
+    CHECK(std::abs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway,
+                                                           // using 15 to account for margins and what
+                                                           // not.
 
     auto fw = dock2->dptr()->morphIntoFloatingWindow();
     CHECK(fw->isVisible());
@@ -2096,8 +2098,8 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
 
     CHECK(delta1 > 0);
     CHECK(delta3 > 0);
-    CHECK(qAbs(delta3 - delta1) <= 1); // Both dock1 and dock3 should have increased by the same
-                                       // amount
+    CHECK(std::abs(delta3 - delta1) <= 1); // Both dock1 and dock3 should have increased by the same
+                                           // amount
     KDDW_TEST_RETURN(true);
 }
 
@@ -3949,7 +3951,7 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore4()
     DropArea *da = fw->dropArea();
     CHECK(da->checkSanity());
     CHECK_EQ(da->layoutSize(), da->rootItem()->size());
-    CHECK(qAbs(fw->width() - da->layoutWidth()) < 30);
+    CHECK(std::abs(fw->width() - da->layoutWidth()) < 30);
     KDDW_TEST_RETURN(true);
 }
 
@@ -4389,9 +4391,9 @@ KDDW_QCORO_TASK tst_constraintsPropagateUp()
 
     auto group1 = dock1->dptr()->group();
 
-    CHECK(qAbs(widgetMinLength(group1, Qt::Horizontal) - minWidth) < 10); // 10px for styling
-                                                                          // differences
-    CHECK(qAbs(widgetMinLength(group1, Qt::Vertical) - (minHeight + group1->nonContentsHeight()))
+    CHECK(std::abs(widgetMinLength(group1, Qt::Horizontal) - minWidth) < 10); // 10px for styling
+                                                                              // differences
+    CHECK(std::abs(widgetMinLength(group1, Qt::Vertical) - (minHeight + group1->nonContentsHeight()))
           < 10); // 10px for styling differences
 
     // Add dock2 side-by side, so the Frame now has a title bar.
@@ -4399,7 +4401,7 @@ KDDW_QCORO_TASK tst_constraintsPropagateUp()
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnLeft);
     Core::TitleBar *tb = dock1->titleBar();
     CHECK(tb->isVisible());
-    CHECK(qAbs(widgetMinLength(group1, Qt::Vertical) - (minHeight + group1->nonContentsHeight()))
+    CHECK(std::abs(widgetMinLength(group1, Qt::Vertical) - (minHeight + group1->nonContentsHeight()))
           < 10);
     KDDW_TEST_RETURN(true);
 }
@@ -4675,13 +4677,13 @@ KDDW_QCORO_TASK tst_resizePropagatesEvenly()
     m->addDockWidget(dock2, Location_OnTop, dock1);
     m->addDockWidget(dock0, Location_OnRight);
 
-    CHECK(qAbs(dock2->height() - dock1->height()) < 2);
+    CHECK(std::abs(dock2->height() - dock1->height()) < 2);
 
     m->view()->resize(m->size() + Size(0, 500));
     for (int i = 1; i < 10; ++i)
         m->view()->resize(m->size() - Size(0, i));
 
-    CHECK(qAbs(dock2->height() - dock1->height()) < 3);
+    CHECK(std::abs(dock2->height() - dock1->height()) < 3);
     KDDW_TEST_RETURN(true);
 }
 

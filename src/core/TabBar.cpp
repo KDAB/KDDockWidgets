@@ -25,6 +25,8 @@
 #include "Config.h"
 #include "core/ViewFactory.h"
 
+#include <cstdlib>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -67,8 +69,8 @@ bool Core::TabBar::dragCanStart(Point pressPos, Point pos) const
     if (index == -1)
         return defaultResult;
 
-    const int deltaX = qAbs(pos.x() - pressPos.x());
-    const int deltaY = qAbs(pos.y() - pressPos.y());
+    const int deltaX = std::abs(pos.x() - pressPos.x());
+    const int deltaY = std::abs(pos.y() - pressPos.y());
 
     const int startDragDistance = Platform::instance()->startDragDistance();
 

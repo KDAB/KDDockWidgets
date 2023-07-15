@@ -23,6 +23,7 @@
 #include "Config.h"
 
 #include <memory.h>
+#include <cstdlib>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -1470,8 +1471,8 @@ KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
 
     // Test that both sides reclaimed the space equally
     CHECK_EQ(item1->width(), oldW1);
-    CHECK(qAbs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::separatorThickness);
-    CHECK(qAbs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::separatorThickness);
+    CHECK(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::separatorThickness);
+    CHECK(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::separatorThickness);
 
     item3->restore(guest3);
 
@@ -1701,7 +1702,7 @@ KDDW_QCORO_TASK tst_requestEqualSize()
         CHECK_EQ(item2->width(), root->length() - st - item1->width());
 
         root->requestEqualSize(separator);
-        CHECK(qAbs(item1->width() - item2->width()) < 5);
+        CHECK(std::abs(item1->width() - item2->width()) < 5);
     }
 
     {

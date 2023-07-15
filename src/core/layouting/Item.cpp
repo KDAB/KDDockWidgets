@@ -28,7 +28,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include <algorithm>
+#include <cstdlib>
 
 #ifdef Q_CC_MSVC
 #pragma warning(push)
@@ -1929,7 +1929,7 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
             m_orientation); // This is how much we need to give to children (when growing the
                             // container), or to take from them when shrinking the container
         const bool isGrowing = remaining > 0;
-        remaining = qAbs(remaining); // Easier to deal in positive numbers
+        remaining = std::abs(remaining); // Easier to deal in positive numbers
 
         // We're resizing the container, and need to decide if we start resizing the 1st children or
         // in reverse order. If the separator is being dragged left or top, then
@@ -2327,7 +2327,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
         return;
     }
 
-    int remainingToTake = qAbs(delta);
+    int remainingToTake = std::abs(delta);
     int tookLocally = 0;
 
     Item *side1Neighbour = children[separatorIndex];
@@ -2413,7 +2413,7 @@ void ItemBoxContainer::requestEqualSize(KDDockWidgets::Core::Separator *separato
     const int length1 = side1Item->length(d->m_orientation);
     const int length2 = side2Item->length(d->m_orientation);
 
-    if (qAbs(length1 - length2) <= 1) {
+    if (std::abs(length1 - length2) <= 1) {
         // items already have the same length, nothing to do.
         // We allow for a difference of 1px, since you can't split that.
 

@@ -24,6 +24,8 @@
 #include "kddockwidgets/core/Platform.h"
 #include "core/ScopedValueRollback_p.h"
 
+#include <cstdlib>
+
 #if defined(Q_OS_WIN)
 #if defined(KDDW_FRONTEND_QTWIDGETS)
 #include "kddockwidgets/qtcommon/Platform.h"
@@ -578,16 +580,16 @@ CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
 
     QFlags<CursorPosition>::Int result = CursorPosition_Undefined;
     if (y >= -margin && y <= mTarget->height() + margin) {
-        if (qAbs(x) <= margin)
+        if (std::abs(x) <= margin)
             result |= CursorPosition_Left;
-        else if (qAbs(x - (mTarget->width() - margin)) <= margin)
+        else if (std::abs(x - (mTarget->width() - margin)) <= margin)
             result |= CursorPosition_Right;
     }
 
     if (x >= -margin && x <= mTarget->width() + margin) {
-        if (qAbs(y) <= margin)
+        if (std::abs(y) <= margin)
             result |= CursorPosition_Top;
-        else if (qAbs(y - (mTarget->height() - margin)) <= margin)
+        else if (std::abs(y - (mTarget->height() - margin)) <= margin)
             result |= CursorPosition_Bottom;
     }
 
