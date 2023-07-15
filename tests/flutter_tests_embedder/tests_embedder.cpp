@@ -195,14 +195,19 @@ TestsEmbedder::~TestsEmbedder()
 
 void TestsEmbedder::init(const QString &projectPath, const QString &icudtlPath)
 {
-    if (!fs::exists(projectPath.toStdString()) || !fs::exists(icudtlPath.toStdString()))
-        qFatal("Either icudtl or project path not found");
+    if (!fs::exists(projectPath.toStdString()) || !fs::exists(icudtlPath.toStdString())) {
+        KDDW_ERROR("Either icudtl or project path not found");
+        std::abort();
+    }
 
     glfwSetErrorCallback(GLFW_ErrorCallback);
 
     int result = glfwInit();
-    if (result != GLFW_TRUE)
-        qFatal("Could not initialize GLFW");
+    if (result != GLFW_TRUE) {
+        KDDW_ERROR("Could not initialize GLFW");
+        std::abort();
+    }
+
 
 #if defined(Q_OS_LINUX)
     glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
@@ -211,16 +216,20 @@ void TestsEmbedder::init(const QString &projectPath, const QString &icudtlPath)
     GLFWwindow *window = glfwCreateWindow(
         kInitialWindowWidth, kInitialWindowHeight, "KDDW tests", NULL, NULL);
 
-    if (!window)
-        qFatal("Could not create GLFW window.");
+    if (!window) {
+        KDDW_ERROR("Could not create GLFW window.");
+        std::abort();
+    }
 
     int framebuffer_width, framebuffer_height;
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     g_pixelRatio = framebuffer_width * 1.0 / kInitialWindowWidth;
 
     const bool run_result = runFlutter(window, projectPath.toStdString(), icudtlPath.toStdString());
-    if (!run_result)
-        qFatal("Could not run the Flutter engine.");
+    if (!run_result) {
+        KDDW_ERROR("Could not run the Flutter engine.");
+        std::abort();
+    }
 
     glfwSetKeyCallback(window, GLFWKeyCallback);
     glfwSetWindowSizeCallback(window, GLFWwindowSizeCallback);

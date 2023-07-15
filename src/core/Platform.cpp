@@ -34,6 +34,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -186,7 +187,7 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 
     if (!platform) {
         KDDW_ERROR("Could not initialize platform for type={}. KDDockWidgets was built without support for it");
-        qFatal("Aborting");
+        std::abort();
         return;
     }
 

@@ -27,6 +27,7 @@
 #include "core/Window.h"
 
 #include <iostream>
+#include <cstdlib>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -395,7 +396,8 @@ Rect View::Private::globalGeometry() const
 void View::createPlatformWindow()
 {
     // Only qtwidgets need this
-    qFatal("Shouldn't be called on this platform");
+    KDDW_ERROR("Shouldn't be called on this platform");
+    std::abort();
 }
 
 std::shared_ptr<Core::Window> View::Private::transientWindow() const

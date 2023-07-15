@@ -1513,7 +1513,7 @@ KDDW_QCORO_TASK tst_stealFrame()
     // 3. Test stealing a tab from the same tab-widget we're in. Nothing happens
     {
         SetExpectedWarning sew(
-            "Already contains "); // Suppress the qFatal this
+            "Already contains "); // Suppress the aborting this
                                   // time
         dock1->addDockWidgetAsTab(dock3);
         CHECK_EQ(dock1->dptr()->group()->dockWidgetCount(), 2);
@@ -1549,7 +1549,7 @@ KDDW_QCORO_TASK tst_stealFrame()
 
     {
         SetExpectedWarning sew(
-            "Invalid parameters "); // Suppress the qFatal
+            "Invalid parameters "); // Suppress the aborting
                                     // this time
         m2->addDockWidget(dock1, Location_OnLeft, dock1);
         CHECK_EQ(dropArea2->count(), 2); // Nothing happened

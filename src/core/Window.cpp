@@ -10,6 +10,7 @@
 */
 
 #include "Window.h"
+#include "core/Logging_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -38,7 +39,7 @@ int Window::maxHeight() const
 
 void Window::startSystemMove()
 {
-    qFatal("Not needed in this platform");
+    KDDW_ERROR("Not needed in this platform");
 }
 
 Point Window::framePosition() const
