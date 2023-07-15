@@ -16,10 +16,6 @@
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/Platform.h"
 
-#ifdef QT_X11EXTRAS_LIB
-#include <QtX11Extras/QX11Info>
-#endif
-
 namespace KDDockWidgets {
 
 inline bool isWayland()
@@ -89,21 +85,6 @@ inline bool linksToXLib()
 inline bool isNormalWindowState(WindowStates states)
 {
     return !(states & WindowState::Maximized) && !(states & WindowState::FullScreen);
-}
-
-inline bool windowManagerHasTranslucency()
-{
-    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY")
-        || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
-        return false;
-
-#ifdef QT_X11EXTRAS_LIB
-    if (isXCB())
-        return QX11Info::isCompositingManagerRunning();
-#endif
-
-    // macOS and Windows are fine
-    return true;
 }
 
 inline MouseEvent *mouseEvent(Event *e)

@@ -17,6 +17,10 @@
 
 #include <QPainter>
 
+#ifdef QT_X11EXTRAS_LIB
+#include <QtX11Extras/QX11Info>
+#endif
+
 #define INDICATOR_WIDTH 40
 #define OUTTER_INDICATOR_MARGIN 10
 
@@ -25,6 +29,21 @@ using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::QtWidgets;
 
 namespace KDDockWidgets {
+
+inline bool windowManagerHasTranslucency()
+{
+    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY")
+        || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
+        return false;
+
+#ifdef QT_X11EXTRAS_LIB
+    if (isXCB())
+        return QX11Info::isCompositingManagerRunning();
+#endif
+
+    // macOS and Windows are fine
+    return true;
+}
 
 class Indicator : public QWidget
 {
