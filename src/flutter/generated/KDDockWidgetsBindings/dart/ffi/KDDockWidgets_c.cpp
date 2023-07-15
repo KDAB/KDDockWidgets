@@ -27,6 +27,11 @@ struct ValueWrapper
 
 }
 extern "C" {
+// fuzzyCompare(double a, double b, double epsilon)
+bool c_static_KDDockWidgets__fuzzyCompare_double_double_double(double a, double b, double epsilon)
+{
+    return KDDockWidgets::fuzzyCompare(a, b, epsilon);
+}
 // initFrontend(KDDockWidgets::FrontendType arg__1)
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
 {

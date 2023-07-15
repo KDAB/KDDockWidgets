@@ -13,6 +13,8 @@
 #include <core/geometry_helpers_p.h>
 
 extern "C" {
+// KDDockWidgets::fuzzyCompare(double a, double b, double epsilon)
+KDDockWidgetsBindings_EXPORT bool c_static_KDDockWidgets__fuzzyCompare_double_double_double(double a, double b, double epsilon);
 // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
 KDDockWidgetsBindings_EXPORT void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
 // KDDockWidgets::spdlogLoggerName()

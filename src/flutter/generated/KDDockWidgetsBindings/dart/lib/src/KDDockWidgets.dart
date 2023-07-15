@@ -92,6 +92,16 @@ class KDDockWidgets_DropLocation {
   static const DropLocation_Outter = 480;
   static const DropLocation_Horizontal = 165;
   static const DropLocation_Vertical = 330;
+} // fuzzyCompare(double a, double b, double epsilon)
+
+bool fuzzyCompare(double a, double b, {double epsilon = 0.0001}) {
+  final bool_Func_double_double_double func = _dylib
+      .lookup<
+              ffi.NativeFunction<
+                  bool_Func_ffi_Double_ffi_Double_ffi_Double_FFI>>(
+          'c_static_KDDockWidgets__fuzzyCompare_double_double_double')
+      .asFunction();
+  return func(a, b, epsilon) != 0;
 } // initFrontend(KDDockWidgets::FrontendType arg__1)
 
 initFrontend(int arg__1) {

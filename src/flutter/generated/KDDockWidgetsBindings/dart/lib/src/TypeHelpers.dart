@@ -279,6 +279,9 @@ typedef voidstar_Func_voidstar_int_int_string_int = ffi.Pointer<void> Function(
 typedef voidstar_Func_voidstar_ffi_Int32_ffi_Int32_string_ffi_Int32_FFI
     = ffi.Pointer<void> Function(
         ffi.Pointer<void>, ffi.Int32, ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32);
+typedef bool_Func_double_double_double = int Function(double, double, double);
+typedef bool_Func_ffi_Double_ffi_Double_ffi_Double_FFI = ffi.Int8 Function(
+    ffi.Double, ffi.Double, ffi.Double);
 typedef void_Func_int = void Function(int);
 typedef void_Func_ffi_Int32_FFI = ffi.Void Function(ffi.Int32);
 typedef string_Func_void = ffi.Pointer<Utf8> Function();

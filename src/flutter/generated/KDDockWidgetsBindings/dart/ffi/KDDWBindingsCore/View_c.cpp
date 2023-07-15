@@ -34,13 +34,13 @@ void View_wrapper::activateWindow()
         const void *thisPtr = this;
         m_activateWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "activateWindow: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::activateWindow_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "activateWindow: Warning: Calling pure-virtual\n";
     return;
 }
 KDDockWidgets::Core::DockWidget *View_wrapper::asDockWidgetController() const
@@ -85,13 +85,13 @@ bool View_wrapper::close()
         const void *thisPtr = this;
         return m_closeCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "close: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::close_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "close: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::Controller *View_wrapper::controller() const
@@ -137,13 +137,13 @@ Qt::WindowFlags View_wrapper::flags() const
         const void *thisPtr = this;
         return m_flagsCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "flags: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 Qt::WindowFlags View_wrapper::flags_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "flags: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Rect View_wrapper::geometry() const
@@ -152,13 +152,13 @@ KDDockWidgets::Rect View_wrapper::geometry() const
         const void *thisPtr = this;
         return *m_geometryCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "geometry: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Rect View_wrapper::geometry_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "geometry: Warning: Calling pure-virtual\n";
     return {};
 }
 void View_wrapper::grabMouse()
@@ -167,13 +167,13 @@ void View_wrapper::grabMouse()
         const void *thisPtr = this;
         m_grabMouseCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "grabMouse: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::grabMouse_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "grabMouse: Warning: Calling pure-virtual\n";
     return;
 }
 KDDockWidgets::Size View_wrapper::hardcodedMinimumSize()
@@ -186,13 +186,13 @@ bool View_wrapper::hasFocus() const
         const void *thisPtr = this;
         return m_hasFocusCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "hasFocus: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::hasFocus_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "hasFocus: Warning: Calling pure-virtual\n";
     return {};
 }
 int View_wrapper::height() const
@@ -205,13 +205,13 @@ void View_wrapper::hide()
         const void *thisPtr = this;
         m_hideCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "hide: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::hide_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "hide: Warning: Calling pure-virtual\n";
     return;
 }
 bool View_wrapper::inDtor() const
@@ -237,13 +237,13 @@ bool View_wrapper::isActiveWindow() const
         const void *thisPtr = this;
         return m_isActiveWindowCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isActiveWindow: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::isActiveWindow_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isActiveWindow: Warning: Calling pure-virtual\n";
     return {};
 }
 bool View_wrapper::isExplicitlyHidden() const
@@ -252,13 +252,13 @@ bool View_wrapper::isExplicitlyHidden() const
         const void *thisPtr = this;
         return m_isExplicitlyHiddenCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isExplicitlyHidden: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::isExplicitlyHidden_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isExplicitlyHidden: Warning: Calling pure-virtual\n";
     return {};
 }
 bool View_wrapper::isMaximized() const
@@ -267,13 +267,13 @@ bool View_wrapper::isMaximized() const
         const void *thisPtr = this;
         return m_isMaximizedCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isMaximized: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::isMaximized_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isMaximized: Warning: Calling pure-virtual\n";
     return {};
 }
 bool View_wrapper::isMinimized() const
@@ -282,13 +282,13 @@ bool View_wrapper::isMinimized() const
         const void *thisPtr = this;
         return m_isMinimizedCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isMinimized: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::isMinimized_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isMinimized: Warning: Calling pure-virtual\n";
     return {};
 }
 bool View_wrapper::isNull() const
@@ -310,13 +310,13 @@ bool View_wrapper::isRootView() const
         const void *thisPtr = this;
         return m_isRootViewCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isRootView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::isRootView_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isRootView: Warning: Calling pure-virtual\n";
     return {};
 }
 bool View_wrapper::isVisible() const
@@ -325,13 +325,13 @@ bool View_wrapper::isVisible() const
         const void *thisPtr = this;
         return m_isVisibleCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isVisible: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool View_wrapper::isVisible_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isVisible: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Point View_wrapper::mapFromGlobal(KDDockWidgets::Point arg__1) const
@@ -340,13 +340,13 @@ KDDockWidgets::Point View_wrapper::mapFromGlobal(KDDockWidgets::Point arg__1) co
         const void *thisPtr = this;
         return *m_mapFromGlobalCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "mapFromGlobal: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Point View_wrapper::mapFromGlobal_nocallback(KDDockWidgets::Point arg__1) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "mapFromGlobal: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Point View_wrapper::mapTo(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Point arg__2) const
@@ -355,13 +355,13 @@ KDDockWidgets::Point View_wrapper::mapTo(KDDockWidgets::Core::View *arg__1, KDDo
         const void *thisPtr = this;
         return *m_mapToCallback(const_cast<void *>(thisPtr), arg__1, &arg__2);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "mapTo: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Point View_wrapper::mapTo_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Point arg__2) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "mapTo: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Point View_wrapper::mapToGlobal(KDDockWidgets::Point arg__1) const
@@ -370,13 +370,13 @@ KDDockWidgets::Point View_wrapper::mapToGlobal(KDDockWidgets::Point arg__1) cons
         const void *thisPtr = this;
         return *m_mapToGlobalCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "mapToGlobal: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Point View_wrapper::mapToGlobal_nocallback(KDDockWidgets::Point arg__1) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "mapToGlobal: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Size View_wrapper::maxSizeHint() const
@@ -385,13 +385,13 @@ KDDockWidgets::Size View_wrapper::maxSizeHint() const
         const void *thisPtr = this;
         return *m_maxSizeHintCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "maxSizeHint: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Size View_wrapper::maxSizeHint_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "maxSizeHint: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Size View_wrapper::minSize() const
@@ -400,13 +400,13 @@ KDDockWidgets::Size View_wrapper::minSize() const
         const void *thisPtr = this;
         return *m_minSizeCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "minSize: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Size View_wrapper::minSize_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "minSize: Warning: Calling pure-virtual\n";
     return {};
 }
 int View_wrapper::minimumHeight() const
@@ -427,13 +427,13 @@ void View_wrapper::move(int x, int y)
         const void *thisPtr = this;
         m_move_2Callback(const_cast<void *>(thisPtr), x, y);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "move: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::move_nocallback(int x, int y)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "move: Warning: Calling pure-virtual\n";
     return;
 }
 KDDockWidgets::Rect View_wrapper::normalGeometry() const
@@ -442,13 +442,13 @@ KDDockWidgets::Rect View_wrapper::normalGeometry() const
         const void *thisPtr = this;
         return *m_normalGeometryCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "normalGeometry: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Rect View_wrapper::normalGeometry_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "normalGeometry: Warning: Calling pure-virtual\n";
     return {};
 }
 bool View_wrapper::onResize(KDDockWidgets::Size arg__1)
@@ -478,13 +478,13 @@ void View_wrapper::raise()
         const void *thisPtr = this;
         m_raiseCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "raise: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::raise_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "raise: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::raiseAndActivate()
@@ -493,13 +493,13 @@ void View_wrapper::raiseAndActivate()
         const void *thisPtr = this;
         m_raiseAndActivateCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "raiseAndActivate: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::raiseAndActivate_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "raiseAndActivate: Warning: Calling pure-virtual\n";
     return;
 }
 KDDockWidgets::Rect View_wrapper::rect() const
@@ -512,13 +512,13 @@ void View_wrapper::releaseKeyboard()
         const void *thisPtr = this;
         m_releaseKeyboardCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "releaseKeyboard: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::releaseKeyboard_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "releaseKeyboard: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::releaseMouse()
@@ -527,13 +527,13 @@ void View_wrapper::releaseMouse()
         const void *thisPtr = this;
         m_releaseMouseCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "releaseMouse: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::releaseMouse_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "releaseMouse: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::resize(KDDockWidgets::Size arg__1)
@@ -550,13 +550,13 @@ void View_wrapper::setCursor(Qt::CursorShape arg__1)
         const void *thisPtr = this;
         m_setCursorCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setCursor: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setCursor_nocallback(Qt::CursorShape arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setCursor: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setFixedHeight(int arg__1)
@@ -565,13 +565,13 @@ void View_wrapper::setFixedHeight(int arg__1)
         const void *thisPtr = this;
         m_setFixedHeightCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setFixedHeight: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setFixedHeight_nocallback(int arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setFixedHeight: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setFixedWidth(int arg__1)
@@ -580,13 +580,13 @@ void View_wrapper::setFixedWidth(int arg__1)
         const void *thisPtr = this;
         m_setFixedWidthCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setFixedWidth: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setFixedWidth_nocallback(int arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setFixedWidth: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setGeometry(KDDockWidgets::Rect arg__1)
@@ -595,13 +595,13 @@ void View_wrapper::setGeometry(KDDockWidgets::Rect arg__1)
         const void *thisPtr = this;
         m_setGeometryCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setGeometry: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setGeometry_nocallback(KDDockWidgets::Rect arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setGeometry: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setHeight(int height)
@@ -610,13 +610,13 @@ void View_wrapper::setHeight(int height)
         const void *thisPtr = this;
         m_setHeightCallback(const_cast<void *>(thisPtr), height);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setHeight: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setHeight_nocallback(int height)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setHeight: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setMaximumSize(KDDockWidgets::Size sz)
@@ -625,13 +625,13 @@ void View_wrapper::setMaximumSize(KDDockWidgets::Size sz)
         const void *thisPtr = this;
         m_setMaximumSizeCallback(const_cast<void *>(thisPtr), &sz);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setMaximumSize: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setMaximumSize_nocallback(KDDockWidgets::Size sz)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setMaximumSize: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setMinimumSize(KDDockWidgets::Size arg__1)
@@ -640,13 +640,13 @@ void View_wrapper::setMinimumSize(KDDockWidgets::Size arg__1)
         const void *thisPtr = this;
         m_setMinimumSizeCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setMinimumSize: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setMinimumSize_nocallback(KDDockWidgets::Size arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setMinimumSize: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setMouseTracking(bool arg__1)
@@ -655,13 +655,13 @@ void View_wrapper::setMouseTracking(bool arg__1)
         const void *thisPtr = this;
         m_setMouseTrackingCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setMouseTracking: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setMouseTracking_nocallback(bool arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setMouseTracking: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setParent(KDDockWidgets::Core::View *arg__1)
@@ -670,13 +670,13 @@ void View_wrapper::setParent(KDDockWidgets::Core::View *arg__1)
         const void *thisPtr = this;
         m_setParentCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setParent: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setParent_nocallback(KDDockWidgets::Core::View *arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setParent: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setSize(KDDockWidgets::Size arg__1)
@@ -689,13 +689,13 @@ void View_wrapper::setSize(int width, int height)
         const void *thisPtr = this;
         m_setSize_2Callback(const_cast<void *>(thisPtr), width, height);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setSize: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setSize_nocallback(int width, int height)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setSize: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setViewName(const QString &arg__1)
@@ -704,13 +704,13 @@ void View_wrapper::setViewName(const QString &arg__1)
         const void *thisPtr = this;
         m_setViewNameCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setViewName: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setViewName_nocallback(const QString &arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setViewName: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setVisible(bool arg__1)
@@ -719,13 +719,13 @@ void View_wrapper::setVisible(bool arg__1)
         const void *thisPtr = this;
         m_setVisibleCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setVisible: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setVisible_nocallback(bool arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setVisible: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setWidth(int width)
@@ -734,13 +734,13 @@ void View_wrapper::setWidth(int width)
         const void *thisPtr = this;
         m_setWidthCallback(const_cast<void *>(thisPtr), width);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setWidth: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setWidth_nocallback(int width)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setWidth: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setWindowOpacity(double arg__1)
@@ -749,13 +749,13 @@ void View_wrapper::setWindowOpacity(double arg__1)
         const void *thisPtr = this;
         m_setWindowOpacityCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setWindowOpacity: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setWindowOpacity_nocallback(double arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setWindowOpacity: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setWindowTitle(const QString &title)
@@ -764,13 +764,13 @@ void View_wrapper::setWindowTitle(const QString &title)
         const void *thisPtr = this;
         m_setWindowTitleCallback(const_cast<void *>(thisPtr), title);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setWindowTitle: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::setWindowTitle_nocallback(const QString &title)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setWindowTitle: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::setZOrder(int arg__1)
@@ -792,13 +792,13 @@ void View_wrapper::show()
         const void *thisPtr = this;
         m_showCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "show: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::show_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "show: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::showMaximized()
@@ -807,13 +807,13 @@ void View_wrapper::showMaximized()
         const void *thisPtr = this;
         m_showMaximizedCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "showMaximized: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::showMaximized_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "showMaximized: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::showMinimized()
@@ -822,13 +822,13 @@ void View_wrapper::showMinimized()
         const void *thisPtr = this;
         m_showMinimizedCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "showMinimized: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::showMinimized_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "showMinimized: Warning: Calling pure-virtual\n";
     return;
 }
 void View_wrapper::showNormal()
@@ -837,13 +837,13 @@ void View_wrapper::showNormal()
         const void *thisPtr = this;
         m_showNormalCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "showNormal: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::showNormal_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "showNormal: Warning: Calling pure-virtual\n";
     return;
 }
 KDDockWidgets::Size View_wrapper::size() const
@@ -856,13 +856,13 @@ void View_wrapper::update()
         const void *thisPtr = this;
         m_updateCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "update: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void View_wrapper::update_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "update: Warning: Calling pure-virtual\n";
     return;
 }
 QString View_wrapper::viewName() const
@@ -871,13 +871,13 @@ QString View_wrapper::viewName() const
         const void *thisPtr = this;
         return *m_viewNameCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "viewName: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 QString View_wrapper::viewName_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "viewName: Warning: Calling pure-virtual\n";
     return {};
 }
 int View_wrapper::width() const
@@ -1352,154 +1352,154 @@ void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 687:
+    case 689:
         wrapper->m_activateWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_activateWindow>(callback);
         break;
-    case 697:
+    case 699:
         wrapper->m_closeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_close>(callback);
         break;
-    case 699:
+    case 701:
         wrapper->m_createPlatformWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_createPlatformWindow>(callback);
         break;
-    case 705:
+    case 707:
         wrapper->m_flagsCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_flags>(callback);
         break;
-    case 706:
+    case 708:
         wrapper->m_geometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_geometry>(callback);
         break;
-    case 707:
+    case 709:
         wrapper->m_grabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_grabMouse>(callback);
         break;
-    case 710:
+    case 712:
         wrapper->m_hasFocusCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_hasFocus>(callback);
         break;
-    case 712:
+    case 714:
         wrapper->m_hideCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_hide>(callback);
         break;
-    case 714:
+    case 716:
         wrapper->m_initCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_init>(callback);
         break;
-    case 716:
+    case 718:
         wrapper->m_isActiveWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isActiveWindow>(callback);
         break;
-    case 717:
+    case 719:
         wrapper->m_isExplicitlyHiddenCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isExplicitlyHidden>(callback);
         break;
-    case 718:
+    case 720:
         wrapper->m_isMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isMaximized>(callback);
         break;
-    case 719:
+    case 721:
         wrapper->m_isMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isMinimized>(callback);
         break;
-    case 720:
+    case 722:
         wrapper->m_isNullCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isNull>(callback);
         break;
-    case 721:
+    case 723:
         wrapper->m_isRootViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isRootView>(callback);
         break;
-    case 722:
+    case 724:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_isVisible>(callback);
         break;
-    case 723:
+    case 725:
         wrapper->m_mapFromGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_mapFromGlobal>(callback);
         break;
-    case 724:
+    case 726:
         wrapper->m_mapToCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_mapTo>(callback);
         break;
-    case 725:
+    case 727:
         wrapper->m_mapToGlobalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_mapToGlobal>(callback);
         break;
-    case 726:
+    case 728:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 727:
+    case 729:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_minSize>(callback);
         break;
-    case 731:
+    case 733:
         wrapper->m_move_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_move_2>(callback);
         break;
-    case 732:
+    case 734:
         wrapper->m_normalGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_normalGeometry>(callback);
         break;
-    case 734:
+    case 736:
         wrapper->m_onResize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_onResize_2>(callback);
         break;
-    case 736:
+    case 738:
         wrapper->m_raiseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_raise>(callback);
         break;
-    case 737:
+    case 739:
         wrapper->m_raiseAndActivateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_raiseAndActivate>(callback);
         break;
-    case 739:
+    case 741:
         wrapper->m_releaseKeyboardCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_releaseKeyboard>(callback);
         break;
-    case 740:
+    case 742:
         wrapper->m_releaseMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_releaseMouse>(callback);
         break;
-    case 743:
+    case 745:
         wrapper->m_setCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setCursor>(callback);
         break;
-    case 744:
+    case 746:
         wrapper->m_setFixedHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setFixedHeight>(callback);
         break;
-    case 745:
+    case 747:
         wrapper->m_setFixedWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setFixedWidth>(callback);
         break;
-    case 746:
+    case 748:
         wrapper->m_setGeometryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setGeometry>(callback);
         break;
-    case 747:
+    case 749:
         wrapper->m_setHeightCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setHeight>(callback);
         break;
-    case 748:
+    case 750:
         wrapper->m_setMaximumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setMaximumSize>(callback);
         break;
-    case 749:
+    case 751:
         wrapper->m_setMinimumSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setMinimumSize>(callback);
         break;
-    case 750:
+    case 752:
         wrapper->m_setMouseTrackingCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setMouseTracking>(callback);
         break;
-    case 751:
+    case 753:
         wrapper->m_setParentCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setParent>(callback);
         break;
-    case 753:
+    case 755:
         wrapper->m_setSize_2Callback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setSize_2>(callback);
         break;
-    case 754:
+    case 756:
         wrapper->m_setViewNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setViewName>(callback);
         break;
-    case 755:
+    case 757:
         wrapper->m_setVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setVisible>(callback);
         break;
-    case 756:
+    case 758:
         wrapper->m_setWidthCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setWidth>(callback);
         break;
-    case 757:
+    case 759:
         wrapper->m_setWindowOpacityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setWindowOpacity>(callback);
         break;
-    case 758:
+    case 760:
         wrapper->m_setWindowTitleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setWindowTitle>(callback);
         break;
-    case 759:
+    case 761:
         wrapper->m_setZOrderCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_setZOrder>(callback);
         break;
-    case 760:
+    case 762:
         wrapper->m_showCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_show>(callback);
         break;
-    case 761:
+    case 763:
         wrapper->m_showMaximizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_showMaximized>(callback);
         break;
-    case 762:
+    case 764:
         wrapper->m_showMinimizedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_showMinimized>(callback);
         break;
-    case 763:
+    case 765:
         wrapper->m_showNormalCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_showNormal>(callback);
         break;
-    case 765:
+    case 767:
         wrapper->m_updateCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_update>(callback);
         break;
-    case 766:
+    case 768:
         wrapper->m_viewNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::Callback_viewName>(callback);
         break;
     }

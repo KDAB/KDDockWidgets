@@ -12,8 +12,8 @@
 #include <SideBar.h>
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
-#include <core/View.h>
 #include <core/geometry_helpers_p.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

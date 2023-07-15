@@ -304,40 +304,40 @@ void c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 577:
+    case 579:
         wrapper->m_createClassicIndicatorWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createClassicIndicatorWindow>(callback);
         break;
-    case 595:
+    case 597:
         wrapper->m_createClassicIndicatorWindow_flutterCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createClassicIndicatorWindow_flutter>(callback);
         break;
-    case 578:
+    case 580:
         wrapper->m_createDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createDockWidget>(callback);
         break;
-    case 579:
+    case 581:
         wrapper->m_createDropAreaCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createDropArea>(callback);
         break;
-    case 580:
+    case 582:
         wrapper->m_createFloatingWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createFloatingWindow>(callback);
         break;
-    case 581:
+    case 583:
         wrapper->m_createGroupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createGroup>(callback);
         break;
-    case 582:
+    case 584:
         wrapper->m_createRubberBandCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createRubberBand>(callback);
         break;
-    case 583:
+    case 585:
         wrapper->m_createSeparatorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createSeparator>(callback);
         break;
-    case 584:
+    case 586:
         wrapper->m_createSideBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createSideBar>(callback);
         break;
-    case 585:
+    case 587:
         wrapper->m_createStackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createStack>(callback);
         break;
-    case 586:
+    case 588:
         wrapper->m_createTabBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createTabBar>(callback);
         break;
-    case 587:
+    case 589:
         wrapper->m_createTitleBarCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::ViewFactory_wrapper::Callback_createTitleBar>(callback);
         break;
     }

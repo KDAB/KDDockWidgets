@@ -355,7 +355,9 @@ void *c_QByteArray__trimmed(void *thisObj);
 // QByteArray::truncate(int pos)
 void c_QByteArray__truncate_int(void *thisObj, int pos);
 void c_QByteArray__destructor(void *thisObj);
-void c_QByteArray_Finalizer(void *cppObj); // KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
+void c_QByteArray_Finalizer(void *cppObj); // KDDockWidgets::fuzzyCompare(double a, double b, double epsilon)
+bool c_static_KDDockWidgets__fuzzyCompare_double_double_double(double a, double b, double epsilon);
+// KDDockWidgets::initFrontend(KDDockWidgets::FrontendType arg__1)
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1);
 // KDDockWidgets::spdlogLoggerName()
 const char *c_static_KDDockWidgets__spdlogLoggerName();
@@ -655,6 +657,8 @@ void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape(void *thisObj, 
 int c_KDDockWidgets__Core__Platform__startDragDistance(void *thisObj);
 // KDDockWidgets::Core::Platform::startDragDistance_impl() const
 int c_KDDockWidgets__Core__Platform__startDragDistance_impl(void *thisObj);
+// KDDockWidgets::Core::Platform::supportsAeroSnap() const
+bool c_KDDockWidgets__Core__Platform__supportsAeroSnap(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Core::Platform::tests_createNonClosableView(KDDockWidgets::Core::View * parent)
@@ -747,6 +751,8 @@ void c_KDDockWidgets__flutter__Platform__setCursorPos_Point(void *thisObj, void 
 void c_KDDockWidgets__flutter__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::flutter::Platform::startDragDistance_impl() const
 int c_KDDockWidgets__flutter__Platform__startDragDistance_impl(void *thisObj);
+// KDDockWidgets::flutter::Platform::supportsAeroSnap() const
+bool c_KDDockWidgets__flutter__Platform__supportsAeroSnap(void *thisObj);
 // KDDockWidgets::flutter::Platform::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__flutter__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::Platform::tests_createNonClosableView(KDDockWidgets::Core::View * parent)

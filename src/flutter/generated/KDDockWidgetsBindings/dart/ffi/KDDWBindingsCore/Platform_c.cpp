@@ -38,13 +38,13 @@ QString Platform_wrapper::applicationName() const
         const void *thisPtr = this;
         return *m_applicationNameCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "applicationName: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 QString Platform_wrapper::applicationName_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "applicationName: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::ViewFactory *Platform_wrapper::createDefaultViewFactory()
@@ -53,13 +53,13 @@ KDDockWidgets::Core::ViewFactory *Platform_wrapper::createDefaultViewFactory()
         const void *thisPtr = this;
         return m_createDefaultViewFactoryCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "createDefaultViewFactory: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::ViewFactory *Platform_wrapper::createDefaultViewFactory_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "createDefaultViewFactory: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow(const QString &uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5) const
@@ -68,13 +68,13 @@ KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow(const QStrin
         const void *thisPtr = this;
         return m_createMainWindowCallback(const_cast<void *>(thisPtr), uniqueName, &arg__2, options, parent, arg__5);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "createMainWindow: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::MainWindow *Platform_wrapper::createMainWindow_nocallback(const QString &uniqueName, KDDockWidgets::Core::CreateViewOptions arg__2, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::Core::View *parent, Qt::WindowFlags arg__5) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "createMainWindow: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *Platform_wrapper::createView(KDDockWidgets::Core::Controller *arg__1, KDDockWidgets::Core::View *parent) const
@@ -83,13 +83,13 @@ KDDockWidgets::Core::View *Platform_wrapper::createView(KDDockWidgets::Core::Con
         const void *thisPtr = this;
         return m_createViewCallback(const_cast<void *>(thisPtr), arg__1, parent);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "createView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *Platform_wrapper::createView_nocallback(KDDockWidgets::Core::Controller *arg__1, KDDockWidgets::Core::View *parent) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "createView: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Point Platform_wrapper::cursorPos() const
@@ -98,13 +98,13 @@ KDDockWidgets::Point Platform_wrapper::cursorPos() const
         const void *thisPtr = this;
         return *m_cursorPosCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "cursorPos: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Point Platform_wrapper::cursorPos_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "cursorPos: Warning: Calling pure-virtual\n";
     return {};
 }
 void Platform_wrapper::dumpManagedBacktrace()
@@ -139,13 +139,13 @@ bool Platform_wrapper::inDisallowedDragView(KDDockWidgets::Point globalPos) cons
         const void *thisPtr = this;
         return m_inDisallowedDragViewCallback(const_cast<void *>(thisPtr), &globalPos);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "inDisallowedDragView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool Platform_wrapper::inDisallowedDragView_nocallback(KDDockWidgets::Point globalPos) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "inDisallowedDragView: Warning: Calling pure-virtual\n";
     return {};
 }
 void Platform_wrapper::installMessageHandler()
@@ -154,13 +154,13 @@ void Platform_wrapper::installMessageHandler()
         const void *thisPtr = this;
         m_installMessageHandlerCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "installMessageHandler: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::installMessageHandler_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "installMessageHandler: Warning: Calling pure-virtual\n";
     return;
 }
 KDDockWidgets::Core::Platform *Platform_wrapper::instance()
@@ -177,13 +177,13 @@ bool Platform_wrapper::isLeftMouseButtonPressed() const
         const void *thisPtr = this;
         return m_isLeftMouseButtonPressedCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isLeftMouseButtonPressed: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool Platform_wrapper::isLeftMouseButtonPressed_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isLeftMouseButtonPressed: Warning: Calling pure-virtual\n";
     return {};
 }
 bool Platform_wrapper::isProcessingAppQuitEvent() const
@@ -192,13 +192,13 @@ bool Platform_wrapper::isProcessingAppQuitEvent() const
         const void *thisPtr = this;
         return m_isProcessingAppQuitEventCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "isProcessingAppQuitEvent: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool Platform_wrapper::isProcessingAppQuitEvent_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "isProcessingAppQuitEvent: Warning: Calling pure-virtual\n";
     return {};
 }
 bool Platform_wrapper::isQt() const
@@ -219,13 +219,13 @@ const char *Platform_wrapper::name() const
         const void *thisPtr = this;
         return m_nameCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "name: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 const char *Platform_wrapper::name_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "name: Warning: Calling pure-virtual\n";
     return {};
 }
 void Platform_wrapper::onFloatingWindowCreated(KDDockWidgets::Core::FloatingWindow *arg__1)
@@ -299,13 +299,13 @@ void Platform_wrapper::restoreMouseCursor()
         const void *thisPtr = this;
         m_restoreMouseCursorCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "restoreMouseCursor: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::restoreMouseCursor_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "restoreMouseCursor: Warning: Calling pure-virtual\n";
     return;
 }
 void Platform_wrapper::runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c)
@@ -314,13 +314,13 @@ void Platform_wrapper::runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c)
         const void *thisPtr = this;
         m_runDelayedCallback(const_cast<void *>(thisPtr), ms, c);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "runDelayed: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::runDelayed_nocallback(int ms, KDDockWidgets::Core::DelayedCall *c)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "runDelayed: Warning: Calling pure-virtual\n";
     return;
 }
 int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
@@ -329,13 +329,13 @@ int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
         const void *thisPtr = this;
         return m_screenNumberForCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "screenNumberFor: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 int Platform_wrapper::screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "screenNumberFor: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Size Platform_wrapper::screenSizeFor(KDDockWidgets::Core::View *arg__1) const
@@ -344,13 +344,13 @@ KDDockWidgets::Size Platform_wrapper::screenSizeFor(KDDockWidgets::Core::View *a
         const void *thisPtr = this;
         return *m_screenSizeForCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "screenSizeFor: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Size Platform_wrapper::screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "screenSizeFor: Warning: Calling pure-virtual\n";
     return {};
 }
 void Platform_wrapper::sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const
@@ -359,13 +359,13 @@ void Platform_wrapper::sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidget
         const void *thisPtr = this;
         m_sendEventCallback(const_cast<void *>(thisPtr), arg__1, arg__2);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "sendEvent: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::sendEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "sendEvent: Warning: Calling pure-virtual\n";
     return;
 }
 void Platform_wrapper::setCursorPos(KDDockWidgets::Point arg__1)
@@ -374,13 +374,13 @@ void Platform_wrapper::setCursorPos(KDDockWidgets::Point arg__1)
         const void *thisPtr = this;
         m_setCursorPosCallback(const_cast<void *>(thisPtr), &arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setCursorPos: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::setCursorPos_nocallback(KDDockWidgets::Point arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setCursorPos: Warning: Calling pure-virtual\n";
     return;
 }
 void Platform_wrapper::setMouseCursor(Qt::CursorShape arg__1)
@@ -389,13 +389,13 @@ void Platform_wrapper::setMouseCursor(Qt::CursorShape arg__1)
         const void *thisPtr = this;
         m_setMouseCursorCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "setMouseCursor: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::setMouseCursor_nocallback(Qt::CursorShape arg__1)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "setMouseCursor: Warning: Calling pure-virtual\n";
     return;
 }
 int Platform_wrapper::startDragDistance() const
@@ -415,19 +415,32 @@ int Platform_wrapper::startDragDistance_impl_nocallback() const
 {
     return ::KDDockWidgets::Core::Platform::startDragDistance_impl();
 }
+bool Platform_wrapper::supportsAeroSnap() const
+{
+    if (m_supportsAeroSnapCallback) {
+        const void *thisPtr = this;
+        return m_supportsAeroSnapCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::Core::Platform::supportsAeroSnap();
+    }
+}
+bool Platform_wrapper::supportsAeroSnap_nocallback() const
+{
+    return ::KDDockWidgets::Core::Platform::supportsAeroSnap();
+}
 KDDockWidgets::Core::View *Platform_wrapper::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
     if (m_tests_createFocusableViewCallback) {
         const void *thisPtr = this;
         return m_tests_createFocusableViewCallback(const_cast<void *>(thisPtr), &arg__1, parent);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "tests_createFocusableView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *Platform_wrapper::tests_createFocusableView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "tests_createFocusableView: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *Platform_wrapper::tests_createNonClosableView(KDDockWidgets::Core::View *parent)
@@ -436,13 +449,13 @@ KDDockWidgets::Core::View *Platform_wrapper::tests_createNonClosableView(KDDockW
         const void *thisPtr = this;
         return m_tests_createNonClosableViewCallback(const_cast<void *>(thisPtr), parent);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "tests_createNonClosableView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *Platform_wrapper::tests_createNonClosableView_nocallback(KDDockWidgets::Core::View *parent)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "tests_createNonClosableView: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Core::View *Platform_wrapper::tests_createView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
@@ -451,13 +464,13 @@ KDDockWidgets::Core::View *Platform_wrapper::tests_createView(KDDockWidgets::Cor
         const void *thisPtr = this;
         return m_tests_createViewCallback(const_cast<void *>(thisPtr), &arg__1, parent);
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "tests_createView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 KDDockWidgets::Core::View *Platform_wrapper::tests_createView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent)
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "tests_createView: Warning: Calling pure-virtual\n";
     return {};
 }
 void Platform_wrapper::tests_deinitPlatform()
@@ -496,13 +509,13 @@ void Platform_wrapper::ungrabMouse()
         const void *thisPtr = this;
         m_ungrabMouseCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "ungrabMouse: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::ungrabMouse_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "ungrabMouse: Warning: Calling pure-virtual\n";
     return;
 }
 void Platform_wrapper::uninstallMessageHandler()
@@ -511,13 +524,13 @@ void Platform_wrapper::uninstallMessageHandler()
         const void *thisPtr = this;
         m_uninstallMessageHandlerCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "uninstallMessageHandler: Warning: Calling pure-virtual\n";
         return;
     }
 }
 void Platform_wrapper::uninstallMessageHandler_nocallback()
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "uninstallMessageHandler: Warning: Calling pure-virtual\n";
     return;
 }
 bool Platform_wrapper::usesFallbackMouseGrabber() const
@@ -526,13 +539,13 @@ bool Platform_wrapper::usesFallbackMouseGrabber() const
         const void *thisPtr = this;
         return m_usesFallbackMouseGrabberCallback(const_cast<void *>(thisPtr));
     } else {
-        std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+        std::cerr << "usesFallbackMouseGrabber: Warning: Calling pure-virtual\n";
         return {};
     }
 }
 bool Platform_wrapper::usesFallbackMouseGrabber_nocallback() const
 {
-    std::cerr << Q_FUNC_INFO << "Warning: Calling pure-virtual\n";
+    std::cerr << "usesFallbackMouseGrabber: Warning: Calling pure-virtual\n";
     return {};
 }
 Platform_wrapper::~Platform_wrapper()
@@ -734,6 +747,11 @@ int c_KDDockWidgets__Core__Platform__startDragDistance_impl(void *thisObj)
 {
     return fromWrapperPtr(thisObj)->startDragDistance_impl_nocallback();
 }
+// supportsAeroSnap() const
+bool c_KDDockWidgets__Core__Platform__supportsAeroSnap(void *thisObj)
+{
+    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->supportsAeroSnap_nocallback();} else {    return targetPtr->supportsAeroSnap();} }();
+}
 // tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 void *c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_)
 {
@@ -802,103 +820,106 @@ void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 470:
+    case 471:
         wrapper->m_applicationNameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_applicationName>(callback);
         break;
-    case 471:
+    case 472:
         wrapper->m_createDefaultViewFactoryCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_createDefaultViewFactory>(callback);
         break;
-    case 472:
+    case 473:
         wrapper->m_createMainWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_createMainWindow>(callback);
         break;
-    case 473:
+    case 474:
         wrapper->m_createViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_createView>(callback);
         break;
-    case 474:
+    case 475:
         wrapper->m_cursorPosCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_cursorPos>(callback);
         break;
-    case 475:
+    case 476:
         wrapper->m_dumpManagedBacktraceCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_dumpManagedBacktrace>(callback);
         break;
-    case 477:
+    case 478:
         wrapper->m_hasActivePopupCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_hasActivePopup>(callback);
         break;
-    case 478:
+    case 479:
         wrapper->m_inDisallowedDragViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_inDisallowedDragView>(callback);
         break;
-    case 479:
+    case 480:
         wrapper->m_installMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_installMessageHandler>(callback);
         break;
-    case 482:
+    case 483:
         wrapper->m_isLeftMouseButtonPressedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_isLeftMouseButtonPressed>(callback);
         break;
-    case 483:
+    case 484:
         wrapper->m_isProcessingAppQuitEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_isProcessingAppQuitEvent>(callback);
         break;
-    case 487:
+    case 488:
         wrapper->m_nameCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_name>(callback);
         break;
-    case 488:
+    case 489:
         wrapper->m_onFloatingWindowCreatedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_onFloatingWindowCreated>(callback);
         break;
-    case 489:
+    case 490:
         wrapper->m_onFloatingWindowDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_onFloatingWindowDestroyed>(callback);
         break;
-    case 490:
+    case 491:
         wrapper->m_onMainWindowCreatedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_onMainWindowCreated>(callback);
         break;
-    case 491:
+    case 492:
         wrapper->m_onMainWindowDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_onMainWindowDestroyed>(callback);
         break;
-    case 492:
+    case 493:
         wrapper->m_pauseForDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_pauseForDebugger>(callback);
         break;
-    case 494:
+    case 495:
         wrapper->m_restoreMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_restoreMouseCursor>(callback);
         break;
-    case 495:
+    case 496:
         wrapper->m_runDelayedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_runDelayed>(callback);
         break;
-    case 496:
+    case 497:
         wrapper->m_screenNumberForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenNumberFor>(callback);
         break;
-    case 497:
+    case 498:
         wrapper->m_screenSizeForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenSizeFor>(callback);
         break;
-    case 498:
+    case 499:
         wrapper->m_sendEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_sendEvent>(callback);
         break;
-    case 499:
+    case 500:
         wrapper->m_setCursorPosCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_setCursorPos>(callback);
         break;
-    case 500:
+    case 501:
         wrapper->m_setMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_setMouseCursor>(callback);
         break;
-    case 502:
+    case 503:
         wrapper->m_startDragDistance_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_startDragDistance_impl>(callback);
         break;
-    case 503:
-        wrapper->m_tests_createFocusableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createFocusableView>(callback);
-        break;
     case 504:
-        wrapper->m_tests_createNonClosableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createNonClosableView>(callback);
+        wrapper->m_supportsAeroSnapCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_supportsAeroSnap>(callback);
         break;
     case 505:
-        wrapper->m_tests_createViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createView>(callback);
+        wrapper->m_tests_createFocusableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createFocusableView>(callback);
+        break;
+    case 506:
+        wrapper->m_tests_createNonClosableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createNonClosableView>(callback);
         break;
     case 507:
-        wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_deinitPlatform_impl>(callback);
+        wrapper->m_tests_createViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createView>(callback);
         break;
     case 509:
-        wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
-        break;
-    case 510:
-        wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_ungrabMouse>(callback);
+        wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_deinitPlatform_impl>(callback);
         break;
     case 511:
-        wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
+        wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
         break;
     case 512:
+        wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_ungrabMouse>(callback);
+        break;
+    case 513:
+        wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
+        break;
+    case 514:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_usesFallbackMouseGrabber>(callback);
         break;
     }

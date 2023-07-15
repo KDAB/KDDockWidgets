@@ -85,6 +85,8 @@ public:
     int startDragDistance() const;
     virtual int startDragDistance_impl() const;
     virtual int startDragDistance_impl_nocallback() const;
+    virtual bool supportsAeroSnap() const;
+    virtual bool supportsAeroSnap_nocallback() const;
     virtual KDDockWidgets::Core::View *tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
     virtual KDDockWidgets::Core::View *tests_createFocusableView_nocallback(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View *parent = nullptr);
     virtual KDDockWidgets::Core::View *tests_createNonClosableView(KDDockWidgets::Core::View *parent = nullptr);
@@ -152,6 +154,8 @@ public:
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
     typedef int (*Callback_startDragDistance_impl)(void *);
     Callback_startDragDistance_impl m_startDragDistance_implCallback = nullptr;
+    typedef bool (*Callback_supportsAeroSnap)(void *);
+    Callback_supportsAeroSnap m_supportsAeroSnapCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_tests_createFocusableView)(void *, KDDockWidgets::Core::CreateViewOptions *arg__1, KDDockWidgets::Core::View *parent);
     Callback_tests_createFocusableView m_tests_createFocusableViewCallback = nullptr;
     typedef KDDockWidgets::Core::View *(*Callback_tests_createNonClosableView)(void *, KDDockWidgets::Core::View *parent);
@@ -236,6 +240,8 @@ KDDockWidgetsBindings_EXPORT void c_KDDockWidgets__Core__Platform__setMouseCurso
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance(void *thisObj);
 // KDDockWidgets::Core::Platform::startDragDistance_impl() const
 KDDockWidgetsBindings_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance_impl(void *thisObj);
+// KDDockWidgets::Core::Platform::supportsAeroSnap() const
+KDDockWidgetsBindings_EXPORT bool c_KDDockWidgets__Core__Platform__supportsAeroSnap(void *thisObj);
 // KDDockWidgets::Core::Platform::tests_createFocusableView(KDDockWidgets::Core::CreateViewOptions arg__1, KDDockWidgets::Core::View * parent)
 KDDockWidgetsBindings_EXPORT void *c_KDDockWidgets__Core__Platform__tests_createFocusableView_CreateViewOptions_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::Core::Platform::tests_createNonClosableView(KDDockWidgets::Core::View * parent)

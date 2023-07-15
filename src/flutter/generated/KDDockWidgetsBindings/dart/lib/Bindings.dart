@@ -24,6 +24,7 @@ export 'src/Size.dart' show Size;
 export 'src/flutter.dart' show asView_flutter, asView_flutter;
 export 'src/KDDockWidgets.dart'
     show
+        fuzzyCompare,
         initFrontend,
         spdlogLoggerName,
         KDDockWidgets_Location,

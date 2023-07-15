@@ -47,7 +47,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(577))
+            cFunctionSymbolName(579))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -85,7 +85,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            cFunctionSymbolName(578))
+            cFunctionSymbolName(580))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -123,7 +123,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(579))
+            cFunctionSymbolName(581))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -159,7 +159,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(580))
+            cFunctionSymbolName(582))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -198,7 +198,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(581))
+            cFunctionSymbolName(583))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -229,7 +229,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
   KDDWBindingsCore.View createRubberBand(KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(582))
+            cFunctionSymbolName(584))
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
@@ -258,7 +258,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(583))
+            cFunctionSymbolName(585))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -294,7 +294,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(584))
+            cFunctionSymbolName(586))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -328,7 +328,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(585))
+            cFunctionSymbolName(587))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -362,7 +362,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(586))
+            cFunctionSymbolName(588))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -396,7 +396,7 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<
                 ffi.NativeFunction<
                     voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(587))
+            cFunctionSymbolName(589))
         .asFunction();
     ffi.Pointer<void> result = func(
         thisCpp,
@@ -434,27 +434,27 @@ class ViewFactory extends KDDWBindingsCore.Object {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 577:
-        return "c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
-      case 578:
-        return "c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 579:
-        return "c_KDDockWidgets__Core__ViewFactory__createDropArea_DropArea_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View";
       case 580:
-        return "c_KDDockWidgets__Core__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
+        return "c_KDDockWidgets__Core__ViewFactory__createDockWidget_QString_DockWidgetOptions_LayoutSaverOptions_WindowFlags";
       case 581:
-        return "c_KDDockWidgets__Core__ViewFactory__createGroup_Group_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createDropArea_DropArea_View";
       case 582:
-        return "c_KDDockWidgets__Core__ViewFactory__createRubberBand_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createFloatingWindow_FloatingWindow_MainWindow_WindowFlags";
       case 583:
-        return "c_KDDockWidgets__Core__ViewFactory__createSeparator_Separator_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createGroup_Group_View";
       case 584:
-        return "c_KDDockWidgets__Core__ViewFactory__createSideBar_SideBar_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createRubberBand_View";
       case 585:
-        return "c_KDDockWidgets__Core__ViewFactory__createStack_Stack_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createSeparator_Separator_View";
       case 586:
-        return "c_KDDockWidgets__Core__ViewFactory__createTabBar_TabBar_View";
+        return "c_KDDockWidgets__Core__ViewFactory__createSideBar_SideBar_View";
       case 587:
+        return "c_KDDockWidgets__Core__ViewFactory__createStack_Stack_View";
+      case 588:
+        return "c_KDDockWidgets__Core__ViewFactory__createTabBar_TabBar_View";
+      case 589:
         return "c_KDDockWidgets__Core__ViewFactory__createTitleBar_TitleBar_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -462,27 +462,27 @@ class ViewFactory extends KDDWBindingsCore.Object {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 577:
-        return "createClassicIndicatorWindow";
-      case 578:
-        return "createDockWidget";
       case 579:
-        return "createDropArea";
+        return "createClassicIndicatorWindow";
       case 580:
-        return "createFloatingWindow";
+        return "createDockWidget";
       case 581:
-        return "createGroup";
+        return "createDropArea";
       case 582:
-        return "createRubberBand";
+        return "createFloatingWindow";
       case 583:
-        return "createSeparator";
+        return "createGroup";
       case 584:
-        return "createSideBar";
+        return "createRubberBand";
       case 585:
-        return "createStack";
+        return "createSeparator";
       case 586:
-        return "createTabBar";
+        return "createSideBar";
       case 587:
+        return "createStack";
+      case 588:
+        return "createTabBar";
+      case 589:
         return "createTitleBar";
     }
     throw Error();
@@ -494,49 +494,49 @@ class ViewFactory extends KDDWBindingsCore.Object {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__ViewFactory__registerVirtualMethodCallback')
         .asFunction();
-    final callback577 = ffi.Pointer.fromFunction<
+    final callback579 = ffi.Pointer.fromFunction<
             voidstar_Func_voidstar_voidstar_voidstar_FFI>(
         KDDWBindingsCore.ViewFactory.createClassicIndicatorWindow_calledFromC);
-    registerCallback(thisCpp, callback577, 577);
-    final callback578 = ffi.Pointer.fromFunction<
-            voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
-        KDDWBindingsCore.ViewFactory.createDockWidget_calledFromC);
-    registerCallback(thisCpp, callback578, 578);
-    final callback579 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createDropArea_calledFromC);
     registerCallback(thisCpp, callback579, 579);
     final callback580 = ffi.Pointer.fromFunction<
-            voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>(
-        KDDWBindingsCore.ViewFactory.createFloatingWindow_calledFromC);
+            voidstar_Func_voidstar_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>(
+        KDDWBindingsCore.ViewFactory.createDockWidget_calledFromC);
     registerCallback(thisCpp, callback580, 580);
     final callback581 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createGroup_calledFromC);
+            KDDWBindingsCore.ViewFactory.createDropArea_calledFromC);
     registerCallback(thisCpp, callback581, 581);
-    final callback582 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createRubberBand_calledFromC);
+    final callback582 = ffi.Pointer.fromFunction<
+            voidstar_Func_voidstar_voidstar_voidstar_ffi_Int32_FFI>(
+        KDDWBindingsCore.ViewFactory.createFloatingWindow_calledFromC);
     registerCallback(thisCpp, callback582, 582);
     final callback583 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createSeparator_calledFromC);
+            KDDWBindingsCore.ViewFactory.createGroup_calledFromC);
     registerCallback(thisCpp, callback583, 583);
     final callback584 =
-        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createSideBar_calledFromC);
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.ViewFactory.createRubberBand_calledFromC);
     registerCallback(thisCpp, callback584, 584);
     final callback585 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createStack_calledFromC);
+            KDDWBindingsCore.ViewFactory.createSeparator_calledFromC);
     registerCallback(thisCpp, callback585, 585);
     final callback586 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createTabBar_calledFromC);
+            KDDWBindingsCore.ViewFactory.createSideBar_calledFromC);
     registerCallback(thisCpp, callback586, 586);
     final callback587 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.ViewFactory.createTitleBar_calledFromC);
+            KDDWBindingsCore.ViewFactory.createStack_calledFromC);
     registerCallback(thisCpp, callback587, 587);
+    final callback588 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.ViewFactory.createTabBar_calledFromC);
+    registerCallback(thisCpp, callback588, 588);
+    final callback589 =
+        ffi.Pointer.fromFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>(
+            KDDWBindingsCore.ViewFactory.createTitleBar_calledFromC);
+    registerCallback(thisCpp, callback589, 589);
   }
 }
