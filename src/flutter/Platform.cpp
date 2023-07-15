@@ -23,9 +23,7 @@
 #include "Platform.h"
 #include "kddockwidgets/core/MainWindow.h"
 
-#include <QMutexLocker>
-#include <QMutex>
-
+#include <mutex>
 #include <memory.h>
 
 using namespace KDDockWidgets;
@@ -295,7 +293,7 @@ FocusableTestView_flutter::~FocusableTestView_flutter() = default;
 
 }
 
-static QMutex m_mutex;
+static std::mutex m_mutex;
 void Platform::runTests()
 {
 #ifdef KDDW_FLUTTER_HAS_COROUTINES
@@ -305,7 +303,7 @@ void Platform::runTests()
     // The tests run in a co-routine, meaning they can be interrupted (due to a C++ wait or deleteLater)
     // and the Flutter event loop keeps running. When they are actually finished, the "then()" block is run.
     s_runTestsFunc().then([this](auto result) {
-        QMutexLocker locker(&m_mutex);
+        std::lock_guard<std::mutex> locker(m_mutex);
         assert(!m_testsResult.has_value());
         m_testsResult = result ? 0 : 1;
     });
@@ -326,7 +324,7 @@ void Platform::scheduleResumeCoRoutines(int) const
 
 std::optional<int> Platform::testsResult() const
 {
-    QMutexLocker locker(&m_mutex);
+    std::lock_guard<std::mutex> locker(m_mutex);
     return m_testsResult;
 }
 
