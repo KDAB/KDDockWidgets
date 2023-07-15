@@ -16,6 +16,9 @@
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/Platform.h"
 
+#include <cstdlib>
+#include <string>
+
 namespace KDDockWidgets {
 
 inline bool isWayland()
@@ -173,5 +176,21 @@ void deleteAll(const T &vec)
 }
 
 }
+
+#ifdef DOCKS_DEVELOPER_MODE
+inline int envVarIntValue(const char *variableName, bool &ok)
+{
+    if (auto value = std::getenv(variableName)) {
+        try {
+            ok = true;
+            return std::stoi(value);
+        } catch (const std::exception &) {
+        }
+    }
+
+    ok = false;
+    return -1;
+}
+#endif
 
 #endif

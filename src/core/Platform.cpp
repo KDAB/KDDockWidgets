@@ -13,6 +13,7 @@
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
 #include "core/Window.h"
+#include "core/Utils_p.h"
 #include "core/EventFilterInterface.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
@@ -123,7 +124,7 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
     // During development it's useful to quickly run tests only on the frontend we're developing.
     // The developer can set, for example, KDDW_TEST_FRONTEND=2 to run only the QtQuick tests
     bool ok = false;
-    const int frontendId = qEnvironmentVariableIntValue("KDDW_TEST_FRONTEND", &ok);
+    const int frontendId = envVarIntValue("KDDW_TEST_FRONTEND", /*by-ref*/ ok);
     if (ok) {
         types.push_back(FrontendType(frontendId));
         return types;
