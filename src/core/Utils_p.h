@@ -188,10 +188,12 @@ inline int envVarIntValue(const char *variableName, bool &ok)
     // Flutter:
 
 #ifdef _MSC_VER
+    size_t requiredSize;
     char value[3]; // just used for the platform Id
     auto bufSize = sizeof(value);
-    const errno_t err = getenv_s(&value, &bufSize, variableName);
-    if (err != 0) {
+
+    const errno_t err = getenv_s(&requiredSize, value, bufSize, variableName);
+    if (err != 0 || requiredSize == 0 || requiredSize > bufSize) {
         ok = false;
         return -1;
     }
