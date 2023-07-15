@@ -180,9 +180,28 @@ void deleteAll(const T &vec)
 #ifdef DOCKS_DEVELOPER_MODE
 inline int envVarIntValue(const char *variableName, bool &ok)
 {
-    if (auto value = std::getenv(variableName)) {
+    ok = true;
+
+#if KDDW_FRONTEND_QT
+    return qEnvironmentVariableIntValue(variableName, &ok);
+#endif
+
+    // Flutter:
+
+#ifdef _MSC_VER
+    char value[3]; // just used for the platform Id
+    auto bufSize = sizeof(value);
+    const errno_t err = getenv_s(&value, &bufSize, variableName);
+    if (err != 0) {
+        ok = false;
+        return -1;
+    }
+#else
+    auto value = std::getenv(variableName);
+#endif
+
+    if (value) {
         try {
-            ok = true;
             return std::stoi(value);
         } catch (const std::exception &) {
         }
