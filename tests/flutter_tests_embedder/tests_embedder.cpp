@@ -184,7 +184,9 @@ TestsEmbedder::TestsEmbedder(int &argc, char **argv)
     assert(!s_testsEmbedder);
     s_testsEmbedder = this;
 
-    init(QStringLiteral(FLUTTER_TEST_MAIN), QStringLiteral("%1/icudtl.dat").arg(QLatin1String(FLUTTER_ICUDTL_DIR)));
+    const auto icuPath = std::string(FLUTTER_ICUDTL_DIR) + std::string("/icudtl.dat");
+
+    init(std::string(FLUTTER_TEST_MAIN), icuPath);
 }
 
 TestsEmbedder::~TestsEmbedder()
@@ -193,9 +195,9 @@ TestsEmbedder::~TestsEmbedder()
     s_testsEmbedder = nullptr;
 }
 
-void TestsEmbedder::init(const QString &projectPath, const QString &icudtlPath)
+void TestsEmbedder::init(const std::string &projectPath, const std::string &icudtlPath)
 {
-    if (!fs::exists(projectPath.toStdString()) || !fs::exists(icudtlPath.toStdString())) {
+    if (!fs::exists(projectPath) || !fs::exists(icudtlPath)) {
         KDDW_ERROR("Either icudtl or project path not found");
         std::abort();
     }
@@ -225,7 +227,7 @@ void TestsEmbedder::init(const QString &projectPath, const QString &icudtlPath)
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     g_pixelRatio = framebuffer_width * 1.0 / kInitialWindowWidth;
 
-    const bool run_result = runFlutter(window, projectPath.toStdString(), icudtlPath.toStdString());
+    const bool run_result = runFlutter(window, projectPath, icudtlPath);
     if (!run_result) {
         KDDW_ERROR("Could not run the Flutter engine.");
         std::abort();

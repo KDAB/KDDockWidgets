@@ -29,6 +29,7 @@
 #pragma once
 
 #include "docks_export.h"
+
 #include <string>
 
 class QString;
@@ -51,7 +52,7 @@ public:
     int run();
 
 private:
-    void init(const QString &projectPath, const QString &icudtlPath);
+    void init(const std::string &projectPath, const std::string &icudtlPath);
     void deinit();
     bool runFlutter(GLFWwindow *window,
                     const std::string &project_path,
