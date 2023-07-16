@@ -33,7 +33,7 @@
     KDDW_CO_RETURN res;
 
 // TODOm4: Investigate something more fancy
-#define CHECK Q_ASSERT
+#define CHECK assert
 #define CHECK_EQ(a, b) assert((a) == (b))
 
 struct KDDWTest
