@@ -13,6 +13,7 @@
 #include "kddockwidgets/qtcommon/Window.h"
 #include "qtcommon/View.h"
 #include "core/ViewGuard.h"
+#include "core/Utils_p.h"
 
 #include <QString>
 #include <QTimer>
@@ -60,7 +61,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     s_original(t, context, msg);
 
     if (t == QtWarningMsg) {
-        if (!Core::Platform::s_expectedWarning.isEmpty() && msg.contains(Core::Platform::s_expectedWarning))
+        if (!Core::Platform::s_expectedWarning.empty() && msg.contains(QString::fromStdString(Core::Platform::s_expectedWarning)))
             return;
 
         if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {

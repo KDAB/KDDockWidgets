@@ -489,7 +489,7 @@ KDDW_QCORO_TASK tst_resize()
 
 KDDW_QCORO_TASK tst_resizeWithConstraints()
 {
-    Platform::s_expectedWarning = QStringLiteral("New size doesn't respect size constraints");
+    Platform::s_expectedWarning = "New size doesn't respect size constraints";
 
     {
         // Test that resizing below minSize isn't permitted.

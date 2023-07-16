@@ -278,7 +278,7 @@ public:
 
     virtual void pauseForDebugger();
 
-    static QString s_expectedWarning;
+    static std::string s_expectedWarning;
     static int s_logicalDpiFactorOverride;
 
 protected:
@@ -309,9 +309,9 @@ protected:
 
 struct SetExpectedWarning
 {
-    explicit SetExpectedWarning(const QString &s)
+    explicit SetExpectedWarning(const std::string &s)
     {
-        if (!s.isEmpty())
+        if (!s.empty())
             Platform::s_expectedWarning = s;
     }
 

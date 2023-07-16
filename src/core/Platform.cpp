@@ -45,7 +45,7 @@ EventFilterInterface::~EventFilterInterface() = default;
 
 #ifdef DOCKS_DEVELOPER_MODE
 int Platform::s_logicalDpiFactorOverride = 0;
-QString Platform::s_expectedWarning = {};
+std::string Platform::s_expectedWarning = {};
 #endif
 
 Platform::Platform()

@@ -177,6 +177,12 @@ void deleteAll(const T &vec)
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+inline bool stringContains(const std::string_view haystack, std::string_view needle)
+{
+    return haystack.find(needle) != std::string::npos;
+}
+
 inline int envVarIntValue(const char *variableName, bool &ok)
 {
     ok = true;

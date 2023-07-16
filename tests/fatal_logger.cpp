@@ -12,8 +12,7 @@
 #include "fatal_logger.h"
 #include "core/Logging_p.h"
 #include "core/Platform.h"
-
-#include <QDebug>
+#include "core/Utils_p.h"
 
 using namespace KDDockWidgets;
 
@@ -27,9 +26,8 @@ void FatalLogger::log(const spdlog::details::log_msg &msg)
         return;
     }
 
-    if (!Core::Platform::s_expectedWarning.isEmpty()) {
-        const QString text = QString::fromUtf8(msg.payload.data());
-        if (text.contains(Core::Platform::s_expectedWarning)) {
+    if (!Core::Platform::s_expectedWarning.empty()) {
+        if (stringContains(std::string_view(msg.payload.data()), Core::Platform::s_expectedWarning)) {
             // It's whitelisted, downgrade to warning level
             spdlog::details::log_msg copy = msg;
             copy.level = spdlog::level::warn;
