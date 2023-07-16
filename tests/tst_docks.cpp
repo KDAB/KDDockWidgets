@@ -3553,14 +3553,14 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(!dock1->isFloating());
         CHECK(!action->isChecked());
         CHECK(action->isEnabled());
-        CHECK_EQ(action->toolTip(), QObject::tr("Detach"));
+        CHECK_EQ(action->toolTip(), Object::tr("Detach"));
 
         action->toggle();
 
         CHECK(dock1->isFloating());
         CHECK(action->isChecked());
         CHECK(action->isEnabled());
-        CHECK_EQ(action->toolTip(), QObject::tr("Dock"));
+        CHECK_EQ(action->toolTip(), Object::tr("Dock"));
 
         auto fw = dock1->floatingWindow();
         CHECK(fw);
@@ -3572,7 +3572,7 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(!action->isChecked());
         CHECK(action->isEnabled());
         CHECK(!dock1->isTabbed());
-        CHECK_EQ(action->toolTip(), QObject::tr("Detach"));
+        CHECK_EQ(action->toolTip(), Object::tr("Detach"));
 
         KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     }
@@ -3590,20 +3590,20 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(dock2->isFloating());
         CHECK(action->isChecked());
         CHECK(!action->isEnabled());
-        CHECK_EQ(action->toolTip(), QObject::tr("Dock"));
+        CHECK_EQ(action->toolTip(), Object::tr("Dock"));
 
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
         CHECK(!dock2->isFloating());
         CHECK(!action->isChecked());
         CHECK(action->isEnabled());
-        CHECK_EQ(action->toolTip(), QObject::tr("Detach"));
+        CHECK_EQ(action->toolTip(), Object::tr("Detach"));
 
         action->toggle();
         CHECK(dock2->isFloating());
         CHECK(action->isChecked());
         CHECK(action->isEnabled());
-        CHECK_EQ(action->toolTip(), QObject::tr("Dock"));
+        CHECK_EQ(action->toolTip(), Object::tr("Dock"));
 
         auto fw = dock2->floatingWindow();
         CHECK(fw);
@@ -3615,7 +3615,7 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(!action->isChecked());
         CHECK(action->isEnabled());
         CHECK(!dock1->isTabbed());
-        CHECK_EQ(action->toolTip(), QObject::tr("Detach"));
+        CHECK_EQ(action->toolTip(), Object::tr("Detach"));
 
         KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     }
