@@ -27,9 +27,17 @@
 #include <functional>
 #include <iostream>
 
-#define KDDW_TEST_RETURN(res)                                        \
-    if (!res)                                                        \
-        KDDW_WARN("FAILED: at={} ; line={}", Q_FUNC_INFO, __LINE__); \
+#if defined(_MSC_VER)
+#define KDDW_FUNC_INFO __FUNCSIG__
+#elif defined(__GNUC__)
+#define KDDW_FUNC_INFO __PRETTY_FUNCTION__
+#else
+#define KDDW_FUNC_INFO "unknown"
+#endif
+
+#define KDDW_TEST_RETURN(res)                                           \
+    if (!res)                                                           \
+        KDDW_WARN("FAILED: at={} ; line={}", KDDW_FUNC_INFO, __LINE__); \
     KDDW_CO_RETURN res;
 
 // TODOm4: Investigate something more fancy
