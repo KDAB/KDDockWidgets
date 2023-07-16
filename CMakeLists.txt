@@ -33,6 +33,10 @@
 #
 # -DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=[path] Set an alternative
 # install path for Python bindings Default=CMAKE_INSTALL_PREFIX
+#
+# -DKDDockWidgets_FRONTENDS='qtwidgets;qtquick' Semicolon separated list of
+# frontends to enable. If not specified, frontends will be enabled based on
+# availability of libraries on your system.
 
 # ## DO NOT USE IF YOU ARE AN END-USER.  FOR THE DEVELOPERS ONLY!! # Special
 # CMake Options for Developers
@@ -49,10 +53,6 @@
 #
 # -DKDDockWidgets_CODE_COVERAGE=[true|false] Enable coverage reporting. Ignored
 # unless KDDockWidgets_DEVELOPER_MODE=True Default=false
-#
-# -DKDDockWidgets_FRONTENDS='qtwidgets;qtquick' Semicolon separated list of
-# frontends to enable. If not specified, frontends will be enabled based on
-# availability of libraries on your system.
 
 cmake_minimum_required(VERSION 3.12)
 
