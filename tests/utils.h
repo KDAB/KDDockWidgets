@@ -147,7 +147,7 @@ inline Core::FloatingWindow *createFloatingWindow()
 {
     static int count = 0;
     count++;
-    auto dock = createDockWidget(QString("dock %1").arg(count));
+    auto dock = createDockWidget(QString("dock ") + QString::number(count));
     return dock->d->morphIntoFloatingWindow();
 }
 
@@ -274,7 +274,7 @@ inline Core::DockWidget *createAndNestDockWidget(KDDockWidgets::Core::DropArea *
 {
     static int count = 0;
     count++;
-    const QString name = QString("dock%1").arg(count);
+    const auto name = QString("dock") + QString::number(count);
     auto dock = createDockWidget(name);
     dock->setObjectName(name);
     nestDockWidget(dock, dropArea, relativeTo, location);

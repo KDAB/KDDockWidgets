@@ -71,7 +71,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
     hostWidget->show();
     auto item = new Item(hostWidget);
     item->setGeometry(Rect(0, 0, 200, 200));
-    item->setObjectName(QStringLiteral("%1").arg(count));
+    item->setObjectName(QString::number(count));
     Core::CreateViewOptions opts;
     if (minSz.isValid())
         opts.minSize = minSz;

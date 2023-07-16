@@ -3358,7 +3358,7 @@ KDDW_QCORO_TASK tst_stuckSeparator()
     const int numDockWidgets = 26;
     Core::DockWidget *dw25 = nullptr;
     for (int i = 0; i < numDockWidgets; ++i) {
-        auto createdDw = createDockWidget(QStringLiteral("dock-%1").arg(i));
+        auto createdDw = createDockWidget(QString("dock-") + QString::number(i));
         if (i == 25)
             dw25 = createdDw;
     }

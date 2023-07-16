@@ -38,7 +38,7 @@ KDDockWidgets::Tests::createMainWindow(Size sz, KDDockWidgets::MainWindowOptions
         sz = Size(1000, 1000);
 
     const QString mainWindowName =
-        name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count) : name;
+        name.isEmpty() ? (QString("MyMainWindow") + QString::number(count)) : name;
     CreateViewOptions viewOpts;
     viewOpts.isVisible = show;
     viewOpts.size = sz;
@@ -107,7 +107,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<D
     viewOpts.isVisible = true;
     viewOpts.size = Size(1000, 1000);
     auto m = std::unique_ptr<Core::MainWindow>(Platform::instance()->createMainWindow(
-        QStringLiteral("MyMainWindow%1").arg(count), viewOpts, MainWindowOption_None, parent));
+        (QString("MyMainWindow") + QString::number(count)), viewOpts, MainWindowOption_None, parent));
     auto layout = m->layout();
     m->show();
     m->view()->resize(Size(700, 700));
@@ -116,7 +116,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<D
     for (DockDescriptor &desc : docks) {
         auto guest = Platform::instance()->tests_createView({ true, {}, { 100, 100 } });
         desc.createdDock =
-            createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), guest, {}, {}, false);
+            createDockWidget((QString::number(i) + QString::number(count)), guest, {}, {}, false);
         Core::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;

@@ -50,7 +50,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         int i = 0;
         for (DockDescriptor &desc : docksToCreate) {
             desc.createdDock = createDockWidget(
-                QString("%1").arg(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
+                QString::number(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
 
             Core::DockWidget *relativeTo = nullptr;
             if (desc.relativeToIndex != -1)
