@@ -11,7 +11,7 @@
 
 #pragma once
 
-#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN) && !defined(KDDW_NO_FLUTTER_BINDINGS)
+#if defined(DOCKS_DEVELOPER_MODE) && defined(KDDW_FRONTEND_FLUTTER) && !defined(DARTAGNAN_BINDINGS_RUN)
 #define KDDW_FLUTTER_HAS_COROUTINES
 #endif
 
