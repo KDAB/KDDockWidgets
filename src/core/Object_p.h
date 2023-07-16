@@ -45,7 +45,7 @@ public:
     QString objectName() const;
     void setObjectName(const QString &);
 
-    QString tr(const char *) const;
+    static QString tr(const char *);
 
     KDBindings::Signal<> aboutToBeDeleted;
 

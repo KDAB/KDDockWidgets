@@ -76,7 +76,7 @@ void Object::setObjectName(const QString &name)
     m_name = name;
 }
 
-QString Object::tr(const char *text) const
+QString Object::tr(const char *text)
 {
     // Not translated for Flutter yet
     return QString::fromUtf8(text);
