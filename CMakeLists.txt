@@ -271,18 +271,6 @@ if(KDDockWidgets_DEVELOPER_MODE)
 
     if(KDDW_FRONTEND_FLUTTER)
         include(FetchContent)
-        set(USE_QT_VERSION 6)
-        set(QCORO_BUILD_EXAMPLES OFF)
-        set(QCORO_BUILD_TESTING OFF)
-        set(QCORO_WITH_QTQUICK OFF)
-        set(QCORO_WITH_QML OFF)
-        fetchcontent_declare(
-            qcoro
-            GIT_REPOSITORY https://github.com/iamsergio/qcoro
-            GIT_TAG b97035c5525cbaed03260be6f335af7d6ef2f3ab
-        )
-        fetchcontent_makeavailable(qcoro)
-
         set(GLFW_BUILD_EXAMPLE OFF)
         set(GLFW_BUILD_DOCS OFF)
         set(GLFW_BUILD_WIN32 ON)
@@ -295,7 +283,6 @@ if(KDDockWidgets_DEVELOPER_MODE)
             GIT_TAG 3fa2360720eeba1964df3c0ecf4b5df8648a8e52
         )
         fetchcontent_makeavailable(glfw3)
-
     endif()
 endif()
 

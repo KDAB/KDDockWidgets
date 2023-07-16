@@ -16,7 +16,7 @@
 #endif
 
 #ifdef KDDW_FLUTTER_HAS_COROUTINES
-#include "qcoro/core/qcorocore.h"
+#include "../3rdparty/qcoro/qcorotask.h"
 #define KDDW_QCORO_TASK QCoro::Task<bool>
 #define KDDW_CO_AWAIT co_await
 #define KDDW_CO_RETURN co_return

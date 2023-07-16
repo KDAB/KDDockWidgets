@@ -537,13 +537,6 @@ if(KDDW_FRONTEND_FLUTTER)
 
     # TODOm3: Remove Qt::Core
     target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Core)
-
-    if(KDDockWidgets_DEVELOPER_MODE)
-        # Coroutines are needed for running the C++ tests for flutter
-        # We can move to Qt6 soon and not support Qt5, doesn't matter.
-        target_link_libraries(kddockwidgets PUBLIC QCoro6Core)
-    endif()
-
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 
