@@ -2377,7 +2377,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
 
     if (remainingToTake > 0) {
         // Go up the hierarchy and move the next separator on the left
-        if (Q_UNLIKELY(isRoot())) {
+        if (isRoot()) {
             // Doesn't happen
             KDDW_ERROR("Not enough space to move separator {}", ( void * )this);
         } else {
