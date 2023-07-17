@@ -24,7 +24,7 @@
 
 #include <cmath>
 
-#ifdef QT_GUI_LIB
+#ifdef KDDW_FRONTEND_QT
 #include <QPainter>
 #endif
 
@@ -261,7 +261,7 @@ WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
 
 Pixmap WindowBeingDraggedWayland::pixmap() const
 {
-#ifdef QT_GUI_LIB
+#ifdef KDDW_FRONTEND_QT
     QPixmap pixmap(size());
     QPainter p(&pixmap);
     pixmap.fill(Qt::transparent);

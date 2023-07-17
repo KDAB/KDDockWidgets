@@ -15,7 +15,8 @@
 
 #include "flutter/qcoro.h"
 
-#ifdef QT_GUI_LIB
+#ifdef KDDW_FRONTEND_QT
+
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QHoverEvent>
@@ -27,13 +28,16 @@
 #include <QTimer>
 #include <QObject>
 #include <QString>
+
 #else
+
 #include "qtcompat/geometry_helpers_p.h"
 #include "qtcompat/enums_p.h"
 #include "qtcompat/string_p.h"
 #include "kdtoolbox/KDStlContainerAdaptor.h"
 #include <cstdint>
-#endif
+
+#endif // !Qt
 
 QT_BEGIN_NAMESPACE
 class QMimeData;
@@ -41,7 +45,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-#ifdef QT_GUI_LIB
+#ifdef KDDW_FRONTEND_QT
 
 using Polygon = QPolygon;
 using Icon = QIcon;
