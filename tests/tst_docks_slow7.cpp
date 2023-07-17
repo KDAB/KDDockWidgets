@@ -140,7 +140,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
         layout->layoutSize().height() - layout->view()->minSize().height();
     const Size newSize = { layout->layoutWidth(), layout->layoutHeight() - availableToShrink };
 
-    assert(layout->layoutMinimumSize().expandedTo(newSize) == newSize);
+    CHECK(layout->layoutMinimumSize().expandedTo(newSize) == newSize);
 
     layout->setLayoutSize(newSize);
 
