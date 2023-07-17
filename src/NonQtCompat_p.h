@@ -57,7 +57,6 @@ using DragEnterEvent = QDragEnterEvent;
 using DragMoveEvent = QDragMoveEvent;
 
 using Point = QT_PREPEND_NAMESPACE(QPoint);
-using PointF = QT_PREPEND_NAMESPACE(QPointF);
 using Size = QT_PREPEND_NAMESPACE(QSize);
 using Rect = QT_PREPEND_NAMESPACE(QRect);
 using Margins = QT_PREPEND_NAMESPACE(QMargins);
@@ -160,12 +159,6 @@ public:
     {
         return {};
     }
-
-    // Qt6 signature
-    PointF position() const
-    {
-        return {};
-    }
 };
 
 class MouseEvent : public Event
@@ -186,12 +179,6 @@ public:
     }
 
     Point globalPos() const
-    {
-        return m_globalPos;
-    }
-
-    // Qt6 signature:
-    PointF globalPosition() const
     {
         return m_globalPos;
     }
@@ -220,13 +207,7 @@ class DropEvent : public Event
 public:
     using Event::Event;
 
-    Point pos() const
-    {
-        return {};
-    }
-
-    // Qt6 signature
-    PointF position() const
+    Point position() const
     {
         return {};
     }

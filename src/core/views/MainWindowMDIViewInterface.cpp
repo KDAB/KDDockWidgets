@@ -28,8 +28,10 @@ void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidg
     m_mdiLayout->addDockWidget(dw, localPos, addingOption);
 }
 
+#ifdef KDDW_FRONTEND_QT
 void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
-                                               PointF localPos, InitialOption addingOption)
+                                               QPointF localPos, InitialOption addingOption)
 {
     addDockWidget(dockWidget, localPos.toPoint(), addingOption);
 }
+#endif

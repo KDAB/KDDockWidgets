@@ -135,43 +135,6 @@ private:
     int m_y = 0;
 };
 
-/// TODOm4: Remove after everything is ported away from QtCore
-class PointF
-{
-public:
-    PointF() = default;
-    PointF(Point pos)
-        : m_x(pos.x())
-        , m_y(pos.y())
-    {
-    }
-
-    explicit PointF(double x, double y)
-        : m_x(x)
-        , m_y(y)
-    {
-    }
-
-    double x() const
-    {
-        return m_x;
-    }
-
-    double y() const
-    {
-        return m_y;
-    }
-
-    Point toPoint() const
-    {
-        return Point(int(m_x), int(m_y));
-    }
-
-private:
-    double m_x = 0.0;
-    double m_y = 0.0;
-};
-
 class Margins
 {
 public:

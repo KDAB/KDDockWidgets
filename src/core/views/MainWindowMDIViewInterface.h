@@ -35,9 +35,11 @@ public:
     void addDockWidget(DockWidgetViewInterface *dockWidget, Point localPos,
                        InitialOption addingOption = {});
 
+#ifdef KDDW_FRONTEND_QT
     ///@brief Convenience overload
-    void addDockWidget(DockWidgetViewInterface *dockWidget, PointF localPos,
+    void addDockWidget(DockWidgetViewInterface *dockWidget, QPointF localPos,
                        InitialOption addingOption = {});
+#endif
 
 private:
     MDILayout *const m_mdiLayout;
