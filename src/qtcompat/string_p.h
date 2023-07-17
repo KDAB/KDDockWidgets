@@ -13,6 +13,7 @@
 
 #include <string>
 
+/// Dummy QString class so flutter port builds
 class QString : public std::string
 {
 public:
@@ -28,7 +29,6 @@ public:
     }
 
 #ifndef DARTAGNAN_BINDINGS_RUN
-    // TODOM4: Remove calls to toStdString
     std::string toStdString() const
     {
         return *this;
@@ -72,6 +72,7 @@ inline QString operator+(const QString &s1, const QString &s2)
     return QString::fromStdString(std::string(s1) + std::string(s2));
 }
 
+// Temporary dummy QByteArray to make flutter port build
 class QByteArray : public std::string
 {
 public:
