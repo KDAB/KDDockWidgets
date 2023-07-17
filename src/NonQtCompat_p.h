@@ -11,7 +11,7 @@
 
 #pragma once
 
-// The goal of this file is to provide fallback types when QtGui isn't present
+// The goal of this file is to provide fallback types for non-Qt frontends such as Flutter
 
 #include "flutter/qcoro.h"
 
@@ -25,7 +25,6 @@
 #include <QPixmap>
 #include <QPolygon>
 #include <QDrag>
-#include <QTimer>
 #include <QObject>
 #include <QString>
 
@@ -34,14 +33,11 @@
 #include "qtcompat/geometry_helpers_p.h"
 #include "qtcompat/enums_p.h"
 #include "qtcompat/string_p.h"
+#include "qtcompat/Object_p.h"
 #include "kdtoolbox/KDStlContainerAdaptor.h"
 #include <cstdint>
 
 #endif // !Qt
-
-QT_BEGIN_NAMESPACE
-class QMimeData;
-QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
@@ -80,8 +76,15 @@ inline T object_cast(const QObject *o)
     return qobject_cast<T>(o);
 }
 
-#else
+// Qt uses QObject, while Flutter uses Object.h
+// Qt probably could also use Object.h, but for now reduce the churn for Qt users
+namespace Core {
+using Object = QT_PREPEND_NAMESPACE(QObject);
+}
 
+#define QT_DOCKS_EXPORT DOCKS_EXPORT
+
+#else
 
 class Event
 {
@@ -216,11 +219,6 @@ public:
         return {};
     }
 
-    QMimeData *mimeData() const
-    {
-        return nullptr;
-    }
-
     void setDropAction(Qt::DropAction)
     {
     }
@@ -267,13 +265,13 @@ public:
     }
 };
 
-// Only useful on wayland, to set a drag pixmap
+// Only useful on wayland, to set a drag pixmap. Not implemented yet.
 class Pixmap
 {
 public:
 };
 
-// Used by segmented indicators controller
+// Used by segmented indicators controller. Not implemented yet.
 class Polygon : public Vector<Point>
 {
 public:
@@ -297,44 +295,26 @@ public:
 
 }
 
-#if defined(KDDW_FRONTEND_QT)
-// Qt uses QObject, while Flutter uses Object.h
-// Qt probably could also use Object.h, but for now reduce the churn for Qt users
-namespace KDDockWidgets::Core {
-using Object = QT_PREPEND_NAMESPACE(QObject);
-}
+#if !defined(KDDW_FRONTEND_QT)
 
-#define QT_DOCKS_EXPORT DOCKS_EXPORT
-
-#else
-
-#include "qtcompat/Object_p.h"
-
-#ifndef Q_NAMESPACE
+// Dummy Qt macros, to avoid too much ifdefs in core/
 #define Q_NAMESPACE
-#endif
-
-#ifdef Q_ENUM_NS // TODOm4: Remove the ifdef
-#undef Q_ENUM_NS
-#endif
+#define Q_ENUM(name)
 #define Q_ENUM_NS(name)
-
-#ifdef Q_DECLARE_METATYPE // TODOm4: Remove the ifdef
-#undef Q_DECLARE_METATYPE
-#endif
 #define Q_DECLARE_METATYPE(name)
-
-#ifndef Q_INVOKABLE
 #define Q_INVOKABLE
-#endif
-
-#ifndef Q_SLOTS
 #define Q_SLOTS
-#endif
-
 #define qAsConst(name) name
 #define QT_DOCKS_EXPORT
 #define Q_DECLARE_OPERATORS_FOR_FLAGS(name)
+#define QT_BEGIN_NAMESPACE
+#define QT_END_NAMESPACE
+#define Q_REQUIRED_RESULT
+#define QStringLiteral QString
+#define QT_VERSION 6
+#define QT_VERSION_CHECK(a, b, c) 6
+#define Q_UNREACHABLE() std::abort();
+#define Q_OBJECT
 
 using quintptr = unsigned long long int;
 using qint64 = int64_t;

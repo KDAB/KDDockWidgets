@@ -37,9 +37,12 @@
 
 #include "kdbindings/signal.h"
 
-#if defined(KDDW_FRONTEND_QT_WINDOWS)
+#ifdef KDDW_FRONTEND_QT
+#include <QTimer>
+#ifdef Q_OS_WIN
 #include <QGuiApplication>
 #include <Windows.h>
+#endif
 #endif
 
 #include <limits>

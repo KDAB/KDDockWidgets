@@ -145,14 +145,6 @@ public:
     Int m_value = 0;
 };
 
-#define Q_ENUM(name)
-#define QT_BEGIN_NAMESPACE
-#define QT_END_NAMESPACE
-#define Q_REQUIRED_RESULT
-#define QStringLiteral QString
-#define QT_VERSION 6 // TODOm4 remove
-#define QT_VERSION_CHECK(a, b, c) 6 // TODOm4 remove
-#define Q_UNREACHABLE() std::abort();
 #define Q_DECLARE_FLAGS(Flags, Enum) \
     using Flags = QFlags<Enum>;
 

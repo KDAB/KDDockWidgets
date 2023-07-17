@@ -23,12 +23,6 @@
 
 #include <kdbindings/signal.h>
 
-#if defined(Q_OBJECT) // TODOm4: Remove this ifdef and the undef
-#undef Q_OBJECT
-#endif
-
-#define Q_OBJECT
-
 namespace KDDockWidgets {
 
 namespace Core {

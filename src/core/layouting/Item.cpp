@@ -30,6 +30,10 @@
 #include <iostream>
 #include <cstdlib>
 
+#ifdef KDDW_FRONTEND_QT
+#include <QTimer>
+#endif
+
 #ifdef Q_CC_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4138)

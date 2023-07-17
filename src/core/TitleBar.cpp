@@ -28,6 +28,10 @@
 #include "core/MDILayout.h"
 #include "core/Stack.h"
 
+#ifdef KDDW_FRONTEND_QT
+#include <QTimer>
+#endif
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
