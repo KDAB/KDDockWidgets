@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../NonQtCompat_p.h"
+#include "../../QtCompat_p.h"

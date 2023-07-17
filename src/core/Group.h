@@ -15,7 +15,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/core/FocusScope.h"
 #include "DockWidget.h"
-#include "kddockwidgets/NonQtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/docks_export.h"
 

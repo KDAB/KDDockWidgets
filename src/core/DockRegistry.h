@@ -14,7 +14,7 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/core/View.h"
-#include "kddockwidgets/NonQtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 
 #include <unordered_map>

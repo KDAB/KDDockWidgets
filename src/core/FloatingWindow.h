@@ -17,7 +17,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "Group.h"
-#include "kddockwidgets/NonQtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/core/Draggable_p.h"
 
 QT_BEGIN_NAMESPACE

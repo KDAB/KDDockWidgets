@@ -12,7 +12,7 @@
 #include "utils.h"
 #include "Config.h"
 #include "core/ViewFactory.h"
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Platform.h"

@@ -20,7 +20,7 @@
 #include "core/Stack.h"
 #include "core/MainWindow.h"
 #include <core/Layout.h>
-#include <NonQtCompat_p.h>
+#include <QtCompat_p.h>
 #include <TabBar.h>
 #include <FloatingWindow.h>
 #include <core/DockWidget.h>

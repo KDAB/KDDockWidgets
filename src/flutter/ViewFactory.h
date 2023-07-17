@@ -14,7 +14,7 @@
 #pragma once
 
 #include "core/ViewFactory.h"
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
 

@@ -12,7 +12,7 @@
 #define KDAB_NLOHMANN_JSON_QT_HELPERS_H
 
 #include "Logging_p.h"
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 #include <nlohmann/json.hpp>
 

@@ -13,7 +13,7 @@
 #include <core/Controller.h>
 #include <geometry_helpers_p.h>
 #include <string_p.h>
-#include <NonQtCompat_p.h>
+#include <QtCompat_p.h>
 #include <FloatingWindow.h>
 #include <core/Group.h>
 #include "core/TitleBar.h"

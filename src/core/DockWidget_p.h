@@ -17,7 +17,7 @@
 #include "core/Position_p.h"
 #include "Action.h"
 #include "core/View_p.h"
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 namespace KDDockWidgets {
 

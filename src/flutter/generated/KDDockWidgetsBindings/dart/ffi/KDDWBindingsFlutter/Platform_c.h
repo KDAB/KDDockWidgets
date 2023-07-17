@@ -20,7 +20,7 @@
 #include <DelayedCall_p.h>
 #include <core/Platform.h>
 #include <string_p.h>
-#include <NonQtCompat_p.h>
+#include <QtCompat_p.h>
 #include <vector>
 
 namespace KDDockWidgetsBindings_wrappersNS {

@@ -12,7 +12,7 @@
 #ifndef KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
 #define KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
 
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 namespace KDDockWidgets {
 namespace Qt5Qt6Compat {

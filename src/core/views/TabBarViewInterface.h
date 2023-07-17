@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/NonQtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 
 QT_BEGIN_NAMESPACE
 class Icon;

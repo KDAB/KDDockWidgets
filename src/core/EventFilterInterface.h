@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../NonQtCompat_p.h"
+#include "../QtCompat_p.h"
 
 #include <memory>
 

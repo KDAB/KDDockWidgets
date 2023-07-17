@@ -12,7 +12,7 @@
 #include <core/Platform.h>
 #include <ViewFactory.h>
 #include <core/View.h>
-#include <NonQtCompat_p.h>
+#include <QtCompat_p.h>
 #include <geometry_helpers_p.h>
 #include <core/Controller.h>
 #include <DelayedCall_p.h>

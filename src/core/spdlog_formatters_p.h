@@ -12,7 +12,7 @@
 #pragma once
 
 #include "KDDockWidgets.h"
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 #include <spdlog/spdlog.h>
 

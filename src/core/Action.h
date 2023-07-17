@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/NonQtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 
 /// Class to abstract QAction, so code still works with Flutter and QtQuicks
 

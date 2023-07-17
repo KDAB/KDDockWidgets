@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "kddockwidgets_export.h"
-#include <NonQtCompat_p.h>
+#include <QtCompat_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Event_wrapper : public ::KDDockWidgets::Event

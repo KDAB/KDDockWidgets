@@ -266,7 +266,7 @@ set(KDDW_PUBLIC_HEADERS
     # Screen.h
     # ViewFactory.h
     Qt5Qt6Compat_p.h
-    NonQtCompat_p.h
+    QtCompat_p.h
     # Platform.h
 )
 

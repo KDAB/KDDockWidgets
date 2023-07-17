@@ -16,7 +16,7 @@
 
 #include "WindowBeingDragged_p.h"
 #include "core/EventFilterInterface.h"
-#include "kddockwidgets/NonQtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 
 #include <kdbindings/signal.h>
 

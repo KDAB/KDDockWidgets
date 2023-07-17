@@ -21,7 +21,7 @@
 
 #include "kddockwidgets/docks_export.h"
 
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 #ifdef KDDW_FRONTEND_QT
 #include "Qt5Qt6Compat_p.h"

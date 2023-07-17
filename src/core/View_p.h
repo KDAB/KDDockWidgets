@@ -14,7 +14,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "core/View.h"
 #include "kdbindings/signal.h"
-#include "NonQtCompat_p.h"
+#include "QtCompat_p.h"
 
 #include <vector>
 #include <memory>
