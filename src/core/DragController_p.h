@@ -22,6 +22,10 @@
 
 #include <memory>
 
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+#include <QTimer>
+#endif
+
 namespace KDDockWidgets {
 
 namespace Core {
