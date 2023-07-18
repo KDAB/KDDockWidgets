@@ -80,6 +80,11 @@ public:
         return m_width == other.m_width && m_height == other.m_height;
     }
 
+    bool operator!=(Size other) const
+    {
+        return !operator==(other);
+    }
+
 private:
     int m_width = -1;
     int m_height = -1;
@@ -128,6 +133,11 @@ public:
     bool operator==(Point other) const
     {
         return m_x == other.m_x && m_y == other.m_y;
+    }
+
+    bool operator!=(Point other) const
+    {
+        return !operator==(other);
     }
 
 private:
