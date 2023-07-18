@@ -185,8 +185,7 @@ Rectangle {
     }
 
     MouseArea {
-        id: dragMouseArea
-        objectName: "kddwTabBarDragMouseArea"
+        id: tabBarDragMouseArea
         hoverEnabled: true
         anchors.fill: tabbar
         enabled: tabbar.visible

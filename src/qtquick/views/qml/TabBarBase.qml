@@ -54,7 +54,7 @@ Item {
     onTabBarCppChanged: {
         if (tabBarCpp) {
             if (!root.hasCustomMouseEventRedirector)
-                tabBarCpp.redirectMouseEvents(dragMouseArea)
+                tabBarCpp.redirectMouseEvents(tabBarDragMouseArea)
 
             // Setting just so the unit-tests can access the buttons
             tabBarCpp.tabBarQmlItem = this;

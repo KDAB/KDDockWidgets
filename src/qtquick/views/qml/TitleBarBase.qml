@@ -34,7 +34,7 @@ Rectangle {
     readonly property bool isFocused: titleBarCpp && titleBarCpp.isFocused
 
     // So the tests can send mouse events programmatically
-    readonly property QtObject mouseAreaForTests: dragMouseArea
+    readonly property QtObject mouseAreaForTests: titleBarDragMouseArea
 
     /// The height the title bar should have when visible. Override in your component with another value
     /// Don't set 'hight' directly in the overridden component
@@ -60,7 +60,7 @@ Rectangle {
     implicitHeight: heightWhenVisible
 
     MouseArea {
-        id: dragMouseArea
+        id: titleBarDragMouseArea
         objectName: "titleBarMouseArea"
         anchors.fill: parent
         onDoubleClicked: {
@@ -72,7 +72,7 @@ Rectangle {
     onTitleBarCppChanged: {
         if (titleBarCpp) {
             if (!root.hasCustomMouseEventRedirector)
-                titleBarCpp.redirectMouseEvents(dragMouseArea)
+                titleBarCpp.redirectMouseEvents(titleBarDragMouseArea)
 
             // Setting just so the unit-tests can access the buttons
             titleBarCpp.titleBarQmlItem = this;
