@@ -46,6 +46,9 @@ KDDW.TabBarBase {
     Row {
         id: tabBarRow
 
+        /// #HERE#: If you're going to add any custom MouseAreas please use set a higher Z than the builtin one
+        z: root.mouseAreaZ.z + 1
+
         anchors.fill: parent
         spacing: 2
 
@@ -58,7 +61,7 @@ KDDW.TabBarBase {
             Rectangle {
                 id: tab
                 height: parent.height
-                width: 100
+                width: 150
                 color: (tabBarRow.hoveredIndex == index) ? "#ba7600" : "orange"
                 border.color: "black"
 
@@ -74,11 +77,33 @@ KDDW.TabBarBase {
                     text: title
                 }
 
-                /// ##HERE## Tells the C++ backend that the current tab should change
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        root.currentTabIndex = index;
+                // Optionally, and for illustration purposes, we add a close button
+                Rectangle {
+                    id: closeButton
+                    color: "transparent"
+                    radius: 3
+                    border.width: closeButtonMouseArea.containsMouse ? 1 : 0
+                    border.color: "black"
+
+                    height: 17
+                    width: height
+                    anchors {
+                        right: parent.right
+                        rightMargin: 4
+                        verticalCenter: parent.verticalCenter
+                    }
+                    Image {
+                        source: "qrc:/img/close.png"
+                        anchors.centerIn: parent
+
+                        MouseArea {
+                            id: closeButtonMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                tabBarCpp.closeAtIndex(index);
+                            }
+                        }
                     }
                 }
             }

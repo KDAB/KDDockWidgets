@@ -28,6 +28,9 @@ Item {
 
     property int currentTabIndex: -1
 
+    /// Users adding their own mouse areas should use a Z bigger than this.
+    readonly property alias mouseAreaZ: tabBarDragMouseArea.z
+
     /// Don't override in custom TabBar's.
     visible: tabBarCpp ? (tabBarCpp.tabBarAutoHide ? count > 1 : true) : count > 1
 
