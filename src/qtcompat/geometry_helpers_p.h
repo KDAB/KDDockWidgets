@@ -436,6 +436,11 @@ public:
         return m_pos == other.m_pos && m_size == other.m_size;
     }
 
+    bool operator!=(Rect other) const
+    {
+        return !operator==(other);
+    }
+
 private:
     Point m_pos;
     Size m_size = { 0, 0 };
