@@ -203,6 +203,14 @@ void TabBar::setCurrentIndex(int index)
     m_dockWidgetModel->setCurrentIndex(index);
 }
 
+bool TabBar::closeAtIndex(int index)
+{
+    if (auto dw = m_dockWidgetModel->dockWidgetAt(index))
+        return dw->close();
+
+    return false;
+}
+
 void TabBar::renameTab(int index, const QString &)
 {
     Q_UNUSED(index);

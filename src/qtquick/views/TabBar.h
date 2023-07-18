@@ -65,6 +65,12 @@ public:
 
     void moveTabTo(int from, int to) override;
     Q_INVOKABLE void setCurrentIndex(int index) override;
+
+    /// Closes the dock widget at the specified index
+    /// Returns true on success
+
+    Q_INVOKABLE bool closeAtIndex(int index);
+
     Stack *stackView() const;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &icon) override;
