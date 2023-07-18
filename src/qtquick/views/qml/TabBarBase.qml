@@ -51,6 +51,14 @@ Item {
         }
     }
 
+    MouseArea {
+        id: tabBarDragMouseArea
+        hoverEnabled: true
+        anchors.fill: root
+        enabled: root.visible
+        z: 10
+    }
+
     onTabBarCppChanged: {
         if (tabBarCpp) {
             if (!root.hasCustomMouseEventRedirector)

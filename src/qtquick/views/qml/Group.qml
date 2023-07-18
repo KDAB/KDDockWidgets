@@ -184,14 +184,6 @@ Rectangle {
         }
     }
 
-    MouseArea {
-        id: tabBarDragMouseArea
-        hoverEnabled: true
-        anchors.fill: tabbar
-        enabled: tabbar.visible
-        z: 10
-    }
-
     Loader {
         id: tabbar
         readonly property QtObject groupCpp: root.groupCpp
