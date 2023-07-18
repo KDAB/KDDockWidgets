@@ -273,6 +273,9 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDockWidgets_WERROR ON)
     include(ECMEnableSanitizers)
 
+    # Enable assert() in developer mode, regardless of debug vs release
+    add_definitions(-UNDEBUG)
+
     if(KDDW_FRONTEND_FLUTTER)
         include(FetchContent)
         set(GLFW_BUILD_EXAMPLE OFF)
