@@ -5223,6 +5223,10 @@ KDDW_QCORO_TASK tst_rect()
     r.adjust(1, 2, 3, 4);
     CHECK_EQ(r, Rect(1, 2, 102, 102));
 
+
+    r = { 800, 300, 400, 400 };
+    CHECK(r.contains({ 900, 500 }));
+
     KDDW_TEST_RETURN(true);
 }
 

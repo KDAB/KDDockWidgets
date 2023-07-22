@@ -397,7 +397,7 @@ public:
 
     bool contains(Point pt) const
     {
-        return pt.x() >= x() && pt.y() >= y() && pt.x() < width() && pt.y() < height();
+        return pt.x() >= x() && pt.y() >= y() && pt.x() <= right() && pt.y() <= bottom();
     }
 
     bool contains(Rect other) const
