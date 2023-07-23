@@ -16,9 +16,9 @@ Image {
     id: root
 
     property int indicatorType: KDDockWidgets.DropLocation_None
-    readonly property bool isHovered: _window.currentDropLocation === indicatorType
+    readonly property bool isHovered: _kddw_overlayWindow.currentDropLocation === indicatorType
 
-    source: "qrc:/img/classic_indicators/" + _window.iconName(indicatorType, isHovered) + ".png";
+    source: "qrc:/img/classic_indicators/" + _kddw_overlayWindow.iconName(indicatorType, isHovered) + ".png";
     width: 64
     height: 64
 }

@@ -143,7 +143,7 @@ IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndic
     setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);
 
-    rootContext()->setContextProperty(QStringLiteral("_window"), m_qmlInterface);
+    rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), m_qmlInterface);
 
     setSource(
         QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
