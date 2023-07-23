@@ -18,7 +18,6 @@
 #include <QQuickItem>
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::QtQuick;
 
 namespace KDDockWidgets {
@@ -68,20 +67,89 @@ static QString iconName(DropLocation loc, bool active)
 }
 }
 
+ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::ClassicDropIndicatorOverlay *classicIndicators, QObject *parent)
+    : QObject(parent)
+    , m_classicIndicators(classicIndicators)
+{
+}
+
+ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay() = default;
+
+QString ClassicDropIndicatorOverlay::iconName(int loc, bool active) const
+{
+    return KDDockWidgets::iconName(DropLocation(loc), active);
+}
+
+bool ClassicDropIndicatorOverlay::innerLeftIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Left);
+}
+
+bool ClassicDropIndicatorOverlay::innerRightIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Right);
+}
+
+bool ClassicDropIndicatorOverlay::innerTopIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Top);
+}
+
+bool ClassicDropIndicatorOverlay::innerBottomIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Bottom);
+}
+
+bool ClassicDropIndicatorOverlay::outterLeftIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterLeft);
+}
+
+bool ClassicDropIndicatorOverlay::outterRightIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterRight);
+}
+
+bool ClassicDropIndicatorOverlay::outterTopIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterTop);
+}
+
+bool ClassicDropIndicatorOverlay::outterBottomIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterBottom);
+}
+
+bool ClassicDropIndicatorOverlay::tabIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Center);
+}
+
+QRect ClassicDropIndicatorOverlay::hoveredGroupRect() const
+{
+    return m_classicIndicators->hoveredGroupRect();
+}
+
+DropLocation ClassicDropIndicatorOverlay::currentDropLocation() const
+{
+    return m_classicIndicators->currentDropLocation();
+}
+
+
 IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndicators)
     : QQuickView()
-    , m_classicIndicators(classicIndicators)
+    , m_qmlInterface(new ClassicDropIndicatorOverlay(classicIndicators, this))
 {
     setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);
 
-    rootContext()->setContextProperty(QStringLiteral("_window"),
-                                      QVariant::fromValue<QObject *>(this));
+    rootContext()->setContextProperty(QStringLiteral("_window"), m_qmlInterface);
+
     setSource(
         QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
 
-    classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { hoveredGroupRectChanged(); });
-    classicIndicators->dptr()->currentDropLocationChanged.connect([this] { currentDropLocationChanged(); });
+    classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { m_qmlInterface->hoveredGroupRectChanged(); });
+    classicIndicators->dptr()->currentDropLocationChanged.connect([this] { m_qmlInterface->currentDropLocationChanged(); });
 
     // Two workarounds for two unrelated bugs:
     if (KDDockWidgets::isOffscreen()) {
@@ -103,6 +171,8 @@ IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndic
     }
 }
 
+IndicatorWindow::~IndicatorWindow() = default;
+
 DropLocation IndicatorWindow::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
@@ -111,7 +181,7 @@ DropLocation IndicatorWindow::hover(QPoint pt)
 
 void IndicatorWindow::updateIndicatorVisibility()
 {
-    Q_EMIT indicatorsVisibleChanged();
+    Q_EMIT m_qmlInterface->indicatorsVisibleChanged();
 }
 
 QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const
@@ -141,11 +211,6 @@ QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation loc) const
 {
     QQuickItem *indicator = IndicatorWindow::indicatorForLocation(loc);
     return indicator->mapToGlobal(indicator->boundingRect().center()).toPoint();
-}
-
-QString IndicatorWindow::iconName(int loc, bool active) const
-{
-    return KDDockWidgets::iconName(DropLocation(loc), active);
 }
 
 QQuickItem *IndicatorWindow::indicatorForLocation(DropLocation loc) const
@@ -220,59 +285,4 @@ void IndicatorWindow::resize(QSize sz)
 bool IndicatorWindow::isWindow() const
 {
     return true;
-}
-
-bool IndicatorWindow::innerLeftIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_Left);
-}
-
-bool IndicatorWindow::innerRightIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_Right);
-}
-
-bool IndicatorWindow::innerTopIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_Top);
-}
-
-bool IndicatorWindow::innerBottomIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_Bottom);
-}
-
-bool IndicatorWindow::outterLeftIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterLeft);
-}
-
-bool IndicatorWindow::outterRightIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterRight);
-}
-
-bool IndicatorWindow::outterTopIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterTop);
-}
-
-bool IndicatorWindow::outterBottomIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterBottom);
-}
-
-bool IndicatorWindow::tabIndicatorVisible() const
-{
-    return m_classicIndicators->dropIndicatorVisible(DropLocation_Center);
-}
-
-QRect IndicatorWindow::hoveredGroupRect() const
-{
-    return m_classicIndicators->hoveredGroupRect();
-}
-
-DropLocation IndicatorWindow::currentDropLocation() const
-{
-    return m_classicIndicators->currentDropLocation();
 }

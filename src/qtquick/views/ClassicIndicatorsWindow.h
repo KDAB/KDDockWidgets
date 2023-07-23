@@ -24,7 +24,8 @@ class ClassicDropIndicatorOverlay;
 }
 
 namespace QtQuick {
-class IndicatorWindow : public QQuickView, public Core::ClassicIndicatorWindowViewInterface
+
+class ClassicDropIndicatorOverlay : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY
@@ -48,20 +49,10 @@ class IndicatorWindow : public QQuickView, public Core::ClassicIndicatorWindowVi
     Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY
                    currentDropLocationChanged)
 public:
-    explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *);
+    explicit ClassicDropIndicatorOverlay(Core::ClassicDropIndicatorOverlay *, QObject *parent);
+    ~ClassicDropIndicatorOverlay() override;
 
     Q_INVOKABLE QString iconName(int loc, bool active) const;
-    QQuickItem *indicatorForLocation(DropLocation loc) const;
-
-    DropLocation hover(QPoint globalPos) override;
-    void updatePositions() override;
-    QPoint posForIndicator(DropLocation) const override;
-    void raise() override;
-    void setVisible(bool) override;
-    bool isWindow() const override;
-    void setGeometry(QRect) override;
-    void resize(QSize) override;
-    void setObjectName(const QString &) override;
 
     // Property getters for QML:
     bool innerLeftIndicatorVisible() const;
@@ -76,18 +67,42 @@ public:
     QRect hoveredGroupRect() const;
     DropLocation currentDropLocation() const;
 
-    void updateIndicatorVisibility() override;
-
 Q_SIGNALS:
     void indicatorsVisibleChanged();
     void hoveredGroupRectChanged();
     void currentDropLocationChanged();
 
 private:
+    Core::ClassicDropIndicatorOverlay *const m_classicIndicators;
+};
+
+
+class IndicatorWindow : public QQuickView, public Core::ClassicIndicatorWindowViewInterface
+{
+    Q_OBJECT
+public:
+    explicit IndicatorWindow(Core::ClassicDropIndicatorOverlay *);
+    ~IndicatorWindow() override;
+
+    QQuickItem *indicatorForLocation(DropLocation loc) const;
+
+    DropLocation hover(QPoint globalPos) override;
+    void updatePositions() override;
+    QPoint posForIndicator(DropLocation) const override;
+    void raise() override;
+    void setVisible(bool) override;
+    bool isWindow() const override;
+    void setGeometry(QRect) override;
+    void resize(QSize) override;
+    void setObjectName(const QString &) override;
+    void updateIndicatorVisibility() override;
+
+private:
     DropLocation locationForIndicator(const QQuickItem *) const;
     QQuickItem *indicatorForPos(QPoint) const;
     QVector<QQuickItem *> indicatorItems() const;
-    Core::ClassicDropIndicatorOverlay *const m_classicIndicators;
+
+    ClassicDropIndicatorOverlay *const m_qmlInterface;
 };
 }
 }
