@@ -784,7 +784,8 @@ void View::render(QPainter *painter)
     if (QQuickWindow *w = QQuickItem::window()) {
         const QImage image = w->grabWindow();
 
-        const QRect sourceRect { asGroupController()->dragRect().topLeft() * image.devicePixelRatio(), painter->window().size() * image.devicePixelRatio() };
+        const QPoint pos = mapToScene({ 0, 0 }).toPoint();
+        const QRect sourceRect { pos * image.devicePixelRatio(), painter->window().size() * image.devicePixelRatio() };
         painter->drawImage(painter->window(), image, sourceRect);
     }
 }
