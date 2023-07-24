@@ -84,14 +84,14 @@ public:
 
     bool handleDnDEvent(QObject *o, QEvent *ev)
     {
-        KDDW_DEBUG("Platform_qt::handleDnDEvent numFilters={}", q->d->m_globalEventFilters.size());
         if (q->d->m_globalEventFilters.empty())
             return false;
 
-        auto view = Platform_qt::instance()->qobjectAsView(o);
-        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
-            if (filter->onDnDEvent(view.get(), ev))
-                return true;
+        if (auto view = Platform_qt::instance()->qobjectAsView(o)) {
+            for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+                if (filter->onDnDEvent(view.get(), ev))
+                    return true;
+            }
         }
 
         return false;
