@@ -75,7 +75,7 @@ project(
     KDDockWidgets
     DESCRIPTION "An advanced docking system for Qt"
     HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
-    LANGUAGES CXX
+    LANGUAGES CXX C
 )
 
 set(KDDockWidgets_VERSION_MAJOR 2)
