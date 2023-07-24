@@ -13,6 +13,7 @@
 #include "core/DropIndicatorOverlay_p.h"
 #include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
 #include "core/Utils_p.h"
+#include "View.h"
 
 #include <QQmlContext>
 #include <QQuickItem>
@@ -67,13 +68,19 @@ static QString iconName(DropLocation loc, bool active)
 }
 }
 
-ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::ClassicDropIndicatorOverlay *classicIndicators, QObject *parent)
-    : QObject(parent)
+ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::ClassicDropIndicatorOverlay *classicIndicators, Core::View *parent)
+    : QObject(QtQuick::asView_qtquick(parent))
     , m_classicIndicators(classicIndicators)
+    , m_window(new IndicatorWindow(this))
 {
+    classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { hoveredGroupRectChanged(); });
+    classicIndicators->dptr()->currentDropLocationChanged.connect([this] { currentDropLocationChanged(); });
 }
 
-ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay() = default;
+ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay()
+{
+    delete m_window;
+}
 
 QString ClassicDropIndicatorOverlay::iconName(int loc, bool active) const
 {
@@ -135,21 +142,56 @@ DropLocation ClassicDropIndicatorOverlay::currentDropLocation() const
     return m_classicIndicators->currentDropLocation();
 }
 
+DropLocation ClassicDropIndicatorOverlay::hover(QPoint pt)
+{
+    QQuickItem *item = indicatorForPos(pt);
+    return item ? locationForIndicator(item) : DropLocation_None;
+}
 
-IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndicators)
+void ClassicDropIndicatorOverlay::updateIndicatorVisibility()
+{
+    Q_EMIT indicatorsVisibleChanged();
+}
+
+QQuickItem *ClassicDropIndicatorOverlay::indicatorForPos(QPoint pt) const
+{
+    const QVector<QQuickItem *> indicators = indicatorItems();
+    Q_ASSERT(indicators.size() == 9);
+
+    for (QQuickItem *item : indicators) {
+        if (item->isVisible()) {
+            QRect rect(0, 0, int(item->width()), int(item->height()));
+            rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
+            if (rect.contains(pt)) {
+                return item;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+void ClassicDropIndicatorOverlay::updatePositions()
+{
+    // Not needed to implement, the Indicators use QML anchors
+}
+
+QPoint ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation loc) const
+{
+    QQuickItem *indicator = ClassicDropIndicatorOverlay::indicatorForLocation(loc);
+    return indicator->mapToGlobal(indicator->boundingRect().center()).toPoint();
+}
+
+IndicatorWindow::IndicatorWindow(QtQuick::ClassicDropIndicatorOverlay *classicIndicators)
     : QQuickView()
-    , m_qmlInterface(new ClassicDropIndicatorOverlay(classicIndicators, this))
 {
     setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);
 
-    rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), m_qmlInterface);
+    rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), classicIndicators);
 
     setSource(
         QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
-
-    classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { m_qmlInterface->hoveredGroupRectChanged(); });
-    classicIndicators->dptr()->currentDropLocationChanged.connect([this] { m_qmlInterface->currentDropLocationChanged(); });
 
     // Two workarounds for two unrelated bugs:
     if (KDDockWidgets::isOffscreen()) {
@@ -173,47 +215,7 @@ IndicatorWindow::IndicatorWindow(Core::ClassicDropIndicatorOverlay *classicIndic
 
 IndicatorWindow::~IndicatorWindow() = default;
 
-DropLocation IndicatorWindow::hover(QPoint pt)
-{
-    QQuickItem *item = indicatorForPos(pt);
-    return item ? locationForIndicator(item) : DropLocation_None;
-}
-
-void IndicatorWindow::updateIndicatorVisibility()
-{
-    Q_EMIT m_qmlInterface->indicatorsVisibleChanged();
-}
-
-QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const
-{
-    const QVector<QQuickItem *> indicators = indicatorItems();
-    Q_ASSERT(indicators.size() == 9);
-
-    for (QQuickItem *item : indicators) {
-        if (item->isVisible()) {
-            QRect rect(0, 0, int(item->width()), int(item->height()));
-            rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
-            if (rect.contains(pt)) {
-                return item;
-            }
-        }
-    }
-
-    return nullptr;
-}
-
-void IndicatorWindow::updatePositions()
-{
-    // Not needed to implement, the Indicators use QML anchors
-}
-
-QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropLocation loc) const
-{
-    QQuickItem *indicator = IndicatorWindow::indicatorForLocation(loc);
-    return indicator->mapToGlobal(indicator->boundingRect().center()).toPoint();
-}
-
-QQuickItem *IndicatorWindow::indicatorForLocation(DropLocation loc) const
+QQuickItem *ClassicDropIndicatorOverlay::indicatorForLocation(DropLocation loc) const
 {
     const QVector<QQuickItem *> indicators = indicatorItems();
     Q_ASSERT(indicators.size() == 9);
@@ -227,17 +229,17 @@ QQuickItem *IndicatorWindow::indicatorForLocation(DropLocation loc) const
     return nullptr;
 }
 
-DropLocation IndicatorWindow::locationForIndicator(const QQuickItem *item) const
+DropLocation ClassicDropIndicatorOverlay::locationForIndicator(const QQuickItem *item) const
 {
     return DropLocation(item->property("indicatorType").toInt());
 }
 
-QVector<QQuickItem *> IndicatorWindow::indicatorItems() const
+QVector<QQuickItem *> ClassicDropIndicatorOverlay::indicatorItems() const
 {
     QVector<QQuickItem *> indicators;
     indicators.reserve(9);
 
-    QQuickItem *root = rootObject();
+    QQuickItem *root = m_window->rootObject();
     const QList<QQuickItem *> items = root->childItems();
     for (QQuickItem *item : items) {
         if (QString::fromLatin1(item->metaObject()->className())
@@ -257,32 +259,32 @@ QVector<QQuickItem *> IndicatorWindow::indicatorItems() const
     return indicators;
 }
 
-void IndicatorWindow::raise()
+void ClassicDropIndicatorOverlay::raise()
 {
-    QWindow::raise();
+    m_window->raise();
 }
 
-void IndicatorWindow::setGeometry(QRect geo)
+void ClassicDropIndicatorOverlay::setGeometry(QRect geo)
 {
-    QWindow::setGeometry(geo);
+    m_window->setGeometry(geo);
 }
 
-void IndicatorWindow::setObjectName(const QString &name)
+void ClassicDropIndicatorOverlay::setObjectName(const QString &name)
 {
     QObject::setObjectName(name);
 }
 
-void IndicatorWindow::setVisible(bool is)
+void ClassicDropIndicatorOverlay::setVisible(bool is)
 {
-    QWindow::setVisible(is);
+    m_window->setVisible(is);
 }
 
-void IndicatorWindow::resize(QSize sz)
+void ClassicDropIndicatorOverlay::resize(QSize sz)
 {
-    QWindow::resize(sz);
+    m_window->resize(sz);
 }
 
-bool IndicatorWindow::isWindow() const
+bool ClassicDropIndicatorOverlay::isWindow() const
 {
     return true;
 }

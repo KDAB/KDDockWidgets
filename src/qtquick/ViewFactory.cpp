@@ -211,8 +211,7 @@ ViewFactory::createSegmentedDropIndicatorOverlayView(Core::SegmentedDropIndicato
 Core::ClassicIndicatorWindowViewInterface *ViewFactory::createClassicIndicatorWindow(
     Core::ClassicDropIndicatorOverlay *classicIndicators, Core::View *parent) const
 {
-    Q_UNUSED(parent); /// It's a real window, not parented to drop area
-    return new IndicatorWindow(classicIndicators);
+    return new QtQuick::ClassicDropIndicatorOverlay(classicIndicators, parent);
 }
 
 ViewFactory *ViewFactory::self()
