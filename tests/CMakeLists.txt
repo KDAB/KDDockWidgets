@@ -116,4 +116,6 @@ if(NOT KDDW_FRONTEND_FLUTTER)
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp)
 endif()
 
+add_subdirectory(wayland)
+
 #-----------------------------------------------------------------------------
