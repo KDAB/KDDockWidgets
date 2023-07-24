@@ -21,7 +21,7 @@ Item {
     visible: width > 50 && height > 50 // don't show if window is too small'
 
     ClassicIndicator {
-        visible: _kddw_overlayWindow.outterLeftIndicatorVisible
+        visible: _kddw_overlayWindow && _kddw_overlayWindow.outterLeftIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterLeft
         anchors {
             left: parent.left
@@ -31,7 +31,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _kddw_overlayWindow.outterRightIndicatorVisible
+        visible: _kddw_overlayWindow && _kddw_overlayWindow.outterRightIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterRight
         anchors {
             right: parent.right
@@ -41,7 +41,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _kddw_overlayWindow.outterTopIndicatorVisible
+        visible: _kddw_overlayWindow && _kddw_overlayWindow.outterTopIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterTop
         anchors {
             top: parent.top
@@ -51,7 +51,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _kddw_overlayWindow.outterBottomIndicatorVisible
+        visible: _kddw_overlayWindow && _kddw_overlayWindow.outterBottomIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterBottom
         anchors {
             bottom: parent.bottom
@@ -64,17 +64,17 @@ Item {
         id: innerIndicators
         objectName: "innerIndicators"
 
-        x: _kddw_overlayWindow.hoveredGroupRect.x + (_kddw_overlayWindow.hoveredGroupRect.width / 2)
-        y: _kddw_overlayWindow.hoveredGroupRect.y + (_kddw_overlayWindow.hoveredGroupRect.height / 2)
+        x: _kddw_overlayWindow ? (_kddw_overlayWindow.hoveredGroupRect.x + (_kddw_overlayWindow.hoveredGroupRect.width / 2)) : 0
+        y: _kddw_overlayWindow ? (_kddw_overlayWindow.hoveredGroupRect.y + (_kddw_overlayWindow.hoveredGroupRect.height / 2)) : 0
 
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width
-        visible: _kddw_overlayWindow.innerLeftIndicatorVisible || _kddw_overlayWindow.innerRightIndicatorVisible ||
-                 _kddw_overlayWindow.innerTopIndicatorVisible || _kddw_overlayWindow.innerBottomIndicatorVisible || _kddw_overlayWindow.tabIndicatorVisible
+        visible: _kddw_overlayWindow && (_kddw_overlayWindow.innerLeftIndicatorVisible || _kddw_overlayWindow.innerRightIndicatorVisible ||
+                 _kddw_overlayWindow.innerTopIndicatorVisible || _kddw_overlayWindow.innerBottomIndicatorVisible || _kddw_overlayWindow.tabIndicatorVisible)
 
         ClassicIndicator {
             id: innerLeft
-            visible: _kddw_overlayWindow.innerLeftIndicatorVisible
+            visible: _kddw_overlayWindow && _kddw_overlayWindow.innerLeftIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Left
             anchors {
                 right: centerIndicator.left
@@ -85,14 +85,14 @@ Item {
 
         ClassicIndicator {
             id: centerIndicator
-            visible: _kddw_overlayWindow.tabIndicatorVisible
+            visible: _kddw_overlayWindow && _kddw_overlayWindow.tabIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Center
             anchors.centerIn: parent
         }
 
         ClassicIndicator {
             id: innerRight
-            visible: _kddw_overlayWindow.innerRightIndicatorVisible
+            visible: _kddw_overlayWindow && _kddw_overlayWindow.innerRightIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Right
             anchors {
                 left: centerIndicator.right
@@ -103,7 +103,7 @@ Item {
 
         ClassicIndicator {
             id: innerTop
-            visible: _kddw_overlayWindow.innerTopIndicatorVisible
+            visible: _kddw_overlayWindow && _kddw_overlayWindow.innerTopIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Top
             anchors {
                 bottom: centerIndicator.top
@@ -114,7 +114,7 @@ Item {
 
         ClassicIndicator {
             id: innerBottom
-            visible: _kddw_overlayWindow.innerBottomIndicatorVisible
+            visible: _kddw_overlayWindow && _kddw_overlayWindow.innerBottomIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Bottom
             anchors {
                 top: centerIndicator.bottom
