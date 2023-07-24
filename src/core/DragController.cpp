@@ -670,7 +670,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
         if (auto dropArea = view->asDropAreaController()) {
             switch (int(e->type())) {
             case Event::DragEnter:
-                if (activeState()->handleDragEnter(static_cast<DragEnterEvent *>(e), dropArea))
+                if (activeState()->handleDragEnter(static_cast<DragMoveEvent *>(e), dropArea))
                     return true;
                 break;
             case Event::DragLeave:
@@ -692,7 +692,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
         KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.");
         return true;
     } else {
-        KDDW_DEBUG("DragController::onDnDEvent: No view");
+        KDDW_DEBUG("DragController::onDnDEvent: No view. ev={}", e->type());
     }
 
     return false;

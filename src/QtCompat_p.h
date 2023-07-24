@@ -53,7 +53,6 @@ using FocusEvent = QFocusEvent;
 using MouseEvent = QMouseEvent;
 using HoverEvent = QHoverEvent;
 using DropEvent = QDropEvent;
-using DragEnterEvent = QDragEnterEvent;
 using DragMoveEvent = QDragMoveEvent;
 
 using Point = QT_PREPEND_NAMESPACE(QPoint);
@@ -234,15 +233,6 @@ public:
 
     DragMoveEvent()
         : DropEvent(Event::DragMove)
-    {
-    }
-};
-
-class DragEnterEvent : public DragMoveEvent
-{
-public:
-    DragEnterEvent()
-        : DragMoveEvent(Event::DragEnter)
     {
     }
 };

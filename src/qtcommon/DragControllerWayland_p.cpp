@@ -70,7 +70,7 @@ bool StateDraggingWayland::handleMouseMove(QPoint)
     return false;
 }
 
-bool StateDraggingWayland::handleDragEnter(DragEnterEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDragEnter(DragMoveEvent *ev, DropArea *dropArea)
 {
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)

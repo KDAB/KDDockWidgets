@@ -183,7 +183,7 @@ public:
     }
 
     // Only interesting for Wayland
-    virtual bool handleDragEnter(DragEnterEvent *, DropArea *)
+    virtual bool handleDragEnter(DragMoveEvent *, DropArea *)
     {
         return false;
     }

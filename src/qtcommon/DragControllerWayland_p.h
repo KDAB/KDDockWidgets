@@ -29,7 +29,7 @@ public:
     void onEntry() override;
 
     bool handleMouseButtonRelease(QPoint globalPos) override;
-    bool handleDragEnter(DragEnterEvent *, DropArea *) override;
+    bool handleDragEnter(DragMoveEvent *, DropArea *) override;
     bool handleDragMove(DragMoveEvent *, DropArea *) override;
     bool handleDragLeave(DropArea *) override;
     bool handleDrop(DropEvent *, DropArea *) override;
