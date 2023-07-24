@@ -829,7 +829,7 @@ inline QString cleanQRCFilename(const QString &filename)
 }
 }
 
-QQuickItem *View::createItem(const QString &filename, QQuickItem *parent)
+QQuickItem *View::createItem(const QString &filename, QQuickItem *parent, QQmlContext *ctx)
 {
     auto p = parent;
     QQmlEngine *engine = nullptr;
@@ -852,7 +852,7 @@ QQuickItem *View::createItem(const QString &filename, QQuickItem *parent)
     }
 
     QQmlComponent component(engine, filename);
-    auto qquickitem = qobject_cast<QQuickItem *>(component.create());
+    auto qquickitem = qobject_cast<QQuickItem *>(component.create(ctx));
     if (!qquickitem) {
         qWarning() << Q_FUNC_INFO << component.errorString();
         return nullptr;

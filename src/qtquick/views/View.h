@@ -148,7 +148,7 @@ public:
 
     /// @brief Convenience to create a QQuickItem parented to @p parent.
     /// Uses the engine from the parent
-    static QQuickItem *createItem(const QString &filename, QQuickItem *parent);
+    static QQuickItem *createItem(const QString &filename, QQuickItem *parent, QQmlContext *ctx = nullptr);
 
     static std::shared_ptr<Core::View> parentViewFor(const QQuickItem *);
     static std::shared_ptr<Core::View> asQQuickWrapper(QQuickItem *item);
