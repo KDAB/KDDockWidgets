@@ -21,12 +21,12 @@
 #include "qtwidgets/views/FloatingWindow.h"
 #include "qtwidgets/views/TabBar.h"
 
-static KWayland::Client::FakeInput* input = nullptr;
+static KWayland::Client::FakeInput *input = nullptr;
 
 QPoint getWindowTopLeft()
 {
     const int titlebarHeight = QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
-    return {0, titlebarHeight + 10};
+    return { 0, titlebarHeight + 10 };
 }
 
 QPoint getCenterOfTitlebar(const KDDockWidgets::QtWidgets::DockWidget &dockWidget)
@@ -67,25 +67,26 @@ TestFunc tst_detachTitlebar()
     auto tabbedDockWidget = createDockWidget(QStringLiteral("detachtitle_dock2"));
     mainWindow->addDockWidget(tabbedDockWidget, KDDockWidgets::Location::Location_OnRight);
 
-    return {QtConcurrent::run([=]() {
-                // wait to settle
-                QThread::msleep(1000);
+    return { QtConcurrent::run([=]() {
+                 // wait to settle
+                 QThread::msleep(1000);
 
-                input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfTitlebar(*dockWidget));
-                input->requestPointerButtonPress(Qt::MouseButton::LeftButton);
-                QThread::msleep(1000);
-                input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfDockWidget(*dockWidget));
-                QThread::msleep(4000);
-                input->requestPointerButtonRelease(Qt::MouseButton::LeftButton);
-                QThread::msleep(1000);
-            }), [=]() {
-                Q_ASSERT(dockWidget->isFloating());
-                mainWindow->close();
-                tabbedDockWidget->close();
+                 input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfTitlebar(*dockWidget));
+                 input->requestPointerButtonPress(Qt::MouseButton::LeftButton);
+                 QThread::msleep(1000);
+                 input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfDockWidget(*dockWidget));
+                 QThread::msleep(4000);
+                 input->requestPointerButtonRelease(Qt::MouseButton::LeftButton);
+                 QThread::msleep(1000);
+             }),
+             [=]() {
+                 Q_ASSERT(dockWidget->isFloating());
+                 mainWindow->close();
+                 tabbedDockWidget->close();
 
-                mainWindow->deleteLater();
-                tabbedDockWidget->deleteLater();
-            }};
+                 mainWindow->deleteLater();
+                 tabbedDockWidget->deleteLater();
+             } };
 }
 
 TestFunc tst_detachTab()
@@ -98,27 +99,28 @@ TestFunc tst_detachTab()
     auto tabbedDockWidget = createDockWidget(QStringLiteral("detachtab_dock2"));
     dockWidget->addDockWidgetAsTab(tabbedDockWidget);
 
-    auto tabBar = dynamic_cast<KDDockWidgets::QtWidgets::TabBar*>(dockWidget->group()->tabBar()->view());
+    auto tabBar = dynamic_cast<KDDockWidgets::QtWidgets::TabBar *>(dockWidget->group()->tabBar()->view());
 
-    return {QtConcurrent::run([=]() {
-                // wait to settle
-                QThread::msleep(1000);
+    return { QtConcurrent::run([=]() {
+                 // wait to settle
+                 QThread::msleep(1000);
 
-                const QRect secondTabRect = tabBar->rectForTab(1);
+                 const QRect secondTabRect = tabBar->rectForTab(1);
 
-                input->requestPointerMoveAbsolute(getWindowTopLeft() + tabBar->mapToGlobal(secondTabRect.center()));
-                input->requestPointerButtonClick(Qt::MouseButton::LeftButton);
-                QThread::msleep(10);
-                input->requestPointerButtonClick(Qt::MouseButton::LeftButton);
-                QThread::msleep(1000);
-            }), [=]() {
-                Q_ASSERT(tabbedDockWidget->isFloating());
-                mainWindow->close();
-                tabbedDockWidget->close();
+                 input->requestPointerMoveAbsolute(getWindowTopLeft() + tabBar->mapToGlobal(secondTabRect.center()));
+                 input->requestPointerButtonClick(Qt::MouseButton::LeftButton);
+                 QThread::msleep(10);
+                 input->requestPointerButtonClick(Qt::MouseButton::LeftButton);
+                 QThread::msleep(1000);
+             }),
+             [=]() {
+                 Q_ASSERT(tabbedDockWidget->isFloating());
+                 mainWindow->close();
+                 tabbedDockWidget->close();
 
-                mainWindow->deleteLater();
-                tabbedDockWidget->deleteLater();
-            }};
+                 mainWindow->deleteLater();
+                 tabbedDockWidget->deleteLater();
+             } };
 }
 
 TestFunc tst_dragAndDrop()
@@ -150,36 +152,37 @@ TestFunc tst_dragAndDrop()
     auto tabbedDockWidget = createDockWidget(QStringLiteral("draganddrop_dock2"));
     tabbedDockWidget->open();
 
-    auto window = dynamic_cast<KDDockWidgets::QtWidgets::FloatingWindow*>(tabbedDockWidget->group()->floatingWindow()->view());
+    auto window = dynamic_cast<KDDockWidgets::QtWidgets::FloatingWindow *>(tabbedDockWidget->group()->floatingWindow()->view());
     window->showMaximized();
 
-    return {QtConcurrent::run([=]() {
-                // wait to settle
-                QThread::msleep(5000);
+    return { QtConcurrent::run([=]() {
+                 // wait to settle
+                 QThread::msleep(5000);
 
-                input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfTitlebar(*tabbedDockWidget));
-                QThread::msleep(1000);
-                input->requestPointerButtonPress(Qt::MouseButton::LeftButton);
-                QThread::msleep(1000);
+                 input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfTitlebar(*tabbedDockWidget));
+                 QThread::msleep(1000);
+                 input->requestPointerButtonPress(Qt::MouseButton::LeftButton);
+                 QThread::msleep(1000);
 
-                input->requestPointerMove({100, 100});
-                QThread::msleep(1000);
+                 input->requestPointerMove({ 100, 100 });
+                 QThread::msleep(1000);
 
-                window->hide();
+                 window->hide();
 
-                input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfDockWidget(*dockWidget));
-                QThread::msleep(1000);
-                input->requestPointerButtonRelease(Qt::MouseButton::LeftButton);
-                QThread::msleep(1000);
-            }), [=]() {
-                Q_ASSERT(!tabbedDockWidget->isFloating());
+                 input->requestPointerMoveAbsolute(getWindowTopLeft() + getCenterOfDockWidget(*dockWidget));
+                 QThread::msleep(1000);
+                 input->requestPointerButtonRelease(Qt::MouseButton::LeftButton);
+                 QThread::msleep(1000);
+             }),
+             [=]() {
+                 Q_ASSERT(!tabbedDockWidget->isFloating());
 
-                mainWindow->close();
-                tabbedDockWidget->close();
+                 mainWindow->close();
+                 tabbedDockWidget->close();
 
-                mainWindow->deleteLater();
-                tabbedDockWidget->deleteLater();
-            }};
+                 mainWindow->deleteLater();
+                 tabbedDockWidget->deleteLater();
+             } };
 }
 
 const std::vector tests = {

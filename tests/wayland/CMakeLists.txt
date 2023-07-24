@@ -8,14 +8,22 @@ find_package(PlasmaWaylandProtocols)
 find_package(QtWaylandScanner)
 find_package(Wayland REQUIRED Client)
 
-ecm_add_qtwayland_client_protocol(wayland_SRCS
-        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/fake-input.xml
-        BASENAME fake-input)
+ecm_add_qtwayland_client_protocol(
+    wayland_SRCS PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/fake-input.xml BASENAME fake-input
+)
 
 # add wayland test
 function(add_wayland_test test srcs)
     add_executable(${test} ${srcs})
-    target_link_libraries(${test} kddockwidgets kdbindings Wayland::Client Qt::WaylandClient KF${Qt_VERSION_MAJOR}::WaylandClient Qt::Concurrent)
+    target_link_libraries(
+        ${test}
+        kddockwidgets
+        kdbindings
+        Wayland::Client
+        Qt::WaylandClient
+        KF${Qt_VERSION_MAJOR}::WaylandClient
+        Qt::Concurrent
+    )
     if(KDDockWidgets_HAS_SPDLOG)
         target_link_libraries(${test} spdlog::spdlog)
     endif()
@@ -24,7 +32,9 @@ function(add_wayland_test test srcs)
     set_compiler_flags(${test})
 
     # FIXME: Use find_program to check if kwin_wayland exists first
-    add_test(NAME ${test} COMMAND kwin_wayland --no-kactivities --no-global-shortcuts --no-lockscreen --virtual --exit-with-session $<TARGET_FILE:${test}>)
+    add_test(NAME ${test} COMMAND kwin_wayland --no-kactivities --no-global-shortcuts --no-lockscreen --virtual
+                                  --exit-with-session $<TARGET_FILE:${test}>
+    )
 endfunction()
 
 add_wayland_test(tst_wayland_qtwidgets tst_qtwidgets.cpp)
