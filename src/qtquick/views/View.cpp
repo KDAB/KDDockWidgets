@@ -829,7 +829,7 @@ inline QString cleanQRCFilename(const QString &filename)
 }
 }
 
-QQuickItem *View::createQQuickItem(const QString &filename, QQuickItem *parent) const
+QQuickItem *View::createItem(const QString &filename, QQuickItem *parent)
 {
     auto p = parent;
     QQmlEngine *engine = nullptr;

@@ -144,6 +144,11 @@ public:
 
     /// @brief Convenience to create a QQuickItem
     static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
+
+    /// @brief Convenience to create a QQuickItem parented to @p parent.
+    /// Uses the engine from the parent
+    static QQuickItem *createItem(const QString &filename, QQuickItem *parent);
+
     static std::shared_ptr<Core::View> parentViewFor(const QQuickItem *);
     static std::shared_ptr<Core::View> asQQuickWrapper(QQuickItem *item);
 
@@ -157,7 +162,6 @@ protected:
     void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
     bool eventFilter(QObject *watched, QEvent *ev) override;
     bool event(QEvent *) override;
-    QQuickItem *createQQuickItem(const QString &filename, QQuickItem *parent) const;
 
     /// Override in case you want to have different styling on hover
     virtual void onHoverEvent(QHoverEvent *, QPoint /*globalPos*/)

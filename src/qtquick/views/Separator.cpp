@@ -31,7 +31,7 @@ Separator::Separator(Core::Separator *controller, QQuickItem *parent)
 
 void Separator::init()
 {
-    createQQuickItem(plat()->viewFactory()->separatorFilename().toString(), this);
+    View::createItem(plat()->viewFactory()->separatorFilename().toString(), this);
 
     // Only set on Separator::init(), so single-shot
     QTimer::singleShot(0, this, &Separator::isVerticalChanged);
