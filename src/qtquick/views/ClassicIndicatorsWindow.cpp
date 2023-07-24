@@ -13,9 +13,11 @@
 #include "core/DropIndicatorOverlay_p.h"
 #include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
 #include "core/Utils_p.h"
+#include "qtquick/Platform.h"
 #include "View.h"
 
 #include <QQmlContext>
+#include <QQmlEngine>
 #include <QQuickItem>
 
 using namespace KDDockWidgets;
@@ -71,10 +73,13 @@ static QString iconName(DropLocation loc, bool active)
 ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::ClassicDropIndicatorOverlay *classicIndicators, Core::View *parent)
     : QObject(QtQuick::asView_qtquick(parent))
     , m_classicIndicators(classicIndicators)
-    , m_window(new IndicatorWindow(this))
+    , m_window(new IndicatorWindow())
 {
     classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { hoveredGroupRectChanged(); });
     classicIndicators->dptr()->currentDropLocationChanged.connect([this] { currentDropLocationChanged(); });
+
+    rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), this);
+    m_window->init(qmlSouceUrl());
 }
 
 ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay()
@@ -182,16 +187,16 @@ QPoint ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation 
     return indicator->mapToGlobal(indicator->boundingRect().center()).toPoint();
 }
 
-IndicatorWindow::IndicatorWindow(QtQuick::ClassicDropIndicatorOverlay *classicIndicators)
+IndicatorWindow::IndicatorWindow()
     : QQuickView()
 {
     setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);
+}
 
-    rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), classicIndicators);
-
-    setSource(
-        QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
+void IndicatorWindow::init(const QUrl &rootQml)
+{
+    setSource(rootQml);
 
     // Two workarounds for two unrelated bugs:
     if (KDDockWidgets::isOffscreen()) {
@@ -214,6 +219,11 @@ IndicatorWindow::IndicatorWindow(QtQuick::ClassicDropIndicatorOverlay *classicIn
 }
 
 IndicatorWindow::~IndicatorWindow() = default;
+
+QUrl ClassicDropIndicatorOverlay::qmlSouceUrl() const
+{
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml"));
+}
 
 QQuickItem *ClassicDropIndicatorOverlay::indicatorForLocation(DropLocation loc) const
 {
@@ -257,6 +267,16 @@ QVector<QQuickItem *> ClassicDropIndicatorOverlay::indicatorItems() const
     }
 
     return indicators;
+}
+
+QQmlContext *ClassicDropIndicatorOverlay::rootContext() const
+{
+    if (m_window) {
+        return m_window->rootContext();
+    } else {
+        // Wayland case, indicator overlay isn't a window
+        return plat()->qmlEngine()->rootContext();
+    }
 }
 
 void ClassicDropIndicatorOverlay::raise()

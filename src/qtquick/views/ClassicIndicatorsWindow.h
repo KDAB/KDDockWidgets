@@ -32,8 +32,10 @@ class IndicatorWindow : public QQuickView
 {
     Q_OBJECT
 public:
-    explicit IndicatorWindow(QtQuick::ClassicDropIndicatorOverlay *);
+    explicit IndicatorWindow();
     ~IndicatorWindow() override;
+
+    void init(const QUrl &rootQml);
 };
 
 class ClassicDropIndicatorOverlay : public QObject, public Core::ClassicIndicatorWindowViewInterface
@@ -101,6 +103,8 @@ private:
     DropLocation locationForIndicator(const QQuickItem *) const;
     QQuickItem *indicatorForPos(QPoint) const;
     QVector<QQuickItem *> indicatorItems() const;
+    QQmlContext *rootContext() const;
+    QUrl qmlSouceUrl() const;
 
     IndicatorWindow *const m_window;
 };
