@@ -138,9 +138,10 @@ public:
     void setZOrder(int) override;
     virtual QQuickItem *visualItem() const;
 
-    /// @brief This is equivalent to "anchors.fill: parent but in C++
-    void makeItemFillParent(QQuickItem *item);
     void onWindowStateChangeEvent(QWindowStateChangeEvent *);
+
+    /// @brief This is equivalent to "anchors.fill: parent but in C++
+    static void makeItemFillParent(QQuickItem *item);
 
     /// @brief Convenience to create a QQuickItem
     static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
