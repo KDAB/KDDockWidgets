@@ -73,18 +73,29 @@ static QString iconName(DropLocation loc, bool active)
 ClassicDropIndicatorOverlay::ClassicDropIndicatorOverlay(Core::ClassicDropIndicatorOverlay *classicIndicators, Core::View *parent)
     : QObject(QtQuick::asView_qtquick(parent))
     , m_classicIndicators(classicIndicators)
-    , m_window(new IndicatorWindow())
+    , m_window(isWayland() ? nullptr : new IndicatorWindow())
 {
+    Q_ASSERT(parent);
     classicIndicators->dptr()->hoveredGroupRectChanged.connect([this] { hoveredGroupRectChanged(); });
     classicIndicators->dptr()->currentDropLocationChanged.connect([this] { currentDropLocationChanged(); });
 
-    rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), this);
-    m_window->init(qmlSouceUrl());
+    if (isWayland()) {
+        auto subContext = new QQmlContext(plat()->qmlEngine()->rootContext(), this);
+        subContext->setContextProperty(QStringLiteral("_kddw_overlayWindow"), this);
+        m_overlayItem = QtQuick::View::createItem(qmlSouceUrl().toString(), QtQuick::asView_qtquick(parent), subContext);
+        Q_ASSERT(m_overlayItem);
+        View::makeItemFillParent(m_overlayItem);
+        m_overlayItem->setZ(2);
+    } else {
+        m_window->rootContext()->setContextProperty(QStringLiteral("_kddw_overlayWindow"), this);
+        m_window->init(qmlSouceUrl());
+    }
 }
 
 ClassicDropIndicatorOverlay::~ClassicDropIndicatorOverlay()
 {
     delete m_window;
+    delete m_overlayItem;
 }
 
 QString ClassicDropIndicatorOverlay::iconName(int loc, bool active) const
@@ -194,6 +205,8 @@ IndicatorWindow::IndicatorWindow()
     setColor(Qt::transparent);
 }
 
+IndicatorWindow::~IndicatorWindow() = default;
+
 void IndicatorWindow::init(const QUrl &rootQml)
 {
     setSource(rootQml);
@@ -217,8 +230,6 @@ void IndicatorWindow::init(const QUrl &rootQml)
         hide();
     }
 }
-
-IndicatorWindow::~IndicatorWindow() = default;
 
 QUrl ClassicDropIndicatorOverlay::qmlSouceUrl() const
 {
@@ -249,7 +260,7 @@ QVector<QQuickItem *> ClassicDropIndicatorOverlay::indicatorItems() const
     QVector<QQuickItem *> indicators;
     indicators.reserve(9);
 
-    QQuickItem *root = m_window->rootObject();
+    QQuickItem *root = m_window ? m_window->rootObject() : m_overlayItem;
     const QList<QQuickItem *> items = root->childItems();
     for (QQuickItem *item : items) {
         if (QString::fromLatin1(item->metaObject()->className())
@@ -268,25 +279,22 @@ QVector<QQuickItem *> ClassicDropIndicatorOverlay::indicatorItems() const
 
     return indicators;
 }
-
-QQmlContext *ClassicDropIndicatorOverlay::rootContext() const
-{
-    if (m_window) {
-        return m_window->rootContext();
-    } else {
-        // Wayland case, indicator overlay isn't a window
-        return plat()->qmlEngine()->rootContext();
-    }
-}
-
 void ClassicDropIndicatorOverlay::raise()
 {
-    m_window->raise();
+    if (m_window) {
+        m_window->raise();
+    } else {
+        // The wayland item has an higher Z, no need to raise
+    }
 }
 
 void ClassicDropIndicatorOverlay::setGeometry(QRect geo)
 {
-    m_window->setGeometry(geo);
+    if (m_window) {
+        m_window->setGeometry(geo);
+    } else {
+        // The wayland item has "anchors.fill: parent", no need to resize
+    }
 }
 
 void ClassicDropIndicatorOverlay::setObjectName(const QString &name)
@@ -296,15 +304,24 @@ void ClassicDropIndicatorOverlay::setObjectName(const QString &name)
 
 void ClassicDropIndicatorOverlay::setVisible(bool is)
 {
-    m_window->setVisible(is);
+    if (m_window) {
+        m_window->setVisible(is);
+    } else {
+        // Wayland case
+        m_overlayItem->setVisible(is);
+    }
 }
 
 void ClassicDropIndicatorOverlay::resize(QSize sz)
 {
-    m_window->resize(sz);
+    if (m_window) {
+        m_window->resize(sz);
+    } else {
+        // The wayland item has "anchors.fill: parent", no need to resize
+    }
 }
 
 bool ClassicDropIndicatorOverlay::isWindow() const
 {
-    return true;
+    return m_window != nullptr;
 }

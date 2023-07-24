@@ -10,7 +10,6 @@
 */
 
 #include "DropArea.h"
-#include "core/Utils_p.h"
 #include "core/View_p.h"
 #include "kddockwidgets/core/DropArea.h"
 
@@ -22,9 +21,6 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
     , m_dropArea(dropArea)
 {
     Q_ASSERT(dropArea);
-    if (isWayland()) {
-        qWarning() << "Dropping not implement for QtQuick on Wayland yet!";
-    }
 }
 
 DropArea::~DropArea()

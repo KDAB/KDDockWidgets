@@ -103,10 +103,10 @@ private:
     DropLocation locationForIndicator(const QQuickItem *) const;
     QQuickItem *indicatorForPos(QPoint) const;
     QVector<QQuickItem *> indicatorItems() const;
-    QQmlContext *rootContext() const;
     QUrl qmlSouceUrl() const;
 
     IndicatorWindow *const m_window;
+    QQuickItem *m_overlayItem = nullptr;
 };
 
 }

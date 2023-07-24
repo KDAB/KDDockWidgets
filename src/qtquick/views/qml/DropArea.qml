@@ -11,7 +11,9 @@
 
 import QtQuick 2.9
 
-Item {
+// For wayland support, we use a Qt DropArea, as wayland uses real DnD
+// Otherwise an Item would be fine.
+DropArea {
     id: root
     property QtObject dropAreaCpp: null
 }
