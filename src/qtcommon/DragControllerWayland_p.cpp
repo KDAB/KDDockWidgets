@@ -118,9 +118,12 @@ bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
 bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
 {
     KDDW_DEBUG("StateDraggingWayland::handleDragMove");
+
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
-    if (!mimeData || !q->m_windowBeingDragged)
+    if (!mimeData || !q->m_windowBeingDragged) {
+        KDDW_DEBUG("StateDraggingWayland::handleDragMove. Early bailout hasMimeData={} windowBeingDragged={}", mimeData != nullptr, bool(q->m_windowBeingDragged));
         return false; // Not for us, some other user drag.
+    }
 
     dropArea->hover(q->m_windowBeingDragged.get(),
                     dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
