@@ -40,69 +40,74 @@ using namespace KDDockWidgets::Tests;
 
 KDDW_QCORO_TASK tst_isFocused()
 {
-    EnsureTopLevelsDeleted e;
+    {
+        EnsureTopLevelsDeleted e;
 
-    // 1. Create 2 floating windows
-    auto dock1 = createDockWidget(QStringLiteral("dock1"),
-                                  Platform::instance()->tests_createFocusableView({ true }));
-    auto dock2 = createDockWidget(QStringLiteral("dock2"),
-                                  Platform::instance()->tests_createFocusableView({ true }));
+        // 1. Create 2 floating windows
+        auto dock1 = createDockWidget(QStringLiteral("dock1"),
+                                      Platform::instance()->tests_createFocusableView({ true }));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"),
+                                      Platform::instance()->tests_createFocusableView({ true }));
 
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
-                                                         // otherwise dock1 looses again
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
+                                                             // otherwise dock1 looses again
 
-    dock1->window()->move(400, 200);
+        dock1->window()->move(400, 200);
 
-    // 2. Raise dock1 and focus its line edit
-    dock1->raise();
-    dock1->guestView()->setFocus(Qt::OtherFocusReason);
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+        // 2. Raise dock1 and focus its line edit
+        dock1->raise();
+        dock1->guestView()->setFocus(Qt::OtherFocusReason);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
 
-    CHECK(dock1->isFocused());
-    CHECK(!dock2->isFocused());
+        CHECK(dock1->isFocused());
+        CHECK(!dock2->isFocused());
 
-    // 3. Raise dock2 and focus its line edit
-    dock2->view()->raiseAndActivate();
-    if (!dock2->window()->window()->isActive())
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->view()->window(), Event::WindowActivate);
+        // 3. Raise dock2 and focus its line edit
+        dock2->view()->raiseAndActivate();
+        if (!dock2->window()->window()->isActive())
+            KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->view()->window(), Event::WindowActivate);
 
-    dock2->guestView()->setFocus(Qt::OtherFocusReason);
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+        dock2->guestView()->setFocus(Qt::OtherFocusReason);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
 
-    CHECK(!dock1->isFocused());
-    CHECK(dock2->guestView()->hasFocus());
-    CHECK(dock2->isFocused());
+        CHECK(!dock1->isFocused());
+        CHECK(dock2->guestView()->hasFocus());
+        CHECK(dock2->isFocused());
 
-    // 4. Tab dock1, it's current tab now
-    auto oldFw1 = dock1->window();
-    dock2->addDockWidgetAsTab(dock1);
-    CHECK(dock1->isFocused());
-    CHECK(!dock2->isFocused());
+        // 4. Tab dock1, it's current tab now
+        auto oldFw1 = dock1->window();
+        dock2->addDockWidgetAsTab(dock1);
+        CHECK(dock1->isFocused());
+        CHECK(!dock2->isFocused());
 
-    // 5. Set dock2 as current tab again
-    dock2->raise();
-    CHECK(!dock1->isFocused());
-    CHECK(dock2->isFocused());
+        // 5. Set dock2 as current tab again
+        dock2->raise();
+        CHECK(!dock1->isFocused());
+        CHECK(dock2->isFocused());
 
-    // 6. Create dock3, focus it
-    auto dock3 = createDockWidget(QStringLiteral("dock3"),
-                                  Platform::instance()->tests_createFocusableView({ true }));
-    auto oldFw3 = dock3->window();
-    dock3->raise();
-    dock3->guestView()->setFocus(Qt::OtherFocusReason);
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
-    CHECK(!dock1->isFocused());
-    CHECK(!dock2->isFocused());
-    CHECK(dock3->isFocused());
+        // 6. Create dock3, focus it
+        auto dock3 = createDockWidget(QStringLiteral("dock3"),
+                                      Platform::instance()->tests_createFocusableView({ true }));
+        auto oldFw3 = dock3->window();
+        dock3->raise();
+        dock3->guestView()->setFocus(Qt::OtherFocusReason);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+        CHECK(!dock1->isFocused());
+        CHECK(!dock2->isFocused());
+        CHECK(dock3->isFocused());
 
-    // 4. Add dock3 to the 1st window, nested, focus 2 again
-    dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
-    dock2->raise();
-    dock2->guestView()->setFocus(Qt::OtherFocusReason);
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->guestView().get(), Event::FocusIn);
-    CHECK(!dock1->isFocused());
-    CHECK(dock2->isFocused());
-    CHECK(!dock3->isFocused());
+        // 4. Add dock3 to the 1st window, nested, focus 2 again
+        dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
+        dock2->raise();
+        dock2->guestView()->setFocus(Qt::OtherFocusReason);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->guestView().get(), Event::FocusIn);
+        CHECK(!dock1->isFocused());
+        CHECK(dock2->isFocused());
+        CHECK(!dock3->isFocused());
+    }
+
+    // Spin one event loop so we so some deleteLater()s run. Makes LSAN happy.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     KDDW_CO_RETURN(true);
 }
