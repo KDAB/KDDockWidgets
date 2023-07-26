@@ -24,7 +24,6 @@ using namespace KDDockWidgets::Core;
 Controller::Controller(ViewType type, View *view)
     : d(new Private(type, view))
 {
-    assert(view);
 }
 
 Controller::~Controller()

@@ -53,8 +53,7 @@ KDDW_QCORO_TASK tst_objectGuard()
     }
 
     {
-        auto view = Platform::instance()->tests_createView({});
-        auto c = new Controller(ViewType::DockWidget, view);
+        auto c = new Controller(ViewType::DockWidget, nullptr);
         ObjectGuard<Controller> guard(c);
         CHECK(guard);
         CHECK(!guard.isNull());
@@ -65,8 +64,7 @@ KDDW_QCORO_TASK tst_objectGuard()
         CHECK(guard.isNull());
         CHECK(guard.data() == nullptr);
 
-        auto view2 = Platform::instance()->tests_createView({});
-        auto c2 = new Controller(ViewType::DockWidget, view2);
+        auto c2 = new Controller(ViewType::DockWidget, nullptr);
 
         // Test assignment
         guard = c2;
