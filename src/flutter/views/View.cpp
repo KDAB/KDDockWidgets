@@ -17,6 +17,7 @@
 #include "../Window.h"
 #include "ViewWrapper.h"
 
+#include <utility>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::flutter;
@@ -92,7 +93,7 @@ void View::setVisible(bool is)
 
         if (m_visible) {
             // Mimic QWidgets: Set children visible, unless they were explicitly hidden
-            for (auto child : qAsConst(m_childViews)) {
+            for (auto child : std::as_const(m_childViews)) {
                 if (!child->isExplicitlyHidden()) {
                     child->setVisible(true);
                 }

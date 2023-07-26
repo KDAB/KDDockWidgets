@@ -28,6 +28,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <utility>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -445,7 +446,7 @@ void View::removeViewEventFilter(EventFilterInterface *filter)
 
 bool View::deliverViewEventToFilters(Event *ev)
 {
-    for (Core::EventFilterInterface *filter : qAsConst(d->m_viewEventFilters)) {
+    for (Core::EventFilterInterface *filter : std::as_const(d->m_viewEventFilters)) {
         if (ev->type() == Event::Move) {
             if (filter->onMoveEvent(this))
                 return true;

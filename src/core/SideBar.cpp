@@ -18,6 +18,7 @@
 #include "Config.h"
 
 #include <unordered_map>
+#include <utility>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -144,7 +145,7 @@ Vector<QString> SideBar::serialize() const
 
 void SideBar::clear()
 {
-    for (DockWidget *dw : qAsConst(m_dockWidgets))
+    for (DockWidget *dw : std::as_const(m_dockWidgets))
         removeDockWidget(dw);
 }
 

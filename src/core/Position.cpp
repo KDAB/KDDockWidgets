@@ -26,6 +26,7 @@
 #include "kddockwidgets/core/DockRegistry.h"
 
 #include <algorithm>
+#include <utility>
 
 using namespace KDDockWidgets;
 
@@ -135,7 +136,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
     m_lastFloatingGeometry = lp.lastFloatingGeometry;
     m_lastOverlayedGeometries = lp.lastOverlayedGeometries;
 
-    for (const auto &placeholder : qAsConst(lp.placeholders)) {
+    for (const auto &placeholder : std::as_const(lp.placeholders)) {
         Core::Layout *layout = nullptr;
         int itemIndex = placeholder.itemIndex;
         if (placeholder.isFloatingWindow) {

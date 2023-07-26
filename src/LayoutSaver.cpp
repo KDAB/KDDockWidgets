@@ -39,6 +39,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <utility>
 
 /**
  * Some implementation details:
@@ -488,7 +489,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
                              d->m_affinityNames);
 
     // 1. Restore main windows
-    for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
+    for (const LayoutSaver::MainWindow &mw : std::as_const(layout.mainWindows)) {
         auto mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
         if (!mainWindow) {
             if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
@@ -536,14 +537,14 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder
     // properties
-    for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
+    for (const auto &dw : std::as_const(layout.closedDockWidgets)) {
         if (d->matchesAffinity(dw->affinities)) {
             Core::DockWidget::deserialize(dw);
         }
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
-    for (const auto &dw : qAsConst(layout.allDockWidgets)) {
+    for (const auto &dw : std::as_const(layout.allDockWidgets)) {
         if (!d->matchesAffinity(dw->affinities))
             continue;
 

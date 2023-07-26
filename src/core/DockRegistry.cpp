@@ -35,6 +35,7 @@
 #include "kdbindings/signal.h"
 
 #include <set>
+#include <utility>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -119,7 +120,7 @@ bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
 
 void DockRegistry::checkSanityAll(bool dumpLayout)
 {
-    for (auto layout : qAsConst(m_layouts)) {
+    for (auto layout : std::as_const(m_layouts)) {
         layout->checkSanity();
         if (dumpLayout)
             layout->dumpLayout();
@@ -383,7 +384,7 @@ bool DockRegistry::containsMainWindow(const QString &uniqueName) const
 
 Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags flags) const
 {
-    for (auto dock : qAsConst(m_dockWidgets)) {
+    for (auto dock : std::as_const(m_dockWidgets)) {
         if (dock->uniqueName() == name)
             return dock;
     }
@@ -417,7 +418,7 @@ Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags 
 
 Core::MainWindow *DockRegistry::mainWindowByName(const QString &name) const
 {
-    for (auto mainWindow : qAsConst(m_mainWindows)) {
+    for (auto mainWindow : std::as_const(m_mainWindows)) {
         if (mainWindow->uniqueName() == name)
             return mainWindow;
     }
@@ -428,7 +429,7 @@ Core::MainWindow *DockRegistry::mainWindowByName(const QString &name) const
 bool DockRegistry::isSane() const
 {
     std::set<QString> names;
-    for (auto dock : qAsConst(m_dockWidgets)) {
+    for (auto dock : std::as_const(m_dockWidgets)) {
         const QString name = dock->uniqueName();
         if (name.isEmpty()) {
             KDDW_ERROR("DockRegistry::isSane: DockWidget is missing a name");
@@ -442,7 +443,7 @@ bool DockRegistry::isSane() const
     }
 
     names.clear();
-    for (auto mainwindow : qAsConst(m_mainWindows)) {
+    for (auto mainwindow : std::as_const(m_mainWindows)) {
         const QString name = mainwindow->uniqueName();
         if (name.isEmpty()) {
             KDDW_ERROR("DockRegistry::isSane: MainWindow is missing a name");
@@ -471,7 +472,7 @@ const Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &na
     Core::DockWidget::List result;
     result.reserve(names.size());
 
-    for (auto dw : qAsConst(m_dockWidgets)) {
+    for (auto dw : std::as_const(m_dockWidgets)) {
         if (names.contains(dw->uniqueName()))
             result.push_back(dw);
     }
@@ -484,7 +485,7 @@ const Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &na
     Core::MainWindow::List result;
     result.reserve(names.size());
 
-    for (auto mw : qAsConst(m_mainWindows)) {
+    for (auto mw : std::as_const(m_mainWindows)) {
         if (names.contains(mw->uniqueName()))
             result.push_back(mw);
     }
@@ -645,14 +646,14 @@ void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
                          const Core::MainWindow::List &mainWindows,
                          const Vector<QString> &affinities)
 {
-    for (auto dw : qAsConst(dockWidgets)) {
+    for (auto dw : std::as_const(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
             dw->forceClose();
             dw->d->lastPosition()->removePlaceholders();
         }
     }
 
-    for (auto mw : qAsConst(mainWindows)) {
+    for (auto mw : std::as_const(mainWindows)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, mw->affinities())) {
             mw->layout()->clearLayout();
         }
@@ -661,7 +662,7 @@ void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
 
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
-    for (Core::DockWidget *dw : qAsConst(m_dockWidgets)) {
+    for (Core::DockWidget *dw : std::as_const(m_dockWidgets)) {
         if (dw->view()->rootView()->equals(dw->view()) && dw->isVisible())
             dw->d->morphIntoFloatingWindow();
     }

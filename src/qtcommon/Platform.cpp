@@ -74,7 +74,7 @@ public:
             return false;
 
         auto view = Platform_qt::instance()->qobjectAsView(o);
-        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+        for (EventFilterInterface *filter : std::as_const(q->d->m_globalEventFilters)) {
             if (filter->onMoveEvent(view.get()))
                 return true;
         }
@@ -88,7 +88,7 @@ public:
             return false;
 
         if (auto view = Platform_qt::instance()->qobjectAsView(o)) {
-            for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+            for (EventFilterInterface *filter : std::as_const(q->d->m_globalEventFilters)) {
                 if (filter->onDnDEvent(view.get(), ev))
                     return true;
             }
@@ -106,7 +106,7 @@ public:
         if (!window)
             return false;
 
-        for (EventFilterInterface *filter : qAsConst(q->d->m_globalEventFilters)) {
+        for (EventFilterInterface *filter : std::as_const(q->d->m_globalEventFilters)) {
             if (filter->onExposeEvent(window))
                 return true;
         }
@@ -123,7 +123,7 @@ public:
 
         // Make a copy, as there could be reentrancy and filters getting removed while event being
         // processed
-        const auto filters = qAsConst(q->d->m_globalEventFilters);
+        const auto filters = std::as_const(q->d->m_globalEventFilters);
 
         for (EventFilterInterface *filter : filters) {
 

@@ -32,6 +32,8 @@
 #include <QTimer>
 #endif
 
+#include <utility>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -443,7 +445,7 @@ void TitleBar::onFloatClicked()
 
                 int i = 0;
                 DockWidget *current = nullptr;
-                for (auto dock : qAsConst(dockWidgets)) {
+                for (auto dock : std::as_const(dockWidgets)) {
 
                     if (!current && dock->isCurrentTab())
                         current = dock;

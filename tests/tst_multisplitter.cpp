@@ -24,6 +24,7 @@
 
 #include <memory.h>
 #include <cstdlib>
+#include <utility>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -1329,7 +1330,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator2()
         /// all.
         const int numChildren = root->numChildren();
         auto children = root->childItems();
-        for (auto item : qAsConst(children)) {
+        for (auto item : std::as_const(children)) {
             item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
         }
         root->setSize_recursive(Size(4000 + Item::separatorThickness * (numChildren - 1), 1000));

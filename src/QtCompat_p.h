@@ -294,7 +294,6 @@ public:
 #define Q_DECLARE_METATYPE(name)
 #define Q_INVOKABLE
 #define Q_SLOTS
-#define qAsConst(name) name
 #define QT_DOCKS_EXPORT
 #define Q_DECLARE_OPERATORS_FOR_FLAGS(name)
 #define QT_BEGIN_NAMESPACE

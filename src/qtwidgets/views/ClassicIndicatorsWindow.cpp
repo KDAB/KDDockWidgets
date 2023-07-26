@@ -17,6 +17,8 @@
 
 #include <QPainter>
 
+#include <utility>
+
 #ifdef QT_X11EXTRAS_LIB
 #include <QtX11Extras/QX11Info>
 #endif
@@ -214,7 +216,7 @@ void IndicatorWindow::updateMask()
     QRegion region;
 
     if (!KDDockWidgets::windowManagerHasTranslucency()) {
-        for (Indicator *indicator : qAsConst(m_indicators)) {
+        for (Indicator *indicator : std::as_const(m_indicators)) {
             if (indicator->isVisible())
                 region = region.united(QRegion(indicator->geometry(), QRegion::Rectangle));
         }
@@ -248,7 +250,7 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
 {
     DropLocation loc = DropLocation_None;
 
-    for (Indicator *indicator : qAsConst(m_indicators)) {
+    for (Indicator *indicator : std::as_const(m_indicators)) {
         if (indicator->isVisible()) {
             const bool hovered = indicator->rect().contains(indicator->mapFromGlobal(globalPos));
             indicator->setHovered(hovered);

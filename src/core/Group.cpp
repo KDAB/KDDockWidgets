@@ -47,6 +47,7 @@
 
 #include "kdbindings/signal.h"
 
+#include <utility>
 
 #define MARGIN_THRESHOLD 100
 
@@ -726,7 +727,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
 
     group->setObjectName(f.objectName);
 
-    for (const auto &savedDock : qAsConst(f.dockWidgets)) {
+    for (const auto &savedDock : std::as_const(f.dockWidgets)) {
         if (DockWidget *dw = DockWidget::deserialize(savedDock)) {
             group->addTab(dw);
         }
