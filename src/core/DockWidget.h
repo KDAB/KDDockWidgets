@@ -471,6 +471,4 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(KDDockWidgets::Location)
-
 #endif

@@ -426,6 +426,7 @@ inline bool fuzzyCompare(double a, double b, double epsilon = 0.0001)
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
+Q_DECLARE_METATYPE(KDDockWidgets::Location)
 
 #define KDDW_DELETE_COPY_CTOR(NAME)         \
     NAME(const NAME &) = delete;            \
