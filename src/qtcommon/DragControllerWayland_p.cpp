@@ -30,13 +30,13 @@ void StateDraggingWayland::onEntry()
 {
     KDDW_DEBUG("StateDraggingWayland entered");
 
-    if (m_inQDrag) {
+    if (DragController::instance()->m_inQDrag) {
         // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
         KDDW_ERROR("Impossible!");
         return;
     }
 
-    ScopedValueRollback guard(m_inQDrag, true);
+    ScopedValueRollback guard(DragController::instance()->m_inQDrag, true);
     q->m_windowBeingDragged =
         std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 

@@ -12,6 +12,8 @@
 #include "DelayedCall_p.h"
 #include "DockWidget_p.h"
 #include "Controller.h"
+#include "DragController_p.h"
+#include "core/Utils_p.h"
 
 using namespace KDDockWidgets::Core;
 
@@ -28,6 +30,12 @@ DelayedDelete::~DelayedDelete() = default;
 
 void DelayedDelete::call()
 {
+    if (isWayland() && DragController::instance()->isInQDrag()) {
+        // Workaround QTBUG-115527. FloatingWindow must be deleted after QDrag::exec() ends.
+        Platform::instance()->runDelayed(200, new DelayedDelete(m_object));
+        return;
+    }
+
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
     // triggered by a sendEvent() before event loop starts)
     delete m_object;

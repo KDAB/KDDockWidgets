@@ -979,3 +979,8 @@ Draggable *DragController::draggableForView(View *view) const
 
     return nullptr;
 }
+
+bool DragController::isInQDrag() const
+{
+    return m_inQDrag;
+}

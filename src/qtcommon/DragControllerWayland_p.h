@@ -34,7 +34,6 @@ public:
     bool handleDragLeave(DropArea *) override;
     bool handleDrop(DropEvent *, DropArea *) override;
     bool handleMouseMove(QPoint globalPos) override;
-    bool m_inQDrag = false;
 };
 
 // A sub-class just so we don't use QMimeData directly. We'll only accept drops if its mime data

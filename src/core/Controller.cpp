@@ -16,6 +16,7 @@
 #include "View_p.h"
 #include "Logging_p.h"
 #include "Controller_p.h"
+#include "DragController_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

@@ -125,6 +125,9 @@ public:
     KDBindings::Signal<> dropped;
     KDBindings::Signal<> isDraggingChanged;
 
+    /// Wayland only
+    bool isInQDrag() const;
+
 private:
     friend class StateBase;
     friend class StateNone;
@@ -154,6 +157,7 @@ private:
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
     StateNone *m_stateNone = nullptr;
     StateInternalMDIDragging *m_stateDraggingMDI = nullptr;
+    bool m_inQDrag = false;
 };
 
 class StateBase : public State
