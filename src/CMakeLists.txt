@@ -410,7 +410,12 @@ if(KDDW_FRONTEND_FLUTTER)
     if(MSVC)
         set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
     else()
-        set(FLUTTER_ENGINE_LIBRARY libflutter_engine.so)
+        if(DEFINED ENV{KDDW_FLUTTER_TESTS_USE_AOT})
+            set(FLUTTER_ENGINE_LIBRARY rel/libflutter_engine.so)
+        else()
+            set(FLUTTER_ENGINE_LIBRARY dbg/libflutter_engine.so)
+        endif()
+
         set_source_files_properties(
             ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
             PROPERTIES COMPILE_FLAGS "-Wno-unused-function -Wno-unused-variable -Wno-format-security \
@@ -441,13 +446,22 @@ if(KDDW_FRONTEND_FLUTTER)
         endif()
 
         if(NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
-            # Build our dart code for the tests embedder
+            # Build assets for our tests
             add_custom_command(
                 TARGET kddockwidgets
                 PRE_BUILD
                 COMMAND ${FLUTTER_EXE} build bundle --suppress-analytics
                 WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
                 COMMENT "Running flutter build bundle flutter_tests_embedder"
+            )
+
+            # Build AOT stuff (libapp.so)
+            add_custom_command(
+                TARGET kddockwidgets
+                PRE_BUILD
+                COMMAND ${FLUTTER_EXE} build linux --release --suppress-analytics
+                WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
+                COMMENT "Running flutter build linux --release flutter_tests_embedder"
             )
         endif()
 
