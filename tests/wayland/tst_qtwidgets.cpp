@@ -25,7 +25,6 @@
 
 #include <QApplication>
 #include <QLabel>
-#include <QScreen>
 #include <QSignalSpy>
 #include <QStyle>
 #include <QVBoxLayout>
