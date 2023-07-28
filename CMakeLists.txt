@@ -143,16 +143,6 @@ else()
     set(QT_MIN_VERSION "5.15")
 endif()
 
-if(KDDockWidgets_WAYLAND_TESTS)
-    if(NOT KDDockWidgets_DEVELOPER_MODE)
-        message(FATAL_ERROR "Wayland tests require developer mode")
-    endif()
-
-    if(NOT KDDW_FRONTEND_QTWIDGETS)
-        message(FATAL_ERROR "Wayland tests require QtWidgets")
-    endif()
-endif()
-
 # BEGIN frontend enabling
 
 set(KDDW_FRONTEND_QTWIDGETS OFF)
@@ -233,6 +223,16 @@ if(KDDW_FRONTEND_FLUTTER)
 endif()
 
 # END frontend enabling
+
+if(KDDockWidgets_WAYLAND_TESTS)
+    if(NOT KDDockWidgets_DEVELOPER_MODE)
+        message(FATAL_ERROR "Wayland tests require developer mode")
+    endif()
+
+    if(NOT KDDW_FRONTEND_QTWIDGETS)
+        message(FATAL_ERROR "Wayland tests require QtWidgets")
+    endif()
+endif()
 
 set(KDDockWidgets_LIBRARY_QTID "")
 
