@@ -1,4 +1,7 @@
 /examples/flutter/windows/flutter/ephemeral/
+/tests/flutter_tests_embedder/flutter_tests_embedder.iml
+/tests/flutter_tests_embedder/linux/flutter/ephemeral/
+/tests/flutter_tests_embedder/.metadata
 /default/
 docks.qbs.user
 /release/
