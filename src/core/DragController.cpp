@@ -692,7 +692,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
         KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.");
         return true;
     } else {
-        KDDW_DEBUG("DragController::onDnDEvent: No view. ev={}", e->type());
+        KDDW_DEBUG("DragController::onDnDEvent: No view. ev={}", int(e->type()));
     }
 
     return false;
