@@ -573,5 +573,6 @@ private:
 
 }
 Q_DECLARE_METATYPE(KDDockWidgets::Location)
+Q_DECLARE_METATYPE(KDDockWidgets::DockWidgetBase::List)
 
 #endif

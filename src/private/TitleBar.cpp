@@ -27,6 +27,51 @@
 
 using namespace KDDockWidgets;
 
+class SideBarGroupRegister
+{
+public:
+    static void registerDockWidgetsAsGroup(const DockWidgetBase::List &list)
+    {
+        s_groups.push_back(list);
+        for (const auto &dw : list) {
+            QObject::connect(dw, &QObject::destroyed, [dw] {
+                auto group = groupForDockWidgetRef(dw);
+                group.removeAll(dw);
+            });
+        }
+    }
+
+    static DockWidgetBase::List groupForDockWidget(DockWidgetBase *dw)
+    {
+        return groupForDockWidgetRef(dw);
+    }
+
+    static void removeDockWidgetFromGroup(DockWidgetBase *dw)
+    {
+        while (true) {
+            auto &group = groupForDockWidgetRef(dw);
+            if (group.isEmpty())
+                return;
+            group.removeAll(dw);
+        }
+    }
+
+private:
+    static DockWidgetBase::List &groupForDockWidgetRef(DockWidgetBase *dw)
+    {
+        static DockWidgetBase::List empty;
+        for (auto &group : s_groups) {
+            if (group.contains(dw))
+                return group;
+        }
+        return empty;
+    }
+
+    static QVector<DockWidgetBase::List> s_groups;
+};
+
+QVector<DockWidgetBase::List> SideBarGroupRegister::s_groups;
+
 TitleBar::TitleBar(Frame *parent)
     : QWidgetAdapter(parent)
     , Draggable(this)
@@ -501,14 +546,33 @@ void TitleBar::onAutoHideClicked()
         return;
     }
 
+    const bool groupedAutoHide = Config::self().flags() & Config::Flag_AutoHideAsTabGroups;
+    const auto currentDw = m_frame->currentDockWidget();
+
     const auto &dockwidgets = m_frame->dockWidgets();
+    if (groupedAutoHide) {
+        SideBarGroupRegister::registerDockWidgetsAsGroup(dockwidgets);
+    }
+
     for (DockWidgetBase *dw : dockwidgets) {
         if (dw->isOverlayed()) {
             // restore
             MainWindowBase *mainWindow = dw->mainWindow();
-            mainWindow->restoreFromSideBar(dw);
+            auto sideBarGroup = groupedAutoHide ? SideBarGroupRegister::groupForDockWidget(dw) : DockWidgetBase::List();
+            if (sideBarGroup.isEmpty()) {
+                mainWindow->restoreFromSideBar(dw);
+            } else {
+                for (auto it = sideBarGroup.rbegin(); it != sideBarGroup.rend(); ++it) {
+                    DockWidgetBase *member = *it;
+                    mainWindow->restoreFromSideBar(member);
+                }
+                dw->setAsCurrentTab();
+            }
+            SideBarGroupRegister::removeDockWidgetFromGroup(dw);
         } else {
-            dw->moveToSideBar();
+            if (groupedAutoHide || dw == currentDw) {
+                dw->moveToSideBar();
+            }
         }
     }
 }
