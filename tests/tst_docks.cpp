@@ -5590,6 +5590,38 @@ void TestDocks::tst_sidebarOverlayShowsAutohide()
     delete dw1;
 }
 
+void TestDocks::tst_sidebarGrouping()
+{
+    // Tests Flag_AutoHideAsTabGroups
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport | KDDockWidgets::Config::Flag_AutoHideAsTabGroups);
+
+    {
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = new DockWidgetType(QStringLiteral("1"));
+        auto dw2 = new DockWidgetType(QStringLiteral("2"));
+
+        m1->addDockWidget(dw1, Location_OnBottom);
+        dw1->addDockWidgetAsTab(dw2);
+
+        dw1->titleBar()->onAutoHideClicked();
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(dw2->isInSideBar());
+        QVERIFY(!dw1->isOverlayed());
+        QVERIFY(!dw2->isOverlayed());
+
+        m1->overlayOnSideBar(dw1);
+        QVERIFY(dw1->isOverlayed());
+        QVERIFY(!dw2->isOverlayed());
+
+        dw1->titleBar()->onAutoHideClicked();
+        QVERIFY(!dw1->isInSideBar());
+        QVERIFY(!dw2->isInSideBar());
+        QVERIFY(!dw1->isOverlayed());
+        QVERIFY(!dw2->isOverlayed());
+    }
+}
+
 void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
 {
     EnsureTopLevelsDeleted e;

@@ -33,6 +33,7 @@ class Frame;
 class LayoutWidget;
 class MainWindowMDI;
 class SideBar;
+class SideBarGroupings;
 struct WindowBeingDragged;
 
 class DOCKS_EXPORT DockRegistry : public QObject
@@ -241,11 +242,17 @@ protected:
 
 private:
     friend class FocusScope;
+    friend class TitleBar;
     explicit DockRegistry(QObject *parent = nullptr);
     bool onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *);
     void onFocusObjectChanged(QObject *obj);
     void maybeDelete();
     void setFocusedDockWidget(DockWidgetBase *);
+
+    // To honour Config::Flag_AutoHideAsTabGroups:
+    void addSideBarGrouping(const DockWidgetBase::List &);
+    void removeSideBarGrouping(const DockWidgetBase::List &);
+    DockWidgetBase::List sideBarGroupingFor(DockWidgetBase *) const;
 
     bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;
@@ -262,6 +269,9 @@ private:
     /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
     /// entry
     mutable QHash<QString, QString> m_dockWidgetIdRemapping;
+
+    // To honour Config::Flag_AutoHideAsTabGroups
+    SideBarGroupings *const m_sideBarGroupings;
 };
 
 }
