@@ -655,7 +655,7 @@ void MainWindow::setUniqueName(const QString &uniqueName)
 bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
 {
     if (mw.options != options()) {
-        KDDW_ERROR("Refusing to restore MainWindow with different options ; expected={}, has={}", mw.options, options());
+        KDDW_ERROR("Refusing to restore MainWindow with different options ; expected={}, has={}", int(mw.options), int(options()));
         return false;
     }
 

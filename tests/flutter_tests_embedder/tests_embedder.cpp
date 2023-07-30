@@ -248,7 +248,7 @@ void TestsEmbedder::deinit()
         const FlutterEngineResult res = FlutterEngineShutdown(m_flutterEngine);
         m_flutterEngine = nullptr;
         if (res != kSuccess)
-            KDDW_WARN("TestsEmbedder::deinit: Could not stop flutter {}", res);
+            KDDW_WARN("TestsEmbedder::deinit: Could not stop flutter {}", int(res));
     }
 
     if (m_glfwWindow) {
@@ -316,7 +316,7 @@ bool TestsEmbedder::runFlutter(GLFWwindow *window,
         const FlutterEngineAOTDataSource source = { .type = kFlutterEngineAOTDataSourceTypeElfPath, .elf_path = aot_elf.c_str() };
         auto res = FlutterEngineCreateAOTData(&source, &aot_data);
         if (res != kSuccess || !aot_data) {
-            KDDW_ERROR("Could not prepare AOT data result={}", res);
+            KDDW_ERROR("Could not prepare AOT data result={}", int(res));
             return false;
         }
     }
