@@ -13,8 +13,6 @@
 
 // The goal of this file is to provide fallback types for non-Qt frontends such as Flutter
 
-#include "flutter/qcoro.h"
-
 #ifdef KDDW_FRONTEND_QT
 
 #include <QCloseEvent>
@@ -30,6 +28,7 @@
 
 #else
 
+#include "flutter/qcoro.h"
 #include "qtcompat/geometry_helpers_p.h"
 #include "qtcompat/enums_p.h"
 #include "qtcompat/string_p.h"
@@ -285,7 +284,13 @@ public:
 
 }
 
-#if !defined(KDDW_FRONTEND_QT)
+#if defined(KDDW_FRONTEND_QT)
+
+#define KDDW_QCORO_TASK bool
+#define KDDW_CO_AWAIT
+#define KDDW_CO_RETURN return
+
+#else
 
 // Dummy Qt macros, to avoid too much ifdefs in core/
 #define Q_NAMESPACE
