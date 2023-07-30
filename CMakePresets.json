@@ -10,8 +10,7 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
-                "KDDockWidgets_USE_LLD": "ON",
-                "KDDockWidgets_WAYLAND_TESTS": "ON"
+                "KDDockWidgets_USE_LLD": "ON"
             },
             "warnings": {
                 "uninitialized": true
