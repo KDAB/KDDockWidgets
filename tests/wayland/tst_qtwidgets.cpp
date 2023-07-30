@@ -30,6 +30,11 @@
 #include <QVBoxLayout>
 #include <QtConcurrent>
 
+// TODO:
+// - Remove QtConcurrent. We shouldn't run widget code on secondary threads.
+// - Replace QThread::msleep() with QTest::qWait(), so event loop still runs
+
+
 static KWayland::Client::FakeInput *input = nullptr;
 
 QPoint getWindowTopLeft()
