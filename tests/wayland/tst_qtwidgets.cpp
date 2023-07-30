@@ -220,9 +220,9 @@ void nextTest()
 
 int main(int argc, char **argv)
 {
+    qputenv("QT_QPA_PLATFORM", "wayland");
     QApplication app(argc, argv);
 
-    qputenv("QT_QPA_PLATFORM", "wayland");
     KWayland::Client::ConnectionThread *connection = KWayland::Client::ConnectionThread::fromApplication(qGuiApp);
 
     QObject::connect(&watcher, &QFutureWatcher<void>::finished, [] {
