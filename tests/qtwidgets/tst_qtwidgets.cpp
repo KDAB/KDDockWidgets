@@ -149,6 +149,7 @@ private Q_SLOTS:
     void tst_sidebarOverlayShowsAutohide();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_sidebarGrouping();
+    void tst_sidebarCrash();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
@@ -886,6 +887,33 @@ void TestQtWidgets::tst_sidebarGrouping()
         QVERIFY(!dw1->isOverlayed());
         QVERIFY(!dw2->isOverlayed());
     }
+}
+
+void TestQtWidgets::tst_sidebarCrash()
+{
+    // Tests a crash that happened when toggling overlay a few times
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = newDockWidget(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    dw1->titleBar()->onAutoHideClicked();
+    QVERIFY(dw1->isInSideBar());
+
+    m1->overlayOnSideBar(dw1);
+    dw1->titleBar()->onAutoHideClicked();
+    QVERIFY(!dw1->isInSideBar());
+    QVERIFY(!dw1->isOverlayed());
+
+    dw1->titleBar()->onAutoHideClicked();
+    QVERIFY(dw1->isInSideBar());
+
+    QTest::qWait(1000);
+
+    m1->toggleOverlayOnSideBar(dw1);
 }
 
 void TestQtWidgets::tst_floatRemovesFromSideBar()

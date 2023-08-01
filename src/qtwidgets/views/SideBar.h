@@ -47,6 +47,8 @@ protected:
 
 private:
     bool isVertical() const;
+
+    friend class QtWidgets::SideBar;
     class Private;
     Private *const d;
 };

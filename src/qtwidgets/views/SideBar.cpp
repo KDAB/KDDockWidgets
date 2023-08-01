@@ -38,6 +38,9 @@ public:
 
     Core::SideBar *const m_sideBar;
     const QPointer<Core::DockWidget> m_dockWidget;
+
+    // Connections to be disconnected when button is destroyed
+    std::vector<KDBindings::ScopedConnection> m_connections;
 };
 }
 
@@ -64,9 +67,9 @@ void SideBar::addDockWidget_Impl(Core::DockWidget *dw)
     auto button = createButton(dw, this);
     button->setText(dw->title());
 
-    dw->d->titleChanged.connect(&SideBarButton::setText, button);
-    dw->d->isOverlayedChanged.connect([button] { button->update(); });
-    dw->d->removedFromSideBar.connect(&QObject::deleteLater, button);
+    button->d->m_connections.push_back(dw->d->titleChanged.connect(&SideBarButton::setText, button));
+    button->d->m_connections.push_back(dw->d->isOverlayedChanged.connect([button] { button->update(); }));
+    button->d->m_connections.push_back(dw->d->removedFromSideBar.connect(&QObject::deleteLater, button));
 
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] { m_sideBar->onButtonClicked(dw); });
