@@ -46,7 +46,7 @@
 #include <kddockwidgets/qtquick/views/RubberBand.h>
 #include <kddockwidgets/qtquick/views/Separator.h>
 #include <kddockwidgets/qtquick/views/Stack.h>
-// #include <kddockwidgets/qtquick/views/TabBar.h>
+#include <kddockwidgets/qtquick/views/TabBar.h>
 #include <kddockwidgets/qtquick/views/TitleBar.h>
 #include <kddockwidgets/qtquick/views/View.h>
 // #include <kddockwidgets/qtquick/views/ViewWrapper.h>

@@ -30,11 +30,26 @@
 #include <QMouseEvent>
 #include <QDebug>
 
+#include "kdbindings/signal.h"
+
 #include <unordered_map>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
+class QtQuick::TabBar::Private
+{
+public:
+    Private(Core::TabBar *controller, TabBar *q)
+        : m_dockWidgetModel(new DockWidgetModel(controller, q))
+    {
+    }
+
+    int m_hoveredTabIndex = -1;
+    QPointer<QQuickItem> m_tabBarQmlItem;
+    DockWidgetModel *const m_dockWidgetModel;
+    KDBindings::ScopedConnection m_tabBarAutoHideChanged;
+};
 
 class DockWidgetModel::Private
 {
@@ -59,15 +74,20 @@ public:
 TabBar::TabBar(Core::TabBar *controller, QQuickItem *parent)
     : View(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
-    , m_dockWidgetModel(new DockWidgetModel(controller, this))
+    , d(new Private(controller, this))
 {
-    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
+    connect(d->m_dockWidgetModel, &DockWidgetModel::countChanged, this,
             [controller] { controller->dptr()->countChanged.emit(); });
+}
+
+TabBar::~TabBar()
+{
+    delete d;
 }
 
 void TabBar::init()
 {
-    m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect(
+    d->m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect(
         [this] { Q_EMIT tabBarAutoHideChanged(); });
 }
 
@@ -77,16 +97,16 @@ int TabBar::tabAt(QPoint localPt) const
     // Also note that the ListView's flickable has bogus contentX, so instead just iterate through
     // the tabs
 
-    if (!m_tabBarQmlItem) {
+    if (!d->m_tabBarQmlItem) {
         qWarning() << Q_FUNC_INFO << "No visual tab bar item yet";
         return -1;
     }
 
-    const QPointF globalPos = m_tabBarQmlItem->mapToGlobal(localPt);
+    const QPointF globalPos = d->m_tabBarQmlItem->mapToGlobal(localPt);
 
     QVariant index;
     const bool res =
-        QMetaObject::invokeMethod(m_tabBarQmlItem, "getTabIndexAtPosition",
+        QMetaObject::invokeMethod(d->m_tabBarQmlItem, "getTabIndexAtPosition",
                                   Q_RETURN_ARG(QVariant, index), Q_ARG(QVariant, globalPos));
 
     if (res)
@@ -97,17 +117,17 @@ int TabBar::tabAt(QPoint localPt) const
 
 QQuickItem *TabBar::tabBarQmlItem() const
 {
-    return m_tabBarQmlItem;
+    return d->m_tabBarQmlItem;
 }
 
 void TabBar::setTabBarQmlItem(QQuickItem *item)
 {
-    if (m_tabBarQmlItem == item) {
+    if (d->m_tabBarQmlItem == item) {
         qWarning() << Q_FUNC_INFO << "Should be called only once";
         return;
     }
 
-    m_tabBarQmlItem = item;
+    d->m_tabBarQmlItem = item;
     Q_EMIT tabBarQmlItemChanged();
 }
 
@@ -143,9 +163,9 @@ bool TabBar::event(QEvent *ev)
     switch (ev->type()) {
     case QEvent::MouseButtonDblClick:
     case QEvent::MouseButtonPress: {
-        if (m_tabBarQmlItem) {
+        if (d->m_tabBarQmlItem) {
             auto me = static_cast<QMouseEvent *>(ev);
-            m_tabBarQmlItem->setProperty("currentTabIndex", tabAt(me->pos()));
+            d->m_tabBarQmlItem->setProperty("currentTabIndex", tabAt(me->pos()));
             if (ev->type() == QEvent::MouseButtonPress)
                 m_tabBar->onMousePress(me->pos());
             else
@@ -168,7 +188,7 @@ QQuickItem *TabBar::tabAt(int index) const
 {
     QVariant result;
     const bool res = QMetaObject::invokeMethod(
-        m_tabBarQmlItem, "getTabAtIndex", Q_RETURN_ARG(QVariant, result), Q_ARG(QVariant, index));
+        d->m_tabBarQmlItem, "getTabAtIndex", Q_RETURN_ARG(QVariant, result), Q_ARG(QVariant, index));
 
     if (res)
         return result.value<QQuickItem *>();
@@ -200,12 +220,12 @@ Stack *TabBar::stackView() const
 
 void TabBar::setCurrentIndex(int index)
 {
-    m_dockWidgetModel->setCurrentIndex(index);
+    d->m_dockWidgetModel->setCurrentIndex(index);
 }
 
 bool TabBar::closeAtIndex(int index)
 {
-    if (auto dw = m_dockWidgetModel->dockWidgetAt(index))
+    if (auto dw = d->m_dockWidgetModel->dockWidgetAt(index))
         return dw->close();
 
     return false;
@@ -225,7 +245,7 @@ void TabBar::changeTabIcon(int index, const QIcon &)
 
 void TabBar::removeDockWidget(Core::DockWidget *dw)
 {
-    m_dockWidgetModel->remove(dw);
+    d->m_dockWidgetModel->remove(dw);
 }
 
 void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
@@ -234,12 +254,12 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon
     Q_UNUSED(title); // TODO
     Q_UNUSED(icon); // TODO
 
-    m_dockWidgetModel->insert(dw, index);
+    d->m_dockWidgetModel->insert(dw, index);
 }
 
 DockWidgetModel *TabBar::dockWidgetModel() const
 {
-    return m_dockWidgetModel;
+    return d->m_dockWidgetModel;
 }
 
 void TabBar::onHoverEvent(QHoverEvent *ev, QPoint globalPos)
@@ -253,7 +273,7 @@ void TabBar::onHoverEvent(QHoverEvent *ev, QPoint globalPos)
 
 int TabBar::indexForTabPos(QPoint globalPt) const
 {
-    const int count = m_dockWidgetModel->count();
+    const int count = d->m_dockWidgetModel->count();
     for (int i = 0; i < count; i++) {
         const QRect tabRect = globalRectForTab(i);
         if (tabRect.contains(globalPt))
@@ -265,16 +285,16 @@ int TabBar::indexForTabPos(QPoint globalPt) const
 
 void TabBar::setHoveredTabIndex(int idx)
 {
-    if (idx == m_hoveredTabIndex)
+    if (idx == d->m_hoveredTabIndex)
         return;
 
-    m_hoveredTabIndex = idx;
+    d->m_hoveredTabIndex = idx;
     Q_EMIT hoveredTabIndexChanged(idx);
 }
 
 int TabBar::hoveredTabIndex() const
 {
-    return m_hoveredTabIndex;
+    return d->m_hoveredTabIndex;
 }
 
 DockWidgetModel::DockWidgetModel(Core::TabBar *tabBar, QObject *parent)

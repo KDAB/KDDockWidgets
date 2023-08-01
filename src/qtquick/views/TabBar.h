@@ -28,8 +28,6 @@
 #include <QPointer>
 #include <QHash>
 
-#include "kdbindings/signal.h"
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -51,6 +49,7 @@ class DOCKS_EXPORT TabBar : public QtQuick::View, public Core::TabBarViewInterfa
     Q_PROPERTY(int hoveredTabIndex READ hoveredTabIndex NOTIFY hoveredTabIndexChanged)
 public:
     explicit TabBar(Core::TabBar *controller, QQuickItem *parent = nullptr);
+    ~TabBar() override;
 
     DockWidgetModel *dockWidgetModel() const;
 
@@ -102,10 +101,9 @@ protected:
 private:
     QQuickItem *tabAt(int index) const;
     void setHoveredTabIndex(int);
-    DockWidgetModel *const m_dockWidgetModel;
-    QPointer<QQuickItem> m_tabBarQmlItem;
-    KDBindings::ScopedConnection m_tabBarAutoHideChanged;
-    int m_hoveredTabIndex = -1;
+
+    class Private;
+    Private *const d;
 };
 
 class DockWidgetModel : public QAbstractListModel
