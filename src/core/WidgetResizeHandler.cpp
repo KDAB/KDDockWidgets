@@ -558,7 +558,7 @@ void WidgetResizeHandler::restoreMouseCursor()
 
 CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
 {
-    if (!mTarget)
+    if (!mTargetGuard)
         return CursorPosition_Undefined;
 
 #ifdef KDDW_FRONTEND_QTQUICK
