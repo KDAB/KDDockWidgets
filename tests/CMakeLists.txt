@@ -123,4 +123,7 @@ if(KDDockWidgets_WAYLAND_TESTS)
     add_subdirectory(wayland)
 endif()
 
+# Check if includes are installed
+add_subdirectory(includes_test)
+
 #-----------------------------------------------------------------------------
