@@ -40,9 +40,28 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
+namespace KDDockWidgets::Core {
+
+// Helper class to help implement Config::Flag_AutoHideAsTabGroups
+class SideBarGroupings
+{
+public:
+    void addGrouping(const DockWidget::List &);
+    void removeGrouping(const DockWidget::List &);
+    DockWidget::List groupingFor(DockWidget *) const;
+    void removeFromGroupings(DockWidget *);
+
+private:
+    DockWidget::List &groupingByRef(DockWidget *);
+    Vector<DockWidget::List> m_groupings;
+};
+
+}
+
 DockRegistry::DockRegistry(Core::Object *parent)
     : Core::Object(parent)
     , d(new Private())
+    , m_sideBarGroupings(new SideBarGroupings())
 {
     Platform::instance()->installGlobalEventFilter(this);
 
@@ -52,6 +71,7 @@ DockRegistry::DockRegistry(Core::Object *parent)
 
 DockRegistry::~DockRegistry()
 {
+    delete m_sideBarGroupings;
     Platform::instance()->removeGlobalEventFilter(this);
     d->m_connection.disconnect();
     delete d;
@@ -312,6 +332,8 @@ void DockRegistry::unregisterDockWidget(Core::DockWidget *dock)
         d->m_focusedDockWidget = nullptr;
 
     m_dockWidgets.removeOne(dock);
+    m_sideBarGroupings->removeFromGroupings(dock);
+
     maybeDelete();
 }
 
@@ -751,4 +773,61 @@ bool DockRegistry::onExposeEvent(Core::Window::Ptr window)
     }
 
     return false;
+}
+
+void DockRegistry::addSideBarGrouping(const DockWidget::List &dws)
+{
+    m_sideBarGroupings->addGrouping(dws);
+}
+
+void DockRegistry::removeSideBarGrouping(const DockWidget::List &dws)
+{
+    m_sideBarGroupings->removeGrouping(dws);
+}
+
+DockWidget::List DockRegistry::sideBarGroupingFor(DockWidget *dw) const
+{
+    return m_sideBarGroupings->groupingFor(dw);
+}
+
+void SideBarGroupings::addGrouping(const DockWidget::List &dws)
+{
+    if (dws.size() < 2) {
+        // Simplification: A single dock widget is not considered to be grouped.
+        return;
+    }
+
+    m_groupings.push_back(dws);
+}
+
+void SideBarGroupings::removeGrouping(const DockWidget::List &dws)
+{
+    m_groupings.removeAll(dws);
+}
+
+DockWidget::List SideBarGroupings::groupingFor(DockWidget *dw) const
+{
+    return const_cast<SideBarGroupings *>(this)->groupingByRef(dw);
+}
+
+void SideBarGroupings::removeFromGroupings(DockWidget *dw)
+{
+    while (true) {
+        auto &grouping = groupingByRef(dw);
+        if (grouping.isEmpty())
+            return;
+        grouping.removeAll(dw);
+    }
+}
+
+DockWidget::List &SideBarGroupings::groupingByRef(DockWidget *dw)
+{
+    static DockWidget::List empty;
+
+    for (auto &grouping : m_groupings) {
+        if (grouping.contains(dw))
+            return grouping;
+    }
+
+    return empty;
 }

@@ -22,6 +22,7 @@
 #include "views/TitleBarViewInterface.h"
 #include "core/DockWidget_p.h"
 #include "core/FloatingWindow.h"
+#include "DockRegistry.h"
 #include "core/FloatingWindow_p.h"
 #include "core/TabBar.h"
 #include "core/MainWindow.h"
@@ -502,13 +503,37 @@ void TitleBar::onAutoHideClicked()
     }
 
     const auto &dockwidgets = m_group->dockWidgets();
-    for (DockWidget *dw : dockwidgets) {
-        if (dw->isOverlayed()) {
-            // restore
-            MainWindow *mainWindow = dw->mainWindow();
+    if (isOverlayed() && dockwidgets.size() != 1) {
+        // Doesn't happen
+        KDDW_ERROR("TitleBar::onAutoHideClicked: There can only be a single dock widget per titlebar overlayed");
+        return;
+    }
+
+    const bool groupedAutoHide = Config::hasFlag(Config::Flag_AutoHideAsTabGroups);
+    const auto currentDw = m_group->currentDockWidget();
+    auto registry = DockRegistry::self();
+
+    if (isOverlayed()) { // Restore it:
+        auto dw = dockwidgets.first();
+        MainWindow *mainWindow = dw->mainWindow();
+        auto sideBarGroup = groupedAutoHide ? registry->sideBarGroupingFor(dw) : DockWidget::List();
+        if (sideBarGroup.isEmpty()) {
             mainWindow->restoreFromSideBar(dw);
         } else {
-            dw->moveToSideBar();
+            // Config::Flag_AutoHideAsTabGroups case. Restore its friends too
+            for (auto it = sideBarGroup.rbegin(); it != sideBarGroup.rend(); ++it) {
+                mainWindow->restoreFromSideBar(*it);
+            }
+            dw->setAsCurrentTab();
+            registry->removeSideBarGrouping(sideBarGroup);
+        }
+    } else { // Send it to sidebar:
+        if (groupedAutoHide)
+            registry->addSideBarGrouping(dockwidgets);
+
+        for (DockWidget *dw : dockwidgets) {
+            if (groupedAutoHide || dw == currentDw)
+                dw->moveToSideBar();
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Core {
 class FloatingWindow;
 class Layout;
 class SideBar;
+class SideBarGroupings;
 class MainWindow;
 class DockWidget;
 class Group;
@@ -234,6 +235,8 @@ public:
 
 private:
     friend class Core::FocusScope;
+    friend class Core::TitleBar;
+
     explicit DockRegistry(Core::Object *parent = nullptr);
     bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);
     void onFocusedViewChanged(std::shared_ptr<Core::View> view);
@@ -243,6 +246,11 @@ private:
     // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Core::Window>) override;
     bool onMouseButtonPress(Core::View *, MouseEvent *) override;
+
+    // To honour Config::Flag_AutoHideAsTabGroups:
+    void addSideBarGrouping(const Vector<Core::DockWidget *> &);
+    void removeSideBarGrouping(const Vector<Core::DockWidget *> &);
+    Vector<Core::DockWidget *> sideBarGroupingFor(Core::DockWidget *) const;
 
     Private *const d;
 
@@ -259,6 +267,9 @@ private:
     /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
     /// entry
     mutable std::unordered_map<QString, QString> m_dockWidgetIdRemapping;
+
+    // To honour Config::Flag_AutoHideAsTabGroups
+    Core::SideBarGroupings *const m_sideBarGroupings;
 };
 
 }
