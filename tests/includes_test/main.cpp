@@ -29,7 +29,6 @@
 #include <kddockwidgets/qtwidgets/views/TabBar.h>
 #include <kddockwidgets/qtwidgets/views/TitleBar.h>
 #include <kddockwidgets/qtwidgets/views/View.h>
-// #include <kddockwidgets/qtwidgets/views/ViewWrapper.h>
 
 #include <kddockwidgets/qtquick/Action.h>
 #include <kddockwidgets/qtquick/Platform.h>
@@ -49,7 +48,6 @@
 #include <kddockwidgets/qtquick/views/TabBar.h>
 #include <kddockwidgets/qtquick/views/TitleBar.h>
 #include <kddockwidgets/qtquick/views/View.h>
-// #include <kddockwidgets/qtquick/views/ViewWrapper.h>
 
 int main()
 {
