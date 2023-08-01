@@ -24,6 +24,7 @@
 #include "kddockwidgets/core/Stack.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/TabBar_p.h"
+#include "core/Stack_p.h"
 #include "core/Logging_p.h"
 
 #include <QMetaObject>
@@ -87,7 +88,7 @@ TabBar::~TabBar()
 
 void TabBar::init()
 {
-    d->m_tabBarAutoHideChanged = m_tabBar->stack()->tabBarAutoHideChanged.connect(
+    d->m_tabBarAutoHideChanged = m_tabBar->stack()->d->tabBarAutoHideChanged.connect(
         [this] { Q_EMIT tabBarAutoHideChanged(); });
 }
 

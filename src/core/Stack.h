@@ -16,9 +16,17 @@
 #include "Group.h"
 #include "TabBar.h"
 
-#include "kdbindings/signal.h"
+namespace KDDockWidgets {
 
-namespace KDDockWidgets::Core {
+namespace QtWidgets {
+class Stack;
+}
+
+namespace QtQuick {
+class TabBar;
+}
+
+namespace Core {
 
 class Group;
 class TabBar;
@@ -77,17 +85,19 @@ public:
     /// @brief Enables document mode. Default is false.
     void setDocumentMode(bool);
 
-    /// Emitted when the tabBarAutoHide boolean member changes
-    KDBindings::Signal<bool> tabBarAutoHideChanged;
-
 public: // TODOm3
     bool onMouseDoubleClick(Point localPos);
 
 private:
+    friend class QtWidgets::Stack;
+    friend class QtQuick::TabBar;
+
     class Private;
     Private *const d;
 
     KDDW_DELETE_COPY_CTOR(Stack)
 };
+
+}
 
 }

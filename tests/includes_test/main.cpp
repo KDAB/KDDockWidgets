@@ -89,7 +89,7 @@
 #include <kddockwidgets/core/MainWindow.h>
 #include <kddockwidgets/core/Platform.h>
 #include <kddockwidgets/core/Separator.h>
-// #include <kddockwidgets/core/Stack.h>
+#include <kddockwidgets/core/Stack.h>
 #include <kddockwidgets/core/TitleBar.h>
 #include <kddockwidgets/core/ViewFactory.h>
 // #include <kddockwidgets/core/WidgetResizeHandler_p.h>

@@ -17,6 +17,8 @@
 #include "TabBar.h"
 #include "ObjectGuard_p.h"
 
+#include "kdbindings/signal.h"
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -33,7 +35,12 @@ public:
         , m_options(options)
     {
     }
+
+    /// Emitted when the tabBarAutoHide boolean member changes
+    KDBindings::Signal<bool> tabBarAutoHideChanged;
+
     Stack *const q;
+
     ObjectGuard<TabBar> m_tabBar;
     Group *const m_group;
     bool m_tabBarAutoHide = true;

@@ -188,7 +188,7 @@ void Stack::setTabBarAutoHide(bool is)
         return;
 
     d->m_tabBarAutoHide = is;
-    tabBarAutoHideChanged.emit(is);
+    d->tabBarAutoHideChanged.emit(is);
 }
 
 bool Stack::tabBarAutoHide() const

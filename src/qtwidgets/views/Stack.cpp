@@ -17,6 +17,7 @@
 #include "kddockwidgets/core/Window.h"
 #include "qtwidgets/ViewFactory.h"
 #include "core/DockRegistry_p.h"
+#include "core/Stack_p.h"
 #include "Config.h"
 #include "core/View_p.h"
 
@@ -82,7 +83,7 @@ void Stack::init()
 
     QTabWidget::setTabBarAutoHide(m_stack->tabBarAutoHide());
 
-    d->tabBarAutoHideChanged = m_stack->tabBarAutoHideChanged.connect(
+    d->tabBarAutoHideChanged = m_stack->d->tabBarAutoHideChanged.connect(
         [this](bool is) { QTabWidget::setTabBarAutoHide(is); });
 
     if (!QTabWidget::tabBar()->isVisible())
