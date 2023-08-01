@@ -15,6 +15,8 @@ project(qtwidgets_mdi)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIRS ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT TARGET kddockwidgets)
     # This will look for Qt, do find_package yourself manually before if you want
