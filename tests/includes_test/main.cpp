@@ -11,6 +11,7 @@
 
 // Tests that the includes are installed
 
+#if KDDW_FRONTEND_QTWIDGETS
 // #include <kddockwidgets/qtwidgets/Action.h>
 #include <kddockwidgets/qtwidgets/Platform.h>
 #include <kddockwidgets/qtwidgets/ViewFactory.h>
@@ -29,7 +30,9 @@
 #include <kddockwidgets/qtwidgets/views/TabBar.h>
 #include <kddockwidgets/qtwidgets/views/TitleBar.h>
 #include <kddockwidgets/qtwidgets/views/View.h>
+#endif
 
+#if KDDW_FRONTEND_QTQUICK
 #include <kddockwidgets/qtquick/Action.h>
 #include <kddockwidgets/qtquick/Platform.h>
 #include <kddockwidgets/qtquick/ViewFactory.h>
@@ -48,6 +51,7 @@
 #include <kddockwidgets/qtquick/views/TabBar.h>
 #include <kddockwidgets/qtquick/views/TitleBar.h>
 #include <kddockwidgets/qtquick/views/View.h>
+#endif
 
 int main()
 {
