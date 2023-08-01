@@ -374,10 +374,6 @@ target_include_directories(
 )
 
 if(KDDW_FRONTEND_QTWIDGETS)
-    target_include_directories(
-        kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtwidgets>
-    )
-
     if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
         target_include_directories(
             kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtwidgets_pretty>
@@ -658,17 +654,22 @@ if(KDDW_FRONTEND_QTWIDGETS)
         qtwidgets/views/TitleBar.h
     )
 
-    set(KDDW_QTWIDGET_PRETTY_HEADERS fwd_headers/qtwidgets_pretty/kddockwidgets/MainWindow.h
-                                     fwd_headers/qtwidgets_pretty/kddockwidgets/DockWidget.h
-    )
-
     install(FILES ${KDDW_QTWIDGET_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+
     install(FILES ${KDDW_QTWIDGET_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/)
     install(FILES ${KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS}
             DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/views/
     )
 
     if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
+        set(KDDW_QTWIDGET_PRETTY_HEADERS
+            fwd_headers/qtwidgets_pretty/kddockwidgets/MainWindow.h
+            fwd_headers/qtwidgets_pretty/kddockwidgets/DockWidget.h
+            fwd_headers/qtwidgets_pretty/kddockwidgets/ViewFactory.h
+            fwd_headers/qtwidgets_pretty/kddockwidgets/Platform.h
+            fwd_headers/qtwidgets_pretty/kddockwidgets/Window.h
+        )
+
         install(FILES ${KDDW_QTWIDGET_PRETTY_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
     endif()
 endif()
