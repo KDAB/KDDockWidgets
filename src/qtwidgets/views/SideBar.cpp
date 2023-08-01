@@ -26,6 +26,21 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
+namespace KDDockWidgets {
+class SideBarButton::Private
+{
+public:
+    Private(Core::DockWidget *dw, Core::SideBar *sideBar)
+        : m_sideBar(sideBar)
+        , m_dockWidget(dw)
+    {
+    }
+
+    Core::SideBar *const m_sideBar;
+    const QPointer<Core::DockWidget> m_dockWidget;
+};
+}
+
 SideBar::SideBar(Core::SideBar *controller, QWidget *parent)
     : View(controller, Core::ViewType::SideBar, parent)
     , SideBarViewInterface(controller)
@@ -71,21 +86,25 @@ SideBarButton *SideBar::createButton(Core::DockWidget *dw,
     return new SideBarButton(dw, parent);
 }
 
-SideBarButton::SideBarButton(Core::DockWidget *dw, SideBar *parent)
+SideBarButton::SideBarButton(Core::DockWidget *dw, QtWidgets::SideBar *parent)
     : QToolButton(parent)
-    , m_sideBar(parent->sideBar())
-    , m_dockWidget(dw)
+    , d(new Private(dw, parent->sideBar()))
 {
+}
+
+SideBarButton::~SideBarButton()
+{
+    delete d;
 }
 
 bool SideBarButton::isVertical() const
 {
-    return m_sideBar->isVertical();
+    return d->m_sideBar->isVertical();
 }
 
 void SideBarButton::paintEvent(QPaintEvent *)
 {
-    if (!m_dockWidget) {
+    if (!d->m_dockWidget) {
         // Can happen during destruction
         return;
     }

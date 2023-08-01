@@ -39,6 +39,7 @@ class DOCKS_EXPORT SideBarButton : public QToolButton
     Q_OBJECT
 public:
     explicit SideBarButton(Core::DockWidget *dw, QtWidgets::SideBar *parent);
+    ~SideBarButton() override;
 
 protected:
     void paintEvent(QPaintEvent *) override;
@@ -46,8 +47,8 @@ protected:
 
 private:
     bool isVertical() const;
-    Core::SideBar *const m_sideBar;
-    const QPointer<Core::DockWidget> m_dockWidget;
+    class Private;
+    Private *const d;
 };
 
 namespace QtWidgets {
