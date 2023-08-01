@@ -38,7 +38,7 @@
 #include <kddockwidgets/qtquick/views/DockWidget.h>
 #include <kddockwidgets/qtquick/views/DropArea.h>
 #include <kddockwidgets/qtquick/views/FloatingWindow.h>
-// #include <kddockwidgets/qtquick/views/Group.h>
+#include <kddockwidgets/qtquick/views/Group.h>
 #include <kddockwidgets/qtquick/views/MainWindow.h>
 #include <kddockwidgets/qtquick/views/MainWindowMDI.h>
 #include <kddockwidgets/qtquick/views/MDILayout.h>
