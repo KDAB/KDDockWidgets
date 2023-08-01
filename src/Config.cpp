@@ -102,6 +102,12 @@ void Config::setFlags(Flags f)
     d->fixFlags();
 }
 
+/** static*/
+bool Config::hasFlag(Flag flag)
+{
+    return (Config::self().flags() & flag) == flag;
+}
+
 void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
 {
     d->m_dockWidgetFactoryFunc = func;

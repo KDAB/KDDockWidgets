@@ -188,6 +188,9 @@ public:
     /// Call @ref flags() after the setter if you need to know what was really set
     void setFlags(Flags flags);
 
+    ///@brief Returns whether the specified flag is set or not
+    static bool hasFlag(Flag);
+
     /**
      * @brief Registers a DockWidgetFactoryFunc.
      *
