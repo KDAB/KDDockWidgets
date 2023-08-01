@@ -58,6 +58,42 @@
 #include <kddockwidgets/qtcommon/Platform.h>
 #endif
 
+#include <kddockwidgets/Config.h>
+#include <kddockwidgets/docks_export.h>
+#include <kddockwidgets/KDDockWidgets.h>
+#include <kddockwidgets/LayoutSaver.h>
+#include <kddockwidgets/MainWindowMDI.h> // TODOm4: really ?
+#include <kddockwidgets/Qt5Qt6Compat_p.h>
+#include <kddockwidgets/QtCompat_p.h>
+
+#include <kddockwidgets/core/Action.h>
+#include <kddockwidgets/core/DockRegistry.h>
+#include <kddockwidgets/core/Draggable_p.h>
+#include <kddockwidgets/core/EventFilterInterface.h>
+#include <kddockwidgets/core/Group.h>
+#include <kddockwidgets/core/LayoutSaver_p.h>
+#include <kddockwidgets/core/MDILayout.h>
+#include <kddockwidgets/core/Screen.h>
+#include <kddockwidgets/core/SideBar.h>
+#include <kddockwidgets/core/TabBar.h>
+#include <kddockwidgets/core/Utils_p.h>
+#include <kddockwidgets/core/View.h>
+#include <kddockwidgets/core/Window.h>
+#include <kddockwidgets/core/Controller.h>
+#include <kddockwidgets/core/DockWidget.h>
+#include <kddockwidgets/core/DropArea.h>
+#include <kddockwidgets/core/DropIndicatorOverlay.h>
+#include <kddockwidgets/core/FloatingWindow.h>
+#include <kddockwidgets/core/FocusScope.h>
+#include <kddockwidgets/core/Layout.h>
+#include <kddockwidgets/core/MainWindow.h>
+#include <kddockwidgets/core/Platform.h>
+#include <kddockwidgets/core/Separator.h>
+// #include <kddockwidgets/core/Stack.h>
+#include <kddockwidgets/core/TitleBar.h>
+#include <kddockwidgets/core/ViewFactory.h>
+// #include <kddockwidgets/core/WidgetResizeHandler_p.h>
+
 int main()
 {
     return 0;
