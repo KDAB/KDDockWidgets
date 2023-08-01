@@ -569,7 +569,7 @@ void WidgetResizeHandler::restoreMouseCursor()
 
 CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 {
-    if (!mTarget)
+    if (!mTargetGuard)
         return CursorPosition_Undefined;
 
     if (isMDI()) {
