@@ -21,12 +21,12 @@
 #include "qtwidgets/ViewFactory.h"
 #include "ViewWrapper_p.h"
 #include "core/DockRegistry_p.h"
-#include "kddockwidgets/core/DropArea.h"
-#include "kddockwidgets/core/MainWindow.h"
-#include "kddockwidgets/core/Group.h"
-#include "kddockwidgets/core/SideBar.h"
-#include "kddockwidgets/core/Window.h"
-#include "kddockwidgets/core/DockRegistry.h"
+#include "core/DropArea.h"
+#include "core/MainWindow.h"
+#include "core/Group.h"
+#include "core/SideBar.h"
+#include "core/Window.h"
+#include "core/DockRegistry.h"
 
 #include "core/Logging_p.h"
 

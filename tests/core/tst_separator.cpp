@@ -10,8 +10,8 @@
 */
 
 #include "../simple_test_framework.h"
-#include "kddockwidgets/core/Separator.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/Separator.h"
+#include "core/Platform.h"
 
 using namespace KDDockWidgets;
 

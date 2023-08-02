@@ -22,17 +22,17 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/LayoutSaver_p.h"
 #include "core/layouting/Item_p.h"
-#include "kddockwidgets/core/ViewFactory.h"
-#include "kddockwidgets/core/MDILayout.h"
-#include "kddockwidgets/core/DropArea.h"
-#include "kddockwidgets/core/MainWindow.h"
-#include "kddockwidgets/core/DockWidget.h"
+#include "core/ViewFactory.h"
+#include "core/MDILayout.h"
+#include "core/DropArea.h"
+#include "core/MainWindow.h"
+#include "core/DockWidget.h"
 
-#include "kddockwidgets/core/Separator.h"
-#include "kddockwidgets/core/TabBar.h"
-#include "kddockwidgets/core/Stack.h"
-#include "kddockwidgets/core/SideBar.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/Separator.h"
+#include "core/TabBar.h"
+#include "core/Stack.h"
+#include "core/SideBar.h"
+#include "core/Platform.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

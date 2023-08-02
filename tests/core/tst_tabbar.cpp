@@ -10,12 +10,12 @@
 */
 
 #include "../simple_test_framework.h"
-#include "kddockwidgets/core/Group.h"
-#include "kddockwidgets/core/Stack.h"
-#include "kddockwidgets/core/TabBar.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/Group.h"
+#include "core/Stack.h"
+#include "core/TabBar.h"
+#include "core/Platform.h"
 #include "kddockwidgets/Config.h"
-#include "kddockwidgets/core/ViewFactory.h"
+#include "core/ViewFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

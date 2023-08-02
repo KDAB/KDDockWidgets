@@ -12,7 +12,7 @@
 #pragma once
 
 #include "docks_export.h"
-#include "kddockwidgets/core/Window.h"
+#include "core/Window.h"
 #include "core/WidgetResizeHandler_p.h"
 
 #include <QObject>

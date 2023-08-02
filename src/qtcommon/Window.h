@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/core/Window.h"
+#include "core/Window.h"
 #include "Screen.h"
 
 #include <QPointer>

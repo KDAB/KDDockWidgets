@@ -13,12 +13,12 @@
 #include "Config.h"
 #include "core/ViewFactory.h"
 #include "QtCompat_p.h"
-#include "kddockwidgets/core/DropArea.h"
-#include "kddockwidgets/core/MainWindow.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/DropArea.h"
+#include "core/MainWindow.h"
+#include "core/Platform.h"
 #include "core/ViewGuard.h"
 #include "core/Logging_p.h"
-#include "kddockwidgets/core/Window.h"
+#include "core/Window.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

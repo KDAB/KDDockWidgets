@@ -10,8 +10,8 @@
 */
 
 #include "simple_test_framework.h"
-#include "kddockwidgets/core/Platform.h"
-#include "kddockwidgets/core/Window.h"
+#include "core/Platform.h"
+#include "core/Window.h"
 #include "core/View_p.h"
 #include "core/ViewGuard.h"
 

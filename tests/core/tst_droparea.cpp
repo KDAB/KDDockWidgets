@@ -13,9 +13,9 @@
 #include "core/DropArea.h"
 #include "core/Group.h"
 #include "Config.h"
-#include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/ViewFactory.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/DockWidget.h"
+#include "core/ViewFactory.h"
+#include "core/Platform.h"
 #include "tests/utils.h"
 
 using namespace KDDockWidgets;

@@ -10,9 +10,9 @@
 */
 
 
-#include "kddockwidgets/qtcommon/Screen.h"
-#include "kddockwidgets/qtcommon/Window.h"
-#include "kddockwidgets/qtcommon/Platform.h"
+#include "../qtcommon/Screen.h"
+#include "../qtcommon/Window.h"
+#include "../qtcommon/Platform.h"
 
 #include <QWindow>
 #include <QScreen>

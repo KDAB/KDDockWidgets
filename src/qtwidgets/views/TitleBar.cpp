@@ -11,15 +11,15 @@
 
 #include "TitleBar.h"
 
-#include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/FloatingWindow.h"
-#include "kddockwidgets/core/Window.h"
-
+#include "core/TitleBar.h"
+#include "core/FloatingWindow.h"
+#include "core/Window.h"
 #include "core/Utils_p.h"
 #include "core/View_p.h"
 #include "core/Logging_p.h"
 #include "core/TitleBar_p.h"
 #include "core/DockRegistry_p.h"
+
 #include "qtwidgets/ViewFactory.h"
 #include "qtwidgets/ViewFactory.h"
 

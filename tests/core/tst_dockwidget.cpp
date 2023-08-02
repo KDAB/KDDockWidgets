@@ -11,15 +11,15 @@
 
 #include "../simple_test_framework.h"
 #include "../utils.h"
-#include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/FloatingWindow.h"
+#include "core/DockWidget.h"
+#include "core/FloatingWindow.h"
 #include "core/DockWidget_p.h"
-#include "kddockwidgets/core/Group.h"
-#include "kddockwidgets/core/Platform.h"
-#include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/ViewFactory.h"
-#include "kddockwidgets/core/Platform.h"
-#include "kddockwidgets/core/Window.h"
+#include "core/Group.h"
+#include "core/Platform.h"
+#include "core/TitleBar.h"
+#include "core/ViewFactory.h"
+#include "core/Platform.h"
+#include "core/Window.h"
 #include "Config.h"
 
 using namespace KDDockWidgets;

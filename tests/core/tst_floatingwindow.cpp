@@ -10,12 +10,12 @@
 */
 
 #include "../simple_test_framework.h"
-#include "kddockwidgets/core/FloatingWindow.h"
-#include "kddockwidgets/core/Group.h"
-#include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/ViewFactory.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/FloatingWindow.h"
+#include "core/Group.h"
+#include "core/TitleBar.h"
+#include "core/DockWidget.h"
+#include "core/ViewFactory.h"
+#include "core/Platform.h"
 #include "core/ObjectGuard_p.h"
 #include "Config.h"
 #include "tests/utils.h"

@@ -11,15 +11,16 @@
 
 #include "qtwidgets/views/DockWidget.h"
 #include "Stack.h"
-#include "kddockwidgets/core/Controller.h"
-#include "kddockwidgets/core/Stack.h"
-#include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/Window.h"
-#include "qtwidgets/ViewFactory.h"
+#include "core/Controller.h"
+#include "core/Stack.h"
+#include "core/TitleBar.h"
+#include "core/Window.h"
 #include "core/DockRegistry_p.h"
 #include "core/Stack_p.h"
 #include "Config.h"
 #include "core/View_p.h"
+
+#include "qtwidgets/ViewFactory.h"
 
 #include <QMouseEvent>
 #include <QTabBar>

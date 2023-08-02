@@ -15,7 +15,7 @@
 #include "ViewWrapper_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/ScopedValueRollback_p.h"
-#include "kddockwidgets/qtquick/Window.h"
+#include "qtquick/Window.h"
 #include "qtquick/Platform.h"
 #include "core/Group.h"
 

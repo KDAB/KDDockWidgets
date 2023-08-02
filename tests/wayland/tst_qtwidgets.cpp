@@ -11,11 +11,11 @@
 
 #include "kddockwidgets/DockWidget.h"
 #include "kddockwidgets/MainWindow.h"
-#include "kddockwidgets/core/Group.h"
-#include "kddockwidgets/core/Platform.h"
-#include "kddockwidgets/core/TabBar.h"
-#include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/FloatingWindow.h"
+#include "core/Group.h"
+#include "core/Platform.h"
+#include "core/TabBar.h"
+#include "core/TitleBar.h"
+#include "core/FloatingWindow.h"
 #include "qtwidgets/views/FloatingWindow.h"
 #include "qtwidgets/views/TabBar.h"
 

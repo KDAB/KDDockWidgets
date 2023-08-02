@@ -16,7 +16,7 @@
 
 #include "KDDockWidgets.h"
 #include "simple_test_framework.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/Platform.h"
 
 #ifdef KDDW_FRONTEND_FLUTTER
 #include "../flutter/Platform.h"

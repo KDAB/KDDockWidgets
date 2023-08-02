@@ -10,10 +10,10 @@
 */
 
 #include "MainWindow.h"
-#include "kddockwidgets/core/Layout.h"
-#include "kddockwidgets/core/MainWindow.h"
-#include "kddockwidgets/core/Window.h"
-#include "kddockwidgets/core/DockRegistry.h"
+#include "core/Layout.h"
+#include "core/MainWindow.h"
+#include "core/Window.h"
+#include "core/DockRegistry.h"
 #include "core/layouting/Item_p.h"
 
 #include <QDebug>

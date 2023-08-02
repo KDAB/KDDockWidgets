@@ -11,8 +11,8 @@
 
 #include "simple_test_framework.h"
 #include "core/View_p.h"
-#include "kddockwidgets/core/ViewFactory.h"
-#include "kddockwidgets/core/Platform.h"
+#include "core/ViewFactory.h"
+#include "core/Platform.h"
 #include "Config.h"
 
 #include <string>

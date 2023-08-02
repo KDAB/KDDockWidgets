@@ -15,7 +15,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
-#include "kddockwidgets/core/Window.h"
+#include "core/Window.h"
 #include "core/ViewGuard.h"
 
 #if defined(Q_OS_WIN)

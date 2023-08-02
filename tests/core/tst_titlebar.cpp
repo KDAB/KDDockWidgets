@@ -10,9 +10,9 @@
 */
 
 #include "../simple_test_framework.h"
-#include "kddockwidgets/core/Platform.h"
-#include "kddockwidgets/core/TitleBar.h"
-#include "kddockwidgets/core/Group.h"
+#include "core/Platform.h"
+#include "core/TitleBar.h"
+#include "core/Group.h"
 
 using namespace KDDockWidgets;
 

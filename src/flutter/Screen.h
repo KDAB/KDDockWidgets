@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/core/Screen.h"
+#include "core/Screen.h"
 
 
 namespace KDDockWidgets::flutter {

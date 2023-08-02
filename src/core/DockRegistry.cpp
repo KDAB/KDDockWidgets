@@ -22,15 +22,14 @@
 #include "core/layouting/Item_p.h"
 #include "core/DockWidget_p.h"
 #include "core/ObjectGuard_p.h"
-
-#include "kddockwidgets/core/views/MainWindowViewInterface.h"
-#include "kddockwidgets/core/FloatingWindow.h"
-#include "kddockwidgets/core/SideBar.h"
-#include "kddockwidgets/core/MainWindow.h"
-#include "kddockwidgets/core/DockWidget.h"
-#include "kddockwidgets/core/DropArea.h"
-#include "kddockwidgets/core/Platform.h"
-#include "kddockwidgets/core/Window.h"
+#include "core/views/MainWindowViewInterface.h"
+#include "core/FloatingWindow.h"
+#include "core/SideBar.h"
+#include "core/MainWindow.h"
+#include "core/DockWidget.h"
+#include "core/DropArea.h"
+#include "core/Platform.h"
+#include "core/Window.h"
 
 #include "kdbindings/signal.h"
 
