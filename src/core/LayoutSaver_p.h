@@ -15,7 +15,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/core/Platform.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "nlohmann_helpers_p.h"
 
 #include <memory>

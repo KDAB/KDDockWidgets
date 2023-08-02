@@ -29,7 +29,7 @@
 #include "core/DockWidget.h"
 #include "core/DropArea.h"
 #include "core/Platform.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 
 #include "kdbindings/signal.h"
 

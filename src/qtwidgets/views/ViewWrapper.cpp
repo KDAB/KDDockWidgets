@@ -23,7 +23,7 @@
 #include "qtwidgets/views/TabBar.h"
 #include "qtwidgets/views/TitleBar.h"
 #include "qtwidgets/views/RubberBand.h"
-#include "qtwidgets/Window.h"
+#include "qtwidgets/Window_p.h"
 #include "qtwidgets/views/MDIArea.h"
 
 #include "kddockwidgets/core/MDILayout.h"

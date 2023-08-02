@@ -24,7 +24,7 @@
 #include "core/MDILayout.h"
 #include "core/Logging_p.h"
 #include "core/Platform.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 
 #include <iostream>
 #include <cstdlib>

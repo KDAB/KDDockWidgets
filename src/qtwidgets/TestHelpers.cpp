@@ -15,7 +15,7 @@
 #include "views/View.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "qtwidgets/views/MainWindow.h"
-#include "Window.h"
+#include "Window_p.h"
 
 #include <QStyleFactory>
 #include <QApplication>

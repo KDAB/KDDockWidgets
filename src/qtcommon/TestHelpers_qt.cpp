@@ -10,7 +10,7 @@
 */
 
 #include "Platform.h"
-#include "qtcommon/Window.h"
+#include "qtcommon/Window_p.h"
 #include "qtcommon/View.h"
 #include "core/ViewGuard.h"
 #include "core/Utils_p.h"

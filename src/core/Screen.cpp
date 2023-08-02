@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Screen.h"
+#include "Screen_p.h"
 
 using namespace KDDockWidgets::Core;
 

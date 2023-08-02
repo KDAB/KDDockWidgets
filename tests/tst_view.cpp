@@ -11,7 +11,7 @@
 
 #include "simple_test_framework.h"
 #include "core/Platform.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/View_p.h"
 #include "core/ViewGuard.h"
 

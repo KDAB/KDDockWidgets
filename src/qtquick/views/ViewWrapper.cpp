@@ -27,7 +27,7 @@
 #include "qtquick/views/MDILayout.h"
 #include "qtquick/views/DropArea.h"
 
-#include "../Window.h"
+#include "../Window_p.h"
 
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MDILayout.h"

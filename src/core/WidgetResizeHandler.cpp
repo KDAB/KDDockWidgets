@@ -33,7 +33,7 @@
 #endif
 
 #if defined(KDDW_FRONTEND_QT)
-#include "kddockwidgets/qtcommon/Window.h"
+#include "kddockwidgets/qtcommon/Window_p.h"
 #include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>
 #endif

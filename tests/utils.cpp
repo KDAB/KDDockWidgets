@@ -18,7 +18,7 @@
 #include "core/Platform.h"
 #include "core/ViewGuard.h"
 #include "core/Logging_p.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

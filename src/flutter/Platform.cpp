@@ -12,8 +12,8 @@
 #include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "Window.h"
-#include "Screen.h"
+#include "Window_p.h"
+#include "Screen_p.h"
 #include "views/View.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"

@@ -14,7 +14,7 @@
 #include "core/Controller.h"
 #include "core/Stack.h"
 #include "core/TitleBar.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/DockRegistry_p.h"
 #include "core/Stack_p.h"
 #include "Config.h"

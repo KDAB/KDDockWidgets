@@ -15,7 +15,7 @@
 #include "kddockwidgets/core/Group.h"
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/Platform.h"
 #include "core/View.h"
 #include "core/View_p.h"

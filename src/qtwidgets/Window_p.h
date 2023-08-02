@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../qtcommon/Window.h"
+#include "../qtcommon/Window_p.h"
 
 namespace KDDockWidgets {
 

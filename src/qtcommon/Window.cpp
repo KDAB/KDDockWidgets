@@ -10,8 +10,8 @@
 */
 
 
-#include "../qtcommon/Screen.h"
-#include "../qtcommon/Window.h"
+#include "../qtcommon/Screen_p.h"
+#include "../qtcommon/Window_p.h"
 #include "../qtcommon/Platform.h"
 
 #include <QWindow>

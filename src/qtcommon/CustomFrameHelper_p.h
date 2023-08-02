@@ -12,7 +12,7 @@
 #pragma once
 
 #include "docks_export.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/WidgetResizeHandler_p.h"
 
 #include <QObject>

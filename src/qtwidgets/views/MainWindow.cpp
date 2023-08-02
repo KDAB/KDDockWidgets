@@ -25,7 +25,7 @@
 #include "core/MainWindow.h"
 #include "core/Group.h"
 #include "core/SideBar.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/DockRegistry.h"
 
 #include "core/Logging_p.h"

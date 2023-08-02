@@ -12,7 +12,7 @@
 #include "Platform.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "Window.h"
+#include "Window_p.h"
 #include "DebugWindow.h"
 #include "views/ViewWrapper_p.h"
 #include "views/View.h"

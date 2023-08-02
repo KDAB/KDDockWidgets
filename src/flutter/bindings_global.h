@@ -38,7 +38,7 @@
 
 #include "Platform.h"
 #include "ViewFactory.h"
-#include "Window.h"
+#include "Window_p.h"
 
 #include "views/View.h"
 #include "views/Stack.h"

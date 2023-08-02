@@ -12,7 +12,7 @@
 #include "Platform.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/Utils_p.h"
 #include "core/EventFilterInterface.h"
 

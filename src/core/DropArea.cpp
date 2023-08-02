@@ -30,7 +30,7 @@
 #include "core/indicators/NullDropIndicatorOverlay.h"
 #include "core/indicators/SegmentedDropIndicatorOverlay.h"
 
-#include "Window.h"
+#include "Window_p.h"
 #include "kdbindings/signal.h"
 
 #include <algorithm>

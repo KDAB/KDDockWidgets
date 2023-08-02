@@ -12,7 +12,7 @@
 #include "MainWindow.h"
 #include "core/Layout.h"
 #include "core/MainWindow.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/DockRegistry.h"
 #include "core/layouting/Item_p.h"
 

@@ -14,7 +14,7 @@
 #include "core/Logging_p.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
-#include "../Window.h"
+#include "../Window_p.h"
 #include "ViewWrapper_p.h"
 
 #include <utility>

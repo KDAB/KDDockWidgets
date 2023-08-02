@@ -16,7 +16,7 @@
 #include "flutter/ViewFactory.h"
 #include "DockRegistry.h"
 #include "Config.h"
-#include "Window.h"
+#include "Window_p.h"
 #include "core/View_p.h"
 
 using namespace KDDockWidgets;

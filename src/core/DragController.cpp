@@ -17,7 +17,7 @@
 #include "WindowZOrder_x11_p.h"
 
 #include "core/DockRegistry.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/MDILayout.h"
 #include "core/DropArea.h"
 #include "core/TitleBar.h"

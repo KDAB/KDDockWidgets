@@ -17,9 +17,9 @@
 #include "QmlTypes.h"
 
 #include "Helpers_p.h"
-#include "Window.h"
+#include "Window_p.h"
 #include "views/View.h"
-#include "qtquick/Window.h"
+#include "qtquick/Window_p.h"
 #include "core/DockRegistry.h"
 #include "core/Platform_p.h"
 #include "ViewFactory.h"

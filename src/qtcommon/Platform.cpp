@@ -10,7 +10,7 @@
 */
 
 #include "Platform.h"
-#include "Window.h"
+#include "Window_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 #include "core/Platform_p.h"

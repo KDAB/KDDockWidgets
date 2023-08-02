@@ -10,7 +10,7 @@
 */
 
 
-#include "Window.h"
+#include "Window_p.h"
 #include "core/Logging_p.h"
 
 using namespace KDDockWidgets;

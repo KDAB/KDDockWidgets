@@ -30,7 +30,7 @@
 #include "core/Utils_p.h"
 #include "core/ViewFactory.h"
 #include "core/MainWindow.h"
-#include "core/Window.h"
+#include "core/Window_p.h"
 #include "core/Platform.h"
 
 #include <vector>

@@ -28,7 +28,7 @@
 
 #include "core/WidgetResizeHandler_p.h"
 #include "qtquick/Platform.h"
-#include "qtquick/Window.h"
+#include "qtquick/Window_p.h"
 #include "qtquick/views/MainWindow.h"
 #include "qtquick/views/TitleBar.h"
 #include "qtquick/views/DropArea.h"

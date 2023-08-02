@@ -10,7 +10,7 @@
 */
 
 
-#include "Window.h"
+#include "Window_p.h"
 #include "qtwidgets/views/ViewWrapper_p.h"
 
 #include <QWidget>

@@ -13,8 +13,8 @@
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/Utils_p.h"
-#include "core/Window.h"
-#include "qtcommon/Window.h"
+#include "core/Window_p.h"
+#include "qtcommon/Window_p.h"
 
 #include <QGuiApplication>
 

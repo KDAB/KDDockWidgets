@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View.h"
-#include "Screen.h"
+#include "Screen_p.h"
 
 namespace KDDockWidgets::Core {
 

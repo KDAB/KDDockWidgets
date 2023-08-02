@@ -12,7 +12,7 @@
 #include "ViewWrapper_p.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
-#include "../Window.h"
+#include "../Window_p.h"
 #include "View.h"
 
 using namespace KDDockWidgets;

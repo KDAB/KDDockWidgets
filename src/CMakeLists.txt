@@ -261,7 +261,6 @@ set(KDDW_PUBLIC_HEADERS
     # Controller.h
     # View.h
     # Window.h
-    # Screen.h
     # ViewFactory.h
     Qt5Qt6Compat_p.h
     QtCompat_p.h
