@@ -30,7 +30,6 @@ class Stack::Private
 public:
     explicit Private(Group *group, StackOptions options, Stack *qq)
         : q(qq)
-        , m_tabBar(new TabBar(q))
         , m_group(group)
         , m_options(options)
     {

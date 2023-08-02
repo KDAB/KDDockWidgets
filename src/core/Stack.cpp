@@ -36,6 +36,9 @@ Stack::Stack(Group *group, StackOptions options)
     , d(new Private(group, options, this))
 
 {
+    // needs to be initialized out of Private(), as tabbar view's init will call into stack's private
+    d->m_tabBar = new TabBar(this);
+
     view()->init();
 }
 
