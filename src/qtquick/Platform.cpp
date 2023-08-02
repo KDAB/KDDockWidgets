@@ -23,7 +23,7 @@
 #include "core/DockRegistry.h"
 #include "core/Platform_p.h"
 #include "ViewFactory.h"
-#include "views/ViewWrapper.h"
+#include "views/ViewWrapper_p.h"
 
 #include "views/DockWidget.h"
 #include "DockWidgetInstantiator.h"

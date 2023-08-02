@@ -20,7 +20,7 @@
 #include "qtquick/ViewFactory.h"
 #include "qtquick/Platform.h"
 #include "qtquick/views/TabBar.h"
-#include "qtquick/views/ViewWrapper.h"
+#include "qtquick/views/ViewWrapper_p.h"
 
 #include "kddockwidgets/core/Group.h"
 #include "kddockwidgets/core/Stack.h"

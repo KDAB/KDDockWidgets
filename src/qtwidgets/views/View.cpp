@@ -13,7 +13,7 @@
 #include "../Window.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
-#include "ViewWrapper.h"
+#include "ViewWrapper_p.h"
 
 #include <QTabBar>
 #include <QTabWidget>

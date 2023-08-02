@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ViewWrapper.h"
+#include "ViewWrapper_p.h"
 #include "qtquick/views/RubberBand.h"
 #include "qtquick/views/View.h"
 #include "core/View_p.h"

@@ -34,7 +34,7 @@
 
 #include "qtwidgets/views/MDIArea.h"
 #include "qtwidgets/views/MainWindow.h"
-#include "qtwidgets/views/ViewWrapper.h"
+#include "qtwidgets/views/ViewWrapper_p.h"
 #include "qtwidgets/views/DockWidget.h"
 #include "qtwidgets/views/TitleBar.h"
 #include "qtcommon/View.h"

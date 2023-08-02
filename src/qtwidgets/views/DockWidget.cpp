@@ -11,7 +11,7 @@
 
 #include "DockWidget.h"
 #include "core/DockWidget_p.h"
-#include "ViewWrapper.h"
+#include "ViewWrapper_p.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>

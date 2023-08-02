@@ -14,7 +14,7 @@
 
 #include "Window.h"
 #include "DebugWindow.h"
-#include "views/ViewWrapper.h"
+#include "views/ViewWrapper_p.h"
 #include "views/View.h"
 #include "core/Platform_p.h"
 #include "ViewFactory.h"

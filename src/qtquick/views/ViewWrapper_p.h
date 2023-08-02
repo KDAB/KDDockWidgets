@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include "../../qtcommon/ViewWrapper.h"
+#include "../../qtcommon/ViewWrapper_p.h"
 
-#include <QWidget>
+#include <QQuickItem>
 #include <QPointer>
 
-namespace KDDockWidgets::QtWidgets {
+namespace KDDockWidgets::QtQuick {
 
-/// @brief A View that doesn't own its QWidget
-/// Implements a View API around an existing QWidget
-/// Useful for widgets that are not created by KDDW.
+/// @brief A View that doesn't own its QQuickItem
+/// Implements a View API around an existing QQuickItem
+/// Useful for items that are not created by KDDW.
 class DOCKS_EXPORT ViewWrapper : public QtCommon::ViewWrapper
 {
 public:
@@ -31,44 +31,46 @@ public:
     QPoint mapFromGlobal(QPoint) const override;
     bool isRootView() const override;
     bool isVisible() const override;
-    void setVisible(bool) override;
     bool isExplicitlyHidden() const override;
+    void setVisible(bool) override;
     void activateWindow() override;
     bool isMaximized() const override;
     bool isMinimized() const override;
+    QSize maxSizeHint() const override;
     void setSize(int width, int height) override;
     bool is(Core::ViewType) const override;
+    std::shared_ptr<Core::View> childViewAt(QPoint) const override;
+    QVector<std::shared_ptr<Core::View>> childViews() const override;
     std::shared_ptr<Core::Window> window() const override;
-    std::shared_ptr<View> rootView() const override;
-    std::shared_ptr<View> parentView() const override;
-    void setParent(View *) override;
-    bool close() override;
-    std::shared_ptr<View> childViewAt(QPoint localPos) const override;
-    QVector<std::shared_ptr<View>> childViews() const override;
+    std::shared_ptr<Core::View> rootView() const override;
+    std::shared_ptr<Core::View> parentView() const override;
+    void setParent(Core::View *) override; // TODOm3: Rename to setParentView
     void grabMouse() override;
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;
+    void setFocusPolicy(Qt::FocusPolicy) override;
     QString viewName() const override;
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
-    QPoint mapTo(View *, QPoint) const override;
+    QPoint mapTo(Core::View *someAncestor, QPoint pos) const override;
     bool hasAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
+    bool close() override;
     Qt::FocusPolicy focusPolicy() const override;
-    void setFocusPolicy(Qt::FocusPolicy) override;
     bool hasFocus() const override;
-    QSize maxSizeHint() const override;
     void raiseAndActivate() override;
-    QWidget *widget() const;
 
-    static std::shared_ptr<View> create(QObject *widget);
-    static std::shared_ptr<View> create(QWidget *widget);
+    const Core::View *unwrap() const;
+    Core::View *unwrap();
+
+    static std::shared_ptr<Core::View> create(QObject *widget);
+    static std::shared_ptr<Core::View> create(QQuickItem *widget);
 
 private:
     explicit ViewWrapper(QObject *widget);
-    explicit ViewWrapper(QWidget *widget);
-    QPointer<QWidget> m_widget;
+    explicit ViewWrapper(QQuickItem *widget);
+    QPointer<QQuickItem> m_item;
 };
 
 }

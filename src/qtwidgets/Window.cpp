@@ -11,7 +11,7 @@
 
 
 #include "Window.h"
-#include "qtwidgets/views/ViewWrapper.h"
+#include "qtwidgets/views/ViewWrapper_p.h"
 
 #include <QWidget>
 #include <QVariant>

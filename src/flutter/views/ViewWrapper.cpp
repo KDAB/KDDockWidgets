@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ViewWrapper.h"
+#include "ViewWrapper_p.h"
 #include "core/View_p.h"
 #include "core/layouting/Item_p.h"
 #include "../Window.h"

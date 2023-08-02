@@ -109,7 +109,6 @@ set(KDDW_FRONTEND_QTWIDGETS_SRCS
 
 set(KDDW_FRONTEND_QTWIDGETS_VIEW_HEADERS
     qtwidgets/views/View.h
-    qtwidgets/views/ViewWrapper.h
     qtwidgets/views/FloatingWindow.h
     qtwidgets/views/DockWidget.h
     qtwidgets/views/DropArea.h
@@ -171,7 +170,6 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
     qtquick/views/TabBar.h
     qtquick/views/TitleBar.h
     qtquick/views/View.h
-    qtquick/views/ViewWrapper.h
     qtquick/views/ClassicIndicatorsWindow.h
 )
 
@@ -640,7 +638,6 @@ if(KDDW_FRONTEND_QTWIDGETS)
         qtwidgets/views/FloatingWindow.h
         qtwidgets/views/View.h
         qtwidgets/views/MainWindowMDI.h
-        qtwidgets/views/ViewWrapper.h
         qtwidgets/views/MDILayout.h
         qtwidgets/views/MDIArea.h
         qtwidgets/views/DropArea.h
@@ -700,7 +697,6 @@ if(KDDW_FRONTEND_QTQUICK)
         qtquick/views/DropArea.h
         qtquick/views/Group.h
         qtquick/views/TitleBar.h
-        qtquick/views/ViewWrapper.h
     )
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)

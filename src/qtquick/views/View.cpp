@@ -12,7 +12,7 @@
 #include "View.h"
 #include "core/Utils_p.h"
 #include "core/View_p.h"
-#include "ViewWrapper.h"
+#include "ViewWrapper_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "kddockwidgets/qtquick/Window.h"
