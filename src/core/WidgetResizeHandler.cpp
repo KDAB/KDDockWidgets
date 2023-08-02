@@ -28,12 +28,12 @@
 
 #if defined(Q_OS_WIN)
 #if defined(KDDW_FRONTEND_QTWIDGETS)
-#include "kddockwidgets/qtcommon/Platform.h"
+#include "../qtcommon/Platform.h"
 #include <QWidget>
 #endif
 
 #if defined(KDDW_FRONTEND_QT)
-#include "kddockwidgets/qtcommon/Window_p.h"
+#include "../qtcommon/Window_p.h"
 #include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>
 #endif
