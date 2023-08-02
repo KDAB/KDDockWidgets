@@ -13,7 +13,10 @@ cmake_minimum_required(VERSION 3.7)
 project(includes_test)
 
 if(NOT TARGET kddockwidgets)
-    find_package(KDDockWidgets REQUIRED)
+    find_package(KDDockWidgets QUIET)
+    if(NOT KDDockWidgets_FOUND)
+        find_package(KDDockWidgets-qt6 REQUIRED)
+    endif()
 endif()
 
 add_executable(includes_test main.cpp)
