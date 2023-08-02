@@ -666,8 +666,6 @@ if(KDDW_FRONTEND_QTWIDGETS)
             fwd_headers/qtwidgets_pretty/kddockwidgets/MainWindow.h
             fwd_headers/qtwidgets_pretty/kddockwidgets/DockWidget.h
             fwd_headers/qtwidgets_pretty/kddockwidgets/ViewFactory.h
-            fwd_headers/qtwidgets_pretty/kddockwidgets/Platform.h
-            fwd_headers/qtwidgets_pretty/kddockwidgets/Window.h
         )
 
         install(FILES ${KDDW_QTWIDGET_PRETTY_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
