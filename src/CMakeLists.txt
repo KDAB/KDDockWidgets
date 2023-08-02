@@ -288,7 +288,6 @@ set(KDDW_CORE_HEADERS
     core/View.h
     core/EventFilterInterface.h
     core/Draggable_p.h
-    core/LayoutSaver_p.h
     core/WindowBeingDragged_p.h
     core/WidgetResizeHandler_p.h
     core/DockRegistry.h

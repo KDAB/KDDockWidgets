@@ -27,7 +27,7 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/ObjectGuard_p.h"
-#include "kddockwidgets/core/Utils_p.h"
+#include "core/Utils_p.h"
 #include "kddockwidgets/core/ViewFactory.h"
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/Window.h"

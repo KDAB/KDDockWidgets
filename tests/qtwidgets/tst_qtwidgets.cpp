@@ -23,7 +23,7 @@
 #include "core/WindowBeingDragged_p.h"
 
 #include "kddockwidgets/ViewFactory.h"
-#include "kddockwidgets/core/LayoutSaver_p.h"
+#include "core/LayoutSaver_p.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/Separator.h"

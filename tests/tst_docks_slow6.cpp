@@ -22,7 +22,7 @@
 #include "core/layouting/Item_p.h"
 #include "core/Position_p.h"
 #include "kddockwidgets/core/ViewFactory.h"
-#include "kddockwidgets/core/LayoutSaver_p.h"
+#include "core/LayoutSaver_p.h"
 #include "kddockwidgets/core/MDILayout.h"
 #include "kddockwidgets/core/DropArea.h"
 #include "kddockwidgets/core/MainWindow.h"

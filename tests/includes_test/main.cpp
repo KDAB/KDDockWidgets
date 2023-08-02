@@ -71,12 +71,10 @@
 #include <kddockwidgets/core/Draggable_p.h>
 #include <kddockwidgets/core/EventFilterInterface.h>
 #include <kddockwidgets/core/Group.h>
-#include <kddockwidgets/core/LayoutSaver_p.h>
 #include <kddockwidgets/core/MDILayout.h>
 #include <kddockwidgets/core/Screen.h>
 #include <kddockwidgets/core/SideBar.h>
 #include <kddockwidgets/core/TabBar.h>
-#include <kddockwidgets/core/Utils_p.h>
 #include <kddockwidgets/core/View.h>
 #include <kddockwidgets/core/Window.h>
 #include <kddockwidgets/core/Controller.h>
@@ -92,6 +90,8 @@
 #include <kddockwidgets/core/Stack.h>
 #include <kddockwidgets/core/TitleBar.h>
 #include <kddockwidgets/core/ViewFactory.h>
+
+// Will only be available upon request
 // #include <kddockwidgets/core/WidgetResizeHandler_p.h>
 
 int main()
