@@ -22,7 +22,7 @@
 #pragma once
 
 #include "View.h"
-#include "core/views/TabBarViewInterface.h"
+#include "kddockwidgets/core/views/TabBarViewInterface.h"
 
 #include <QAbstractListModel>
 #include <QPointer>

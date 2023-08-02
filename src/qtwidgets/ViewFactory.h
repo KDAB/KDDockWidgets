@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KDDOCKWIDGETS_ViewFactory_QTWIDGETS_H
-#define KDDOCKWIDGETS_ViewFactory_QTWIDGETS_H
+#ifndef KDDOCKWIDGETS_VIEWFACTORY_QTWIDGETS_H
+#define KDDOCKWIDGETS_VIEWFACTORY_QTWIDGETS_H
 
 #include "kddockwidgets/core/ViewFactory.h"
 

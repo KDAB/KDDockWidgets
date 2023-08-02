@@ -22,7 +22,7 @@
 #include "core/layouting/Item_p.h"
 #include "core/WindowBeingDragged_p.h"
 
-#include "kddockwidgets/ViewFactory.h"
+#include "qtwidgets/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/DropArea.h"

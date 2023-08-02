@@ -9,12 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KDDOCKWIDGETS_ACTION_QTWIDGETS_H
+#define KDDOCKWIDGETS_ACTION_QTWIDGETS_H
 #pragma once
 
 #include "kddockwidgets/core/Action.h"
 
 #include <QAction>
-
 
 namespace KDDockWidgets {
 
@@ -57,3 +58,5 @@ private:
 }
 
 }
+
+#endif

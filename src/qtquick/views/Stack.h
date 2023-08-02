@@ -21,7 +21,7 @@
 #pragma once
 
 #include "View.h"
-#include "core/views/StackViewInterface.h"
+#include "kddockwidgets/core/views/StackViewInterface.h"
 
 #include <QVector>
 

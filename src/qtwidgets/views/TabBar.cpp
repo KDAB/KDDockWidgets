@@ -18,7 +18,7 @@
 #include "core/Utils_p.h"
 #include "core/Logging_p.h"
 #include "Config.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "qtwidgets/ViewFactory.h"
 #include "kddockwidgets/core/DockRegistry.h"
 
 #include <QMouseEvent>

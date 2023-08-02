@@ -15,8 +15,8 @@
 #pragma once
 
 #include "View.h"
-#include "core/views/GroupViewInterface.h"
 #include "TitleBar.h"
+#include "kddockwidgets/core/views/GroupViewInterface.h"
 
 QT_BEGIN_NAMESPACE
 class QQuickItem;

@@ -20,7 +20,7 @@
 #include "core/Logging_p.h"
 #include "core/TitleBar_p.h"
 #include "core/DockRegistry_p.h"
-#include "kddockwidgets/ViewFactory.h"
+#include "qtwidgets/ViewFactory.h"
 #include "qtwidgets/ViewFactory.h"
 
 #include <QPainter>

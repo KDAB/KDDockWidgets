@@ -15,7 +15,6 @@
 // #include <kddockwidgets/qtwidgets/Action.h>
 #include <kddockwidgets/qtwidgets/Platform.h>
 #include <kddockwidgets/qtwidgets/ViewFactory.h>
-#include <kddockwidgets/qtwidgets/Window.h>
 #include <kddockwidgets/qtwidgets/views/ClassicIndicatorsWindow.h>
 #include <kddockwidgets/qtwidgets/views/DockWidget.h>
 #include <kddockwidgets/qtwidgets/views/DropArea.h>
@@ -36,7 +35,6 @@
 #include <kddockwidgets/qtquick/Action.h>
 #include <kddockwidgets/qtquick/Platform.h>
 #include <kddockwidgets/qtquick/ViewFactory.h>
-#include <kddockwidgets/qtquick/Window.h>
 #include <kddockwidgets/qtquick/views/ClassicIndicatorsWindow.h>
 #include <kddockwidgets/qtquick/views/DockWidget.h>
 #include <kddockwidgets/qtquick/views/DropArea.h>
@@ -62,7 +60,7 @@
 #include <kddockwidgets/docks_export.h>
 #include <kddockwidgets/KDDockWidgets.h>
 #include <kddockwidgets/LayoutSaver.h>
-#include <kddockwidgets/MainWindowMDI.h> // TODOm4: really ?
+// #include <kddockwidgets/MainWindowMDI.h> // TODOm4: really ?
 #include <kddockwidgets/Qt5Qt6Compat_p.h>
 #include <kddockwidgets/QtCompat_p.h>
 
@@ -72,11 +70,10 @@
 #include <kddockwidgets/core/EventFilterInterface.h>
 #include <kddockwidgets/core/Group.h>
 #include <kddockwidgets/core/MDILayout.h>
-#include <kddockwidgets/core/Screen.h>
 #include <kddockwidgets/core/SideBar.h>
 #include <kddockwidgets/core/TabBar.h>
 #include <kddockwidgets/core/View.h>
-#include <kddockwidgets/core/Window.h>
+// #include <kddockwidgets/core/Window.h>
 #include <kddockwidgets/core/Controller.h>
 #include <kddockwidgets/core/DockWidget.h>
 #include <kddockwidgets/core/DropArea.h>

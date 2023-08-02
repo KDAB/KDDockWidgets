@@ -9,9 +9,11 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KDDOCKWIDGETS_PLATFORM_QTWIDGETS_H
+#define KDDOCKWIDGETS_PLATFORM_QTWIDGETS_H
 #pragma once
 
-#include "qtcommon/Platform.h"
+#include "kddockwidgets/qtcommon/Platform.h"
 
 namespace KDDockWidgets {
 
@@ -66,3 +68,5 @@ protected:
 }
 
 }
+
+#endif

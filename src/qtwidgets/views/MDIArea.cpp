@@ -13,7 +13,7 @@
 
 #include "core/View_p.h"
 
-#include "kddockwidgets/ViewFactory.h"
+#include "qtwidgets/ViewFactory.h"
 #include "kddockwidgets/core/views/DockWidgetViewInterface.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MDILayout.h"

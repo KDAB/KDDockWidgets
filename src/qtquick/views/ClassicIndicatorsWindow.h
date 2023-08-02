@@ -13,7 +13,7 @@
 #define KD_CLASSICINDICATORS_WINDOW_QTQUICK_H
 #pragma once
 
-#include "core/views/ClassicIndicatorWindowViewInterface.h"
+#include "kddockwidgets/core/views/ClassicIndicatorWindowViewInterface.h"
 
 #include <QQuickView>
 
