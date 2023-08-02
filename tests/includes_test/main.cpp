@@ -51,10 +51,8 @@
 #include <kddockwidgets/qtquick/views/View.h>
 #endif
 
-#if KDDW_FRONTEND_QT
 #include <kddockwidgets/qtcommon/View.h>
 #include <kddockwidgets/qtcommon/Platform.h>
-#endif
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/docks_export.h>
