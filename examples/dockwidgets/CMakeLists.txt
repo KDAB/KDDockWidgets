@@ -19,9 +19,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT TARGET kddockwidgets)
-    # This will look for Qt, do find_package yourself manually before if you want
-    # to look for a specific Qt version for instance.
-    find_package(KDDockWidgets REQUIRED)
+    # For the purpose of our example, we're looking for Qt5 or Qt6 KDDW.
+    # For your own purposes, just chose the one you need.
+    find_package(KDDockWidgets QUIET)
+    if(NOT KDDockWidgets_FOUND)
+        find_package(KDDockWidgets-qt6 REQUIRED)
+    endif()
 endif()
 
 set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
