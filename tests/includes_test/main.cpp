@@ -58,7 +58,6 @@
 #include <kddockwidgets/docks_export.h>
 #include <kddockwidgets/KDDockWidgets.h>
 #include <kddockwidgets/LayoutSaver.h>
-// #include <kddockwidgets/MainWindowMDI.h> // TODOm4: really ?
 #include <kddockwidgets/Qt5Qt6Compat_p.h>
 #include <kddockwidgets/QtCompat_p.h>
 
@@ -71,7 +70,6 @@
 #include <kddockwidgets/core/SideBar.h>
 #include <kddockwidgets/core/TabBar.h>
 #include <kddockwidgets/core/View.h>
-// #include <kddockwidgets/core/Window.h>
 #include <kddockwidgets/core/Controller.h>
 #include <kddockwidgets/core/DockWidget.h>
 #include <kddockwidgets/core/DropArea.h>
