@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../qtwidgets/ViewFactory.h"
+#include "kddockwidgets/qtwidgets/ViewFactory.h"
