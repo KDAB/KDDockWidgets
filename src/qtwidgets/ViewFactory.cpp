@@ -11,7 +11,7 @@
 
 #include "ViewFactory.h"
 #include "Config.h"
-#include "Action.h"
+#include "Action_p.h"
 
 #include "core/Utils_p.h"
 

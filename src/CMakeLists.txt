@@ -257,7 +257,6 @@ set(KDDW_PUBLIC_HEADERS
     KDDockWidgets.h
     # FocusScope.h
     LayoutSaver.h
-    #Action.h
     # Controller.h
     # View.h
     # Window.h
@@ -627,7 +626,7 @@ endif()
 
 if(KDDW_FRONTEND_QTWIDGETS)
 
-    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h qtwidgets/Action.h)
+    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h)
 
     set(KDDW_QTWIDGET_VIEW_HEADERS
         qtwidgets/views/DockWidget.h

@@ -12,7 +12,6 @@
 // Tests that the includes are installed
 
 #if KDDW_FRONTEND_QTWIDGETS
-// #include <kddockwidgets/qtwidgets/Action.h>
 #include <kddockwidgets/qtwidgets/Platform.h>
 #include <kddockwidgets/qtwidgets/ViewFactory.h>
 #include <kddockwidgets/qtwidgets/views/ClassicIndicatorsWindow.h>
