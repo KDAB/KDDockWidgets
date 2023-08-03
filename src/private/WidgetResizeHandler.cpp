@@ -235,7 +235,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_TopLeft:
         case CursorPosition_Left:
         case CursorPosition_BottomLeft: {
-            parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
+            parentGeometry = parentGeometry.adjusted(m_resizeGap, 0, 0, 0);
             deltaWidth = oldGeometry.left() - globalPos.x();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
