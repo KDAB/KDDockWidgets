@@ -104,7 +104,7 @@ int WidgetResizeHandler::widgetResizeHandlerMargin()
 
 bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 {
-    if (s_disableAllHandlers || !widget)
+    if (s_disableAllHandlers || !widget || !mTargetGuard)
         return false;
 
     if (e->type() != Event::MouseButtonPress && e->type() != Event::MouseButtonRelease
@@ -503,6 +503,12 @@ void WidgetResizeHandler::setTarget(View *w)
 
 void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
+    if (!mTargetGuard) {
+        // Our target was destroyed while we're processing mouse events, it's fine.
+        restoreMouseCursor();
+        return;
+    }
+
     if (Platform::instance()->isQtWidgets()) {
         // Need for updating cursor when we change child widget
         const auto childViews = mTarget->childViews();
@@ -552,7 +558,7 @@ void WidgetResizeHandler::restoreMouseCursor()
 {
     if (m_usesGlobalEventFilter)
         Platform::instance()->restoreMouseCursor();
-    else
+    else if (mTargetGuard)
         mTarget->setCursor(Qt::ArrowCursor);
 }
 
