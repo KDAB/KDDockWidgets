@@ -506,18 +506,28 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 
 void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 {
-    if (m_usesGlobalEventFilter)
-        qApp->setOverrideCursor(cursor);
-    else
+    if (m_usesGlobalEventFilter) {
+        if (m_overrideCursorSet) {
+            qApp->changeOverrideCursor(cursor);
+        } else {
+            qApp->setOverrideCursor(cursor);
+            m_overrideCursorSet = true;
+        }
+    } else {
         mTarget->setCursor(cursor);
+    }
 }
 
 void WidgetResizeHandler::restoreMouseCursor()
 {
-    if (m_usesGlobalEventFilter)
-        qApp->restoreOverrideCursor();
-    else
+    if (m_usesGlobalEventFilter) {
+        if (m_overrideCursorSet) {
+            qApp->restoreOverrideCursor();
+            m_overrideCursorSet = false;
+        }
+    } else {
         mTarget->setCursor(Qt::ArrowCursor);
+    }
 }
 
 CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
