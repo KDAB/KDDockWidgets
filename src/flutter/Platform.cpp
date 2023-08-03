@@ -107,7 +107,7 @@ QString Platform::applicationName() const
     return {};
 }
 
-void Platform::setMouseCursor(Qt::CursorShape)
+void Platform::setMouseCursor(Qt::CursorShape, bool)
 {
     KDDW_WARN("Platform::setMouseCursor: Not implemented");
 }

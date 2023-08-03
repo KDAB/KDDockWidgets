@@ -134,7 +134,9 @@ public:
 
     /// @brief Sets the mouse cursor to the specified shape, this has an application-wide effect
     /// Call restoreMouseCursor() to set the previous cursor shape
-    virtual void setMouseCursor(Qt::CursorShape) = 0;
+    /// @param discardLast If true, then the previous shape is discarded instead of
+    /// being saved into a stack for restoreMouseCursor()
+    virtual void setMouseCursor(Qt::CursorShape, bool discardLast = false) = 0;
 
     /// @brief Undoes the call to setMouseCursor()
     virtual void restoreMouseCursor() = 0;

@@ -246,9 +246,13 @@ QString Platform_qt::applicationName() const
     return qGuiApp->applicationName();
 }
 
-void Platform_qt::setMouseCursor(Qt::CursorShape shape)
+void Platform_qt::setMouseCursor(Qt::CursorShape shape, bool discardLast)
 {
-    qGuiApp->setOverrideCursor(shape);
+    if (discardLast) {
+        qGuiApp->changeOverrideCursor(shape);
+    } else {
+        qGuiApp->setOverrideCursor(shape);
+    }
 }
 
 void Platform_qt::restoreMouseCursor()

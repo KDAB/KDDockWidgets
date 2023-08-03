@@ -139,7 +139,7 @@ public:
     int screenNumberFor(std::shared_ptr<Core::Window>) const override;
     bool isProcessingAppQuitEvent() const override;
     QString applicationName() const override;
-    void setMouseCursor(Qt::CursorShape) override;
+    void setMouseCursor(Qt::CursorShape, bool discardLast = false) override;
     void restoreMouseCursor() override;
     DisplayType displayType() const override;
     bool isLeftMouseButtonPressed() const override;

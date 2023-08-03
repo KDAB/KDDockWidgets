@@ -171,6 +171,7 @@ private:
     const bool m_isTopLevelWindowResizer;
     int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;
+    bool m_overrideCursorSet = false;
 };
 
 #if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
