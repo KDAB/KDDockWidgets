@@ -170,8 +170,9 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             // item when we're finished.
             frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->QWidgetAdapter::geometry());
         }
-        updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);
+        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
+        updateCursor(cursorPos);
 
         if (mTarget->isMaximized() || !m_resizingInProgress || mouseEvent->button() != Qt::LeftButton)
             break;
