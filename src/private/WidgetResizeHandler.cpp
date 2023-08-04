@@ -51,6 +51,7 @@ WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode 
 
 WidgetResizeHandler::~WidgetResizeHandler()
 {
+    restoreMouseCursor();
 }
 
 void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
