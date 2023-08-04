@@ -73,6 +73,8 @@ WidgetResizeHandler::~WidgetResizeHandler()
     } else if (mTargetGuard) {
         mTarget->removeViewEventFilter(this);
     }
+
+    restoreMouseCursor();
 }
 
 void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
