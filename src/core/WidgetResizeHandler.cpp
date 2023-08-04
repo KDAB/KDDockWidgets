@@ -68,11 +68,10 @@ WidgetResizeHandler::WidgetResizeHandler(EventFilterMode filterMode, WindowMode 
 
 WidgetResizeHandler::~WidgetResizeHandler()
 {
-    if (m_isTopLevelWindowResizer) {
-        if (mTargetGuard)
-            mTarget->removeViewEventFilter(this);
-    } else {
+    if (m_usesGlobalEventFilter) {
         Platform::instance()->removeGlobalEventFilter(this);
+    } else if (mTargetGuard) {
+        mTarget->removeViewEventFilter(this);
     }
 }
 
