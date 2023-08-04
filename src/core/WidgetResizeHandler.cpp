@@ -198,6 +198,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
             group->mdiLayout()->setDockWidgetGeometry(group, group->geometry());
         }
         updateCursor(CursorPosition_Undefined);
+        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(e));
+        updateCursor(cursorPos);
         if (mTarget->isMaximized() || !m_resizingInProgress || e->button() != Qt::LeftButton)
             break;
 
