@@ -17,6 +17,7 @@ import 'src/flutter/utils.dart';
 bool isAOT = false;
 bool isASAN = false;
 bool isLSAN = false;
+bool ubsanPrintStacks = false;
 
 String kddwSourceDir() {
   return Platform.script.path.replaceAll("run_flutter_tests.dart", "");
@@ -71,7 +72,9 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
   final String aotValue = isAOT ? "1" : "0";
   final String lsanValue = isLSAN ? "1" : "0";
   final String asanOptions = "detect_leaks=$lsanValue";
+  final String ubsanOptions = ubsanPrintStacks ? "print_stacktrace=1" : "";
   final String gensnapshotOptions = "--no-strip";
+
   print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
   print("export ASAN_OPTIONS=$asanOptions");
   print("\n");
@@ -79,7 +82,8 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
   final env = {
     "KDDW_FLUTTER_TESTS_USE_AOT": aotValue,
     "ASAN_OPTIONS": asanOptions,
-    "EXTRA_GEN_SNAPSHOT_OPTIONS": gensnapshotOptions
+    "EXTRA_GEN_SNAPSHOT_OPTIONS": gensnapshotOptions,
+    if (ubsanPrintStacks) "UBSAN_OPTIONS": ubsanOptions
   };
 
   /// Now we can run the tests:
@@ -96,9 +100,11 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
 }
 
 void printUsage() {
-  print("Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan]");
+  print(
+      "Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces]");
   print("Or specify a single test to run:");
-  print("dart run_flutter_tests.dart [--aot] [--asan] [--lsan] <test_name>");
+  print(
+      "dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces] <test_name>");
 }
 
 String calculateBuildDir() {
@@ -122,11 +128,17 @@ Future<void> main(List<String> args) async {
   isAOT = _args.remove("--aot");
   isLSAN = _args.remove("--lsan");
   isASAN = isLSAN || _args.remove("--asan");
+  ubsanPrintStacks = _args.remove("--ubsan-stacktraces");
   final bool isHelp = _args.remove("--help") || _args.remove("-h");
 
   if (_args.length > 1 || isHelp) {
     printUsage();
     exit(0);
+  }
+
+  if (ubsanPrintStacks && !isASAN) {
+    print("ERROR: --ubsan-stacktraces requires --asan");
+    exit(1);
   }
 
   final String? singleTestName = _args.isEmpty ? null : _args.first;
