@@ -337,7 +337,7 @@ macro(set_compiler_flags targetName)
         if(NOT MSVC AND NOT APPLE)
             target_compile_options(${targetName} PRIVATE -Wall -Wextra)
             if(KDDockWidgets_USE_LLD)
-                target_compile_options(${targetName} PRIVATE -fuse-ld=lld)
+                target_link_options(${targetName} PRIVATE -fuse-ld=lld)
             endif()
         endif()
 
