@@ -301,6 +301,8 @@ bool TestsEmbedder::runFlutter(GLFWwindow *window,
     config.open_gl.present = [](void *userdata) -> bool {
         static bool initial = true;
         if (initial) {
+            // HACK: Fixes a GLFW black screen at startup which happens sometimes.
+            // No idea how to fix it properly
             kddw_fakeMouseButton({ 1, 1 }, true);
             initial = false;
         }
