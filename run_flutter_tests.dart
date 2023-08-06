@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+// A script that runs the tests but first ensures the bundle is built
+
 import 'dart:io';
 import 'src/flutter/utils.dart';
 

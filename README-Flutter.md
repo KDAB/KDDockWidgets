@@ -64,6 +64,14 @@ Similar to Linux. The dev preset is not supported though, only `release-flutter`
 Similar to Linux, just use cmd syntax or so.<br>
 The dev preset is not supported though, only `release-flutter`.
 
+## Running the tests
+
+On Linux, get a developer build (see above), then run:
+
+```bash
+dart run_flutter_tests.dart build-dev-flutter/
+```
+
 ## TODO
 
 - Styling
@@ -71,7 +79,5 @@ The dev preset is not supported though, only `release-flutter`.
 - Support flutter multi-window
 
 - Make more tests pass
-
-- Don't depend on QtCore
 
 - Package
