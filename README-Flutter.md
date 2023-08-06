@@ -13,11 +13,10 @@
 
 ## Build instructions
 
+Adjust paths as needed.<br>
 Checkout branch `2.0`.
 
 ### Linux
-
-Adjust paths as needed.
 
 Preparatives:
 
@@ -64,12 +63,30 @@ Similar to Linux. The dev preset is not supported though, only `release-flutter`
 Similar to Linux, just use cmd syntax or so.<br>
 The dev preset is not supported though, only `release-flutter`.
 
-## Running the tests
+## Development tips
+
+### Running the tests
 
 On Linux, get a developer build (see above), then run:
 
 ```bash
 dart run_flutter_tests.dart build-dev-flutter/
+```
+
+## Minimize git noise
+
+`flutter build` likes to regenerate some files, which we've added licenses headers and clang-formatted.<br>
+We can tell git to ignore these:
+
+```bash
+git update-index --assume-unchanged tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.cc
+git update-index --assume-unchanged tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.h
+git update-index --assume-unchanged tests/flutter_tests_embedder/linux/flutter/generated_plugins.cmake
+git update-index --assume-unchanged examples/flutter/linux/flutter/generated_plugin_registrant.*
+git update-index --assume-unchanged examples/flutter/linux/flutter/generated_plugins.cmake
+git update-index --assume-unchanged examples/flutter/windows/flutter/generated_plugins.cmake
+git update-index --assume-unchanged examples/flutter/windows/flutter/generated_plugin_registrant.*
+
 ```
 
 ## TODO
