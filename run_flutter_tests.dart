@@ -71,13 +71,15 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
   final String aotValue = isAOT ? "1" : "0";
   final String lsanValue = isLSAN ? "1" : "0";
   final String asanOptions = "detect_leaks=$lsanValue";
+  final String gensnapshotOptions = "--no-strip";
   print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
   print("export ASAN_OPTIONS=$asanOptions");
   print("\n");
 
   final env = {
     "KDDW_FLUTTER_TESTS_USE_AOT": aotValue,
-    "ASAN_OPTIONS": asanOptions
+    "ASAN_OPTIONS": asanOptions,
+    "EXTRA_GEN_SNAPSHOT_OPTIONS": gensnapshotOptions
   };
 
   /// Now we can run the tests:
