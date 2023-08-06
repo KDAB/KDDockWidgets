@@ -74,17 +74,20 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
   final String asanOptions = "detect_leaks=$lsanValue";
   final String ubsanOptions = ubsanPrintStacks ? "print_stacktrace=1" : "";
   final String gensnapshotOptions = "--no-strip";
+  final String libraryPath = "$buildDir/lib/";
 
   print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
   print("export ASAN_OPTIONS=$asanOptions");
   if (ubsanPrintStacks) print("export UBSAN_OPTIONS=$ubsanOptions");
+  print("export DARTAGNAN_BINDINGSLIB_PATH=$libraryPath");
   print("\n");
 
   final env = {
     "KDDW_FLUTTER_TESTS_USE_AOT": aotValue,
     "ASAN_OPTIONS": asanOptions,
     "EXTRA_GEN_SNAPSHOT_OPTIONS": gensnapshotOptions,
-    if (ubsanPrintStacks) "UBSAN_OPTIONS": ubsanOptions
+    if (ubsanPrintStacks) "UBSAN_OPTIONS": ubsanOptions,
+    "DARTAGNAN_BINDINGSLIB_PATH": libraryPath
   };
 
   /// Now we can run the tests:
