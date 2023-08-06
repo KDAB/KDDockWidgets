@@ -102,6 +102,18 @@
             ]
         },
         {
+            "name": "dev-flutter-aot-asan",
+            "displayName": "dev-flutter-aot-asan",
+            "binaryDir": "${sourceDir}/build-dev-flutter-aot-asan",
+            "cacheVariables": {
+                "KDDockWidgets_FLUTTER_TESTS_AOT": "ON"
+            },
+            "inherits": [
+                "dev-flutter",
+                "asan-base"
+            ]
+        },
+        {
             "name": "release-flutter",
             "displayName": "release-flutter",
             "binaryDir": "${sourceDir}/build-release-flutter",

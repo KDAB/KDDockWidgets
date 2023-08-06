@@ -15,6 +15,7 @@ import 'dart:io';
 import 'src/flutter/utils.dart';
 
 bool isAOT = false;
+bool isASAN = false;
 
 String kddwSourceDir() {
   return Platform.script.path.replaceAll("run_flutter_tests.dart", "");
@@ -22,7 +23,12 @@ String kddwSourceDir() {
 
 Future<int> runTests(String buildDir) async {
   if (!await Directory(buildDir).exists()) {
-    print("ERROR: Could not find $buildDir");
+    final presetName = buildDir
+        .replaceAll(kddwSourceDir(), "")
+        .replaceAll("build-", "")
+        .replaceAll("/", "");
+    print("ERROR: Could not find $buildDir.\n"
+        "Be sure to build the preset: $presetName");
     return -1;
   }
 
@@ -65,7 +71,7 @@ Future<int> runTests(String buildDir) async {
 }
 
 void printUsage() {
-  print("Usage: dart run_flutter_tests.dart [--aot] <build-dir>");
+  print("Usage: dart run_flutter_tests.dart [--aot] [--asan] <build-dir>");
 }
 
 String calculateBuildDir() {
@@ -77,6 +83,8 @@ String calculateBuildDir() {
     result = "build-dev-flutter";
   }
 
+  if (isASAN) result += "-asan";
+
   print("Using $result");
   return "${kddwSourceDir()}${result}/";
 }
@@ -85,6 +93,7 @@ Future<void> main(List<String> args) async {
   final _args = List<String>.from(args);
 
   isAOT = _args.remove("--aot");
+  isASAN = _args.remove("--asan");
 
   if (_args.length > 1 || _args.contains("--help") || _args.contains("-h")) {
     printUsage();
