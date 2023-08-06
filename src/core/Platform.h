@@ -241,7 +241,7 @@ public:
     /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
     static void tests_deinitPlatform();
 
-    static std::string s_expectedWarning;
+    std::string m_expectedWarning;
     static int s_logicalDpiFactorOverride;
 #endif
 
@@ -316,12 +316,12 @@ struct SetExpectedWarning
     explicit SetExpectedWarning(const std::string &s)
     {
         if (!s.empty())
-            Platform::s_expectedWarning = s;
+            Platform::instance()->m_expectedWarning = s;
     }
 
     ~SetExpectedWarning()
     {
-        Platform::s_expectedWarning.clear();
+        Platform::instance()->m_expectedWarning.clear();
     }
 
     KDDW_DELETE_COPY_CTOR(SetExpectedWarning)

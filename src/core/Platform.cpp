@@ -45,7 +45,6 @@ EventFilterInterface::~EventFilterInterface() = default;
 
 #if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
 int Platform::s_logicalDpiFactorOverride = 0;
-std::string Platform::s_expectedWarning = {};
 #endif
 
 Platform::Platform()

@@ -490,7 +490,7 @@ KDDW_QCORO_TASK tst_resize()
 
 KDDW_QCORO_TASK tst_resizeWithConstraints()
 {
-    Platform::s_expectedWarning = "New size doesn't respect size constraints";
+    Platform::instance()->m_expectedWarning = "New size doesn't respect size constraints";
 
     {
         // Test that resizing below minSize isn't permitted.
@@ -523,7 +523,7 @@ KDDW_QCORO_TASK tst_resizeWithConstraints()
         root->insertItem(item3, Location_OnRight);
         CHECK(root->checkSanity());
     }
-    Platform::s_expectedWarning.clear();
+    Platform::instance()->m_expectedWarning.clear();
 
     KDDW_TEST_RETURN(true);
 }
