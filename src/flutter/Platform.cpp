@@ -31,9 +31,22 @@ using namespace KDDockWidgets::flutter;
 
 Point Platform::s_lastCursorPosition = { -1, -1 };
 
+class flutter::Platform::Private
+{
+public:
+    std::shared_ptr<Core::View> m_focusedView;
+    std::optional<int> m_testsResult;
+};
+
 Platform::Platform()
+    : d(new Private())
 {
     init();
+}
+
+Platform::~Platform()
+{
+    delete d;
 }
 
 void Platform::init()
@@ -42,7 +55,7 @@ void Platform::init()
 
 std::shared_ptr<Core::View> Platform::focusedView() const
 {
-    return m_focusedView;
+    return d->m_focusedView;
 }
 
 Vector<std::shared_ptr<Core::Window>> Platform::windows() const
@@ -54,10 +67,6 @@ Vector<std::shared_ptr<Core::Window>> Platform::windows() const
 void Platform::sendEvent(Core::View *, Event *) const
 {
     KDDW_WARN("Platform::sendEvent: Not implemented");
-}
-
-Platform::~Platform()
-{
 }
 
 const char *Platform::name() const
@@ -304,8 +313,8 @@ void Platform::runTests()
     // and the Flutter event loop keeps running. When they are actually finished, the "then()" block is run.
     s_runTestsFunc().then([this](auto result) {
         std::lock_guard<std::mutex> locker(m_mutex);
-        assert(!m_testsResult.has_value());
-        m_testsResult = result ? 0 : 1;
+        assert(!d->m_testsResult.has_value());
+        d->m_testsResult = result ? 0 : 1;
     });
 #endif
 }
@@ -325,7 +334,7 @@ void Platform::scheduleResumeCoRoutines(int) const
 std::optional<int> Platform::testsResult() const
 {
     std::lock_guard<std::mutex> locker(m_mutex);
-    return m_testsResult;
+    return d->m_testsResult;
 }
 
 void Platform::tests_initPlatform_impl()
@@ -367,7 +376,7 @@ Core::MainWindow *Platform::createMainWindow(const QString &, Core::CreateViewOp
 
 void Platform::setFocusedView(std::shared_ptr<Core::View> view)
 {
-    m_focusedView = view;
+    d->m_focusedView = view;
 }
 
 #ifdef KDDW_FLUTTER_HAS_COROUTINES

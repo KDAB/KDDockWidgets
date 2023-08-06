@@ -147,8 +147,8 @@ public:
     void setCursorPos(Point) override;
     void setFocusedView(std::shared_ptr<Core::View>);
 
-    std::shared_ptr<Core::View> m_focusedView;
-    std::optional<int> m_testsResult;
+    class Private;
+    Private *const d;
 };
 
 }

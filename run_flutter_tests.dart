@@ -77,6 +77,7 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
 
   print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
   print("export ASAN_OPTIONS=$asanOptions");
+  if (ubsanPrintStacks) print("export UBSAN_OPTIONS=$ubsanOptions");
   print("\n");
 
   final env = {
