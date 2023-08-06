@@ -73,6 +73,10 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "KDDockWidgets_USE_LLD": "ON"
             },
+            "environment": {
+                "CC": "gcc",
+                "CXX": "g++"
+            },
             "inherits": [
                 "flutter"
             ]
