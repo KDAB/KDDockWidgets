@@ -299,6 +299,12 @@ bool TestsEmbedder::runFlutter(GLFWwindow *window,
         return true;
     };
     config.open_gl.present = [](void *userdata) -> bool {
+        static bool initial = true;
+        if (initial) {
+            kddw_fakeMouseButton({ 1, 1 }, true);
+            initial = false;
+        }
+
         glfwSwapBuffers(static_cast<GLFWwindow *>(userdata));
         return true;
     };
