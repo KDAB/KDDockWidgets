@@ -2,19 +2,38 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "dev-base",
+            "name": "base",
             "generator": "Ninja",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
-                "KDDockWidgets_USE_LLD": "ON"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             },
             "warnings": {
                 "uninitialized": true
             }
+        },
+        {
+            "name": "dev-base",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
+                "KDDockWidgets_USE_LLD": "ON"
+            },
+            "inherits": [
+                "base"
+            ]
+        },
+        {
+            "name": "asan-base",
+            "hidden": true,
+            "cacheVariables": {
+                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
+            },
+            "inherits": [
+                "base"
+            ]
         },
         {
             "name": "dev",
@@ -29,25 +48,21 @@
             "displayName": "dev-asan",
             "description": "An ASAN/UBSAN build",
             "binaryDir": "${sourceDir}/build-dev-asan",
-            "cacheVariables": {
-                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
-            },
             "inherits": [
-                "dev-base"
+                "dev-base",
+                "asan-base"
             ]
         },
         {
             "name": "flutter",
             "hidden": true,
-            "generator": "Ninja",
             "cacheVariables": {
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FRONTENDS": "flutter",
                 "KDDockWidgets_QT6": "ON"
             },
-            "warnings": {
-                "uninitialized": true
-            }
+            "inherits": [
+                "base"
+            ]
         },
         {
             "name": "dev-flutter",
@@ -66,17 +81,14 @@
             "name": "dev-flutter-asan",
             "displayName": "dev-flutter-asan",
             "binaryDir": "${sourceDir}/build-dev-flutter-asan",
-            "cacheVariables": {
-                "ECM_ENABLE_SANITIZERS": "'address;undefined'"
-            },
             "inherits": [
-                "dev-flutter"
+                "dev-flutter",
+                "asan-base"
             ]
         },
         {
             "name": "release-flutter",
             "displayName": "release-flutter",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-release-flutter",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
@@ -88,7 +100,6 @@
         {
             "name": "dev-flutter-no-bindings",
             "displayName": "dev-flutter-no-bindings",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-flutter-no-bindings",
             "cacheVariables": {
                 "KDDockWidgets_FLUTTER_NO_BINDINGS": "ON"
@@ -100,18 +111,16 @@
         {
             "name": "dev-lcov",
             "displayName": "dev-lcov",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-lcov",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_CODE_COVERAGE": "ON",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
-            "warnings": {
-                "uninitialized": true
-            }
+            "inherits": [
+                "base"
+            ]
         },
         {
             "name": "clazy",
@@ -223,30 +232,28 @@
             "binaryDir": "${sourceDir}/build-dev-asan6",
             "cacheVariables": {
                 "KDDockWidgets_QT6": "ON",
-                "ECM_ENABLE_SANITIZERS": "'address;undefined'",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             },
             "inherits": [
-                "dev-base"
+                "dev-base",
+                "asan-base"
             ]
         },
         {
             "name": "dev-clangcl",
             "displayName": "dev-clangcl",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-clangcl",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
-            "warnings": {
-                "uninitialized": true
-            },
+            "inherits": [
+                "base"
+            ],
             "environment": {
                 "CC": "clang-cl",
                 "CXX": "clang-cl"
@@ -255,13 +262,10 @@
         {
             "name": "dev-clangcl-asan",
             "displayName": "dev-clangcl-asan",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-clangcl-asan",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "ECM_ENABLE_SANITIZERS": "'address;undefined'",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
             "warnings": {
@@ -270,12 +274,14 @@
             "environment": {
                 "CC": "clang-cl",
                 "CXX": "clang-cl"
-            }
+            },
+            "inherits": [
+                "asan-base"
+            ]
         },
         {
             "name": "dev-clangcl6",
             "displayName": "dev-clangcl6",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-clangcl6",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
@@ -284,9 +290,9 @@
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
-            "warnings": {
-                "uninitialized": true
-            },
+            "inherits": [
+                "base"
+            ],
             "environment": {
                 "CC": "clang-cl",
                 "CXX": "clang-cl",
@@ -296,16 +302,17 @@
         {
             "name": "dev-time-trace",
             "displayName": "dev-time-trace",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev-time-trace",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
+            "inherits": [
+                "base"
+            ],
             "environment": {
                 "CC": "clang",
                 "CXX": "clang++",
@@ -315,17 +322,18 @@
         {
             "name": "dev6-time-trace",
             "displayName": "dev6-time-trace",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev6-time-trace",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "KDDockWidgets_QT6": "ON",
                 "CMAKE_C_FLAGS_INIT": "-ftime-trace",
                 "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
+            "inherits": [
+                "base"
+            ],
             "environment": {
                 "CC": "clang",
                 "CXX": "clang++",
