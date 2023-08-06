@@ -16,6 +16,7 @@ import 'src/flutter/utils.dart';
 
 bool isAOT = false;
 bool isASAN = false;
+bool isLSAN = false;
 
 String kddwSourceDir() {
   return Platform.script.path.replaceAll("run_flutter_tests.dart", "");
@@ -62,16 +63,23 @@ Future<int> runTests(String buildDir) async {
   }
 
   final String aotValue = isAOT ? "1" : "0";
+  final String lsanValue = isLSAN ? "1" : "0";
+  final String asanOptions = "detect_leaks=$lsanValue";
   print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
+  print("export ASAN_OPTIONS=$asanOptions");
 
   /// Now we can run the tests:
   return await runCommand("ctest", ["-j5"],
       workingDirectory: buildDir,
-      env: {"KDDW_FLUTTER_TESTS_USE_AOT": aotValue});
+      env: {
+        "KDDW_FLUTTER_TESTS_USE_AOT": aotValue,
+        "ASAN_OPTIONS": asanOptions
+      });
 }
 
 void printUsage() {
-  print("Usage: dart run_flutter_tests.dart [--aot] [--asan] <build-dir>");
+  print(
+      "Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan] <build-dir>");
 }
 
 String calculateBuildDir() {
@@ -93,7 +101,8 @@ Future<void> main(List<String> args) async {
   final _args = List<String>.from(args);
 
   isAOT = _args.remove("--aot");
-  isASAN = _args.remove("--asan");
+  isLSAN = _args.remove("--lsan");
+  isASAN = isLSAN || _args.remove("--asan");
 
   if (_args.length > 1 || _args.contains("--help") || _args.contains("-h")) {
     printUsage();

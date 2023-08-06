@@ -84,7 +84,6 @@ function(add_kddw_test test srcs)
         target_link_libraries(${test} kddockwidgets)
         add_test(NAME ${test} COMMAND ${test})
         target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
-        set_tests_properties(${test} PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0")
 
         if(KDDockWidgets_FLUTTER_TESTS_AOT)
             set(KDDW_AOT_VALUE 1)
