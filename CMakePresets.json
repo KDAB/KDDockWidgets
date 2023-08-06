@@ -91,6 +91,17 @@
             ]
         },
         {
+            "name": "dev-flutter-aot",
+            "displayName": "dev-flutter-aot",
+            "binaryDir": "${sourceDir}/build-dev-flutter-aot",
+            "cacheVariables": {
+                "KDDockWidgets_FLUTTER_TESTS_AOT": "ON"
+            },
+            "inherits": [
+                "dev-flutter"
+            ]
+        },
+        {
             "name": "release-flutter",
             "displayName": "release-flutter",
             "binaryDir": "${sourceDir}/build-release-flutter",

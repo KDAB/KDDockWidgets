@@ -104,6 +104,7 @@ option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
+option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 
