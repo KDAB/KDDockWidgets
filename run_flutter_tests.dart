@@ -22,7 +22,7 @@ String kddwSourceDir() {
   return Platform.script.path.replaceAll("run_flutter_tests.dart", "");
 }
 
-Future<int> runTests(String buildDir) async {
+Future<int> runTests(String? singleTestName, String buildDir) async {
   if (!await Directory(buildDir).exists()) {
     final presetName = buildDir
         .replaceAll(kddwSourceDir(), "")
@@ -30,6 +30,12 @@ Future<int> runTests(String buildDir) async {
         .replaceAll("/", "");
     print("ERROR: Could not find $buildDir.\n"
         "Be sure to build the preset: $presetName");
+    return -1;
+  }
+
+  if (singleTestName != null &&
+      !await File("$buildDir/bin/$singleTestName").exists()) {
+    print("ERROR: Could not find executable $buildDir/bin/$singleTestName\n");
     return -1;
   }
 
@@ -67,19 +73,30 @@ Future<int> runTests(String buildDir) async {
   final String asanOptions = "detect_leaks=$lsanValue";
   print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
   print("export ASAN_OPTIONS=$asanOptions");
+  print("\n");
+
+  final env = {
+    "KDDW_FLUTTER_TESTS_USE_AOT": aotValue,
+    "ASAN_OPTIONS": asanOptions
+  };
 
   /// Now we can run the tests:
-  return await runCommand("ctest", ["-j5"],
-      workingDirectory: buildDir,
-      env: {
-        "KDDW_FLUTTER_TESTS_USE_AOT": aotValue,
-        "ASAN_OPTIONS": asanOptions
-      });
+
+  if (singleTestName == null) {
+    // Run everything:
+    return await runCommand("ctest", ["-j5"],
+        workingDirectory: buildDir, env: env);
+  } else {
+    // Run a single test:
+    return await runCommand("bin/$singleTestName", [],
+        workingDirectory: buildDir, env: env);
+  }
 }
 
 void printUsage() {
-  print(
-      "Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan] <build-dir>");
+  print("Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan]");
+  print("Or specify a single test to run:");
+  print("dart run_flutter_tests.dart [--aot] [--asan] [--lsan] <test_name>");
 }
 
 String calculateBuildDir() {
@@ -103,11 +120,24 @@ Future<void> main(List<String> args) async {
   isAOT = _args.remove("--aot");
   isLSAN = _args.remove("--lsan");
   isASAN = isLSAN || _args.remove("--asan");
+  final bool isHelp = _args.remove("--help") || _args.remove("-h");
 
-  if (_args.length > 1 || _args.contains("--help") || _args.contains("-h")) {
+  if (_args.length > 1 || isHelp) {
     printUsage();
     exit(0);
   }
 
-  exit(await runTests(calculateBuildDir()));
+  final String? singleTestName = _args.isEmpty ? null : _args.first;
+
+  final result = await runTests(singleTestName, calculateBuildDir());
+  final bool isSuccess = result == 0;
+  if (isSuccess)
+    print("SUCCESS!");
+  else
+    print("ERROR!");
+
+  if (isLSAN && !isAOT && !isSuccess) {
+    print("\nConsider using LSAN with AOT so you can get symbolized traces");
+  }
+  exit(result);
 }
