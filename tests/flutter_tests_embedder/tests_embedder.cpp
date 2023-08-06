@@ -277,6 +277,12 @@ int TestsEmbedder::run()
 }
 
 
+static bool isAOT()
+{
+    const char *value = std::getenv("KDDW_FLUTTER_TESTS_USE_AOT");
+    return value && std::string(value) == "1";
+}
+
 bool TestsEmbedder::runFlutter(GLFWwindow *window,
                                const std::string &project_path,
                                const std::string &icudtl_path)
@@ -309,10 +315,8 @@ bool TestsEmbedder::runFlutter(GLFWwindow *window,
     // flutter build linux --release , for AOT mode
     const std::string aot_elf = project_path + "/build/linux/x64/release/bundle/lib/libapp.so";
 
-    const bool isAOT = std::getenv("KDDW_FLUTTER_TESTS_USE_AOT") != nullptr;
     FlutterEngineAOTData aot_data = nullptr;
-
-    if (isAOT) {
+    if (isAOT()) {
         const FlutterEngineAOTDataSource source = { .type = kFlutterEngineAOTDataSourceTypeElfPath, .elf_path = aot_elf.c_str() };
         auto res = FlutterEngineCreateAOTData(&source, &aot_data);
         if (res != kSuccess || !aot_data) {

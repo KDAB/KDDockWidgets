@@ -55,21 +55,30 @@ Future<int> runTests(String buildDir) async {
     }
   }
 
+  final String aotValue = isAOT ? "1" : "0";
+  print("export KDDW_FLUTTER_TESTS_USE_AOT=$aotValue");
+
   /// Now we can run the tests:
-  return await runCommand("ctest", ["-j5"], workingDirectory: buildDir);
+  return await runCommand("ctest", ["-j5"],
+      workingDirectory: buildDir,
+      env: {"KDDW_FLUTTER_TESTS_USE_AOT": aotValue});
 }
 
 void printUsage() {
   print("Usage: dart run_flutter_tests.dart [--aot] <build-dir>");
 }
 
-String calculateBuildDir(List<String> args) {
-  if (args.isEmpty) {
-    print("No build dir specified, defaulting to build-dev-flutter/");
-    return "${kddwSourceDir()}build-dev-flutter/";
+String calculateBuildDir() {
+  String result;
+
+  if (isAOT) {
+    result = "build-dev-flutter-aot";
+  } else {
+    result = "build-dev-flutter";
   }
 
-  return args.first;
+  print("Using $result");
+  return "${kddwSourceDir()}${result}/";
 }
 
 Future<void> main(List<String> args) async {
@@ -82,5 +91,5 @@ Future<void> main(List<String> args) async {
     exit(0);
   }
 
-  exit(await runTests(calculateBuildDir(_args)));
+  exit(await runTests(calculateBuildDir()));
 }
