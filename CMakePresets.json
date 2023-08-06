@@ -54,7 +54,7 @@
             ]
         },
         {
-            "name": "flutter",
+            "name": "flutter-base",
             "hidden": true,
             "cacheVariables": {
                 "KDDockWidgets_FRONTENDS": "flutter",
@@ -78,7 +78,7 @@
                 "CXX": "g++"
             },
             "inherits": [
-                "flutter"
+                "flutter-base"
             ]
         },
         {
@@ -109,7 +109,7 @@
                 "CMAKE_BUILD_TYPE": "Release"
             },
             "inherits": [
-                "flutter"
+                "flutter-base"
             ]
         },
         {
