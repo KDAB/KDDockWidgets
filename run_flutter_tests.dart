@@ -14,6 +14,8 @@
 import 'dart:io';
 import 'src/flutter/utils.dart';
 
+bool isAOT = false;
+
 String kddwSourceDir() {
   return Platform.script.path.replaceAll("run_flutter_tests.dart", "");
 }
@@ -33,7 +35,8 @@ Future<int> runTests(String buildDir) async {
 
   /// Make sure the flutter bundle is built:
   final flutterEmbedderDir = "${kddwSourceDir()}/tests/flutter_tests_embedder/";
-  result = await runCommand("flutter", ["build", "bundle"],
+  result = await runCommand(
+      "flutter", ["build", "bundle", "--suppress-analytics"],
       workingDirectory: flutterEmbedderDir);
 
   if (result != 0) {
@@ -41,12 +44,23 @@ Future<int> runTests(String buildDir) async {
     return result;
   }
 
+  if (isAOT) {
+    result = await runCommand(
+        "flutter", ["build", "linux", "--release", "--suppress-analytics"],
+        workingDirectory: flutterEmbedderDir);
+
+    if (result != 0) {
+      print("Failed to build AOT snapshot (libapp.so)");
+      return result;
+    }
+  }
+
   /// Now we can run the tests:
   return await runCommand("ctest", ["-j5"], workingDirectory: buildDir);
 }
 
 void printUsage() {
-  print("Usage: dart run_flutter_tests.dart <build-dir>");
+  print("Usage: dart run_flutter_tests.dart [--aot] <build-dir>");
 }
 
 String calculateBuildDir(List<String> args) {
@@ -59,11 +73,14 @@ String calculateBuildDir(List<String> args) {
 }
 
 Future<void> main(List<String> args) async {
-  var _args = List.from(args);
-  if (_args.length > 1) {
+  final _args = List<String>.from(args);
+
+  isAOT = _args.remove("--aot");
+
+  if (_args.length > 1 || _args.contains("--help") || _args.contains("-h")) {
     printUsage();
     exit(0);
   }
 
-  exit(await runTests(calculateBuildDir(args)));
+  exit(await runTests(calculateBuildDir(_args)));
 }
