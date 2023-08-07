@@ -115,6 +115,7 @@ QCoro::Task<bool> kddw_fakeMouseButton(KDDockWidgets::Point globalPos, bool isPr
     if (!s_window)
         co_return true;
 
+    KDDW_TRACE("GLFW: kddw_fakeMouseButton({}, {})", globalPos, isPress);
     s_requestedPos = globalPos;
     GLFWmouseButtonCallback(s_window, GLFW_MOUSE_BUTTON_1, isPress ? GLFW_PRESS : GLFW_RELEASE, 0);
     s_requestedPos = std::nullopt;

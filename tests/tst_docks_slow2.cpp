@@ -202,10 +202,14 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
+
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
 
+
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
@@ -218,7 +222,8 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     EnsureTopLevelsDeleted e;
 
     auto fw = createFloatingWindow();
-    fw->view()->move(50, 50);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+    fw->view()->move(200, 200);
     fw->setObjectName("fw1");
 
     auto dock2 = createDockWidget("doc2");
@@ -230,11 +235,12 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     CHECK(fw2->dropArea()->checkSanity());
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
 
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());

@@ -61,43 +61,53 @@ class TitleBarPositionedWidgetState extends PositionedWidgetState {
   @override
   Widget buildContents(BuildContext ctx) {
     final titleBarView = kddwView as TitleBar;
+    const double vPadding = 4;
+    const double iconVPadding = 4;
+    const double maxIconHeight = 26;
+    final ButtonStyle style = IconButton.styleFrom(
+      foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+      minimumSize: const Size(26, maxIconHeight),
+      maximumSize: const Size(26, maxIconHeight),
+      padding: const EdgeInsets.all(iconVPadding),
+      iconSize: 22,
+    );
+
     final contents = SizedBox(
-        height: 30,
-        child: Container(
-            padding: EdgeInsets.fromLTRB(8, 3, 5, 0),
-            color: Color(0xffF6E8EA),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    titleBarView.asTitleBarController().title().toDartString(),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
-                    foregroundColor: Colors.black,
-                  ),
-                  onPressed: () {
-                    titleBarView.asTitleBarController().onFloatClicked();
-                  },
-                  child: Icon(Icons.square_outlined),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
-                    foregroundColor: Colors.black,
-                  ),
-                  onPressed: () {
-                    titleBarView.asTitleBarController().onCloseClicked();
-                  },
-                  child: Icon(Icons.close),
-                ),
-              ],
-            )));
+      height: maxIconHeight + (2 * vPadding) + (2 * iconVPadding),
+      child: Container(
+        color: Colors.transparent, // for hit testing
+        padding: const EdgeInsets.only(
+            top: vPadding, bottom: vPadding, left: 16, right: 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                titleBarView.asTitleBarController().title().toDartString(),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                titleBarView.asTitleBarController().onFloatClicked();
+              },
+              style: style,
+              icon: const Icon(
+                Icons.filter_none,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                titleBarView.asTitleBarController().onCloseClicked();
+              },
+              style: style,
+              icon: const Icon(
+                Icons.close,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
 
     return Listener(
         onPointerDown: (event) {
