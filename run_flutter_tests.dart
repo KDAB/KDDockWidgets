@@ -98,8 +98,15 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
         workingDirectory: buildDir, env: env);
   } else {
     // Run a single test:
-    return await runCommand("bin/$singleTestName", [],
-        workingDirectory: buildDir, env: env);
+    return await runCommand(
+        "bin/$singleTestName",
+        [
+          // "--disable-service-auth-codes",
+          // "--verbose-logging",
+          // "--start-paused"
+        ],
+        workingDirectory: buildDir,
+        env: env);
   }
 }
 
