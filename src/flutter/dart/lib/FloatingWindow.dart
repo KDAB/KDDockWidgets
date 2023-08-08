@@ -70,12 +70,11 @@ class FloatingWindowPositionedWidgetState extends PositionedWidgetState {
     final titleBarWidget = view.titleBarView().flutterWidget;
     final dropAreaWidget = view.dropAreaView().flutterWidget;
 
-    return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            width: 4,
-          ),
+    return Card(
+        elevation: 5,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
             children: [titleBarWidget, Expanded(child: dropAreaWidget)]));
