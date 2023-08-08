@@ -128,13 +128,18 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
   Widget buildContents(BuildContext ctx) {
     final tabBarView = this.tabBarView();
     final int numTabs = tabBarView.m_controller.numDockWidgets();
+    final tabHeight = 40.0;
+    final double tabWidth = 120;
 
     if (numTabs == 0) return Container();
 
     final tabs = <Widget>[];
     for (var i = 0; i < numTabs; ++i) {
       final dw = tabBarView.m_controller.dockWidgetAt_2(i);
-      tabs.add(Tab(text: "${dw.title().toDartString()}"));
+      tabs.add(Tab(
+          height: tabHeight,
+          child: Text("${dw.title().toDartString()}",
+              style: Theme.of(context).textTheme.bodyMedium)));
     }
 
     final curIndex = tabBarView.m_controller.currentIndex();
@@ -154,7 +159,8 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
           kddwView.onFlutterMouseEvent(event);
         },
         child: SizedBox(
-            height: 50,
+            height: tabHeight,
+            width: tabWidth * numTabs,
             child: DefaultTabController(
                 initialIndex: curIndex == -1 ? 0 : curIndex,
                 length: numTabs,
@@ -172,7 +178,8 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
 
                     return material.TabBar(
                       tabs: tabs,
-                      labelColor: Colors.black,
+                      splashBorderRadius: BorderRadius.circular(8),
+                      indicatorSize: TabBarIndicatorSize.label,
                     );
                   },
                 ))));
