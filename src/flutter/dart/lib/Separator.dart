@@ -30,7 +30,7 @@ class Separator extends View {
       {required KDDWBindingsCore.View? parent})
       : super(separator, KDDockWidgetBindings.Core_ViewType.Separator, parent) {
     m_controller = separator!;
-    m_color = Colors.blueGrey;
+    m_color = Color.fromARGB(255, 213, 216, 218);
     debugName = "Separator";
 
     m_parent = KDDWBindingsFlutter.View.fromCache(parent!.thisCpp);
