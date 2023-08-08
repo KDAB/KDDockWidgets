@@ -19,7 +19,8 @@ import 'package:KDDockWidgetsBindings/Bindings_KDDWBindingsFlutter.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/material.dart' as material show TabBar;
-import 'package:flutter/material.dart' as Geometry show Rect;
+import 'package:flutter/material.dart' as Geometry show Rect, Size;
+import 'dart:ui';
 
 class TabBar extends KDDWBindingsFlutter.TabBar with View_mixin {
   late final KDDWBindingsCore.TabBar m_controller;
@@ -136,7 +137,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
     final tabs = <Widget>[];
     for (var i = 0; i < numTabs; ++i) {
       final dw = tabBarView.m_controller.dockWidgetAt_2(i);
-      tabs.add(Tab(
+      tabs.add(MyTab(
           height: tabHeight,
           child: Text("${dw.title().toDartString()}",
               style: Theme.of(context).textTheme.bodyMedium)));
@@ -158,30 +159,95 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
           if (event.buttons != kPrimaryButton) return;
           kddwView.onFlutterMouseEvent(event);
         },
-        child: SizedBox(
-            height: tabHeight,
-            width: tabWidth * numTabs,
-            child: DefaultTabController(
-                initialIndex: curIndex == -1 ? 0 : curIndex,
-                length: numTabs,
-                child: Builder(
-                  builder: (context) {
-                    final TabController controller =
-                        DefaultTabController.of(context);
-                    controller.addListener(() {
-                      if (!controller.indexIsChanging) {
-                        _calledFromFlutter = true;
-                        currentIndex = controller.index;
-                        _calledFromFlutter = false;
-                      }
-                    });
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+              height: tabHeight,
+              width: tabWidth * numTabs,
+              child: DefaultTabController(
+                  initialIndex: curIndex == -1 ? 0 : curIndex,
+                  length: numTabs,
+                  child: Builder(
+                    builder: (context) {
+                      final TabController controller =
+                          DefaultTabController.of(context);
+                      controller.addListener(() {
+                        if (!controller.indexIsChanging) {
+                          _calledFromFlutter = true;
+                          currentIndex = controller.index;
+                          _calledFromFlutter = false;
+                        }
+                      });
 
-                    return material.TabBar(
-                      tabs: tabs,
-                      splashBorderRadius: BorderRadius.circular(8),
-                      indicatorSize: TabBarIndicatorSize.label,
-                    );
-                  },
-                ))));
+                      return material.TabBar(
+                        tabs: tabs,
+                        splashBorderRadius: BorderRadius.circular(8),
+                        indicatorSize: TabBarIndicatorSize.label,
+                      );
+                    },
+                  ))),
+        ));
+  }
+}
+
+class MyTab extends StatelessWidget implements PreferredSizeWidget {
+  MyTab({
+    super.key,
+    required this.child,
+    required this.height,
+  });
+
+  final Widget child;
+  final double height;
+  final isHovering = ValueNotifier(false);
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onHover: (event) {
+        if (isHovering.value) return;
+        isHovering.value = true;
+      },
+      onExit: (event) {
+        if (!isHovering.value) return;
+        isHovering.value = false;
+      },
+      child: ValueListenableBuilder(
+        valueListenable: isHovering,
+        builder: (context, isHovering, widget) {
+          return SizedBox(
+            height: height,
+            child: isHovering
+                ? Stack(
+                    children: [
+                      Align(
+                        child: child,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Icon(
+                          Icons.open_with,
+                          size: 18,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant
+                              .withAlpha(100),
+                        ),
+                      ),
+                    ],
+                  )
+                : Center(
+                    widthFactor: 1.5,
+                    child: child,
+                  ),
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Geometry.Size get preferredSize {
+    return Geometry.Size.fromHeight(height);
   }
 }
