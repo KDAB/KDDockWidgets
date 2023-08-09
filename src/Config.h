@@ -32,7 +32,7 @@ class ViewFactory;
 }
 
 typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
-typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
+typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name, KDDockWidgets::MainWindowOptions);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///

@@ -29,8 +29,8 @@ static bool lint(const QString &filename)
         return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
     };
 
-    MainWindowFactoryFunc mwFunc = [](const QString &mwName) {
-        return Platform::instance()->createMainWindow(mwName, {});
+    MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions opts) {
+        return Platform::instance()->createMainWindow(mwName, {}, opts);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
