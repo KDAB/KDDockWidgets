@@ -197,7 +197,6 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(waitAtEndOpt)) {
         // For debugging inspection purposes.
-        QGuiApplication app(argc, argv);
 
         QTimer::singleShot(1000, [] {
             LayoutSaver saver;
