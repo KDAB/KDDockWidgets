@@ -116,7 +116,8 @@ static bool lint(const QString &filename, LinterConfig config)
         if (s_isVerbose)
             qDebug() << "Pre-creating main window" << name << "with options" << mw.options;
 
-        Platform::instance()->createMainWindow(name, {}, mw.options);
+        auto mainWindow = Platform::instance()->createMainWindow(name, {}, mw.options);
+        mainWindow->show();
     }
 
     LayoutSaver restorer(config.restoreOptions);
@@ -139,8 +140,11 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     QCommandLineOption configFileOpt = { { "c", "config" }, "Linter config file", "configfile" };
     QCommandLineOption verboseOpt = { { "v", "verbose" }, "Verbose output" };
+    QCommandLineOption waitAtEndOpt = { { "w", "wait" }, "Waits instead of exiting. For debugging purposes." };
+
     parser.addOption(configFileOpt);
     parser.addOption(verboseOpt);
+    parser.addOption(waitAtEndOpt);
     parser.addPositionalArgument("layout", "layout json file");
     parser.process(*qApp);
 
@@ -157,8 +161,6 @@ int main(int argc, char *argv[])
             exitCode = 2;
     }
 
-    KDDockWidgets::Core::Platform::tests_deinitPlatform();
-
     if (s_isVerbose) {
         if (exitCode == 0) {
             qDebug() << "Success";
@@ -166,6 +168,14 @@ int main(int argc, char *argv[])
             qDebug() << "Error";
         }
     }
+
+    if (parser.isSet(waitAtEndOpt)) {
+        // For debugging inspection purposes.
+        QGuiApplication app(argc, argv);
+        app.exec();
+    }
+
+    KDDockWidgets::Core::Platform::tests_deinitPlatform();
 
     return exitCode;
 }
