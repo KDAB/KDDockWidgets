@@ -18,7 +18,7 @@
 
 #include <QDebug>
 #include <QString>
-#include <QGuiApplication>
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFileInfo>
@@ -132,20 +132,17 @@ static bool lint(const QString &filename, LinterConfig config)
 
 int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
     const auto frontends = Platform::frontendTypes();
     if (frontends.empty()) {
         qWarning() << "Error: Your KDDockWidgets installation doesn't support any frontend!";
         return -1;
     }
 
-    const FrontendType ft = frontends.size() == 2 ? FrontendType::QtWidgets : frontends.front();
-
-    // Just take the 1st frontend, any is fine
-    KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, ft);
-
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets layout linter");
-    parser.addHelpOption();
+    QCommandLineOption forceQtQuick = { { "q", "force-qtquick" }, "Forces usage of QtQuick" };
     QCommandLineOption configFileOpt = { { "c", "config" }, "Linter config file", "configfile" };
     QCommandLineOption verboseOpt = { { "v", "verbose" }, "Verbose output" };
     QCommandLineOption waitAtEndOpt = { { "w", "wait" }, "Waits instead of exiting. For debugging purposes." };
@@ -154,7 +151,28 @@ int main(int argc, char *argv[])
     parser.addOption(verboseOpt);
     parser.addOption(waitAtEndOpt);
     parser.addPositionalArgument("layout", "layout json file");
+    parser.addHelpOption();
+
+    FrontendType frontendType = FrontendType::QtWidgets;
+
+#if defined(KDDW_FRONTEND_QTQUICK)
+#if defined(KDDW_FRONTEND_QTWIDGETS)
+    // There's both frontends, so add a switch to chose QtQuick
+    parser.addOption(forceQtQuick);
+#else
+    // There's only QtQuick
+    frontendType = FrontendType::QtQuick;
+#endif
+#endif
+
     parser.process(*qApp);
+
+#if defined(KDDW_FRONTEND_QTQUICK) && defined(KDDW_FRONTEND_QTWIDGETS)
+    if (parser.isSet(forceQtQuick))
+        frontendType = FrontendType::QtQuick;
+#endif
+
+    KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, frontendType);
 
     s_isVerbose = parser.isSet(verboseOpt);
     const LinterConfig lc = requestedLinterConfig(parser, parser.isSet(configFileOpt) ? parser.value(configFileOpt) : QString());
