@@ -20,24 +20,56 @@
 #include <QString>
 #include <QGuiApplication>
 #include <QCommandLineParser>
+#include <QDir>
+#include <QFileInfo>
+
+#include "nlohmann/json.hpp"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 struct LinterConfig
 {
-    QStringList filesToLint;
+    std::vector<std::string> filesToLint;
 
     bool isEmpty() const
     {
-        return filesToLint.isEmpty();
+        return filesToLint.empty();
     }
 };
 
-LinterConfig requestedLinterConfig(const QCommandLineParser &parser)
+inline void from_json(const nlohmann::json &j, LinterConfig &ls)
+{
+    ls.filesToLint = j.value("files", std::vector<std::string>());
+}
+
+LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QString &configFile)
 {
     LinterConfig c;
-    c.filesToLint = parser.positionalArguments();
+
+    const auto positionalArguments = parser.positionalArguments();
+    if (configFile.isEmpty() && positionalArguments.isEmpty()) {
+        qWarning() << "Expected either a config file or positional arguments";
+        return {};
+    } else if (!configFile.isEmpty() && !positionalArguments.isEmpty()) {
+        qWarning() << "Expected either a config file or positional arguments, not both";
+        return {};
+    } else if (!positionalArguments.isEmpty()) {
+        std::transform(positionalArguments.begin(), positionalArguments.end(), std::back_inserter(c.filesToLint),
+                       [](const QString &str) {
+                           return str.toStdString();
+                       });
+    } else {
+        QFile f(configFile);
+        if (!f.open(QIODevice::ReadOnly)) {
+            qWarning() << "Failed to open" << configFile;
+            return {};
+        }
+        const QByteArray jsonData = f.readAll();
+        QDir::setCurrent(QFileInfo(configFile).path());
+        nlohmann::json j = nlohmann::json::parse(jsonData, nullptr, /*DisableExceptions=*/true);
+        from_json(j, c);
+    }
 
     return c;
 }
@@ -73,21 +105,22 @@ int main(int argc, char *argv[])
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets layout linter");
     parser.addHelpOption();
+    QCommandLineOption opt = { { "c", "config" }, "Linter config file", "configfile" };
+    parser.addOption(opt);
     parser.addPositionalArgument("layout", "layout json file");
     parser.process(*qApp);
 
-    const LinterConfig lc = requestedLinterConfig(parser);
-
+    const LinterConfig lc = requestedLinterConfig(parser, parser.isSet(opt) ? parser.value(opt) : QString());
     if (lc.isEmpty()) {
-        qWarning() << "Expected a layout file";
+        qWarning() << "Bailing out";
         return 3;
     }
 
     const auto options = RestoreOption_None;
 
     int exitCode = 0;
-    for (const QString &layout : lc.filesToLint) {
-        if (!lint(qGuiApp->arguments().at(1), options))
+    for (const std::string &layout : lc.filesToLint) {
+        if (!lint(QString::fromStdString(layout), options))
             exitCode = 2;
     }
 
