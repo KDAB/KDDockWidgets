@@ -1034,7 +1034,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, Rect savedMai
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
     if (!mainWindow) {
-        KDDW_ERROR("Failed to find main window with name {}", mainWindowName);
+        KDDW_ERROR("Failed to find main window with name {}", mainWindowId);
         return;
     }
 
