@@ -22,6 +22,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFileInfo>
+#include <QTimer>
 
 #include "nlohmann/json.hpp"
 
@@ -132,8 +133,10 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    const FrontendType ft = frontends.size() == 2 ? FrontendType::QtWidgets : frontends.front();
+
     // Just take the 1st frontend, any is fine
-    KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, frontends[0]);
+    KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, ft);
 
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets layout linter");
@@ -172,6 +175,14 @@ int main(int argc, char *argv[])
     if (parser.isSet(waitAtEndOpt)) {
         // For debugging inspection purposes.
         QGuiApplication app(argc, argv);
+
+        QTimer::singleShot(1000, [] {
+            LayoutSaver saver;
+            const QByteArray saved = saver.serializeLayout();
+            if (s_isVerbose)
+                qDebug() << "Testing if serialize works" << !saved.isEmpty();
+        });
+
         app.exec();
     }
 
