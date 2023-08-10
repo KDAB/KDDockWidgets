@@ -23,20 +23,20 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-static bool lint(const QString &filename)
+static bool lint(const QString &filename, RestoreOptions options)
 {
     DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
         return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
     };
 
-    MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions opts) {
-        return Platform::instance()->createMainWindow(mwName, {}, opts);
+    MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions mainWindowOptions) {
+        return Platform::instance()->createMainWindow(mwName, {}, mainWindowOptions);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
     KDDockWidgets::Config::self().setMainWindowFactoryFunc(mwFunc);
 
-    LayoutSaver restorer;
+    LayoutSaver restorer(options);
     return restorer.restoreFromFile(filename);
 }
 
@@ -56,7 +56,8 @@ int main(int argc, char *argv[])
     // Just take the 1st frontend, any is fine
     KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, frontends[0]);
 
-    const int exitCode = lint(qGuiApp->arguments().at(1)) ? 0 : 2;
+    const auto options = RestoreOption_None;
+    const int exitCode = lint(qGuiApp->arguments().at(1), options) ? 0 : 2;
 
     KDDockWidgets::Core::Platform::tests_deinitPlatform();
 
