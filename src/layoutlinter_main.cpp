@@ -28,6 +28,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
+static bool s_isVerbose = false;
+
 struct LinterConfig
 {
     struct MainWindow
@@ -92,6 +94,10 @@ LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QStri
 
 static bool lint(const QString &filename, LinterConfig config)
 {
+    if (s_isVerbose) {
+        qDebug() << "Linting" << filename << "with options" << config.restoreOptions;
+    }
+
     DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
         return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
     };
@@ -106,7 +112,11 @@ static bool lint(const QString &filename, LinterConfig config)
 
     // Create the main windows specified from -c <file>
     for (auto mw : config.mainWindows) {
-        Platform::instance()->createMainWindow(QString::fromStdString(mw.name), {}, mw.options);
+        const QString name = QString::fromStdString(mw.name);
+        if (s_isVerbose)
+            qDebug() << "Pre-creating main window" << name << "with options" << mw.options;
+
+        Platform::instance()->createMainWindow(name, {}, mw.options);
     }
 
     LayoutSaver restorer(config.restoreOptions);
@@ -127,12 +137,15 @@ int main(int argc, char *argv[])
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets layout linter");
     parser.addHelpOption();
-    QCommandLineOption opt = { { "c", "config" }, "Linter config file", "configfile" };
-    parser.addOption(opt);
+    QCommandLineOption configFileOpt = { { "c", "config" }, "Linter config file", "configfile" };
+    QCommandLineOption verboseOpt = { { "v", "verbose" }, "Verbose output" };
+    parser.addOption(configFileOpt);
+    parser.addOption(verboseOpt);
     parser.addPositionalArgument("layout", "layout json file");
     parser.process(*qApp);
 
-    const LinterConfig lc = requestedLinterConfig(parser, parser.isSet(opt) ? parser.value(opt) : QString());
+    s_isVerbose = parser.isSet(verboseOpt);
+    const LinterConfig lc = requestedLinterConfig(parser, parser.isSet(configFileOpt) ? parser.value(configFileOpt) : QString());
     if (lc.isEmpty()) {
         qWarning() << "Bailing out";
         return 3;
@@ -145,5 +158,14 @@ int main(int argc, char *argv[])
     }
 
     KDDockWidgets::Core::Platform::tests_deinitPlatform();
+
+    if (s_isVerbose) {
+        if (exitCode == 0) {
+            qDebug() << "Success";
+        } else {
+            qDebug() << "Error";
+        }
+    }
+
     return exitCode;
 }
