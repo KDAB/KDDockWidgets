@@ -4,8 +4,9 @@
     ],
     "mainWindows": [
         {
-            "name": "MyMainWindow1",
-            "options": 0
+            "name": "MainWindow1",
+            "options": 0,
+            "maximize": true
         }
     ],
     "restoreOptions": 0

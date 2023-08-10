@@ -37,6 +37,7 @@ struct LinterConfig
     {
         std::string name;
         MainWindowOptions options = {};
+        bool maximize = false;
     };
 
     RestoreOptions restoreOptions = {};
@@ -53,6 +54,7 @@ inline void from_json(const nlohmann::json &j, LinterConfig::MainWindow &mw)
 {
     mw.name = j["name"];
     mw.options = MainWindowOptions(j.value("options", 0));
+    mw.maximize = j.value("maximize", false);
 }
 
 inline void from_json(const nlohmann::json &j, LinterConfig &ls)
@@ -118,7 +120,10 @@ static bool lint(const QString &filename, LinterConfig config)
             qDebug() << "Pre-creating main window" << name << "with options" << mw.options;
 
         auto mainWindow = Platform::instance()->createMainWindow(name, {}, mw.options);
-        mainWindow->show();
+        if (mw.maximize)
+            mainWindow->view()->showMaximized();
+        else
+            mainWindow->view()->show();
     }
 
     LayoutSaver restorer(config.restoreOptions);
