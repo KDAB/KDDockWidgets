@@ -1,5 +1,12 @@
 {
     "files": [
         "layouts/overlapping-item.json"
-    ]
+    ],
+    "mainWindows": [
+        {
+            "name": "MyMainWindow1",
+            "options": 0
+        }
+    ],
+    "restoreOptions": 0
 }

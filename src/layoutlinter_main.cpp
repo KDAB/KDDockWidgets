@@ -30,7 +30,15 @@ using namespace KDDockWidgets::Core;
 
 struct LinterConfig
 {
+    struct MainWindow
+    {
+        std::string name;
+        MainWindowOptions options = {};
+    };
+
+    RestoreOptions restoreOptions = {};
     std::vector<std::string> filesToLint;
+    std::vector<MainWindow> mainWindows;
 
     bool isEmpty() const
     {
@@ -38,9 +46,17 @@ struct LinterConfig
     }
 };
 
+inline void from_json(const nlohmann::json &j, LinterConfig::MainWindow &mw)
+{
+    mw.name = j["name"];
+    mw.options = MainWindowOptions(j.value("options", 0));
+}
+
 inline void from_json(const nlohmann::json &j, LinterConfig &ls)
 {
     ls.filesToLint = j.value("files", std::vector<std::string>());
+    ls.mainWindows = j.value("mainWindows", std::vector<LinterConfig::MainWindow>());
+    ls.restoreOptions = RestoreOptions(j.value("restoreOptions", int(RestoreOption::RestoreOption_None)));
 }
 
 LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QString &configFile)
@@ -74,12 +90,13 @@ LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QStri
     return c;
 }
 
-static bool lint(const QString &filename, RestoreOptions options)
+static bool lint(const QString &filename, LinterConfig config)
 {
     DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
         return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
     };
 
+    /// MainWindow factory for the easy cases.
     MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions mainWindowOptions) {
         return Platform::instance()->createMainWindow(mwName, {}, mainWindowOptions);
     };
@@ -87,7 +104,12 @@ static bool lint(const QString &filename, RestoreOptions options)
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
     KDDockWidgets::Config::self().setMainWindowFactoryFunc(mwFunc);
 
-    LayoutSaver restorer(options);
+    // Create the main windows specified from -c <file>
+    for (auto mw : config.mainWindows) {
+        Platform::instance()->createMainWindow(QString::fromStdString(mw.name), {}, mw.options);
+    }
+
+    LayoutSaver restorer(config.restoreOptions);
     return restorer.restoreFromFile(filename);
 }
 
@@ -116,11 +138,9 @@ int main(int argc, char *argv[])
         return 3;
     }
 
-    const auto options = RestoreOption_None;
-
     int exitCode = 0;
     for (const std::string &layout : lc.filesToLint) {
-        if (!lint(QString::fromStdString(layout), options))
+        if (!lint(QString::fromStdString(layout), lc))
             exitCode = 2;
     }
 
