@@ -2150,6 +2150,10 @@ void ItemBoxContainer::dumpLayout(int level)
     const std::string beingInserted =
         m_sizingInfo.isBeingInserted ? "; beingInserted;" : "";
     const std::string visible = !isVisible() ? ";hidden;" : "";
+    const bool isOverflow = d->isOverflowing();
+    const Size missingSize_ = missingSize();
+    const std::string isOverflowStr = isOverflow ? "; overflowing ;" : "";
+    const std::string missingSizeStr = missingSize_.isNull() ? "" : (std::string("; missingSize=") + std::to_string(::length(missingSize_, d->m_orientation)));
 
     const std::string typeStr = isRoot() ? "* Root: " : "* Layout: ";
 
