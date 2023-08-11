@@ -3470,8 +3470,9 @@ void ItemBoxContainer::Private::relayoutIfNeeded()
     // When loading a layout from disk the min-sizes for the host QWidgets might have changed, so we
     // need to adjust
 
-    if (!q->missingSize().isNull())
-        q->setSize_recursive(q->minSize());
+    const Size missing = q->missingSize();
+    if (!missing.isNull())
+        q->setSize_recursive(q->size() + missing);
 
     if (isOverflowing()) {
         const Size size = q->size();
