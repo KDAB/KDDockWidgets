@@ -268,7 +268,7 @@ public:
                       ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(Rect rect);
-    virtual void dumpLayout(int level = 0);
+    virtual void dumpLayout(int level = 0, bool printSeparators = true);
     virtual void setHostView(KDDockWidgets::Core::View *);
     virtual void to_json(nlohmann::json &) const;
 
@@ -414,7 +414,7 @@ public:
     Size maxSizeHint() const override;
     Size availableSize() const;
     Q_REQUIRED_RESULT bool checkSanity() override;
-    void dumpLayout(int level = 0) override;
+    void dumpLayout(int level = 0, bool printSeparators = true) override;
     void setSize_recursive(
         Size newSize,
         ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;

@@ -746,7 +746,7 @@ std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> 
 }
 
 
-void Item::dumpLayout(int level)
+void Item::dumpLayout(int level, bool)
 {
     std::string indent(size_t(level), ' ');
 
@@ -2135,7 +2135,7 @@ int ItemBoxContainer::length() const
     return isVertical() ? height() : width();
 }
 
-void ItemBoxContainer::dumpLayout(int level)
+void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
 {
     if (level == 0 && hostView()) {
 
@@ -2171,8 +2171,8 @@ void ItemBoxContainer::dumpLayout(int level)
 
     int i = 0;
     for (Item *item : std::as_const(m_children)) {
-        item->dumpLayout(level + 1);
-        if (item->isVisible()) {
+        item->dumpLayout(level + 1, printSeparators);
+        if (printSeparators && item->isVisible()) {
             if (i < d->m_separators.size()) {
                 auto separator = d->m_separators.at(i);
                 std::cerr << indent << " - Separator: "
