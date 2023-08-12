@@ -3475,10 +3475,23 @@ void ItemBoxContainer::Private::relayoutIfNeeded()
     // When loading a layout from disk the min-sizes for the host QWidgets might have changed, so we
     // need to adjust
 
-    const Size missing = q->missingSize();
-    if (!missing.isNull())
-        q->setSize_recursive(q->size() + missing);
+    {
+        // #1. First, we check if the current container has enough space
+        const Size missing = q->missingSize();
+        if (!missing.isNull())
+            q->setSize_recursive(q->size() + missing);
+    }
 
+    // #2. Make sure there's no child that is missing space
+    for (Item *child : q->m_children) {
+        const int missingLength = ::length(child->missingSize(), m_orientation);
+        if (!child->isVisible() || missingLength == 0)
+            continue;
+
+        q->growItem(child, missingLength, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
+    }
+
+    // #3. Contents is currently bigger. Not sure if this can still happen.
     if (q->isOverflowing()) {
         const Size size = q->size();
         q->m_sizingInfo.setSize(size + Size(1, 1)); // Just so setSize_recursive() doesn't bail out

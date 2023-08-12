@@ -1964,9 +1964,8 @@ KDDW_QCORO_TASK tst_relayoutIfNeeded()
 
     root->relayoutIfNeeded();
     root->positionItems_recursive();
-    // CHECK(!root->isOverflowing()); // TODO uncomment
-    root->dumpLayout(0, false);
-    // CHECK(!root->checkSanity());
+    CHECK(!root->isOverflowing());
+    CHECK(root->checkSanity());
 
     KDDW_TEST_RETURN(true);
 }

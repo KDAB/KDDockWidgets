@@ -534,6 +534,9 @@ public:
 private:
 #endif
     void simplify();
+
+    /// Puts the items in their respective places. i.e. lays them sequentially, spaced by 5px (separator thickness)
+    /// does not resize.
     void positionItems();
     void positionItems_recursive();
     void positionItems(SizingInfo::List &sizes);
