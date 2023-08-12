@@ -35,6 +35,8 @@
 #include <QTimer>
 #endif
 
+#define LAYOUT_DUMP_INDENT 6
+
 #ifdef Q_CC_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4138)
@@ -748,9 +750,9 @@ std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> 
 
 void Item::dumpLayout(int level, bool)
 {
-    std::string indent(size_t(level), ' ');
+    std::string indent(LAYOUT_DUMP_INDENT * size_t(level), ' ');
 
-    std::cerr << indent << "- Widget: " << objectName().toStdString() << " "
+    std::cerr << indent << "- Widget: name=" << objectName().toStdString() << " "
               << m_sizingInfo.geometry // << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
               << "; min=" << minSize();
 
@@ -767,7 +769,7 @@ void Item::dumpLayout(int level, bool)
     if (m_sizingInfo.isBeingInserted)
         std::cerr << ";beingInserted;";
 
-    std::cerr << this << "; guest=" << this << "\n";
+    std::cerr << "; guest=" << this << "\n";
 }
 
 Item::Item(View *hostWidget, ItemContainer *parent)
@@ -2138,7 +2140,6 @@ int ItemBoxContainer::length() const
 void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
 {
     if (level == 0 && hostView()) {
-
         const auto screens = Platform::instance()->screens();
         for (const auto &screen : screens) {
             std::cerr << "Screen: " << screen->geometry() << "; " << screen->availableGeometry()
@@ -2146,7 +2147,7 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
         }
     }
 
-    std::string indent(size_t(level), ' ');
+    std::string indent(LAYOUT_DUMP_INDENT * size_t(level), ' ');
     const std::string beingInserted =
         m_sizingInfo.isBeingInserted ? "; beingInserted;" : "";
     const std::string visible = !isVisible() ? ";hidden;" : "";
@@ -2155,7 +2156,7 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
     const std::string isOverflowStr = isOverflow ? "; overflowing ;" : "";
     const std::string missingSizeStr = missingSize_.isNull() ? "" : (std::string("; missingSize=") + std::to_string(::length(missingSize_, d->m_orientation)));
 
-    const std::string typeStr = isRoot() ? "* Root: " : "* Layout: ";
+    const std::string typeStr = isRoot() ? "- Root: " : "- Layout: ";
 
     {
         std::cerr << indent << typeStr << "; isVertical=" << (d->m_orientation == Qt::Vertical) << "; "
@@ -2175,9 +2176,9 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
         if (printSeparators && item->isVisible()) {
             if (i < d->m_separators.size()) {
                 auto separator = d->m_separators.at(i);
-                std::cerr << indent << " - Separator: "
+                std::cerr << std::string(LAYOUT_DUMP_INDENT * size_t(level + 1), ' ') << "- Separator: "
                           << "local.geo=" << mapFromRoot(separator->view()->geometry())
-                          << " ; global.geo=" << separator->view()->geometry() << "; separator=" << separator << "\n ";
+                          << " ; global.geo=" << separator->view()->geometry() << "; separator=" << separator << "\n";
             }
             ++i;
         }
