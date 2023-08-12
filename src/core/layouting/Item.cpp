@@ -2153,7 +2153,7 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
     const bool isOverflow = d->isOverflowing();
     const Size missingSize_ = missingSize();
     const std::string isOverflowStr = isOverflow ? "; overflowing ;" : "";
-    const std::string missingSizeStr = missingSize_.isNull() ? "" : (std::string("; missingSize=") + std::to_string(::length(missingSize_, d->m_orientation)));
+    const std::string missingSizeStr = missingSize_.isNull() ? "" : (std::string("; missingSize=") + std::to_string(missingSize_.width()) + "x" + std::to_string(missingSize_.height()));
 
     const std::string typeStr = isRoot() ? "- Root: " : "- Layout: ";
 
@@ -2166,7 +2166,8 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
 
         if (maxSizeHint() != Item::hardcodedMaximumSize)
             std::cerr << "; max=" << maxSizeHint();
-        std::cerr << "\n";
+
+        std::cerr << missingSizeStr << isOverflowStr << "\n";
     }
 
     int i = 0;
