@@ -3387,6 +3387,11 @@ bool ItemBoxContainer::Private::isDummy() const
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
+void ItemBoxContainer::relayoutIfNeeded()
+{
+    d->relayoutIfNeeded();
+}
+
 bool ItemBoxContainer::test_suggestedRect()
 {
     auto itemToDrop = new Item(hostView());

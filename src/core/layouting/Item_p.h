@@ -518,13 +518,14 @@ private:
     int indexOf(KDDockWidgets::Core::Separator *) const;
     bool isInSimplify() const;
 
-#ifdef DOCKS_DEVELOPER_MODE
-    bool test_suggestedRect();
-#endif
-
 public:
     Vector<KDDockWidgets::Core::Separator *> separators_recursive() const;
     Vector<KDDockWidgets::Core::Separator *> separators() const;
+
+#ifdef DOCKS_DEVELOPER_MODE
+    bool test_suggestedRect();
+    void relayoutIfNeeded();
+#endif
 
 #ifdef DOCKS_DEVELOPER_MODE
 public:
