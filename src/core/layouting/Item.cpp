@@ -953,7 +953,6 @@ struct ItemBoxContainer::Private
     }
 
     int defaultLengthFor(Item *item, InitialOption option) const;
-    bool isOverflowing() const;
     void relayoutIfNeeded();
     const Item *itemFromPath(const Vector<int> &path) const;
     void resizeChildren(Size oldSize, Size newSize, SizingInfo::List &sizes,
@@ -2150,7 +2149,7 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
     const std::string beingInserted =
         m_sizingInfo.isBeingInserted ? "; beingInserted;" : "";
     const std::string visible = !isVisible() ? ";hidden;" : "";
-    const bool isOverflow = d->isOverflowing();
+    const bool isOverflow = isOverflowing();
     const Size missingSize_ = missingSize();
     const std::string isOverflowStr = isOverflow ? "; overflowing ;" : "";
     const std::string missingSizeStr = missingSize_.isNull() ? "" : (std::string("; missingSize=") + std::to_string(missingSize_.width()) + "x" + std::to_string(missingSize_.height()));
@@ -3452,22 +3451,22 @@ Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators() const
     return d->m_separators;
 }
 
-bool ItemBoxContainer::Private::isOverflowing() const
+bool ItemBoxContainer::isOverflowing() const
 {
     // This never returns true, unless when loading a buggy layout
     // or if QWidgets now have bigger min-size
 
     int contentsLength = 0;
     int numVisible = 0;
-    for (Item *item : std::as_const(q->m_children)) {
+    for (Item *item : std::as_const(m_children)) {
         if (item->isVisible()) {
-            contentsLength += item->length(m_orientation);
+            contentsLength += item->length(d->m_orientation);
             numVisible++;
         }
     }
 
     contentsLength += std::max(0, Item::separatorThickness * (numVisible - 1));
-    return contentsLength > q->length();
+    return contentsLength > length();
 }
 
 void ItemBoxContainer::Private::relayoutIfNeeded()
@@ -3480,7 +3479,7 @@ void ItemBoxContainer::Private::relayoutIfNeeded()
     if (!missing.isNull())
         q->setSize_recursive(q->size() + missing);
 
-    if (isOverflowing()) {
+    if (q->isOverflowing()) {
         const Size size = q->size();
         q->m_sizingInfo.setSize(size + Size(1, 1)); // Just so setSize_recursive() doesn't bail out
         q->setSize_recursive(size);

@@ -1934,6 +1934,43 @@ KDDW_QCORO_TASK tst_itemSerialization()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_relayoutIfNeeded()
+{
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    auto item1 = createItem({ 600, 0 });
+    item1->setSize({ 600, 100 });
+
+    auto item11 = createItem();
+    auto item12 = createItem();
+    auto item2 = createItem();
+
+    root->insertItem(item1, Location_OnLeft);
+    root->insertItem(item2, Location_OnRight);
+    ItemBoxContainer::insertItemRelativeTo(item11, item1, Location_OnBottom);
+    ItemBoxContainer::insertItemRelativeTo(item12, item1, Location_OnBottom);
+
+    CHECK(root->checkSanity());
+    CHECK(!root->isOverflowing());
+
+    // Make item1's min width bigger than it's actual width. Layout is now invalid!
+    item1->m_sizingInfo.minSize = { item1->width() + 1, 0 };
+
+    {
+        SetExpectedWarning w("Size constraints not honoured");
+        CHECK(!root->checkSanity());
+    }
+
+    root->relayoutIfNeeded();
+    root->positionItems_recursive();
+    // CHECK(!root->isOverflowing()); // TODO uncomment
+    root->dumpLayout(0, false);
+    // CHECK(!root->checkSanity());
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const std::vector<KDDWTest> s_tests = {
     TEST(tst_createRoot),
     TEST(tst_insertOne),
@@ -1989,6 +2026,7 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_numSideBySide_recursive),
     TEST(tst_sizingInfoSerialization),
     TEST(tst_itemSerialization),
+    TEST(tst_relayoutIfNeeded),
 };
 
 #include "tests_main.h"

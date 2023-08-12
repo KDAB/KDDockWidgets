@@ -430,6 +430,7 @@ public:
     bool isHorizontal() const;
     int length() const;
     bool hasOrientation() const;
+    bool isOverflowing() const;
 
     /// @brief Returns the number of visible items layed-out horizontally or vertically
     /// But honours nesting
