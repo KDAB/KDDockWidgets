@@ -752,8 +752,7 @@ void Item::dumpLayout(int level, bool)
 {
     std::string indent(LAYOUT_DUMP_INDENT * size_t(level), ' ');
 
-    std::cerr << indent << "- Widget: name=" << objectName().toStdString() << " "
-              << m_sizingInfo.geometry // << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
+    std::cerr << indent << "- Widget: " << m_sizingInfo.geometry // << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
               << "; min=" << minSize();
 
     if (maxSizeHint() != hardcodedMaximumSize)
@@ -769,7 +768,7 @@ void Item::dumpLayout(int level, bool)
     if (m_sizingInfo.isBeingInserted)
         std::cerr << ";beingInserted;";
 
-    std::cerr << "; guest=" << this << "\n";
+    std::cerr << "; guest=" << this << "; name=" << objectName().toStdString() << "\n";
 }
 
 Item::Item(View *hostWidget, ItemContainer *parent)
