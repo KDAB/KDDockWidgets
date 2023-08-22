@@ -183,7 +183,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
     d->m_visibleWidgetCountConnection =
         d->m_dropArea->d_ptr()->visibleWidgetCountChanged.connect([this](int count) {
             onFrameCountChanged(count);
-            d->numFramesChanged.emit();
+            d->numGroupsChanged.emit();
             onVisibleFrameCountChanged(count);
         });
 
@@ -193,7 +193,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
 
     d->m_layoutDestroyedConnection = d->m_dropArea->Controller::dptr()->aboutToBeDeleted.connect(&FloatingWindow::scheduleDeleteLater, this);
 
-    d->numFramesChanged.connect([this] {
+    d->numGroupsChanged.connect([this] {
         d->numDockWidgetsChanged.emit();
     });
 }

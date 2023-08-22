@@ -28,7 +28,7 @@ public:
     explicit Private(FloatingWindowFlags requestedFlags, FloatingWindow *q);
 
     KDBindings::Signal<> activatedChanged;
-    KDBindings::Signal<> numFramesChanged;
+    KDBindings::Signal<> numGroupsChanged;
     KDBindings::Signal<> numDockWidgetsChanged;
     KDBindings::Signal<> windowStateChanged;
 

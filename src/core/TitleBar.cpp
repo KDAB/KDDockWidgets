@@ -78,7 +78,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     init();
     auto fwPrivate = m_floatingWindow->dptr();
-    fwPrivate->numFramesChanged.connect([this] { updateButtons(); });
+    fwPrivate->numGroupsChanged.connect([this] { updateButtons(); });
     fwPrivate->numDockWidgetsChanged.connect([this] { d->numDockWidgetsChanged.emit(); });
     fwPrivate->windowStateChanged.connect([this] { updateMaximizeButton(); });
     fwPrivate->activatedChanged.connect([this] { d->isFocusedChanged.emit(); });
