@@ -16,6 +16,7 @@
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "core/Utils_p.h"
+#include "core/TabBar_p.h"
 #include "core/Logging_p.h"
 #include "Config.h"
 #include "qtwidgets/ViewFactory.h"
@@ -62,20 +63,38 @@ static MyProxy *proxyStyle()
     return proxy;
 }
 
-}
+class QtWidgets::TabBar::Private
+{
+public:
+    explicit Private(Core::TabBar *controller)
+        : m_controller(controller)
+    {
+    }
+    Core::TabBar *const m_controller;
+    KDBindings::ScopedConnection m_currentDockWidgetChangedConnection;
+};
 
+}
 
 TabBar::TabBar(Core::TabBar *controller, QWidget *parent)
     : View(controller, Core::ViewType::TabBar, parent)
     , TabBarViewInterface(controller)
-    , m_controller(controller)
+    , d(new Private(controller))
 {
     setStyle(proxyStyle());
+}
+
+TabBar::~TabBar()
+{
+    delete d;
 }
 
 void TabBar::init()
 {
     connect(this, &QTabBar::currentChanged, m_tabBar, &Core::TabBar::setCurrentIndex);
+    d->m_currentDockWidgetChangedConnection = d->m_controller->dptr()->currentDockWidgetChanged.connect([this](KDDockWidgets::Core::DockWidget *dw) {
+        Q_EMIT currentDockWidgetChanged(dw);
+    });
 }
 
 int TabBar::tabAt(QPoint localPos) const
@@ -85,7 +104,7 @@ int TabBar::tabAt(QPoint localPos) const
 
 void TabBar::mousePressEvent(QMouseEvent *e)
 {
-    m_controller->onMousePress(e->pos());
+    d->m_controller->onMousePress(e->pos());
     QTabBar::mousePressEvent(e);
 }
 
@@ -99,7 +118,7 @@ void TabBar::mouseMoveEvent(QMouseEvent *e)
 
 void TabBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    m_controller->onMouseDoubleClick(e->pos());
+    d->m_controller->onMouseDoubleClick(e->pos());
 }
 
 bool TabBar::event(QEvent *ev)
@@ -157,7 +176,7 @@ void TabBar::setCurrentIndex(int index)
 
 QTabWidget *TabBar::tabWidget() const
 {
-    if (auto tw = dynamic_cast<Stack *>(m_controller->stack()->view()))
+    if (auto tw = dynamic_cast<Stack *>(d->m_controller->stack()->view()))
         return tw;
 
     qWarning() << Q_FUNC_INFO << "Unexpected null QTabWidget";

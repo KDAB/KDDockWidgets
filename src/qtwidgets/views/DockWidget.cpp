@@ -58,6 +58,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
         }
     });
 
+    m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) {
+        Q_EMIT optionsChanged(opts);
+    });
+
     m_dockWidget->init();
 }
 

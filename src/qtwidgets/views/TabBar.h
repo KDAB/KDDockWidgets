@@ -33,6 +33,7 @@ class DOCKS_EXPORT TabBar : public View<QTabBar>, public Core::TabBarViewInterfa
     Q_OBJECT
 public:
     explicit TabBar(Core::TabBar *controller, QWidget *parent = nullptr);
+    ~TabBar() override;
 
     Core::TabBar *tabBar() const;
 
@@ -54,6 +55,7 @@ public:
 Q_SIGNALS:
     void dockWidgetInserted(int index);
     void dockWidgetRemoved(int index);
+    void currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *);
 
 protected:
     void init() override final;
@@ -65,7 +67,8 @@ protected:
     void tabRemoved(int index) override;
 
 private:
-    Core::TabBar *const m_controller;
+    class Private;
+    Private *const d;
 };
 
 }

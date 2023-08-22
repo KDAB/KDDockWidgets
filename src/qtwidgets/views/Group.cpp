@@ -69,6 +69,10 @@ void Group::init()
         Q_EMIT isInMainWindowChanged();
     });
 
+    m_group->dptr()->isFocusedChanged.connect([this] {
+        Q_EMIT isFocusedChanged();
+    });
+
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);

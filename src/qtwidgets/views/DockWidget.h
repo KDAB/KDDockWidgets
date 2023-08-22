@@ -83,6 +83,9 @@ public:
     QAction *toggleAction() const;
     QAction *floatAction() const;
 
+Q_SIGNALS:
+    void optionsChanged(KDDockWidgets::DockWidgetOptions);
+
 protected:
     bool event(QEvent *) override;
     void resizeEvent(QResizeEvent *) override;
