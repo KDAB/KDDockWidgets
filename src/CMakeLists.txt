@@ -554,12 +554,17 @@ if(KDDockWidgets_XLib)
 endif()
 
 find_package(nlohmann_json QUIET)
-if(nlohmann_json_FOUND)
-    target_link_libraries(kddockwidgets PRIVATE nlohmann_json::nlohmann_json)
-else()
-    message("nlohmann_json not found in system. Using our own bundled one")
-    target_include_directories(kddockwidgets SYSTEM PRIVATE 3rdparty/nlohmann)
-endif()
+
+function (link_to_nlohman target)
+    if(nlohmann_json_FOUND)
+        target_link_libraries(${target} PRIVATE nlohmann_json::nlohmann_json)
+    else()
+        message("nlohmann_json not found in system. Using our own bundled one")
+        target_include_directories(${target} SYSTEM PRIVATE 3rdparty/nlohmann)
+    endif()
+endfunction()
+
+link_to_nlohman(kddockwidgets)
 
 set_target_properties(kddockwidgets PROPERTIES SOVERSION ${KDDockWidgets_SOVERSION} VERSION ${KDDockWidgets_VERSION})
 
@@ -738,5 +743,6 @@ if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QT)
 
         add_executable(kddockwidgets_linter ${LINTER_SRCS})
         target_link_libraries(kddockwidgets_linter kddockwidgets)
+        link_to_nlohman(kddockwidgets_linter)
     endif()
 endif()
