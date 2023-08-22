@@ -48,6 +48,9 @@ protected:
                      Qt5Qt6Compat::qintptr *result) override;
 #endif
 
+Q_SIGNALS:
+    void numGroupsChanged();
+
 private:
     class Private;
     Private *const d;

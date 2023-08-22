@@ -30,6 +30,9 @@ public:
     int nonContentsHeight() const override;
     QRect dragRect() const override;
 
+Q_SIGNALS:
+    void numDockWidgetsChanged();
+
 protected:
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;

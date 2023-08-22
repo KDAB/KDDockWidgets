@@ -52,6 +52,7 @@ public:
     QVBoxLayout *const m_vlayout;
     Core::FloatingWindow *const m_controller;
     bool m_connectedToScreenChanged = false;
+    KDBindings::ScopedConnection m_numGroupsChangedConnection;
 };
 
 FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
@@ -126,6 +127,10 @@ bool FloatingWindow::event(QEvent *ev)
 
 void FloatingWindow::init()
 {
+    d->m_numGroupsChangedConnection = d->m_controller->dptr()->numGroupsChanged.connect([this] {
+        Q_EMIT numGroupsChanged();
+    });
+
     d->m_vlayout->setSpacing(0);
     updateMargins();
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->titleBar()));

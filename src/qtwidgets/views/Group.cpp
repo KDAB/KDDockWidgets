@@ -20,6 +20,7 @@
 #include "kddockwidgets/core/TitleBar.h"
 #include "Config.h"
 #include "core/View_p.h"
+#include "core/Group_p.h"
 
 #include <QPainter>
 #include <QTabBar>
@@ -60,6 +61,10 @@ Group::Group(Core::Group *controller, QWidget *parent)
 
 void Group::init()
 {
+    m_group->dptr()->numDockWidgetsChanged.connect([this] {
+        Q_EMIT numDockWidgetsChanged();
+    });
+
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
