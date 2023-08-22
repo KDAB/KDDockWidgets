@@ -32,6 +32,7 @@ public:
 
 Q_SIGNALS:
     void numDockWidgetsChanged();
+    void isInMainWindowChanged();
 
 protected:
     void paintEvent(QPaintEvent *) override;

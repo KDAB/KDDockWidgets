@@ -65,6 +65,10 @@ void Group::init()
         Q_EMIT numDockWidgetsChanged();
     });
 
+    m_group->dptr()->isInMainWindowChanged.connect([this] {
+        Q_EMIT isInMainWindowChanged();
+    });
+
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
