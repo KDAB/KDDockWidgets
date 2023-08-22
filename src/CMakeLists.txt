@@ -555,7 +555,8 @@ endif()
 
 find_package(nlohmann_json QUIET)
 
-function (link_to_nlohman target)
+# Function to link to nlohmann
+function(link_to_nlohman target)
     if(nlohmann_json_FOUND)
         target_link_libraries(${target} PRIVATE nlohmann_json::nlohmann_json)
     else()
@@ -742,7 +743,7 @@ if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QT)
         endif()
 
         add_executable(kddockwidgets_linter ${LINTER_SRCS})
-        target_link_libraries(kddockwidgets_linter kddockwidgets)
+        target_link_libraries(kddockwidgets_linter PRIVATE kddockwidgets)
         link_to_nlohman(kddockwidgets_linter)
     endif()
 endif()
