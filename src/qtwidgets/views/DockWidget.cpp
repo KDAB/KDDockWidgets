@@ -41,6 +41,10 @@ public:
     }
 
     QVBoxLayout *const layout;
+    KDBindings::ScopedConnection optionsChangedConnection;
+    KDBindings::ScopedConnection guestViewChangedConnection;
+    KDBindings::ScopedConnection isFocusedChangedConnection;
+    KDBindings::ScopedConnection windowActiveAboutToChangeConnection;
 };
 
 DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
@@ -58,19 +62,19 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
         }
     });
 
-    m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) {
+    d->optionsChangedConnection = m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) {
         Q_EMIT optionsChanged(opts);
     });
 
-    m_dockWidget->d->guestViewChanged.connect([this] {
+    d->guestViewChangedConnection = m_dockWidget->d->guestViewChanged.connect([this] {
         Q_EMIT guestViewChanged();
     });
 
-    m_dockWidget->d->isFocusedChanged.connect([this](bool focused) {
+    d->isFocusedChangedConnection = m_dockWidget->d->isFocusedChanged.connect([this](bool focused) {
         Q_EMIT isFocusedChanged(focused);
     });
 
-    m_dockWidget->d->windowActiveAboutToChange.connect([this](bool active) {
+    d->windowActiveAboutToChangeConnection = m_dockWidget->d->windowActiveAboutToChange.connect([this](bool active) {
         Q_EMIT windowActiveAboutToChange(active);
     });
 
