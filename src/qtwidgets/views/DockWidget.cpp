@@ -44,6 +44,7 @@ public:
     KDBindings::ScopedConnection optionsChangedConnection;
     KDBindings::ScopedConnection guestViewChangedConnection;
     KDBindings::ScopedConnection isFocusedChangedConnection;
+    KDBindings::ScopedConnection isOpenChangedConnection;
     KDBindings::ScopedConnection windowActiveAboutToChangeConnection;
 };
 
@@ -72,6 +73,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
 
     d->isFocusedChangedConnection = m_dockWidget->d->isFocusedChanged.connect([this](bool focused) {
         Q_EMIT isFocusedChanged(focused);
+    });
+
+    d->isOpenChangedConnection = m_dockWidget->d->isOpenChanged.connect([this](bool open) {
+        Q_EMIT isOpenChanged(open);
     });
 
     d->windowActiveAboutToChangeConnection = m_dockWidget->d->windowActiveAboutToChange.connect([this](bool active) {

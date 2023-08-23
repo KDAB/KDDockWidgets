@@ -87,6 +87,7 @@ Q_SIGNALS:
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
     void guestViewChanged();
     void isFocusedChanged(bool);
+    void isOpenChanged(bool);
     void windowActiveAboutToChange(bool);
 
 protected:
