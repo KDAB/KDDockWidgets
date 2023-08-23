@@ -70,6 +70,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
         Q_EMIT isFocusedChanged(focused);
     });
 
+    m_dockWidget->d->windowActiveAboutToChange.connect([this](bool active) {
+        Q_EMIT windowActiveAboutToChange(active);
+    });
+
     m_dockWidget->init();
 }
 
