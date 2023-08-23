@@ -31,7 +31,7 @@ public:
     QTabBar *tabBar() const;
 
     bool isPositionDraggable(QPoint p) const override;
-    void init() override final;
+    void init() override;
     void setDocumentMode(bool) override;
 
     /// @brief Returns the controller
