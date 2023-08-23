@@ -66,6 +66,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
         Q_EMIT guestViewChanged();
     });
 
+    m_dockWidget->d->isFocusedChanged.connect([this](bool focused) {
+        Q_EMIT isFocusedChanged(focused);
+    });
+
     m_dockWidget->init();
 }
 

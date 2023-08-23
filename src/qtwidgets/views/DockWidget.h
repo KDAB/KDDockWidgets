@@ -86,6 +86,7 @@ public:
 Q_SIGNALS:
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
     void guestViewChanged();
+    void isFocusedChanged(bool);
 
 protected:
     bool event(QEvent *) override;
