@@ -62,6 +62,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
         Q_EMIT optionsChanged(opts);
     });
 
+    m_dockWidget->d->guestViewChanged.connect([this] {
+        Q_EMIT guestViewChanged();
+    });
+
     m_dockWidget->init();
 }
 
