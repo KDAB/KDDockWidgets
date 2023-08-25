@@ -7,6 +7,7 @@
         <file>layouts/layoutEquallyCrash.json</file>
         <file>layouts/restoreWithIncompleteFactory.json</file>
         <file>layouts/1.6layoutWithoutFloatingWindowFlags.json</file>
+        <file>layouts/nlohman_exception.json</file>
         <file>main.qml</file>
         <file>main2.qml</file>
         <file>main350.qml</file>

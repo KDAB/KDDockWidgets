@@ -426,6 +426,19 @@ KDDW_QCORO_TASK tst_restoreTwice()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_restoreNlohmanException()
+{
+    LayoutSaver saver;
+
+    bool ok = false;
+    LayoutSaver::Layout layout;
+    const QByteArray data = Platform::instance()->readFile(":/layouts/nlohman_exception.json", /*by-ref*/ ok);
+    CHECK(ok);
+    CHECK(layout.fromJson(data));
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreEmpty()
 {
     EnsureTopLevelsDeleted e;
@@ -5352,6 +5365,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_restoreWithPlaceholder),
         TEST(tst_lastFloatingPositionIsRestored),
         TEST(tst_restoreNonClosable),
+        TEST(tst_restoreNlohmanException),
         TEST(tst_restoreRestoresMainWindowPosition),
         TEST(tst_dontCloseDockWidgetBeforeRestore2),
         TEST(tst_doubleClickTabToDetach),
