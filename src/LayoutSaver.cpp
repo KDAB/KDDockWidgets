@@ -743,10 +743,11 @@ QByteArray LayoutSaver::Layout::toJson() const
 
 bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
 {
-    nlohmann::json json = nlohmann::json::parse(jsonData, nullptr, /*DisableExceptions=*/true);
+    nlohmann::json json = nlohmann::json::parse(jsonData, nullptr, /*allow_exceptions=*/false);
     if (json.is_discarded()) {
         return false;
     }
+
     from_json(json, *this);
     return true;
 }

@@ -88,7 +88,7 @@ LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QStri
         }
         const QByteArray jsonData = f.readAll();
         QDir::setCurrent(QFileInfo(configFile).path());
-        nlohmann::json j = nlohmann::json::parse(jsonData, nullptr, /*DisableExceptions=*/true);
+        nlohmann::json j = nlohmann::json::parse(jsonData, nullptr, /*DisableExceptions=*/false);
         from_json(j, c);
     }
 
