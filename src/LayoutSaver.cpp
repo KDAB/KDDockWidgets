@@ -748,7 +748,16 @@ bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
         return false;
     }
 
-    from_json(json, *this);
+    try {
+        from_json(json, *this);
+    } catch (const std::exception &e) {
+        KDDW_ERROR("LayoutSaver::Layout::fromJson: Caught exception: {}", e.what());
+        return false;
+    } catch (...) {
+        KDDW_ERROR("LayoutSaver::Layout::fromJson: Caught exception.");
+        return false;
+    }
+
     return true;
 }
 
