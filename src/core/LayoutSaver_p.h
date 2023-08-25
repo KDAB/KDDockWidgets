@@ -256,7 +256,7 @@ struct LayoutSaver::ScreenInfo
     double devicePixelRatio;
 };
 
-struct LayoutSaver::Layout
+struct DOCKS_EXPORT_FOR_UNIT_TESTS LayoutSaver::Layout
 {
 public:
     Layout()
