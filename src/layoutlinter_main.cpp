@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
         frontendType = FrontendType::QtQuick;
 #endif
 
-    KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, frontendType);
+    KDDockWidgets::initFrontend(frontendType);
 
     s_isVerbose = parser.isSet(verboseOpt);
     const LinterConfig lc = requestedLinterConfig(parser, parser.isSet(configFileOpt) ? parser.value(configFileOpt) : QString());
@@ -207,8 +207,6 @@ int main(int argc, char *argv[])
 
         app.exec();
     }
-
-    KDDockWidgets::Core::Platform::tests_deinitPlatform();
 
     return exitCode;
 }
