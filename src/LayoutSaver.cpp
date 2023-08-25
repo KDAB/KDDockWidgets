@@ -91,6 +91,18 @@ inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
 bool LayoutSaver::Private::s_restoreInProgress = false;
 
 namespace KDDockWidgets {
+
+template<typename T>
+T jsonValue(const nlohmann::json &json, const char *name, const T &defaultValue)
+{
+    try {
+        // value can throw if the type has "null" value, for instance.
+        return json.value(name, defaultValue);
+    } catch (...) {
+        return defaultValue;
+    }
+}
+
 template<typename Type>
 void to_json(nlohmann::json &json, const typename Type::List &list)
 {
@@ -112,13 +124,13 @@ void to_json(nlohmann::json &json, const LayoutSaver::Group &f)
 }
 void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
 {
-    f.id = json.value("id", QString());
-    f.isNull = json.value("isNull", true);
-    f.objectName = json.value("objectName", QString());
-    f.geometry = json.value("geometry", Rect());
-    f.options = json.value("options", QFlags<FrameOption>::Int {});
-    f.currentTabIndex = json.value("currentTabIndex", 0);
-    f.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
+    f.id = jsonValue(json, "id", QString());
+    f.isNull = jsonValue(json, "isNull", true);
+    f.objectName = jsonValue(json, "objectName", QString());
+    f.geometry = jsonValue(json, "geometry", Rect());
+    f.options = jsonValue(json, "options", QFlags<FrameOption>::Int {});
+    f.currentTabIndex = jsonValue(json, "currentTabIndex", 0);
+    f.mainWindowUniqueName = jsonValue(json, "mainWindowUniqueName", QString());
 
     auto it = json.find("dockWidgets");
     if (it == json.end())
@@ -146,7 +158,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
 void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 {
     s.groups.clear();
-    s.layout = json.value("layout", nlohmann::json::object());
+    s.layout = jsonValue(json, "layout", nlohmann::json::object());
     auto it = json.find("frames");
     if (it == json.end())
         return;
@@ -189,16 +201,16 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
 
 void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
 {
-    mw.options = static_cast<decltype(mw.options)>(json.value("options", 0));
-    mw.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
-    mw.uniqueName = json.value("uniqueName", QString());
-    mw.geometry = json.value("geometry", Rect());
-    mw.normalGeometry = json.value("normalGeometry", Rect());
-    mw.screenIndex = json.value("screenIndex", 0);
-    mw.screenSize = json.value("screenSize", Size(800, 600));
-    mw.isVisible = json.value("isVisible", false);
-    mw.affinities = json.value("affinities", Vector<QString>());
-    mw.windowState = ( WindowState )json.value("windowState", 0);
+    mw.options = static_cast<decltype(mw.options)>(jsonValue(json, "options", 0));
+    mw.multiSplitterLayout = jsonValue(json, "multiSplitterLayout", LayoutSaver::MultiSplitter());
+    mw.uniqueName = jsonValue(json, "uniqueName", QString());
+    mw.geometry = jsonValue(json, "geometry", Rect());
+    mw.normalGeometry = jsonValue(json, "normalGeometry", Rect());
+    mw.screenIndex = jsonValue(json, "screenIndex", 0);
+    mw.screenSize = jsonValue(json, "screenSize", Size(800, 600));
+    mw.isVisible = jsonValue(json, "isVisible", false);
+    mw.affinities = jsonValue(json, "affinities", Vector<QString>());
+    mw.windowState = ( WindowState )jsonValue(json, "windowState", 0);
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
     // list:
@@ -241,20 +253,20 @@ void to_json(nlohmann::json &json, const LayoutSaver::FloatingWindow &window)
 
 void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
 {
-    window.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
-    window.parentIndex = json.value("parentIndex", -1);
-    window.geometry = json.value("geometry", Rect());
-    window.normalGeometry = json.value("normalGeometry", Rect());
-    window.screenIndex = json.value("screenIndex", 0);
-    window.screenSize = json.value("screenSize", Size(800, 600));
-    window.isVisible = json.value("isVisible", false);
-    window.flags = json.value("flags", int(FloatingWindowFlag::FromGlobalConfig));
-    window.windowState = ( WindowState )json.value("windowState", 0);
-    window.affinities = json.value("affinities", Vector<QString>());
+    window.multiSplitterLayout = jsonValue(json, "multiSplitterLayout", LayoutSaver::MultiSplitter());
+    window.parentIndex = jsonValue(json, "parentIndex", -1);
+    window.geometry = jsonValue(json, "geometry", Rect());
+    window.normalGeometry = jsonValue(json, "normalGeometry", Rect());
+    window.screenIndex = jsonValue(json, "screenIndex", 0);
+    window.screenSize = jsonValue(json, "screenSize", Size(800, 600));
+    window.isVisible = jsonValue(json, "isVisible", false);
+    window.flags = jsonValue(json, "flags", int(FloatingWindowFlag::FromGlobalConfig));
+    window.windowState = ( WindowState )jsonValue(json, "windowState", 0);
+    window.affinities = jsonValue(json, "affinities", Vector<QString>());
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
     // list:
-    const QString affinityName = json.value("affinityName", QString());
+    const QString affinityName = jsonValue(json, "affinityName", QString());
     if (!affinityName.isEmpty() && !window.affinities.contains(affinityName)) {
         window.affinities.push_back(affinityName);
     }
@@ -287,10 +299,10 @@ void to_json(nlohmann::json &json, const LayoutSaver::Placeholder &placeHolder)
 
 void from_json(const nlohmann::json &json, LayoutSaver::Placeholder &placeHolder)
 {
-    placeHolder.isFloatingWindow = json.value("isFloatingWindow", false);
-    placeHolder.itemIndex = json.value("itemIndex", 0);
-    placeHolder.indexOfFloatingWindow = json.value("indexOfFloatingWindow", -1);
-    placeHolder.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
+    placeHolder.isFloatingWindow = jsonValue(json, "isFloatingWindow", false);
+    placeHolder.itemIndex = jsonValue(json, "itemIndex", 0);
+    placeHolder.indexOfFloatingWindow = jsonValue(json, "indexOfFloatingWindow", -1);
+    placeHolder.mainWindowUniqueName = jsonValue(json, "mainWindowUniqueName", QString());
 }
 
 void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
@@ -304,11 +316,11 @@ void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 
 void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
 {
-    pos.lastFloatingGeometry = json.value("lastFloatingGeometry", Rect());
-    pos.lastOverlayedGeometries = json.value("lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, Rect>());
-    pos.tabIndex = json.value("tabIndex", 0);
-    pos.wasFloating = json.value("wasFloating", false);
-    pos.placeholders = json.value("placeholders", LayoutSaver::Placeholder::List());
+    pos.lastFloatingGeometry = jsonValue(json, "lastFloatingGeometry", Rect());
+    pos.lastOverlayedGeometries = jsonValue(json, "lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, Rect>());
+    pos.tabIndex = jsonValue(json, "tabIndex", 0);
+    pos.wasFloating = jsonValue(json, "wasFloating", false);
+    pos.placeholders = jsonValue(json, "placeholders", LayoutSaver::Placeholder::List());
 }
 
 void to_json(nlohmann::json &json, const LayoutSaver::DockWidget &dw)
@@ -324,11 +336,11 @@ void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
     if (it != json.end())
         dw.affinities = it->get<Vector<QString>>();
 
-    dw.uniqueName = json.value("uniqueName", QString());
+    dw.uniqueName = jsonValue(json, "uniqueName", QString());
     if (dw.uniqueName.isEmpty())
         KDDW_ERROR("Unexpected no uniqueName for dockWidget");
 
-    dw.lastPosition = json.value("lastPosition", LayoutSaver::Position());
+    dw.lastPosition = jsonValue(json, "lastPosition", LayoutSaver::Position());
 }
 
 void to_json(nlohmann::json &json, const typename LayoutSaver::DockWidget::List &list)
