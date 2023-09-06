@@ -10,7 +10,6 @@
 */
 
 #include "Item_p.h"
-#include "Config.h"
 #include "kddockwidgets/core/Separator.h"
 #include "kddockwidgets/core/Group.h"
 #include "ItemFreeContainer_p.h"
@@ -3694,7 +3693,6 @@ struct ItemContainer::Private
     explicit Private(ItemContainer *qq)
         : q(qq)
     {
-        ( void )Config::self(); // Ensure Config ctor runs, as it registers qml types
     }
 
     ~Private()

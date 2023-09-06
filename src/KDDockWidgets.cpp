@@ -11,6 +11,7 @@
 
 
 #include "kddockwidgets/KDDockWidgets.h"
+#include "Config.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
@@ -44,6 +45,8 @@ void KDDockWidgets::initFrontend(FrontendType type)
         // Nothing to do, called from Dart
         break;
     }
+
+    ( void )Config::self(); // Ensure Config ctor runs, as it registers qml types
 }
 
 const char *KDDockWidgets::spdlogLoggerName()
