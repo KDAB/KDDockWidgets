@@ -264,6 +264,8 @@ public:
     bool m_willUpdateActions = false;
     KDBindings::ScopedConnection m_windowActivatedConnection;
     KDBindings::ScopedConnection m_windowDeactivatedConnection;
+    KDBindings::ScopedConnection m_toggleActionConnection;
+    KDBindings::ScopedConnection m_floatActionConnection;
 };
 
 }

@@ -981,7 +981,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
     , toggleAction(Config::self().viewFactory()->createAction(q, "toggle"))
     , floatAction(Config::self().viewFactory()->createAction(q, "float"))
 {
-    toggleAction->d->toggled.connect(
+    m_toggleActionConnection = toggleAction->d->toggled.connect(
         [this](bool enabled) {
             if (!m_updatingToggleAction) { // guard against recursiveness
                 toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock
@@ -994,7 +994,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
             }
         });
 
-    floatAction->d->toggled.connect([this](bool checked) {
+    m_floatActionConnection = floatAction->d->toggled.connect([this](bool checked) {
         if (!m_updatingFloatAction) { // guard against recursiveness
             q->setFloating(checked);
         }

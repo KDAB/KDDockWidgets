@@ -46,6 +46,7 @@ public:
     KDBindings::ScopedConnection isFocusedChangedConnection;
     KDBindings::ScopedConnection isOpenChangedConnection;
     KDBindings::ScopedConnection windowActiveAboutToChangeConnection;
+    KDBindings::ScopedConnection guestChangeConnection;
 };
 
 DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
@@ -56,7 +57,7 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this))
 {
-    m_dockWidget->d->guestViewChanged.connect([this] {
+    d->guestChangeConnection = m_dockWidget->d->guestViewChanged.connect([this] {
         if (auto guest = widget()) {
             QWidget::setSizePolicy(guest->sizePolicy());
             d->layout->addWidget(guest);
