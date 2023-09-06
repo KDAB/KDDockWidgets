@@ -15,7 +15,6 @@
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
 #include "core/Window_p.h"
-#include "core/View.h"
 #include "core/View_p.h"
 #include "core/Utils_p.h"
 #include "core/Controller_p.h"
