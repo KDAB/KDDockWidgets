@@ -195,8 +195,7 @@ void Item::setGuestView(View *guest)
 
         m_parentChangedConnection = m_guest->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
             if (!View::equals(parent, hostView())) {
-                // Frame was detached into floating window. Turn
-                // into placeholder
+                // Group was detached into floating window. Turn into placeholder
                 assert(isVisible());
                 turnIntoPlaceholder();
             }
