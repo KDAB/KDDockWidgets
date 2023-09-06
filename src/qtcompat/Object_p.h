@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "enums_p.h"
 #include "string_p.h"
 
