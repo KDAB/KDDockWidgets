@@ -561,7 +561,7 @@ function(link_to_nlohman target)
         target_link_libraries(${target} PRIVATE nlohmann_json::nlohmann_json)
     else()
         message("nlohmann_json not found in system. Using our own bundled one")
-        target_include_directories(${target} SYSTEM PRIVATE 3rdparty/nlohmann)
+        target_include_directories(${target} SYSTEM PRIVATE ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/3rdparty/nlohmann)
     endif()
 endfunction()
 
