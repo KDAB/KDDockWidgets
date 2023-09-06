@@ -674,7 +674,11 @@ DockWidget::Private *DockWidget::dptr() const
     return d;
 }
 
-DockWidget::Private::~Private() = default;
+DockWidget::Private::~Private()
+{
+    delete toggleAction;
+    delete floatAction;
+}
 
 Point DockWidget::Private::defaultCenterPosForFloating()
 {
