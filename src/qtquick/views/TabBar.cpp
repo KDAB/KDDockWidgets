@@ -232,16 +232,15 @@ bool TabBar::closeAtIndex(int index)
     return false;
 }
 
-void TabBar::renameTab(int index, const QString &)
+void TabBar::renameTab(int, const QString &)
 {
-    Q_UNUSED(index);
-    qDebug() << Q_FUNC_INFO << "Not implemented";
+    /// Nothing to do for QtQuick. The .qml has a binding
+    /// to DockWidget::title, so it works automatically.
 }
 
-void TabBar::changeTabIcon(int index, const QIcon &)
+void TabBar::changeTabIcon(int, const QIcon &)
 {
-    Q_UNUSED(index);
-    qDebug() << Q_FUNC_INFO << "Not implemented";
+    // Not implemented for QtQuick
 }
 
 void TabBar::removeDockWidget(Core::DockWidget *dw)
