@@ -18,6 +18,8 @@
 #include "DockWidgetInstantiator.h"
 #include "Platform.h"
 
+#include <QDebug>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
@@ -70,6 +72,13 @@ void MainWindowInstantiator::addDockWidget(QQuickItem *dockWidget, Location loca
         return;
 
     Core::DockWidget *dw = Platform::dockWidgetForItem(dockWidget);
+    if (!dw) {
+        // Can happen if the DockWidgetInstantiatior couldn't create a dockwidget,
+        // for example, if using duplicate unique-names
+        qWarning() << "MainWindowInstantiator::addDockWidget: Could not find dockwidget";
+        return;
+    }
+
     Core::DockWidget *relativeToDw = Platform::dockWidgetForItem(relativeTo);
 
     m_mainWindow->addDockWidget(dw, location, relativeToDw, { option, initialSize });
