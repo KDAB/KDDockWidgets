@@ -48,10 +48,13 @@ public:
     QVector<QString> affinities() const;
     bool isMDI() const;
 
-    /// @brief See KDDockWidgets::MainWindowBase::addDockWidget()
+    /// @brief See KDDockWidgets::Core::MainWindow::addDockWidget()
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, KDDockWidgets::Location location,
                                    QQuickItem *relativeTo = nullptr, QSize initialSize = {},
                                    KDDockWidgets::InitialVisibilityOption = {});
+
+    /// @brief See KDDockWidgets::Core::MainWindow::addDockWidgetAsTab()
+    Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *dockWidget);
 
     Q_INVOKABLE void layoutEqually();
     Q_INVOKABLE void layoutParentContainerEqually(QQuickItem *dockWidget);

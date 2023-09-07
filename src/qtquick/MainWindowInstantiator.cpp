@@ -75,6 +75,15 @@ void MainWindowInstantiator::addDockWidget(QQuickItem *dockWidget, Location loca
     m_mainWindow->addDockWidget(dw, location, relativeToDw, { option, initialSize });
 }
 
+void MainWindowInstantiator::addDockWidgetAsTab(QQuickItem *dockWidget)
+{
+    if (!dockWidget || !m_mainWindow)
+        return;
+
+    Core::DockWidget *dw = Platform::dockWidgetForItem(dockWidget);
+    m_mainWindow->addDockWidgetAsTab(dw);
+}
+
 void MainWindowInstantiator::layoutEqually()
 {
     if (m_mainWindow)
