@@ -166,7 +166,10 @@ bool TabBar::event(QEvent *ev)
     case QEvent::MouseButtonPress: {
         if (d->m_tabBarQmlItem) {
             auto me = static_cast<QMouseEvent *>(ev);
-            d->m_tabBarQmlItem->setProperty("currentTabIndex", tabAt(me->pos()));
+            const int idx = tabAt(me->pos());
+            if (idx != -1)
+                d->m_tabBarQmlItem->setProperty("currentTabIndex", idx);
+
             if (ev->type() == QEvent::MouseButtonPress)
                 m_tabBar->onMousePress(me->pos());
             else
