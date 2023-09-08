@@ -72,11 +72,11 @@ Group::~Group()
 
 void Group::init()
 {
-    d->currentDockWidgetChangedConnection = m_group->tabBar()->dptr()->countChanged.connect([this] {
+    d->updateConstraintsConnection = m_group->tabBar()->dptr()->countChanged.connect([this] {
         updateConstraints();
     });
 
-    d->updateConstraintsConnection = m_group->tabBar()->dptr()->currentDockWidgetChanged.connect([this] {
+    d->currentDockWidgetChangedConnection = m_group->tabBar()->dptr()->currentDockWidgetChanged.connect([this] {
         currentDockWidgetChanged();
     });
 
