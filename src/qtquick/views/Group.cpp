@@ -73,7 +73,7 @@ Group::~Group()
 void Group::init()
 {
     d->currentDockWidgetChangedConnection = m_group->tabBar()->dptr()->countChanged.connect([this] {
-        updateConstriants();
+        updateConstraints();
     });
 
     d->updateConstraintsConnection = m_group->tabBar()->dptr()->currentDockWidgetChanged.connect([this] {
@@ -114,7 +114,7 @@ void Group::init()
     m_visualItem->setParent(this);
 }
 
-void Group::updateConstriants()
+void Group::updateConstraints()
 {
     m_group->onDockWidgetCountChanged();
 

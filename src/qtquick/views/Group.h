@@ -77,7 +77,7 @@ Q_SIGNALS:
     void actualTitleBarChanged();
 
 public Q_SLOTS:
-    void updateConstriants();
+    void updateConstraints();
 
 private:
     void init() override final;

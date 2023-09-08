@@ -166,7 +166,7 @@ void DockWidget::onGeometryUpdated()
     if (auto group = this->group()) {
         if (auto view = group->view()) {
             auto groupView = static_cast<Group *>(QtQuick::asView_qtquick(view));
-            groupView->updateConstriants();
+            groupView->updateConstraints();
             groupView->updateGeometry();
         }
     }
