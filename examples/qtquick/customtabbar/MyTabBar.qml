@@ -23,6 +23,56 @@ KDDW.TabBarBase {
     implicitHeight: 30
     currentTabIndex: 0
 
+    /// Optionally, we add a background.
+    Rectangle {
+        id: tabBarBackground
+        color: "pink"
+        anchors.fill: parent
+        z: tabBarRow.z + 100
+
+        Rectangle {
+            id: addButton
+            width: 50
+            color: addButtonMouseArea.containsMouse ? (addButtonMouseArea.pressed ? "#AAAAAA" : "#CECECE" ) : "white"
+            anchors {
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+                topMargin: 5
+                rightMargin: 5
+            }
+            Text {
+                text: "+"
+                font.pixelSize: 24
+                anchors.centerIn: parent
+            }
+            MouseArea {
+                id: addButtonMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                property int count: 0;
+                onPressed: {
+                    count++;
+                    var uniqueName = `dock${count}-dynamic`;
+                    var code = `import com.kdab.dockwidgets 2.0 as KDDW;
+                                import QtQuick 2.6;
+                                KDDW.DockWidget {
+                                    uniqueName: "${uniqueName}";
+                                    title: "dynamic-${count}";
+                                    Rectangle {
+                                        color: "green";
+                                        anchors.fill: parent;
+                                    }
+                                }`;
+
+                    /// Here we create a dock widget dynamically
+                    var newDW = Qt.createQmlObject(code, root);
+                    newDW.show();
+                }
+            }
+        }
+    }
+
     /// #HERE#. This function required in all derived tab bars. It's called by C++;
     /// Returns the tab bar (QQuickItem*) at the specified index.
     function getTabAtIndex(index) {

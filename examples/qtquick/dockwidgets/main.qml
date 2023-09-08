@@ -114,6 +114,7 @@ ApplicationWindow {
                 color: "black"
             }
         }
+
         KDDW.DockWidget {
             id: dock7
             uniqueName: "dock7"
