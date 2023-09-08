@@ -43,6 +43,7 @@ public:
 
     Q_INVOKABLE qreal logicalDpiFactor(const QQuickItem *item) const;
 
+    /// Used by our customtabbar example.
     Q_INVOKABLE QString generateUuid() const;
 
     QObject *groupViewInMDIResize() const;
