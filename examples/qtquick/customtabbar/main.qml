@@ -37,8 +37,13 @@ ApplicationWindow {
         id: dock4
         uniqueName: "dock4"
         Rectangle {
-          color: "blue"
-          anchors.fill: parent
+            color: "#85baa1"
+            anchors.fill: parent
+            Text {
+                font.pixelSize: 25
+                text: "Four"
+                anchors.centerIn: parent
+            }
         }
     }
 
@@ -46,8 +51,13 @@ ApplicationWindow {
         id: dock5
         uniqueName: "dock5"
         Rectangle {
-          color: "green"
+          color: "#85baa1"
           anchors.fill: parent
+          Text {
+              font.pixelSize: 25
+              text: "Five"
+              anchors.centerIn: parent
+          }
         }
     }
 

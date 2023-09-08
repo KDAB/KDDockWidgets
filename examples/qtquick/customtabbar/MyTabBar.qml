@@ -26,14 +26,14 @@ KDDW.TabBarBase {
     /// Optionally, we add a background.
     Rectangle {
         id: tabBarBackground
-        color: "pink"
+        color: "#85baa1"
         anchors.fill: parent
         z: tabBarRow.z + 100
 
         Rectangle {
             id: addButton
             width: 50
-            color: addButtonMouseArea.containsMouse ? (addButtonMouseArea.pressed ? "#AAAAAA" : "#CECECE" ) : "white"
+            color: addButtonMouseArea.containsMouse ? (addButtonMouseArea.pressed ? "#d6ce93" : "#ffecd1" ) : "#ffecd1"
             anchors {
                 right: parent.right
                 top: parent.top
@@ -61,7 +61,7 @@ KDDW.TabBarBase {
                                     uniqueName: "${uniqueName}";
                                     title: "dynamic";
                                     Rectangle {
-                                        color: "green";
+                                        color: "#85baa1";
                                         anchors.fill: parent;
                                     }
                                 }`;
@@ -112,11 +112,13 @@ KDDW.TabBarBase {
                 id: tab
                 height: parent.height
                 width: 150
-                color: (tabBarRow.hoveredIndex == index) ? "#ba7600" : "orange"
+                readonly property bool isCurrent: index == root.groupCpp.currentIndex;
+                color: (tabBarRow.hoveredIndex == index) ? "#d6ce93" : (isCurrent ? "#d6ce93" : "#ffecd1")
                 border.color: "black"
 
                 // ##HERE## Illustrating how to have a different style in case the tab is current
-                border.width: index == root.groupCpp.currentIndex ? 3 : 1
+                border.width: isCurrent ? 2 : 1
+                radius: 2
 
                 // ##HERE## The index of the tab. This is required in all custom tab bar implementations
                 // It is be used by "getTabAtIndex()" and "getTabIndexAtPosition()" functions
