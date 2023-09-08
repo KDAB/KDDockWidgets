@@ -30,6 +30,8 @@
 
 namespace KDDockWidgets {
 
+class DockWidgetInstantiator;
+
 namespace Core {
 class TabBar;
 }
@@ -84,6 +86,9 @@ public:
     /// @brief Returns the index of the currently hovered tab
     /// In case you want to style them differently in QML
     int hoveredTabIndex() const;
+
+    Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
+                                        KDDockWidgets::InitialVisibilityOption = {});
 
 Q_SIGNALS:
     void tabBarQmlItemChanged();

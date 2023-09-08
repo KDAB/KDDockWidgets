@@ -43,6 +43,8 @@ public:
 
     Q_INVOKABLE qreal logicalDpiFactor(const QQuickItem *item) const;
 
+    Q_INVOKABLE QString generateUuid() const;
+
     QObject *groupViewInMDIResize() const;
     bool isDragging() const;
 

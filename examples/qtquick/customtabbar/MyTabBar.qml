@@ -50,24 +50,24 @@ KDDW.TabBarBase {
                 id: addButtonMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
-                property int count: 0;
                 onPressed: {
-                    count++;
-                    var uniqueName = `dock${count}-dynamic`;
+                    /// Do not use random uuids if you're planing to use layout save/restore!
+                    /// Using them here for convenience of the exercise
+                    var uniqueName = _kddwHelpers.generateUuid();
+
                     var code = `import com.kdab.dockwidgets 2.0 as KDDW;
                                 import QtQuick 2.6;
                                 KDDW.DockWidget {
                                     uniqueName: "${uniqueName}";
-                                    title: "dynamic-${count}";
+                                    title: "dynamic";
                                     Rectangle {
                                         color: "green";
                                         anchors.fill: parent;
                                     }
                                 }`;
 
-                    /// Here we create a dock widget dynamically
                     var newDW = Qt.createQmlObject(code, root);
-                    newDW.show();
+                    tabBarCpp.addDockWidgetAsTab(newDW);
                 }
             }
         }

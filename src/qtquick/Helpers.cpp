@@ -16,6 +16,7 @@
 #include "qtcommon/View.h"
 
 #include <QQuickItem>
+#include <QUuid>
 
 using namespace KDDockWidgets;
 
@@ -49,4 +50,9 @@ QObject *QtQuickHelpers::groupViewInMDIResize() const
 bool QtQuickHelpers::isDragging() const
 {
     return Core::DragController::instance()->isDragging();
+}
+
+QString QtQuickHelpers::generateUuid() const
+{
+    return QUuid::createUuid().toString();
 }

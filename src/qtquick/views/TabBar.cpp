@@ -26,6 +26,7 @@
 #include "core/TabBar_p.h"
 #include "core/Stack_p.h"
 #include "core/Logging_p.h"
+#include "qtquick/DockWidgetInstantiator.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>
@@ -298,6 +299,35 @@ void TabBar::setHoveredTabIndex(int idx)
 int TabBar::hoveredTabIndex() const
 {
     return d->m_hoveredTabIndex;
+}
+
+void TabBar::addDockWidgetAsTab(QQuickItem *other,
+                                KDDockWidgets::InitialVisibilityOption opt)
+{
+    if (!other) {
+        qWarning() << Q_FUNC_INFO << "Refusing to add null dock widget";
+        return;
+    }
+
+    Core::DockWidget *existingDw = d->m_dockWidgetModel->dockWidgetAt(0);
+    if (!existingDw) {
+        // We require an existing tab, as all this goes through DockWidget::addDockWidgetAsTab()
+        // This error can't happen, as KDDW doesn't allow users to have empty tab bars.
+        // But let's return early in any case.
+        qWarning() << Q_FUNC_INFO << "No existing tab was found";
+        return;
+    }
+
+    if (auto dwi = qobject_cast<DockWidgetInstantiator *>(other)) {
+        if (QtQuick::DockWidget *dwView = dwi->dockWidget())
+            existingDw->addDockWidgetAsTab(dwView->dockWidget(), opt);
+    } else if (auto dwView = qobject_cast<QtQuick::DockWidget *>(other)) {
+        existingDw->addDockWidgetAsTab(dwView->dockWidget(), opt);
+    } else if (auto dw = qobject_cast<Core::DockWidget *>(other)) {
+        dw->addDockWidgetAsTab(dw, opt);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Could not understand what is" << other;
+    }
 }
 
 DockWidgetModel::DockWidgetModel(Core::TabBar *tabBar, QObject *parent)
