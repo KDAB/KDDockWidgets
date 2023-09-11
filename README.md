@@ -4,9 +4,8 @@
 
 ![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/1.7/images/kddockwidgets.png?raw=true)
 
-> ⚠️⚠️: 2.0 is under development, there might be API breaks before release.
-> Stick with version 1.7 if you're using QtWidgets. However, if you're using
-> QtQuick it's better to base on 2.0, as 1.7 won't be receiving much QtQuick development.
+> ⚠⚠: It's recommended to start using the 2.0 branch, which should already be as stable as v1.7 but with more features.
+> 1.x will continue to receive bug fixes for a long time but only for QtWidgets frontend, not for QtQuick/QML.
 
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
 `QDockWidget` and implementing advanced functionalities missing in Qt.
