@@ -47,6 +47,7 @@ public:
     KDBindings::ScopedConnection isOpenChangedConnection;
     KDBindings::ScopedConnection windowActiveAboutToChangeConnection;
     KDBindings::ScopedConnection guestChangeConnection;
+    KDBindings::ScopedConnection isCurrentTabConnection;
 };
 
 DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
@@ -82,6 +83,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
 
     d->windowActiveAboutToChangeConnection = m_dockWidget->d->windowActiveAboutToChange.connect([this](bool active) {
         Q_EMIT windowActiveAboutToChange(active);
+    });
+
+    d->isCurrentTabConnection = m_dockWidget->d->isCurrentTabChanged.connect([this](bool isCurrent) {
+        Q_EMIT isCurrentTabChanged(isCurrent);
     });
 
     m_dockWidget->init();

@@ -234,6 +234,10 @@ public:
     /// @param isOpen
     KDBindings::Signal<bool> isOpenChanged;
 
+    /// @brief Emitted when a dock widget becomes current or not in its tab group
+    /// @param isCurrent true if it became current
+    KDBindings::Signal<bool> isCurrentTabChanged;
+
     const QString name;
     Vector<QString> affinities;
     QString title;

@@ -302,9 +302,16 @@ void TabBar::setCurrentIndex(int index)
     if (newCurrentDw == d->m_currentDockWidget)
         return;
 
+    if (d->m_currentDockWidget) {
+        d->m_currentDockWidget->d->isCurrentTabChanged.emit(false);
+    }
+
     d->m_currentDockWidget = newCurrentDw;
     d->currentDockWidgetChanged.emit(newCurrentDw);
     dynamic_cast<Core::TabBarViewInterface *>(view())->setCurrentIndex(index);
+
+    if (newCurrentDw)
+        newCurrentDw->d->isCurrentTabChanged.emit(true);
 }
 
 void TabBar::renameTab(int index, const QString &text)

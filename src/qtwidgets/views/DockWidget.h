@@ -90,6 +90,10 @@ Q_SIGNALS:
     void isOpenChanged(bool);
     void windowActiveAboutToChange(bool);
 
+    /// @brief Emitted when a dock widget becomes current or not in its tab group
+    /// @param isCurrent true if it became current
+    void isCurrentTabChanged(bool);
+
 protected:
     bool event(QEvent *) override;
     void resizeEvent(QResizeEvent *) override;

@@ -159,6 +159,7 @@ private Q_SLOTS:
     void tst_deleteDockWidget();
     void tst_standaloneTitleBar();
     void tst_widgetAddQAction();
+    void tst_currentTabChanged();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1784,6 +1785,52 @@ void TestQtWidgets::tst_widgetAddQAction()
     w.addAction(dock1->toggleAction());
 
     delete dock1;
+}
+
+void TestQtWidgets::tst_currentTabChanged()
+{
+    // Tests that QtWidgets::DockWidget::isCurrentTabConnection is emitted
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
+    auto dock2 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock2"));
+
+    int count1 = 0;
+    int count2 = 0;
+    connect(dock1, &QtWidgets::DockWidget::isCurrentTabChanged, [&count1](bool isCurrent) {
+        if (isCurrent)
+            count1++;
+        else
+            count1--;
+    });
+
+    connect(dock2, &QtWidgets::DockWidget::isCurrentTabChanged, [&count2](bool isCurrent) {
+        if (isCurrent)
+            count2++;
+        else
+            count2--;
+    });
+
+    m1->addDockWidget(dock1->asDockWidgetController(), Location_OnBottom);
+    QCOMPARE(count1, 1);
+    QCOMPARE(count2, 0);
+
+    dock1->addDockWidgetAsTab(dock2);
+    QCOMPARE(count1, 0);
+    QCOMPARE(count2, 1);
+
+    // already current
+    dock2->dockWidget()->setAsCurrentTab();
+    QCOMPARE(count1, 0);
+    QCOMPARE(count2, 1);
+
+    dock1->dockWidget()->setAsCurrentTab();
+    QCOMPARE(count1, 1);
+    QCOMPARE(count2, 0);
+
+    dock2->dockWidget()->setAsCurrentTab();
+    QCOMPARE(count1, 0);
+    QCOMPARE(count2, 1);
 }
 
 void TestQtWidgets::tstQGraphicsProxyWidget()
