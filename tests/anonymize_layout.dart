@@ -43,6 +43,11 @@ main(List<String> args) {
 
   int i = 0;
   for (var name in dockWidgetNames) {
+    if (name.startsWith("dockwidget_tests_")) {
+      print("This file is already anonymized ? Has $name. Aborting.");
+      return;
+    }
+
     contents = contents.replaceAll(name, "dockwidget_tests_$i");
     i++;
   }
