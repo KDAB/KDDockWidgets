@@ -38,6 +38,7 @@ class Stack::Private
 {
 public:
     KDBindings::ScopedConnection tabBarAutoHideChanged;
+    KDBindings::ScopedConnection screenChangedConnection;
     QHBoxLayout *cornerWidgetLayout = nullptr;
     QAbstractButton *floatButton = nullptr;
     QAbstractButton *closeButton = nullptr;
@@ -146,7 +147,7 @@ void Stack::setupTabBarButtons()
     });
 
     updateMargins();
-    DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
+    d->screenChangedConnection = DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
         if (View::d->isInWindow(w))
             updateMargins();
     });

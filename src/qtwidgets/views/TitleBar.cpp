@@ -102,10 +102,27 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
+class KDDockWidgets::QtWidgets::TitleBar::Private
+{
+public:
+    KDBindings::ScopedConnection titleChangedConnection;
+    KDBindings::ScopedConnection iconChangedConnection;
+    KDBindings::ScopedConnection screenChangedConnection;
+    KDBindings::ScopedConnection focusChangedConnection;
+
+    KDBindings::ScopedConnection closeButtonEnabledConnection;
+    KDBindings::ScopedConnection floatButtonToolTipConnection;
+    KDBindings::ScopedConnection floatButtonVisibleConnection;
+    KDBindings::ScopedConnection autoHideButtonConnection;
+    KDBindings::ScopedConnection minimizeButtonConnection;
+    KDBindings::ScopedConnection maximizeButtonConnection;
+};
+
 TitleBar::TitleBar(Core::TitleBar *controller, Core::View *parent)
     : View(controller, Core::ViewType::TitleBar, View_qt::asQWidget(parent))
     , Core::TitleBarViewInterface(controller)
     , m_layout(new QHBoxLayout(this))
+    , d(new Private())
 {
 }
 
@@ -113,8 +130,14 @@ TitleBar::TitleBar(QWidget *parent)
     : View(new Core::TitleBar(this), Core::ViewType::TitleBar, parent)
     , Core::TitleBarViewInterface(static_cast<Core::TitleBar *>(controller()))
     , m_layout(new QHBoxLayout(this))
+    , d(new Private())
 {
     m_titleBar->init();
+}
+
+TitleBar::~TitleBar()
+{
+    delete d;
 }
 
 void TitleBar::init()
@@ -159,10 +182,9 @@ void TitleBar::init()
     m_minimizeButton->setToolTip(tr("Minimize"));
     m_closeButton->setToolTip(tr("Close"));
 
-    m_titleBar->dptr()->titleChanged.connect([this] { update(); });
+    d->titleChangedConnection = m_titleBar->dptr()->titleChanged.connect([this] { update(); });
 
-
-    m_titleBar->dptr()->iconChanged.connect([this] { if (m_titleBar->icon().isNull()) {
+    d->iconChangedConnection = m_titleBar->dptr()->iconChanged.connect([this] { if (m_titleBar->icon().isNull()) {
             m_dockWidgetIcon->setPixmap(QPixmap());
         } else {
             const QPixmap pix = m_titleBar->icon().pixmap(QSize(28, 28));
@@ -170,22 +192,22 @@ void TitleBar::init()
         }
         update(); });
 
-    m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
-    m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
-    m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
-    m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });
-    m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible, bool enabled) { updateMinimizeButton(visible, enabled); });
-    m_titleBar->dptr()->maximizeButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateMaximizeButton(visible, enabled, type); });
+    d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
+    d->floatButtonToolTipConnection = m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
+    d->floatButtonVisibleConnection = m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
+    d->autoHideButtonConnection = m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });
+    d->minimizeButtonConnection = m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible, bool enabled) { updateMinimizeButton(visible, enabled); });
+    d->maximizeButtonConnection = m_titleBar->dptr()->maximizeButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateMaximizeButton(visible, enabled, type); });
 
     m_floatButton->setVisible(m_titleBar->floatButtonVisible());
     m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
-    DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
-        if (d->isInWindow(w))
+    d->screenChangedConnection = DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
+        if (View::d->isInWindow(w))
             updateMargins();
     });
 
-    m_titleBar->dptr()->isFocusedChanged.connect([this] {
+    d->focusChangedConnection = m_titleBar->dptr()->isFocusedChanged.connect([this] {
         Q_EMIT isFocusedChanged();
     });
 }
@@ -197,7 +219,7 @@ Core::TitleBar *TitleBar::titleBar() const
 
 void TitleBar::paintEvent(QPaintEvent *)
 {
-    if (d->freed())
+    if (View::d->freed())
         return;
 
     QPainter p(this);
@@ -299,7 +321,7 @@ QSize TitleBar::sizeHint() const
 
 void TitleBar::focusInEvent(QFocusEvent *ev)
 {
-    if (!d->freed())
+    if (!View::d->freed())
         return;
 
     QWidget::focusInEvent(ev);

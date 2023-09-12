@@ -37,6 +37,8 @@ public:
     /// style things twice.
     explicit TitleBar(QWidget *parent = nullptr);
 
+    ~TitleBar() override;
+
     /// Returns the controller
     Core::TitleBar *titleBar() const;
 
@@ -73,6 +75,11 @@ protected:
     QAbstractButton *m_minimizeButton = nullptr;
     QAbstractButton *m_autoHideButton = nullptr;
     QLabel *m_dockWidgetIcon = nullptr;
+
+private:
+    // Private class just to hide KDBindings usage
+    class Private;
+    Private *const d;
 };
 
 /// @brief Button widget to be used in the TitleBar.

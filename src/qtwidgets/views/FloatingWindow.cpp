@@ -53,6 +53,7 @@ public:
     Core::FloatingWindow *const m_controller;
     bool m_connectedToScreenChanged = false;
     KDBindings::ScopedConnection m_numGroupsChangedConnection;
+    KDBindings::ScopedConnection m_screenChangedConnection;
 };
 
 FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
@@ -136,7 +137,7 @@ void FloatingWindow::init()
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->titleBar()));
     d->m_vlayout->addWidget(View_qt::asQWidget(d->m_controller->dropArea()));
 
-    DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
+    d->m_screenChangedConnection = DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
         if (View::d->isInWindow(w))
             updateMargins();
     });
