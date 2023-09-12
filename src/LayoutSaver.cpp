@@ -370,10 +370,12 @@ void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidget::Lis
 LayoutSaver::LayoutSaver(RestoreOptions options)
     : d(new Private(options))
 {
+    d->m_dockRegistry->registerLayoutSaver();
 }
 
 LayoutSaver::~LayoutSaver()
 {
+    d->m_dockRegistry->unregisterLayoutSaver();
     delete d;
 }
 

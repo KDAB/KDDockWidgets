@@ -76,6 +76,9 @@ public:
     void registerGroup(Core::Group *);
     void unregisterGroup(Core::Group *);
 
+    void registerLayoutSaver();
+    void unregisterLayoutSaver();
+
     Q_INVOKABLE KDDockWidgets::Core::DockWidget *focusedDockWidget() const;
 
     Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;

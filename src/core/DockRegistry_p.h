@@ -37,6 +37,8 @@ public:
     KDBindings::Signal<bool> dropIndicatorsInhibitedChanged;
 
     KDBindings::ConnectionHandle m_connection;
+
+    int m_numLayoutSavers = 0;
 };
 
 }
