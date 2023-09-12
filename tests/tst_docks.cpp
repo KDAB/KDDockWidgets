@@ -448,7 +448,9 @@ KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
     LayoutSaver restorer;
     const QByteArray data = Platform::instance()->readFile(":/layouts/invalidCurrentTab.json", /*by-ref*/ ok);
     CHECK(ok);
-    // CHECK(restorer.restoreLayout(data)); // To fix
+    CHECK(restorer.restoreLayout(data));
+
+    delete DockRegistry::self()->mainwindows().first();
 
     KDDW_TEST_RETURN(true);
 }

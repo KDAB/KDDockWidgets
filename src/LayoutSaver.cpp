@@ -913,8 +913,15 @@ bool LayoutSaver::Group::isValid() const
 
     if (!dockWidgets.isEmpty()) {
         if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
-            KDDW_ERROR("Invalid tab index {}, {}", currentTabIndex, dockWidgets.size());
-            return false;
+
+            if (dockWidgets.isEmpty() || KDDockWidgets::Config::self().layoutSaverUsesStrictMode()) {
+                KDDW_ERROR("Invalid tab index = {}, size = {}", currentTabIndex, dockWidgets.size());
+                return false;
+            } else {
+                // Layout seems corrupted. Use 0 as current tab and let's continue.
+                KDDW_WARN("Invalid tab index = {}, size = {}", currentTabIndex, dockWidgets.size());
+                const_cast<LayoutSaver::Group *>(this)->currentTabIndex = 0;
+            }
         }
     }
 
