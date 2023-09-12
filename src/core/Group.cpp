@@ -759,6 +759,11 @@ LayoutSaver::Group Group::serialize() const
     for (DockWidget *dock : docks)
         group.dockWidgets.push_back(dock->d->serialize());
 
+    if (group.currentTabIndex == -1 && !docks.isEmpty()) {
+        KDDW_ERROR("Group::serialize: Current index shouldn't be -1. Setting to 0 instead.");
+        group.currentTabIndex = 0;
+    }
+
     return group;
 }
 
