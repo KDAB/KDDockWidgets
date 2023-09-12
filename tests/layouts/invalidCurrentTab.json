@@ -1,0 +1,1663 @@
+{
+    "allDockWidgets": [
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 31,
+                    "x": 174,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 12,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_25"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 5,
+                    "width": 28,
+                    "x": 150,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 7,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_12"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 425,
+                    "width": 79,
+                    "x": 213,
+                    "y": 116
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 10,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_27"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 20,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_23"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 21,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_20"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 234,
+                    "y": 30
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 21,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_15"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 0,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_18"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 9,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_16"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 3,
+                    "width": 7,
+                    "x": 158,
+                    "y": 29
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 4,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_6"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 21,
+                    "x": 138,
+                    "y": 35
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 6,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_24"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 14,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_7"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 17,
+                    "x": 152,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 23,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_26"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 479,
+                    "width": 0,
+                    "x": -1,
+                    "y": 486
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_8"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_3"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 8,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_28"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 19,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_14"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 22,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_4"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 11,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_17"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 15,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_1"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_10"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 23,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 17,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_5"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 18,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_9"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 24,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_22"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 277,
+                    "width": 414,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 2,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_19"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 4,
+                    "width": 15,
+                    "x": 152,
+                    "y": 31
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 16,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_11"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 9,
+                    "width": 23,
+                    "x": 152,
+                    "y": 29
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 5,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_13"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 6,
+                    "width": 47,
+                    "x": 176,
+                    "y": 32
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 3,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_21"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_2"
+        },
+        {
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 1,
+                        "mainWindowUniqueName": "MainWindow1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": true
+            },
+            "uniqueName": "dockwidget_tests_0"
+        }
+    ],
+    "closedDockWidgets": [
+        "dockwidget_tests_25",
+        "dockwidget_tests_12",
+        "dockwidget_tests_27",
+        "dockwidget_tests_23",
+        "dockwidget_tests_20",
+        "dockwidget_tests_15",
+        "dockwidget_tests_16",
+        "dockwidget_tests_6",
+        "dockwidget_tests_24",
+        "dockwidget_tests_7",
+        "dockwidget_tests_26",
+        "dockwidget_tests_8",
+        "dockwidget_tests_3",
+        "dockwidget_tests_28",
+        "dockwidget_tests_14",
+        "dockwidget_tests_17",
+        "dockwidget_tests_1",
+        "dockwidget_tests_10",
+        "dockwidget_tests_5",
+        "dockwidget_tests_9",
+        "dockwidget_tests_22",
+        "dockwidget_tests_11",
+        "dockwidget_tests_13",
+        "dockwidget_tests_2"
+    ],
+    "floatingWindows": [],
+    "mainWindows": [
+        {
+            "affinities": null,
+            "geometry": {
+                "height": 1392,
+                "width": 2560,
+                "x": 0,
+                "y": 27
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "2256": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_19"
+                        ],
+                        "geometry": {
+                            "height": 717,
+                            "width": 921,
+                            "x": 414,
+                            "y": 524
+                        },
+                        "id": "2256",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MainWindow1",
+                        "objectName": "dockwidget_tests_19",
+                        "options": 1
+                    },
+                    "2278": {
+                        "currentTabIndex": -1,
+                        "dockWidgets": [
+                            "dockwidget_tests_0"
+                        ],
+                        "geometry": {
+                            "height": 519,
+                            "width": 1549,
+                            "x": 414,
+                            "y": 0
+                        },
+                        "id": "2278",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MainWindow1",
+                        "objectName": "dockwidget_tests_0",
+                        "options": 1
+                    },
+                    "2774": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_4"
+                        ],
+                        "geometry": {
+                            "height": 1241,
+                            "width": 590,
+                            "x": 1968,
+                            "y": 0
+                        },
+                        "id": "2774",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MainWindow1",
+                        "objectName": "dockwidget_tests_4",
+                        "options": 1
+                    },
+                    "2796": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_18"
+                        ],
+                        "geometry": {
+                            "height": 1241,
+                            "width": 409,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "2796",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MainWindow1",
+                        "objectName": "dockwidget_tests_18",
+                        "options": 1
+                    },
+                    "2818": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_21"
+                        ],
+                        "geometry": {
+                            "height": 717,
+                            "width": 623,
+                            "x": 1340,
+                            "y": 524
+                        },
+                        "id": "2818",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MainWindow1",
+                        "objectName": "dockwidget_tests_21",
+                        "options": 1
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "children": [
+                                        {
+                                            "guestId": "2796",
+                                            "isContainer": false,
+                                            "isVisible": true,
+                                            "objectName": "dockwidget_tests_18",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 1241,
+                                                    "width": 409,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": 524314,
+                                                    "width": 524289
+                                                },
+                                                "minSize": {
+                                                    "height": 135,
+                                                    "width": 244
+                                                },
+                                                "percentageWithinParent": 0.20908311910882604
+                                            }
+                                        },
+                                        {
+                                            "children": [
+                                                {
+                                                    "children": [
+                                                        {
+                                                            "guestId": "2278",
+                                                            "isContainer": false,
+                                                            "isVisible": true,
+                                                            "objectName": "dockwidget_tests_0",
+                                                            "sizingInfo": {
+                                                                "geometry": {
+                                                                    "height": 519,
+                                                                    "width": 1549,
+                                                                    "x": 0,
+                                                                    "y": 0
+                                                                },
+                                                                "isBeingInserted": false,
+                                                                "maxSizeHint": {
+                                                                    "height": 524287,
+                                                                    "width": 524291
+                                                                },
+                                                                "minSize": {
+                                                                    "height": 90,
+                                                                    "width": 84
+                                                                },
+                                                                "percentageWithinParent": 0.4199029126213592
+                                                            }
+                                                        },
+                                                        {
+                                                            "children": [
+                                                                {
+                                                                    "guestId": "2256",
+                                                                    "isContainer": false,
+                                                                    "isVisible": true,
+                                                                    "objectName": "dockwidget_tests_19",
+                                                                    "sizingInfo": {
+                                                                        "geometry": {
+                                                                            "height": 717,
+                                                                            "width": 921,
+                                                                            "x": 0,
+                                                                            "y": 0
+                                                                        },
+                                                                        "isBeingInserted": false,
+                                                                        "maxSizeHint": {
+                                                                            "height": 524314,
+                                                                            "width": 524289
+                                                                        },
+                                                                        "minSize": {
+                                                                            "height": 269,
+                                                                            "width": 548
+                                                                        },
+                                                                        "percentageWithinParent": 0.5969498910675382
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "guestId": "2818",
+                                                                    "isContainer": false,
+                                                                    "isVisible": true,
+                                                                    "objectName": "dockwidget_tests_21",
+                                                                    "sizingInfo": {
+                                                                        "geometry": {
+                                                                            "height": 717,
+                                                                            "width": 623,
+                                                                            "x": 926,
+                                                                            "y": 0
+                                                                        },
+                                                                        "isBeingInserted": false,
+                                                                        "maxSizeHint": {
+                                                                            "height": 524314,
+                                                                            "width": 524289
+                                                                        },
+                                                                        "minSize": {
+                                                                            "height": 122,
+                                                                            "width": 370
+                                                                        },
+                                                                        "percentageWithinParent": 0.40305010893246185
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "isContainer": true,
+                                                            "isVisible": false,
+                                                            "objectName": "",
+                                                            "orientation": 1,
+                                                            "sizingInfo": {
+                                                                "geometry": {
+                                                                    "height": 717,
+                                                                    "width": 1549,
+                                                                    "x": 0,
+                                                                    "y": 524
+                                                                },
+                                                                "isBeingInserted": false,
+                                                                "maxSizeHint": {
+                                                                    "height": 524314,
+                                                                    "width": 1048583
+                                                                },
+                                                                "minSize": {
+                                                                    "height": 269,
+                                                                    "width": 923
+                                                                },
+                                                                "percentageWithinParent": 0.5800970873786407
+                                                            }
+                                                        }
+                                                    ],
+                                                    "isContainer": true,
+                                                    "isVisible": false,
+                                                    "objectName": "",
+                                                    "orientation": 2,
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 1241,
+                                                            "width": 1549,
+                                                            "x": 0,
+                                                            "y": 0
+                                                        },
+                                                        "isBeingInserted": false,
+                                                        "maxSizeHint": {
+                                                            "height": 1048606,
+                                                            "width": 524291
+                                                        },
+                                                        "minSize": {
+                                                            "height": 364,
+                                                            "width": 923
+                                                        },
+                                                        "percentageWithinParent": 1.0
+                                                    }
+                                                },
+                                                {
+                                                    "children": [
+                                                        {
+                                                            "isContainer": false,
+                                                            "isVisible": false,
+                                                            "objectName": "hidden",
+                                                            "sizingInfo": {
+                                                                "geometry": {
+                                                                    "height": 276,
+                                                                    "width": 1721,
+                                                                    "x": 0,
+                                                                    "y": 0
+                                                                },
+                                                                "isBeingInserted": false,
+                                                                "maxSizeHint": {
+                                                                    "height": -1,
+                                                                    "width": -1
+                                                                },
+                                                                "minSize": {
+                                                                    "height": 174,
+                                                                    "width": 214
+                                                                },
+                                                                "percentageWithinParent": 0.0
+                                                            }
+                                                        }
+                                                    ],
+                                                    "isContainer": true,
+                                                    "isVisible": false,
+                                                    "objectName": "",
+                                                    "orientation": 2,
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 0,
+                                                            "width": 0,
+                                                            "x": 0,
+                                                            "y": 0
+                                                        },
+                                                        "isBeingInserted": false,
+                                                        "maxSizeHint": {
+                                                            "height": -1,
+                                                            "width": -1
+                                                        },
+                                                        "minSize": {
+                                                            "height": 90,
+                                                            "width": 127
+                                                        },
+                                                        "percentageWithinParent": 0.0
+                                                    }
+                                                },
+                                                {
+                                                    "isContainer": false,
+                                                    "isVisible": false,
+                                                    "objectName": "hidden",
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 283,
+                                                            "width": 1721,
+                                                            "x": 0,
+                                                            "y": 865
+                                                        },
+                                                        "isBeingInserted": false,
+                                                        "maxSizeHint": {
+                                                            "height": -1,
+                                                            "width": -1
+                                                        },
+                                                        "minSize": {
+                                                            "height": 90,
+                                                            "width": 148
+                                                        },
+                                                        "percentageWithinParent": 0.0
+                                                    }
+                                                },
+                                                {
+                                                    "children": [
+                                                        {
+                                                            "isContainer": false,
+                                                            "isVisible": false,
+                                                            "objectName": "hidden",
+                                                            "sizingInfo": {
+                                                                "geometry": {
+                                                                    "height": 368,
+                                                                    "width": 1360,
+                                                                    "x": 0,
+                                                                    "y": 0
+                                                                },
+                                                                "isBeingInserted": false,
+                                                                "maxSizeHint": {
+                                                                    "height": -1,
+                                                                    "width": -1
+                                                                },
+                                                                "minSize": {
+                                                                    "height": 357,
+                                                                    "width": 605
+                                                                },
+                                                                "percentageWithinParent": 0.0
+                                                            }
+                                                        }
+                                                    ],
+                                                    "isContainer": true,
+                                                    "isVisible": false,
+                                                    "objectName": "",
+                                                    "orientation": 2,
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 0,
+                                                            "width": 0,
+                                                            "x": 0,
+                                                            "y": 0
+                                                        },
+                                                        "isBeingInserted": false,
+                                                        "maxSizeHint": {
+                                                            "height": -1,
+                                                            "width": -1
+                                                        },
+                                                        "minSize": {
+                                                            "height": 357,
+                                                            "width": 605
+                                                        },
+                                                        "percentageWithinParent": 0.0
+                                                    }
+                                                }
+                                            ],
+                                            "isContainer": true,
+                                            "isVisible": false,
+                                            "objectName": "",
+                                            "orientation": 2,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 1241,
+                                                    "width": 1549,
+                                                    "x": 414,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": 1048606,
+                                                    "width": 524291
+                                                },
+                                                "minSize": {
+                                                    "height": 364,
+                                                    "width": 923
+                                                },
+                                                "percentageWithinParent": 0.790916880891174
+                                            }
+                                        }
+                                    ],
+                                    "isContainer": true,
+                                    "isVisible": false,
+                                    "objectName": "",
+                                    "orientation": 1,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 1241,
+                                            "width": 1963,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "isBeingInserted": false,
+                                        "maxSizeHint": {
+                                            "height": 524314,
+                                            "width": 1048585
+                                        },
+                                        "minSize": {
+                                            "height": 364,
+                                            "width": 1172
+                                        },
+                                        "percentageWithinParent": 0.7690288713910761
+                                    }
+                                },
+                                {
+                                    "children": [
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 90,
+                                                    "width": 640,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        }
+                                    ],
+                                    "isContainer": true,
+                                    "isVisible": false,
+                                    "objectName": "",
+                                    "orientation": 2,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 0,
+                                            "width": 0,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "isBeingInserted": false,
+                                        "maxSizeHint": {
+                                            "height": -1,
+                                            "width": -1
+                                        },
+                                        "minSize": {
+                                            "height": 90,
+                                            "width": 80
+                                        },
+                                        "percentageWithinParent": 0.0
+                                    }
+                                },
+                                {
+                                    "children": [
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "objectName": "hidden",
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 1148,
+                                                    "width": 304,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": -1,
+                                                    "width": -1
+                                                },
+                                                "minSize": {
+                                                    "height": 181,
+                                                    "width": 262
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "children": [
+                                                {
+                                                    "guestId": "2774",
+                                                    "isContainer": false,
+                                                    "isVisible": true,
+                                                    "objectName": "dockwidget_tests_4",
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 1241,
+                                                            "width": 590,
+                                                            "x": 0,
+                                                            "y": 0
+                                                        },
+                                                        "isBeingInserted": false,
+                                                        "maxSizeHint": {
+                                                            "height": 524314,
+                                                            "width": 524289
+                                                        },
+                                                        "minSize": {
+                                                            "height": 152,
+                                                            "width": 352
+                                                        },
+                                                        "percentageWithinParent": 1.0
+                                                    }
+                                                }
+                                            ],
+                                            "isContainer": true,
+                                            "isVisible": false,
+                                            "objectName": "",
+                                            "orientation": 2,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 1241,
+                                                    "width": 590,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "isBeingInserted": false,
+                                                "maxSizeHint": {
+                                                    "height": 524314,
+                                                    "width": 524289
+                                                },
+                                                "minSize": {
+                                                    "height": 152,
+                                                    "width": 352
+                                                },
+                                                "percentageWithinParent": 1.0
+                                            }
+                                        }
+                                    ],
+                                    "isContainer": true,
+                                    "isVisible": false,
+                                    "objectName": "",
+                                    "orientation": 2,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 1241,
+                                            "width": 590,
+                                            "x": 1968,
+                                            "y": 0
+                                        },
+                                        "isBeingInserted": false,
+                                        "maxSizeHint": {
+                                            "height": 524314,
+                                            "width": 524289
+                                        },
+                                        "minSize": {
+                                            "height": 152,
+                                            "width": 352
+                                        },
+                                        "percentageWithinParent": 0.23097112860892388
+                                    }
+                                }
+                            ],
+                            "isContainer": true,
+                            "isVisible": false,
+                            "objectName": "",
+                            "orientation": 1,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 1241,
+                                    "width": 2558,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "isBeingInserted": false,
+                                "maxSizeHint": {
+                                    "height": 524314,
+                                    "width": 1572879
+                                },
+                                "minSize": {
+                                    "height": 364,
+                                    "width": 1529
+                                },
+                                "percentageWithinParent": 1.0
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "isContainer": false,
+                                    "isVisible": false,
+                                    "objectName": "hidden",
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 220,
+                                            "width": 2046,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "isBeingInserted": false,
+                                        "maxSizeHint": {
+                                            "height": -1,
+                                            "width": -1
+                                        },
+                                        "minSize": {
+                                            "height": 90,
+                                            "width": 127
+                                        },
+                                        "percentageWithinParent": 0.0
+                                    }
+                                }
+                            ],
+                            "isContainer": true,
+                            "isVisible": false,
+                            "objectName": "",
+                            "orientation": 2,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 0,
+                                    "width": 0,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "isBeingInserted": false,
+                                "maxSizeHint": {
+                                    "height": -1,
+                                    "width": -1
+                                },
+                                "minSize": {
+                                    "height": 219,
+                                    "width": 483
+                                },
+                                "percentageWithinParent": 0.0
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "isContainer": false,
+                                    "isVisible": false,
+                                    "objectName": "hidden",
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 184,
+                                            "width": 2046,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "isBeingInserted": false,
+                                        "maxSizeHint": {
+                                            "height": -1,
+                                            "width": -1
+                                        },
+                                        "minSize": {
+                                            "height": 90,
+                                            "width": 127
+                                        },
+                                        "percentageWithinParent": 0.0
+                                    }
+                                }
+                            ],
+                            "isContainer": true,
+                            "isVisible": false,
+                            "objectName": "",
+                            "orientation": 2,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 0,
+                                    "width": 0,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "isBeingInserted": false,
+                                "maxSizeHint": {
+                                    "height": -1,
+                                    "width": -1
+                                },
+                                "minSize": {
+                                    "height": 98,
+                                    "width": 284
+                                },
+                                "percentageWithinParent": 0.0
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "objectName": "",
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 1241,
+                            "width": 2558,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "isBeingInserted": false,
+                        "maxSizeHint": {
+                            "height": -1,
+                            "width": -1
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 1392,
+                "width": 1531,
+                "x": 1029,
+                "y": 27
+            },
+            "options": 0,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 1440,
+                "width": 2560
+            },
+            "uniqueName": "MainWindow1",
+            "windowState": 2
+        }
+    ],
+    "screenInfo": [
+        {
+            "devicePixelRatio": 1.5,
+            "geometry": {
+                "height": 1440,
+                "width": 2560,
+                "x": 0,
+                "y": 0
+            },
+            "index": 0,
+            "name": "DisplayPort-0"
+        }
+    ],
+    "serializationVersion": 3
+}

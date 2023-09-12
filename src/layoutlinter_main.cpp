@@ -95,9 +95,9 @@ LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QStri
     return c;
 }
 
-static bool lint(const QString &filename, LinterConfig config)
+static bool lint(const QString &filename, LinterConfig config, bool isVerbose)
 {
-    if (s_isVerbose) {
+    if (isVerbose) {
         qDebug() << "Linting" << filename << "with options" << config.restoreOptions;
     }
 
@@ -116,7 +116,7 @@ static bool lint(const QString &filename, LinterConfig config)
     // Create the main windows specified from -c <file>
     for (auto mw : config.mainWindows) {
         const QString name = QString::fromStdString(mw.name);
-        if (s_isVerbose)
+        if (isVerbose)
             qDebug() << "Pre-creating main window" << name << "with options" << mw.options;
 
         auto mainWindow = Platform::instance()->createMainWindow(name, {}, mw.options);
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 
     int exitCode = 0;
     for (const std::string &layout : lc.filesToLint) {
-        if (!lint(QString::fromStdString(layout), lc))
+        if (!lint(QString::fromStdString(layout), lc, s_isVerbose))
             exitCode = 2;
     }
 

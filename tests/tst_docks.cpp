@@ -426,6 +426,33 @@ KDDW_QCORO_TASK tst_restoreTwice()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
+{
+    EnsureTopLevelsDeleted e;
+
+    DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
+        return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
+    };
+
+    /// MainWindow factory for the easy cases.
+    MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions mainWindowOptions) {
+        return Platform::instance()->createMainWindow(mwName, {}, mainWindowOptions);
+    };
+
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
+    KDDockWidgets::Config::self().setMainWindowFactoryFunc(mwFunc);
+
+    LayoutSaver saver;
+
+    bool ok = false;
+    LayoutSaver restorer;
+    const QByteArray data = Platform::instance()->readFile(":/layouts/invalidCurrentTab.json", /*by-ref*/ ok);
+    CHECK(ok);
+    // CHECK(restorer.restoreLayout(data)); // To fix
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreNlohmanException()
 {
     LayoutSaver saver;
@@ -5366,6 +5393,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_lastFloatingPositionIsRestored),
         TEST(tst_restoreNonClosable),
         TEST(tst_restoreNlohmanException),
+        TEST(tst_restoreWithInvalidCurrentTab),
         TEST(tst_restoreRestoresMainWindowPosition),
         TEST(tst_dontCloseDockWidgetBeforeRestore2),
         TEST(tst_doubleClickTabToDetach),
