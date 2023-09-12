@@ -145,11 +145,13 @@ int main(int argc, char *argv[])
     QCommandLineOption forceQtQuick = { { "q", "force-qtquick" }, "Forces usage of QtQuick" };
     QCommandLineOption configFileOpt = { { "c", "config" }, "Linter config file", "configfile" };
     QCommandLineOption verboseOpt = { { "v", "verbose" }, "Verbose output" };
+    QCommandLineOption strictOpt = { { "s", "strict" }, "Strict mode" };
     QCommandLineOption waitAtEndOpt = { { "w", "wait" }, "Waits instead of exiting. For debugging purposes." };
 
     parser.addOption(configFileOpt);
     parser.addOption(verboseOpt);
     parser.addOption(waitAtEndOpt);
+    parser.addOption(strictOpt);
     parser.addPositionalArgument("layout", "layout json file");
     parser.addHelpOption();
 
@@ -173,6 +175,7 @@ int main(int argc, char *argv[])
 #endif
 
     KDDockWidgets::initFrontend(frontendType);
+    KDDockWidgets::Config::self().setLayoutSaverStrictMode(parser.isSet(strictOpt));
 
     s_isVerbose = parser.isSet(verboseOpt);
     const LinterConfig lc = requestedLinterConfig(parser, parser.isSet(configFileOpt) ? parser.value(configFileOpt) : QString());

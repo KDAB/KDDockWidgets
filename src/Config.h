@@ -388,6 +388,12 @@ public:
     /// Prints some debug information
     void printDebug();
 
+    /// Mostly used by the linter so it errors out when finding invalid layouts.
+    /// For production, this should be false, as sometimes there's fallbacks and the layout is recoverable.
+    /// Default is false.
+    void setLayoutSaverStrictMode(bool);
+    bool layoutSaverUsesStrictMode() const;
+
 private:
     KDDW_DELETE_COPY_CTOR(Config)
     Config();

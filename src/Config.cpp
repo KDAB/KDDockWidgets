@@ -62,6 +62,7 @@ public:
     int m_mdiPopupThreshold = 250;
     int m_startDragDistance = -1;
     bool m_dropIndicatorsInhibited = false;
+    bool m_layoutSaverStrictMode = false;
 };
 
 Config::Config()
@@ -343,6 +344,16 @@ int Config::startDragDistance() const
 void Config::printDebug()
 {
     std::cerr << "Flags: " << d->m_flags << d->m_internalFlags << "\n";
+}
+
+void Config::setLayoutSaverStrictMode(bool is)
+{
+    d->m_layoutSaverStrictMode = is;
+}
+
+bool Config::layoutSaverUsesStrictMode() const
+{
+    return d->m_layoutSaverStrictMode;
 }
 
 }
