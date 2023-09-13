@@ -56,6 +56,7 @@ before_build:
   - cmd: set PATH=C:\Qt\6.5\msvc2019_64\bin;C:\Qt\5.15\msvc2019_64\bin;%PATH%
   - sh: export QT_QUICK_BACKEND=software
   - sh: if [ "`uname -s`" = "Darwin" ]; then export PATH=$HOME/Qt/6.2/macos/bin:$HOME/Qt/5.15/clang_64/bin:$PATH; else export PATH=$HOME/Qt/6.3/gcc_64/bin:$HOME/Qt/5.15/gcc_64/bin:$PATH; fi
+  - sh: export CTEST_OUTPUT_ON_FAILURE=1
 
 build_script:
   - mkdir build
