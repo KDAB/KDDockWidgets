@@ -16,12 +16,12 @@ include(${EPHEMERAL_DIR}/generated_config.cmake)
 
 # Serves the same purpose as list(TRANSFORM ... PREPEND ...),
 # which isn't available in 3.10.
-function(list_prepend LIST_NAME PREFIX)
+function(list_prepend listName prefix)
     set(NEW_LIST "")
-    foreach(element ${${LIST_NAME}})
-        list(APPEND NEW_LIST "${PREFIX}${element}")
+    foreach(element ${${listName}})
+        list(APPEND NEW_LIST "${prefix}${element}")
     endforeach(element)
-    set(${LIST_NAME}
+    set(${listName}
         "${NEW_LIST}"
         PARENT_SCOPE
     )
@@ -93,6 +93,11 @@ add_custom_command(
     OUTPUT ${FLUTTER_LIBRARY} ${FLUTTER_LIBRARY_HEADERS} ${CMAKE_CURRENT_BINARY_DIR}/_phony_
     COMMAND ${CMAKE_COMMAND} -E env ${FLUTTER_TOOL_ENVIRONMENT}
             "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.sh" ${FLUTTER_TARGET_PLATFORM} ${CMAKE_BUILD_TYPE}
+    COMMENT "Run Flutter tool_backend.sh"
     VERBATIM
 )
-add_custom_target(flutter_assemble DEPENDS "${FLUTTER_LIBRARY}" ${FLUTTER_LIBRARY_HEADERS})
+add_custom_target(
+    flutter_assemble
+    DEPENDS "${FLUTTER_LIBRARY}" ${FLUTTER_LIBRARY_HEADERS}
+    COMMENT "Add some dependencies to the flutter_assemble target"
+)
