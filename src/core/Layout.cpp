@@ -286,6 +286,9 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
     for (auto it : l.groups) {
         const LayoutSaver::Group &group = it.second;
         Core::Group *f = Core::Group::deserialize(group);
+        if (!f)
+            return false;
+
         assert(!group.id.isEmpty());
         groups[group.id] = f->view();
     }

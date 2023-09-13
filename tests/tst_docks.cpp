@@ -428,31 +428,49 @@ KDDW_QCORO_TASK tst_restoreTwice()
 
 KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
 {
-    EnsureTopLevelsDeleted e;
+    auto test = [](bool strictMode) {
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setLayoutSaverStrictMode(strictMode);
 
-    DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
-        return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
+        DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
+            return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
+        };
+
+        /// MainWindow factory for the easy cases.
+        MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions mainWindowOptions) {
+            return Platform::instance()->createMainWindow(mwName, {}, mainWindowOptions);
+        };
+
+        KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
+        KDDockWidgets::Config::self().setMainWindowFactoryFunc(mwFunc);
+
+        LayoutSaver saver;
+
+        bool ok = false;
+        LayoutSaver restorer;
+        const QByteArray data = Platform::instance()->readFile(":/layouts/invalidCurrentTab.json", /*by-ref*/ ok);
+        CHECK(ok);
+
+        // In strict mode we expect it to fail. This also tests that it's not failing with a crash, as it was before.
+        if (strictMode)
+            CHECK(!restorer.restoreLayout(data));
+        else
+            CHECK(restorer.restoreLayout(data));
+
+        delete DockRegistry::self()->mainwindows().first();
+
+        KDDW_TEST_RETURN(true);
     };
 
-    /// MainWindow factory for the easy cases.
-    MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions mainWindowOptions) {
-        return Platform::instance()->createMainWindow(mwName, {}, mainWindowOptions);
-    };
+    // We test both in strict mode and in non-strict mode. Since neither should crash.
 
-    KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
-    KDDockWidgets::Config::self().setMainWindowFactoryFunc(mwFunc);
+    if (!KDDW_CO_AWAIT test(false)) {
+        KDDW_TEST_RETURN(false);
+    }
 
-    LayoutSaver saver;
+    SetExpectedWarning ignoreWarning("Invalid tab index");
 
-    bool ok = false;
-    LayoutSaver restorer;
-    const QByteArray data = Platform::instance()->readFile(":/layouts/invalidCurrentTab.json", /*by-ref*/ ok);
-    CHECK(ok);
-    CHECK(restorer.restoreLayout(data));
-
-    delete DockRegistry::self()->mainwindows().first();
-
-    KDDW_TEST_RETURN(true);
+    return KDDW_CO_AWAIT test(true);
 }
 
 KDDW_QCORO_TASK tst_restoreNlohmanException()

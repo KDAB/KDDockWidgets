@@ -108,6 +108,7 @@ struct EnsureTopLevelsDeleted
         Config::self().setInternalFlags(m_originalInternalFlags);
         Config::self().setFlags(m_originalFlags);
         Config::self().setSeparatorThickness(m_originalSeparatorThickness);
+        Config::self().setLayoutSaverStrictMode(false);
     }
 
     const Config::Flags m_originalFlags;
