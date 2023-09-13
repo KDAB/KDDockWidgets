@@ -706,7 +706,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
 
         if (f.mainWindowUniqueName.isEmpty()) {
             // Can happen with older serialization formats
-            KDDW_ERROR("Frame is the persistent central group but doesn't have"
+            KDDW_ERROR("Group is the persistent central group but doesn't have"
                        "an associated window name");
         } else {
             if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
