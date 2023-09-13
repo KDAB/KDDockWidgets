@@ -45,7 +45,7 @@ add_definitions(-DUNICODE -D_UNICODE)
 # Be cautious about adding new options here, as plugins use this function by
 # default. In most cases, you should add new options to specific targets instead
 # of modifying this function.
-function(apply_standard_setttings target)
+function(APPLY_STANDARD_SETTINGS target)
     target_compile_features(${target} PUBLIC cxx_std_17)
     target_compile_options(${target} PRIVATE /W4 /WX /wd"4100")
     target_compile_options(${target} PRIVATE /EHsc)

@@ -167,7 +167,7 @@ with section("lint"):
     disabled_codes = []
 
     # regular expression pattern describing valid function names
-    function_pattern = '[0-9a-z_]+'
+    function_pattern = '[0-9A-Za-z_]+'
 
     # regular expression pattern describing valid macro names
     macro_pattern = '[0-9a-z_]+'

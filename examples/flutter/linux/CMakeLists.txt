@@ -53,7 +53,7 @@ endif()
 # Be cautious about adding new options here, as plugins use this function by
 # default. In most cases, you should add new options to specific targets instead
 # of modifying this function.
-function(apply_standard_settings target)
+function(APPLY_STANDARD_SETTINGS target)
     target_compile_features(${target} PUBLIC cxx_std_14)
     target_compile_options(${target} PRIVATE -Wall -Werror)
     target_compile_options(${target} PRIVATE "$<$<NOT:$<CONFIG:Debug>>:-O3>")
