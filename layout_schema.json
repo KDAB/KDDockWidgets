@@ -1,0 +1,354 @@
+{
+    "schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "KDDockWidgets layout JSON schema",
+    "type": "object",
+    "required": [
+        "allDockWidgets",
+        "closedDockWidgets",
+        "floatingWindows",
+        "mainWindows",
+        "screenInfo",
+        "serializationVersion"
+    ],
+    "definitions": {
+        "geometry": {
+            "type": "object",
+            "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+            ],
+            "properties": {
+                "x": {
+                    "type": "integer"
+                },
+                "y": {
+                    "type": "integer"
+                },
+                "width": {
+                    "type": "integer"
+                },
+                "height": {
+                    "type": "integer"
+                }
+            }
+        },
+        "size": {
+            "type": "object",
+            "required": [
+                "width",
+                "height"
+            ],
+            "properties": {
+                "width": {
+                    "type": "integer"
+                },
+                "height": {
+                    "type": "integer"
+                }
+            }
+        },
+        "placeholder": {
+            "type": "object",
+            "required": [
+                "isFloatingWindow",
+                "itemIndex"
+            ],
+            "properties": {
+                "isFloatingWindow": {
+                    "type": "boolean"
+                },
+                "itemIndex": {
+                    "type": "integer"
+                },
+                "mainWindowUniqueName": {
+                    "type": "string"
+                }
+            }
+        },
+        "dockwidget": {
+            "required": [
+                "lastPosition",
+                "uniqueName"
+            ],
+            "properties": {
+                "uniqueName": {
+                    "type": "string"
+                },
+                "lastPosition": {
+                    "type": "object",
+                    "required": [
+                        "lastFloatingGeometry",
+                        "placeholders",
+                        "tabIndex",
+                        "wasFloating"
+                    ],
+                    "properties": {
+                        "wasFloating": {
+                            "type": "boolean"
+                        },
+                        "tabIndex": {
+                            "type": "integer"
+                        },
+                        "lastFloatingGeometry": {
+                            "$ref": "#/definitions/geometry"
+                        },
+                        "lastOverlayedGeometries": {
+                            "type": "array",
+                            "description": "TODO"
+                        },
+                        "placeholders": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/placeholder"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "group": {
+            "type": "object",
+            "required": [
+                "currentTabIndex",
+                "dockWidgets",
+                "geometry",
+                "id",
+                "isNull",
+                "objectName",
+                "options"
+            ],
+            "properties": {
+                "currentTabIndex": {
+                    "type": "integer"
+                },
+                "dockWidgets": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "geometry": {
+                    "$ref": "#/definitions/geometry"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isNull": {
+                    "type": "boolean"
+                },
+                "mainWindowUniqueName": {
+                    "type": "string"
+                },
+                "objectName": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "integer",
+                    "description": "TODO use enum"
+                }
+            }
+        },
+        "mainWindow": {
+            "required": [
+                "geometry",
+                "isVisible",
+                "multiSplitterLayout",
+                "options",
+                "screenIndex",
+                "screenSize",
+                "uniqueName"
+            ],
+            "properties": {
+                "affinities": {
+                    "type": [
+                        "null",
+                        "array"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "geometry": {
+                    "$ref": "#/definitions/geometry"
+                },
+                "isVisible": {
+                    "type": "boolean"
+                },
+                "multiSplitterLayout": {
+                    "$ref": "#/definitions/multiSplitterLayout"
+                },
+                "normalGeometry": {
+                    "$ref": "#/definitions/geometry"
+                },
+                "options": {
+                    "type": "integer",
+                    "description": "TODO use enum"
+                },
+                "screenIndex": {
+                    "type": "integer"
+                },
+                "screenSize": {
+                    "$ref": "#/definitions/size"
+                },
+                "uniqueName": {
+                    "type": "string"
+                },
+                "windowState": {
+                    "type": "integer",
+                    "description": "TODO use enum"
+                }
+            }
+        },
+        "floatingWindow": {
+            "type": "object",
+            "required": [
+                "geometry",
+                "multiSplitterLayout",
+                "isVisible",
+                "parentIndex",
+                "screenIndex",
+                "screenSize"
+            ],
+            "properties": {
+                "geometry": {
+                    "$ref": "#/definitions/geometry"
+                },
+                "isVisible": {
+                    "type": "boolean"
+                },
+                "parentIndex": {
+                    "type": "integer"
+                },
+                "screenIndex": {
+                    "type": "integer"
+                },
+                "screenSize": {
+                    "$ref": "#/definitions/size"
+                },
+                "multiSplitterLayout": {
+                    "$ref": "#/definitions/multiSplitterLayout"
+                }
+            }
+        },
+        "multiSplitterLayout": {
+            "type": "object",
+            "required": [
+                "frames",
+                "layout"
+            ],
+            "properties": {
+                "frames": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^[0-9]+$": {
+                            "$ref": "#/definitions/group"
+                        }
+                    }
+                },
+                "layout": {
+                    "type": "object",
+                    "required": [
+                        "children",
+                        "isContainer",
+                        "isVisible",
+                        "objectName",
+                        "orientation",
+                        "sizingInfo"
+                    ],
+                    "properties": {
+                        "children": {
+                            "type": "array"
+                        },
+                        "isContainer": {
+                            "type": "boolean"
+                        },
+                        "isVisible": {
+                            "type": "boolean"
+                        },
+                        "objectName": {
+                            "type": "string"
+                        },
+                        "orientation": {
+                            "type": "integer",
+                            "description": "TODO use enum"
+                        },
+                        "sizingInfo": {
+                            "type": "object",
+                            "required": [
+                                "geometry",
+                                "minSize"
+                            ],
+                            "properties": {
+                                "geometry": {
+                                    "$ref": "#/definitions/geometry"
+                                },
+                                "maxSize": {
+                                    "$ref": "#/definitions/size"
+                                },
+                                "minSize": {
+                                    "$ref": "#/definitions/size"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "properties": {
+        "serializationVersion": {
+            "type": "integer",
+            "description": "Serialization version. TODO: only accept 3"
+        },
+        "screenInfo": {
+            "type": "array",
+            "properties": {
+                "devicePixelRatio": {
+                    "type": "number"
+                },
+                "index": {
+                    "type": "integer"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/geometry"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "index",
+                "geometry",
+                "devicePixelRatio"
+            ]
+        },
+        "closedDockWidgets": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "uniqueItems": true
+        },
+        "allDockWidgets": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/dockwidget"
+            }
+        },
+        "floatingWindows": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/floatingWindow"
+            }
+        },
+        "mainWindows": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/mainWindow"
+            }
+        }
+    }
+}
