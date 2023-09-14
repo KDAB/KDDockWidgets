@@ -398,6 +398,11 @@ public:
     /// Empty otherwise
     Size lastOverlayedSize() const;
 
+    /// Returns the size this dockwidget occupies inside the layout
+    /// This is slightly bigger than DockWidget::size() due to margins from the tab widget
+    /// This is convenience for calling Group::size(), as Group is private API
+    /// @sa resizeInLayout()
+    Size sizeInLayout() const;
 
     /// @brief Returns a dock widget by its name
     /// This is the same name you passed to DockWidget CTOR.

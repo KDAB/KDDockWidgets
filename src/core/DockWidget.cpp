@@ -1110,3 +1110,11 @@ KDDockWidgets::FloatingWindowFlags DockWidget::floatingWindowFlags() const
 {
     return d->m_flags;
 }
+
+Size DockWidget::sizeInLayout() const
+{
+    if (auto group = d->group())
+        return group->size();
+
+    return size();
+}
