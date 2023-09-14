@@ -33,7 +33,8 @@
       "**/ECM",
       "**/3rdparty"
     ],
-    "cmake.copyCompileCommands": "${workspaceFolder:kddockwidgets}/compile_commands.json"
+    "cmake.copyCompileCommands": "${workspaceFolder:kddockwidgets}/compile_commands.json",
+    "files.insertFinalNewline": true
   },
   "launch": {
     "version": "0.2.0",
