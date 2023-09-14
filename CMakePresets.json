@@ -447,6 +447,29 @@
             }
         },
         {
+            "name": "ci-release-qt5",
+            "displayName": "ci-release-qt5",
+            "description": "Qt5 non dev-mode build",
+            "binaryDir": "${sourceDir}/build-ci-release-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "ci-release-qt6",
+            "description": "Qt6 non dev-mode",
+            "displayName": "ci-release-qt6",
+            "binaryDir": "${sourceDir}/build-ci-release-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
             "name": "ci-static",
             "inherits": [
                 "static"
