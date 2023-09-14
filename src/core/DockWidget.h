@@ -404,6 +404,26 @@ public:
     /// @sa resizeInLayout()
     Size sizeInLayout() const;
 
+    /// Resizes the dock widget to the requested size.
+    /// The new sizing is expressed by how much the margins should shift, similar to how QRect::adjust() works.
+    /// Use negative values to shrink the widget.
+    ///
+    /// By "inLayout" it is meant that it will be resized within the layout. You can't use
+    /// this method to resize a top-level floating dock widget. Using this function will
+    /// never resize the window.
+    ///
+    /// Note: the final size might not be the same as the requested size, as min/max
+    /// sizes need to be honoured. Also, if you're trying to resize the left margin and the widget is already
+    /// left-most in the layout then left isn't changed (similar for the other sides).
+    /// Call sizeInLayout() afterwards, to see what size was really given.
+    ///
+    /// Example:
+    ///     // Grow the widget 5px to the left, 10px to the right and shrink 7px at the bottom
+    ///     dockWidget->resizeInLayout(5, 0, 10, -7);
+    ///
+    /// @sa sizeInLayout()
+    void resizeInLayout(int left, int top, int right, int bottom);
+
     /// @brief Returns a dock widget by its name
     /// This is the same name you passed to DockWidget CTOR.
     /// nullptr is returned if the dock widget isn't found.

@@ -542,6 +542,63 @@ void Item::setSize(Size sz)
     setGeometry(newGeo);
 }
 
+void Item::requestResize(int left, int top, int right, int bottom)
+{
+    if (left == 0 && right == 0 && top == 0 && bottom == 0)
+        return;
+
+    ItemBoxContainer *parent = parentBoxContainer();
+    if (!parent) {
+        // Can't happen
+        KDDW_ERROR("Item::requestResize: Could not find parent container");
+        return;
+    }
+
+    {
+        // Here we handle resize along the orientation of the container
+        const int side1Delta = parent->isHorizontal() ? left : top;
+        const int side2Delta = parent->isHorizontal() ? right : bottom;
+
+        if (side1Delta != 0) {
+            if (auto separator = parent->separatorForChild(this, Side1)) {
+                const int min = parent->minPosForSeparator_global(separator);
+                const int pos = separator->position();
+                const int max = parent->maxPosForSeparator_global(separator);
+                int newPos = pos - side1Delta;
+                newPos = bound(min, newPos, max);
+                const int delta = newPos - pos;
+
+                parent->requestSeparatorMove(separator, delta);
+            }
+        }
+
+        if (side2Delta != 0) {
+            if (auto separator = parent->separatorForChild(this, Side2)) {
+                const int min = parent->minPosForSeparator_global(separator);
+                const int pos = separator->position();
+                const int max = parent->maxPosForSeparator_global(separator);
+                int newPos = pos + side2Delta;
+                newPos = bound(min, newPos, max);
+                const int delta = newPos - pos;
+
+                parent->requestSeparatorMove(separator, delta);
+            }
+        }
+    }
+
+    // TODO: cross-axis resize not implemented yet
+    // {
+    //     // Here we handle resize against the orientation of the container
+    //     const int side1 = parent->isHorizontal() ? top : left;
+    //     const int side2 = parent->isHorizontal() ? bottom : right;
+
+    //     if (side1 != 0) {
+    //     }
+
+    //     if (side2 != 0) { }
+    // }
+}
+
 Point Item::pos() const
 {
     return m_sizingInfo.geometry.topLeft();

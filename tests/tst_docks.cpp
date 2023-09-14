@@ -5124,6 +5124,56 @@ KDDW_QCORO_TASK tst_childViewAt()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_resizeInLayout()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
+    auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dockC = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+
+    m->addDockWidget(dockA, KDDockWidgets::Location_OnTop);
+    m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
+    m->addDockWidget(dockC, KDDockWidgets::Location_OnBottom);
+
+    // Nothing happens, since the widget's top is the window's top too:
+    const Size dockAOriginalSize = dockA->sizeInLayout();
+    dockA->resizeInLayout(0, 500 - dockA->sizeInLayout().height(), 0, 0);
+    CHECK_EQ(dockAOriginalSize, dockA->sizeInLayout());
+
+    // Move bottom separator down, height is increased to 500
+    dockA->resizeInLayout(0, 0, 0, 500 - dockA->sizeInLayout().height());
+    CHECK_EQ(dockA->sizeInLayout().height(), 500);
+
+    // Move dockB's top separator 50px up, and the bottom one 49px up
+    const Size dockBOriginalSize = dockB->sizeInLayout();
+
+    dockB->resizeInLayout(0, 50, 0, -49);
+
+    CHECK_EQ(dockA->sizeInLayout().height(), 500 - 50);
+    CHECK_EQ(dockB->sizeInLayout().height(), dockBOriginalSize.height() + 1);
+
+    // Nothing happens, since the widget's bottom is the window's bottom too:
+    Size dockCOriginalSize = dockC->sizeInLayout();
+    dockC->resizeInLayout(0, 0, 0, -1);
+    CHECK_EQ(dockCOriginalSize, dockC->sizeInLayout());
+
+    // Now let's test the cross-axis
+    auto dockRight = createDockWidget("right", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dockRight, KDDockWidgets::Location_OnRight);
+
+    dockCOriginalSize = dockC->sizeInLayout();
+    dockC->resizeInLayout(10, 10, 10, 10);
+
+    // bottom wasn't moved
+    CHECK_EQ(dockC->sizeInLayout().height(), dockCOriginalSize.height() + 10);
+
+    // left wasn't moved. TODO: Implement cross-axis resize
+    // CHECK_EQ(dockC->sizeInLayout().width(), dockCOriginalSize.width() + 10);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
@@ -5398,6 +5448,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_size),
         TEST(tst_point),
         TEST(tst_rect),
+        TEST(tst_resizeInLayout),
 #if !defined(KDDW_FRONTEND_FLUTTER)
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),

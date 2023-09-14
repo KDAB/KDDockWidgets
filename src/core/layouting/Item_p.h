@@ -216,6 +216,13 @@ public:
     int height() const;
     Size size() const;
     void setSize(Size);
+
+    /// Unlike setSize(), which just stores data, requestResize() asks the parent container
+    /// to resize this item and all its neighbours. This is convenience API for users wanting
+    /// to programmatically resize a dock widget. Not really used by the usual layouting.
+    /// API semantics work like QRect::adjust(), positive values always increase size.
+    void requestResize(int left, int top, int right, int bottom);
+
     Point pos() const;
     int pos(Qt::Orientation) const;
     Rect geometry() const;

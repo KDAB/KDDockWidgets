@@ -1118,3 +1118,12 @@ Size DockWidget::sizeInLayout() const
 
     return size();
 }
+
+void DockWidget::resizeInLayout(int left, int top, int right, int bottom)
+{
+    Item *item = d->item();
+    if (!item || item->m_inDtor)
+        return;
+
+    item->requestResize(left, top, right, bottom);
+}
