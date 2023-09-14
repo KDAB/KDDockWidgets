@@ -49,6 +49,31 @@
                 }
             }
         },
+        "SideBarLocation": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "lastOverlayedGeometry": {
+            "description": "this could have been an object instead of array",
+            "type": "array",
+            "prefixItems": [
+                {
+                    "$ref": "#/definitions/SideBarLocation"
+                },
+                {
+                    "$ref": "#/definitions/geometry"
+                }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+        },
         "placeholder": {
             "type": "object",
             "required": [
@@ -101,7 +126,9 @@
                                 null,
                                 "array"
                             ],
-                            "description": "TODO"
+                            "items": {
+                                "$ref": "#/definitions/lastOverlayedGeometry"
+                            }
                         },
                         "placeholders": {
                             "type": "array",
