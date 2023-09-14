@@ -97,7 +97,10 @@
                             "$ref": "#/definitions/geometry"
                         },
                         "lastOverlayedGeometries": {
-                            "type": "array",
+                            "types": [
+                                null,
+                                "array"
+                            ],
                             "description": "TODO"
                         },
                         "placeholders": {
