@@ -1037,6 +1037,15 @@ Core::Group *DockWidget::Private::group() const
     return nullptr;
 }
 
+Core::Item *DockWidget::Private::item() const
+{
+    auto group = this->group();
+    if (!group || group->inDtor())
+        return nullptr;
+
+    return group->layoutItem();
+}
+
 void DockWidget::Private::saveLastFloatingGeometry()
 {
     if (q->isFloating() && q->isVisible()) {

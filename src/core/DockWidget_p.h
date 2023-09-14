@@ -137,6 +137,12 @@ public:
      */
     Core::Group *group() const;
 
+    /**
+     * Returns the Layout Item this DockWidget is in.
+     * Can be nullptr.
+     */
+    Core::Item *item() const;
+
     ///@brief If this dock widget is floating, then it saves its geometry
     void saveLastFloatingGeometry();
 
