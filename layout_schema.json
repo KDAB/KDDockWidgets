@@ -60,7 +60,8 @@
                     "type": "boolean"
                 },
                 "itemIndex": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": -1
                 },
                 "mainWindowUniqueName": {
                     "type": "string"
@@ -89,7 +90,8 @@
                             "type": "boolean"
                         },
                         "tabIndex": {
-                            "type": "integer"
+                            "type": "integer",
+                            "minimum": -1
                         },
                         "lastFloatingGeometry": {
                             "$ref": "#/definitions/geometry"
@@ -121,7 +123,8 @@
             ],
             "properties": {
                 "currentTabIndex": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "dockWidgets": {
                     "type": "array",
@@ -146,7 +149,13 @@
                 },
                 "options": {
                     "type": "integer",
-                    "description": "TODO use enum"
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        4,
+                        8
+                    ]
                 }
             }
         },
@@ -184,10 +193,16 @@
                 },
                 "options": {
                     "type": "integer",
-                    "description": "TODO use enum"
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        5
+                    ]
                 },
                 "screenIndex": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": -1
                 },
                 "screenSize": {
                     "$ref": "#/definitions/size"
@@ -197,7 +212,12 @@
                 },
                 "windowState": {
                     "type": "integer",
-                    "description": "TODO use enum"
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        4
+                    ]
                 }
             }
         },
@@ -219,10 +239,12 @@
                     "type": "boolean"
                 },
                 "parentIndex": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": -1
                 },
                 "screenIndex": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": -1
                 },
                 "screenSize": {
                     "$ref": "#/definitions/size"
@@ -272,7 +294,10 @@
                         },
                         "orientation": {
                             "type": "integer",
-                            "description": "TODO use enum"
+                            "enum": [
+                                1,
+                                2
+                            ]
                         },
                         "sizingInfo": {
                             "type": "object",
@@ -300,7 +325,9 @@
     "properties": {
         "serializationVersion": {
             "type": "integer",
-            "description": "Serialization version. TODO: only accept 3"
+            "enum": [
+                3
+            ]
         },
         "screenInfo": {
             "type": "array",
@@ -309,7 +336,8 @@
                     "type": "number"
                 },
                 "index": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "geometry": {
                     "$ref": "#/definitions/geometry"
