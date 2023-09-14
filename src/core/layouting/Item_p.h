@@ -522,6 +522,7 @@ private:
 public:
     Vector<KDDockWidgets::Core::Separator *> separators_recursive() const;
     Vector<KDDockWidgets::Core::Separator *> separators() const;
+    KDDockWidgets::Core::Separator *separatorForChild(Item *, Side) const;
 
 #ifdef DOCKS_DEVELOPER_MODE
     bool test_suggestedRect();

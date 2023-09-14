@@ -3447,6 +3447,44 @@ Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators() const
     return d->m_separators;
 }
 
+KDDockWidgets::Core::Separator *ItemBoxContainer::separatorForChild(Item *child, Side side) const
+{
+    if (!child || !child->isVisible()) {
+        KDDW_ERROR("ItemBoxContainer::separatorForChild: Unexpected nullptr or invisible child");
+        return nullptr;
+    }
+
+    const Item::List children = visibleChildren();
+    const int childIndex = children.indexOf(child);
+    if (childIndex == -1) {
+        KDDW_ERROR("ItemBoxContainer::separatorForChild: Could not find child");
+        return nullptr;
+    }
+
+    int separatorIndex = -1;
+
+    if (side == Side1) {
+        // side1 is the separator on the left (or top)
+        if (childIndex == 0) // No left separator for the 1st item
+            return nullptr;
+
+        separatorIndex = childIndex - 1;
+    } else {
+        // side2 is the separator on the right (or bottom)
+        if (childIndex == children.size() - 1) // No right separator for the last item
+            return nullptr;
+
+        separatorIndex = childIndex;
+    }
+
+    if (separatorIndex < 0 || separatorIndex >= d->m_separators.size()) {
+        KDDW_ERROR("ItemBoxContainer::separatorForChild: Not enough separators {} {} {}", d->m_separators.size(), children.size(), childIndex);
+        return nullptr;
+    }
+
+    return d->m_separators[separatorIndex];
+}
+
 bool ItemBoxContainer::isOverflowing() const
 {
     // This never returns true, unless when loading a buggy layout
