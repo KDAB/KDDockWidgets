@@ -9,8 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_SEGMENTED_INDICATORS_P_H
-#define KD_SEGMENTED_INDICATORS_P_H
+#pragma once
 
 #include <kddockwidgets/QtCompat_p.h>
 #include <kddockwidgets/core/DropIndicatorOverlay.h>
@@ -52,5 +51,3 @@ private:
 }
 
 }
-
-#endif

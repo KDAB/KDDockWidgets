@@ -8,8 +8,8 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-#ifndef KDAB_NLOHMANN_JSON_QT_HELPERS_H
-#define KDAB_NLOHMANN_JSON_QT_HELPERS_H
+
+#pragma once
 
 #include "Logging_p.h"
 #include "QtCompat_p.h"
@@ -106,5 +106,3 @@ inline void from_json(const nlohmann::json &j, QRect &rect)
 #endif
 
 QT_END_NAMESPACE
-
-#endif
