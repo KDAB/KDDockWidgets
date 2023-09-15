@@ -72,15 +72,15 @@ if __name__ == "__main__":
     dock5.setWidget(widget5)
 
     # 3. Add them to the main window
-    mainWindow.addKDockWidget(dock1, KDDockWidgets.Location_OnLeft)
-    mainWindow.addKDockWidget(dock2, KDDockWidgets.Location_OnTop)
+    mainWindow.addKDockWidget(dock1, KDDockWidgets.Location.Location_OnLeft)
+    mainWindow.addKDockWidget(dock2, KDDockWidgets.Location.Location_OnTop)
 
     # 4. Add dock3 to the right of dock2
-    mainWindow.addKDockWidget(dock3, KDDockWidgets.Location_OnRight, dock2)
+    mainWindow.addKDockWidget(dock3, KDDockWidgets.Location.Location_OnRight, dock2)
 
     # 5. dock4 is docked at the bottom, with 200px height
     preferredSize = QtCore.QSize(0, 200)
-    mainWindow.addKDockWidget(dock4, KDDockWidgets.Location_OnBottom, None, preferredSize)
+    mainWindow.addKDockWidget(dock4, KDDockWidgets.Location.Location_OnBottom, None, preferredSize)
 
     # 5. dock5 will be its own top level (floating window)
     dock5.open()
