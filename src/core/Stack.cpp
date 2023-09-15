@@ -21,7 +21,6 @@
 #include "Group.h"
 #include "FloatingWindow.h"
 #include "ObjectGuard_p.h"
-#include "ObjectGuard_p.h"
 
 #include "views/StackViewInterface.h"
 

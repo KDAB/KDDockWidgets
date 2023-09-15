@@ -10,7 +10,6 @@
 */
 
 #include "simple_test_framework.h"
-#include "simple_test_framework.h"
 #include "core/ViewGuard.h"
 #include "core/ObjectGuard_p.h"
 #include "core/Platform.h"
