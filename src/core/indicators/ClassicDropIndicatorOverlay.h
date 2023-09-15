@@ -9,8 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_INDICATORS_CLASSICINDICATORS_P_H
-#define KD_INDICATORS_CLASSICINDICATORS_P_H
+#pragma once
 
 #include "core/DropIndicatorOverlay.h"
 
@@ -52,5 +51,3 @@ private:
 }
 
 }
-
-#endif

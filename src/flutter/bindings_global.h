@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#pragma once
 
 // TODOm4: Remove ?
 #ifndef DOCKS_DEVELOPER_MODE

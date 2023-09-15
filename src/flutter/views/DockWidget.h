@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#pragma once
+
 /**
  * @file
  * @brief Represents a dock widget.
