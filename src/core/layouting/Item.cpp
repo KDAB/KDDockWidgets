@@ -446,6 +446,33 @@ ItemBoxContainer *Item::parentBoxContainer() const
     return object_cast<ItemBoxContainer *>(m_parent);
 }
 
+int Item::indexInAncestor(ItemContainer *ancestor) const
+{
+    auto it = this;
+    while (auto p = it->parentBoxContainer()) {
+        if (p == ancestor) {
+            // We found the ancestor
+            const auto children = ancestor->visibleChildren();
+            return children.indexOf(const_cast<Item *>(it));
+        }
+        it = p;
+    }
+
+    return -1;
+}
+
+ItemBoxContainer *Item::ancestorBoxContainerWithOrientation(Qt::Orientation o) const
+{
+    auto p = parentBoxContainer();
+    while (p) {
+        if (p->orientation() == o)
+            return p;
+        p = p->parentBoxContainer();
+    }
+
+    return nullptr;
+}
+
 const ItemContainer *Item::asContainer() const
 {
     return object_cast<const ItemContainer *>(this);
@@ -554,49 +581,52 @@ void Item::requestResize(int left, int top, int right, int bottom)
         return;
     }
 
+    auto moveSeparators = [](int side1Delta, int side2Delta, Separator *separator1, Separator *separator2) {
+        if (side1Delta != 0 && separator1) {
+            const auto ancestor = separator1->parentContainer();
+            const int min = ancestor->minPosForSeparator_global(separator1);
+            const int pos = separator1->position();
+            const int max = ancestor->maxPosForSeparator_global(separator1);
+            int newPos = pos - side1Delta;
+            newPos = bound(min, newPos, max);
+            const int delta = newPos - pos;
+
+            ancestor->requestSeparatorMove(separator1, delta);
+        }
+
+        if (side2Delta != 0 && separator2) {
+            const auto ancestor = separator2->parentContainer();
+            const int min = ancestor->minPosForSeparator_global(separator2);
+            const int pos = separator2->position();
+            const int max = ancestor->maxPosForSeparator_global(separator2);
+            int newPos = pos + side2Delta;
+            newPos = bound(min, newPos, max);
+            const int delta = newPos - pos;
+
+            ancestor->requestSeparatorMove(separator2, delta);
+        }
+    };
+
     {
         // Here we handle resize along the orientation of the container
         const int side1Delta = parent->isHorizontal() ? left : top;
         const int side2Delta = parent->isHorizontal() ? right : bottom;
-
-        if (side1Delta != 0) {
-            if (auto separator = parent->separatorForChild(this, Side1)) {
-                const int min = parent->minPosForSeparator_global(separator);
-                const int pos = separator->position();
-                const int max = parent->maxPosForSeparator_global(separator);
-                int newPos = pos - side1Delta;
-                newPos = bound(min, newPos, max);
-                const int delta = newPos - pos;
-
-                parent->requestSeparatorMove(separator, delta);
-            }
-        }
-
-        if (side2Delta != 0) {
-            if (auto separator = parent->separatorForChild(this, Side2)) {
-                const int min = parent->minPosForSeparator_global(separator);
-                const int pos = separator->position();
-                const int max = parent->maxPosForSeparator_global(separator);
-                int newPos = pos + side2Delta;
-                newPos = bound(min, newPos, max);
-                const int delta = newPos - pos;
-
-                parent->requestSeparatorMove(separator, delta);
-            }
-        }
+        auto separator1 = parent->separatorForChild(this, Side1);
+        auto separator2 = parent->separatorForChild(this, Side2);
+        moveSeparators(side1Delta, side2Delta, separator1, separator2);
     }
 
-    // TODO: cross-axis resize not implemented yet
-    // {
-    //     // Here we handle resize against the orientation of the container
-    //     const int side1 = parent->isHorizontal() ? top : left;
-    //     const int side2 = parent->isHorizontal() ? bottom : right;
+    {
+        // Here we handle resize against the orientation of the container
+        const int side1Delta = parent->isHorizontal() ? top : left;
+        const int side2Delta = parent->isHorizontal() ? bottom : right;
+        auto separator1 = parent->adjacentSeparatorForChild(this, Side1);
+        auto separator2 = parent->adjacentSeparatorForChild(this, Side2);
 
-    //     if (side1 != 0) {
-    //     }
-
-    //     if (side2 != 0) { }
-    // }
+        if (separator2)
+            KDDW_WARN("SEP {} {}", separator2->position(), separator2->orientation());
+        moveSeparators(side1Delta, side2Delta, separator1, separator2);
+    }
 }
 
 Point Item::pos() const
@@ -3540,6 +3570,52 @@ KDDockWidgets::Core::Separator *ItemBoxContainer::separatorForChild(Item *child,
     }
 
     return d->m_separators[separatorIndex];
+}
+
+Core::Separator *ItemBoxContainer::adjacentSeparatorForChild(Item *child, Side side) const
+{
+    if (!child || !child->isVisible()) {
+        KDDW_ERROR("ItemBoxContainer::adjacentSeparatorForChild: Unexpected nullptr or invisible child");
+        return nullptr;
+    }
+
+    int separatorIndex = -1;
+
+    // If this container is horizontal, we need to find the parent vertical one (or vice-versa):
+    if (ItemBoxContainer *ancestor = ancestorBoxContainerWithOrientation(oppositeOrientation(orientation()))) {
+        // Since it's not a direct ancestor, we need to use indexInAncestor().
+        const int childIndex = indexInAncestor(ancestor);
+        const auto children = ancestor->visibleChildren();
+        const auto separators = ancestor->separators();
+
+        if (childIndex == -1) {
+            // Can't happen
+            KDDW_ERROR("ItemBoxContainer::adjacentSeparatorForChild: Could not find index inside ancestor");
+            return nullptr;
+        }
+
+        if (side == Side1) {
+            if (childIndex == 0) // No top separator for the 1st item
+                return nullptr;
+
+            separatorIndex = childIndex - 1;
+        } else {
+            if (childIndex == children.size() - 1) // No bottom separator for the last item
+                return nullptr;
+
+            separatorIndex = childIndex;
+        }
+
+        if (separatorIndex < 0 || separatorIndex >= separators.size()) {
+            KDDW_ERROR("ItemBoxContainer::adjacentSeparatorForChild: Not enough separators {} {} {}", separators.size(), children.size(), childIndex);
+            return nullptr;
+        }
+
+        return separators[separatorIndex];
+    }
+
+    /// No grand parent, for example if we are root
+    return nullptr;
 }
 
 bool ItemBoxContainer::isOverflowing() const

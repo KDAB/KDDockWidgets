@@ -229,7 +229,20 @@ public:
     Rect rect() const;
     bool isContainer() const;
     ItemContainer *parentContainer() const;
+
+    /// Returns the parent container, but casted to ItemBoxContainer
     ItemBoxContainer *parentBoxContainer() const;
+
+    int indexInAncestor(ItemContainer *) const;
+
+    /// Returns the 1st ancestor container that has the desired orientation
+    /// Example:
+    /// - ItemBoxContainer(Vertical)
+    /// -- ItemBoxContainer(Horizontal)
+    /// --- Item // Passing this item to ancestorBoxContainerWithOrientation(Qt::Vertical) would
+    /// skip the direct parent and return the verticl one.
+    ItemBoxContainer *ancestorBoxContainerWithOrientation(Qt::Orientation) const;
+
     void setMinSize(Size);
     void setMaxSizeHint(Size);
     bool isPlaceholder() const;
@@ -529,10 +542,26 @@ private:
 public:
     Vector<KDDockWidgets::Core::Separator *> separators_recursive() const;
     Vector<KDDockWidgets::Core::Separator *> separators() const;
-    KDDockWidgets::Core::Separator *separatorForChild(Item *, Side) const;
+
+    /// Returns the separator for the specified child on the specified child
+    /// Example:
+    /// - If this layout is horizontal, and side is Side1, then the left separator is returned.
+    /// - If this layout is horizontal, and side is Side2, then the right separator is returned.
+    /// - top, bottom if vertical layout.
+    /// @sa adjacentSeparatorForChild
+    Core::Separator *separatorForChild(Item *child, Side side) const;
+
+    /// Returns the separator for the specified child on the specified child
+    /// Example:
+    /// - If this layout is horizontal, and side is Side1, then the top separator is returned.
+    /// - If this layout is horizontal, and side is Side2, then the bottom separator is returned.
+    /// - left, right if vertical layout.
+    /// @sa separatorForChild
+    Core::Separator *adjacentSeparatorForChild(Item *child, Side side) const;
 
 #ifdef DOCKS_DEVELOPER_MODE
-    bool test_suggestedRect();
+    bool
+    test_suggestedRect();
     void relayoutIfNeeded();
 #endif
 

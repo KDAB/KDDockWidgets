@@ -5165,11 +5165,13 @@ KDDW_QCORO_TASK tst_resizeInLayout()
     dockCOriginalSize = dockC->sizeInLayout();
     dockC->resizeInLayout(10, 10, 10, 10);
 
+    KDDW_WARN("{} {}", dockCOriginalSize, dockC->sizeInLayout());
+
     // bottom wasn't moved
     CHECK_EQ(dockC->sizeInLayout().height(), dockCOriginalSize.height() + 10);
 
-    // left wasn't moved. TODO: Implement cross-axis resize
-    // CHECK_EQ(dockC->sizeInLayout().width(), dockCOriginalSize.width() + 10);
+    // left wasn't moved
+    CHECK_EQ(dockC->sizeInLayout().width(), dockCOriginalSize.width() + 10);
 
     KDDW_TEST_RETURN(true);
 }
