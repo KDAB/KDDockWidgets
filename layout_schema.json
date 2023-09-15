@@ -93,6 +93,29 @@
                 }
             }
         },
+        "screen": {
+            "properties": {
+                "devicePixelRatio": {
+                    "type": "number"
+                },
+                "index": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "geometry": {
+                    "$ref": "#/definitions/geometry"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "index",
+                "geometry",
+                "devicePixelRatio"
+            ]
+        },
         "dockwidget": {
             "required": [
                 "lastPosition",
@@ -361,27 +384,9 @@
         },
         "screenInfo": {
             "type": "array",
-            "properties": {
-                "devicePixelRatio": {
-                    "type": "number"
-                },
-                "index": {
-                    "type": "integer",
-                    "minimum": 0
-                },
-                "geometry": {
-                    "$ref": "#/definitions/geometry"
-                },
-                "name": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "name",
-                "index",
-                "geometry",
-                "devicePixelRatio"
-            ]
+            "items": {
+                "$ref": "#/definitions/screen"
+            }
         },
         "closedDockWidgets": {
             "type": "array",
