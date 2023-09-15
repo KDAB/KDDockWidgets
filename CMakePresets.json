@@ -447,6 +447,17 @@
             }
         },
         {
+            "name": "ci-dev-qt5",
+            "displayName": "ci-dev-qt5",
+            "description": "Qt5 dev-mode build",
+            "binaryDir": "${sourceDir}/build-ci-dev-qt5",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
             "name": "ci-release-qt5",
             "displayName": "ci-release-qt5",
             "description": "Qt5 non dev-mode build",
@@ -455,6 +466,18 @@
             "cacheVariables": {
                 "KDDockWidgets_DEVELOPER_MODE": "OFF",
                 "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "ci-dev-qt6",
+            "displayName": "ci-dev-qt6",
+            "description": "Qt6 dev-mode build",
+            "binaryDir": "${sourceDir}/build-ci-dev-qt6",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QT6": "ON"
             }
         },
         {
