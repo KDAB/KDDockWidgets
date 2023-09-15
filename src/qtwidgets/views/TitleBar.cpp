@@ -21,7 +21,6 @@
 #include "core/DockRegistry_p.h"
 
 #include "qtwidgets/ViewFactory.h"
-#include "qtwidgets/ViewFactory.h"
 
 #include <QPainter>
 #include <QStyle>

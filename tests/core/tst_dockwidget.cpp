@@ -18,7 +18,6 @@
 #include "core/Platform.h"
 #include "core/TitleBar.h"
 #include "core/ViewFactory.h"
-#include "core/Platform.h"
 #include "core/Window_p.h"
 #include "Config.h"
 

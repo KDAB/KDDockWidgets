@@ -20,7 +20,6 @@
 #include "core/ObjectGuard_p.h"
 #include "core/ViewGuard.h"
 #include "ViewFactory.h"
-#include "Platform.h"
 #include "kddockwidgets/core/MainWindow.h"
 
 #include <mutex>
