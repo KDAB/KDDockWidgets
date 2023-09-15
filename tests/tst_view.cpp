@@ -79,6 +79,9 @@ KDDW_QCORO_TASK tst_viewRoot()
     childView->setParent(nullptr);
     CHECK(childView->rootView()->equals(childView));
 
+    delete rootView;
+    delete childView;
+
     KDDW_TEST_RETURN(true);
 }
 
