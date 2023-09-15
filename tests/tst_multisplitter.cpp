@@ -31,8 +31,18 @@ using namespace KDDockWidgets::Core;
 
 static int st = Item::separatorThickness;
 
+static std::vector<View *> s_views;
+struct DeleteViews
+{
+    ~DeleteViews()
+    {
+        qDeleteAll(s_views);
+        s_views.clear();
+    }
+};
 
-static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
+static bool
+serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
 {
     // Serializes and deserializes a layout
     if (!root->checkSanity())
@@ -58,8 +68,10 @@ static std::unique_ptr<ItemBoxContainer> createRoot()
     auto hostWidget = Core::Platform::instance()->tests_createView({});
     hostWidget->setViewName("HostWidget");
     hostWidget->show();
+    s_views.push_back(hostWidget);
     auto root = new ItemBoxContainer(hostWidget);
     root->setSize({ 1000, 1000 });
+
     return std::unique_ptr<ItemBoxContainer>(root);
 }
 
@@ -70,6 +82,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
     auto hostWidget = Core::Platform::instance()->tests_createView({});
     hostWidget->setViewName("HostWidget");
     hostWidget->show();
+    s_views.push_back(hostWidget);
     auto item = new Item(hostWidget);
     item->setGeometry(Rect(0, 0, 200, 200));
     item->setObjectName(QString::number(count));
@@ -88,6 +101,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
 static ItemBoxContainer *createRootWithSingleItem()
 {
     auto host = Core::Platform::instance()->tests_createView({});
+    s_views.push_back(host);
     auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
 
@@ -99,6 +113,8 @@ static ItemBoxContainer *createRootWithSingleItem()
 
 KDDW_QCORO_TASK tst_createRoot()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     CHECK(root->isRoot());
     CHECK(root->isContainer());
@@ -112,6 +128,8 @@ KDDW_QCORO_TASK tst_createRoot()
 
 KDDW_QCORO_TASK tst_insertOne()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item = createItem();
     root->insertItem(item, Location_OnTop);
@@ -130,6 +148,8 @@ KDDW_QCORO_TASK tst_insertOne()
 
 KDDW_QCORO_TASK tst_insertThreeSideBySide()
 {
+    DeleteViews deleteViews;
+
     // Result is [1, 2, 3]
     auto root = createRoot();
     auto item1 = createItem();
@@ -149,6 +169,8 @@ KDDW_QCORO_TASK tst_insertThreeSideBySide()
 
 KDDW_QCORO_TASK tst_insertTwoHorizontal()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -162,6 +184,8 @@ KDDW_QCORO_TASK tst_insertTwoHorizontal()
 
 KDDW_QCORO_TASK tst_insertTwoVertical()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -175,6 +199,8 @@ KDDW_QCORO_TASK tst_insertTwoVertical()
 
 KDDW_QCORO_TASK tst_insertOnWidgetItem1()
 {
+    DeleteViews deleteViews;
+
     // We insert into a widget item instead of in a container. It will insert in the container still
     // Result is still [1, 2, 3]
 
@@ -198,6 +224,8 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem1()
 
 KDDW_QCORO_TASK tst_insertOnWidgetItem2()
 {
+    DeleteViews deleteViews;
+
     // Same, but result [1, 3, 2]
 
     auto root = createRoot();
@@ -221,6 +249,8 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem2()
 
 KDDW_QCORO_TASK tst_insertOnWidgetItem1DifferentOrientation()
 {
+    DeleteViews deleteViews;
+
     // Result [1, 2, |3  |]
     //               |3.1|
 
@@ -272,6 +302,8 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem1DifferentOrientation()
 
 KDDW_QCORO_TASK tst_insertOnWidgetItem2DifferentOrientation()
 {
+    DeleteViews deleteViews;
+
     // Result [1, 2, |3 3.2|]
     //               |3.1  |
 
@@ -326,6 +358,8 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem2DifferentOrientation()
 
 KDDW_QCORO_TASK tst_insertOnRootDifferentOrientation()
 {
+    DeleteViews deleteViews;
+
     //        [       4     ]
     // Result [1, 2, |3 3.2|]
     //               |3.1  |
@@ -359,6 +393,8 @@ KDDW_QCORO_TASK tst_removeItem1()
     //        [       4     ]
     // Result [1, 2, |3 3.2|]
     //               |3.1  |
+
+    DeleteViews deleteViews;
 
     auto root = createRoot();
     auto item1 = createItem();
@@ -407,6 +443,8 @@ KDDW_QCORO_TASK tst_removeItem1()
 
 KDDW_QCORO_TASK tst_removeItem2()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -424,6 +462,8 @@ KDDW_QCORO_TASK tst_removeItem2()
 
 KDDW_QCORO_TASK tst_minSize()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -451,6 +491,8 @@ KDDW_QCORO_TASK tst_minSize()
 
 KDDW_QCORO_TASK tst_resize()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -490,6 +532,8 @@ KDDW_QCORO_TASK tst_resize()
 
 KDDW_QCORO_TASK tst_resizeWithConstraints()
 {
+    DeleteViews deleteViews;
+
     Platform::instance()->m_expectedWarning = "New size doesn't respect size constraints";
 
     {
@@ -530,6 +574,8 @@ KDDW_QCORO_TASK tst_resizeWithConstraints()
 
 KDDW_QCORO_TASK tst_availableSize()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     CHECK_EQ(root->availableSize(), Size(1000, 1000));
     CHECK_EQ(root->minSize(), Size(0, 0));
@@ -613,6 +659,8 @@ KDDW_QCORO_TASK tst_availableSize()
 
 KDDW_QCORO_TASK tst_missingSize()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     CHECK_EQ(root->size(), Size(1000, 1000));
     CHECK_EQ(root->availableSize(), Size(1000, 1000));
@@ -638,6 +686,8 @@ KDDW_QCORO_TASK tst_missingSize()
 
 KDDW_QCORO_TASK tst_ensureEnoughSize()
 {
+    DeleteViews deleteViews;
+
     // Tests that the layout's size grows when the item being inserted wouldn't have enough space
 
     auto root = createRoot(); /// 1000x1000
@@ -667,6 +717,8 @@ KDDW_QCORO_TASK tst_ensureEnoughSize()
 
 KDDW_QCORO_TASK tst_turnIntoPlaceholder()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
 
     int numVisibleItems = 0;
@@ -705,6 +757,8 @@ KDDW_QCORO_TASK tst_turnIntoPlaceholder()
 
 KDDW_QCORO_TASK tst_suggestedRect()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     root->setSize(Size(2000, 1000));
     const Size minSize(100, 100);
@@ -775,6 +829,8 @@ KDDW_QCORO_TASK tst_suggestedRect()
 
 KDDW_QCORO_TASK tst_suggestedRect2()
 {
+    DeleteViews deleteViews;
+
     // Tests a bug where the inner drop locations didn't work when there was a nested container
     // Like container >> container >> Item
 
@@ -798,6 +854,8 @@ KDDW_QCORO_TASK tst_suggestedRect2()
 
 KDDW_QCORO_TASK tst_suggestedRect3()
 {
+    DeleteViews deleteViews;
+
     auto root1 = createRoot();
     Item *item1 = createItem();
     Item *item2 = createItem();
@@ -818,6 +876,8 @@ KDDW_QCORO_TASK tst_suggestedRect3()
 
 KDDW_QCORO_TASK tst_suggestedRect4()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
 
     auto root1 = createRoot();
@@ -853,6 +913,8 @@ KDDW_QCORO_TASK tst_suggestedRect4()
 
 KDDW_QCORO_TASK tst_insertAnotherRoot()
 {
+    DeleteViews deleteViews;
+
     {
         auto root1 = createRoot();
         Item *item1 = createItem();
@@ -905,6 +967,8 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
 
 KDDW_QCORO_TASK tst_misc1()
 {
+    DeleteViews deleteViews;
+
     // Random test1
 
     auto root = createRoot();
@@ -928,6 +992,8 @@ KDDW_QCORO_TASK tst_misc1()
 
 KDDW_QCORO_TASK tst_misc2()
 {
+    DeleteViews deleteViews;
+
     // Random test1
     // |5|1|2|
     // | |3|4|
@@ -962,6 +1028,8 @@ KDDW_QCORO_TASK tst_misc2()
 
 KDDW_QCORO_TASK tst_misc3()
 {
+    DeleteViews deleteViews;
+
     // Random test1
     // |1|2|3|
     // | |3|4|
@@ -981,6 +1049,8 @@ KDDW_QCORO_TASK tst_misc3()
 
 KDDW_QCORO_TASK tst_containerGetsHidden()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     Item *item1 = createItem();
     Item *item2 = createItem();
@@ -1006,6 +1076,8 @@ KDDW_QCORO_TASK tst_containerGetsHidden()
 
 KDDW_QCORO_TASK tst_minSizeChanges()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     Item *item1 = createItem();
     root->insertItem(item1, Location_OnLeft);
@@ -1034,6 +1106,8 @@ KDDW_QCORO_TASK tst_minSizeChanges()
 
 KDDW_QCORO_TASK tst_numSeparators()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     Item *item1 = createItem();
     Item *item2 = createItem();
@@ -1073,6 +1147,8 @@ KDDW_QCORO_TASK tst_numSeparators()
 
 KDDW_QCORO_TASK tst_separatorMinMax()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     Item *item1 = createItem();
     Item *item2 = createItem();
@@ -1094,6 +1170,8 @@ KDDW_QCORO_TASK tst_separatorMinMax()
 
 KDDW_QCORO_TASK tst_separatorRecreatedOnParentChange()
 {
+    DeleteViews deleteViews;
+
     auto root1 = createRoot();
     Item *item1 = createItem();
     Item *item2 = createItem();
@@ -1114,6 +1192,8 @@ KDDW_QCORO_TASK tst_separatorRecreatedOnParentChange()
 
 KDDW_QCORO_TASK tst_containerReducesSize()
 {
+    DeleteViews deleteViews;
+
     // Tests that the container reduces size when its children get hidden
 
     auto root = createRoot();
@@ -1141,6 +1221,8 @@ KDDW_QCORO_TASK tst_containerReducesSize()
 
 KDDW_QCORO_TASK tst_insertHiddenContainer()
 {
+    DeleteViews deleteViews;
+
     auto root1 = createRoot();
     auto root2 = createRoot();
     Item *item2 = createItem();
@@ -1161,6 +1243,8 @@ KDDW_QCORO_TASK tst_insertHiddenContainer()
 
 KDDW_QCORO_TASK tst_availableOnSide()
 {
+    DeleteViews deleteViews;
+
     // Tests that items are available to squeeze a certain amount (without violating their min-size)
 
     auto root = createRoot();
@@ -1235,6 +1319,8 @@ KDDW_QCORO_TASK tst_availableOnSide()
 
 KDDW_QCORO_TASK tst_availableToGrowOnSide()
 {
+    DeleteViews deleteViews;
+
     // Tests that items are available to grow a certain amount (without violating their max-size)
     auto root = createRoot();
     Item *item1 = createItem(/*min=*/Size(100, 100), /*max=*/Size(230, 230));
@@ -1277,6 +1363,8 @@ KDDW_QCORO_TASK tst_availableToGrowOnSide()
 
 KDDW_QCORO_TASK tst_resizeViaSeparator()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     Item *item1 = createItem(/*min=*/Size(100, 100));
     Item *item2 = createItem(/*min=*/Size(100, 100));
@@ -1311,6 +1399,8 @@ KDDW_QCORO_TASK tst_resizeViaSeparator()
 
 KDDW_QCORO_TASK tst_resizeViaSeparator2()
 {
+    DeleteViews deleteViews;
+
     // Here we resize one of the separators and make sure only the items next to the separator move
     // propagation should only start when constraints have been met
 
@@ -1367,6 +1457,8 @@ KDDW_QCORO_TASK tst_resizeViaSeparator2()
 
 KDDW_QCORO_TASK tst_resizeViaSeparator3()
 {
+    DeleteViews deleteViews;
+
     // Like tst_resizeViaSeparator2 but we have nesting, when a container is shrunk, it too
     // should only shrink its children that are near the separator, instead of all of them equally
 
@@ -1424,6 +1516,8 @@ KDDW_QCORO_TASK tst_resizeViaSeparator3()
 
 KDDW_QCORO_TASK tst_mapToRoot()
 {
+    DeleteViews deleteViews;
+
     //   1
     // -----
     // 21|22
@@ -1449,6 +1543,8 @@ KDDW_QCORO_TASK tst_mapToRoot()
 
 KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
 {
+    DeleteViews deleteViews;
+
     // Result is [1, 2, 3]
 
     auto root = createRoot();
@@ -1487,6 +1583,8 @@ KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
 
 KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -1507,6 +1605,8 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
 
 KDDW_QCORO_TASK tst_separatorMoveCrash()
 {
+    DeleteViews deleteViews;
+
     // Tests a crash I got when moving separator to the right
 
     auto root = createRoot();
@@ -1536,6 +1636,8 @@ KDDW_QCORO_TASK tst_separatorMoveCrash()
 
 KDDW_QCORO_TASK tst_separatorMoveHonoursMax()
 {
+    DeleteViews deleteViews;
+
     const int maxWidth = 250;
     auto root = createRoot();
     auto item1 = createItem();
@@ -1577,6 +1679,8 @@ KDDW_QCORO_TASK tst_separatorMoveHonoursMax()
 
 KDDW_QCORO_TASK tst_maxSizeHonoured1()
 {
+    DeleteViews deleteViews;
+
     // Tests that the suggested rect honors max size when adding an item to a layout.
 
     auto root = createRoot();
@@ -1600,6 +1704,8 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
 
 KDDW_QCORO_TASK tst_maxSizeHonoured2()
 {
+    DeleteViews deleteViews;
+
     // Tests that a container gets the max size of its children
 
     //   2
@@ -1628,6 +1734,8 @@ KDDW_QCORO_TASK tst_maxSizeHonoured2()
 
 KDDW_QCORO_TASK tst_maxSizeHonoured3()
 {
+    DeleteViews deleteViews;
+
     {
         // Tests that resizing a window will now make the item with max-size grow past its max
         auto root = createRoot();
@@ -1684,6 +1792,8 @@ KDDW_QCORO_TASK tst_maxSizeHonoured3()
 
 KDDW_QCORO_TASK tst_requestEqualSize()
 {
+    DeleteViews deleteViews;
+
     // Tests that double-clicking a separator will make both sides equal
 
     {
@@ -1751,6 +1861,8 @@ KDDW_QCORO_TASK tst_requestEqualSize()
 
 KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
 {
+    DeleteViews deleteViews;
+
     // Test that when removing item 3 that all the new available space goes to item1, so that
     // we don't violate the space of item 1
 
@@ -1776,6 +1888,8 @@ KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
 
 KDDW_QCORO_TASK tst_simplify()
 {
+    DeleteViews deleteViews;
+
     ScopedValueRollback inhibitSimplify(ItemBoxContainer::s_inhibitSimplify, true);
 
     auto root = createRoot();
@@ -1804,6 +1918,8 @@ KDDW_QCORO_TASK tst_simplify()
 
 KDDW_QCORO_TASK tst_adjacentLayoutBorders()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -1848,6 +1964,8 @@ KDDW_QCORO_TASK tst_adjacentLayoutBorders()
 
 KDDW_QCORO_TASK tst_numSideBySide_recursive()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     CHECK(root->isVertical());
     CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 0);
@@ -1888,6 +2006,8 @@ KDDW_QCORO_TASK tst_numSideBySide_recursive()
 
 KDDW_QCORO_TASK tst_sizingInfoSerialization()
 {
+    DeleteViews deleteViews;
+
     SizingInfo info;
     info.minSize = { 10, 10 };
     info.geometry = { 10, 10, 100, 100 };
@@ -1911,6 +2031,8 @@ KDDW_QCORO_TASK tst_sizingInfoSerialization()
 
 KDDW_QCORO_TASK tst_itemSerialization()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
 
     auto item1 = createItem();
@@ -1936,6 +2058,8 @@ KDDW_QCORO_TASK tst_itemSerialization()
 
 KDDW_QCORO_TASK tst_relayoutIfNeeded()
 {
+    DeleteViews deleteViews;
+
     auto root = createRoot();
     root->setSize({ 1000, 1000 });
 
