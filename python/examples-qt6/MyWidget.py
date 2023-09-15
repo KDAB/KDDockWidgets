@@ -19,7 +19,7 @@ from PySide6 import QtWidgets, QtGui, QtCore
 class MyWidget(QtWidgets.QWidget):
     s_images = {}
 
-    def __init__(self, backgroundFile, logoFile, parent=None):
+    def __init__(self, backgroundFile="", logoFile="", parent=None):
         super().__init__(parent)
 
         self.background = self._lookupImage(backgroundFile)

@@ -34,6 +34,7 @@
         <enum-type name="DropLocation" />
         <enum-type name="DropIndicatorType" />
         <enum-type name="AddingOption" />
+        <enum-type name="WindowState" flags="WindowStates" />
 
         <!-- Internal - just to avoid generation warning -->
         <enum-type name="SuggestedGeometryHint" flags="SuggestedGeometryHints" />
@@ -75,12 +76,12 @@
             </object-type>
         </namespace-type>
 
-        <namespace-type name="qtwidgets" visible="no">
+        <namespace-type name="QtWidgets" visible="no">
             <object-type name="MainWindow">
-                <include file-name="kddockwidgets/views/MainWindow.h" location="global"/>
+                <include file-name="kddockwidgets/qtwidgets/views/MainWindow.h" location="global"/>
             </object-type>
             <object-type name="DockWidget">
-                <include file-name="kddockwidgets/views/DockWidget.h" location="global"/>
+                <include file-name="kddockwidgets/qtwidgets/views/DockWidget.h" location="global"/>
             </object-type>
         </namespace-type>
     </namespace-type>
