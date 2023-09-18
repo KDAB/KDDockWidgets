@@ -161,6 +161,11 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
 
     auto group = item->asGroupController();
     assert(group);
+    if (group->inDtor() || group->beingDeletedLater()) {
+        // Known bug. Let's print diagnostics early, as this is usually difficult to debug
+        // further up the stack. Will also fatal the tests.
+        KDDW_ERROR("Layout::restorePlaceholder: Trying to use a group that's being deleted");
+    }
 
     if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {
         group->insertWidget(dw, tabIndex);

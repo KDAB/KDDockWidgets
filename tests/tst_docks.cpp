@@ -3042,6 +3042,7 @@ KDDW_QCORO_TASK tst_toggleDockWidgetWithHiddenTitleBar()
     d1->toggleAction()->setChecked(false);
     auto f1 = d1->dptr()->group();
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f1);
+    SetExpectedWarning expected("Trying to use a group that's being deleted");
     d1->toggleAction()->setChecked(true);
     CHECK(d1->dptr()->group());
     CHECK(!d1->dptr()->group()->titleBar()->isVisible());

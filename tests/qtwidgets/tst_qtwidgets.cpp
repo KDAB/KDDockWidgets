@@ -882,6 +882,9 @@ void TestQtWidgets::tst_sidebarGrouping()
         QVERIFY(dw1->isOverlayed());
         QVERIFY(!dw2->isOverlayed());
 
+        /// Remove this expected warning after #326 is fixed
+        SetExpectedWarning expected("Trying to use a group that's being deleted");
+
         dw1->titleBar()->onAutoHideClicked();
         QVERIFY(!dw1->isInSideBar());
         QVERIFY(!dw2->isInSideBar());
@@ -905,6 +908,9 @@ void TestQtWidgets::tst_sidebarCrash()
     QVERIFY(dw1->isInSideBar());
 
     m1->overlayOnSideBar(dw1);
+
+    /// Remove this expected warning after #326 is fixed
+    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dw1->titleBar()->onAutoHideClicked();
     QVERIFY(!dw1->isInSideBar());
     QVERIFY(!dw1->isOverlayed());
@@ -1687,6 +1693,7 @@ void TestQtWidgets::tst_crash326()
     QVERIFY(originalFrame->beingDeletedLater());
 
     // In bug #326, the dock widget is reparented to the frame that's being deleted
+    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dock1->show();
     QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
     QVERIFY(originalFrame != dock1->d->group());
