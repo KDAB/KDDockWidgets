@@ -160,6 +160,8 @@ private Q_SLOTS:
     void tst_standaloneTitleBar();
     void tst_widgetAddQAction();
     void tst_currentTabChanged();
+    void tst_nestedMainWindowToggle();
+    void tst_nestedMainWindowToggle_data();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1838,6 +1840,61 @@ void TestQtWidgets::tst_currentTabChanged()
     dock2->dockWidget()->setAsCurrentTab();
     QCOMPARE(count1, 0);
     QCOMPARE(count2, 1);
+}
+
+void TestQtWidgets::tst_nestedMainWindowToggle_data()
+{
+    QTest::addColumn<bool>("waitAfterClose");
+
+    // QTest::newRow("false") << false; // uncomment after #326 is fixed
+    QTest::newRow("true") << true;
+}
+
+void TestQtWidgets::tst_nestedMainWindowToggle()
+{
+    QFETCH(bool, waitAfterClose);
+
+    EnsureTopLevelsDeleted e;
+    auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto nestedMainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW2");
+    mainWindow->setObjectName("root main window");
+
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container"));
+    auto nestedMainWindowQWidget = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
+    dock1->setWidget(nestedMainWindowQWidget);
+    mainWindow->addDockWidget(dock1->asDockWidgetController(), Location_OnBottom);
+
+    auto nestedDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested Dock"));
+    nestedMainWindow->addDockWidget(nestedDock->asDockWidgetController(), Location_OnBottom);
+    nestedMainWindowQWidget->menuBar()->addMenu("Just a visual cue, to notice the nesting");
+    nestedMainWindowQWidget->setObjectName("nested main window");
+    QPointer<QObject> guard = nestedMainWindowQWidget;
+
+    // Close dock1:
+    QVERIFY(dock1->isOpen());
+    QVERIFY(nestedDock->isOpen());
+
+    dock1->close();
+    QVERIFY(guard); // For some reason nested main window was being deleted
+    QVERIFY(!dock1->isOpen());
+    QVERIFY(!nestedDock->isOpen());
+
+    // Reopen dock1, the nested dockwidgets should also reopen
+
+    if (waitAfterClose) {
+        // If false, tests #326, otherwise tests #360
+        Platform::instance()->tests_wait(1000);
+    }
+
+    dock1->open();
+
+    QVERIFY(guard);
+    QVERIFY(dock1->isOpen());
+    QVERIFY(dock1->isVisible());
+    QVERIFY(nestedMainWindowQWidget->isVisible());
+
+    QEXPECT_FAIL("", "Bug #360, to be fixed", Continue);
+    QVERIFY(nestedDock->isOpen());
 }
 
 void TestQtWidgets::tstQGraphicsProxyWidget()
