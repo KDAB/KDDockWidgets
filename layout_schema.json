@@ -94,6 +94,7 @@
             }
         },
         "screen": {
+            "type": "object",
             "properties": {
                 "devicePixelRatio": {
                     "type": "number"
@@ -117,6 +118,7 @@
             ]
         },
         "dockwidget": {
+            "type": "object",
             "required": [
                 "lastPosition",
                 "uniqueName"
@@ -213,6 +215,7 @@
             }
         },
         "mainWindow": {
+            "type": "object",
             "required": [
                 "geometry",
                 "isVisible",
