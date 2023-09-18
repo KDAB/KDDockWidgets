@@ -1,0 +1,80 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-22.04
+          - ubuntu-20.04
+          - windows-2022
+          - windows-2019
+          - macos-12
+          - macos-11
+        cmake_preset:
+          - ci-dev-qt5
+          - ci-release-qt5
+          - ci-qtwidgets-qt5
+          - ci-qtquick-qt5
+          - ci-dev-qt6
+          - ci-release-qt6
+          - ci-qtwidgets-qt6
+          - ci-qtquick-qt6
+
+    steps:
+      - name: Install Qt5 with options and default aqtversion
+        if: endsWith(matrix.cmake_preset, '-qt5')
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: "5.15"
+          cache: true
+
+      - name: Install Qt6 with options and default aqtversion
+        if: endsWith(matrix.cmake_preset, '-qt6')
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: "6.3.*" # Qt 6.3 is not an LTS version, so '6.3.*' always resolves to '6.3.2'
+          cache: true
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Create build directory
+        run: mkdir build
+
+      - name: Install ninja-build tool (must be after Qt due PATH changes)
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure project
+        run: cmake -S . -B ./build --preset ${{ matrix.cmake_preset }}
+
+      - name: Build Project
+        run: cmake --build ./build
+
+      - name: Run tests on Linux (offscreen)
+        if: ${{ startsWith(matrix.cmake_preset, 'ci-dev-') && runner.os == 'Linux' }}
+        run: ctest --test-dir ./build -C ${{ matrix.build_type }} --output-on-failure
+        env:
+          QT_QPA_PLATFORM: offscreen
+          KDDW_TEST_FRONTEND: 1 # TODO fix OpenGl
+
+      - name: Run tests on Window/macOS
+        if: ${{ startsWith(matrix.cmake_preset, 'ci-dev-') && runner.os != 'Linux' }}
+        run: ctest --test-dir ./build -C ${{ matrix.build_type }} --output-on-failure
+
+      - name: Read tests log when it fails
+        uses: andstor/file-reader-action@v1
+        if: ${{ failure() && startsWith(matrix.cmake_preset, 'ci-dev-') }}
+        with:
+          path: "./build/Testing/Temporary/LastTest.log"
