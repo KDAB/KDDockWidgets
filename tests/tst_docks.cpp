@@ -2672,6 +2672,28 @@ KDDW_QCORO_TASK tst_marginsAfterRestore()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_mainWindowToggle()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+    CHECK(dock1->isOpen());
+    CHECK(m->isVisible());
+
+    m->close();
+    CHECK(!m->isVisible());
+    CHECK(!dock1->isOpen());
+    Platform::instance()->tests_wait(1000);
+    m->setVisible(true);
+    CHECK(m->isVisible());
+
+    /// TODO: uncomment once #360 is fixed
+    // CHECK(dock1->isOpen());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreWithNewDockWidgets()
 {
     // Tests that if the LayoutSaver doesn't know about some dock widget
@@ -5450,6 +5472,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_point),
         TEST(tst_rect),
         TEST(tst_resizeInLayout),
+        TEST(tst_mainWindowToggle),
 #if !defined(KDDW_FRONTEND_FLUTTER)
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),
