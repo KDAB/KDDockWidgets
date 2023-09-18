@@ -384,7 +384,8 @@
                 "release"
             ],
             "cacheVariables": {
-                "CMAKE_CXX_CLANG_TIDY": "clang-tidy"
+                "CMAKE_CXX_CLANG_TIDY": "clang-tidy",
+                "KDDockWidgets_EXAMPLES": "OFF"
             }
         },
         {
