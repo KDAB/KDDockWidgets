@@ -39,6 +39,10 @@
 #include <iostream>
 #include <cstdlib>
 
+#ifdef KDDW_HAS_SPDLOG
+#include "fatal_logger.h"
+#endif
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
@@ -283,6 +287,10 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
 
 int main(int argc, char *argv[])
 {
+#ifdef KDDW_HAS_SPDLOG
+    FatalLogger::create();
+#endif
+
     int exitCode = 0;
     for (FrontendType type : Platform::frontendTypes()) {
         KDDW_INFO("\nTesting platform {}\n", int(type));
