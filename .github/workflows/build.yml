@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
 name: CI
 
@@ -67,7 +67,7 @@ jobs:
         run: ctest --test-dir ./build -C ${{ matrix.build_type }} --output-on-failure
         env:
           QT_QPA_PLATFORM: offscreen
-          KDDW_TEST_FRONTEND: 1 # TODO fix OpenGl
+          QT_QUICK_BACKEND: software
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.cmake_preset, 'ci-dev-') && runner.os != 'Linux' }}
