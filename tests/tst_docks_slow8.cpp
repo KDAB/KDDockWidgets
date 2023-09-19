@@ -179,6 +179,10 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     };
 
     EnsureTopLevelsDeleted e;
+
+    // Remove once #326 is fixed
+    SetExpectedWarning warn("Trying to use a group that's being deleted");
+
     auto m = createMainWindow();
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
