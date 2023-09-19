@@ -511,7 +511,7 @@
             ]
         },
         {
-            "name": "ci-dev-asan",
+            "name": "ci-dev-asan-qt5",
             "displayName": "ci-dev-asan",
             "description": "An ASAN/UBSAN build",
             "binaryDir": "${sourceDir}/build-ci-dev-asan",
@@ -520,7 +520,7 @@
             ]
         },
         {
-            "name": "ci-dev-asan6",
+            "name": "ci-dev-asan-qt6",
             "displayName": "ci-dev-asan6",
             "description": "An ASAN/UBSAN build",
             "binaryDir": "${sourceDir}/build-ci-dev-asan6",

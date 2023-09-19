@@ -28,21 +28,32 @@ jobs:
           - ci-release-qt6
           - ci-qtwidgets-qt6
           - ci-qtquick-qt6
+        include:
+          - os: ubuntu-22.04
+            cmake_preset: ci-dev-asan-qt5
+          - os: ubuntu-22.04
+            cmake_preset: ci-dev-asan-qt6
 
     steps:
       - name: Install Qt5 with options and default aqtversion
-        if: endsWith(matrix.cmake_preset, '-qt5')
+        if: ${{ endsWith(matrix.cmake_preset, '-qt5') }}
         uses: jurplel/install-qt-action@v3
         with:
           version: "5.15"
           cache: true
 
       - name: Install Qt6 with options and default aqtversion
-        if: endsWith(matrix.cmake_preset, '-qt6')
+        if: ${{ endsWith(matrix.cmake_preset, '-qt6') }}
         uses: jurplel/install-qt-action@v3
         with:
           version: "6.3.*" # Qt 6.3 is not an LTS version, so '6.3.*' always resolves to '6.3.2'
           cache: true
+
+      - name: Install dependencies on Ubuntu
+        if: ${{ runner.os == 'Linux' && startsWith(matrix.cmake_preset, 'ci-dev-asan') }}
+        run: |
+          sudo apt update -qq
+          sudo apt install -y lld
 
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -68,6 +79,7 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
+          LSAN_OPTIONS: detect_leaks=0
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.cmake_preset, 'ci-dev-') && runner.os != 'Linux' }}
