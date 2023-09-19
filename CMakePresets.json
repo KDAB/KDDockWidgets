@@ -509,6 +509,24 @@
             "inherits": [
                 "release-flutter"
             ]
+        },
+        {
+            "name": "ci-dev-asan",
+            "displayName": "ci-dev-asan",
+            "description": "An ASAN/UBSAN build",
+            "binaryDir": "${sourceDir}/build-ci-dev-asan",
+            "inherits": [
+                "dev-asan"
+            ]
+        },
+        {
+            "name": "ci-dev-asan6",
+            "displayName": "ci-dev-asan6",
+            "description": "An ASAN/UBSAN build",
+            "binaryDir": "${sourceDir}/build-ci-dev-asan6",
+            "inherits": [
+                "dev-asan6"
+            ]
         }
     ],
     "buildPresets": [
