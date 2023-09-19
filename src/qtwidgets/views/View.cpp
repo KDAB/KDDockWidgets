@@ -158,7 +158,7 @@ template<class T>
 QVector<std::shared_ptr<Core::View>> View<T>::childViewsFor(const QWidget *parent)
 {
     QVector<std::shared_ptr<Core::View>> result;
-    const QObjectList children = parent->children();
+    const QObjectList &children = parent->children();
     result.reserve(children.size());
     for (QObject *child : children) {
         if (auto widget = qobject_cast<QWidget *>(child)) {

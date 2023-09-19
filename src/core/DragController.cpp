@@ -813,7 +813,7 @@ static std::shared_ptr<View> qtTopLevelUnderCursor_impl(Point globalPos,
                                                         View *rootViewBeingDragged)
 {
     for (auto i = windows.size() - 1; i >= 0; --i) {
-        Window::Ptr window = windows.at(i);
+        const Window::Ptr &window = windows.at(i);
         auto tl = window->rootView();
 
         if (!tl->isVisible() || tl->equals(rootViewBeingDragged) || tl->isMinimized())
