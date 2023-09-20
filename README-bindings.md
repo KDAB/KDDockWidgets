@@ -6,6 +6,8 @@ Make sure you have PySide2, shiboken2 and shiboken2-generator installed.
 As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.
 To use the wheels do this:
 
+A C++17 compliant C++ compiler is also required.
+
 ```bash
 % python3 -m pip install \
     --index-url=http://download.qt.io/official_releases/QtForPython/ \
