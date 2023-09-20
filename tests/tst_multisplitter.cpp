@@ -2013,7 +2013,7 @@ KDDW_QCORO_TASK tst_sizingInfoSerialization()
     info.geometry = { 10, 10, 100, 100 };
     info.maxSizeHint = { 300, 300 };
     info.percentageWithinParent = 5;
-    info.isBeingInserted = true;
+    info.isBeingInserted = false;
 
     nlohmann::json json = info;
 

@@ -3801,7 +3801,6 @@ void Core::to_json(nlohmann::json &j, const SizingInfo &info)
     j["minSize"] = info.minSize;
     j["maxSizeHint"] = info.maxSizeHint;
     j["percentageWithinParent"] = info.percentageWithinParent;
-    j["isBeingInserted"] = info.isBeingInserted;
 }
 
 void Core::from_json(const nlohmann::json &j, SizingInfo &info)
@@ -3810,7 +3809,6 @@ void Core::from_json(const nlohmann::json &j, SizingInfo &info)
     info.minSize = j.value("minSize", Size());
     info.maxSizeHint = j.value("maxSizeHint", Size());
     info.percentageWithinParent = j.value<double>("percentageWithinParent", {});
-    info.isBeingInserted = j.value<bool>("isBeingInserted", {});
 }
 
 void Core::to_json(nlohmann::json &j, Item *item)
