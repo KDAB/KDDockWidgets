@@ -117,6 +117,58 @@
                 "devicePixelRatio"
             ]
         },
+        "layoutItem": {
+            "type": "object",
+            "description": "An item is a recursive container. It maps to C++ Item and ItemContainer",
+            "required": [
+                "isContainer",
+                "isVisible",
+                "objectName",
+                "sizingInfo"
+            ],
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/layoutItem"
+                    }
+                },
+                "isContainer": {
+                    "type": "boolean"
+                },
+                "isVisible": {
+                    "type": "boolean"
+                },
+                "objectName": {
+                    "type": "string"
+                },
+                "orientation": {
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
+                },
+                "sizingInfo": {
+                    "type": "object",
+                    "required": [
+                        "geometry",
+                        "minSize"
+                    ],
+                    "properties": {
+                        "geometry": {
+                            "$ref": "#/definitions/geometry"
+                        },
+                        "maxSize": {
+                            "$ref": "#/definitions/size"
+                        },
+                        "minSize": {
+                            "$ref": "#/definitions/size"
+                        }
+                    }
+                }
+            }
+        },
         "dockwidget": {
             "type": "object",
             "required": [
@@ -326,54 +378,7 @@
                     }
                 },
                 "layout": {
-                    "type": "object",
-                    "required": [
-                        "children",
-                        "isContainer",
-                        "isVisible",
-                        "objectName",
-                        "orientation",
-                        "sizingInfo"
-                    ],
-                    "properties": {
-                        "children": {
-                            "type": "array"
-                        },
-                        "isContainer": {
-                            "type": "boolean"
-                        },
-                        "isVisible": {
-                            "type": "boolean"
-                        },
-                        "objectName": {
-                            "type": "string"
-                        },
-                        "orientation": {
-                            "type": "integer",
-                            "enum": [
-                                1,
-                                2
-                            ]
-                        },
-                        "sizingInfo": {
-                            "type": "object",
-                            "required": [
-                                "geometry",
-                                "minSize"
-                            ],
-                            "properties": {
-                                "geometry": {
-                                    "$ref": "#/definitions/geometry"
-                                },
-                                "maxSize": {
-                                    "$ref": "#/definitions/size"
-                                },
-                                "minSize": {
-                                    "$ref": "#/definitions/size"
-                                }
-                            }
-                        }
-                    }
+                    "$ref": "#/definitions/layoutItem"
                 }
             }
         }
