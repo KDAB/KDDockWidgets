@@ -31,7 +31,7 @@ followed by the make command.
 The bindings will be installed to the passed `-DCMAKE_INSTALL_PREFIX`, which
 might require setting the `PYTHONPATH` env variable to point to that path when
 running applications.  Alternatively, configure the bindings install location
-by passing `-DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
+by passing `-DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.9/site-packages`
 to CMake (adjust to the python path on your system).
 
 To run the KDDW python example
@@ -60,7 +60,7 @@ Build Issues
   Examples:
 
 ```bash
-    export LLVM_INSTALL_DIR=/usr/local/opt/llvm-11
+    export LLVM_INSTALL_DIR=/usr/local/opt/llvm-15
     set "LLVM_INSTALL_DIR=C:\Program Files\LLVM" #Windows
 ```
 
@@ -74,12 +74,12 @@ Build Issues
     (Adjust to wherever your PySide is installed)
 ```
 
-- On Windows the `libclang.dll` that ship with QtForPython is not compatible with MSVC2019.
+- On Windows the `libclang.dll` that ships with QtForPython is not compatible with MSVC2.
   To fix this, copy the `libclang.dll` that comes with llvm into shiboken2, like so:
 
 ```bash
-    cd C:\Python37\Lib\site-packages\shiboken2_generator
+    cd C:\Python39\Lib\site-packages\shiboken2_generator
     copy libclang.dll libclang.dll.save
     copy "C:\Program Files\llvm\bin\libclang.dll" libclang.dll
-    (Python3 installation in C:\Python37 and llvm in c:\Program Files\llvm. adjust as needed)
+    (Python3 installation in C:\Python39 and llvm in c:\Program Files\llvm. adjust as needed)
 ```
