@@ -1,6 +1,6 @@
 # KDDockWidgets
 
-[![Build Status](https://travis-ci.com/KDAB/KDDockWidgets.svg?branch=master)](https://travis-ci.com/KDAB/KDDockWidgets)
+![Build Status](https://github.com/KDAB/KDDockWidgets/actions/workflows/build.yml/badge.svg)
 
 ![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/1.7/images/kddockwidgets.png?raw=true)
 
