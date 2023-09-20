@@ -512,18 +512,18 @@
         },
         {
             "name": "ci-dev-asan-qt5",
-            "displayName": "ci-dev-asan",
+            "displayName": "ci-dev-asan-qt5",
             "description": "An ASAN/UBSAN build",
-            "binaryDir": "${sourceDir}/build-ci-dev-asan",
+            "binaryDir": "${sourceDir}/build-ci-dev-asan-qt5",
             "inherits": [
                 "dev-asan"
             ]
         },
         {
             "name": "ci-dev-asan-qt6",
-            "displayName": "ci-dev-asan6",
+            "displayName": "ci-dev-asan-qt6",
             "description": "An ASAN/UBSAN build",
-            "binaryDir": "${sourceDir}/build-ci-dev-asan6",
+            "binaryDir": "${sourceDir}/build-ci-dev-asan-qt6",
             "inherits": [
                 "dev-asan6"
             ]
