@@ -223,7 +223,7 @@ public:
     T *asController()
     {
         if (m_inDtor)
-            return false;
+            return nullptr;
 
         return object_cast<T *>(m_controller);
     }
