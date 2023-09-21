@@ -19,38 +19,53 @@ jobs:
           - windows-2019
           - macos-12
           - macos-11
-        cmake_preset:
-          - ci-dev-qt5
-          - ci-release-qt5
-          - ci-qtwidgets-qt5
-          - ci-qtquick-qt5
-          - ci-dev-qt6
-          - ci-release-qt6
-          - ci-qtwidgets-qt6
-          - ci-qtquick-qt6
+        preset:
+          - name: ci-dev-qt5
+            qt_version: "5.15"
+          - name: ci-release-qt5
+            qt_version: "5.15"
+          - name: ci-qtwidgets-qt5
+            qt_version: "5.15"
+          - name: ci-qtquick-qt5
+            qt_version: "5.15"
+          - name: ci-dev-qt6
+            qt_version: "6.3.*"
+          - name: ci-release-qt6
+            qt_version: "6.3.*"
+          - name: ci-qtwidgets-qt6
+            qt_version: "6.3.*"
+          - name: ci-qtquick-qt6
+            qt_version: "6.3.*"
         include:
           - os: ubuntu-22.04
-            cmake_preset: ci-dev-asan-qt5
+            preset:
+              name: ci-dev-asan-qt5
+              qt_version: "5.15"
+              detect_leaks: 0
           - os: ubuntu-22.04
-            cmake_preset: ci-dev-asan-qt6
+            preset:
+              name: ci-dev-asan-qtwidgets-qt6
+              qt_version: "6.5.*"
+              detect_leaks: 1
+          - os: ubuntu-22.04
+            preset:
+              name: ci-dev-asan-qtquick-qt6
+              qt_version: "6.5.*"
+              detect_leaks: 1
+          - os: ubuntu-22.04
+            preset:
+              name: ci-clang-tidy-qt5
+              qt_version: "5.15"
 
     steps:
-      - name: Install Qt5 with options and default aqtversion
-        if: ${{ endsWith(matrix.cmake_preset, '-qt5') }}
+      - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
         uses: jurplel/install-qt-action@v3
         with:
-          version: "5.15"
-          cache: true
-
-      - name: Install Qt6 with options and default aqtversion
-        if: ${{ endsWith(matrix.cmake_preset, '-qt6') }}
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: "6.3.*" # Qt 6.3 is not an LTS version, so '6.3.*' always resolves to '6.3.2'
+          version: ${{ matrix.preset.qt_version }}
           cache: true
 
       - name: Install dependencies on Ubuntu
-        if: ${{ runner.os == 'Linux' && startsWith(matrix.cmake_preset, 'ci-dev-asan') }}
+        if: ${{ runner.os == 'Linux' && startsWith(matrix.preset.name, 'ci-dev-asan') }}
         run: |
           sudo apt update -qq
           sudo apt install -y lld
@@ -68,25 +83,25 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
-        run: cmake -S . -B ./build --preset ${{ matrix.cmake_preset }}
+        run: cmake -S . -B ./build --preset ${{ matrix.preset.name }}
 
       - name: Build Project
         run: cmake --build ./build
 
       - name: Run tests on Linux (offscreen)
-        if: ${{ startsWith(matrix.cmake_preset, 'ci-dev-') && runner.os == 'Linux' }}
-        run: ctest --test-dir ./build -C ${{ matrix.build_type }} --output-on-failure
+        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
+        run: ctest --test-dir ./build --output-on-failure
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
-          LSAN_OPTIONS: detect_leaks=0
+          LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
       - name: Run tests on Window/macOS
-        if: ${{ startsWith(matrix.cmake_preset, 'ci-dev-') && runner.os != 'Linux' }}
-        run: ctest --test-dir ./build -C ${{ matrix.build_type }} --output-on-failure
+        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
+        run: ctest --test-dir ./build --output-on-failure
 
       - name: Read tests log when it fails
         uses: andstor/file-reader-action@v1
-        if: ${{ failure() && startsWith(matrix.cmake_preset, 'ci-dev-') }}
+        if: ${{ failure() && startsWith(matrix.preset.name, 'ci-dev-') }}
         with:
           path: "./build/Testing/Temporary/LastTest.log"

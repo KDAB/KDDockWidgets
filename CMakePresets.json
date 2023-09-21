@@ -378,8 +378,8 @@
             }
         },
         {
-            "name": "clang-tidy",
-            "binaryDir": "${sourceDir}/build-clang-tidy",
+            "name": "ci-clang-tidy-qt5",
+            "binaryDir": "${sourceDir}/build-clang-tidy-qt5",
             "inherits": [
                 "release"
             ],
