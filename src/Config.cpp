@@ -89,14 +89,24 @@ Config::Flags Config::flags() const
 
 void Config::setFlags(Flags f)
 {
-    auto dr = DockRegistry::self();
-    if (!dr->isEmpty(/*excludeBeingDeleted=*/true)) {
-        std::cerr
-            << "Config::setFlags: "
-            << "Only use this function at startup before creating any DockWidget or MainWindow"
-            << "; These are already created: " << dr->mainWindowsNames().size() << dr->dockWidgetNames().size()
-            << dr->floatingWindows().size() << "\n";
-        return;
+    // Most flags aren't allowed to be changed at runtime.
+    // Some are. More can be supported but they need to be examined in a case-by-case
+    // basis.
+
+    static const Flags mutableFlags = Flag::Flag_AutoHideAsTabGroups;
+    const Flags changedFlags = f ^ d->m_flags;
+    const bool nonMutableFlagsChanged = (changedFlags & ~mutableFlags);
+
+    if (nonMutableFlagsChanged) {
+        auto dr = DockRegistry::self();
+        if (!dr->isEmpty(/*excludeBeingDeleted=*/true)) {
+            std::cerr
+                << "Config::setFlags: "
+                << "Only use this function at startup before creating any DockWidget or MainWindow"
+                << "; These are already created: " << dr->mainWindowsNames().size() << dr->dockWidgetNames().size()
+                << dr->floatingWindows().size() << "\n";
+            return;
+        }
     }
 
     d->m_flags = f;
