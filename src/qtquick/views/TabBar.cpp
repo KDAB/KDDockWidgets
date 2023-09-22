@@ -387,7 +387,8 @@ Core::DockWidget *DockWidgetModel::currentDockWidget() const
 
 void DockWidgetModel::setCurrentDockWidget(Core::DockWidget *dw)
 {
-    if (d->m_currentDockWidget)
+
+    if (d->m_currentDockWidget && !d->m_currentDockWidget->inDtor())
         d->m_currentDockWidget->setVisible(false);
 
     d->m_currentDockWidget = dw;

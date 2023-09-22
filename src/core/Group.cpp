@@ -401,8 +401,10 @@ void Group::onDockWidgetCountChanged()
             d->hasTabsVisibleChanged.emit();
 
         const DockWidget::List docks = dockWidgets();
-        for (DockWidget *dock : docks)
-            dock->d->updateFloatAction();
+        for (DockWidget *dock : docks) {
+            if (!dock->inDtor())
+                dock->d->updateFloatAction();
+        }
 
         if (auto fw = floatingWindow()) {
             fw->dptr()->numDockWidgetsChanged.emit();

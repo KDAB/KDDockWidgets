@@ -47,6 +47,8 @@ private Q_SLOTS:
 
     /// Tests a situation where DockWidgetInstantiator::isFloatingChanged wasn't being emitted (#350)
     void tst_isFloatingIsEmitted();
+
+    void tst_shutdownCrash();
 };
 
 
@@ -188,6 +190,25 @@ void TestQtQuick::tst_isFloatingIsEmitted()
 
         QVERIFY(signalReceived);
     }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+}
+
+void TestQtQuick::tst_shutdownCrash()
+{
+    // Tests a crash where Core::DockWidget would be referenced while being destroyed
+
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+    auto guestView = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto dock1 = createDockWidget("dock1", guestView);
+
+    QQuickItem *dockWidgeItem = QtCommon::View_qt::asQQuickItem(dock1->view());
+    QVERIFY(dockWidgeItem);
+    Core::Group *group = dock1->dptr()->group();
+    delete dockWidgeItem;
+    delete group;
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
