@@ -5,6 +5,18 @@
       "path": "."
     }
   ],
+  "extensions": {
+    "recommendations": [
+      "vadimcn.vscode-lldb",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "Dart-Code.dart-code",
+      "Dart-Code.flutter",
+      "mhutchie.git-graph",
+      "Gruntfuggly.todo-tree",
+      "bbenoist.QML",
+      "ms-vscode.cmake-tools"
+    ],
+  },
   "settings": {
     "files.trimTrailingWhitespace": true,
     "editor.formatOnSave": true,
