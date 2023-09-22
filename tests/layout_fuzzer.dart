@@ -62,7 +62,8 @@ class Schema {
       return ObjectSchema(jsonSchema, propertyName);
     } else if (type == "string") {
       return StringSchema(jsonSchema, propertyName);
-    } else if (propertyName == "lastOverlayedGeometries") {
+    } else if (["lastOverlayedGeometries", "affinities"]
+        .contains(propertyName)) {
       // lastOverlayedGeometries actually has "types" = [null, "array"],
       // but we can just use an empty array instead of honouring that null
       jsonSchema["type"] = "array";
@@ -323,6 +324,8 @@ main(List<String> args) {
   final jsonSchema = jsonDecode(schemaStr);
   final fuzzer = Fuzzer(ObjectSchema(jsonSchema, ""));
   final result = fuzzer.run();
-  print("Result:");
-  print(result);
+
+  JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+  String prettyprint = encoder.convert(result);
+  print(prettyprint);
 }
