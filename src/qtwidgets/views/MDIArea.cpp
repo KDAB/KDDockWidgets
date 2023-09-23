@@ -66,6 +66,9 @@ MDIArea::~MDIArea()
 void MDIArea::addDockWidget(Core::DockWidget *dw, QPoint localPt,
                             InitialOption addingOption)
 {
+    if (!dw)
+        return;
+
     if (dw->options() & DockWidgetOption_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
         auto wrapperDW =
