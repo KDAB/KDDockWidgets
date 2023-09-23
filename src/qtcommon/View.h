@@ -18,12 +18,8 @@ class QWidget;
 class QQuickItem;
 QT_END_NAMESPACE
 
-namespace KDDockWidgets {
-class EventFilter;
-
-namespace Core {
+namespace KDDockWidgets::Core {
 class Controller;
-}
 }
 
 namespace KDDockWidgets::QtCommon {

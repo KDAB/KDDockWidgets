@@ -101,7 +101,7 @@ public:
     Core::TitleBar *actualTitleBar() const;
     QString title() const;
     Icon icon() const;
-    const Vector<DockWidget *> dockWidgets() const;
+    Vector<DockWidget *> dockWidgets() const;
 
     bool isTheOnlyGroup() const;
 

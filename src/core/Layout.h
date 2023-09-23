@@ -125,7 +125,7 @@ public:
     /**
      * @brief The list of items in this layout.
      */
-    const Vector<Core::Item *> items() const;
+    Vector<Core::Item *> items() const;
 
     /**
      * @brief Returns true if this layout contains the specified item.

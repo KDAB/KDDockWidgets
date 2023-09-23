@@ -149,7 +149,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
 {
     json["layout"] = s.layout;
     auto &groups = json["frames"];
-    for (auto it : s.groups) {
+    for (const auto &it : s.groups) {
         const auto &group = it.second;
         groups[group.id.toStdString()] = group;
     }
@@ -464,7 +464,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     struct FrameCleanup
     {
-        FrameCleanup(LayoutSaver *saver)
+        explicit FrameCleanup(LayoutSaver *saver)
             : m_saver(saver)
         {
         }
@@ -473,6 +473,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         {
             m_saver->d->deleteEmptyGroups();
         }
+
+        FrameCleanup(const FrameCleanup &) = delete;
+        FrameCleanup &operator=(const FrameCleanup) = delete;
 
         LayoutSaver *const m_saver;
     };
@@ -917,11 +920,11 @@ bool LayoutSaver::Group::isValid() const
             if (dockWidgets.isEmpty() || KDDockWidgets::Config::self().layoutSaverUsesStrictMode()) {
                 KDDW_ERROR("Invalid tab index = {}, size = {}", currentTabIndex, dockWidgets.size());
                 return false;
-            } else {
-                // Layout seems corrupted. Use 0 as current tab and let's continue.
-                KDDW_WARN("Invalid tab index = {}, size = {}", currentTabIndex, dockWidgets.size());
-                const_cast<LayoutSaver::Group *>(this)->currentTabIndex = 0;
             }
+
+            // Layout seems corrupted. Use 0 as current tab and let's continue.
+            KDDW_WARN("Invalid tab index = {}, size = {}", currentTabIndex, dockWidgets.size());
+            const_cast<LayoutSaver::Group *>(this)->currentTabIndex = 0;
         }
     }
 
@@ -1055,9 +1058,13 @@ void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
     scalingInfo.applyFactorsTo(/*by-ref*/ lastFloatingGeometry);
 }
 
-static Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
+namespace {
+
+Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
 {
     return mw->view()->d->screen();
+}
+
 }
 
 LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo,

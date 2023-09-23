@@ -38,9 +38,7 @@ SegmentedDropIndicatorOverlay::SegmentedDropIndicatorOverlay(Core::DropArea *dro
         Config::self().setDraggedWindowOpacity(s_draggedWindowOpacity);
 }
 
-SegmentedDropIndicatorOverlay::~SegmentedDropIndicatorOverlay()
-{
-}
+SegmentedDropIndicatorOverlay::~SegmentedDropIndicatorOverlay() = default;
 
 DropLocation SegmentedDropIndicatorOverlay::hover_impl(Point pt)
 {
@@ -53,9 +51,9 @@ DropLocation SegmentedDropIndicatorOverlay::hover_impl(Point pt)
 
 DropLocation SegmentedDropIndicatorOverlay::dropLocationForPos(Point pos) const
 {
-    for (auto it = m_segments.cbegin(), end = m_segments.cend(); it != end; ++it) {
-        if (it->second.containsPoint(pos, Qt::OddEvenFill)) {
-            return it->first;
+    for (const auto &m_segment : m_segments) {
+        if (m_segment.second.containsPoint(pos, Qt::OddEvenFill)) {
+            return m_segment.first;
         }
     }
 
@@ -121,12 +119,12 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
                  { DropLocation_Right, rightPoints },
                  { DropLocation_Bottom, bottomPoints },
                  { DropLocation_Center, center } };
-    } else {
-        return { { DropLocation_OutterLeft, leftPoints },
-                 { DropLocation_OutterTop, topPoints },
-                 { DropLocation_OutterRight, rightPoints },
-                 { DropLocation_OutterBottom, bottomPoints } };
     }
+
+    return { { DropLocation_OutterLeft, leftPoints },
+             { DropLocation_OutterTop, topPoints },
+             { DropLocation_OutterRight, rightPoints },
+             { DropLocation_OutterBottom, bottomPoints } };
 }
 
 void SegmentedDropIndicatorOverlay::updateSegments()

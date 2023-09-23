@@ -376,7 +376,8 @@ public:
     int numChildren() const;
     bool hasChildren() const;
     bool hasVisibleChildren(bool excludeBeingInserted = false) const;
-    const List childItems() const;
+    List childItems() const;
+    int indexOfChild(const Item *child) const;
     bool isEmpty() const;
     bool contains(const Item *item) const;
     Item *itemForView(const KDDockWidgets::Core::View *) const;

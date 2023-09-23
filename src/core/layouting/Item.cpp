@@ -337,7 +337,7 @@ Vector<int> Item::pathFromRoot() const
     const Item *it = this;
     while (it) {
         if (auto p = it->parentContainer()) {
-            const auto index = p->childItems().indexOf(const_cast<Item *>(it));
+            const auto index = p->indexOfChild(it);
             path.prepend(index);
             it = p;
         } else {
@@ -1428,7 +1428,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
 
     if (parent->hasOrientationFor(loc)) {
         const bool locIsSide1 = locationIsSide1(loc);
-        auto indexInParent = parent->childItems().indexOf(relativeTo);
+        auto indexInParent = parent->indexOfChild(relativeTo);
         if (!locIsSide1)
             indexInParent++;
 
@@ -3300,7 +3300,8 @@ void ItemBoxContainer::simplify()
                 || childContainer->m_children.size() == 1) {
                 // This sub-container is redundant, as it has the same orientation as its parent
                 // Cannibalize it.
-                for (Item *child2 : childContainer->childItems()) {
+                const auto children = childContainer->childItems();
+                for (Item *child2 : children) {
                     child2->setParentContainer(this);
                     newChildren.push_back(child2);
                 }
@@ -3895,9 +3896,14 @@ ItemContainer::~ItemContainer()
     delete d;
 }
 
-const Item::List ItemContainer::childItems() const
+Item::List ItemContainer::childItems() const
 {
     return m_children;
+}
+
+int ItemContainer::indexOfChild(const Item *child) const
+{
+    return m_children.indexOf(const_cast<Item *>(child));
 }
 
 bool ItemContainer::hasChildren() const

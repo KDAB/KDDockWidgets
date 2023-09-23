@@ -508,7 +508,7 @@ Icon Group::icon() const
     return m_titleBar->icon();
 }
 
-const Core::DockWidget::List Group::dockWidgets() const
+Core::DockWidget::List Group::dockWidgets() const
 {
     if (m_inCtor || m_inDtor)
         return {};

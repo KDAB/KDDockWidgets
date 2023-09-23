@@ -194,7 +194,7 @@ void Layout::setLayoutSize(Size size)
     }
 }
 
-const Core::Item::List Layout::items() const
+Core::Item::List Layout::items() const
 {
     return d->m_rootItem->items_recursive();
 }
