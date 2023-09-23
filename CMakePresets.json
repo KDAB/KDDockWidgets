@@ -378,8 +378,8 @@
             }
         },
         {
-            "name": "release-clang-tidy",
-            "binaryDir": "${sourceDir}/build-release-clang-tidy",
+            "name": "clang-tidy",
+            "binaryDir": "${sourceDir}/build-clang-tidy",
             "inherits": [
                 "release"
             ],
