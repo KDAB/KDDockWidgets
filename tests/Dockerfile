@@ -31,7 +31,8 @@ ENV LD_LIBRARY_PATH=/Qt/lib/
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt update
-RUN apt install build-essential software-properties-common lld git cmake ninja-build mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig -y
+RUN apt install build-essential software-properties-common lld git cmake ninja-build mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
+                libxkbcommon-dev -y
 
 WORKDIR /
 RUN git clone https://github.com/KDAB/KDDockWidgets.git
