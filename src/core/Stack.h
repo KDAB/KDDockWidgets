@@ -75,7 +75,7 @@ public:
 
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    DockWidget *singleDockWidget() const override;
+    DockWidget *singleDockWidget() const override final;
     bool isWindow() const override;
     bool isMDI() const override;
     bool isPositionDraggable(Point p) const override;

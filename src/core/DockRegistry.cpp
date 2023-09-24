@@ -496,12 +496,12 @@ bool DockRegistry::isSane() const
     return true;
 }
 
-const Core::DockWidget::List DockRegistry::dockwidgets() const
+Core::DockWidget::List DockRegistry::dockwidgets() const
 {
     return m_dockWidgets;
 }
 
-const Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &names)
+Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &names)
 {
     Core::DockWidget::List result;
     result.reserve(names.size());
@@ -514,7 +514,7 @@ const Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &na
     return result;
 }
 
-const Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &names)
+Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &names)
 {
     Core::MainWindow::List result;
     result.reserve(names.size());
@@ -527,7 +527,7 @@ const Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &na
     return result;
 }
 
-const Core::DockWidget::List DockRegistry::closedDockwidgets() const
+::DockWidget::List DockRegistry::closedDockwidgets() const
 {
     Core::DockWidget::List result;
     result.reserve(m_dockWidgets.size());
@@ -540,12 +540,12 @@ const Core::DockWidget::List DockRegistry::closedDockwidgets() const
     return result;
 }
 
-const Core::MainWindow::List DockRegistry::mainwindows() const
+Core::MainWindow::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;
 }
 
-const Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
+Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
 {
     Vector<Core::MainWindowViewInterface *> areas;
 
@@ -559,18 +559,17 @@ const Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() c
     return areas;
 }
 
-const Vector<Core::Layout *> DockRegistry::layouts() const
+Vector<Core::Layout *> DockRegistry::layouts() const
 {
     return m_layouts;
 }
 
-const Core::Group::List DockRegistry::groups() const
+Core::Group::List DockRegistry::groups() const
 {
     return m_groups;
 }
 
-const Vector<Core::FloatingWindow *>
-DockRegistry::floatingWindows(bool includeBeingDeleted) const
+Vector<Core::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
 {
     // Returns all the FloatingWindow which aren't being deleted
     Vector<Core::FloatingWindow *> result;
@@ -583,7 +582,7 @@ DockRegistry::floatingWindows(bool includeBeingDeleted) const
     return result;
 }
 
-const Window::List DockRegistry::floatingQWindows() const
+Window::List DockRegistry::floatingQWindows() const
 {
     Window::List windows;
     windows.reserve(m_floatingWindows.size());

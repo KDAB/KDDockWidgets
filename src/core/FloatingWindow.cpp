@@ -315,12 +315,12 @@ Core::DockWidget *FloatingWindow::singleDockWidget() const
     return nullptr;
 }
 
-const Core::DockWidget::List FloatingWindow::dockWidgets() const
+Core::DockWidget::List FloatingWindow::dockWidgets() const
 {
     return d->m_dropArea->dockWidgets();
 }
 
-const Core::Group::List FloatingWindow::groups() const
+Core::Group::List FloatingWindow::groups() const
 {
     assert(d->m_dropArea);
     return d->m_dropArea->groups();

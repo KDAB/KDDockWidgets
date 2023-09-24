@@ -91,39 +91,39 @@ public:
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
-    const Vector<Core::DockWidget *> dockwidgets() const;
+    Vector<Core::DockWidget *> dockwidgets() const;
 
     ///@brief overload returning only the ones with the specified names
-    const Vector<Core::DockWidget *> dockWidgets(const Vector<QString> &names);
+    Vector<Core::DockWidget *> dockWidgets(const Vector<QString> &names);
 
     ///@brief returns all closed DockWidget instances
-    const Vector<Core::DockWidget *> closedDockwidgets() const;
+    Vector<Core::DockWidget *> closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
-    const Vector<Core::MainWindow *> mainwindows() const;
+    Vector<Core::MainWindow *> mainwindows() const;
 
     /// @brief returns all MainWindow instances
     /// Like mainwindows(), but with better suited for QtQuick and better terminology
     /// as we're phasing out the "MainWindow" name there
-    const Vector<Core::MainWindowViewInterface *> mainDockingAreas() const;
+    Vector<Core::MainWindowViewInterface *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
-    const Vector<Core::MainWindow *> mainWindows(const Vector<QString> &names);
+    Vector<Core::MainWindow *> mainWindows(const Vector<QString> &names);
 
     ///@brief returns the list of Layout instances
-    const Vector<Core::Layout *> layouts() const;
+    Vector<Core::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    const Vector<Core::Group *> groups() const;
+    Vector<Core::Group *> groups() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
-    const Vector<Core::FloatingWindow *>
+    Vector<Core::FloatingWindow *>
     floatingWindows(bool includeBeingDeleted = false) const;
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both
     /// QtWidgets and QtQuick
-    const Vector<std::shared_ptr<Core::Window>> floatingQWindows() const;
+    Vector<std::shared_ptr<Core::Window>> floatingQWindows() const;
 
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;

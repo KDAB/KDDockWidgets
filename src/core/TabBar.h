@@ -67,7 +67,7 @@ public:
 
     bool tabsAreMovable() const;
 
-    DockWidget *singleDockWidget() const override;
+    DockWidget *singleDockWidget() const override final;
 
     /// @reimp
     bool isMDI() const override;

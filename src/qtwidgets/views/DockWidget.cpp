@@ -107,12 +107,15 @@ bool DockWidget::event(QEvent *e)
     if (e->type() == QEvent::Show)
         m_dockWidget->open();
 
-    return QWidget::event(e);
+    // NOLINTNEXTLINE(bugprone-parent-virtual-call)
+    return QtWidgets::View<QWidget>::event(e);
 }
 
 void DockWidget::resizeEvent(QResizeEvent *e)
 {
     m_dockWidget->onResize(e->size());
+
+    // NOLINTNEXTLINE(bugprone-parent-virtual-call)
     QWidget::resizeEvent(e);
 }
 

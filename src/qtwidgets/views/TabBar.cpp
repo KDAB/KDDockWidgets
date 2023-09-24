@@ -128,9 +128,12 @@ bool TabBar::event(QEvent *ev)
     // stops working (#180)
 
     auto parent = parentWidget();
-    if (!parent)
+    if (!parent) {
+        // NOLINTNEXTLINE(bugprone-parent-virtual-call)
         return QTabBar::event(ev);
+    }
 
+    // NOLINTNEXTLINE(bugprone-parent-virtual-call)
     const bool result = QTabBar::event(ev);
 
     if (ev->type() == QEvent::Show) {
