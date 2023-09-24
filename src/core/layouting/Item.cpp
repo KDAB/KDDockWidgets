@@ -429,9 +429,14 @@ void Item::connectParent(ItemContainer *parent)
         m_visibleChangedHandle =
             visibleChanged.connect(&ItemContainer::onChildVisibleChanged, parent);
 
+        // These virtuals are fine to be called from Item ctor, as the ItemContainer is still empty at this point
+        // NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
         setHostView(parent->hostView());
+
+        // NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
         updateWidgetGeometries();
 
+        // NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
         visibleChanged.emit(this, isVisible());
     }
 }
