@@ -754,11 +754,11 @@ void DockWidget::Private::updateFloatAction()
     if (q->isFloating()) {
         floatAction->setEnabled(m_lastPosition->isValid());
         floatAction->setChecked(true);
-        floatAction->setToolTip(QObject::tr("Dock"));
+        floatAction->setToolTip(Object::tr("Dock"));
     } else {
         floatAction->setEnabled(true);
         floatAction->setChecked(false);
-        floatAction->setToolTip(QObject::tr("Detach"));
+        floatAction->setToolTip(Object::tr("Detach"));
     }
 }
 

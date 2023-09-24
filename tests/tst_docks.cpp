@@ -428,7 +428,7 @@ KDDW_QCORO_TASK tst_restoreTwice()
 
 KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
 {
-    auto test = [](bool strictMode) {
+    auto test = [](bool strictMode) -> KDDW_QCORO_TASK {
         EnsureTopLevelsDeleted e;
         KDDockWidgets::Config::self().setLayoutSaverStrictMode(strictMode);
 
@@ -470,7 +470,9 @@ KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
 
     SetExpectedWarning ignoreWarning("Invalid tab index");
 
-    return KDDW_CO_AWAIT test(true);
+    const bool result = KDDW_CO_AWAIT test(true);
+
+    KDDW_TEST_RETURN(result);
 }
 
 KDDW_QCORO_TASK tst_restoreNlohmanException()

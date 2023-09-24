@@ -17,6 +17,7 @@
 #include "core/View.h"
 #include "core/ViewFactory.h"
 #include "core/View_p.h"
+#include "core/Utils_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/nlohmann_helpers_p.h"
 #include "core/ScopedValueRollback_p.h"
@@ -36,7 +37,7 @@ struct DeleteViews
 {
     ~DeleteViews()
     {
-        qDeleteAll(s_views);
+        deleteAll(s_views);
         s_views.clear();
     }
 };
