@@ -38,7 +38,6 @@ Window::Ptr windowForHandle(WId id)
 
 CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     : QObject(parent)
-    , QAbstractNativeEventFilter()
     , m_shouldUseCustomFrameFunc(func)
 {
 #if defined(KDDW_FRONTEND_QT_WINDOWS)

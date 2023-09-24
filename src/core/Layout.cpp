@@ -288,7 +288,7 @@ void Layout::updateSizeConstraints()
 bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     std::unordered_map<QString, View *> groups;
-    for (auto it : l.groups) {
+    for (const auto &it : l.groups) {
         const LayoutSaver::Group &group = it.second;
         Core::Group *f = Core::Group::deserialize(group);
         if (!f)

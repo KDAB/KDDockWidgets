@@ -912,7 +912,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
             return tl;
 
         return qtTopLevelUnderCursor_impl(
-            globalPos, DockRegistry::self()->topLevels(/*excludeFloating=*/true), tlwBeingDragged);
+            globalPos, DockRegistry::self()->topLevels(/*excludeFloatingDocks=*/true), tlwBeingDragged);
     }
 
     KDDW_TRACE("No top-level found");

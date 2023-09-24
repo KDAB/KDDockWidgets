@@ -47,5 +47,6 @@ Checks: '*, -google-*, -objc-*, -llvmlibc-*, -zircon-*,
 -clang-analyzer-cplusplus.NewDelete,
 -clang-analyzer-cplusplus.NewDeleteLeaks,
 -cert-err58-cpp,
--bugprone-suspicious-include
+-bugprone-suspicious-include,
+-bugprone-branch-clone
 '

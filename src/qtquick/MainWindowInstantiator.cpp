@@ -24,7 +24,6 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
 MainWindowInstantiator::MainWindowInstantiator()
-    : QQuickItem()
 {
 }
 

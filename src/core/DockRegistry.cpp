@@ -300,7 +300,7 @@ Core::Layout *DockRegistry::layoutForItem(const Item *item) const
 bool DockRegistry::itemIsInMainWindow(const Item *item) const
 {
     if (Core::Layout *layout = layoutForItem(item)) {
-        return layout->isInMainWindow(/*honoursNesting=*/true);
+        return layout->isInMainWindow(/*honourNesting=*/true);
     }
 
     return false;

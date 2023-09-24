@@ -24,7 +24,6 @@
 using namespace KDDockWidgets;
 
 MDIDockingAreaInstantiator::MDIDockingAreaInstantiator()
-    : QQuickItem()
 {
 }
 

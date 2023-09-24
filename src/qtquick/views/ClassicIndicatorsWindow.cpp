@@ -199,7 +199,6 @@ QPoint ClassicDropIndicatorOverlay::posForIndicator(KDDockWidgets::DropLocation 
 }
 
 IndicatorWindow::IndicatorWindow()
-    : QQuickView()
 {
     setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);

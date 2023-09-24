@@ -1078,7 +1078,7 @@ ItemBoxContainer::ItemBoxContainer(View *hostWidget, ItemContainer *parent)
 }
 
 ItemBoxContainer::ItemBoxContainer(View *hostWidget)
-    : ItemContainer(hostWidget, /*parentContainer=*/nullptr)
+    : ItemContainer(hostWidget, /*parent=*/nullptr)
     , d(new Private(this))
 {
 }
@@ -1362,7 +1362,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
     if (isEmpty()) {
         // Empty container is useless, delete it
         if (auto p = parentContainer())
-            p->removeItem(this, /*hardDelete=*/true);
+            p->removeItem(this, /*hardRemove=*/true);
     } else if (!hasVisibleChildren()) {
         if (auto p = parentContainer()) {
             p->removeItem(this, /*hardDelete=*/false);
@@ -2995,7 +2995,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         side1Growth = std::min(missing, sizingInfo.availableToGrow(d->m_orientation));
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side1Growth, d->m_orientation);
         if (side1Growth > 0)
-            shrinkNeighbours(index, sizes, side1Growth, /*side2Growth=*/0,
+            shrinkNeighbours(index, sizes, side1Growth, /*side2Amount=*/0,
                              neighbourSqueezeStrategy);
         if (side1Growth < missing) {
             missing = missing - side1Growth;
@@ -3014,7 +3014,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side2Growth, d->m_orientation);
 
         if (side2Growth > 0)
-            shrinkNeighbours(index, sizes, /*side1Growth=*/0, side2Growth,
+            shrinkNeighbours(index, sizes, /*side1Amount=*/0, side2Growth,
                              neighbourSqueezeStrategy);
         if (side2Growth < missing) {
             missing = missing - side2Growth;
