@@ -121,6 +121,7 @@ QRect MainWindow::centralAreaGeometry() const
     return {};
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
     Q_UNUSED(left);

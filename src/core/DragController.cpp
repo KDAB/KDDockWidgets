@@ -186,6 +186,7 @@ void StateNone::onEntry()
     q->isDraggingChanged.emit();
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 bool StateNone::handleMouseButtonPress(Draggable *draggable, Point globalPos, Point pos)
 {
     KDDW_DEBUG("StateNone::handleMouseButtonPress: draggable={} ; globalPos={}", ( void * )draggable,

@@ -581,6 +581,7 @@ void Item::requestResize(int left, int top, int right, int bottom)
         return;
     }
 
+    // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
     auto moveSeparators = [](int side1Delta, int side2Delta, Separator *separator1, Separator *separator2) {
         if (side1Delta != 0 && separator1) {
             const auto ancestor = separator1->parentContainer();
@@ -891,7 +892,7 @@ void Item::turnIntoPlaceholder()
     // Turning into placeholder just means hiding it. So we can show it again in its original
     // position. Call removeItem() so we share the code for making the neighbours grow into the
     // space that becomes available after hiding this one
-    parentContainer()->removeItem(this, /*hardDelete=*/false);
+    parentContainer()->removeItem(this, /*hardRemove=*/false);
 }
 
 void Item::updateObjectName()
@@ -1365,7 +1366,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
             p->removeItem(this, /*hardRemove=*/true);
     } else if (!hasVisibleChildren()) {
         if (auto p = parentContainer()) {
-            p->removeItem(this, /*hardDelete=*/false);
+            p->removeItem(this, /*hardRemove=*/false);
             setGeometry(Rect());
         }
     } else {
@@ -1407,6 +1408,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 }
 
 /** static */
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Location loc,
                                             KDDockWidgets::InitialOption option)
 {
@@ -1620,6 +1622,7 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
     return itemCopy->mapToRoot(itemCopy->rect());
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo,
                                                  Location loc) const
 {

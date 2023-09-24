@@ -130,7 +130,7 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
 
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
+    return std::make_unique<WindowBeingDragged>(floatingWindow, this);
 }
 
 bool Stack::isWindow() const

@@ -202,6 +202,7 @@ QQuickItem *TabBar::tabAt(int index) const
     return nullptr;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void TabBar::moveTabTo(int from, int to)
 {
     Q_UNUSED(from);

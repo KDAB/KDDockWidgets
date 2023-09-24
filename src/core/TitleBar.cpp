@@ -567,14 +567,14 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 
     if (m_floatingWindow) {
         // We're already a floating window, no detach needed
-        return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_floatingWindow, this));
+        return std::make_unique<WindowBeingDragged>(m_floatingWindow, this);
     }
 
     if (FloatingWindow *fw = floatingWindow()) { // Already floating
         if (m_group->isTheOnlyGroup()) { // We don't detach. This one drags the entire window
                                          // instead.
             KDDW_DEBUG("TitleBar::makeWindow no detach needed");
-            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
+            return std::make_unique<WindowBeingDragged>(fw, this);
         }
     }
 

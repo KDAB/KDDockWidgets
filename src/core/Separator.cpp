@@ -144,6 +144,7 @@ void Separator::setGeometry(Rect r)
     setVisible(true);
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void Separator::setGeometry(int pos, int pos2, int length)
 {
     Rect newGeo = d->geometry;

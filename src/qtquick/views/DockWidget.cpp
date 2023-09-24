@@ -39,7 +39,7 @@ public:
     Private(DockWidget *view, QQmlEngine *qmlengine)
         : q(view)
         , m_visualItem(
-              q->createItem(qmlengine, plat()->viewFactory()->dockwidgetFilename().toString()))
+              DockWidget::createItem(qmlengine, plat()->viewFactory()->dockwidgetFilename().toString()))
         , m_qmlEngine(qmlengine)
     {
         Q_ASSERT(m_visualItem);
