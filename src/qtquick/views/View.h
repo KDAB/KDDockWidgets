@@ -174,6 +174,7 @@ private:
     friend class MouseEventRedirector;
     void updateNormalGeometry();
     void sendVisibleChangeEvent();
+    void _setSize(QSize);
     bool m_inSetParent = false;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute

@@ -46,6 +46,7 @@ Q_SIGNALS:
 
 private:
     void init() override final;
+    QSize minSize() const override;
     Core::Separator *const m_controller;
 };
 

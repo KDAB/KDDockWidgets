@@ -150,7 +150,7 @@ View::View(Core::Controller *controller, Core::ViewType type, QQuickItem *parent
     });
 
     qGuiApp->installEventFilter(this);
-    setSize(800, 800);
+    _setSize({ 800, 800 });
 }
 
 void View::setGeometry(QRect rect)
@@ -365,8 +365,13 @@ bool View::isExplicitlyHidden() const
 
 void View::setSize(int w, int h)
 {
-    // TODOm3: Test that setting a size less than min doesn't set it
     const auto newSize = QSize(w, h).expandedTo(minSize());
+    _setSize(newSize);
+}
+
+void View::_setSize(QSize newSize)
+{
+    // Like setSize() but does not honour minSize()
 
     if (isRootView()) {
         if (QWindow *window = QQuickItem::window()) {
@@ -379,7 +384,7 @@ void View::setSize(int w, int h)
         }
     }
 
-    QQuickItem::setSize(QSizeF(w, h));
+    QQuickItem::setSize(newSize);
 }
 
 std::shared_ptr<Core::View> View::rootView() const

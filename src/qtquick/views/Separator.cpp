@@ -74,3 +74,9 @@ void Separator::onMouseDoubleClicked()
 
     m_controller->onMouseDoubleClick();
 }
+
+QSize Separator::minSize() const
+{
+    // Min sizes don't really make sense for separators, as they are fixed size
+    return { 0, 0 };
+}
