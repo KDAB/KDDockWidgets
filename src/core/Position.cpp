@@ -57,7 +57,7 @@ void Position::addPlaceholderItem(Core::Item *placeholder)
     // from the lambda, since the Item might outlive Position
     auto conn = placeholder->deleted.connect([this, placeholder] { removePlaceholder(placeholder); });
 
-    m_placeholders.push_back(std::unique_ptr<ItemRef>(new ItemRef(conn, placeholder)));
+    m_placeholders.push_back(std::make_unique<ItemRef>(conn, placeholder));
 
     // NOTE: We use a list instead of simply two variables to keep the placeholders, because
     // a placeholder from a FloatingWindow might become a MainWindow one without we knowing,
@@ -221,7 +221,7 @@ LayoutSaver::Position Position::serialize() const
 
 ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
     : item(it)
-    , connection(conn)
+    , connection(std::move(conn))
 {
     item->ref();
 }

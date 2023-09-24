@@ -195,7 +195,7 @@ std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
 
     auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable *>(floatingWindow)
                                                          : static_cast<Draggable *>(this);
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
+    return std::make_unique<WindowBeingDragged>(floatingWindow, draggable);
 }
 
 bool Core::TabBar::isWindow() const

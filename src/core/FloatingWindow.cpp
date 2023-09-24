@@ -300,7 +300,7 @@ DropArea *FloatingWindow::dropArea() const
 
 std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
 {
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(this, this));
+    return std::make_unique<WindowBeingDragged>(this, this);
 }
 
 Core::DockWidget *FloatingWindow::singleDockWidget() const

@@ -117,7 +117,7 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
         if (fw->hasSingleFrame()) {
             // We're already in a floating window, and it only has 1 dock widget.
             // So there's no detachment to be made, we just move the window.
-            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
+            return std::make_unique<WindowBeingDragged>(fw, this);
         }
     }
 
