@@ -534,7 +534,8 @@
             "description": "LSAN build for Qt6/qtwidgets",
             "binaryDir": "${sourceDir}/build-ci-dev-asan-qtwidgets-qt6",
             "cacheVariables": {
-                "KDDockWidgets_FRONTENDS": "qtwidgets"
+                "KDDockWidgets_FRONTENDS": "qtwidgets",
+                "KDDockWidgets_NO_SPDLOG": "ON"
             },
             "inherits": [
                 "dev-asan6"
@@ -546,7 +547,8 @@
             "description": "LSAN build for Qt6/qtquick",
             "binaryDir": "${sourceDir}/build-ci-dev-asan-qtquick-qt6",
             "cacheVariables": {
-                "KDDockWidgets_FRONTENDS": "qtquick"
+                "KDDockWidgets_FRONTENDS": "qtquick",
+                "KDDockWidgets_NO_SPDLOG": "ON"
             },
             "inherits": [
                 "dev-asan6"
