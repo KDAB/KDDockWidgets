@@ -24,6 +24,7 @@
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <QGuiApplication>
 #include <QFile>
+#include <QQmlContext>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
@@ -879,6 +880,17 @@ QQuickItem *View::visualItem() const
 {
     qWarning() << Q_FUNC_INFO
                << "Base class called, please implement in your derived class if needed";
+    return nullptr;
+}
+
+QQmlContext *QtQuick::qmlContextFor(QQuickItem *item)
+{
+    while (item) {
+        if (auto ctx = qmlContext(item))
+            return ctx;
+        item = item->parentItem();
+    }
+
     return nullptr;
 }
 

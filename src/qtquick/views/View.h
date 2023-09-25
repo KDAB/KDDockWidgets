@@ -44,6 +44,8 @@ inline QQuickItem *asQQuickItem(Core::Controller *controller)
     return asQQuickItem(controller->view());
 }
 
+DOCKS_EXPORT QQmlContext *qmlContextFor(QQuickItem *);
+
 class DOCKS_EXPORT View : public QQuickItem, public QtCommon::View_qt
 {
     Q_OBJECT

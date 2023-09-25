@@ -14,5 +14,6 @@
         <file>main350.qml</file>
         <file>main343.qml</file>
         <file>main343_2.qml</file>
+        <file>MyRectangle.qml</file>
     </qresource>
 </RCC>

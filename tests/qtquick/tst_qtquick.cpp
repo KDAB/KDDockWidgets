@@ -13,7 +13,9 @@
 /// @brief Here lives the tests that only apply to QtQuick
 
 #include "kddockwidgets/KDDockWidgets.h"
+#include "qtquick/Platform.h"
 #include "qtquick/views/TitleBar.h"
+#include "qtquick/views/DockWidget.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
 #include "core/Platform.h"
@@ -26,6 +28,7 @@
 
 #include <QtTest/QTest>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
@@ -49,6 +52,7 @@ private Q_SLOTS:
     void tst_isFloatingIsEmitted();
 
     void tst_shutdownCrash();
+    void tst_childQmlContext();
 };
 
 
@@ -209,6 +213,59 @@ void TestQtQuick::tst_shutdownCrash()
     Core::Group *group = dock1->dptr()->group();
     delete dockWidgeItem;
     delete group;
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+}
+
+void TestQtQuick::tst_childQmlContext()
+{
+    // Tests that guest items can have a separate QML context
+    EnsureTopLevelsDeleted e;
+
+    {
+        QQmlApplicationEngine engine(":/main2.qml");
+        auto dock1 = new QtQuick::DockWidget("dock1");
+        auto dock2 = new QtQuick::DockWidget("dock2");
+        auto dock3 = new QtQuick::DockWidget("dock3");
+
+        auto mw = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+        QVERIFY(mw);
+        mw->addDockWidget(dock1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+        mw->addDockWidget(dock2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+        mw->addDockWidget(dock3->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+
+        auto guestItem1 = new QQuickItem(dock1);
+        dock1->setGuestItem(guestItem1);
+        dock2->setGuestItem(":/MyRectangle.qml");
+        dock3->setGuestItem(":/MyRectangle.qml");
+        QVERIFY(dock2->dockWidget()->guestView().get());
+        auto guestItem2 = dock2->guestItem();
+        QVERIFY(guestItem2);
+        auto guestItem3 = dock3->guestItem();
+        QVERIFY(guestItem3);
+
+        QQmlContext *rootContext = plat()->qmlEngine()->rootContext();
+        QQmlContext *guestContext1 = QtQuick::qmlContextFor(guestItem1);
+        QQmlContext *guestContext2 = QtQuick::qmlContextFor(guestItem2);
+        QQmlContext *guestContext3 = QtQuick::qmlContextFor(guestItem3);
+
+        QVERIFY(guestContext1);
+        QVERIFY(guestContext2);
+        QVERIFY(guestContext3);
+        QVERIFY(guestContext1 != guestContext2);
+        QVERIFY(guestContext1 != guestContext3);
+        QVERIFY(guestContext2 != guestContext3);
+        QVERIFY(rootContext != guestContext1);
+        QVERIFY(rootContext != guestContext2);
+        QVERIFY(guestContext1->parentContext() == rootContext);
+        QVERIFY(guestContext2->parentContext() == rootContext);
+        QVERIFY(guestContext3->parentContext() == rootContext);
+
+        delete dock1->dockWidget()->dptr()->group();
+        delete dock2->dockWidget()->dptr()->group();
+        delete dock3->dockWidget()->dptr()->group();
+    }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
