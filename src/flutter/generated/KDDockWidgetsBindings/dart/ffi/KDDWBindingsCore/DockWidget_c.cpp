@@ -142,6 +142,10 @@ void DockWidget_wrapper::raise()
 {
     ::KDDockWidgets::Core::DockWidget::raise();
 }
+void DockWidget_wrapper::resizeInLayout(int left, int top, int right, int bottom)
+{
+    ::KDDockWidgets::Core::DockWidget::resizeInLayout(left, top, right, bottom);
+}
 void DockWidget_wrapper::setAffinityName(const QString &name)
 {
     ::KDDockWidgets::Core::DockWidget::setAffinityName(name);
@@ -198,6 +202,10 @@ void DockWidget_wrapper::setUserType(int userType)
 void DockWidget_wrapper::show()
 {
     ::KDDockWidgets::Core::DockWidget::show();
+}
+KDDockWidgets::Size DockWidget_wrapper::sizeInLayout() const
+{
+    return ::KDDockWidgets::Core::DockWidget::sizeInLayout();
 }
 bool DockWidget_wrapper::skipsRestore() const
 {
@@ -396,6 +404,11 @@ void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj)
 {
     fromPtr(thisObj)->raise();
 }
+// resizeInLayout(int left, int top, int right, int bottom)
+void c_KDDockWidgets__Core__DockWidget__resizeInLayout_int_int_int_int(void *thisObj, int left, int top, int right, int bottom)
+{
+    fromPtr(thisObj)->resizeInLayout(left, top, right, bottom);
+}
 // setAffinityName(const QString & name)
 void c_KDDockWidgets__Core__DockWidget__setAffinityName_QString(void *thisObj, const char *name_)
 {
@@ -466,6 +479,11 @@ void c_KDDockWidgets__Core__DockWidget__show(void *thisObj)
 {
     fromPtr(thisObj)->show();
 }
+// sizeInLayout() const
+void *c_KDDockWidgets__Core__DockWidget__sizeInLayout(void *thisObj)
+{
+    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->sizeInLayout() };
+}
 // skipsRestore() const
 bool c_KDDockWidgets__Core__DockWidget__skipsRestore(void *thisObj)
 {
@@ -504,7 +522,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 332:
+    case 338:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

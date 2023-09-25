@@ -52,6 +52,7 @@ public:
     void open();
     QFlags<KDDockWidgets::DockWidgetOption> options() const;
     void raise();
+    void resizeInLayout(int left, int top, int right, int bottom);
     void setAffinityName(const QString &name);
     void setAsCurrentTab();
     bool setFloating(bool floats);
@@ -65,6 +66,7 @@ public:
     void setTitle(const QString &title);
     void setUserType(int userType);
     void show();
+    KDDockWidgets::Size sizeInLayout() const;
     bool skipsRestore() const;
     int tabIndex() const;
     QString title() const;
@@ -133,6 +135,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__open(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__DockWidget__options(void *thisObj);
 // KDDockWidgets::Core::DockWidget::raise()
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj);
+// KDDockWidgets::Core::DockWidget::resizeInLayout(int left, int top, int right, int bottom)
+DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__resizeInLayout_int_int_int_int(void *thisObj, int left, int top, int right, int bottom);
 // KDDockWidgets::Core::DockWidget::setAffinityName(const QString & name)
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setAffinityName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Core::DockWidget::setAsCurrentTab()
@@ -157,6 +161,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setTitle_QString(void *this
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setUserType_int(void *thisObj, int userType);
 // KDDockWidgets::Core::DockWidget::show()
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__show(void *thisObj);
+// KDDockWidgets::Core::DockWidget::sizeInLayout() const
+DOCKS_EXPORT void *c_KDDockWidgets__Core__DockWidget__sizeInLayout(void *thisObj);
 // KDDockWidgets::Core::DockWidget::skipsRestore() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__DockWidget__skipsRestore(void *thisObj);
 // KDDockWidgets::Core::DockWidget::tabIndex() const

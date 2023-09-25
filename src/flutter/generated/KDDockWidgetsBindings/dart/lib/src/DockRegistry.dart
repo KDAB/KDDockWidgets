@@ -188,6 +188,14 @@ class DockRegistry extends KDDWBindingsCore.Object {
             'c_KDDockWidgets__DockRegistry__registerLayout_Layout')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  } // registerLayoutSaver()
+
+  registerLayoutSaver() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__DockRegistry__registerLayoutSaver')
+        .asFunction();
+    func(thisCpp);
   } // registerMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 
   registerMainWindow(KDDWBindingsCore.MainWindow? arg__1) {
@@ -257,6 +265,14 @@ class DockRegistry extends KDDWBindingsCore.Object {
             'c_KDDockWidgets__DockRegistry__unregisterLayout_Layout')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
+  } // unregisterLayoutSaver()
+
+  unregisterLayoutSaver() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__DockRegistry__unregisterLayoutSaver')
+        .asFunction();
+    func(thisCpp);
   } // unregisterMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 
   unregisterMainWindow(KDDWBindingsCore.MainWindow? arg__1) {

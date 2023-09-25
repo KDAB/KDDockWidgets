@@ -313,8 +313,8 @@ void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *a
 void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Platform::setCursorPos(KDDockWidgets::Point arg__1)
 void c_KDDockWidgets__Core__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1)
-void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+// KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1, bool discardLast)
+void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape_bool(void *thisObj, int arg__1, bool discardLast);
 // KDDockWidgets::Core::Platform::startDragDistance() const
 int c_KDDockWidgets__Core__Platform__startDragDistance(void *thisObj);
 // KDDockWidgets::Core::Platform::startDragDistance_impl() const
@@ -405,8 +405,8 @@ void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void
 void c_KDDockWidgets__flutter__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::flutter::Platform::setCursorPos(KDDockWidgets::Point arg__1)
 void c_KDDockWidgets__flutter__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
-// KDDockWidgets::flutter::Platform::setMouseCursor(Qt::CursorShape arg__1)
-void c_KDDockWidgets__flutter__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+// KDDockWidgets::flutter::Platform::setMouseCursor(Qt::CursorShape arg__1, bool discardLast)
+void c_KDDockWidgets__flutter__Platform__setMouseCursor_CursorShape_bool(void *thisObj, int arg__1, bool discardLast);
 // KDDockWidgets::flutter::Platform::startDragDistance_impl() const
 int c_KDDockWidgets__flutter__Platform__startDragDistance_impl(void *thisObj);
 // KDDockWidgets::flutter::Platform::supportsAeroSnap() const
@@ -479,6 +479,8 @@ void c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow(void *
 void c_KDDockWidgets__DockRegistry__registerGroup_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::registerLayout(KDDockWidgets::Core::Layout * arg__1)
 void c_KDDockWidgets__DockRegistry__registerLayout_Layout(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::registerLayoutSaver()
+void c_KDDockWidgets__DockRegistry__registerLayoutSaver(void *thisObj);
 // KDDockWidgets::DockRegistry::registerMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 void c_KDDockWidgets__DockRegistry__registerMainWindow_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::self()
@@ -493,6 +495,8 @@ void c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow(void
 void c_KDDockWidgets__DockRegistry__unregisterGroup_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::unregisterLayout(KDDockWidgets::Core::Layout * arg__1)
 void c_KDDockWidgets__DockRegistry__unregisterLayout_Layout(void *thisObj, void *arg__1_);
+// KDDockWidgets::DockRegistry::unregisterLayoutSaver()
+void c_KDDockWidgets__DockRegistry__unregisterLayoutSaver(void *thisObj);
 // KDDockWidgets::DockRegistry::unregisterMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 void c_KDDockWidgets__DockRegistry__unregisterMainWindow_MainWindow(void *thisObj, void *arg__1_);
 void c_KDDockWidgets__DockRegistry__destructor(void *thisObj);
@@ -557,8 +561,8 @@ void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_);
 void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj);
 // KDDockWidgets::Core::Item::checkSanity()
 bool c_KDDockWidgets__Core__Item__checkSanity(void *thisObj);
-// KDDockWidgets::Core::Item::dumpLayout(int level)
-void c_KDDockWidgets__Core__Item__dumpLayout_int(void *thisObj, int level);
+// KDDockWidgets::Core::Item::dumpLayout(int level, bool printSeparators)
+void c_KDDockWidgets__Core__Item__dumpLayout_int_bool(void *thisObj, int level, bool printSeparators);
 // KDDockWidgets::Core::Item::geometry() const
 void *c_KDDockWidgets__Core__Item__geometry(void *thisObj);
 // KDDockWidgets::Core::Item::guestView() const
@@ -603,6 +607,8 @@ void *c_KDDockWidgets__Core__Item__rect(void *thisObj);
 void c_KDDockWidgets__Core__Item__ref(void *thisObj);
 // KDDockWidgets::Core::Item::refCount() const
 int c_KDDockWidgets__Core__Item__refCount(void *thisObj);
+// KDDockWidgets::Core::Item::requestResize(int left, int top, int right, int bottom)
+void c_KDDockWidgets__Core__Item__requestResize_int_int_int_int(void *thisObj, int left, int top, int right, int bottom);
 // KDDockWidgets::Core::Item::restore(KDDockWidgets::Core::View * guestView)
 void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_);
 // KDDockWidgets::Core::Item::setBeingInserted(bool arg__1)
@@ -2569,6 +2575,8 @@ void c_KDDockWidgets__Core__DockWidget__open(void *thisObj);
 int c_KDDockWidgets__Core__DockWidget__options(void *thisObj);
 // KDDockWidgets::Core::DockWidget::raise()
 void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj);
+// KDDockWidgets::Core::DockWidget::resizeInLayout(int left, int top, int right, int bottom)
+void c_KDDockWidgets__Core__DockWidget__resizeInLayout_int_int_int_int(void *thisObj, int left, int top, int right, int bottom);
 // KDDockWidgets::Core::DockWidget::setAffinityName(const QString & name)
 void c_KDDockWidgets__Core__DockWidget__setAffinityName_QString(void *thisObj, const char *name_);
 // KDDockWidgets::Core::DockWidget::setAsCurrentTab()
@@ -2593,6 +2601,8 @@ void c_KDDockWidgets__Core__DockWidget__setTitle_QString(void *thisObj, const ch
 void c_KDDockWidgets__Core__DockWidget__setUserType_int(void *thisObj, int userType);
 // KDDockWidgets::Core::DockWidget::show()
 void c_KDDockWidgets__Core__DockWidget__show(void *thisObj);
+// KDDockWidgets::Core::DockWidget::sizeInLayout() const
+void *c_KDDockWidgets__Core__DockWidget__sizeInLayout(void *thisObj);
 // KDDockWidgets::Core::DockWidget::skipsRestore() const
 bool c_KDDockWidgets__Core__DockWidget__skipsRestore(void *thisObj);
 // KDDockWidgets::Core::DockWidget::tabIndex() const
@@ -2807,6 +2817,8 @@ void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj);
 double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
 // KDDockWidgets::Config::dropIndicatorsInhibited() const
 bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
+// KDDockWidgets::Config::layoutSaverUsesStrictMode() const
+bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
 // KDDockWidgets::Config::printDebug()
@@ -2823,6 +2835,8 @@ void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size(void *thisObj, void 
 void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *thisObj, double opacity);
 // KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
 void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
+// KDDockWidgets::Config::setLayoutSaverStrictMode(bool arg__1)
+void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setSeparatorThickness(int value)

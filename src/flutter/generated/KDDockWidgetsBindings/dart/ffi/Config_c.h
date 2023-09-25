@@ -22,6 +22,7 @@ public:
     KDDockWidgets::Size absoluteWidgetMinSize() const;
     double draggedWindowOpacity() const;
     bool dropIndicatorsInhibited() const;
+    bool layoutSaverUsesStrictMode() const;
     int mdiPopupThreshold() const;
     void printDebug();
     static KDDockWidgets::Config &self();
@@ -30,6 +31,7 @@ public:
     void setAbsoluteWidgetMinSize(KDDockWidgets::Size size);
     void setDraggedWindowOpacity(double opacity);
     void setDropIndicatorsInhibited(bool inhibit) const;
+    void setLayoutSaverStrictMode(bool arg__1);
     void setMDIPopupThreshold(int arg__1);
     void setSeparatorThickness(int value);
     void setStartDragDistance(int arg__1);
@@ -49,6 +51,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj)
 DOCKS_EXPORT double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
 // KDDockWidgets::Config::dropIndicatorsInhibited() const
 DOCKS_EXPORT bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
+// KDDockWidgets::Config::layoutSaverUsesStrictMode() const
+DOCKS_EXPORT bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 DOCKS_EXPORT int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
 // KDDockWidgets::Config::printDebug()
@@ -65,6 +69,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Config__setAbsoluteWidgetMinSize_Size(void *t
 DOCKS_EXPORT void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *thisObj, double opacity);
 // KDDockWidgets::Config::setDropIndicatorsInhibited(bool inhibit) const
 DOCKS_EXPORT void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
+// KDDockWidgets::Config::setLayoutSaverStrictMode(bool arg__1)
+DOCKS_EXPORT void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setSeparatorThickness(int value)

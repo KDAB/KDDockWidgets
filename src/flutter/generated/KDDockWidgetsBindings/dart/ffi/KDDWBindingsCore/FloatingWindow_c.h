@@ -56,8 +56,6 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setSuggestedGeometry(KDDockWidgets::Rect suggestedRect);
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Core::Group *singleFrame() const;
     bool supportsMaximizeButton() const;
     bool supportsMinimizeButton() const;

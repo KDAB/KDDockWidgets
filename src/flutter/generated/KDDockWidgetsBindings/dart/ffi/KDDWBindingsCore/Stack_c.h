@@ -38,8 +38,6 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setTabBarAutoHide(bool arg__1);
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Core::TabBar *tabBar() const;
     bool tabBarAutoHide() const;
     typedef bool (*Callback_isMDI)(void *);

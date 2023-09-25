@@ -48,8 +48,6 @@ public:
     void setCurrentIndex(int index);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     KDDockWidgets::Core::Stack *stack() const;
     bool tabsAreMovable() const;
     QString text(int index) const;

@@ -289,7 +289,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 332:
+      case 338:
         return "c_KDDockWidgets__Core__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -297,7 +297,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 332:
+      case 338:
         return "setParentView_impl";
     }
     throw Error();
@@ -309,9 +309,9 @@ class DropArea extends KDDWBindingsCore.Layout {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback332 =
+    final callback338 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback332, 332);
+    registerCallback(thisCpp, callback338, 338);
   }
 }

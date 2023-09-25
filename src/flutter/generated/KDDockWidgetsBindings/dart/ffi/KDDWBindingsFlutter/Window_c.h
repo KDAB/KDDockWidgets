@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "kddockwidgets_export.h"
-#include <Window.h>
+#include <Window_p.h>
 #include <geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

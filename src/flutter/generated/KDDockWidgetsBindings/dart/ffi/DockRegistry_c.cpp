@@ -101,6 +101,10 @@ void DockRegistry_wrapper::registerLayout(KDDockWidgets::Core::Layout *arg__1)
 {
     ::KDDockWidgets::DockRegistry::registerLayout(arg__1);
 }
+void DockRegistry_wrapper::registerLayoutSaver()
+{
+    ::KDDockWidgets::DockRegistry::registerLayoutSaver();
+}
 void DockRegistry_wrapper::registerMainWindow(KDDockWidgets::Core::MainWindow *arg__1)
 {
     ::KDDockWidgets::DockRegistry::registerMainWindow(arg__1);
@@ -128,6 +132,10 @@ void DockRegistry_wrapper::unregisterGroup(KDDockWidgets::Core::Group *arg__1)
 void DockRegistry_wrapper::unregisterLayout(KDDockWidgets::Core::Layout *arg__1)
 {
     ::KDDockWidgets::DockRegistry::unregisterLayout(arg__1);
+}
+void DockRegistry_wrapper::unregisterLayoutSaver()
+{
+    ::KDDockWidgets::DockRegistry::unregisterLayoutSaver();
 }
 void DockRegistry_wrapper::unregisterMainWindow(KDDockWidgets::Core::MainWindow *arg__1)
 {
@@ -250,6 +258,11 @@ void c_KDDockWidgets__DockRegistry__registerLayout_Layout(void *thisObj, void *a
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Layout *>(arg__1_);
     fromPtr(thisObj)->registerLayout(arg__1);
 }
+// registerLayoutSaver()
+void c_KDDockWidgets__DockRegistry__registerLayoutSaver(void *thisObj)
+{
+    fromPtr(thisObj)->registerLayoutSaver();
+}
 // registerMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 void c_KDDockWidgets__DockRegistry__registerMainWindow_MainWindow(void *thisObj, void *arg__1_)
 {
@@ -290,6 +303,11 @@ void c_KDDockWidgets__DockRegistry__unregisterLayout_Layout(void *thisObj, void 
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Layout *>(arg__1_);
     fromPtr(thisObj)->unregisterLayout(arg__1);
+}
+// unregisterLayoutSaver()
+void c_KDDockWidgets__DockRegistry__unregisterLayoutSaver(void *thisObj)
+{
+    fromPtr(thisObj)->unregisterLayoutSaver();
 }
 // unregisterMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
 void c_KDDockWidgets__DockRegistry__unregisterMainWindow_MainWindow(void *thisObj, void *arg__1_)

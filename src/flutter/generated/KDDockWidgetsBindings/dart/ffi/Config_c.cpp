@@ -45,6 +45,10 @@ bool Config_wrapper::dropIndicatorsInhibited() const
 {
     return ::KDDockWidgets::Config::dropIndicatorsInhibited();
 }
+bool Config_wrapper::layoutSaverUsesStrictMode() const
+{
+    return ::KDDockWidgets::Config::layoutSaverUsesStrictMode();
+}
 int Config_wrapper::mdiPopupThreshold() const
 {
     return ::KDDockWidgets::Config::mdiPopupThreshold();
@@ -76,6 +80,10 @@ void Config_wrapper::setDraggedWindowOpacity(double opacity)
 void Config_wrapper::setDropIndicatorsInhibited(bool inhibit) const
 {
     ::KDDockWidgets::Config::setDropIndicatorsInhibited(inhibit);
+}
+void Config_wrapper::setLayoutSaverStrictMode(bool arg__1)
+{
+    ::KDDockWidgets::Config::setLayoutSaverStrictMode(arg__1);
 }
 void Config_wrapper::setMDIPopupThreshold(int arg__1)
 {
@@ -146,6 +154,11 @@ bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj)
 {
     return fromPtr(thisObj)->dropIndicatorsInhibited();
 }
+// layoutSaverUsesStrictMode() const
+bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj)
+{
+    return fromPtr(thisObj)->layoutSaverUsesStrictMode();
+}
 // mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj)
 {
@@ -189,6 +202,11 @@ void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *thisObj, doub
 void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit)
 {
     fromPtr(thisObj)->setDropIndicatorsInhibited(inhibit);
+}
+// setLayoutSaverStrictMode(bool arg__1)
+void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool arg__1)
+{
+    fromPtr(thisObj)->setLayoutSaverStrictMode(arg__1);
 }
 // setMDIPopupThreshold(int arg__1)
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1)

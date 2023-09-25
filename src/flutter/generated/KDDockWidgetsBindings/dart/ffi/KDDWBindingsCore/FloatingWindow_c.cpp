@@ -165,19 +165,6 @@ void FloatingWindow_wrapper::setSuggestedGeometry(KDDockWidgets::Rect suggestedR
 {
     ::KDDockWidgets::Core::FloatingWindow::setSuggestedGeometry(suggestedRect);
 }
-KDDockWidgets::Core::DockWidget *FloatingWindow_wrapper::singleDockWidget() const
-{
-    if (m_singleDockWidgetCallback) {
-        const void *thisPtr = this;
-        return m_singleDockWidgetCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::Core::FloatingWindow::singleDockWidget();
-    }
-}
-KDDockWidgets::Core::DockWidget *FloatingWindow_wrapper::singleDockWidget_nocallback() const
-{
-    return ::KDDockWidgets::Core::FloatingWindow::singleDockWidget();
-}
 KDDockWidgets::Core::Group *FloatingWindow_wrapper::singleFrame() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::singleFrame();
@@ -381,7 +368,7 @@ void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_Rect(void *this
 // singleDockWidget() const
 void *c_KDDockWidgets__Core__FloatingWindow__singleDockWidget(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->singleDockWidget_nocallback();} else {    return targetPtr->singleDockWidget();} }();
+    return fromPtr(thisObj)->singleDockWidget();
 }
 // singleFrame() const
 void *c_KDDockWidgets__Core__FloatingWindow__singleFrame(void *thisObj)
@@ -426,16 +413,16 @@ void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 976:
+    case 982:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 979:
+    case 985:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 332:
+    case 338:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 995:
+    case 1001:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

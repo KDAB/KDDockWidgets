@@ -15,15 +15,15 @@
 #include <geometry_helpers_p.h>
 #include <string_p.h>
 #include <core/Group.h>
-#include "core/TitleBar.h"
-#include "core/DropArea.h"
-#include "core/Stack.h"
 #include "core/MainWindow.h"
+#include <core/DockWidget.h>
+#include <FloatingWindow.h>
 #include <core/Layout.h>
+#include "core/DropArea.h"
+#include "core/TitleBar.h"
+#include "core/Stack.h"
 #include <QtCompat_p.h>
 #include <TabBar.h>
-#include <FloatingWindow.h>
-#include <core/DockWidget.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

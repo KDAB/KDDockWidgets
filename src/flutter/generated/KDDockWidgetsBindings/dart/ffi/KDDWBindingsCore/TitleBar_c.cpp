@@ -177,19 +177,6 @@ void TitleBar_wrapper::setTitle(const QString &title)
 {
     ::KDDockWidgets::Core::TitleBar::setTitle(title);
 }
-KDDockWidgets::Core::DockWidget *TitleBar_wrapper::singleDockWidget() const
-{
-    if (m_singleDockWidgetCallback) {
-        const void *thisPtr = this;
-        return m_singleDockWidgetCallback(const_cast<void *>(thisPtr));
-    } else {
-        return ::KDDockWidgets::Core::TitleBar::singleDockWidget();
-    }
-}
-KDDockWidgets::Core::DockWidget *TitleBar_wrapper::singleDockWidget_nocallback() const
-{
-    return ::KDDockWidgets::Core::TitleBar::singleDockWidget();
-}
 bool TitleBar_wrapper::supportsAutoHideButton() const
 {
     return ::KDDockWidgets::Core::TitleBar::supportsAutoHideButton();
@@ -403,7 +390,7 @@ void c_KDDockWidgets__Core__TitleBar__setTitle_QString(void *thisObj, const char
 // singleDockWidget() const
 void *c_KDDockWidgets__Core__TitleBar__singleDockWidget(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->singleDockWidget_nocallback();} else {    return targetPtr->singleDockWidget();} }();
+    return fromPtr(thisObj)->singleDockWidget();
 }
 // supportsAutoHideButton() const
 bool c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton(void *thisObj)
@@ -458,16 +445,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 545:
+    case 551:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 549:
+    case 555:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 332:
+    case 338:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 568:
+    case 574:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

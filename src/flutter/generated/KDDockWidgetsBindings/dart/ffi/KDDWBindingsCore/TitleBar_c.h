@@ -58,8 +58,6 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setTitle(const QString &title);
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget() const;
-    virtual KDDockWidgets::Core::DockWidget *singleDockWidget_nocallback() const;
     bool supportsAutoHideButton() const;
     bool supportsFloatingButton() const;
     bool supportsMaximizeButton() const;

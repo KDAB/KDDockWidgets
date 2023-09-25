@@ -127,7 +127,7 @@ class Controller extends KDDWBindingsCore.Object {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(332))
+            cFunctionSymbolName(338))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -222,7 +222,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 332:
+      case 338:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -230,7 +230,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 332:
+      case 338:
         return "setParentView_impl";
     }
     throw Error();
@@ -242,9 +242,9 @@ class Controller extends KDDWBindingsCore.Object {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback332 =
+    final callback338 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback332, 332);
+    registerCallback(thisCpp, callback338, 338);
   }
 }

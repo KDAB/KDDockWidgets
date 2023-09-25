@@ -79,8 +79,8 @@ public:
     virtual void sendEvent_nocallback(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
     virtual void setCursorPos(KDDockWidgets::Point arg__1);
     virtual void setCursorPos_nocallback(KDDockWidgets::Point arg__1);
-    virtual void setMouseCursor(Qt::CursorShape arg__1);
-    virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1);
+    virtual void setMouseCursor(Qt::CursorShape arg__1, bool discardLast = false);
+    virtual void setMouseCursor_nocallback(Qt::CursorShape arg__1, bool discardLast = false);
     int startDragDistance() const;
     virtual int startDragDistance_impl() const;
     virtual int startDragDistance_impl_nocallback() const;
@@ -148,7 +148,7 @@ public:
     Callback_sendEvent m_sendEventCallback = nullptr;
     typedef void (*Callback_setCursorPos)(void *, KDDockWidgets::Point *arg__1);
     Callback_setCursorPos m_setCursorPosCallback = nullptr;
-    typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1);
+    typedef void (*Callback_setMouseCursor)(void *, Qt::CursorShape arg__1, bool discardLast);
     Callback_setMouseCursor m_setMouseCursorCallback = nullptr;
     typedef int (*Callback_startDragDistance_impl)(void *);
     Callback_startDragDistance_impl m_startDragDistance_implCallback = nullptr;
@@ -232,8 +232,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thi
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__sendEvent_View_Event(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Platform::setCursorPos(KDDockWidgets::Point arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__setCursorPos_Point(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1)
-DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape(void *thisObj, int arg__1);
+// KDDockWidgets::Core::Platform::setMouseCursor(Qt::CursorShape arg__1, bool discardLast)
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__setMouseCursor_CursorShape_bool(void *thisObj, int arg__1, bool discardLast);
 // KDDockWidgets::Core::Platform::startDragDistance() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Platform__startDragDistance(void *thisObj);
 // KDDockWidgets::Core::Platform::startDragDistance_impl() const
