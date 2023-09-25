@@ -728,7 +728,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_
         DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
 )
 
-if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QT)
+if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QTWIDGETS)
     # Under developer mode since kddw might be a sub-folder of a project setting a
     # different value for QT_DISABLE_DEPRECATED_BEFORE
     target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
