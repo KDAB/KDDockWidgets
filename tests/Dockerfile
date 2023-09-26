@@ -33,8 +33,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update
 RUN apt install build-essential software-properties-common lld git cmake ninja-build \
                 mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
-                libxkbcommon-dev  apt install mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                vim -y
+                libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
+                vim clang-tidy-14 -y
 
 WORKDIR /
 RUN git clone https://github.com/KDAB/KDDockWidgets.git

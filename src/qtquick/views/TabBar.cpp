@@ -469,6 +469,8 @@ void DockWidgetModel::setCurrentIndex(int index)
 
     if (d->m_currentDockWidget != dw) {
         setCurrentDockWidget(dw);
+
+        // NOLINTNEXTLINE(clang-analyzer-core.CallAndMessage])
         d->m_tabBar->setCurrentIndex(index);
     }
 }

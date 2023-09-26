@@ -554,17 +554,17 @@ bool StateInternalMDIDragging::handleMouseDoubleClick()
 
 DragController::DragController(Core::Object *parent)
     : MinimalStateMachine(parent)
+    , m_stateNone(new StateNone(this))
+    , m_stateDraggingMDI(new StateInternalMDIDragging(this))
 {
     KDDW_TRACE("DragController CTOR");
 
-    m_stateNone = new StateNone(this);
     auto statepreDrag = new StatePreDrag(this);
 #ifdef KDDW_FRONTEND_QT
     auto stateDragging = isWayland() ? new StateDraggingWayland(this) : new StateDragging(this);
 #else
     auto stateDragging = new StateDragging(this);
 #endif
-    m_stateDraggingMDI = new StateInternalMDIDragging(this);
 
     m_stateNone->addTransition(mousePressed, statepreDrag);
     statepreDrag->addTransition(dragCanceled, m_stateNone);
