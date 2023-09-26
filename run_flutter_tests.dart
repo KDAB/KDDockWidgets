@@ -17,6 +17,7 @@ import 'src/flutter/utils.dart';
 bool isAOT = false;
 bool isASAN = false;
 bool isLSAN = false;
+bool useGDB = false;
 bool ubsanPrintStacks = false;
 
 String kddwSourceDir() {
@@ -98,15 +99,15 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
         workingDirectory: buildDir, env: env);
   } else {
     // Run a single test:
-    return await runCommand(
-        "bin/$singleTestName",
-        [
-          // "--disable-service-auth-codes",
-          // "--verbose-logging",
-          // "--start-paused"
-        ],
-        workingDirectory: buildDir,
-        env: env);
+    final String executableName = useGDB ? "gdb" : "bin/$singleTestName";
+    List<String> args = [
+      // "--disable-service-auth-codes",
+      // "--verbose-logging",
+      // "--start-paused"
+      if (useGDB) ...["-ex=run", "--args", "bin/$singleTestName"]
+    ];
+    return await runCommand(executableName, args,
+        workingDirectory: buildDir, env: env);
   }
 }
 
@@ -115,7 +116,7 @@ void printUsage() {
       "Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces]");
   print("Or specify a single test to run:");
   print(
-      "dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces] <test_name>");
+      "dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces] [--gdb] <test_name>");
 }
 
 String calculateBuildDir() {
@@ -139,6 +140,7 @@ Future<void> main(List<String> args) async {
   isAOT = _args.remove("--aot");
   isLSAN = _args.remove("--lsan");
   isASAN = isLSAN || _args.remove("--asan");
+  useGDB = _args.remove("--gdb");
   ubsanPrintStacks = _args.remove("--ubsan-stacktraces");
   final bool isHelp = _args.remove("--help") || _args.remove("-h");
 
