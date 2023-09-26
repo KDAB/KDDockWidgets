@@ -5161,6 +5161,9 @@ KDDW_QCORO_TASK tst_resizeInLayout()
     m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
     m->addDockWidget(dockC, KDDockWidgets::Location_OnBottom);
 
+    m->window()->resize(400, 1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
+
     // Nothing happens, since the widget's top is the window's top too:
     const Size dockAOriginalSize = dockA->sizeInLayout();
     dockA->resizeInLayout(0, 500 - dockA->sizeInLayout().height(), 0, 0);
@@ -5168,6 +5171,7 @@ KDDW_QCORO_TASK tst_resizeInLayout()
 
     // Move bottom separator down, height is increased to 500
     dockA->resizeInLayout(0, 0, 0, 500 - dockA->sizeInLayout().height());
+
     CHECK_EQ(dockA->sizeInLayout().height(), 500);
 
     // Move dockB's top separator 50px up, and the bottom one 49px up
