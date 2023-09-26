@@ -4,7 +4,13 @@
 
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 2.0
+  pull_request:
+    branches:
+      - 2.0
 
 jobs:
   build:
