@@ -66,7 +66,9 @@ class MyMenuBar extends StatelessWidget {
                         child: const MenuAcceleratorLabel('&Restore Layout'),
                       ),
                       MenuItemButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          DockRegistry.self().clear();
+                        },
                         child: const MenuAcceleratorLabel('&Close All'),
                       ),
                       MenuItemButton(
