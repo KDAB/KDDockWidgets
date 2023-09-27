@@ -70,6 +70,9 @@ public:
         : m_controller(controller)
     {
     }
+
+    void onTabMoved(int from, int to);
+
     Core::TabBar *const m_controller;
     KDBindings::ScopedConnection m_currentDockWidgetChangedConnection;
 };
@@ -92,6 +95,10 @@ TabBar::~TabBar()
 void TabBar::init()
 {
     connect(this, &QTabBar::currentChanged, m_tabBar, &Core::TabBar::setCurrentIndex);
+    connect(this, &QTabBar::tabMoved, this, [this](int from, int to) {
+        d->onTabMoved(from, to);
+    });
+
     d->m_currentDockWidgetChangedConnection = d->m_controller->dptr()->currentDockWidgetChanged.connect([this](KDDockWidgets::Core::DockWidget *dw) {
         Q_EMIT currentDockWidgetChanged(dw);
     });
@@ -212,4 +219,15 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon
 void TabBar::setTabsAreMovable(bool are)
 {
     QTabBar::setMovable(are);
+}
+
+void TabBar::Private::onTabMoved(int from, int to)
+{
+    if (from == to || m_controller->isMovingTab())
+        return;
+
+    // !m_controller->isMovingTab() means the move was initiated by Qt, for example
+    // the user is reordering tabs with mouse
+    // We need to tell the controller we got a new order.
+    m_controller->dptr()->moveTabTo(from, to);
 }

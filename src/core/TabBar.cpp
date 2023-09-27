@@ -13,6 +13,7 @@
 #include "TabBar_p.h"
 #include "core/Draggable_p.h"
 #include "Controller.h"
+#include "core/ScopedValueRollback_p.h"
 #include "core/Stack.h"
 #include "core/FloatingWindow.h"
 #include "core/DockWidget_p.h"
@@ -252,10 +253,19 @@ Stack *TabBar::stack() const
     return d->m_stack;
 }
 
+void Core::TabBar::Private::moveTabTo(int from, int to)
+{
+    auto fromDw = m_dockWidgets.takeAt(from);
+    m_dockWidgets.insert(to, fromDw);
+}
+
 void Core::TabBar::moveTabTo(int from, int to)
 {
-    auto fromDw = d->m_dockWidgets.takeAt(from);
-    d->m_dockWidgets.insert(to, fromDw);
+    ScopedValueRollback guard(d->m_isMovingTab, true);
+
+    d->moveTabTo(from, to);
+
+    // Tell GUI:
     dynamic_cast<Core::TabBarViewInterface *>(view())->moveTabTo(from, to);
 }
 
@@ -322,6 +332,11 @@ void TabBar::renameTab(int index, const QString &text)
 void TabBar::changeTabIcon(int index, const Icon &icon)
 {
     dynamic_cast<Core::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
+}
+
+bool TabBar::isMovingTab() const
+{
+    return d->m_isMovingTab;
 }
 
 TabBar::Private *TabBar::dptr() const

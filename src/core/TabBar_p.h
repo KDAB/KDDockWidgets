@@ -36,11 +36,14 @@ public:
     {
     }
 
+    void moveTabTo(int from, int to);
+
     Core::Stack *const m_stack;
     ObjectGuard<DockWidget> m_lastPressedDockWidget = nullptr;
     DockWidget *m_currentDockWidget = nullptr;
     Vector<const DockWidget *> m_dockWidgets;
     bool m_removeGuard = false;
+    bool m_isMovingTab = false;
     std::unordered_map<KDDockWidgets::Core::DockWidget *, KDBindings::ScopedConnection> aboutToDeleteConnections;
 
     KDBindings::Signal<KDDockWidgets::Core::DockWidget *> currentDockWidgetChanged;

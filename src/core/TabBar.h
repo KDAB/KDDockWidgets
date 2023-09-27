@@ -84,6 +84,9 @@ public:
     ///@brief change the tab's icon
     void changeTabIcon(int index, const Icon &);
 
+    /// Returns whether we're inside Core::TabBar::moveTab()
+    bool isMovingTab() const;
+
     class Private;
     Private *dptr() const;
 

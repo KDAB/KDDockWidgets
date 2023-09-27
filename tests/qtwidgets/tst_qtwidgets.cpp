@@ -1893,10 +1893,6 @@ void TestQtWidgets::tst_moveTab()
     QCOMPARE(qtabwidget->widget(1), qwidgetA);
 
     QCOMPARE(tb->currentIndex(), 1);
-
-    if (!moveViaController)
-        QEXPECT_FAIL("", "Bug #406, to be fixed", Continue);
-
     QCOMPARE(tb->currentDockWidget(), dockA);
 }
 
