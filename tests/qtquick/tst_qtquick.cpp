@@ -248,9 +248,9 @@ void TestQtQuick::tst_childQmlContext()
         dock2->setGuestItem(":/MyRectangle.qml");
         dock3->setGuestItem(":/MyRectangle.qml");
 
-        auto subContext = new QQmlContext(rootContext);
-        subContext->setContextProperty("_ctxProperty", overriddenPropertyValue);
-        dock4->setGuestItem(":/MyRectangle.qml", subContext);
+        QQmlContext subContext(rootContext);
+        subContext.setContextProperty("_ctxProperty", overriddenPropertyValue);
+        dock4->setGuestItem(":/MyRectangle.qml", &subContext);
 
         QVERIFY(dock2->dockWidget()->guestView().get());
         auto guestItem2 = dock2->guestItem();
@@ -272,7 +272,7 @@ void TestQtQuick::tst_childQmlContext()
         QVERIFY(guestContext1 != guestContext2);
         QVERIFY(guestContext1 != guestContext3);
         QVERIFY(guestContext2 != guestContext3);
-        QCOMPARE(guestContext4->parentContext(), subContext);
+        QCOMPARE(guestContext4->parentContext(), &subContext);
         QVERIFY(rootContext != guestContext1);
         QVERIFY(rootContext != guestContext2);
         QVERIFY(guestContext1->parentContext() == rootContext);
