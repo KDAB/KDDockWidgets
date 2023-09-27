@@ -69,7 +69,7 @@ QString Action::toolTip() const
 
 void Action::setEnabled(bool enabled)
 {
-    return QAction::setEnabled(enabled);
+    QAction::setEnabled(enabled);
 }
 
 bool Action::isEnabled() const

@@ -156,7 +156,7 @@ void MainWindowViewInterface::moveToSideBar(const QString &dockId,
 void MainWindowViewInterface::restoreFromSideBar(const QString &dockId)
 {
     if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
-        return m_mainWindow->restoreFromSideBar(dw);
+        m_mainWindow->restoreFromSideBar(dw);
     } else {
         KDDW_ERROR("Could not find dock widget {}", dockId);
     }
