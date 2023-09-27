@@ -731,6 +731,10 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         return false;
     }
     case Event::MouseButtonPress:
+        // We don't care about the secondary button
+        if (me->buttons() & Qt::RightButton)
+            break;
+
         // For top-level windows that support native dragging all goes through the NonClient*
         // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
         // title area, in the background

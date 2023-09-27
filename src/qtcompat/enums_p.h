@@ -19,7 +19,8 @@ namespace Qt {
 
 enum MouseButton {
     NoButton = 0,
-    LeftButton = 1
+    LeftButton = 1,
+    RightButton = 2
 };
 
 enum KeyboardModifiers {
