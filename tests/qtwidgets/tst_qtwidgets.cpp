@@ -1850,7 +1850,7 @@ void TestQtWidgets::tst_moveTab_data()
     QTest::addColumn<bool>("moveViaController");
 
     QTest::newRow("true") << true;
-    QTest::newRow("true") << false;
+    QTest::newRow("false") << false;
 }
 
 void TestQtWidgets::tst_moveTab()
