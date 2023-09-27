@@ -158,7 +158,7 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_WERROR": "ON",
                 "KDDockWidgets_EXAMPLES": "OFF",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick;flutter"
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
             "environment": {
                 "CXX": "clazy",
