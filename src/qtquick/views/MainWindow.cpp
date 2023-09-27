@@ -67,7 +67,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     // MainWindowQuick has the same constraints as Layout, so just forward the signal
     d->layoutGeometryChangedConnection = connect(layoutView, &View::geometryUpdated, this,
                                                  [this] {
-                geometryUpdated();
+                Q_EMIT geometryUpdated();
                 d->onLayoutGeometryUpdated(); });
 
     {

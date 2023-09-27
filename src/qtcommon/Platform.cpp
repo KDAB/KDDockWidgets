@@ -316,7 +316,7 @@ Screen::Ptr Platform_qt::primaryScreen() const
 
 void Platform_qt::runDelayed(int ms, Core::DelayedCall *c)
 {
-    QTimer::singleShot(ms, [c] { c->call(); delete c; });
+    QTimer::singleShot(ms, qGuiApp, [c] { c->call(); delete c; });
 }
 
 QByteArray Platform_qt::readFile(const QString &fileName, bool &ok) const

@@ -417,6 +417,7 @@ QVector<std::shared_ptr<Core::View>> ViewWrapper::childViews() const
 {
     QVector<std::shared_ptr<View>> result;
     const auto childItems = m_item->childItems();
+    result.reserve(childItems.size());
     for (QQuickItem *child : childItems) {
         result << QtQuick::View::asQQuickWrapper(child);
     }

@@ -153,7 +153,7 @@ Core::FloatingWindow *FloatingWindow::floatingWindow() const
     return d->m_controller;
 }
 
-bool FloatingWindow::eventFilter(QObject *, QEvent *ev)
+bool FloatingWindow::eventFilter(QObject *watched, QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
 
@@ -167,7 +167,7 @@ bool FloatingWindow::eventFilter(QObject *, QEvent *ev)
         }
     }
 
-    return false;
+    return KDDockWidgets::QtWidgets::View<QWidget>::eventFilter(watched, ev);
 }
 
 #if defined(Q_OS_WIN)

@@ -79,7 +79,7 @@ public:
     bool blockSignals(bool) override;
 
 Q_SIGNALS:
-    bool toggled(bool);
+    void toggled(bool);
 
 private:
     QString m_text;
