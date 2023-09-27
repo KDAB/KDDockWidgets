@@ -162,6 +162,7 @@ private Q_SLOTS:
     void tst_widgetAddQAction();
     void tst_currentTabChanged();
     void tst_moveTab();
+    void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowToggle_data();
 
@@ -1844,13 +1845,23 @@ void TestQtWidgets::tst_currentTabChanged()
     QCOMPARE(count2, 1);
 }
 
+void TestQtWidgets::tst_moveTab_data()
+{
+    QTest::addColumn<bool>("moveViaController");
+
+    QTest::newRow("true") << true;
+    QTest::newRow("true") << false;
+}
+
 void TestQtWidgets::tst_moveTab()
 {
+    QFETCH(bool, moveViaController);
+
     EnsureTopLevelsDeleted e;
     Config::self().setFlags(Config::Flag_AllowReorderTabs);
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
-    auto dockA = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    auto dockB = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
+    auto dockA = Config::self().viewFactory()->createDockWidget("dwA")->asDockWidgetController();
+    auto dockB = Config::self().viewFactory()->createDockWidget("dwB")->asDockWidgetController();
 
     auto qwidgetA = QtCommon::View_qt::asQWidget(dockA->view());
     auto qwidgetB = QtCommon::View_qt::asQWidget(dockB->view());
@@ -1871,7 +1882,11 @@ void TestQtWidgets::tst_moveTab()
     QCOMPARE(qtabwidget->widget(0), qwidgetA);
     QCOMPARE(qtabwidget->widget(1), qwidgetB);
 
-    qtabbar->moveTab(0, 1);
+    if (moveViaController) {
+        tb->moveTabTo(0, 1);
+    } else {
+        qtabbar->moveTab(0, 1);
+    }
 
     QCOMPARE(qtabbar->currentIndex(), 1);
     QCOMPARE(qtabwidget->widget(0), qwidgetB);
@@ -1879,7 +1894,9 @@ void TestQtWidgets::tst_moveTab()
 
     QCOMPARE(tb->currentIndex(), 1);
 
-    QEXPECT_FAIL("", "Bug #406, to be fixed", Continue);
+    if (!moveViaController)
+        QEXPECT_FAIL("", "Bug #406, to be fixed", Continue);
+
     QCOMPARE(tb->currentDockWidget(), dockA);
 }
 
