@@ -228,43 +228,64 @@ void TestQtQuick::tst_childQmlContext()
         auto dock1 = new QtQuick::DockWidget("dock1");
         auto dock2 = new QtQuick::DockWidget("dock2");
         auto dock3 = new QtQuick::DockWidget("dock3");
+        auto dock4 = new QtQuick::DockWidget("dock4");
+
+        const auto defaultPropertyValue = QVariant(0);
+        const auto overriddenPropertyValue = QVariant(1);
+
+        QQmlContext *rootContext = plat()->qmlEngine()->rootContext();
+        rootContext->setContextProperty("_ctxProperty", defaultPropertyValue);
 
         auto mw = DockRegistry::self()->mainWindowByName("MyWindowName-1");
         QVERIFY(mw);
         mw->addDockWidget(dock1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
         mw->addDockWidget(dock2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
         mw->addDockWidget(dock3->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+        mw->addDockWidget(dock4->asDockWidgetController(), KDDockWidgets::Location_OnRight);
 
         auto guestItem1 = new QQuickItem(dock1);
         dock1->setGuestItem(guestItem1);
         dock2->setGuestItem(":/MyRectangle.qml");
         dock3->setGuestItem(":/MyRectangle.qml");
+
+        auto subContext = new QQmlContext(rootContext);
+        subContext->setContextProperty("_ctxProperty", overriddenPropertyValue);
+        dock4->setGuestItem(":/MyRectangle.qml", subContext);
+
         QVERIFY(dock2->dockWidget()->guestView().get());
         auto guestItem2 = dock2->guestItem();
         QVERIFY(guestItem2);
         auto guestItem3 = dock3->guestItem();
         QVERIFY(guestItem3);
+        auto guestItem4 = dock4->guestItem();
+        QVERIFY(guestItem4);
 
-        QQmlContext *rootContext = plat()->qmlEngine()->rootContext();
         QQmlContext *guestContext1 = QtQuick::qmlContextFor(guestItem1);
         QQmlContext *guestContext2 = QtQuick::qmlContextFor(guestItem2);
         QQmlContext *guestContext3 = QtQuick::qmlContextFor(guestItem3);
+        QQmlContext *guestContext4 = QtQuick::qmlContextFor(guestItem4);
 
         QVERIFY(guestContext1);
         QVERIFY(guestContext2);
         QVERIFY(guestContext3);
+        QVERIFY(guestContext4);
         QVERIFY(guestContext1 != guestContext2);
         QVERIFY(guestContext1 != guestContext3);
         QVERIFY(guestContext2 != guestContext3);
+        QCOMPARE(guestContext4->parentContext(), subContext);
         QVERIFY(rootContext != guestContext1);
         QVERIFY(rootContext != guestContext2);
         QVERIFY(guestContext1->parentContext() == rootContext);
         QVERIFY(guestContext2->parentContext() == rootContext);
         QVERIFY(guestContext3->parentContext() == rootContext);
 
+        QCOMPARE(guestItem3->property("someValue"), defaultPropertyValue);
+        QCOMPARE(guestItem4->property("someValue"), overriddenPropertyValue);
+
         delete dock1->dockWidget()->dptr()->group();
         delete dock2->dockWidget()->dptr()->group();
         delete dock3->dockWidget()->dptr()->group();
+        delete dock4->dockWidget()->dptr()->group();
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.

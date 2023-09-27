@@ -146,7 +146,7 @@ public:
     static void makeItemFillParent(QQuickItem *item);
 
     /// @brief Convenience to create a QQuickItem
-    static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
+    static QQuickItem *createItem(QQmlEngine *engine, const QString &filename, QQmlContext *context = nullptr);
 
     /// @brief Convenience to create a QQuickItem parented to @p parent.
     /// Uses the engine from the parent

@@ -14,4 +14,8 @@ import QtQuick 2.9
 Rectangle {
     color: "green"
     anchors.fill: parent
+    readonly property int someValue: _ctxProperty
+    Text {
+      text: someValue
+    }
 }

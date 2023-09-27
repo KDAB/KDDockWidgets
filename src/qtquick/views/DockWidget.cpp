@@ -85,9 +85,9 @@ DockWidget::~DockWidget()
     delete d;
 }
 
-void DockWidget::setGuestItem(const QString &qmlFilename)
+void DockWidget::setGuestItem(const QString &qmlFilename, QQmlContext *context)
 {
-    QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename);
+    QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename, context);
     if (!guest)
         return;
 

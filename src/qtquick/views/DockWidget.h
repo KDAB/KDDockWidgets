@@ -76,7 +76,9 @@ public:
     ~DockWidget() override;
 
     /// Sets the DockWidget's guest item
-    void setGuestItem(const QString &qmlFilename);
+    /// @param qmlFilename The path to a QML file to load. This path is passed to QQmlComponent.
+    /// @param context An optional QQmlContext. This is passed to QQmlComponent::create().
+    void setGuestItem(const QString &qmlFilename, QQmlContext *context = nullptr);
 
     /// @reimp
     Q_INVOKABLE void setGuestItem(QQuickItem *);
