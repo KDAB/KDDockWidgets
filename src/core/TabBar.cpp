@@ -253,6 +253,7 @@ Stack *TabBar::stack() const
     return d->m_stack;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 void Core::TabBar::Private::moveTabTo(int from, int to)
 {
     auto fromDw = m_dockWidgets.takeAt(from);
