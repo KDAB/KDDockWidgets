@@ -47,6 +47,7 @@
 #include <QPushButton>
 #include <QMenuBar>
 #include <QTabBar>
+#include <QTabWidget>
 #include <QVBoxLayout>
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -160,6 +161,7 @@ private Q_SLOTS:
     void tst_standaloneTitleBar();
     void tst_widgetAddQAction();
     void tst_currentTabChanged();
+    void tst_moveTab();
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowToggle_data();
 
@@ -1840,6 +1842,45 @@ void TestQtWidgets::tst_currentTabChanged()
     dock2->dockWidget()->setAsCurrentTab();
     QCOMPARE(count1, 0);
     QCOMPARE(count2, 1);
+}
+
+void TestQtWidgets::tst_moveTab()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::Flag_AllowReorderTabs);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dockA = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    auto dockB = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
+
+    auto qwidgetA = QtCommon::View_qt::asQWidget(dockA->view());
+    auto qwidgetB = QtCommon::View_qt::asQWidget(dockB->view());
+
+    m1->addDockWidget(dockA, Location_OnBottom);
+    dockA->addDockWidgetAsTab(dockB);
+
+    Core::TabBar *tb = dockA->d->group()->tabBar();
+    QVERIFY(tb);
+    tb->setCurrentIndex(0);
+    QCOMPARE(tb->currentDockWidget(), dockA);
+    auto qtabbar = qobject_cast<QTabBar *>(QtCommon::View_qt::asQWidget(tb->view()));
+    auto qtabwidget = qobject_cast<QTabWidget *>(QtCommon::View_qt::asQWidget(tb->stack()->view()));
+    QVERIFY(qtabbar);
+    QVERIFY(qtabwidget);
+    QCOMPARE(qtabbar->currentIndex(), 0);
+    QCOMPARE(qtabwidget->currentIndex(), 0);
+    QCOMPARE(qtabwidget->widget(0), qwidgetA);
+    QCOMPARE(qtabwidget->widget(1), qwidgetB);
+
+    qtabbar->moveTab(0, 1);
+
+    QCOMPARE(qtabbar->currentIndex(), 1);
+    QCOMPARE(qtabwidget->widget(0), qwidgetB);
+    QCOMPARE(qtabwidget->widget(1), qwidgetA);
+
+    QCOMPARE(tb->currentIndex(), 1);
+
+    QEXPECT_FAIL("", "Bug #406, to be fixed", Continue);
+    QCOMPARE(tb->currentDockWidget(), dockA);
 }
 
 void TestQtWidgets::tst_nestedMainWindowToggle_data()
