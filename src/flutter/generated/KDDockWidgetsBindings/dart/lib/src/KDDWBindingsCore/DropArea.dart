@@ -29,14 +29,18 @@ class DropArea extends KDDWBindingsCore.Layout {
       if (instance != null) return instance as DropArea;
     }
     return DropArea.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__DropArea_Finalizer";
   } //DropArea(KDDockWidgets::Core::View * parent, QFlags<KDDockWidgets::MainWindowOption> options, bool isMDIWrapper)
+
   DropArea(KDDWBindingsCore.View? parent, int options,
       {bool isMDIWrapper = false})
       : super.init() {
     final voidstar_Func_voidstar_int_bool func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_ffi_Int32_ffi_Int8_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_ffi_Int32_ffi_Int8_FFI>>(
             'c_KDDockWidgets__Core__DropArea__constructor_View_MainWindowOptions_bool')
         .asFunction();
     thisCpp = func(parent == null ? ffi.nullptr : parent.thisCpp, options,

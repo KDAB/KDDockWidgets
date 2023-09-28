@@ -29,13 +29,17 @@ class MainWindow extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as MainWindow;
     }
     return MainWindow.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__MainWindow_Finalizer";
   } //MainWindow(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options)
+
   MainWindow(KDDWBindingsCore.View? view, String? uniqueName, int options)
       : super.init() {
     final voidstar_Func_voidstar_voidstar_int func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_ffi_Int32_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_ffi_Int32_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__constructor_View_QString_MainWindowOptions')
         .asFunction();
     thisCpp = func(view == null ? ffi.nullptr : view.thisCpp,

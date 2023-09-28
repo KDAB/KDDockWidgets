@@ -29,7 +29,11 @@ class ViewFactory extends KDDWBindingsCore.Object {
       if (instance != null) return instance as ViewFactory;
     }
     return ViewFactory.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__ViewFactory_Finalizer";
   } //ViewFactory()
+
   ViewFactory() : super.init() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
@@ -45,8 +49,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
           {required KDDWBindingsCore.View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(238))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -121,8 +125,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       KDDWBindingsCore.DropArea? arg__1, KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(240))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -196,8 +200,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       {required KDDWBindingsCore.View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(242))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -256,8 +260,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       {required KDDWBindingsCore.View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(244))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -292,8 +296,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       KDDWBindingsCore.SideBar? arg__1, KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(245))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -326,8 +330,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       KDDWBindingsCore.Stack? stack, KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(246))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -360,8 +364,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       {required KDDWBindingsCore.View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(247))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -394,8 +398,8 @@ class ViewFactory extends KDDWBindingsCore.Object {
       KDDWBindingsCore.TitleBar? controller, KDDWBindingsCore.View? parent) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(248))
         .asFunction();
     ffi.Pointer<void> result = func(

@@ -29,7 +29,11 @@ class Separator extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as Separator;
     }
     return Separator.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__Separator_Finalizer";
   } //Separator(KDDockWidgets::Core::View * host)
+
   Separator(KDDWBindingsCore.View? host) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(

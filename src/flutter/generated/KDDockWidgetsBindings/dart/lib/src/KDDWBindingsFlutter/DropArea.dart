@@ -29,7 +29,11 @@ class DropArea extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as DropArea;
     }
     return DropArea.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__DropArea_Finalizer";
   } //DropArea(KDDockWidgets::Core::DropArea * arg__1, KDDockWidgets::Core::View * parent)
+
   DropArea(KDDWBindingsCore.DropArea? arg__1, KDDWBindingsCore.View? parent)
       : super.init() {
     final voidstar_Func_voidstar_voidstar func = _dylib

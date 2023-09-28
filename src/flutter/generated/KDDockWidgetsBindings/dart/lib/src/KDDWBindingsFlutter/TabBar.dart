@@ -29,7 +29,11 @@ class TabBar extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as TabBar;
     }
     return TabBar.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__TabBar_Finalizer";
   } //TabBar(KDDockWidgets::Core::TabBar * controller, KDDockWidgets::Core::View * parent)
+
   TabBar(KDDWBindingsCore.TabBar? controller,
       {required KDDWBindingsCore.View? parent})
       : super.init() {

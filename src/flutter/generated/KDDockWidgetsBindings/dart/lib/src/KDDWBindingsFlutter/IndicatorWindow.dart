@@ -29,7 +29,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as IndicatorWindow;
     }
     return IndicatorWindow.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__IndicatorWindow_Finalizer";
   } //IndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent)
+
   IndicatorWindow(KDDWBindingsCore.ClassicDropIndicatorOverlay? arg__1,
       KDDWBindingsCore.View? parent)
       : super.init() {
@@ -202,7 +206,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   int hover(Point globalPos) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1120))
+            cFunctionSymbolName(1121))
         .asFunction();
     return func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
   }
@@ -223,7 +227,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   int hover_flutter(Point globalPos) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1131))
+            cFunctionSymbolName(1132))
         .asFunction();
     return func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
   }
@@ -432,7 +436,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   bool isWindow() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1121))
+            cFunctionSymbolName(1122))
         .asFunction();
     return func(thisCpp) != 0;
   }
@@ -475,8 +479,8 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   Point mapTo(KDDWBindingsCore.View? parent, Point pos) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(386))
         .asFunction();
     ffi.Pointer<void> result = func(
@@ -737,7 +741,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   Point posForIndicator(int arg__1) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1122))
+            cFunctionSymbolName(1123))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, arg__1);
     return Point.fromCppPointer(result, true);
@@ -759,7 +763,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   Point posForIndicator_flutter(int arg__1) {
     final voidstar_Func_voidstar_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1135))
+            cFunctionSymbolName(1136))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp, arg__1);
     return Point.fromCppPointer(result, true);
@@ -781,7 +785,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   raise() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1123))
+            cFunctionSymbolName(1124))
         .asFunction();
     func(thisCpp);
   }
@@ -901,7 +905,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   resize(Size arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1124))
+            cFunctionSymbolName(1125))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -987,7 +991,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   setGeometry(Rect arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1125))
+            cFunctionSymbolName(1126))
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
@@ -1086,7 +1090,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   setObjectName(String? arg__1) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(1126))
+            cFunctionSymbolName(1127))
         .asFunction();
     func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   }
@@ -1167,7 +1171,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   setVisible(bool arg__1) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            cFunctionSymbolName(1127))
+            cFunctionSymbolName(1128))
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
   }
@@ -1359,7 +1363,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   updateIndicatorVisibility() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1128))
+            cFunctionSymbolName(1129))
         .asFunction();
     func(thisCpp);
   }
@@ -1378,7 +1382,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
   updatePositions() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(1129))
+            cFunctionSymbolName(1130))
         .asFunction();
     func(thisCpp);
   }
@@ -1400,7 +1404,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         .lookup<
                 ffi.NativeFunction<
                     bool_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI>>(
-            cFunctionSymbolName(1139))
+            cFunctionSymbolName(1140))
         .asFunction();
     return func(
             thisCpp,
@@ -1489,9 +1493,9 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__hasFocus";
       case 374:
         return "c_KDDockWidgets__flutter__IndicatorWindow__hide";
-      case 1120:
+      case 1121:
         return "c_KDDockWidgets__flutter__IndicatorWindow__hover_Point";
-      case 1131:
+      case 1132:
         return "c_KDDockWidgets__flutter__IndicatorWindow__hover_flutter_Point";
       case 376:
         return "c_KDDockWidgets__flutter__IndicatorWindow__init";
@@ -1511,7 +1515,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__isRootView";
       case 384:
         return "c_KDDockWidgets__flutter__IndicatorWindow__isVisible";
-      case 1121:
+      case 1122:
         return "c_KDDockWidgets__flutter__IndicatorWindow__isWindow";
       case 385:
         return "c_KDDockWidgets__flutter__IndicatorWindow__mapFromGlobal_Point";
@@ -1539,11 +1543,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__onRebuildRequested";
       case 396:
         return "c_KDDockWidgets__flutter__IndicatorWindow__onResize_int_int";
-      case 1122:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation";
-      case 1135:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_flutter_DropLocation";
       case 1123:
+        return "c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_DropLocation";
+      case 1136:
+        return "c_KDDockWidgets__flutter__IndicatorWindow__posForIndicator_flutter_DropLocation";
+      case 1124:
         return "c_KDDockWidgets__flutter__IndicatorWindow__raise";
       case 399:
         return "c_KDDockWidgets__flutter__IndicatorWindow__raiseAndActivate";
@@ -1555,7 +1559,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__releaseKeyboard";
       case 402:
         return "c_KDDockWidgets__flutter__IndicatorWindow__releaseMouse";
-      case 1124:
+      case 1125:
         return "c_KDDockWidgets__flutter__IndicatorWindow__resize_Size";
       case 405:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setCursor_CursorShape";
@@ -1563,7 +1567,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__setFixedHeight_int";
       case 407:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setFixedWidth_int";
-      case 1125:
+      case 1126:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setGeometry_Rect";
       case 409:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setHeight_int";
@@ -1573,7 +1577,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__setMinimumSize_Size";
       case 412:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setMouseTracking_bool";
-      case 1126:
+      case 1127:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setObjectName_QString";
       case 413:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setParent_View";
@@ -1581,7 +1585,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__setSize_int_int";
       case 416:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setViewName_QString";
-      case 1127:
+      case 1128:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setVisible_bool";
       case 418:
         return "c_KDDockWidgets__flutter__IndicatorWindow__setWidth_int";
@@ -1601,11 +1605,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "c_KDDockWidgets__flutter__IndicatorWindow__showNormal";
       case 427:
         return "c_KDDockWidgets__flutter__IndicatorWindow__update";
-      case 1128:
-        return "c_KDDockWidgets__flutter__IndicatorWindow__updateIndicatorVisibility";
       case 1129:
+        return "c_KDDockWidgets__flutter__IndicatorWindow__updateIndicatorVisibility";
+      case 1130:
         return "c_KDDockWidgets__flutter__IndicatorWindow__updatePositions";
-      case 1139:
+      case 1140:
         return "c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int";
       case 428:
         return "c_KDDockWidgets__flutter__IndicatorWindow__viewName";
@@ -1631,9 +1635,9 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "hasFocus";
       case 374:
         return "hide";
-      case 1120:
+      case 1121:
         return "hover";
-      case 1131:
+      case 1132:
         return "hover_flutter";
       case 376:
         return "init";
@@ -1653,7 +1657,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "isRootView";
       case 384:
         return "isVisible";
-      case 1121:
+      case 1122:
         return "isWindow";
       case 385:
         return "mapFromGlobal";
@@ -1681,11 +1685,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "onRebuildRequested";
       case 396:
         return "onResize_2";
-      case 1122:
-        return "posForIndicator";
-      case 1135:
-        return "posForIndicator_flutter";
       case 1123:
+        return "posForIndicator";
+      case 1136:
+        return "posForIndicator_flutter";
+      case 1124:
         return "raise";
       case 399:
         return "raiseAndActivate";
@@ -1697,7 +1701,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "releaseKeyboard";
       case 402:
         return "releaseMouse";
-      case 1124:
+      case 1125:
         return "resize";
       case 405:
         return "setCursor";
@@ -1705,7 +1709,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "setFixedHeight";
       case 407:
         return "setFixedWidth";
-      case 1125:
+      case 1126:
         return "setGeometry";
       case 409:
         return "setHeight";
@@ -1715,7 +1719,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "setMinimumSize";
       case 412:
         return "setMouseTracking";
-      case 1126:
+      case 1127:
         return "setObjectName";
       case 413:
         return "setParent";
@@ -1723,7 +1727,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "setSize_2";
       case 416:
         return "setViewName";
-      case 1127:
+      case 1128:
         return "setVisible";
       case 418:
         return "setWidth";
@@ -1743,11 +1747,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         return "showNormal";
       case 427:
         return "update";
-      case 1128:
-        return "updateIndicatorVisibility";
       case 1129:
+        return "updateIndicatorVisibility";
+      case 1130:
         return "updatePositions";
-      case 1139:
+      case 1140:
         return "updatePositions_flutter";
       case 428:
         return "viewName";
@@ -1788,12 +1792,12 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
     final callback374 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.hide_calledFromC);
     registerCallback(thisCpp, callback374, 374);
-    const callbackExcept1131 = 0;
-    final callback1131 =
+    const callbackExcept1132 = 0;
+    final callback1132 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
             KDDWBindingsFlutter.IndicatorWindow.hover_flutter_calledFromC,
-            callbackExcept1131);
-    registerCallback(thisCpp, callback1131, 1131);
+            callbackExcept1132);
+    registerCallback(thisCpp, callback1132, 1132);
     final callback376 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.View.init_calledFromC);
     registerCallback(thisCpp, callback376, 376);
@@ -1878,11 +1882,11 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
         ffi.Pointer.fromFunction<bool_Func_voidstar_ffi_Int32_ffi_Int32_FFI>(
             KDDWBindingsCore.View.onResize_2_calledFromC, callbackExcept396);
     registerCallback(thisCpp, callback396, 396);
-    final callback1135 =
+    final callback1136 =
         ffi.Pointer.fromFunction<voidstar_Func_voidstar_ffi_Int32_FFI>(
             KDDWBindingsFlutter
                 .IndicatorWindow.posForIndicator_flutter_calledFromC);
-    registerCallback(thisCpp, callback1135, 1135);
+    registerCallback(thisCpp, callback1136, 1136);
     final callback399 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.raiseAndActivate_calledFromC);
     registerCallback(thisCpp, callback399, 399);
@@ -1971,12 +1975,12 @@ class IndicatorWindow extends KDDWBindingsFlutter.View {
     final callback427 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.update_calledFromC);
     registerCallback(thisCpp, callback427, 427);
-    const callbackExcept1139 = 0;
-    final callback1139 = ffi.Pointer.fromFunction<
+    const callbackExcept1140 = 0;
+    final callback1140 = ffi.Pointer.fromFunction<
             bool_Func_voidstar_ffi_Int32_ffi_Int32_voidstar_ffi_Int32_FFI>(
         KDDWBindingsFlutter.IndicatorWindow.updatePositions_flutter_calledFromC,
-        callbackExcept1139);
-    registerCallback(thisCpp, callback1139, 1139);
+        callbackExcept1140);
+    registerCallback(thisCpp, callback1140, 1140);
     final callback428 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsFlutter.View.viewName_calledFromC);
     registerCallback(thisCpp, callback428, 428);

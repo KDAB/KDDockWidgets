@@ -35,6 +35,7 @@ public:
     int indexOfDockWidget(const KDDockWidgets::Core::DockWidget *dw) const;
     virtual bool isMDI() const;
     virtual bool isMDI_nocallback() const;
+    bool isMovingTab() const;
     virtual bool isWindow() const;
     virtual bool isWindow_nocallback() const;
     void moveTabTo(int from, int to);
@@ -85,6 +86,8 @@ DOCKS_EXPORT bool c_KDDockWidgets__Core__TabBar__hasSingleDockWidget(void *thisO
 DOCKS_EXPORT int c_KDDockWidgets__Core__TabBar__indexOfDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::TabBar::isMDI() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__TabBar__isMDI(void *thisObj);
+// KDDockWidgets::Core::TabBar::isMovingTab() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TabBar__isMovingTab(void *thisObj);
 // KDDockWidgets::Core::TabBar::isWindow() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__TabBar__isWindow(void *thisObj);
 // KDDockWidgets::Core::TabBar::moveTabTo(int from, int to)

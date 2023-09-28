@@ -29,7 +29,11 @@ class Group extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as Group;
     }
     return Group.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__Group_Finalizer";
   } //Group(KDDockWidgets::Core::Group * controller, KDDockWidgets::Core::View * parent)
+
   Group(KDDWBindingsCore.Group? controller,
       {required KDDWBindingsCore.View? parent})
       : super.init() {

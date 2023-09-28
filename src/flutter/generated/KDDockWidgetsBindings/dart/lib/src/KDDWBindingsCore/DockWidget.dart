@@ -29,7 +29,11 @@ class DockWidget extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as DockWidget;
     }
     return DockWidget.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__DockWidget_Finalizer";
   } //DockWidget(KDDockWidgets::Core::View * view, const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+
   DockWidget(KDDWBindingsCore.View? view, String? uniqueName,
       {int options = 0, int layoutSaverOptions = 0})
       : super.init() {

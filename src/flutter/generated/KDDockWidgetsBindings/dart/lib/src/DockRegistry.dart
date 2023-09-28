@@ -29,7 +29,11 @@ class DockRegistry extends KDDWBindingsCore.Object {
       if (instance != null) return instance as DockRegistry;
     }
     return DockRegistry.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__DockRegistry_Finalizer";
   } // checkSanityAll(bool dumpDebug)
+
   checkSanityAll({bool dumpDebug = false}) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(

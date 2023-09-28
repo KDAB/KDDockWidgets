@@ -30,6 +30,10 @@ class Item extends KDDWBindingsCore.Object {
     }
     return Item.fromCppPointer(cppPointer, needsAutoDelete);
   }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__Item_Finalizer";
+  }
+
   static int get separatorThickness {
     final int_Func_void func = _dylib
         .lookup<ffi.NativeFunction<int_Func_void_FFI>>(

@@ -94,8 +94,8 @@ class QObject implements ffi.Finalizable {
           QObject? sender, String? signal, QObject? receiver, String? member) {
     final bool_Func_voidstar_string_voidstar_string func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    bool_Func_voidstar_string_voidstar_string_FFI>>(
+                ffi
+                .NativeFunction<bool_Func_voidstar_string_voidstar_string_FFI>>(
             'c_static_QObject__disconnect_QObject_char_QObject_char')
         .asFunction();
     return func(
@@ -110,8 +110,8 @@ class QObject implements ffi.Finalizable {
       {String? signal, required QObject? receiver, String? member}) {
     final bool_Func_voidstar_string_voidstar_string func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    bool_Func_voidstar_string_voidstar_string_FFI>>(
+                ffi
+                .NativeFunction<bool_Func_voidstar_string_voidstar_string_FFI>>(
             'c_QObject__disconnect_char_QObject_char')
         .asFunction();
     return func(

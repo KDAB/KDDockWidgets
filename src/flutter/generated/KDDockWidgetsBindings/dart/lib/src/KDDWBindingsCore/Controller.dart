@@ -29,7 +29,11 @@ class Controller extends KDDWBindingsCore.Object {
       if (instance != null) return instance as Controller;
     }
     return Controller.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__Controller_Finalizer";
   } //Controller(KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__2)
+
   Controller(int type, KDDWBindingsCore.View? arg__2) : super.init() {
     final voidstar_Func_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(

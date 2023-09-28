@@ -29,7 +29,11 @@ class Stack extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as Stack;
     }
     return Stack.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__Stack_Finalizer";
   } //Stack(KDDockWidgets::Core::Stack * controller, KDDockWidgets::Core::View * parent)
+
   Stack(KDDWBindingsCore.Stack? controller,
       {required KDDWBindingsCore.View? parent})
       : super.init() {

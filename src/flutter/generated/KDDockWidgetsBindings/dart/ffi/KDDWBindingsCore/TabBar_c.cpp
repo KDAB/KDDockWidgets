@@ -88,6 +88,10 @@ bool TabBar_wrapper::isMDI_nocallback() const
 {
     return ::KDDockWidgets::Core::TabBar::isMDI();
 }
+bool TabBar_wrapper::isMovingTab() const
+{
+    return ::KDDockWidgets::Core::TabBar::isMovingTab();
+}
 bool TabBar_wrapper::isWindow() const
 {
     if (m_isWindowCallback) {
@@ -239,6 +243,11 @@ bool c_KDDockWidgets__Core__TabBar__isMDI(void *thisObj)
 {
     return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
 }
+// isMovingTab() const
+bool c_KDDockWidgets__Core__TabBar__isMovingTab(void *thisObj)
+{
+    return fromPtr(thisObj)->isMovingTab();
+}
 // isWindow() const
 bool c_KDDockWidgets__Core__TabBar__isWindow(void *thisObj)
 {
@@ -336,13 +345,13 @@ void c_KDDockWidgets__Core__TabBar__registerVirtualMethodCallback(void *ptr, voi
     case 609:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 611:
+    case 612:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_isWindow>(callback);
         break;
     case 338:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 627:
+    case 628:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

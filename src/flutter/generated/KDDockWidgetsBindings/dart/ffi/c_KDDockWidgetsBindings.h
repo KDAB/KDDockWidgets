@@ -1995,6 +1995,8 @@ bool c_KDDockWidgets__Core__TabBar__hasSingleDockWidget(void *thisObj);
 int c_KDDockWidgets__Core__TabBar__indexOfDockWidget_DockWidget(void *thisObj, void *dw_);
 // KDDockWidgets::Core::TabBar::isMDI() const
 bool c_KDDockWidgets__Core__TabBar__isMDI(void *thisObj);
+// KDDockWidgets::Core::TabBar::isMovingTab() const
+bool c_KDDockWidgets__Core__TabBar__isMovingTab(void *thisObj);
 // KDDockWidgets::Core::TabBar::isWindow() const
 bool c_KDDockWidgets__Core__TabBar__isWindow(void *thisObj);
 // KDDockWidgets::Core::TabBar::moveTabTo(int from, int to)

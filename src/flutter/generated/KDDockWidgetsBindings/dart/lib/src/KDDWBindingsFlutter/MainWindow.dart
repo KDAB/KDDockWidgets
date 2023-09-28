@@ -29,7 +29,11 @@ class MainWindow extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as MainWindow;
     }
     return MainWindow.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__MainWindow_Finalizer";
   } //MainWindow(const QString & uniqueName, QFlags<KDDockWidgets::MainWindowOption> options, KDDockWidgets::flutter::View * parent, Qt::WindowFlags flags)
+
   MainWindow(String? uniqueName,
       {int options = 0,
       required KDDWBindingsFlutter.View? parent,

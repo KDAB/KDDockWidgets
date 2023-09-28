@@ -29,7 +29,11 @@ class SideBar extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as SideBar;
     }
     return SideBar.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__SideBar_Finalizer";
   } // addDockWidget(KDDockWidgets::Core::DockWidget * dw)
+
   addDockWidget(KDDWBindingsCore.DockWidget? dw) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(

@@ -97,8 +97,8 @@ class KDDockWidgets_DropLocation {
 bool fuzzyCompare(double a, double b, {double epsilon = 0.0001}) {
   final bool_Func_double_double_double func = _dylib
       .lookup<
-              ffi.NativeFunction<
-                  bool_Func_ffi_Double_ffi_Double_ffi_Double_FFI>>(
+              ffi
+              .NativeFunction<bool_Func_ffi_Double_ffi_Double_ffi_Double_FFI>>(
           'c_static_KDDockWidgets__fuzzyCompare_double_double_double')
       .asFunction();
   return func(a, b, epsilon) != 0;

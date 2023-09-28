@@ -17,10 +17,12 @@ import '../Bindings_KDDWBindingsFlutter.dart' as KDDWBindingsFlutter;
 import '../LibraryLoader.dart';
 
 var _dylib = Library.instance().dylib;
-final _finalizerFunc =
-    _dylib.lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(
-        'c_KDDockWidgets__Rect_Finalizer');
-final _finalizer = ffi.NativeFinalizer(_finalizerFunc.cast());
+final _finalizerFunc = (String name) {
+  return _dylib
+      .lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer)>>(name);
+};
+
+Map<String, ffi.NativeFinalizer> _finalizers = {};
 
 class Rect implements ffi.Finalizable {
   static var s_dartInstanceByCppPtr = Map<int, Rect>();
@@ -30,7 +32,14 @@ class Rect implements ffi.Finalizable {
   set thisCpp(var ptr) {
     _thisCpp = ptr;
     ffi.Pointer<ffi.Void> ptrvoid = ptr.cast<ffi.Void>();
-    if (_needsAutoDelete) _finalizer.attach(this, ptrvoid);
+    if (_needsAutoDelete) {
+      final String finalizerName = getFinalizerName();
+      if (!_finalizers.keys.contains(runtimeType)) {
+        _finalizers[finalizerName] =
+            ffi.NativeFinalizer(_finalizerFunc(finalizerName).cast());
+      }
+      _finalizers[finalizerName]!.attach(this, ptrvoid);
+    }
   }
 
   static bool isCached(var cppPointer) {
@@ -44,7 +53,11 @@ class Rect implements ffi.Finalizable {
   Rect.fromCppPointer(var cppPointer, [this._needsAutoDelete = false]) {
     thisCpp = cppPointer;
   }
-  Rect.init() {} //Rect()
+  Rect.init() {}
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Rect_Finalizer";
+  } //Rect()
+
   Rect() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(

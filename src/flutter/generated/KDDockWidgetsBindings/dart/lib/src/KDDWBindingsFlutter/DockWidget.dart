@@ -29,7 +29,11 @@ class DockWidget extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as DockWidget;
     }
     return DockWidget.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__DockWidget_Finalizer";
   } //DockWidget(const QString & uniqueName, QFlags<KDDockWidgets::DockWidgetOption> options, QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions)
+
   DockWidget(String? uniqueName, {int options = 0, int layoutSaverOptions = 0})
       : super.init() {
     final voidstar_Func_voidstar_int_int func = _dylib

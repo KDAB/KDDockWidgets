@@ -29,7 +29,11 @@ class TitleBar extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as TitleBar;
     }
     return TitleBar.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__TitleBar_Finalizer";
   } //TitleBar(KDDockWidgets::Core::FloatingWindow * parent)
+
   TitleBar(KDDWBindingsCore.FloatingWindow? parent) : super.init() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(

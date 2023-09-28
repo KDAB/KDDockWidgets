@@ -29,7 +29,11 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
       if (instance != null) return instance as ViewFactory;
     }
     return ViewFactory.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__ViewFactory_Finalizer";
   } //ViewFactory()
+
   ViewFactory() : super.init() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(
@@ -66,8 +70,8 @@ class ViewFactory extends KDDWBindingsCore.ViewFactory {
       {required KDDWBindingsCore.View? parent}) {
     final voidstar_Func_voidstar_voidstar_voidstar func = _dylib
         .lookup<
-                ffi.NativeFunction<
-                    voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
+                ffi
+                .NativeFunction<voidstar_Func_voidstar_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(256))
         .asFunction();
     ffi.Pointer<void> result = func(

@@ -29,7 +29,11 @@ class Layout extends KDDWBindingsCore.Controller {
       if (instance != null) return instance as Layout;
     }
     return Layout.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__Core__Layout_Finalizer";
   } //Layout(KDDockWidgets::Core::ViewType arg__1, KDDockWidgets::Core::View * arg__2)
+
   Layout(int arg__1, KDDWBindingsCore.View? arg__2) : super.init() {
     final voidstar_Func_int_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_voidstar_FFI>>(

@@ -29,7 +29,11 @@ class Platform extends KDDWBindingsCore.Platform {
       if (instance != null) return instance as Platform;
     }
     return Platform.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__Platform_Finalizer";
   } //Platform()
+
   Platform() : super.init() {
     final voidstar_Func_void func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_void_FFI>>(

@@ -29,7 +29,11 @@ class View extends KDDWBindingsCore.View {
       if (instance != null) return instance as View;
     }
     return View.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__View_Finalizer";
   } //View(KDDockWidgets::Core::Controller * controller, KDDockWidgets::Core::ViewType type, KDDockWidgets::Core::View * arg__3, Qt::WindowFlags windowFlags)
+
   View(KDDWBindingsCore.Controller? controller, int type,
       KDDWBindingsCore.View? arg__3,
       {int windowFlags = 0})

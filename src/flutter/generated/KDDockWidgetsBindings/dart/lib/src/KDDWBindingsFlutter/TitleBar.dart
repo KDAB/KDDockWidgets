@@ -29,7 +29,11 @@ class TitleBar extends KDDWBindingsFlutter.View {
       if (instance != null) return instance as TitleBar;
     }
     return TitleBar.fromCppPointer(cppPointer, needsAutoDelete);
+  }
+  String getFinalizerName() {
+    return "c_KDDockWidgets__flutter__TitleBar_Finalizer";
   } //TitleBar(KDDockWidgets::Core::TitleBar * controller, KDDockWidgets::Core::View * parent)
+
   TitleBar(KDDWBindingsCore.TitleBar? controller,
       {required KDDWBindingsCore.View? parent})
       : super.init() {
