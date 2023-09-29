@@ -32,12 +32,22 @@ if(KDDockWidgets_HAS_SPDLOG)
 endif()
 
 find_package(nlohmann_json QUIET)
+
 # Function to link to nlohmann
 function(kddw_add_nlohmann test)
     if(nlohmann_json_FOUND)
         target_link_libraries(${test} nlohmann_json::nlohmann_json)
     else()
         target_include_directories(${test} SYSTEM PRIVATE ${CMAKE_SOURCE_DIR}/src/3rdparty/nlohmann)
+    endif()
+endfunction()
+
+# Equivalent to CMake's add_test but can enable valgrind
+function(_add_test test)
+    if(KDDockWidgets_USE_VALGRIND)
+        add_test(NAME ${test} COMMAND valgrind --leak-check=no --error-exitcode=1 ${CMAKE_BINARY_DIR}/bin/${test})
+    else()
+        add_test(NAME ${test} COMMAND ${test})
     endif()
 endfunction()
 
@@ -50,7 +60,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
     endif()
     kddw_add_nlohmann(tst_qtwidgets)
     set_compiler_flags(tst_qtwidgets)
-    add_test(NAME tst_qtwidgets COMMAND tst_qtwidgets)
+    _add_test(tst_qtwidgets)
 endif()
 
 # tst_qtquick
@@ -62,7 +72,7 @@ if(KDDW_FRONTEND_QTQUICK)
     endif()
     kddw_add_nlohmann(tst_qtquick)
     set_compiler_flags(tst_qtquick)
-    add_test(NAME tst_qtquick COMMAND tst_qtquick)
+    _add_test(tst_qtquick)
 endif()
 
 #-----------------------------------------------------------------------------
@@ -82,7 +92,7 @@ function(add_kddw_test test srcs)
 
     if(KDDW_FRONTEND_FLUTTER)
         target_link_libraries(${test} kddockwidgets)
-        add_test(NAME ${test} COMMAND ${test})
+        _add_test(${test})
         target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
 
         if(KDDockWidgets_FLUTTER_TESTS_AOT)
@@ -93,7 +103,7 @@ function(add_kddw_test test srcs)
 
         set_tests_properties(${test} PROPERTIES ENVIRONMENT "KDDW_FLUTTER_TESTS_USE_AOT=${KDDW_AOT_VALUE}")
     else()
-        add_test(NAME ${test} COMMAND ${test})
+        _add_test(${test})
     endif()
 endfunction()
 

@@ -519,7 +519,8 @@
                 "dev"
             ],
             "cacheVariables": {
-                "KDDockWidgets_FRONTENDS": "qtwidgets"
+                "KDDockWidgets_FRONTENDS": "qtwidgets",
+                "KDDockWidgets_USE_VALGRIND": "ON"
             }
         },
         {

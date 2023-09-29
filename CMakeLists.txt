@@ -107,6 +107,7 @@ option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the
 option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
+option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
