@@ -62,6 +62,14 @@ jobs:
             preset:
               name: ci-clang-tidy-qt5
               qt_version: "5.15"
+          - os: ubuntu-22.04
+            preset:
+              name: ci-dev-valgrind-qt5
+              qt_version: "5.15"
+          - os: ubuntu-22.04
+            preset:
+              name: ci-dev-valgrind-qt6
+              qt_version: "6.5.*"
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
@@ -71,10 +79,10 @@ jobs:
           cache: true
 
       - name: Install dependencies on Ubuntu
-        if: ${{ runner.os == 'Linux' && startsWith(matrix.preset.name, 'ci-dev-asan') }}
+        if: ${{ runner.os == 'Linux' && (startsWith(matrix.preset.name, 'ci-dev-asan') || startsWith(matrix.preset.name, 'ci-dev-valgrind')) }}
         run: |
           sudo apt update -qq
-          sudo apt install -y lld
+          sudo apt install -y lld valgrind
 
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -86,6 +94,7 @@ jobs:
         uses: turtlesec-no/get-ninja@main
 
       - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
