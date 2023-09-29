@@ -140,16 +140,10 @@ public:
      *
      * @return whether this widget is the central group in a main window
      */
-    bool isCentralFrame() const
-    {
-        return m_options & FrameOption_IsCentralFrame;
-    }
+    bool isCentralFrame() const;
 
     /// @brief Returns whether you can DND dock widgets over this group and tab into it
-    bool isDockable() const
-    {
-        return !(m_options & FrameOption_NonDockable);
-    }
+    bool isDockable() const;
 
     /**
      * @brief whether the tab widget will always show tabs, even if there's only 1 dock widget
@@ -161,10 +155,7 @@ public:
      *
      * @return whether the tab widget will always show tabs, even if there's only 1 dock widget
      */
-    bool alwaysShowsTabs() const
-    {
-        return m_options & FrameOption_AlwaysShowsTabs;
-    }
+    bool alwaysShowsTabs() const;
 
     /// @brief returns whether the dockwidget @p w is inside this group
     bool containsDockWidget(DockWidget *w) const;
@@ -188,11 +179,7 @@ public:
     void restoreToPreviousPosition();
 
     int currentTabIndex() const;
-
-    FrameOptions options() const
-    {
-        return m_options;
-    }
+    FrameOptions options() const;
     bool anyNonClosable() const;
     bool anyNonDockable() const;
 
@@ -351,10 +338,8 @@ private:
 
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;
-    FrameOptions m_options = FrameOption_None;
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
-    int m_userType = 0;
 };
 
 }

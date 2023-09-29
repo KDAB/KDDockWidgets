@@ -25,9 +25,15 @@ namespace KDDockWidgets {
 
 namespace Core {
 
-class Group ::Private
+class Group::Private
 {
 public:
+    explicit Private(int userType, FrameOptions options)
+        : m_userType(userType)
+        , m_options(options)
+    {
+    }
+
     ObjectGuard<Core::Item> m_layoutItem;
 
     KDBindings::Signal<> numDockWidgetsChanged;
@@ -45,6 +51,9 @@ public:
 
     std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
         iconChangedConnections;
+
+    int m_userType = 0;
+    FrameOptions m_options = FrameOption_None;
 };
 
 }

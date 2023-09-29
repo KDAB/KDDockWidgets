@@ -143,6 +143,7 @@ protected:
 
 private:
     friend class ::TestDocks;
+    friend class Core::Group;
     friend class KDDockWidgets::QtWidgets::TitleBar;
 
     void updateAutoHideButton();

@@ -81,12 +81,10 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 Group::Group(View *parent, FrameOptions options, int userType)
     : Controller(ViewType::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
-    , d(new Private())
+    , d(new Private(userType, actualOptions(options)))
     , m_stack(new Core::Stack(this, tabWidgetOptions(options)))
     , m_tabBar(m_stack->tabBar())
     , m_titleBar(new Core::TitleBar(this))
-    , m_options(actualOptions(options))
-    , m_userType(userType)
 {
     s_dbg_numFrames++;
     DockRegistry::self()->registerGroup(this);
@@ -397,7 +395,7 @@ void Group::onDockWidgetCountChanged()
 
         // We don't really keep track of the state, so emit even if the visibility didn't change. No
         // biggie.
-        if (!(m_options & FrameOption_AlwaysShowsTabs))
+        if (!(d->m_options & FrameOption_AlwaysShowsTabs))
             d->hasTabsVisibleChanged.emit();
 
         const DockWidget::List docks = dockWidgets();
@@ -667,12 +665,12 @@ bool Group::isTheOnlyGroup() const
 
 bool Group::isOverlayed() const
 {
-    return m_options & FrameOption_IsOverlayed;
+    return d->m_options & FrameOption_IsOverlayed;
 }
 
 void Group::unoverlay()
 {
-    m_options &= ~FrameOption_IsOverlayed;
+    d->m_options &= ~FrameOption_IsOverlayed;
 }
 
 bool Group::isFloating() const
@@ -935,7 +933,7 @@ bool Group::hasNestedMDIDockWidgets() const
 
 int Group::userType() const
 {
-    return m_userType;
+    return d->m_userType;
 }
 
 WidgetResizeHandler *Group::resizeHandler() const
@@ -956,6 +954,23 @@ FloatingWindowFlags Group::requestedFloatingWindowFlags() const
         return dockwidgets.first()->floatingWindowFlags();
 
     return FloatingWindowFlag::FromGlobalConfig;
+}
+
+FrameOptions Core::Group::options() const
+{
+    return d->m_options;
+}
+bool Core::Group::alwaysShowsTabs() const
+{
+    return d->m_options & FrameOption_AlwaysShowsTabs;
+}
+bool Core::Group::isDockable() const
+{
+    return !(d->m_options & FrameOption_NonDockable);
+}
+bool Core::Group::isCentralFrame() const
+{
+    return d->m_options & FrameOption_IsCentralFrame;
 }
 
 Group::Private *Group::dptr() const
