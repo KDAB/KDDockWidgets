@@ -14,7 +14,7 @@
 
 # Instructions:
 # docker build -t kddw-tests .
-# docker run -it -v ~/Qt/5.15.2/gcc_64/:/Qt/ kddw-tests
+# docker run -it -v ~/Qt/5.15.2/gcc_64/:/Qt/ --ulimit nofile=1024:4096 kddw-tests
 # cd /KDDockWidgets/
 # cmake --preset=dev
 # cd build-dev && ninja
@@ -34,7 +34,7 @@ RUN apt update
 RUN apt install build-essential software-properties-common lld git cmake ninja-build \
                 mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
                 libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                vim clang-tidy-14 -y
+                vim clang-tidy-14 valgrind -y
 
 WORKDIR /
 RUN git clone https://github.com/KDAB/KDDockWidgets.git
