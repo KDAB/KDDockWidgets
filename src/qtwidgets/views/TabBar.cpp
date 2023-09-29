@@ -226,8 +226,8 @@ void TabBar::Private::onTabMoved(int from, int to)
     if (from == to || m_controller->isMovingTab())
         return;
 
-    // !m_controller->isMovingTab() means the move was initiated by Qt, for example
-    // the user is reordering tabs with mouse
+    // !m_controller->isMovingTab() means the move was initiated by Qt
+    // for example the user is reordering tabs with mouse
     // We need to tell the controller we got a new order.
     m_controller->dptr()->moveTabTo(from, to);
 }

@@ -810,6 +810,7 @@ QVector<std::shared_ptr<Core::View>> View::childViews() const
 {
     QVector<std::shared_ptr<Core::View>> result;
     const auto childItems = QQuickItem::childItems();
+    result.reserve(childItems.size());
     for (QQuickItem *child : childItems) {
         result << asQQuickWrapper(child);
     }
