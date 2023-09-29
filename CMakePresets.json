@@ -54,6 +54,30 @@
             ]
         },
         {
+            "name": "dev-valgrind-qt5",
+            "displayName": "dev-valgrind-qt5",
+            "description": "A dev preset which runs tests under valgrind",
+            "binaryDir": "${sourceDir}/build-dev-valgrind-qt5",
+            "inherits": [
+                "dev"
+            ],
+            "cacheVariables": {
+                "KDDockWidgets_USE_VALGRIND": "ON"
+            }
+        },
+        {
+            "name": "dev-valgrind-qt6",
+            "displayName": "dev-valgrind-qt6",
+            "description": "A dev preset which runs tests under valgrind",
+            "binaryDir": "${sourceDir}/build-dev-valgrind-qt6",
+            "inherits": [
+                "dev6"
+            ],
+            "cacheVariables": {
+                "KDDockWidgets_USE_VALGRIND": "ON"
+            }
+        },
+        {
             "name": "flutter-base",
             "hidden": true,
             "cacheVariables": {
@@ -513,14 +537,25 @@
         {
             "name": "ci-dev-valgrind-qt5",
             "displayName": "ci-dev-valgrind-qt5",
-            "description": "A dev QtWidgets preset which runs tests under valgrind",
+            "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
             "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt5",
             "inherits": [
-                "dev"
+                "dev-valgrind-qt5"
             ],
             "cacheVariables": {
-                "KDDockWidgets_FRONTENDS": "qtwidgets",
-                "KDDockWidgets_USE_VALGRIND": "ON"
+                "KDDockWidgets_FRONTENDS": "qtwidgets"
+            }
+        },
+        {
+            "name": "ci-dev-valgrind-qt6",
+            "displayName": "ci-dev-valgrind-qt6",
+            "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
+            "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt6",
+            "inherits": [
+                "dev-valgrind-qt6"
+            ],
+            "cacheVariables": {
+                "KDDockWidgets_FRONTENDS": "qtwidgets"
             }
         },
         {
