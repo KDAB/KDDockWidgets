@@ -289,15 +289,14 @@ void TitleBar::updateButtons()
 void TitleBar::updateAutoHideButton()
 {
     const bool visible = m_supportsAutoHide;
-    const bool enabled = true;
     TitleBarButtonType type = TitleBarButtonType::AutoHide;
 
-    if (const Core::Group *g = group()) {
-        if (g->isOverlayed())
+    if (const Core::Group *group = this->group()) {
+        if (group->isOverlayed())
             type = TitleBarButtonType::UnautoHide;
     }
 
-    d->autoHideButtonChanged.emit(visible, enabled, type);
+    d->autoHideButtonChanged.emit(visible, /*enabled=*/true, type);
 }
 
 void TitleBar::updateMaximizeButton()
