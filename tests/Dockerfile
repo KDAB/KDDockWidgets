@@ -14,7 +14,7 @@
 
 # Instructions:
 # docker build -t kddw-tests .
-# docker run -it -v ~/Qt/5.15.2/gcc_64/:/Qt/ --ulimit nofile=1024:4096 kddw-tests
+# docker run -it -v ~/Qt/5.15.2/gcc_64/:/Qt/ -v ~/Qt/6.3.2/gcc_64/:/Qt6/ --ulimit nofile=1024:4096 kddw-tests
 # cd /KDDockWidgets/
 # cmake --preset=dev
 # cd build-dev && ninja
@@ -34,8 +34,14 @@ RUN apt update
 RUN apt install build-essential software-properties-common lld git cmake ninja-build \
                 mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
                 libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                vim clang-tidy-14 valgrind -y
+                vim clang-tidy-14 valgrind pip libxslt-dev llvm -y
 
 WORKDIR /
 RUN git clone https://github.com/KDAB/KDDockWidgets.git
 WORKDIR /KDDockWidgets/
+
+RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
+              --trusted-host download.qt.io shiboken2-generator==5.15.2 shiboken2=5.15.2 pyside2=5.15.2
+
+RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
+              --trusted-host download.qt.io shiboken6-generator==6.3.2 shiboken6==6.3.2 pyside6==6.3.2
