@@ -236,6 +236,19 @@
             }
         },
         {
+            "name": "python6",
+            "displayName": "python6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-python6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_PYTHON_BINDINGS": "ON",
+                "CMAKE_UNITY_BUILD": "OFF",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
+                "KDDockWidgets_QT6": "ON"
+            }
+        },
+        {
             "name": "static",
             "displayName": "static",
             "generator": "Ninja",
