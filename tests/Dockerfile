@@ -41,7 +41,7 @@ RUN git clone https://github.com/KDAB/KDDockWidgets.git
 WORKDIR /KDDockWidgets/
 
 RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
-              --trusted-host download.qt.io shiboken2-generator==5.15.2 shiboken2=5.15.2 pyside2=5.15.2
+              --trusted-host download.qt.io shiboken6-generator==6.3.2 shiboken6==6.3.2 pyside6==6.3.2
 
 RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
-              --trusted-host download.qt.io shiboken6-generator==6.3.2 shiboken6==6.3.2 pyside6==6.3.2
+              --trusted-host download.qt.io shiboken2-generator==5.15.2.1 shiboken2==5.15.2.1 pyside2==5.15.2.1
