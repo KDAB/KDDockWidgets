@@ -119,7 +119,8 @@ macro(
 
     set(shiboken_framework_include_dirs_option "")
     if(CMAKE_HOST_APPLE)
-        set(shiboken_framework_include_dirs "${QT_FRAMEWORK_INCLUDE_DIR}")
+        # We need to pass "-iframework /path/to/Qt/<version>/macos/lib/" to shiboken
+        set(shiboken_framework_include_dirs "${QT_FRAMEWORK_INCLUDE_DIR}/..")
         make_path(shiboken_framework_include_dirs ${shiboken_framework_include_dirs})
         set(shiboken_framework_include_dirs_option "--framework-include-paths=${shiboken_framework_include_dirs}")
     endif()
