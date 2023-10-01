@@ -56,7 +56,7 @@ Build Issues
 ```
 
 - If you see errors like "Unable to locate Clang's built-in include directory"
-  then first mROUBLESHOOTINGake sure you have llvm installed.  If you still have problems try
+  then first make sure you have llvm installed.  If you still have problems try
   setting the environment variable `LLVM_INSTALL_DIR` to point to your llvm installation.
 
   Examples:
