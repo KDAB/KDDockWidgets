@@ -256,6 +256,18 @@
             }
         },
         {
+            "name": "homebrew-python6",
+            "displayName": "Qt6 python bindings on macOS via homebrew",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-homebrew-python6",
+            "inherits": [
+                "python6"
+            ],
+            "cacheVariables": {
+                "Python3_EXECUTABLE": "/opt/homebrew/bin/python3.10"
+            }
+        },
+        {
             "name": "static",
             "displayName": "static",
             "generator": "Ninja",
