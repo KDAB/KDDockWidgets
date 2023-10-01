@@ -54,10 +54,10 @@
             ]
         },
         {
-            "name": "dev-valgrind-qt5",
-            "displayName": "dev-valgrind-qt5",
+            "name": "dev-valgrind",
+            "displayName": "dev-valgrind",
             "description": "A dev preset which runs tests under valgrind",
-            "binaryDir": "${sourceDir}/build-dev-valgrind-qt5",
+            "binaryDir": "${sourceDir}/build-dev-valgrind",
             "inherits": [
                 "dev"
             ],
@@ -66,10 +66,10 @@
             }
         },
         {
-            "name": "dev-valgrind-qt6",
-            "displayName": "dev-valgrind-qt6",
+            "name": "dev-valgrind6",
+            "displayName": "dev-valgrind6",
             "description": "A dev preset which runs tests under valgrind",
-            "binaryDir": "${sourceDir}/build-dev-valgrind-qt6",
+            "binaryDir": "${sourceDir}/build-dev-valgrind6",
             "inherits": [
                 "dev6"
             ],
@@ -572,7 +572,7 @@
             "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
             "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt5",
             "inherits": [
-                "dev-valgrind-qt5"
+                "dev-valgrind"
             ],
             "cacheVariables": {
                 "KDDockWidgets_FRONTENDS": "qtwidgets"
@@ -584,7 +584,7 @@
             "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
             "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt6",
             "inherits": [
-                "dev-valgrind-qt6"
+                "dev-valgrind6"
             ],
             "cacheVariables": {
                 "KDDockWidgets_FRONTENDS": "qtwidgets"
