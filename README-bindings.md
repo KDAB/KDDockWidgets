@@ -117,3 +117,5 @@ To run the KDDW python example
     copy "C:\Program Files\llvm\bin\libclang.dll" libclang.dll
     (Python3 installation in C:\Python37 and llvm in c:\Program Files\llvm. adjust as needed)
 ```
+
+- On macOS if you see `cstdlib:145:9: error: no member named 'quick_exit' in the global namespace` with XCode 15, try making the `SDKROOT` env variable point to the XCode 14.2 SDK or download a more recent PySide6
