@@ -33,6 +33,8 @@ public:
 
 protected:
     SideBar *const m_sideBar;
+    SideBarViewInterface(const SideBarViewInterface &) = delete;
+    SideBarViewInterface &operator=(const SideBarViewInterface &) = delete;
 };
 
 }

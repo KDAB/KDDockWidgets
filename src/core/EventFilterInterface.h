@@ -25,6 +25,7 @@ class View;
 class EventFilterInterface
 {
 public:
+    EventFilterInterface() = default;
     virtual ~EventFilterInterface();
 
     /// @brief Override to handle expose events for a certain window
@@ -77,6 +78,9 @@ public:
     {
         return false;
     }
+
+    EventFilterInterface(const EventFilterInterface &) = delete;
+    EventFilterInterface &operator=(const EventFilterInterface &) = delete;
 };
 
 }

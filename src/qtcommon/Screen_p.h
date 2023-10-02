@@ -45,6 +45,7 @@ public:
 
 public:
     QPointer<QScreen> m_screen;
+    Q_DISABLE_COPY(Screen_qt)
 };
 
 }

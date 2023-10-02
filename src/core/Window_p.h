@@ -27,6 +27,7 @@ public:
     using List = Vector<Ptr>;
     typedef void (*WindowScreenChangedCallback)(Core::Object *context, Ptr window);
 
+    Window() = default;
     virtual ~Window();
     virtual void setWindowState(WindowState) = 0;
 
@@ -157,6 +158,9 @@ public:
 private:
     bool containsView(Controller *) const;
     bool containsView(View *) const;
+
+    Window(const Window &) = delete;
+    Window &operator=(const Window &) = delete;
 };
 
 inline bool operator==(Core::Window::Ptr w1, Window::Ptr w2)

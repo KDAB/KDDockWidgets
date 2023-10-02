@@ -32,6 +32,8 @@ public:
 #endif
 protected:
     Core::TitleBar *const m_titleBar;
+    TitleBarViewInterface(const TitleBarViewInterface &) = delete;
+    TitleBarViewInterface &operator=(const TitleBarViewInterface &) = delete;
 };
 
 }

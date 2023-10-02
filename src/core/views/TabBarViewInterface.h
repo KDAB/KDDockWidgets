@@ -55,6 +55,8 @@ public:
 
 protected:
     TabBar *const m_tabBar;
+    TabBarViewInterface(const TabBarViewInterface &) = delete;
+    TabBarViewInterface &operator=(const TabBarViewInterface &) = delete;
 };
 
 }

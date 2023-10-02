@@ -24,6 +24,8 @@ public:
     Window::Ptr transientParent() const override;
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
+
+    Q_DISABLE_COPY(Window)
 };
 
 }

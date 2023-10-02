@@ -24,6 +24,7 @@ namespace KDDockWidgets::Core {
 class DOCKS_EXPORT ClassicIndicatorWindowViewInterface
 {
 public:
+    ClassicIndicatorWindowViewInterface() = default;
     virtual ~ClassicIndicatorWindowViewInterface();
 
     virtual void setObjectName(const QString &) = 0;
@@ -52,6 +53,9 @@ public:
     virtual void setGeometry(Rect) = 0;
     virtual bool isWindow() const = 0;
     virtual void updateIndicatorVisibility() = 0;
+
+    ClassicIndicatorWindowViewInterface(const ClassicIndicatorWindowViewInterface &) = delete;
+    ClassicIndicatorWindowViewInterface &operator=(const ClassicIndicatorWindowViewInterface &) = delete;
 };
 
 }

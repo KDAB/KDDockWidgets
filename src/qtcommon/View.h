@@ -56,6 +56,7 @@ protected:
     class EventFilter;
     EventFilter *const m_eventFilter;
     QObject *const m_thisObj;
+    Q_DISABLE_COPY(View_qt)
 };
 
 }

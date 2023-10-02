@@ -251,6 +251,9 @@ protected:
     Controller *const m_controller;
     bool m_inDtor = false;
 
+    View(const View &) = delete;
+    View &operator=(const View &) = delete;
+
 #ifdef KDDW_FRONTEND_FLUTTER
     // Little workaround so flutter has the same deletion order as Qt.
     // In Qt we have this order of deletion

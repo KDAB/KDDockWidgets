@@ -64,6 +64,7 @@ public:
 
 protected:
     QPointer<QWindow> m_window;
+    Q_DISABLE_COPY(Window)
 };
 
 }

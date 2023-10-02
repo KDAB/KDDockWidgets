@@ -62,6 +62,7 @@ public:
     std::shared_ptr<View> asWrapper() override;
 
 private:
+    Q_DISABLE_COPY(ViewWrapper)
     const bool m_ownsController;
 };
 

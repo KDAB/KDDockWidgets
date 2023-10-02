@@ -43,6 +43,8 @@ public:
 
 private:
     MDILayout *const m_mdiLayout;
+    MainWindowMDIViewInterface(const MainWindowMDIViewInterface &) = delete;
+    MainWindowMDIViewInterface &operator=(const MainWindowMDIViewInterface &) = delete;
 };
 
 }

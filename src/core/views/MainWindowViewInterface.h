@@ -72,6 +72,8 @@ public:
 
 protected:
     MainWindow *const m_mainWindow;
+    MainWindowViewInterface(const MainWindowViewInterface &) = delete;
+    MainWindowViewInterface &operator=(const MainWindowViewInterface &) = delete;
 };
 
 }

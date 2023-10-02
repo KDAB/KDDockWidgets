@@ -58,6 +58,9 @@ public:
 
     class Private;
     Private *const d;
+
+    Action(const Action &) = delete;
+    Action &operator=(const Action &) = delete;
 };
 
 }

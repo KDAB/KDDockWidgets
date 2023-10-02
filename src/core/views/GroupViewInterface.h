@@ -45,6 +45,8 @@ public:
 
 protected:
     Group *const m_group;
+    GroupViewInterface(const GroupViewInterface &) = delete;
+    GroupViewInterface &operator=(const GroupViewInterface &) = delete;
 };
 
 }

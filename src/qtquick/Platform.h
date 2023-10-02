@@ -76,6 +76,7 @@ private:
     void init();
     QPointer<QQmlEngine> m_qmlEngine;
     QtQuickHelpers *const m_qquickHelpers;
+    Q_DISABLE_COPY(Platform)
 };
 
 }

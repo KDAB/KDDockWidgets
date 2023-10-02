@@ -30,6 +30,8 @@ public:
     void setVisible(bool) override;
     bool supportsHonouringLayoutMinSize() const override;
     void destroy() override;
+
+    Q_DISABLE_COPY(Window)
 };
 
 }

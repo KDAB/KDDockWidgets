@@ -305,6 +305,9 @@ public:
 protected:
     virtual int startDragDistance_impl() const;
     Platform();
+
+    Platform(const Platform &) = delete;
+    Platform &operator=(const Platform &) = delete;
 };
 
 #if defined(DOCKS_DEVELOPER_MODE)

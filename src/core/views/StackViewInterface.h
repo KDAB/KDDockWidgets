@@ -40,6 +40,8 @@ public:
 
 protected:
     Stack *const m_stack;
+    StackViewInterface(const StackViewInterface &) = delete;
+    StackViewInterface &operator=(const StackViewInterface &) = delete;
 };
 
 }

@@ -61,6 +61,10 @@ public:
 
     bool operator==(Screen *) = delete;
     bool operator!=(Screen *) = delete;
+
+    Screen() = default;
+    Screen(const Screen &) = delete;
+    Screen &operator=(const Screen &) = delete;
 };
 
 

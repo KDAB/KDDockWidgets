@@ -67,6 +67,9 @@ public:
 
 protected:
     DockWidget *const m_dockWidget;
+
+    DockWidgetViewInterface(const DockWidgetViewInterface &) = delete;
+    DockWidgetViewInterface &operator=(const DockWidgetViewInterface &) = delete;
 };
 
 }

@@ -114,6 +114,7 @@ protected:
 private:
     class GlobalEventFilter;
     GlobalEventFilter *const m_globalEventFilter;
+    Q_DISABLE_COPY(Platform_qt)
 };
 
 }
