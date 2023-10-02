@@ -24,6 +24,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
+// clazy:excludeall=missing-qobject-macro
+
 template<>
 View<QWidget>::View(Core::Controller *controller, Core::ViewType type,
                     QWidget *parent, Qt::WindowFlags windowFlags)

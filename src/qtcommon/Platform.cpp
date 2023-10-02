@@ -32,6 +32,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtCommon;
 using namespace KDDockWidgets::Core;
 
+// clazy:excludeall=missing-qobject-macro
+
 class Platform_qt::GlobalEventFilter : public QObject
 {
 public:

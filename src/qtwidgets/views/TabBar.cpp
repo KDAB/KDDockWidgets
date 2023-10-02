@@ -33,6 +33,7 @@ namespace KDDockWidgets {
 namespace { // anonymous namespace to silence -Wweak-vtables
 class MyProxy : public QProxyStyle
 {
+    Q_OBJECT
 public:
     MyProxy()
         : QProxyStyle(qApp->style())
@@ -231,3 +232,5 @@ void TabBar::Private::onTabMoved(int from, int to)
     // We need to tell the controller we got a new order.
     m_controller->dptr()->moveTabTo(from, to);
 }
+
+#include "TabBar.moc"

@@ -24,6 +24,7 @@ class ItemBoxContainer;
 
 class DOCKS_EXPORT Separator : public Controller
 {
+    Q_OBJECT
 public:
     typedef Vector<Separator *> List;
 

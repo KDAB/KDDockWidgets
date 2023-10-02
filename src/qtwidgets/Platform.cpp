@@ -37,6 +37,7 @@ static void initResources()
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
+// clazy:excludeall=missing-qobject-macro
 
 class Platform::GlobalEventFilter : public QObject
 {

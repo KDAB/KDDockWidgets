@@ -25,6 +25,8 @@
 
 using namespace KDDockWidgets::QtCommon;
 
+// clazy:excludeall=missing-qobject-macro
+
 class View_qt::EventFilter : public QObject
 {
 public:

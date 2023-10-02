@@ -54,6 +54,7 @@ class Separator;
  */
 class DOCKS_EXPORT Layout : public Controller
 {
+    Q_OBJECT
 public:
     explicit Layout(ViewType, View *);
     ~Layout();
