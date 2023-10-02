@@ -666,7 +666,8 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     // When restoring such a file, we need to float any visible dock widgets which it doesn't know
     // about so we can restore the MainWindow layout properly
 
-    for (auto mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
+    const auto mainWindows = DockRegistry::self()->mainWindows(layout.mainWindowNames());
+    for (auto mw : mainWindows) {
         const Core::DockWidget::List docks = mw->layout()->dockWidgets();
         for (Core::DockWidget *dw : docks) {
             if (!layout.containsDockWidget(dw->uniqueName())) {
@@ -681,7 +682,8 @@ void LayoutSaver::Private::deleteEmptyGroups() const
     // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
     // Delete their group now.
 
-    for (auto group : m_dockRegistry->groups()) {
+    const auto groups = m_dockRegistry->groups();
+    for (auto group : groups) {
         if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame()) {
             if (auto item = group->layoutItem()) {
                 item->turnIntoPlaceholder();
@@ -743,7 +745,8 @@ void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 
     layout.closedDockWidgets.clear();
 
-    for (const QString &name : j.value("closedDockWidgets", Vector<QString>())) {
+    const auto closedDockWidgets = j.value("closedDockWidgets", Vector<QString>());
+    for (const QString &name : closedDockWidgets) {
         layout.closedDockWidgets.push_back(
             LayoutSaver::DockWidget::dockWidgetForName(name));
     }

@@ -236,7 +236,8 @@ void Group::addTab(Group *group, InitialOption addingOption)
 void Group::addTab(FloatingWindow *floatingWindow, InitialOption addingOption)
 {
     assert(floatingWindow);
-    for (Group *f : floatingWindow->groups())
+    const auto groups = floatingWindow->groups();
+    for (Group *f : groups)
         addTab(f, addingOption);
 }
 
@@ -585,7 +586,8 @@ int Group::currentTabIndex() const
 
 bool Group::anyNonClosable() const
 {
-    for (auto dw : dockWidgets()) {
+    const auto docks = dockWidgets();
+    for (auto dw : docks) {
         if ((dw->options() & DockWidgetOption_NotClosable)
             && !Platform::instance()->isProcessingAppQuitEvent())
             return true;
@@ -596,7 +598,8 @@ bool Group::anyNonClosable() const
 
 bool Group::anyNonDockable() const
 {
-    for (auto dw : dockWidgets()) {
+    const auto docks = dockWidgets();
+    for (auto dw : docks) {
         if (dw->options() & DockWidgetOption_NotDockable)
             return true;
     }
@@ -616,11 +619,12 @@ void Group::setLayoutItem(Item *item)
         item->ref();
 
     d->m_layoutItem = item;
+    const auto docks = dockWidgets();
     if (item) {
-        for (DockWidget *dw : dockWidgets())
+        for (DockWidget *dw : docks)
             dw->d->addPlaceholderItem(item);
     } else {
-        for (DockWidget *dw : dockWidgets())
+        for (DockWidget *dw : docks)
             dw->d->lastPosition()->removePlaceholders();
     }
 }
@@ -781,7 +785,8 @@ void Group::scheduleDeleteLater()
 Size Group::dockWidgetsMinSize() const
 {
     Size size = Item::hardcodedMinimumSize;
-    for (DockWidget *dw : dockWidgets()) {
+    const auto docks = dockWidgets();
+    for (DockWidget *dw : docks) {
         if (!dw->inDtor())
             size = size.expandedTo(dw->view()->minSize());
     }
@@ -793,7 +798,8 @@ Size Group::dockWidgetsMinSize() const
 Size Group::biggestDockWidgetMaxSize() const
 {
     Size size = Item::hardcodedMaximumSize;
-    for (DockWidget *dw : dockWidgets()) {
+    const auto docks = dockWidgets();
+    for (DockWidget *dw : docks) {
         if (dw->inDtor())
             continue;
         const Size dwMax = dw->view()->maxSizeHint();

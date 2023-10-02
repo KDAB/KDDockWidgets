@@ -449,7 +449,6 @@ bool FloatingWindow::hasSingleDockWidget() const
 Core::Group *FloatingWindow::singleFrame() const
 {
     const Core::Group::List groups = this->groups();
-
     return groups.isEmpty() ? nullptr : groups.first();
 }
 
@@ -458,7 +457,8 @@ bool FloatingWindow::beingDeleted() const
     if (m_deleteScheduled || m_inDtor)
         return true;
 
-    for (Core::Group *f : groups()) {
+    const auto groups = this->groups();
+    for (Core::Group *f : groups) {
         if (f->beingDeletedLater())
             return true;
     }
@@ -509,14 +509,14 @@ void FloatingWindow::updateTitleBarVisibility()
 
     bool visible = true;
 
-    for (Core::Group *group : groups())
+    const auto groups = this->groups();
+    for (Core::Group *group : groups)
         group->updateTitleBarVisibility();
 
     if (KDDockWidgets::usesClientTitleBar()) {
         if ((d->m_flags & FloatingWindowFlag::HideTitleBarWhenTabsVisible)
             && !(d->m_flags & FloatingWindowFlag::AlwaysTitleBarWhenFloating)) {
             if (hasSingleFrame()) {
-                const auto groups = this->groups();
                 visible = !groups.first()->hasTabsVisible();
             }
         }
