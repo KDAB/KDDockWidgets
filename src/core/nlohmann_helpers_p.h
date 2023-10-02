@@ -18,7 +18,7 @@
 
 namespace KDDockWidgets {
 
-inline void to_json(nlohmann::json &j, const Size &size)
+inline void to_json(nlohmann::json &j, Size size)
 {
     j["width"] = size.width();
     j["height"] = size.height();
@@ -31,7 +31,7 @@ inline void from_json(const nlohmann::json &j, Size &size)
     size.setHeight(j.value("height", s.height()));
 }
 
-inline void to_json(nlohmann::json &j, const Rect &rect)
+inline void to_json(nlohmann::json &j, Rect rect)
 {
     j["x"] = rect.x();
     j["y"] = rect.y();
@@ -83,7 +83,7 @@ inline void to_json(nlohmann::json &j, const KDDockWidgets::Vector<QString> &str
 }
 #ifdef KDDW_FRONTEND_QT
 
-inline void to_json(nlohmann::json &j, const QSize &size)
+inline void to_json(nlohmann::json &j, QSize size)
 {
     KDDockWidgets::to_json(j, size);
 }
@@ -93,7 +93,7 @@ inline void from_json(const nlohmann::json &j, QSize &size)
     KDDockWidgets::from_json(j, size);
 }
 
-inline void to_json(nlohmann::json &j, const QRect &rect)
+inline void to_json(nlohmann::json &j, QRect rect)
 {
     KDDockWidgets::to_json(j, rect);
 }

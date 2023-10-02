@@ -153,7 +153,7 @@ QMargins MainWindow::centerWidgetMargins() const
     return d->m_centerWidgetMargins;
 }
 
-void MainWindow::setCenterWidgetMargins(const QMargins &margins)
+void MainWindow::setCenterWidgetMargins(QMargins margins)
 {
     if (d->m_centerWidgetMargins == margins)
         return;
