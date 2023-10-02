@@ -514,7 +514,8 @@ void FloatingWindow::updateTitleBarVisibility()
         if ((d->m_flags & FloatingWindowFlag::HideTitleBarWhenTabsVisible)
             && !(d->m_flags & FloatingWindowFlag::AlwaysTitleBarWhenFloating)) {
             if (hasSingleFrame()) {
-                visible = !groups().first()->hasTabsVisible();
+                const auto groups = this->groups();
+                visible = !groups.first()->hasTabsVisible();
             }
         }
 

@@ -145,8 +145,10 @@ bool Stack::isWindow() const
 
 Core::DockWidget *Stack::singleDockWidget() const
 {
-    if (d->m_group->hasSingleDockWidget())
-        return d->m_group->dockWidgets().first();
+    if (d->m_group->hasSingleDockWidget()) {
+        const auto dockWidgets = d->m_group->dockWidgets();
+        return dockWidgets.first();
+    }
 
     return nullptr;
 }

@@ -52,8 +52,7 @@ std::shared_ptr<Core::View> Window::rootView() const
         } else {
             const auto children = contentItem->childItems();
             Q_ASSERT(!children.isEmpty());
-
-            return QtQuick::View::asQQuickWrapper(contentItem->childItems().first());
+            return QtQuick::View::asQQuickWrapper(children.first());
         }
     } else {
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";
