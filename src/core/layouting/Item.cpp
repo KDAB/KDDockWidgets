@@ -3578,7 +3578,7 @@ KDDockWidgets::Core::Separator *ItemBoxContainer::separatorForChild(Item *child,
         return nullptr;
     }
 
-    return d->m_separators[separatorIndex];
+    return d->m_separators.at(separatorIndex);
 }
 
 Core::Separator *ItemBoxContainer::adjacentSeparatorForChild(Item *child, Side side) const
@@ -3659,7 +3659,7 @@ void ItemBoxContainer::Private::relayoutIfNeeded()
     }
 
     // #2. Make sure there's no child that is missing space
-    for (Item *child : q->m_children) {
+    for (Item *child : std::as_const(q->m_children)) {
         const int missingLength = ::length(child->missingSize(), m_orientation);
         if (!child->isVisible() || missingLength == 0)
             continue;

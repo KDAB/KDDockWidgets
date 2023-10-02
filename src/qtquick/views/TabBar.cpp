@@ -373,7 +373,7 @@ Core::DockWidget *DockWidgetModel::dockWidgetAt(int index) const
         return nullptr;
     }
 
-    return d->m_dockWidgets[index];
+    return d->m_dockWidgets.at(index);
 }
 
 bool DockWidgetModel::contains(Core::DockWidget *dw) const

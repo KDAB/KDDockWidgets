@@ -598,7 +598,8 @@ Core::DockWidget::List TitleBar::dockWidgets() const
 {
     if (m_floatingWindow) {
         DockWidget::List result;
-        for (Group *group : m_floatingWindow->groups()) {
+        const auto groups = m_floatingWindow->groups();
+        for (Group *group : groups) {
             result.append(group->dockWidgets());
         }
         return result;

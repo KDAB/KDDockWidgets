@@ -413,7 +413,8 @@ bool FloatingWindow::isInDragArea(Point globalPoint) const
 
 bool FloatingWindow::anyNonClosable() const
 {
-    for (Core::Group *group : groups()) {
+    const auto groups = this->groups();
+    for (Core::Group *group : groups) {
         if (group->anyNonClosable())
             return true;
     }
@@ -422,7 +423,8 @@ bool FloatingWindow::anyNonClosable() const
 
 bool FloatingWindow::anyNonDockable() const
 {
-    for (Core::Group *group : groups()) {
+    const auto groups = this->groups();
+    for (Core::Group *group : groups) {
         if (group->anyNonDockable())
             return true;
     }

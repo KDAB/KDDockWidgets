@@ -142,7 +142,8 @@ DebugWindow::DebugWindow(QWidget *parent)
     button->setText(QStringLiteral("Float all visible docks"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
-        for (auto dw : DockRegistry::self()->dockwidgets()) {
+        const auto docks = DockRegistry::self()->dockwidgets();
+        for (auto dw : docks) {
             if (dw->isVisible() && !dw->isFloating()) {
                 dw->setFloating(true);
             }

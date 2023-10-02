@@ -170,7 +170,8 @@ void DropArea::updateFloatingActions()
 
 Core::Item *DropArea::centralFrame() const
 {
-    for (Core::Item *item : this->items()) {
+    const auto items = this->items();
+    for (Core::Item *item : items) {
         if (auto group = item->asGroupController()) {
             if (group->isCentralFrame())
                 return item;

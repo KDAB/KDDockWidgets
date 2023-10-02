@@ -179,7 +179,8 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
 void Layout::unrefOldPlaceholders(const Core::Group::List &groupsBeingAdded) const
 {
     for (Core::Group *group : groupsBeingAdded) {
-        for (Core::DockWidget *dw : group->dockWidgets()) {
+        const auto dws = group->dockWidgets();
+        for (Core::DockWidget *dw : dws) {
             dw->d->lastPosition()->removePlaceholders(this);
         }
     }

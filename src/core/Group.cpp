@@ -452,7 +452,8 @@ void Group::updateTitleBarVisibility()
 
     if (wasVisible != visible) {
         d->actualTitleBarChanged.emit();
-        for (auto dw : dockWidgets())
+        const auto docks = dockWidgets();
+        for (auto dw : docks)
             dw->d->actualTitleBarChanged.emit();
     }
 

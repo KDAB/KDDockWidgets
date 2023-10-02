@@ -649,7 +649,8 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const Vector<QString> &m
     // If they were previously docked we need to float them, as the main window they were on will
     // be loading a new layout.
 
-    for (auto mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
+    const auto mainWindows = DockRegistry::self()->mainWindows(mainWindowNames);
+    for (auto mw : mainWindows) {
         const Core::DockWidget::List docks = mw->layout()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {

@@ -94,7 +94,8 @@ void Group::init()
     m_group->dptr()->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
 
     connect(this, &View::itemGeometryChanged, this, [this] {
-        for (auto dw : m_group->dockWidgets()) {
+        const auto docks = m_group->dockWidgets();
+        for (auto dw : docks) {
             auto dwView = static_cast<DockWidget *>(QtQuick::asView_qtquick(dw->view()));
             Q_EMIT dwView->groupGeometryChanged(geometry());
         }
