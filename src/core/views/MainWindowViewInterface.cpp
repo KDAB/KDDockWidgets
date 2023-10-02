@@ -174,7 +174,7 @@ void MainWindowViewInterface::overlayOnSideBar(const QString &dockId)
 void MainWindowViewInterface::toggleOverlayOnSideBar(const QString &dockId)
 {
     if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
-        return m_mainWindow->toggleOverlayOnSideBar(dw);
+        m_mainWindow->toggleOverlayOnSideBar(dw);
     } else {
         KDDW_ERROR("Could not find dock widget {}", dockId);
     }
