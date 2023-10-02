@@ -68,6 +68,12 @@ ViewGuard &ViewGuard::operator=(View *view)
     return *this;
 }
 
+ViewGuard &ViewGuard::operator=(const ViewGuard &other)
+{
+    setView(other.view());
+    return *this;
+}
+
 void ViewGuard::setView(View *view)
 {
     if (view == v)

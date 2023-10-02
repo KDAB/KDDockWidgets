@@ -38,6 +38,7 @@ public:
     View *view() const;
 
     ViewGuard &operator=(View *);
+    ViewGuard &operator=(const ViewGuard &);
 
 private:
     void setView(View *);
