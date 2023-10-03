@@ -76,6 +76,6 @@ struct KDDWTest
     {                   \
         KDDWTest        \
         {               \
-#name, name \
+            #name, name \
         }               \
     }
