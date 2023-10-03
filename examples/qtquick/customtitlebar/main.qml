@@ -35,7 +35,7 @@ ApplicationWindow {
 
         Component.onCompleted: {
             // The other 3 dock widgets are created via C++ in main.cpp
-            // For illustration purposes, here's a .qml version. Maybe it's te preferred form even.
+            // For illustration purposes, here's a .qml version. Maybe its the preferred form even.
             addDockWidget(dock4, KDDW.KDDockWidgets.Location_OnBottom);
         }
     }

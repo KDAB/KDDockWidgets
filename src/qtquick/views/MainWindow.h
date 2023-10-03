@@ -27,7 +27,7 @@ namespace QtQuick {
 
 ///@brief A docking area for dock widgets
 /// Named MainWindow as it's the QtWidgets/QMainWindow counterpart.
-/// Provides the ability of acepting drops of dock widgets.
+/// Provides the ability of accepting drops of dock widgets.
 /// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
 /// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user
 /// to do. From QML just use DockingArea {}, which will create a this class behind the scenes. It's

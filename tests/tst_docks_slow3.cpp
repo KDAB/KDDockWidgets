@@ -13,7 +13,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 // A test that was extracted out from tst_docks.cpp as it was too slow
-// By using a separate executable it can be paralellized by ctest.
+// By using a separate executable it can be parallelized by ctest.
 
 #include "utils.h"
 #include "simple_test_framework.h"

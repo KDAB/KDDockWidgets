@@ -3540,7 +3540,7 @@ KDDW_QCORO_TASK tst_lastFloatingPositionIsRestored()
     saver.restoreLayout(saved);
     CHECK_EQ(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
 
-    // Adjsut to what we got without the group
+    // Adjust to what we got without the group
     targetPos = dock1->window()->geometry().topLeft();
 
     // Now dock it:

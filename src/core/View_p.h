@@ -77,7 +77,7 @@ public:
     ///@brief Returns the type of this view
     ViewType type() const;
 
-    ///@brief returns an id for corelation purposes for saving layouts
+    ///@brief returns an id for correlation purposes for saving layouts
     QString id() const;
 
     Controller *firstParentOfType(ViewType) const;

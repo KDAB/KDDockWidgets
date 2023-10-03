@@ -30,7 +30,7 @@ public:
     virtual void setObjectName(const QString &) = 0;
 
     /// Called when the mouse is dragging a window over a drop area
-    /// The implementor should:
+    /// The implementer should:
     /// - Iterate over all visible indicators, if any is under the mouse then it should show
     ///   the "active" icon variant.
     virtual DropLocation hover(Point) = 0;
@@ -42,7 +42,7 @@ public:
 
     /// Called by the framework to updates the position of the individual drop indicators
     /// This function is called when the drag first starts and also if the window resizes itself (unlikely during drag though)
-    /// The implementor should:
+    /// The implementer should:
     /// - call rect() to know where to put the outer indicators
     /// - call classicIndicators->hoveredGroup(), if not null, will give you the rect for the inner indicators
     virtual void updatePositions() = 0;

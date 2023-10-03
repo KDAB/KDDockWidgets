@@ -38,7 +38,7 @@ inline Point eventGlobalPos(MouseEvent *ev)
     return ev->globalPosition().toPoint();
 }
 
-// TODOm4: Rename to QPoint once flutter doesnt depend on Qt
+// TODOm4: Rename to QPoint once flutter doesn't depend on Qt
 inline Point eventPos(HoverEvent *ev)
 {
     return ev->position().toPoint();
