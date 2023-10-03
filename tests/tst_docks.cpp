@@ -4841,7 +4841,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     saver.restoreLayout(saved);
     QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
 
-    // Adjsut to what we got without the frame
+    // Adjust to what we got without the frame
     targetPos = dock1->window()->geometry().topLeft();
 
     // Now dock it:

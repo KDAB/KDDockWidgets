@@ -17,7 +17,7 @@
 namespace KDDockWidgets {
 
 ///@brief The MainWindow counterpart for QtQuick
-/// Provides the ability of acepting drops of dock widgets.
+/// Provides the ability of accepting drops of dock widgets.
 /// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
 /// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
 class DOCKS_EXPORT MainWindowQuick : public MainWindowBase

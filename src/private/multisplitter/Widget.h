@@ -143,7 +143,7 @@ public:
         return obj == m_thisObj;
     }
 
-    ///@brief returns an id for corelation purposes for saving layouts
+    ///@brief returns an id for correlation purposes for saving layouts
     QString id() const;
 
     static QSize hardcodedMinimumSize();
