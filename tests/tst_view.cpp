@@ -211,6 +211,7 @@ KDDW_QCORO_TASK tst_viewCloseRequested()
 
     rootView->close();
     CHECK(signalArrived);
+    delete rootView;
 
     KDDW_TEST_RETURN(true);
 }
