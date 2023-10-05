@@ -24,7 +24,8 @@ String kddwSourceDir() {
   return Platform.script.path.replaceAll("run_flutter_tests.dart", "");
 }
 
-Future<int> runTests(String? singleTestName, String buildDir) async {
+Future<int> runTests(String? singleTestName, List<String> singleTestArgs,
+    String buildDir) async {
   if (!await Directory(buildDir).exists()) {
     final presetName = buildDir
         .replaceAll(kddwSourceDir(), "")
@@ -104,7 +105,13 @@ Future<int> runTests(String? singleTestName, String buildDir) async {
       // "--disable-service-auth-codes",
       // "--verbose-logging",
       // "--start-paused"
-      if (useGDB) ...["-ex=run", "--args", "bin/$singleTestName"]
+      if (useGDB) ...[
+        "-ex=run",
+        "--args",
+        "bin/$singleTestName",
+        ...singleTestArgs
+      ] else
+        ...singleTestArgs
     ];
     return await runCommand(executableName, args,
         workingDirectory: buildDir, env: env);
@@ -144,7 +151,7 @@ Future<void> main(List<String> args) async {
   ubsanPrintStacks = _args.remove("--ubsan-stacktraces");
   final bool isHelp = _args.remove("--help") || _args.remove("-h");
 
-  if (_args.length > 1 || isHelp) {
+  if (isHelp) {
     printUsage();
     exit(0);
   }
@@ -155,8 +162,10 @@ Future<void> main(List<String> args) async {
   }
 
   final String? singleTestName = _args.isEmpty ? null : _args.first;
+  List<String> singleTestArgs = _args.isEmpty ? [] : _args.sublist(1);
 
-  final result = await runTests(singleTestName, calculateBuildDir());
+  final result =
+      await runTests(singleTestName, singleTestArgs, calculateBuildDir());
   final bool isSuccess = result == 0;
   if (isSuccess)
     print("SUCCESS!");
