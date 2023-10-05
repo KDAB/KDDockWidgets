@@ -48,16 +48,22 @@ jobs:
               name: ci-dev-asan-qt5
               qt_version: "5.15"
               detect_leaks: 0
+              apt_pgks:
+                - lld
           - os: ubuntu-22.04
             preset:
               name: ci-dev-asan-qtwidgets-qt6
               qt_version: "6.5.*"
               detect_leaks: 1
+              apt_pgks:
+                - lld
           - os: ubuntu-22.04
             preset:
               name: ci-dev-asan-qtquick-qt6
               qt_version: "6.5.*"
               detect_leaks: 1
+              apt_pgks:
+                - lld
           - os: ubuntu-22.04
             preset:
               name: ci-clang-tidy-qt5
@@ -66,10 +72,23 @@ jobs:
             preset:
               name: ci-dev-valgrind-qt5
               qt_version: "5.15"
+              apt_pgks:
+                - lld
+                - valgrind
           - os: ubuntu-22.04
             preset:
               name: ci-dev-valgrind-qt6
               qt_version: "6.5.*"
+              apt_pgks:
+                - lld
+                - valgrind
+          - os: ubuntu-22.04
+            preset:
+              name: clazy
+              build_preset_arg: '--preset=clazy'
+              qt_version: "5.15"
+              apt_pgks:
+                - clazy
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
@@ -78,17 +97,14 @@ jobs:
           version: ${{ matrix.preset.qt_version }}
           cache: true
 
-      - name: Install dependencies on Ubuntu
-        if: ${{ runner.os == 'Linux' && (startsWith(matrix.preset.name, 'ci-dev-asan') || startsWith(matrix.preset.name, 'ci-dev-valgrind')) }}
+      - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
+        if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
         run: |
           sudo apt update -qq
-          sudo apt install -y lld valgrind
+          echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
 
       - name: Checkout sources
         uses: actions/checkout@v4
-
-      - name: Create build directory
-        run: mkdir build
 
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main
@@ -98,14 +114,14 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
-        run: cmake -S . -B ./build --preset ${{ matrix.preset.name }}
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
-      - name: Build Project
-        run: cmake --build ./build
+      - name: Build Project ${{ matrix.preset.build_preset_arg }}
+        run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
 
       - name: Run tests on Linux (offscreen)
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
-        run: ctest --test-dir ./build --output-on-failure
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
@@ -113,10 +129,10 @@ jobs:
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
-        run: ctest --test-dir ./build --output-on-failure
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
 
       - name: Read tests log when it fails
         uses: andstor/file-reader-action@v1
         if: ${{ failure() && startsWith(matrix.preset.name, 'ci-dev-') }}
         with:
-          path: "./build/Testing/Temporary/LastTest.log"
+          path: "./build-${{ matrix.preset.name }}/Testing/Temporary/LastTest.log"
