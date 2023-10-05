@@ -123,7 +123,8 @@ void printUsage() {
       "Usage: dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces]");
   print("Or specify a single test to run:");
   print(
-      "dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces] [--gdb] <test_name>");
+      "dart run_flutter_tests.dart [--aot] [--asan] [--lsan] [--ubsan-stacktraces] [--gdb] <test_name> [args]");
+  print("Use asan_symbolize.py if --lsan isn't symbolizing libapp.so");
 }
 
 String calculateBuildDir() {
