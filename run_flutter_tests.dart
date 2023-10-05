@@ -145,9 +145,10 @@ String calculateBuildDir() {
 Future<void> main(List<String> args) async {
   final _args = List<String>.from(args);
 
-  isAOT = _args.remove("--aot");
   isLSAN = _args.remove("--lsan");
-  isASAN = isLSAN || _args.remove("--asan");
+  isASAN = _args.remove("--asan") || isLSAN;
+  isAOT =
+      _args.remove("--aot") || isLSAN; // LSAN requires AOT for simbolization
   useGDB = _args.remove("--gdb");
   ubsanPrintStacks = _args.remove("--ubsan-stacktraces");
   final bool isHelp = _args.remove("--help") || _args.remove("-h");
