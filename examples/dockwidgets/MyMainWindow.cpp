@@ -46,17 +46,10 @@ static MyWidget *newMyWidget()
 }
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                           bool dockWidget0IsNonClosable, bool nonDockableDockWidget9,
-                           bool restoreIsRelative, bool maxSizeForDockWidget8,
-                           bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
+                           ExampleOptions exampleOptions,
                            const QString &affinityName, QWidget *parent)
     : KDDockWidgets::QtWidgets::MainWindow(uniqueName, options, parent)
-    , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
-    , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
-    , m_restoreIsRelative(restoreIsRelative)
-    , m_maxSizeForDockWidget8(maxSizeForDockWidget8)
-    , m_dockwidget5DoesntCloseBeforeRestore(dockwidget5DoesntCloseBeforeRestore)
-    , m_dock0BlocksCloseEvent(dock0BlocksCloseEvent)
+    , m_exampleOptions(exampleOptions)
 {
     auto menubar = menuBar();
     auto fileMenu = new QMenu(QStringLiteral("File"), this);
@@ -91,7 +84,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     auto restoreLayoutAction = fileMenu->addAction(QStringLiteral("Restore Layout"));
     connect(restoreLayoutAction, &QAction::triggered, this, [this] {
         KDDockWidgets::RestoreOptions options = KDDockWidgets::RestoreOption_None;
-        if (m_restoreIsRelative)
+        if (m_exampleOptions & ExampleOption::RestoreIsRelative)
             options |= KDDockWidgets::RestoreOption_RelativeToMainWindow;
 
         KDDockWidgets::LayoutSaver saver(options);
@@ -138,7 +131,7 @@ void MyMainWindow::createDockWidgets()
 {
     Q_ASSERT(m_dockwidgets.isEmpty());
 
-    const int numDockWidgets = m_dockWidget9IsNonDockable ? 10 : 9;
+    const int numDockWidgets = (m_exampleOptions & ExampleOption::NonDockableDockWidget9) ? 10 : 9;
 
     // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget
     // instances)
@@ -178,13 +171,13 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
     KDDockWidgets::DockWidgetOptions options = KDDockWidgets::DockWidgetOption_None;
     KDDockWidgets::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::LayoutSaverOption::None;
 
-    if (count == 0 && m_dockWidget0IsNonClosable)
+    if (count == 0 && (m_exampleOptions & ExampleOption::DockWidget0IsNonClosable))
         options |= KDDockWidgets::DockWidgetOption_NotClosable;
 
-    if (count == 9 && m_dockWidget9IsNonDockable)
+    if (count == 9 && (m_exampleOptions & ExampleOption::NonDockableDockWidget9))
         options |= KDDockWidgets::DockWidgetOption_NotDockable;
 
-    if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
+    if (count == 5 && (m_exampleOptions & ExampleOption::Dockwidget5DoesntCloseBeforeRestore))
         layoutSaverOptions |= KDDockWidgets::LayoutSaverOption::Skip;
 
     auto dock = new KDDockWidgets::QtWidgets::DockWidget(
@@ -196,7 +189,7 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
 
     auto myWidget = newMyWidget();
-    if (count == 8 && m_maxSizeForDockWidget8) {
+    if (count == 8 && (m_exampleOptions & ExampleOption::MaxSizeForDockWidget8)) {
         // Set a maximum size on dock #8
         myWidget->setMaximumSize(200, 200);
         auto button = new QPushButton("dump debug info", myWidget);
@@ -213,7 +206,7 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
         });
     }
 
-    if (count == 0 && m_dock0BlocksCloseEvent)
+    if (count == 0 && (m_exampleOptions & ExampleOption::Dock0BlocksCloseEvent))
         myWidget->blockCloseEvent();
 
     dock->setWidget(myWidget);

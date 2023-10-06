@@ -18,10 +18,18 @@ class MyMainWindow : public KDDockWidgets::QtWidgets::MainWindow
 {
     Q_OBJECT
 public:
+    enum class ExampleOption {
+        DockWidget0IsNonClosable = 1,
+        NonDockableDockWidget9 = 2,
+        RestoreIsRelative = 4,
+        MaxSizeForDockWidget8 = 8,
+        Dockwidget5DoesntCloseBeforeRestore = 16,
+        Dock0BlocksCloseEvent = 32
+    };
+    Q_DECLARE_FLAGS(ExampleOptions, ExampleOption)
+
     explicit MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                          bool dockWidget0IsNonClosable, bool nonDockableDockWidget9,
-                          bool restoreIsRelative, bool maxSizeForDockWidget8,
-                          bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
+                          ExampleOptions exampleOptions,
                           const QString &affinityName = {}, // Usually not needed. Just here to show
                                                             // the feature.
                           QWidget *parent = nullptr);
@@ -32,11 +40,7 @@ private:
     bool eventFilter(QObject *obj, QEvent *ev) override;
     KDDockWidgets::QtWidgets::DockWidget *newDockWidget();
     QMenu *m_toggleMenu = nullptr;
-    const bool m_dockWidget0IsNonClosable;
-    const bool m_dockWidget9IsNonDockable;
-    const bool m_restoreIsRelative;
-    const bool m_maxSizeForDockWidget8;
-    const bool m_dockwidget5DoesntCloseBeforeRestore;
-    const bool m_dock0BlocksCloseEvent;
+    const ExampleOptions m_exampleOptions;
+
     QVector<KDDockWidgets::QtWidgets::DockWidget *> m_dockwidgets;
 };

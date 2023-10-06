@@ -369,13 +369,24 @@ int main(int argc, char **argv)
 
     KDDockWidgets::Config::self().setFlags(flags);
 
-    const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
-    const bool restoreIsRelative = parser.isSet(relativeRestore);
-    const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
-    const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
-    const bool dontCloseDockWidget5BeforeRestore = parser.isSet(dontCloseBeforeRestore);
+
+
+    MyMainWindow::ExampleOptions exampleOptions = {};
+
+    if (parser.isSet(nonClosableDockWidget))
+        exampleOptions |= MyMainWindow::ExampleOption::DockWidget0IsNonClosable;
+    if (parser.isSet(relativeRestore))
+        exampleOptions |= MyMainWindow::ExampleOption::RestoreIsRelative;
+    if (parser.isSet(nonDockable))
+        exampleOptions |= MyMainWindow::ExampleOption::NonDockableDockWidget9;
+    if (parser.isSet(maxSizeOption))
+        exampleOptions |= MyMainWindow::ExampleOption::MaxSizeForDockWidget8;
+    if (parser.isSet(dontCloseBeforeRestore))
+        exampleOptions |= MyMainWindow::ExampleOption::Dockwidget5DoesntCloseBeforeRestore;
+    if (parser.isSet(blockCloseEvent))
+        exampleOptions |= MyMainWindow::ExampleOption::Dock0BlocksCloseEvent;
+
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
-    const bool dock0BlocksCloseEvent = parser.isSet(blockCloseEvent);
 
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
     const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
@@ -383,9 +394,7 @@ int main(int argc, char **argv)
     const bool usesDockableMainWindows = false;
 #endif
 
-    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
-                            nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
-                            dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent);
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, exampleOptions);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -404,9 +413,7 @@ int main(int argc, char **argv)
             parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1") : QString();
 
         auto mainWindow2 =
-            new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, nonClosableDockWidget0,
-                             nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
-                             dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent, affinity);
+            new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, exampleOptions, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else
@@ -419,9 +426,11 @@ int main(int argc, char **argv)
             new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
+        MyMainWindow::ExampleOptions exampleOptions2 = {};
+        if (parser.isSet(relativeRestore))
+            exampleOptions2 |= MyMainWindow::ExampleOption::RestoreIsRelative;
         auto dockableMainWindow =
-            new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, false, false,
-                             restoreIsRelative, false, false, false, affinity);
+            new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, exampleOptions2, affinity);
 
         dockableMainWindow->setAffinities({ affinity });
         dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));
