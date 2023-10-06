@@ -13,6 +13,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "Config.h"
+#include "core/DragController_p.h"
 #include "simple_test_framework.h"
 #include "utils.h"
 #include "core/LayoutSaver_p.h"
@@ -2692,6 +2693,30 @@ KDDW_QCORO_TASK tst_mainWindowToggle()
 
     /// TODO: uncomment once #360 is fixed
     // CHECK(dock1->isOpen());
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_startDragging()
+{
+    auto dc = DragController::instance();
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+        m->addDockWidget(dock1, Location_OnLeft);
+
+        CHECK(!dock1->isFloating());
+        CHECK(!dc->isDragging());
+
+        CHECK(dock1->startDragging());
+        CHECK(dc->isDragging());
+        CHECK(dock1->isFloating());
+
+        dc->programaticStopDrag();
+        CHECK(!dc->isDragging());
+    }
 
     KDDW_TEST_RETURN(true);
 }
@@ -5479,6 +5504,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_rect),
         TEST(tst_resizeInLayout),
         TEST(tst_mainWindowToggle),
+        TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),

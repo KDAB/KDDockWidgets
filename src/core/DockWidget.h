@@ -472,6 +472,10 @@ public:
     void setFloatingWindowFlags(FloatingWindowFlags);
     KDDockWidgets::FloatingWindowFlags floatingWindowFlags() const;
 
+    /// See documentation for DragController::programmaticStartDrag()
+    /// @internal. Do not use until touch UI use case is figured out.
+    bool startDragging();
+
 protected:
     void setParentView_impl(View *parent) override;
 

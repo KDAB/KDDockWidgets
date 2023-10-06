@@ -31,6 +31,7 @@ namespace KDDockWidgets {
 namespace Core {
 
 class StateBase;
+class StatePreDrag;
 class StateNone;
 class StateInternalMDIDragging;
 class FallbackMouseGrabber;
@@ -117,6 +118,18 @@ public:
     /// The user needs to be dragging a window and be over a drop indicator, otherwise DropLocation_None is returned
     DropLocation currentDropLocation() const;
 
+    /// Triggers a drag start without user interaction
+    ///
+    /// This method is unneeded for almost everyone as state machine changes states based
+    /// on mouse events from user interaction. It's currently used for users who are developing for touch interfaces
+    /// and want other means of starting a drag.
+    ///
+    /// Do not rely on it. We're still trying to understand the touch use case.
+    /// @internal
+    /// @param draggable The draggable we want to move (a title-bar, tab-bar or floating window)
+    bool programmaticStartDrag(Draggable *draggable);
+    void programaticStopDrag();
+
     KDBindings::Signal<> mousePressed;
     KDBindings::Signal<> manhattanLengthMove;
     KDBindings::Signal<> manhattanLengthMoveMDI;
@@ -155,7 +168,8 @@ private:
     Core::DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
-    StateNone *m_stateNone = nullptr;
+    StateNone *const m_stateNone;
+    StatePreDrag *const m_statePreDrag;
     StateInternalMDIDragging *m_stateDraggingMDI = nullptr;
     bool m_inQDrag = false;
 };

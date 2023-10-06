@@ -555,21 +555,21 @@ bool StateInternalMDIDragging::handleMouseDoubleClick()
 DragController::DragController(Core::Object *parent)
     : MinimalStateMachine(parent)
     , m_stateNone(new StateNone(this))
+    , m_statePreDrag(new StatePreDrag(this))
     , m_stateDraggingMDI(new StateInternalMDIDragging(this))
 {
     KDDW_TRACE("DragController CTOR");
 
-    auto statepreDrag = new StatePreDrag(this);
 #ifdef KDDW_FRONTEND_QT
     auto stateDragging = isWayland() ? new StateDraggingWayland(this) : new StateDragging(this);
 #else
     auto stateDragging = new StateDragging(this);
 #endif
 
-    m_stateNone->addTransition(mousePressed, statepreDrag);
-    statepreDrag->addTransition(dragCanceled, m_stateNone);
-    statepreDrag->addTransition(manhattanLengthMove, stateDragging);
-    statepreDrag->addTransition(manhattanLengthMoveMDI, m_stateDraggingMDI);
+    m_stateNone->addTransition(mousePressed, m_statePreDrag);
+    m_statePreDrag->addTransition(dragCanceled, m_stateNone);
+    m_statePreDrag->addTransition(manhattanLengthMove, stateDragging);
+    m_statePreDrag->addTransition(manhattanLengthMoveMDI, m_stateDraggingMDI);
     stateDragging->addTransition(dragCanceled, m_stateNone);
     stateDragging->addTransition(dropped, m_stateNone);
 
@@ -771,6 +771,39 @@ DropLocation DragController::currentDropLocation() const
         return dropArea->currentDropLocation();
 
     return DropLocation_None;
+}
+
+bool DragController::programmaticStartDrag(Draggable *draggable)
+{
+    if (!draggable) {
+        KDDW_WARN("DragController::programmaticStartDrag: draggable is null");
+        return false;
+    }
+
+    if (isDragging()) {
+        KDDW_WARN("DragController::programmaticStartDrag: Dragging already ongoing");
+        return false;
+    }
+
+    // No mouse involved but sharing 99.99% of the code path gives some comfort
+    m_stateNone->handleMouseButtonPress(draggable, {}, {});
+    if (activeState() != m_statePreDrag) {
+        KDDW_WARN("DragController::programmaticStartDrag: Expected to be in pre-drag state");
+        return false;
+    }
+
+    manhattanLengthMove.emit();
+    if (activeState() == m_statePreDrag || activeState() == m_stateNone) {
+        KDDW_WARN("DragController::programmaticStartDrag: Expected to be in drag state");
+        return false;
+    }
+
+    return true;
+}
+
+void DragController::programaticStopDrag()
+{
+    dragCanceled.emit();
 }
 
 #if defined(KDDW_FRONTEND_QT_WINDOWS)

@@ -28,6 +28,7 @@
 #include "core/Platform_p.h"
 #include "core/Action_p.h"
 #include "core/DelayedCall_p.h"
+#include "core/DragController_p.h"
 #include "Platform.h"
 #include "core/layouting/Item_p.h"
 
@@ -1126,4 +1127,28 @@ void DockWidget::resizeInLayout(int left, int top, int right, int bottom)
         return;
 
     item->requestResize(left, top, right, bottom);
+}
+
+bool DockWidget::startDragging()
+{
+    auto dc = DragController::instance();
+    if (dc->isDragging()) {
+        KDDW_WARN("DockWidget::startDragging: Dragging already ongoing");
+        return false;
+    }
+
+    Group *group = d->group();
+    if (!group) {
+        KDDW_WARN("DockWidget::startDragging: Expected a group");
+        return false;
+    }
+
+    Core::TitleBar *titleBar = this->titleBar();
+    if (!titleBar) {
+        KDDW_WARN("DockWidget::startDragging: No titlebar found");
+        return false;
+    }
+
+    // For now titlebar only. Tabs come next.
+    return dc->programmaticStartDrag(titleBar);
 }
