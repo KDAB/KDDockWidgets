@@ -172,19 +172,25 @@ void c_KDDockWidgets__DockRegistry__clear(void *thisObj)
 bool c_KDDockWidgets__DockRegistry__containsDockWidget_QString(void *thisObj, const char *uniqueName_)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
-    return fromPtr(thisObj)->containsDockWidget(uniqueName);
+    const auto &result = fromPtr(thisObj)->containsDockWidget(uniqueName);
+    free(( char * )uniqueName_);
+    return result;
 }
 // containsMainWindow(const QString & uniqueName) const
 bool c_KDDockWidgets__DockRegistry__containsMainWindow_QString(void *thisObj, const char *uniqueName_)
 {
     const auto uniqueName = QString::fromUtf8(uniqueName_);
-    return fromPtr(thisObj)->containsMainWindow(uniqueName);
+    const auto &result = fromPtr(thisObj)->containsMainWindow(uniqueName);
+    free(( char * )uniqueName_);
+    return result;
 }
 // dockByName(const QString & arg__1) const
 void *c_KDDockWidgets__DockRegistry__dockByName_QString(void *thisObj, const char *arg__1_)
 {
     const auto arg__1 = QString::fromUtf8(arg__1_);
-    return fromPtr(thisObj)->dockByName(arg__1);
+    const auto &result = fromPtr(thisObj)->dockByName(arg__1);
+    free(( char * )arg__1_);
+    return result;
 }
 // ensureAllFloatingWidgetsAreMorphed()
 void c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed(void *thisObj)
@@ -194,45 +200,54 @@ void c_KDDockWidgets__DockRegistry__ensureAllFloatingWidgetsAreMorphed(void *thi
 // focusedDockWidget() const
 void *c_KDDockWidgets__DockRegistry__focusedDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->focusedDockWidget();
+    const auto &result = fromPtr(thisObj)->focusedDockWidget();
+    return result;
 }
 // groupInMDIResize() const
 void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj)
 {
-    return fromPtr(thisObj)->groupInMDIResize();
+    const auto &result = fromPtr(thisObj)->groupInMDIResize();
+    return result;
 }
 // hasFloatingWindows() const
 bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj)
 {
-    return fromPtr(thisObj)->hasFloatingWindows();
+    const auto &result = fromPtr(thisObj)->hasFloatingWindows();
+    return result;
 }
 // isEmpty(bool excludeBeingDeleted) const
 bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted)
 {
-    return fromPtr(thisObj)->isEmpty(excludeBeingDeleted);
+    const auto &result = fromPtr(thisObj)->isEmpty(excludeBeingDeleted);
+    return result;
 }
 // isSane() const
 bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj)
 {
-    return fromPtr(thisObj)->isSane();
+    const auto &result = fromPtr(thisObj)->isSane();
+    return result;
 }
 // itemIsInMainWindow(const KDDockWidgets::Core::Item * arg__1) const
 bool c_KDDockWidgets__DockRegistry__itemIsInMainWindow_Item(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__1_);
-    return fromPtr(thisObj)->itemIsInMainWindow(arg__1);
+    const auto &result = fromPtr(thisObj)->itemIsInMainWindow(arg__1);
+    return result;
 }
 // layoutForItem(const KDDockWidgets::Core::Item * arg__1) const
 void *c_KDDockWidgets__DockRegistry__layoutForItem_Item(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__1_);
-    return fromPtr(thisObj)->layoutForItem(arg__1);
+    const auto &result = fromPtr(thisObj)->layoutForItem(arg__1);
+    return result;
 }
 // mainWindowByName(const QString & arg__1) const
 void *c_KDDockWidgets__DockRegistry__mainWindowByName_QString(void *thisObj, const char *arg__1_)
 {
     const auto arg__1 = QString::fromUtf8(arg__1_);
-    return fromPtr(thisObj)->mainWindowByName(arg__1);
+    const auto &result = fromPtr(thisObj)->mainWindowByName(arg__1);
+    free(( char * )arg__1_);
+    return result;
 }
 // registerDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__DockRegistry__registerDockWidget_DockWidget(void *thisObj, void *arg__1_)
@@ -272,13 +287,15 @@ void c_KDDockWidgets__DockRegistry__registerMainWindow_MainWindow(void *thisObj,
 // self()
 void *c_static_KDDockWidgets__DockRegistry__self()
 {
-    return KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::self();
+    const auto &result = KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::self();
+    return result;
 }
 // sideBarForDockWidget(const KDDockWidgets::Core::DockWidget * arg__1) const
 void *c_KDDockWidgets__DockRegistry__sideBarForDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    return fromPtr(thisObj)->sideBarForDockWidget(arg__1);
+    const auto &result = fromPtr(thisObj)->sideBarForDockWidget(arg__1);
+    return result;
 }
 // unregisterDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget(void *thisObj, void *arg__1_)

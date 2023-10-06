@@ -84,22 +84,26 @@ void *c_KDDockWidgets__Margins__constructor_int_int_int_int(int l, int t, int r,
 // bottom() const
 int c_KDDockWidgets__Margins__bottom(void *thisObj)
 {
-    return fromPtr(thisObj)->bottom();
+    const auto &result = fromPtr(thisObj)->bottom();
+    return result;
 }
 // left() const
 int c_KDDockWidgets__Margins__left(void *thisObj)
 {
-    return fromPtr(thisObj)->left();
+    const auto &result = fromPtr(thisObj)->left();
+    return result;
 }
 // right() const
 int c_KDDockWidgets__Margins__right(void *thisObj)
 {
-    return fromPtr(thisObj)->right();
+    const auto &result = fromPtr(thisObj)->right();
+    return result;
 }
 // top() const
 int c_KDDockWidgets__Margins__top(void *thisObj)
 {
-    return fromPtr(thisObj)->top();
+    const auto &result = fromPtr(thisObj)->top();
+    return result;
 }
 void c_KDDockWidgets__Margins__destructor(void *thisObj)
 {

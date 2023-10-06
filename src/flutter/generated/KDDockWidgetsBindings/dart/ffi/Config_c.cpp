@@ -137,32 +137,38 @@ void c_KDDockWidgets__Config_Finalizer(void *cppObj)
 } // absoluteWidgetMaxSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMaxSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMaxSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMaxSize() };
+    return result;
 }
 // absoluteWidgetMinSize() const
 void *c_KDDockWidgets__Config__absoluteWidgetMinSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMinSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->absoluteWidgetMinSize() };
+    return result;
 }
 // draggedWindowOpacity() const
 double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj)
 {
-    return fromPtr(thisObj)->draggedWindowOpacity();
+    const auto &result = fromPtr(thisObj)->draggedWindowOpacity();
+    return result;
 }
 // dropIndicatorsInhibited() const
 bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj)
 {
-    return fromPtr(thisObj)->dropIndicatorsInhibited();
+    const auto &result = fromPtr(thisObj)->dropIndicatorsInhibited();
+    return result;
 }
 // layoutSaverUsesStrictMode() const
 bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj)
 {
-    return fromPtr(thisObj)->layoutSaverUsesStrictMode();
+    const auto &result = fromPtr(thisObj)->layoutSaverUsesStrictMode();
+    return result;
 }
 // mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj)
 {
-    return fromPtr(thisObj)->mdiPopupThreshold();
+    const auto &result = fromPtr(thisObj)->mdiPopupThreshold();
+    return result;
 }
 // printDebug()
 void c_KDDockWidgets__Config__printDebug(void *thisObj)
@@ -172,12 +178,14 @@ void c_KDDockWidgets__Config__printDebug(void *thisObj)
 // self()
 void *c_static_KDDockWidgets__Config__self()
 {
-    return &KDDockWidgetsBindings_wrappersNS::Config_wrapper::self();
+    const auto &result = &KDDockWidgetsBindings_wrappersNS::Config_wrapper::self();
+    return result;
 }
 // separatorThickness() const
 int c_KDDockWidgets__Config__separatorThickness(void *thisObj)
 {
-    return fromPtr(thisObj)->separatorThickness();
+    const auto &result = fromPtr(thisObj)->separatorThickness();
+    return result;
 }
 // setAbsoluteWidgetMaxSize(KDDockWidgets::Size size)
 void c_KDDockWidgets__Config__setAbsoluteWidgetMaxSize_Size(void *thisObj, void *size_)
@@ -237,17 +245,20 @@ void c_KDDockWidgets__Config__setViewFactory_ViewFactory(void *thisObj, void *ar
 // startDragDistance() const
 int c_KDDockWidgets__Config__startDragDistance(void *thisObj)
 {
-    return fromPtr(thisObj)->startDragDistance();
+    const auto &result = fromPtr(thisObj)->startDragDistance();
+    return result;
 }
 // transparencyOnlyOverDropIndicator() const
 bool c_KDDockWidgets__Config__transparencyOnlyOverDropIndicator(void *thisObj)
 {
-    return fromPtr(thisObj)->transparencyOnlyOverDropIndicator();
+    const auto &result = fromPtr(thisObj)->transparencyOnlyOverDropIndicator();
+    return result;
 }
 // viewFactory() const
 void *c_KDDockWidgets__Config__viewFactory(void *thisObj)
 {
-    return fromPtr(thisObj)->viewFactory();
+    const auto &result = fromPtr(thisObj)->viewFactory();
+    return result;
 }
 void c_KDDockWidgets__Config__destructor(void *thisObj)
 {

@@ -80,17 +80,21 @@ void *c_QString__constructor_char(const char *str)
 // data() const
 const char *c_QString__data(void *thisObj)
 {
-    return fromPtr(thisObj)->data();
+    const auto &result = fromPtr(thisObj)->data();
+    return result;
 }
 // fromUtf8(const char * str)
 void *c_static_QString__fromUtf8_char(const char *str)
 {
-    return new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromUtf8(str) };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { KDDockWidgetsBindings_wrappersNS::QString_wrapper::fromUtf8(str) };
+    free(( char * )str);
+    return result;
 }
 // isEmpty() const
 bool c_QString__isEmpty(void *thisObj)
 {
-    return fromPtr(thisObj)->isEmpty();
+    const auto &result = fromPtr(thisObj)->isEmpty();
+    return result;
 }
 void c_QString__destructor(void *thisObj)
 {

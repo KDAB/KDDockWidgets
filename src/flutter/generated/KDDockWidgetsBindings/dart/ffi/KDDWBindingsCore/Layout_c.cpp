@@ -171,12 +171,14 @@ void *c_KDDockWidgets__Core__Layout__constructor_ViewType_View(int arg__1, void 
 // asDropArea() const
 void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj)
 {
-    return fromPtr(thisObj)->asDropArea();
+    const auto &result = fromPtr(thisObj)->asDropArea();
+    return result;
 }
 // checkSanity() const
 bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj)
 {
-    return fromPtr(thisObj)->checkSanity();
+    const auto &result = fromPtr(thisObj)->checkSanity();
+    return result;
 }
 // clearLayout()
 void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj)
@@ -187,18 +189,21 @@ void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj)
 bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    return fromPtr(thisObj)->containsFrame(arg__1);
+    const auto &result = fromPtr(thisObj)->containsFrame(arg__1);
+    return result;
 }
 // containsItem(const KDDockWidgets::Core::Item * arg__1) const
 bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__1_);
-    return fromPtr(thisObj)->containsItem(arg__1);
+    const auto &result = fromPtr(thisObj)->containsItem(arg__1);
+    return result;
 }
 // count() const
 int c_KDDockWidgets__Core__Layout__count(void *thisObj)
 {
-    return fromPtr(thisObj)->count();
+    const auto &result = fromPtr(thisObj)->count();
+    return result;
 }
 // dumpLayout() const
 void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj)
@@ -208,53 +213,63 @@ void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj)
 // floatingWindow() const
 void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->floatingWindow();
+    const auto &result = fromPtr(thisObj)->floatingWindow();
+    return result;
 }
 // isInMainWindow(bool honourNesting) const
 bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting)
 {
-    return fromPtr(thisObj)->isInMainWindow(honourNesting);
+    const auto &result = fromPtr(thisObj)->isInMainWindow(honourNesting);
+    return result;
 }
 // itemForFrame(const KDDockWidgets::Core::Group * group) const
 void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_)
 {
     auto group = reinterpret_cast<KDDockWidgets::Core::Group *>(group_);
-    return fromPtr(thisObj)->itemForFrame(group);
+    const auto &result = fromPtr(thisObj)->itemForFrame(group);
+    return result;
 }
 // layoutHeight() const
 int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj)
 {
-    return fromPtr(thisObj)->layoutHeight();
+    const auto &result = fromPtr(thisObj)->layoutHeight();
+    return result;
 }
 // layoutMaximumSizeHint() const
 void *c_KDDockWidgets__Core__Layout__layoutMaximumSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutMaximumSizeHint() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutMaximumSizeHint() };
+    return result;
 }
 // layoutMinimumSize() const
 void *c_KDDockWidgets__Core__Layout__layoutMinimumSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutMinimumSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutMinimumSize() };
+    return result;
 }
 // layoutSize() const
 void *c_KDDockWidgets__Core__Layout__layoutSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->layoutSize() };
+    return result;
 }
 // layoutWidth() const
 int c_KDDockWidgets__Core__Layout__layoutWidth(void *thisObj)
 {
-    return fromPtr(thisObj)->layoutWidth();
+    const auto &result = fromPtr(thisObj)->layoutWidth();
+    return result;
 }
 // mainWindow(bool honourNesting) const
 void *c_KDDockWidgets__Core__Layout__mainWindow_bool(void *thisObj, bool honourNesting)
 {
-    return fromPtr(thisObj)->mainWindow(honourNesting);
+    const auto &result = fromPtr(thisObj)->mainWindow(honourNesting);
+    return result;
 }
 // placeholderCount() const
 int c_KDDockWidgets__Core__Layout__placeholderCount(void *thisObj)
 {
-    return fromPtr(thisObj)->placeholderCount();
+    const auto &result = fromPtr(thisObj)->placeholderCount();
+    return result;
 }
 // removeItem(KDDockWidgets::Core::Item * item)
 void c_KDDockWidgets__Core__Layout__removeItem_Item(void *thisObj, void *item_)
@@ -302,7 +317,8 @@ void c_KDDockWidgets__Core__Layout__viewAboutToBeDeleted(void *thisObj)
 // visibleCount() const
 int c_KDDockWidgets__Core__Layout__visibleCount(void *thisObj)
 {
-    return fromPtr(thisObj)->visibleCount();
+    const auto &result = fromPtr(thisObj)->visibleCount();
+    return result;
 }
 void c_KDDockWidgets__Core__Layout__destructor(void *thisObj)
 {

@@ -150,47 +150,55 @@ void c_KDDockWidgets__Core__Stack__addDockWidget_DockWidget(void *thisObj, void 
 bool c_KDDockWidgets__Core__Stack__contains_DockWidget(void *thisObj, void *dw_)
 {
     auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
-    return fromPtr(thisObj)->contains(dw);
+    const auto &result = fromPtr(thisObj)->contains(dw);
+    return result;
 }
 // group() const
 void *c_KDDockWidgets__Core__Stack__group(void *thisObj)
 {
-    return fromPtr(thisObj)->group();
+    const auto &result = fromPtr(thisObj)->group();
+    return result;
 }
 // insertDockWidget(KDDockWidgets::Core::DockWidget * dockwidget, int index)
 bool c_KDDockWidgets__Core__Stack__insertDockWidget_DockWidget_int(void *thisObj, void *dockwidget_, int index)
 {
     auto dockwidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockwidget_);
-    return fromPtr(thisObj)->insertDockWidget(dockwidget, index);
+    const auto &result = fromPtr(thisObj)->insertDockWidget(dockwidget, index);
+    return result;
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__Stack__isMDI(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    return result;
 }
 // isPositionDraggable(KDDockWidgets::Point p) const
 bool c_KDDockWidgets__Core__Stack__isPositionDraggable_Point(void *thisObj, void *p_)
 {
     assert(p_);
     auto &p = *reinterpret_cast<KDDockWidgets::Point *>(p_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isPositionDraggable_nocallback(p);} else {    return targetPtr->isPositionDraggable(p);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isPositionDraggable_nocallback(p);} else {    return targetPtr->isPositionDraggable(p);} }();
+    return result;
 }
 // isWindow() const
 bool c_KDDockWidgets__Core__Stack__isWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    return result;
 }
 // numDockWidgets() const
 int c_KDDockWidgets__Core__Stack__numDockWidgets(void *thisObj)
 {
-    return fromPtr(thisObj)->numDockWidgets();
+    const auto &result = fromPtr(thisObj)->numDockWidgets();
+    return result;
 }
 // onMouseDoubleClick(KDDockWidgets::Point localPos)
 bool c_KDDockWidgets__Core__Stack__onMouseDoubleClick_Point(void *thisObj, void *localPos_)
 {
     assert(localPos_);
     auto &localPos = *reinterpret_cast<KDDockWidgets::Point *>(localPos_);
-    return fromPtr(thisObj)->onMouseDoubleClick(localPos);
+    const auto &result = fromPtr(thisObj)->onMouseDoubleClick(localPos);
+    return result;
 }
 // setDocumentMode(bool arg__1)
 void c_KDDockWidgets__Core__Stack__setDocumentMode_bool(void *thisObj, bool arg__1)
@@ -211,17 +219,20 @@ void c_KDDockWidgets__Core__Stack__setTabBarAutoHide_bool(void *thisObj, bool ar
 // singleDockWidget() const
 void *c_KDDockWidgets__Core__Stack__singleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->singleDockWidget();
+    const auto &result = fromPtr(thisObj)->singleDockWidget();
+    return result;
 }
 // tabBar() const
 void *c_KDDockWidgets__Core__Stack__tabBar(void *thisObj)
 {
-    return fromPtr(thisObj)->tabBar();
+    const auto &result = fromPtr(thisObj)->tabBar();
+    return result;
 }
 // tabBarAutoHide() const
 bool c_KDDockWidgets__Core__Stack__tabBarAutoHide(void *thisObj)
 {
-    return fromPtr(thisObj)->tabBarAutoHide();
+    const auto &result = fromPtr(thisObj)->tabBarAutoHide();
+    return result;
 }
 void c_KDDockWidgets__Core__Stack__destructor(void *thisObj)
 {

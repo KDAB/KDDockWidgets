@@ -92,12 +92,14 @@ void *c_KDDockWidgets__Point__constructor_int_int(int x, int y)
 // isNull() const
 bool c_KDDockWidgets__Point__isNull(void *thisObj)
 {
-    return fromPtr(thisObj)->isNull();
+    const auto &result = fromPtr(thisObj)->isNull();
+    return result;
 }
 // manhattanLength() const
 int c_KDDockWidgets__Point__manhattanLength(void *thisObj)
 {
-    return fromPtr(thisObj)->manhattanLength();
+    const auto &result = fromPtr(thisObj)->manhattanLength();
+    return result;
 }
 // setX(int x)
 void c_KDDockWidgets__Point__setX_int(void *thisObj, int x)
@@ -112,12 +114,14 @@ void c_KDDockWidgets__Point__setY_int(void *thisObj, int y)
 // x() const
 int c_KDDockWidgets__Point__x(void *thisObj)
 {
-    return fromPtr(thisObj)->x();
+    const auto &result = fromPtr(thisObj)->x();
+    return result;
 }
 // y() const
 int c_KDDockWidgets__Point__y(void *thisObj)
 {
-    return fromPtr(thisObj)->y();
+    const auto &result = fromPtr(thisObj)->y();
+    return result;
 }
 void c_KDDockWidgets__Point__destructor(void *thisObj)
 {

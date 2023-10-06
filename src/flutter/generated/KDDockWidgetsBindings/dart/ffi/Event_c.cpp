@@ -89,17 +89,20 @@ void c_KDDockWidgets__Event__ignore(void *thisObj)
 // isAccepted() const
 bool c_KDDockWidgets__Event__isAccepted(void *thisObj)
 {
-    return fromPtr(thisObj)->isAccepted();
+    const auto &result = fromPtr(thisObj)->isAccepted();
+    return result;
 }
 // spontaneous() const
 bool c_KDDockWidgets__Event__spontaneous(void *thisObj)
 {
-    return fromPtr(thisObj)->spontaneous();
+    const auto &result = fromPtr(thisObj)->spontaneous();
+    return result;
 }
 // type() const
 int c_KDDockWidgets__Event__type(void *thisObj)
 {
-    return int(fromPtr(thisObj)->type());
+    const auto &result = int(fromPtr(thisObj)->type());
+    return result;
 }
 void c_KDDockWidgets__Event__destructor(void *thisObj)
 {

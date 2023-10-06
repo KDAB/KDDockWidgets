@@ -330,12 +330,14 @@ void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_)
 // asGroupController() const
 void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj)
 {
-    return fromPtr(thisObj)->asGroupController();
+    const auto &result = fromPtr(thisObj)->asGroupController();
+    return result;
 }
 // checkSanity()
 bool c_KDDockWidgets__Core__Item__checkSanity(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->checkSanity_nocallback();} else {    return targetPtr->checkSanity();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->checkSanity_nocallback();} else {    return targetPtr->checkSanity();} }();
+    return result;
 }
 // dumpLayout(int level, bool printSeparators)
 void c_KDDockWidgets__Core__Item__dumpLayout_int_bool(void *thisObj, int level, bool printSeparators)
@@ -345,112 +347,132 @@ void c_KDDockWidgets__Core__Item__dumpLayout_int_bool(void *thisObj, int level, 
 // geometry() const
 void *c_KDDockWidgets__Core__Item__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
+    return result;
 }
 // guestView() const
 void *c_KDDockWidgets__Core__Item__guestView(void *thisObj)
 {
-    return fromPtr(thisObj)->guestView();
+    const auto &result = fromPtr(thisObj)->guestView();
+    return result;
 }
 // height() const
 int c_KDDockWidgets__Core__Item__height(void *thisObj)
 {
-    return fromPtr(thisObj)->height();
+    const auto &result = fromPtr(thisObj)->height();
+    return result;
 }
 // hostView() const
 void *c_KDDockWidgets__Core__Item__hostView(void *thisObj)
 {
-    return fromPtr(thisObj)->hostView();
+    const auto &result = fromPtr(thisObj)->hostView();
+    return result;
 }
 // isBeingInserted() const
 bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj)
 {
-    return fromPtr(thisObj)->isBeingInserted();
+    const auto &result = fromPtr(thisObj)->isBeingInserted();
+    return result;
 }
 // isContainer() const
 bool c_KDDockWidgets__Core__Item__isContainer(void *thisObj)
 {
-    return fromPtr(thisObj)->isContainer();
+    const auto &result = fromPtr(thisObj)->isContainer();
+    return result;
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__Item__isMDI(void *thisObj)
 {
-    return fromPtr(thisObj)->isMDI();
+    const auto &result = fromPtr(thisObj)->isMDI();
+    return result;
 }
 // isPlaceholder() const
 bool c_KDDockWidgets__Core__Item__isPlaceholder(void *thisObj)
 {
-    return fromPtr(thisObj)->isPlaceholder();
+    const auto &result = fromPtr(thisObj)->isPlaceholder();
+    return result;
 }
 // isRoot() const
 bool c_KDDockWidgets__Core__Item__isRoot(void *thisObj)
 {
-    return fromPtr(thisObj)->isRoot();
+    const auto &result = fromPtr(thisObj)->isRoot();
+    return result;
 }
 // isVisible(bool excludeBeingInserted) const
 bool c_KDDockWidgets__Core__Item__isVisible_bool(void *thisObj, bool excludeBeingInserted)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback(excludeBeingInserted);} else {    return targetPtr->isVisible(excludeBeingInserted);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback(excludeBeingInserted);} else {    return targetPtr->isVisible(excludeBeingInserted);} }();
+    return result;
 }
 // mapFromParent(KDDockWidgets::Point arg__1) const
 void *c_KDDockWidgets__Core__Item__mapFromParent_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapFromParent(arg__1) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapFromParent(arg__1) };
+    return result;
 }
 // mapFromRoot(KDDockWidgets::Point arg__1) const
 void *c_KDDockWidgets__Core__Item__mapFromRoot_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapFromRoot(arg__1) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapFromRoot(arg__1) };
+    return result;
 }
 // mapFromRoot(KDDockWidgets::Rect arg__1) const
 void *c_KDDockWidgets__Core__Item__mapFromRoot_Rect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->mapFromRoot(arg__1) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->mapFromRoot(arg__1) };
+    return result;
 }
 // mapToRoot(KDDockWidgets::Point arg__1) const
 void *c_KDDockWidgets__Core__Item__mapToRoot_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapToRoot(arg__1) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapToRoot(arg__1) };
+    return result;
 }
 // mapToRoot(KDDockWidgets::Rect arg__1) const
 void *c_KDDockWidgets__Core__Item__mapToRoot_Rect(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Rect *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->mapToRoot(arg__1) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->mapToRoot(arg__1) };
+    return result;
 }
 // maxSizeHint() const
 void *c_KDDockWidgets__Core__Item__maxSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    return result;
 }
 // minSize() const
 void *c_KDDockWidgets__Core__Item__minSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    return result;
 }
 // missingSize() const
 void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->missingSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->missingSize() };
+    return result;
 }
 // pos() const
 void *c_KDDockWidgets__Core__Item__pos(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
+    return result;
 }
 // rect() const
 void *c_KDDockWidgets__Core__Item__rect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
+    return result;
 }
 // ref()
 void c_KDDockWidgets__Core__Item__ref(void *thisObj)
@@ -460,7 +482,8 @@ void c_KDDockWidgets__Core__Item__ref(void *thisObj)
 // refCount() const
 int c_KDDockWidgets__Core__Item__refCount(void *thisObj)
 {
-    return fromPtr(thisObj)->refCount();
+    const auto &result = fromPtr(thisObj)->refCount();
+    return result;
 }
 // requestResize(int left, int top, int right, int bottom)
 void c_KDDockWidgets__Core__Item__requestResize_int_int_int_int(void *thisObj, int left, int top, int right, int bottom)
@@ -540,7 +563,8 @@ void c_KDDockWidgets__Core__Item__setSize_Size(void *thisObj, void *arg__1_)
 // size() const
 void *c_KDDockWidgets__Core__Item__size(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
+    return result;
 }
 // turnIntoPlaceholder()
 void c_KDDockWidgets__Core__Item__turnIntoPlaceholder(void *thisObj)
@@ -560,22 +584,26 @@ void c_KDDockWidgets__Core__Item__updateWidgetGeometries(void *thisObj)
 // visibleCount_recursive() const
 int c_KDDockWidgets__Core__Item__visibleCount_recursive(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->visibleCount_recursive_nocallback();} else {    return targetPtr->visibleCount_recursive();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->visibleCount_recursive_nocallback();} else {    return targetPtr->visibleCount_recursive();} }();
+    return result;
 }
 // width() const
 int c_KDDockWidgets__Core__Item__width(void *thisObj)
 {
-    return fromPtr(thisObj)->width();
+    const auto &result = fromPtr(thisObj)->width();
+    return result;
 }
 // x() const
 int c_KDDockWidgets__Core__Item__x(void *thisObj)
 {
-    return fromPtr(thisObj)->x();
+    const auto &result = fromPtr(thisObj)->x();
+    return result;
 }
 // y() const
 int c_KDDockWidgets__Core__Item__y(void *thisObj)
 {
-    return fromPtr(thisObj)->y();
+    const auto &result = fromPtr(thisObj)->y();
+    return result;
 }
 void c_KDDockWidgets__Core__Item__destructor(void *thisObj)
 {

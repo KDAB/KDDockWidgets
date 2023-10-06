@@ -187,68 +187,80 @@ void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOptio
 // availableSize() const
 void *c_KDDockWidgets__Core__DropArea__availableSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->availableSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->availableSize() };
+    return result;
 }
 // centralFrame() const
 void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->centralFrame();
+    const auto &result = fromPtr(thisObj)->centralFrame();
+    return result;
 }
 // centralGroup() const
 void *c_KDDockWidgets__Core__DropArea__centralGroup(void *thisObj)
 {
-    return fromPtr(thisObj)->centralGroup();
+    const auto &result = fromPtr(thisObj)->centralGroup();
+    return result;
 }
 // containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    return fromPtr(thisObj)->containsDockWidget(arg__1);
+    const auto &result = fromPtr(thisObj)->containsDockWidget(arg__1);
+    return result;
 }
 // createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
 void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_)
 {
     auto options = static_cast<QFlags<KDDockWidgets::MainWindowOption>>(options_);
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::createCentralFrame(options);
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::createCentralFrame(options);
+    return result;
 }
 // currentDropLocation() const
 int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj)
 {
-    return int(fromPtr(thisObj)->currentDropLocation());
+    const auto &result = int(fromPtr(thisObj)->currentDropLocation());
+    return result;
 }
 // drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
 bool c_KDDockWidgets__Core__DropArea__drop_View_Location_Group(void *thisObj, void *droppedwindow_, int location, void *relativeTo_)
 {
     auto droppedwindow = reinterpret_cast<KDDockWidgets::Core::View *>(droppedwindow_);
     auto relativeTo = reinterpret_cast<KDDockWidgets::Core::Group *>(relativeTo_);
-    return fromPtr(thisObj)->drop(droppedwindow, static_cast<KDDockWidgets::Location>(location), relativeTo);
+    const auto &result = fromPtr(thisObj)->drop(droppedwindow, static_cast<KDDockWidgets::Location>(location), relativeTo);
+    return result;
 }
 // dropIndicatorOverlay() const
 void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj)
 {
-    return fromPtr(thisObj)->dropIndicatorOverlay();
+    const auto &result = fromPtr(thisObj)->dropIndicatorOverlay();
+    return result;
 }
 // groupContainingPos(KDDockWidgets::Point globalPos) const
 void *c_KDDockWidgets__Core__DropArea__groupContainingPos_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
     auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
-    return fromPtr(thisObj)->groupContainingPos(globalPos);
+    const auto &result = fromPtr(thisObj)->groupContainingPos(globalPos);
+    return result;
 }
 // hasSingleFloatingFrame() const
 bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->hasSingleFloatingFrame();
+    const auto &result = fromPtr(thisObj)->hasSingleFloatingFrame();
+    return result;
 }
 // hasSingleFrame() const
 bool c_KDDockWidgets__Core__DropArea__hasSingleFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->hasSingleFrame();
+    const auto &result = fromPtr(thisObj)->hasSingleFrame();
+    return result;
 }
 // isMDIWrapper() const
 bool c_KDDockWidgets__Core__DropArea__isMDIWrapper(void *thisObj)
 {
-    return fromPtr(thisObj)->isMDIWrapper();
+    const auto &result = fromPtr(thisObj)->isMDIWrapper();
+    return result;
 }
 // layoutEqually()
 void c_KDDockWidgets__Core__DropArea__layoutEqually(void *thisObj)
@@ -264,7 +276,8 @@ void c_KDDockWidgets__Core__DropArea__layoutParentContainerEqually_DockWidget(vo
 // mdiDockWidgetWrapper() const
 void *c_KDDockWidgets__Core__DropArea__mdiDockWidgetWrapper(void *thisObj)
 {
-    return fromPtr(thisObj)->mdiDockWidgetWrapper();
+    const auto &result = fromPtr(thisObj)->mdiDockWidgetWrapper();
+    return result;
 }
 // removeHover()
 void c_KDDockWidgets__Core__DropArea__removeHover(void *thisObj)
@@ -289,7 +302,8 @@ bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_Initial
     auto relativeToFrame = reinterpret_cast<KDDockWidgets::Core::Group *>(relativeToFrame_);
     assert(option_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
-    return fromPtr(thisObj)->validateInputs(widget, static_cast<KDDockWidgets::Location>(location), relativeToFrame, option);
+    const auto &result = fromPtr(thisObj)->validateInputs(widget, static_cast<KDDockWidgets::Location>(location), relativeToFrame, option);
+    return result;
 }
 void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj)
 {

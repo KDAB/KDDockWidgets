@@ -33,12 +33,14 @@ extern "C" {
 void *c_static_KDDockWidgets__flutter__asView_flutter_Controller(void *controller_)
 {
     auto controller = reinterpret_cast<KDDockWidgets::Core::Controller *>(controller_);
-    return flutter::asView_flutter(controller);
+    const auto &result = flutter::asView_flutter(controller);
+    return result;
 }
 // asView_flutter(KDDockWidgets::Core::View * view)
 void *c_static_KDDockWidgets__flutter__asView_flutter_View(void *view_)
 {
     auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
-    return flutter::asView_flutter(view);
+    const auto &result = flutter::asView_flutter(view);
+    return result;
 }
 }

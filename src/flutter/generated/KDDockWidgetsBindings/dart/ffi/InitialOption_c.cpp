@@ -107,12 +107,14 @@ void *c_KDDockWidgets__InitialOption__constructor_Size(void *size_)
 // preservesCurrentTab() const
 bool c_KDDockWidgets__InitialOption__preservesCurrentTab(void *thisObj)
 {
-    return fromPtr(thisObj)->preservesCurrentTab();
+    const auto &result = fromPtr(thisObj)->preservesCurrentTab();
+    return result;
 }
 // startsHidden() const
 bool c_KDDockWidgets__InitialOption__startsHidden(void *thisObj)
 {
-    return fromPtr(thisObj)->startsHidden();
+    const auto &result = fromPtr(thisObj)->startsHidden();
+    return result;
 }
 void c_KDDockWidgets__InitialOption__destructor(void *thisObj)
 {

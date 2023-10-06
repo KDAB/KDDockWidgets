@@ -106,34 +106,40 @@ void *c_KDDockWidgets__Size__boundedTo_Size(void *thisObj, void *sz_)
 {
     assert(sz_);
     auto &sz = *reinterpret_cast<KDDockWidgets::Size *>(sz_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->boundedTo(sz) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->boundedTo(sz) };
+    return result;
 }
 // expandedTo(KDDockWidgets::Size sz) const
 void *c_KDDockWidgets__Size__expandedTo_Size(void *thisObj, void *sz_)
 {
     assert(sz_);
     auto &sz = *reinterpret_cast<KDDockWidgets::Size *>(sz_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->expandedTo(sz) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->expandedTo(sz) };
+    return result;
 }
 // height() const
 int c_KDDockWidgets__Size__height(void *thisObj)
 {
-    return fromPtr(thisObj)->height();
+    const auto &result = fromPtr(thisObj)->height();
+    return result;
 }
 // isEmpty() const
 bool c_KDDockWidgets__Size__isEmpty(void *thisObj)
 {
-    return fromPtr(thisObj)->isEmpty();
+    const auto &result = fromPtr(thisObj)->isEmpty();
+    return result;
 }
 // isNull() const
 bool c_KDDockWidgets__Size__isNull(void *thisObj)
 {
-    return fromPtr(thisObj)->isNull();
+    const auto &result = fromPtr(thisObj)->isNull();
+    return result;
 }
 // isValid() const
 bool c_KDDockWidgets__Size__isValid(void *thisObj)
 {
-    return fromPtr(thisObj)->isValid();
+    const auto &result = fromPtr(thisObj)->isValid();
+    return result;
 }
 // setHeight(int h)
 void c_KDDockWidgets__Size__setHeight_int(void *thisObj, int h)
@@ -148,7 +154,8 @@ void c_KDDockWidgets__Size__setWidth_int(void *thisObj, int w)
 // width() const
 int c_KDDockWidgets__Size__width(void *thisObj)
 {
-    return fromPtr(thisObj)->width();
+    const auto &result = fromPtr(thisObj)->width();
+    return result;
 }
 void c_KDDockWidgets__Size__destructor(void *thisObj)
 {

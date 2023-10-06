@@ -920,57 +920,68 @@ void c_KDDockWidgets__Core__View__activateWindow(void *thisObj)
 // asDockWidgetController() const
 void *c_KDDockWidgets__Core__View__asDockWidgetController(void *thisObj)
 {
-    return fromPtr(thisObj)->asDockWidgetController();
+    const auto &result = fromPtr(thisObj)->asDockWidgetController();
+    return result;
 }
 // asDropAreaController() const
 void *c_KDDockWidgets__Core__View__asDropAreaController(void *thisObj)
 {
-    return fromPtr(thisObj)->asDropAreaController();
+    const auto &result = fromPtr(thisObj)->asDropAreaController();
+    return result;
 }
 // asFloatingWindowController() const
 void *c_KDDockWidgets__Core__View__asFloatingWindowController(void *thisObj)
 {
-    return fromPtr(thisObj)->asFloatingWindowController();
+    const auto &result = fromPtr(thisObj)->asFloatingWindowController();
+    return result;
 }
 // asGroupController() const
 void *c_KDDockWidgets__Core__View__asGroupController(void *thisObj)
 {
-    return fromPtr(thisObj)->asGroupController();
+    const auto &result = fromPtr(thisObj)->asGroupController();
+    return result;
 }
 // asLayout() const
 void *c_KDDockWidgets__Core__View__asLayout(void *thisObj)
 {
-    return fromPtr(thisObj)->asLayout();
+    const auto &result = fromPtr(thisObj)->asLayout();
+    return result;
 }
 // asMainWindowController() const
 void *c_KDDockWidgets__Core__View__asMainWindowController(void *thisObj)
 {
-    return fromPtr(thisObj)->asMainWindowController();
+    const auto &result = fromPtr(thisObj)->asMainWindowController();
+    return result;
 }
 // asStackController() const
 void *c_KDDockWidgets__Core__View__asStackController(void *thisObj)
 {
-    return fromPtr(thisObj)->asStackController();
+    const auto &result = fromPtr(thisObj)->asStackController();
+    return result;
 }
 // asTabBarController() const
 void *c_KDDockWidgets__Core__View__asTabBarController(void *thisObj)
 {
-    return fromPtr(thisObj)->asTabBarController();
+    const auto &result = fromPtr(thisObj)->asTabBarController();
+    return result;
 }
 // asTitleBarController() const
 void *c_KDDockWidgets__Core__View__asTitleBarController(void *thisObj)
 {
-    return fromPtr(thisObj)->asTitleBarController();
+    const auto &result = fromPtr(thisObj)->asTitleBarController();
+    return result;
 }
 // close()
 bool c_KDDockWidgets__Core__View__close(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
+    return result;
 }
 // controller() const
 void *c_KDDockWidgets__Core__View__controller(void *thisObj)
 {
-    return fromPtr(thisObj)->controller();
+    const auto &result = fromPtr(thisObj)->controller();
+    return result;
 }
 // createPlatformWindow()
 void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj)
@@ -981,7 +992,8 @@ void c_KDDockWidgets__Core__View__createPlatformWindow(void *thisObj)
 bool c_KDDockWidgets__Core__View__deliverViewEventToFilters_Event(void *thisObj, void *e_)
 {
     auto e = reinterpret_cast<KDDockWidgets::Event *>(e_);
-    return fromPtr(thisObj)->deliverViewEventToFilters(e);
+    const auto &result = fromPtr(thisObj)->deliverViewEventToFilters(e);
+    return result;
 }
 // dumpDebug()
 void c_KDDockWidgets__Core__View__dumpDebug(void *thisObj)
@@ -993,29 +1005,34 @@ bool c_static_KDDockWidgets__Core__View__equals_View_View(void *one_, void *two_
 {
     auto one = reinterpret_cast<KDDockWidgets::Core::View *>(one_);
     auto two = reinterpret_cast<KDDockWidgets::Core::View *>(two_);
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::equals(one, two);
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::equals(one, two);
+    return result;
 }
 // equals(const KDDockWidgets::Core::View * other) const
 bool c_KDDockWidgets__Core__View__equals_View(void *thisObj, void *other_)
 {
     auto other = reinterpret_cast<KDDockWidgets::Core::View *>(other_);
-    return fromPtr(thisObj)->equals(other);
+    const auto &result = fromPtr(thisObj)->equals(other);
+    return result;
 }
 // firstParentOfType(KDDockWidgets::Core::View * view, KDDockWidgets::Core::ViewType arg__2)
 void *c_static_KDDockWidgets__Core__View__firstParentOfType_View_ViewType(void *view_, int arg__2)
 {
     auto view = reinterpret_cast<KDDockWidgets::Core::View *>(view_);
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::firstParentOfType(view, static_cast<KDDockWidgets::Core::ViewType>(arg__2));
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::firstParentOfType(view, static_cast<KDDockWidgets::Core::ViewType>(arg__2));
+    return result;
 }
 // flags() const
 int c_KDDockWidgets__Core__View__flags(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
+    return result;
 }
 // geometry() const
 void *c_KDDockWidgets__Core__View__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+    return result;
 }
 // grabMouse()
 void c_KDDockWidgets__Core__View__grabMouse(void *thisObj)
@@ -1025,17 +1042,20 @@ void c_KDDockWidgets__Core__View__grabMouse(void *thisObj)
 // hardcodedMinimumSize()
 void *c_static_KDDockWidgets__Core__View__hardcodedMinimumSize()
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::hardcodedMinimumSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper::hardcodedMinimumSize() };
+    return result;
 }
 // hasFocus() const
 bool c_KDDockWidgets__Core__View__hasFocus(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
+    return result;
 }
 // height() const
 int c_KDDockWidgets__Core__View__height(void *thisObj)
 {
-    return fromPtr(thisObj)->height();
+    const auto &result = fromPtr(thisObj)->height();
+    return result;
 }
 // hide()
 void c_KDDockWidgets__Core__View__hide(void *thisObj)
@@ -1045,7 +1065,8 @@ void c_KDDockWidgets__Core__View__hide(void *thisObj)
 // inDtor() const
 bool c_KDDockWidgets__Core__View__inDtor(void *thisObj)
 {
-    return fromPtr(thisObj)->inDtor();
+    const auto &result = fromPtr(thisObj)->inDtor();
+    return result;
 }
 // init()
 void c_KDDockWidgets__Core__View__init(void *thisObj)
@@ -1055,44 +1076,52 @@ void c_KDDockWidgets__Core__View__init(void *thisObj)
 // isActiveWindow() const
 bool c_KDDockWidgets__Core__View__isActiveWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
+    return result;
 }
 // isExplicitlyHidden() const
 bool c_KDDockWidgets__Core__View__isExplicitlyHidden(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isExplicitlyHidden_nocallback();} else {    return targetPtr->isExplicitlyHidden();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isExplicitlyHidden_nocallback();} else {    return targetPtr->isExplicitlyHidden();} }();
+    return result;
 }
 // isMaximized() const
 bool c_KDDockWidgets__Core__View__isMaximized(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
+    return result;
 }
 // isMinimized() const
 bool c_KDDockWidgets__Core__View__isMinimized(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
+    return result;
 }
 // isNull() const
 bool c_KDDockWidgets__Core__View__isNull(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
+    return result;
 }
 // isRootView() const
 bool c_KDDockWidgets__Core__View__isRootView(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
+    return result;
 }
 // isVisible() const
 bool c_KDDockWidgets__Core__View__isVisible(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
+    return result;
 }
 // mapFromGlobal(KDDockWidgets::Point arg__1) const
 void *c_KDDockWidgets__Core__View__mapFromGlobal_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(arg__1);} else {    return targetPtr->mapFromGlobal(arg__1);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(arg__1);} else {    return targetPtr->mapFromGlobal(arg__1);} }() };
+    return result;
 }
 // mapTo(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Point arg__2) const
 void *c_KDDockWidgets__Core__View__mapTo_View_Point(void *thisObj, void *arg__1_, void *arg__2_)
@@ -1100,34 +1129,40 @@ void *c_KDDockWidgets__Core__View__mapTo_View_Point(void *thisObj, void *arg__1_
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
     assert(arg__2_);
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::Point *>(arg__2_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(arg__1,arg__2);} else {    return targetPtr->mapTo(arg__1,arg__2);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(arg__1,arg__2);} else {    return targetPtr->mapTo(arg__1,arg__2);} }() };
+    return result;
 }
 // mapToGlobal(KDDockWidgets::Point arg__1) const
 void *c_KDDockWidgets__Core__View__mapToGlobal_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(arg__1);} else {    return targetPtr->mapToGlobal(arg__1);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(arg__1);} else {    return targetPtr->mapToGlobal(arg__1);} }() };
+    return result;
 }
 // maxSizeHint() const
 void *c_KDDockWidgets__Core__View__maxSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    return result;
 }
 // minSize() const
 void *c_KDDockWidgets__Core__View__minSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    return result;
 }
 // minimumHeight() const
 int c_KDDockWidgets__Core__View__minimumHeight(void *thisObj)
 {
-    return fromPtr(thisObj)->minimumHeight();
+    const auto &result = fromPtr(thisObj)->minimumHeight();
+    return result;
 }
 // minimumWidth() const
 int c_KDDockWidgets__Core__View__minimumWidth(void *thisObj)
 {
-    return fromPtr(thisObj)->minimumWidth();
+    const auto &result = fromPtr(thisObj)->minimumWidth();
+    return result;
 }
 // move(KDDockWidgets::Point arg__1)
 void c_KDDockWidgets__Core__View__move_Point(void *thisObj, void *arg__1_)
@@ -1144,24 +1179,28 @@ void c_KDDockWidgets__Core__View__move_int_int(void *thisObj, int x, int y)
 // normalGeometry() const
 void *c_KDDockWidgets__Core__View__normalGeometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
+    return result;
 }
 // onResize(KDDockWidgets::Size arg__1)
 bool c_KDDockWidgets__Core__View__onResize_Size(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Size *>(arg__1_);
-    return fromPtr(thisObj)->onResize(arg__1);
+    const auto &result = fromPtr(thisObj)->onResize(arg__1);
+    return result;
 }
 // onResize(int h, int w)
 bool c_KDDockWidgets__Core__View__onResize_int_int(void *thisObj, int h, int w)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
+    return result;
 }
 // pos() const
 void *c_KDDockWidgets__Core__View__pos(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
+    return result;
 }
 // raise()
 void c_KDDockWidgets__Core__View__raise(void *thisObj)
@@ -1176,7 +1215,8 @@ void c_KDDockWidgets__Core__View__raiseAndActivate(void *thisObj)
 // rect() const
 void *c_KDDockWidgets__Core__View__rect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
+    return result;
 }
 // releaseKeyboard()
 void c_KDDockWidgets__Core__View__releaseKeyboard(void *thisObj)
@@ -1269,6 +1309,7 @@ void c_KDDockWidgets__Core__View__setViewName_QString(void *thisObj, const char 
 {
     const auto arg__1 = QString::fromUtf8(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setViewName_nocallback(arg__1);} else {    return targetPtr->setViewName(arg__1);} }();
+    free(( char * )arg__1_);
 }
 // setVisible(bool arg__1)
 void c_KDDockWidgets__Core__View__setVisible_bool(void *thisObj, bool arg__1)
@@ -1290,6 +1331,7 @@ void c_KDDockWidgets__Core__View__setWindowTitle_QString(void *thisObj, const ch
 {
     const auto title = QString::fromUtf8(title_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowTitle_nocallback(title);} else {    return targetPtr->setWindowTitle(title);} }();
+    free(( char * )title_);
 }
 // setZOrder(int arg__1)
 void c_KDDockWidgets__Core__View__setZOrder_int(void *thisObj, int arg__1)
@@ -1319,7 +1361,8 @@ void c_KDDockWidgets__Core__View__showNormal(void *thisObj)
 // size() const
 void *c_KDDockWidgets__Core__View__size(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
+    return result;
 }
 // update()
 void c_KDDockWidgets__Core__View__update(void *thisObj)
@@ -1329,22 +1372,26 @@ void c_KDDockWidgets__Core__View__update(void *thisObj)
 // viewName() const
 void *c_KDDockWidgets__Core__View__viewName(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->viewName_nocallback();} else {    return targetPtr->viewName();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::View_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->viewName_nocallback();} else {    return targetPtr->viewName();} }() };
+    return result;
 }
 // width() const
 int c_KDDockWidgets__Core__View__width(void *thisObj)
 {
-    return fromPtr(thisObj)->width();
+    const auto &result = fromPtr(thisObj)->width();
+    return result;
 }
 // x() const
 int c_KDDockWidgets__Core__View__x(void *thisObj)
 {
-    return fromPtr(thisObj)->x();
+    const auto &result = fromPtr(thisObj)->x();
+    return result;
 }
 // y() const
 int c_KDDockWidgets__Core__View__y(void *thisObj)
 {
-    return fromPtr(thisObj)->y();
+    const auto &result = fromPtr(thisObj)->y();
+    return result;
 }
 void c_KDDockWidgets__Core__View__destructor(void *thisObj)
 {

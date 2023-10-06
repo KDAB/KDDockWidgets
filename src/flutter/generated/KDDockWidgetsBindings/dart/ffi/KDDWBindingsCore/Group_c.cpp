@@ -370,7 +370,8 @@ void *c_KDDockWidgets__Core__Group__constructor_View(void *parent_)
 // actualTitleBar() const
 void *c_KDDockWidgets__Core__Group__actualTitleBar(void *thisObj)
 {
-    return fromPtr(thisObj)->actualTitleBar();
+    const auto &result = fromPtr(thisObj)->actualTitleBar();
+    return result;
 }
 // addTab(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::InitialOption arg__2)
 void c_KDDockWidgets__Core__Group__addTab_DockWidget_InitialOption(void *thisObj, void *arg__1_, void *arg__2_)
@@ -399,111 +400,132 @@ void c_KDDockWidgets__Core__Group__addTab_Group_InitialOption(void *thisObj, voi
 // allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 bool c_KDDockWidgets__Core__Group__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    return result;
 }
 // allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const
 bool c_KDDockWidgets__Core__Group__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    return result;
 }
 // alwaysShowsTabs() const
 bool c_KDDockWidgets__Core__Group__alwaysShowsTabs(void *thisObj)
 {
-    return fromPtr(thisObj)->alwaysShowsTabs();
+    const auto &result = fromPtr(thisObj)->alwaysShowsTabs();
+    return result;
 }
 // anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const
 bool c_KDDockWidgets__Core__Group__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    return result;
 }
 // anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const
 bool c_KDDockWidgets__Core__Group__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    return result;
 }
 // anyNonClosable() const
 bool c_KDDockWidgets__Core__Group__anyNonClosable(void *thisObj)
 {
-    return fromPtr(thisObj)->anyNonClosable();
+    const auto &result = fromPtr(thisObj)->anyNonClosable();
+    return result;
 }
 // anyNonDockable() const
 bool c_KDDockWidgets__Core__Group__anyNonDockable(void *thisObj)
 {
-    return fromPtr(thisObj)->anyNonDockable();
+    const auto &result = fromPtr(thisObj)->anyNonDockable();
+    return result;
 }
 // beingDeletedLater() const
 bool c_KDDockWidgets__Core__Group__beingDeletedLater(void *thisObj)
 {
-    return fromPtr(thisObj)->beingDeletedLater();
+    const auto &result = fromPtr(thisObj)->beingDeletedLater();
+    return result;
 }
 // biggestDockWidgetMaxSize() const
 void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->biggestDockWidgetMaxSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->biggestDockWidgetMaxSize() };
+    return result;
 }
 // containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_)
 {
     auto w = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(w_);
-    return fromPtr(thisObj)->containsDockWidget(w);
+    const auto &result = fromPtr(thisObj)->containsDockWidget(w);
+    return result;
 }
 // containsMouse(KDDockWidgets::Point globalPos) const
 bool c_KDDockWidgets__Core__Group__containsMouse_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
     auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
-    return fromPtr(thisObj)->containsMouse(globalPos);
+    const auto &result = fromPtr(thisObj)->containsMouse(globalPos);
+    return result;
 }
 // currentDockWidget() const
 void *c_KDDockWidgets__Core__Group__currentDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->currentDockWidget();
+    const auto &result = fromPtr(thisObj)->currentDockWidget();
+    return result;
 }
 // currentIndex() const
 int c_KDDockWidgets__Core__Group__currentIndex(void *thisObj)
 {
-    return fromPtr(thisObj)->currentIndex();
+    const auto &result = fromPtr(thisObj)->currentIndex();
+    return result;
 }
 // currentTabIndex() const
 int c_KDDockWidgets__Core__Group__currentTabIndex(void *thisObj)
 {
-    return fromPtr(thisObj)->currentTabIndex();
+    const auto &result = fromPtr(thisObj)->currentTabIndex();
+    return result;
 }
 // dbg_numFrames()
 int c_static_KDDockWidgets__Core__Group__dbg_numFrames()
 {
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::dbg_numFrames();
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::dbg_numFrames();
+    return result;
 }
 // detachTab(KDDockWidgets::Core::DockWidget * arg__1)
 void *c_KDDockWidgets__Core__Group__detachTab_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    return fromPtr(thisObj)->detachTab(arg__1);
+    const auto &result = fromPtr(thisObj)->detachTab(arg__1);
+    return result;
 }
 // dockWidgetAt(int index) const
 void *c_KDDockWidgets__Core__Group__dockWidgetAt_int(void *thisObj, int index)
 {
-    return fromPtr(thisObj)->dockWidgetAt(index);
+    const auto &result = fromPtr(thisObj)->dockWidgetAt(index);
+    return result;
 }
 // dockWidgetCount() const
 int c_KDDockWidgets__Core__Group__dockWidgetCount(void *thisObj)
 {
-    return fromPtr(thisObj)->dockWidgetCount();
+    const auto &result = fromPtr(thisObj)->dockWidgetCount();
+    return result;
 }
 // dockWidgetsMinSize() const
 void *c_KDDockWidgets__Core__Group__dockWidgetsMinSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->dockWidgetsMinSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->dockWidgetsMinSize() };
+    return result;
 }
 // dragRect() const
 void *c_KDDockWidgets__Core__Group__dragRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragRect_nocallback();} else {    return targetPtr->dragRect();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragRect_nocallback();} else {    return targetPtr->dragRect();} }() };
+    return result;
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Core__Group__floatingWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->floatingWindow();
+    const auto &result = fromPtr(thisObj)->floatingWindow();
+    return result;
 }
 // focusedWidgetChangedCallback()
 void c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback(void *thisObj)
@@ -513,23 +535,27 @@ void c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback(void *thisObj)
 // hasNestedMDIDockWidgets() const
 bool c_KDDockWidgets__Core__Group__hasNestedMDIDockWidgets(void *thisObj)
 {
-    return fromPtr(thisObj)->hasNestedMDIDockWidgets();
+    const auto &result = fromPtr(thisObj)->hasNestedMDIDockWidgets();
+    return result;
 }
 // hasSingleDockWidget() const
 bool c_KDDockWidgets__Core__Group__hasSingleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->hasSingleDockWidget();
+    const auto &result = fromPtr(thisObj)->hasSingleDockWidget();
+    return result;
 }
 // hasTabsVisible() const
 bool c_KDDockWidgets__Core__Group__hasTabsVisible(void *thisObj)
 {
-    return fromPtr(thisObj)->hasTabsVisible();
+    const auto &result = fromPtr(thisObj)->hasTabsVisible();
+    return result;
 }
 // indexOfDockWidget(const KDDockWidgets::Core::DockWidget * arg__1)
 int c_KDDockWidgets__Core__Group__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    return fromPtr(thisObj)->indexOfDockWidget(arg__1);
+    const auto &result = fromPtr(thisObj)->indexOfDockWidget(arg__1);
+    return result;
 }
 // insertDockWidget(KDDockWidgets::Core::DockWidget * arg__1, int index)
 void c_KDDockWidgets__Core__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index)
@@ -548,22 +574,26 @@ void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(voi
 // isCentralFrame() const
 bool c_KDDockWidgets__Core__Group__isCentralFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->isCentralFrame();
+    const auto &result = fromPtr(thisObj)->isCentralFrame();
+    return result;
 }
 // isDockable() const
 bool c_KDDockWidgets__Core__Group__isDockable(void *thisObj)
 {
-    return fromPtr(thisObj)->isDockable();
+    const auto &result = fromPtr(thisObj)->isDockable();
+    return result;
 }
 // isEmpty() const
 bool c_KDDockWidgets__Core__Group__isEmpty(void *thisObj)
 {
-    return fromPtr(thisObj)->isEmpty();
+    const auto &result = fromPtr(thisObj)->isEmpty();
+    return result;
 }
 // isFloating() const
 bool c_KDDockWidgets__Core__Group__isFloating(void *thisObj)
 {
-    return fromPtr(thisObj)->isFloating();
+    const auto &result = fromPtr(thisObj)->isFloating();
+    return result;
 }
 // isFocusedChangedCallback()
 void c_KDDockWidgets__Core__Group__isFocusedChangedCallback(void *thisObj)
@@ -573,62 +603,74 @@ void c_KDDockWidgets__Core__Group__isFocusedChangedCallback(void *thisObj)
 // isInFloatingWindow() const
 bool c_KDDockWidgets__Core__Group__isInFloatingWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->isInFloatingWindow();
+    const auto &result = fromPtr(thisObj)->isInFloatingWindow();
+    return result;
 }
 // isInMainWindow() const
 bool c_KDDockWidgets__Core__Group__isInMainWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->isInMainWindow();
+    const auto &result = fromPtr(thisObj)->isInMainWindow();
+    return result;
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__Group__isMDI(void *thisObj)
 {
-    return fromPtr(thisObj)->isMDI();
+    const auto &result = fromPtr(thisObj)->isMDI();
+    return result;
 }
 // isMDIWrapper() const
 bool c_KDDockWidgets__Core__Group__isMDIWrapper(void *thisObj)
 {
-    return fromPtr(thisObj)->isMDIWrapper();
+    const auto &result = fromPtr(thisObj)->isMDIWrapper();
+    return result;
 }
 // isOverlayed() const
 bool c_KDDockWidgets__Core__Group__isOverlayed(void *thisObj)
 {
-    return fromPtr(thisObj)->isOverlayed();
+    const auto &result = fromPtr(thisObj)->isOverlayed();
+    return result;
 }
 // isTheOnlyGroup() const
 bool c_KDDockWidgets__Core__Group__isTheOnlyGroup(void *thisObj)
 {
-    return fromPtr(thisObj)->isTheOnlyGroup();
+    const auto &result = fromPtr(thisObj)->isTheOnlyGroup();
+    return result;
 }
 // layoutItem() const
 void *c_KDDockWidgets__Core__Group__layoutItem(void *thisObj)
 {
-    return fromPtr(thisObj)->layoutItem();
+    const auto &result = fromPtr(thisObj)->layoutItem();
+    return result;
 }
 // mainWindow() const
 void *c_KDDockWidgets__Core__Group__mainWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->mainWindow();
+    const auto &result = fromPtr(thisObj)->mainWindow();
+    return result;
 }
 // mdiDockWidgetWrapper() const
 void *c_KDDockWidgets__Core__Group__mdiDockWidgetWrapper(void *thisObj)
 {
-    return fromPtr(thisObj)->mdiDockWidgetWrapper();
+    const auto &result = fromPtr(thisObj)->mdiDockWidgetWrapper();
+    return result;
 }
 // mdiDropAreaWrapper() const
 void *c_KDDockWidgets__Core__Group__mdiDropAreaWrapper(void *thisObj)
 {
-    return fromPtr(thisObj)->mdiDropAreaWrapper();
+    const auto &result = fromPtr(thisObj)->mdiDropAreaWrapper();
+    return result;
 }
 // mdiFrame() const
 void *c_KDDockWidgets__Core__Group__mdiFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->mdiFrame();
+    const auto &result = fromPtr(thisObj)->mdiFrame();
+    return result;
 }
 // nonContentsHeight() const
 int c_KDDockWidgets__Core__Group__nonContentsHeight(void *thisObj)
 {
-    return fromPtr(thisObj)->nonContentsHeight();
+    const auto &result = fromPtr(thisObj)->nonContentsHeight();
+    return result;
 }
 // onDockWidgetCountChanged()
 void c_KDDockWidgets__Core__Group__onDockWidgetCountChanged(void *thisObj)
@@ -652,6 +694,7 @@ void c_KDDockWidgets__Core__Group__renameTab_int_QString(void *thisObj, int inde
 {
     const auto arg__2 = QString::fromUtf8(arg__2_);
     fromPtr(thisObj)->renameTab(index, arg__2);
+    free(( char * )arg__2_);
 }
 // restoreToPreviousPosition()
 void c_KDDockWidgets__Core__Group__restoreToPreviousPosition(void *thisObj)
@@ -690,22 +733,26 @@ void c_KDDockWidgets__Core__Group__setParentView_impl_View(void *thisObj, void *
 // stack() const
 void *c_KDDockWidgets__Core__Group__stack(void *thisObj)
 {
-    return fromPtr(thisObj)->stack();
+    const auto &result = fromPtr(thisObj)->stack();
+    return result;
 }
 // tabBar() const
 void *c_KDDockWidgets__Core__Group__tabBar(void *thisObj)
 {
-    return fromPtr(thisObj)->tabBar();
+    const auto &result = fromPtr(thisObj)->tabBar();
+    return result;
 }
 // title() const
 void *c_KDDockWidgets__Core__Group__title(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->title() };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->title() };
+    return result;
 }
 // titleBar() const
 void *c_KDDockWidgets__Core__Group__titleBar(void *thisObj)
 {
-    return fromPtr(thisObj)->titleBar();
+    const auto &result = fromPtr(thisObj)->titleBar();
+    return result;
 }
 // unoverlay()
 void c_KDDockWidgets__Core__Group__unoverlay(void *thisObj)
@@ -730,7 +777,8 @@ void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *thisObj)
 // userType() const
 int c_KDDockWidgets__Core__Group__userType(void *thisObj)
 {
-    return fromPtr(thisObj)->userType();
+    const auto &result = fromPtr(thisObj)->userType();
+    return result;
 }
 void c_KDDockWidgets__Core__Group__destructor(void *thisObj)
 {

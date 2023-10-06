@@ -202,46 +202,54 @@ void *c_KDDockWidgets__Core__DropIndicatorOverlay__constructor_DropArea_View(voi
 // currentDropLocation() const
 int c_KDDockWidgets__Core__DropIndicatorOverlay__currentDropLocation(void *thisObj)
 {
-    return int(fromPtr(thisObj)->currentDropLocation());
+    const auto &result = int(fromPtr(thisObj)->currentDropLocation());
+    return result;
 }
 // dropIndicatorVisible(KDDockWidgets::DropLocation arg__1) const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__dropIndicatorVisible_DropLocation(void *thisObj, int arg__1)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dropIndicatorVisible_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->dropIndicatorVisible(static_cast<KDDockWidgets::DropLocation>(arg__1));} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dropIndicatorVisible_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->dropIndicatorVisible(static_cast<KDDockWidgets::DropLocation>(arg__1));} }();
+    return result;
 }
 // hover(KDDockWidgets::Point globalPos)
 int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
     auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
-    return int(fromPtr(thisObj)->hover(globalPos));
+    const auto &result = int(fromPtr(thisObj)->hover(globalPos));
+    return result;
 }
 // hover_impl(KDDockWidgets::Point globalPos)
 int c_KDDockWidgets__Core__DropIndicatorOverlay__hover_impl_Point(void *thisObj, void *globalPos_)
 {
     assert(globalPos_);
     auto &globalPos = *reinterpret_cast<KDDockWidgets::Point *>(globalPos_);
-    return fromWrapperPtr(thisObj)->hover_impl_nocallback(globalPos);
+    const auto &result = fromWrapperPtr(thisObj)->hover_impl_nocallback(globalPos);
+    return result;
 }
 // hoveredGroup() const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroup(void *thisObj)
 {
-    return fromPtr(thisObj)->hoveredGroup();
+    const auto &result = fromPtr(thisObj)->hoveredGroup();
+    return result;
 }
 // hoveredGroupRect() const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__hoveredGroupRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->hoveredGroupRect() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->hoveredGroupRect() };
+    return result;
 }
 // isHovered() const
 bool c_KDDockWidgets__Core__DropIndicatorOverlay__isHovered(void *thisObj)
 {
-    return fromPtr(thisObj)->isHovered();
+    const auto &result = fromPtr(thisObj)->isHovered();
+    return result;
 }
 // multisplitterLocationFor(KDDockWidgets::DropLocation arg__1)
 int c_static_KDDockWidgets__Core__DropIndicatorOverlay__multisplitterLocationFor_DropLocation(int arg__1)
 {
-    return KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::multisplitterLocationFor(static_cast<KDDockWidgets::DropLocation>(arg__1));
+    const auto &result = KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper::multisplitterLocationFor(static_cast<KDDockWidgets::DropLocation>(arg__1));
+    return result;
 }
 // onHoveredGroupChanged(KDDockWidgets::Core::Group * arg__1)
 void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group(void *thisObj, void *arg__1_)
@@ -252,7 +260,8 @@ void c_KDDockWidgets__Core__DropIndicatorOverlay__onHoveredGroupChanged_Group(vo
 // posForIndicator(KDDockWidgets::DropLocation arg__1) const
 void *c_KDDockWidgets__Core__DropIndicatorOverlay__posForIndicator_DropLocation(void *thisObj, int arg__1)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::DropIndicatorOverlay_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->posForIndicator_nocallback(static_cast<KDDockWidgets::DropLocation>(arg__1));} else {    return targetPtr->posForIndicator(static_cast<KDDockWidgets::DropLocation>(arg__1));} }() };
+    return result;
 }
 // removeHover()
 void c_KDDockWidgets__Core__DropIndicatorOverlay__removeHover(void *thisObj)

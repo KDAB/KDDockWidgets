@@ -147,7 +147,8 @@ void *c_KDDockWidgets__Core__Controller__constructor_ViewType_View(int type, voi
 // close()
 bool c_KDDockWidgets__Core__Controller__close(void *thisObj)
 {
-    return fromPtr(thisObj)->close();
+    const auto &result = fromPtr(thisObj)->close();
+    return result;
 }
 // destroyLater()
 void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj)
@@ -157,39 +158,46 @@ void c_KDDockWidgets__Core__Controller__destroyLater(void *thisObj)
 // geometry() const
 void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
+    return result;
 }
 // height() const
 int c_KDDockWidgets__Core__Controller__height(void *thisObj)
 {
-    return fromPtr(thisObj)->height();
+    const auto &result = fromPtr(thisObj)->height();
+    return result;
 }
 // inDtor() const
 bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj)
 {
-    return fromPtr(thisObj)->inDtor();
+    const auto &result = fromPtr(thisObj)->inDtor();
+    return result;
 }
 // isVisible() const
 bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj)
 {
-    return fromPtr(thisObj)->isVisible();
+    const auto &result = fromPtr(thisObj)->isVisible();
+    return result;
 }
 // mapToGlobal(KDDockWidgets::Point arg__1) const
 void *c_KDDockWidgets__Core__Controller__mapToGlobal_Point(void *thisObj, void *arg__1_)
 {
     assert(arg__1_);
     auto &arg__1 = *reinterpret_cast<KDDockWidgets::Point *>(arg__1_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapToGlobal(arg__1) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->mapToGlobal(arg__1) };
+    return result;
 }
 // pos() const
 void *c_KDDockWidgets__Core__Controller__pos(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
+    return result;
 }
 // rect() const
 void *c_KDDockWidgets__Core__Controller__rect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rect() };
+    return result;
 }
 // setParentView(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__Controller__setParentView_View(void *thisObj, void *parent_)
@@ -216,32 +224,38 @@ void c_KDDockWidgets__Core__Controller__show(void *thisObj)
 // size() const
 void *c_KDDockWidgets__Core__Controller__size(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->size() };
+    return result;
 }
 // type() const
 int c_KDDockWidgets__Core__Controller__type(void *thisObj)
 {
-    return int(fromPtr(thisObj)->type());
+    const auto &result = int(fromPtr(thisObj)->type());
+    return result;
 }
 // view() const
 void *c_KDDockWidgets__Core__Controller__view(void *thisObj)
 {
-    return fromPtr(thisObj)->view();
+    const auto &result = fromPtr(thisObj)->view();
+    return result;
 }
 // width() const
 int c_KDDockWidgets__Core__Controller__width(void *thisObj)
 {
-    return fromPtr(thisObj)->width();
+    const auto &result = fromPtr(thisObj)->width();
+    return result;
 }
 // x() const
 int c_KDDockWidgets__Core__Controller__x(void *thisObj)
 {
-    return fromPtr(thisObj)->x();
+    const auto &result = fromPtr(thisObj)->x();
+    return result;
 }
 // y() const
 int c_KDDockWidgets__Core__Controller__y(void *thisObj)
 {
-    return fromPtr(thisObj)->y();
+    const auto &result = fromPtr(thisObj)->y();
+    return result;
 }
 void c_KDDockWidgets__Core__Controller__destructor(void *thisObj)
 {

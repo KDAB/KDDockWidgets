@@ -194,24 +194,28 @@ void *c_KDDockWidgets__Core__TabBar__constructor_Stack(void *tabWidget_)
 // currentDockWidget() const
 void *c_KDDockWidgets__Core__TabBar__currentDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->currentDockWidget();
+    const auto &result = fromPtr(thisObj)->currentDockWidget();
+    return result;
 }
 // currentIndex() const
 int c_KDDockWidgets__Core__TabBar__currentIndex(void *thisObj)
 {
-    return fromPtr(thisObj)->currentIndex();
+    const auto &result = fromPtr(thisObj)->currentIndex();
+    return result;
 }
 // dockWidgetAt(KDDockWidgets::Point localPos) const
 void *c_KDDockWidgets__Core__TabBar__dockWidgetAt_Point(void *thisObj, void *localPos_)
 {
     assert(localPos_);
     auto &localPos = *reinterpret_cast<KDDockWidgets::Point *>(localPos_);
-    return fromPtr(thisObj)->dockWidgetAt(localPos);
+    const auto &result = fromPtr(thisObj)->dockWidgetAt(localPos);
+    return result;
 }
 // dockWidgetAt(int index) const
 void *c_KDDockWidgets__Core__TabBar__dockWidgetAt_int(void *thisObj, int index)
 {
-    return fromPtr(thisObj)->dockWidgetAt(index);
+    const auto &result = fromPtr(thisObj)->dockWidgetAt(index);
+    return result;
 }
 // dragCanStart(KDDockWidgets::Point pressPos, KDDockWidgets::Point pos) const
 bool c_KDDockWidgets__Core__TabBar__dragCanStart_Point_Point(void *thisObj, void *pressPos_, void *pos_)
@@ -220,38 +224,45 @@ bool c_KDDockWidgets__Core__TabBar__dragCanStart_Point_Point(void *thisObj, void
     auto &pressPos = *reinterpret_cast<KDDockWidgets::Point *>(pressPos_);
     assert(pos_);
     auto &pos = *reinterpret_cast<KDDockWidgets::Point *>(pos_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragCanStart_nocallback(pressPos,pos);} else {    return targetPtr->dragCanStart(pressPos,pos);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->dragCanStart_nocallback(pressPos,pos);} else {    return targetPtr->dragCanStart(pressPos,pos);} }();
+    return result;
 }
 // group() const
 void *c_KDDockWidgets__Core__TabBar__group(void *thisObj)
 {
-    return fromPtr(thisObj)->group();
+    const auto &result = fromPtr(thisObj)->group();
+    return result;
 }
 // hasSingleDockWidget() const
 bool c_KDDockWidgets__Core__TabBar__hasSingleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->hasSingleDockWidget();
+    const auto &result = fromPtr(thisObj)->hasSingleDockWidget();
+    return result;
 }
 // indexOfDockWidget(const KDDockWidgets::Core::DockWidget * dw) const
 int c_KDDockWidgets__Core__TabBar__indexOfDockWidget_DockWidget(void *thisObj, void *dw_)
 {
     auto dw = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dw_);
-    return fromPtr(thisObj)->indexOfDockWidget(dw);
+    const auto &result = fromPtr(thisObj)->indexOfDockWidget(dw);
+    return result;
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__TabBar__isMDI(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    return result;
 }
 // isMovingTab() const
 bool c_KDDockWidgets__Core__TabBar__isMovingTab(void *thisObj)
 {
-    return fromPtr(thisObj)->isMovingTab();
+    const auto &result = fromPtr(thisObj)->isMovingTab();
+    return result;
 }
 // isWindow() const
 bool c_KDDockWidgets__Core__TabBar__isWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    return result;
 }
 // moveTabTo(int from, int to)
 void c_KDDockWidgets__Core__TabBar__moveTabTo_int_int(void *thisObj, int from, int to)
@@ -261,7 +272,8 @@ void c_KDDockWidgets__Core__TabBar__moveTabTo_int_int(void *thisObj, int from, i
 // numDockWidgets() const
 int c_KDDockWidgets__Core__TabBar__numDockWidgets(void *thisObj)
 {
-    return fromPtr(thisObj)->numDockWidgets();
+    const auto &result = fromPtr(thisObj)->numDockWidgets();
+    return result;
 }
 // onMouseDoubleClick(KDDockWidgets::Point localPos)
 void c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_)
@@ -280,7 +292,8 @@ void c_KDDockWidgets__Core__TabBar__onMousePress_Point(void *thisObj, void *loca
 // rectForTab(int index) const
 void *c_KDDockWidgets__Core__TabBar__rectForTab_int(void *thisObj, int index)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rectForTab(index) };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->rectForTab(index) };
+    return result;
 }
 // removeDockWidget(KDDockWidgets::Core::DockWidget * dw)
 void c_KDDockWidgets__Core__TabBar__removeDockWidget_DockWidget(void *thisObj, void *dw_)
@@ -293,6 +306,7 @@ void c_KDDockWidgets__Core__TabBar__renameTab_int_QString(void *thisObj, int ind
 {
     const auto arg__2 = QString::fromUtf8(arg__2_);
     fromPtr(thisObj)->renameTab(index, arg__2);
+    free(( char * )arg__2_);
 }
 // setCurrentDockWidget(KDDockWidgets::Core::DockWidget * dw)
 void c_KDDockWidgets__Core__TabBar__setCurrentDockWidget_DockWidget(void *thisObj, void *dw_)
@@ -314,22 +328,26 @@ void c_KDDockWidgets__Core__TabBar__setParentView_impl_View(void *thisObj, void 
 // singleDockWidget() const
 void *c_KDDockWidgets__Core__TabBar__singleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->singleDockWidget();
+    const auto &result = fromPtr(thisObj)->singleDockWidget();
+    return result;
 }
 // stack() const
 void *c_KDDockWidgets__Core__TabBar__stack(void *thisObj)
 {
-    return fromPtr(thisObj)->stack();
+    const auto &result = fromPtr(thisObj)->stack();
+    return result;
 }
 // tabsAreMovable() const
 bool c_KDDockWidgets__Core__TabBar__tabsAreMovable(void *thisObj)
 {
-    return fromPtr(thisObj)->tabsAreMovable();
+    const auto &result = fromPtr(thisObj)->tabsAreMovable();
+    return result;
 }
 // text(int index) const
 void *c_KDDockWidgets__Core__TabBar__text_int(void *thisObj, int index)
 {
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->text(index) };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->text(index) };
+    return result;
 }
 void c_KDDockWidgets__Core__TabBar__destructor(void *thisObj)
 {

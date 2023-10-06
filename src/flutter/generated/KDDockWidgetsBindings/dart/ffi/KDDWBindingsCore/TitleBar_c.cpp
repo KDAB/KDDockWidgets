@@ -253,87 +253,104 @@ void *c_KDDockWidgets__Core__TitleBar__constructor_View(void *arg__1_)
 // closeButtonEnabled() const
 bool c_KDDockWidgets__Core__TitleBar__closeButtonEnabled(void *thisObj)
 {
-    return fromPtr(thisObj)->closeButtonEnabled();
+    const auto &result = fromPtr(thisObj)->closeButtonEnabled();
+    return result;
 }
 // floatButtonToolTip() const
 void *c_KDDockWidgets__Core__TitleBar__floatButtonToolTip(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->floatButtonToolTip() };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->floatButtonToolTip() };
+    return result;
 }
 // floatButtonVisible() const
 bool c_KDDockWidgets__Core__TitleBar__floatButtonVisible(void *thisObj)
 {
-    return fromPtr(thisObj)->floatButtonVisible();
+    const auto &result = fromPtr(thisObj)->floatButtonVisible();
+    return result;
 }
 // floatingWindow() const
 void *c_KDDockWidgets__Core__TitleBar__floatingWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->floatingWindow();
+    const auto &result = fromPtr(thisObj)->floatingWindow();
+    return result;
 }
 // group() const
 void *c_KDDockWidgets__Core__TitleBar__group(void *thisObj)
 {
-    return fromPtr(thisObj)->group();
+    const auto &result = fromPtr(thisObj)->group();
+    return result;
 }
 // hasIcon() const
 bool c_KDDockWidgets__Core__TitleBar__hasIcon(void *thisObj)
 {
-    return fromPtr(thisObj)->hasIcon();
+    const auto &result = fromPtr(thisObj)->hasIcon();
+    return result;
 }
 // isCloseButtonEnabled() const
 bool c_KDDockWidgets__Core__TitleBar__isCloseButtonEnabled(void *thisObj)
 {
-    return fromPtr(thisObj)->isCloseButtonEnabled();
+    const auto &result = fromPtr(thisObj)->isCloseButtonEnabled();
+    return result;
 }
 // isCloseButtonVisible() const
 bool c_KDDockWidgets__Core__TitleBar__isCloseButtonVisible(void *thisObj)
 {
-    return fromPtr(thisObj)->isCloseButtonVisible();
+    const auto &result = fromPtr(thisObj)->isCloseButtonVisible();
+    return result;
 }
 // isFloatButtonVisible() const
 bool c_KDDockWidgets__Core__TitleBar__isFloatButtonVisible(void *thisObj)
 {
-    return fromPtr(thisObj)->isFloatButtonVisible();
+    const auto &result = fromPtr(thisObj)->isFloatButtonVisible();
+    return result;
 }
 // isFloating() const
 bool c_KDDockWidgets__Core__TitleBar__isFloating(void *thisObj)
 {
-    return fromPtr(thisObj)->isFloating();
+    const auto &result = fromPtr(thisObj)->isFloating();
+    return result;
 }
 // isFocused() const
 bool c_KDDockWidgets__Core__TitleBar__isFocused(void *thisObj)
 {
-    return fromPtr(thisObj)->isFocused();
+    const auto &result = fromPtr(thisObj)->isFocused();
+    return result;
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__TitleBar__isMDI(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    return result;
 }
 // isOverlayed() const
 bool c_KDDockWidgets__Core__TitleBar__isOverlayed(void *thisObj)
 {
-    return fromWrapperPtr(thisObj)->isOverlayed();
+    const auto &result = fromWrapperPtr(thisObj)->isOverlayed();
+    return result;
 }
 // isStandalone() const
 bool c_KDDockWidgets__Core__TitleBar__isStandalone(void *thisObj)
 {
-    return fromPtr(thisObj)->isStandalone();
+    const auto &result = fromPtr(thisObj)->isStandalone();
+    return result;
 }
 // isWindow() const
 bool c_KDDockWidgets__Core__TitleBar__isWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    return result;
 }
 // mainWindow() const
 void *c_KDDockWidgets__Core__TitleBar__mainWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->mainWindow();
+    const auto &result = fromPtr(thisObj)->mainWindow();
+    return result;
 }
 // maximizeButtonVisible() const
 bool c_KDDockWidgets__Core__TitleBar__maximizeButtonVisible(void *thisObj)
 {
-    return fromPtr(thisObj)->maximizeButtonVisible();
+    const auto &result = fromPtr(thisObj)->maximizeButtonVisible();
+    return result;
 }
 // onAutoHideClicked()
 void c_KDDockWidgets__Core__TitleBar__onAutoHideClicked(void *thisObj)
@@ -348,7 +365,8 @@ void c_KDDockWidgets__Core__TitleBar__onCloseClicked(void *thisObj)
 // onDoubleClicked()
 bool c_KDDockWidgets__Core__TitleBar__onDoubleClicked(void *thisObj)
 {
-    return fromPtr(thisObj)->onDoubleClicked();
+    const auto &result = fromPtr(thisObj)->onDoubleClicked();
+    return result;
 }
 // onFloatClicked()
 void c_KDDockWidgets__Core__TitleBar__onFloatClicked(void *thisObj)
@@ -386,46 +404,55 @@ void c_KDDockWidgets__Core__TitleBar__setTitle_QString(void *thisObj, const char
 {
     const auto title = QString::fromUtf8(title_);
     fromPtr(thisObj)->setTitle(title);
+    free(( char * )title_);
 }
 // singleDockWidget() const
 void *c_KDDockWidgets__Core__TitleBar__singleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->singleDockWidget();
+    const auto &result = fromPtr(thisObj)->singleDockWidget();
+    return result;
 }
 // supportsAutoHideButton() const
 bool c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton(void *thisObj)
 {
-    return fromPtr(thisObj)->supportsAutoHideButton();
+    const auto &result = fromPtr(thisObj)->supportsAutoHideButton();
+    return result;
 }
 // supportsFloatingButton() const
 bool c_KDDockWidgets__Core__TitleBar__supportsFloatingButton(void *thisObj)
 {
-    return fromPtr(thisObj)->supportsFloatingButton();
+    const auto &result = fromPtr(thisObj)->supportsFloatingButton();
+    return result;
 }
 // supportsMaximizeButton() const
 bool c_KDDockWidgets__Core__TitleBar__supportsMaximizeButton(void *thisObj)
 {
-    return fromPtr(thisObj)->supportsMaximizeButton();
+    const auto &result = fromPtr(thisObj)->supportsMaximizeButton();
+    return result;
 }
 // supportsMinimizeButton() const
 bool c_KDDockWidgets__Core__TitleBar__supportsMinimizeButton(void *thisObj)
 {
-    return fromPtr(thisObj)->supportsMinimizeButton();
+    const auto &result = fromPtr(thisObj)->supportsMinimizeButton();
+    return result;
 }
 // tabBar() const
 void *c_KDDockWidgets__Core__TitleBar__tabBar(void *thisObj)
 {
-    return fromPtr(thisObj)->tabBar();
+    const auto &result = fromPtr(thisObj)->tabBar();
+    return result;
 }
 // title() const
 void *c_KDDockWidgets__Core__TitleBar__title(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->title() };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { fromPtr(thisObj)->title() };
+    return result;
 }
 // titleBarIsFocusable() const
 bool c_KDDockWidgets__Core__TitleBar__titleBarIsFocusable(void *thisObj)
 {
-    return fromPtr(thisObj)->titleBarIsFocusable();
+    const auto &result = fromPtr(thisObj)->titleBarIsFocusable();
+    return result;
 }
 // toggleMaximized()
 void c_KDDockWidgets__Core__TitleBar__toggleMaximized(void *thisObj)

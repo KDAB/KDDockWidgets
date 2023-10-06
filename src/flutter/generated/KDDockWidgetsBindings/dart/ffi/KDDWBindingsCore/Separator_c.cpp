@@ -119,12 +119,14 @@ void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_)
 // isResizing()
 bool c_static_KDDockWidgets__Core__Separator__isResizing()
 {
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::isResizing();
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::isResizing();
+    return result;
 }
 // isVertical() const
 bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj)
 {
-    return fromPtr(thisObj)->isVertical();
+    const auto &result = fromPtr(thisObj)->isVertical();
+    return result;
 }
 // move(int p)
 void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p)
@@ -134,7 +136,8 @@ void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p)
 // numSeparators()
 int c_static_KDDockWidgets__Core__Separator__numSeparators()
 {
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::numSeparators();
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::numSeparators();
+    return result;
 }
 // onMouseDoubleClick()
 void c_KDDockWidgets__Core__Separator__onMouseDoubleClick(void *thisObj)
@@ -161,7 +164,8 @@ void c_KDDockWidgets__Core__Separator__onMouseReleased(void *thisObj)
 // position() const
 int c_KDDockWidgets__Core__Separator__position(void *thisObj)
 {
-    return fromPtr(thisObj)->position();
+    const auto &result = fromPtr(thisObj)->position();
+    return result;
 }
 // setGeometry(KDDockWidgets::Rect r)
 void c_KDDockWidgets__Core__Separator__setGeometry_Rect(void *thisObj, void *r_)

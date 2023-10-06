@@ -32,7 +32,8 @@ extern "C" {
 // fuzzyCompare(double a, double b, double epsilon)
 bool c_static_KDDockWidgets__fuzzyCompare_double_double_double(double a, double b, double epsilon)
 {
-    return KDDockWidgets::fuzzyCompare(a, b, epsilon);
+    const auto &result = KDDockWidgets::fuzzyCompare(a, b, epsilon);
+    return result;
 }
 // initFrontend(KDDockWidgets::FrontendType arg__1)
 void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
@@ -42,6 +43,7 @@ void c_static_KDDockWidgets__initFrontend_FrontendType(int arg__1)
 // spdlogLoggerName()
 const char *c_static_KDDockWidgets__spdlogLoggerName()
 {
-    return KDDockWidgets::spdlogLoggerName();
+    const auto &result = KDDockWidgets::spdlogLoggerName();
+    return result;
 }
 }

@@ -913,7 +913,8 @@ void c_KDDockWidgets__flutter__TabBar__activateWindow(void *thisObj)
 // close()
 bool c_KDDockWidgets__flutter__TabBar__close(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->close_nocallback();} else {    return targetPtr->close();} }();
+    return result;
 }
 // createPlatformWindow()
 void c_KDDockWidgets__flutter__TabBar__createPlatformWindow(void *thisObj)
@@ -923,12 +924,14 @@ void c_KDDockWidgets__flutter__TabBar__createPlatformWindow(void *thisObj)
 // flags() const
 int c_KDDockWidgets__flutter__TabBar__flags(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->flags_nocallback();} else {    return targetPtr->flags();} }();
+    return result;
 }
 // geometry() const
 void *c_KDDockWidgets__flutter__TabBar__geometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->geometry_nocallback();} else {    return targetPtr->geometry();} }() };
+    return result;
 }
 // grabMouse()
 void c_KDDockWidgets__flutter__TabBar__grabMouse(void *thisObj)
@@ -938,7 +941,8 @@ void c_KDDockWidgets__flutter__TabBar__grabMouse(void *thisObj)
 // hasFocus() const
 bool c_KDDockWidgets__flutter__TabBar__hasFocus(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->hasFocus_nocallback();} else {    return targetPtr->hasFocus();} }();
+    return result;
 }
 // hide()
 void c_KDDockWidgets__flutter__TabBar__hide(void *thisObj)
@@ -953,49 +957,58 @@ void c_KDDockWidgets__flutter__TabBar__init(void *thisObj)
 // isActiveWindow() const
 bool c_KDDockWidgets__flutter__TabBar__isActiveWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isActiveWindow_nocallback();} else {    return targetPtr->isActiveWindow();} }();
+    return result;
 }
 // isExplicitlyHidden() const
 bool c_KDDockWidgets__flutter__TabBar__isExplicitlyHidden(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isExplicitlyHidden_nocallback();} else {    return targetPtr->isExplicitlyHidden();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isExplicitlyHidden_nocallback();} else {    return targetPtr->isExplicitlyHidden();} }();
+    return result;
 }
 // isMaximized() const
 bool c_KDDockWidgets__flutter__TabBar__isMaximized(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMaximized_nocallback();} else {    return targetPtr->isMaximized();} }();
+    return result;
 }
 // isMinimized() const
 bool c_KDDockWidgets__flutter__TabBar__isMinimized(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMinimized_nocallback();} else {    return targetPtr->isMinimized();} }();
+    return result;
 }
 // isMounted() const
 bool c_KDDockWidgets__flutter__TabBar__isMounted(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMounted_nocallback();} else {    return targetPtr->isMounted();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMounted_nocallback();} else {    return targetPtr->isMounted();} }();
+    return result;
 }
 // isNull() const
 bool c_KDDockWidgets__flutter__TabBar__isNull(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isNull_nocallback();} else {    return targetPtr->isNull();} }();
+    return result;
 }
 // isRootView() const
 bool c_KDDockWidgets__flutter__TabBar__isRootView(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isRootView_nocallback();} else {    return targetPtr->isRootView();} }();
+    return result;
 }
 // isVisible() const
 bool c_KDDockWidgets__flutter__TabBar__isVisible(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isVisible_nocallback();} else {    return targetPtr->isVisible();} }();
+    return result;
 }
 // mapFromGlobal(KDDockWidgets::Point globalPt) const
 void *c_KDDockWidgets__flutter__TabBar__mapFromGlobal_Point(void *thisObj, void *globalPt_)
 {
     assert(globalPt_);
     auto &globalPt = *reinterpret_cast<KDDockWidgets::Point *>(globalPt_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(globalPt);} else {    return targetPtr->mapFromGlobal(globalPt);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapFromGlobal_nocallback(globalPt);} else {    return targetPtr->mapFromGlobal(globalPt);} }() };
+    return result;
 }
 // mapTo(KDDockWidgets::Core::View * parent, KDDockWidgets::Point pos) const
 void *c_KDDockWidgets__flutter__TabBar__mapTo_View_Point(void *thisObj, void *parent_, void *pos_)
@@ -1003,24 +1016,28 @@ void *c_KDDockWidgets__flutter__TabBar__mapTo_View_Point(void *thisObj, void *pa
     auto parent = reinterpret_cast<KDDockWidgets::Core::View *>(parent_);
     assert(pos_);
     auto &pos = *reinterpret_cast<KDDockWidgets::Point *>(pos_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(parent,pos);} else {    return targetPtr->mapTo(parent,pos);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapTo_nocallback(parent,pos);} else {    return targetPtr->mapTo(parent,pos);} }() };
+    return result;
 }
 // mapToGlobal(KDDockWidgets::Point localPt) const
 void *c_KDDockWidgets__flutter__TabBar__mapToGlobal_Point(void *thisObj, void *localPt_)
 {
     assert(localPt_);
     auto &localPt = *reinterpret_cast<KDDockWidgets::Point *>(localPt_);
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(localPt);} else {    return targetPtr->mapToGlobal(localPt);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->mapToGlobal_nocallback(localPt);} else {    return targetPtr->mapToGlobal(localPt);} }() };
+    return result;
 }
 // maxSizeHint() const
 void *c_KDDockWidgets__flutter__TabBar__maxSizeHint(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->maxSizeHint_nocallback();} else {    return targetPtr->maxSizeHint();} }() };
+    return result;
 }
 // minSize() const
 void *c_KDDockWidgets__flutter__TabBar__minSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->minSize_nocallback();} else {    return targetPtr->minSize();} }() };
+    return result;
 }
 // move(int x, int y)
 void c_KDDockWidgets__flutter__TabBar__move_int_int(void *thisObj, int x, int y)
@@ -1035,7 +1052,8 @@ void c_KDDockWidgets__flutter__TabBar__moveTabTo_int_int(void *thisObj, int from
 // normalGeometry() const
 void *c_KDDockWidgets__flutter__TabBar__normalGeometry(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->normalGeometry_nocallback();} else {    return targetPtr->normalGeometry();} }() };
+    return result;
 }
 // onChildAdded(KDDockWidgets::Core::View * childView)
 void c_KDDockWidgets__flutter__TabBar__onChildAdded_View(void *thisObj, void *childView_)
@@ -1068,7 +1086,8 @@ void c_KDDockWidgets__flutter__TabBar__onRebuildRequested(void *thisObj)
 // onResize(int h, int w)
 bool c_KDDockWidgets__flutter__TabBar__onResize_int_int(void *thisObj, int h, int w)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onResize_nocallback(h,w);} else {    return targetPtr->onResize(h,w);} }();
+    return result;
 }
 // raise()
 void c_KDDockWidgets__flutter__TabBar__raise(void *thisObj)
@@ -1095,7 +1114,8 @@ void c_KDDockWidgets__flutter__TabBar__raiseWindow_View(void *thisObj, void *roo
 // rectForTab(int index) const
 void *c_KDDockWidgets__flutter__TabBar__rectForTab_int(void *thisObj, int index)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->rectForTab_nocallback(index);} else {    return targetPtr->rectForTab(index);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->rectForTab_nocallback(index);} else {    return targetPtr->rectForTab(index);} }() };
+    return result;
 }
 // releaseKeyboard()
 void c_KDDockWidgets__flutter__TabBar__releaseKeyboard(void *thisObj)
@@ -1118,6 +1138,7 @@ void c_KDDockWidgets__flutter__TabBar__renameTab_int_QString(void *thisObj, int 
 {
     const auto name = QString::fromUtf8(name_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->renameTab_nocallback(index,name);} else {    return targetPtr->renameTab(index,name);} }();
+    free(( char * )name_);
 }
 // setCurrentIndex(int index)
 void c_KDDockWidgets__flutter__TabBar__setCurrentIndex_int(void *thisObj, int index)
@@ -1186,6 +1207,7 @@ void c_KDDockWidgets__flutter__TabBar__setViewName_QString(void *thisObj, const 
 {
     const auto name = QString::fromUtf8(name_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setViewName_nocallback(name);} else {    return targetPtr->setViewName(name);} }();
+    free(( char * )name_);
 }
 // setVisible(bool visible)
 void c_KDDockWidgets__flutter__TabBar__setVisible_bool(void *thisObj, bool visible)
@@ -1207,6 +1229,7 @@ void c_KDDockWidgets__flutter__TabBar__setWindowTitle_QString(void *thisObj, con
 {
     const auto title = QString::fromUtf8(title_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setWindowTitle_nocallback(title);} else {    return targetPtr->setWindowTitle(title);} }();
+    free(( char * )title_);
 }
 // setZOrder(int z)
 void c_KDDockWidgets__flutter__TabBar__setZOrder_int(void *thisObj, int z)
@@ -1238,12 +1261,14 @@ int c_KDDockWidgets__flutter__TabBar__tabAt_Point(void *thisObj, void *localPos_
 {
     assert(localPos_);
     auto &localPos = *reinterpret_cast<KDDockWidgets::Point *>(localPos_);
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tabAt_nocallback(localPos);} else {    return targetPtr->tabAt(localPos);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->tabAt_nocallback(localPos);} else {    return targetPtr->tabAt(localPos);} }();
+    return result;
 }
 // text(int index) const
 void *c_KDDockWidgets__flutter__TabBar__text_int(void *thisObj, int index)
 {
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->text_nocallback(index);} else {    return targetPtr->text(index);} }() };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->text_nocallback(index);} else {    return targetPtr->text(index);} }() };
+    return result;
 }
 // update()
 void c_KDDockWidgets__flutter__TabBar__update(void *thisObj)
@@ -1253,7 +1278,8 @@ void c_KDDockWidgets__flutter__TabBar__update(void *thisObj)
 // viewName() const
 void *c_KDDockWidgets__flutter__TabBar__viewName(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->viewName_nocallback();} else {    return targetPtr->viewName();} }() };
+    const auto &result = new Dartagnan::ValueWrapper<QString> { [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::TabBar_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->viewName_nocallback();} else {    return targetPtr->viewName();} }() };
+    return result;
 }
 void c_KDDockWidgets__flutter__TabBar__destructor(void *thisObj)
 {

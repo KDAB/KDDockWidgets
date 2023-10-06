@@ -72,18 +72,23 @@ void *c_KDDockWidgets__LayoutSaver__constructor()
 bool c_KDDockWidgets__LayoutSaver__restoreFromFile_QString(void *thisObj, const char *jsonFilename_)
 {
     const auto jsonFilename = QString::fromUtf8(jsonFilename_);
-    return fromPtr(thisObj)->restoreFromFile(jsonFilename);
+    const auto &result = fromPtr(thisObj)->restoreFromFile(jsonFilename);
+    free(( char * )jsonFilename_);
+    return result;
 }
 // restoreInProgress()
 bool c_static_KDDockWidgets__LayoutSaver__restoreInProgress()
 {
-    return KDDockWidgetsBindings_wrappersNS::LayoutSaver_wrapper::restoreInProgress();
+    const auto &result = KDDockWidgetsBindings_wrappersNS::LayoutSaver_wrapper::restoreInProgress();
+    return result;
 }
 // saveToFile(const QString & jsonFilename)
 bool c_KDDockWidgets__LayoutSaver__saveToFile_QString(void *thisObj, const char *jsonFilename_)
 {
     const auto jsonFilename = QString::fromUtf8(jsonFilename_);
-    return fromPtr(thisObj)->saveToFile(jsonFilename);
+    const auto &result = fromPtr(thisObj)->saveToFile(jsonFilename);
+    free(( char * )jsonFilename_);
+    return result;
 }
 void c_KDDockWidgets__LayoutSaver__destructor(void *thisObj)
 {

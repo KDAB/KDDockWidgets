@@ -241,52 +241,62 @@ void c_KDDockWidgets__Core__FloatingWindow__addDockWidget_DockWidget_Location_Do
 // allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 bool c_KDDockWidgets__Core__FloatingWindow__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    return result;
 }
 // allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const
 bool c_KDDockWidgets__Core__FloatingWindow__allDockWidgetsHave_LayoutSaverOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->allDockWidgetsHave(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    return result;
 }
 // anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const
 bool c_KDDockWidgets__Core__FloatingWindow__anyDockWidgetsHas_DockWidgetOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::DockWidgetOption>(arg__1));
+    return result;
 }
 // anyDockWidgetsHas(KDDockWidgets::LayoutSaverOption arg__1) const
 bool c_KDDockWidgets__Core__FloatingWindow__anyDockWidgetsHas_LayoutSaverOption(void *thisObj, int arg__1)
 {
-    return fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    const auto &result = fromPtr(thisObj)->anyDockWidgetsHas(static_cast<KDDockWidgets::LayoutSaverOption>(arg__1));
+    return result;
 }
 // anyNonClosable() const
 bool c_KDDockWidgets__Core__FloatingWindow__anyNonClosable(void *thisObj)
 {
-    return fromPtr(thisObj)->anyNonClosable();
+    const auto &result = fromPtr(thisObj)->anyNonClosable();
+    return result;
 }
 // anyNonDockable() const
 bool c_KDDockWidgets__Core__FloatingWindow__anyNonDockable(void *thisObj)
 {
-    return fromPtr(thisObj)->anyNonDockable();
+    const auto &result = fromPtr(thisObj)->anyNonDockable();
+    return result;
 }
 // beingDeleted() const
 bool c_KDDockWidgets__Core__FloatingWindow__beingDeleted(void *thisObj)
 {
-    return fromPtr(thisObj)->beingDeleted();
+    const auto &result = fromPtr(thisObj)->beingDeleted();
+    return result;
 }
 // contentMargins() const
 void *c_KDDockWidgets__Core__FloatingWindow__contentMargins(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Margins> { fromPtr(thisObj)->contentMargins() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Margins> { fromPtr(thisObj)->contentMargins() };
+    return result;
 }
 // dragRect() const
 void *c_KDDockWidgets__Core__FloatingWindow__dragRect(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->dragRect() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->dragRect() };
+    return result;
 }
 // dropArea() const
 void *c_KDDockWidgets__Core__FloatingWindow__dropArea(void *thisObj)
 {
-    return fromPtr(thisObj)->dropArea();
+    const auto &result = fromPtr(thisObj)->dropArea();
+    return result;
 }
 // ensureRectIsOnScreen(KDDockWidgets::Rect & geometry)
 void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect(void *geometry_)
@@ -298,44 +308,52 @@ void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect(voi
 // hasSingleDockWidget() const
 bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->hasSingleDockWidget();
+    const auto &result = fromPtr(thisObj)->hasSingleDockWidget();
+    return result;
 }
 // hasSingleFrame() const
 bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->hasSingleFrame();
+    const auto &result = fromPtr(thisObj)->hasSingleFrame();
+    return result;
 }
 // isInDragArea(KDDockWidgets::Point globalPoint) const
 bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_Point(void *thisObj, void *globalPoint_)
 {
     assert(globalPoint_);
     auto &globalPoint = *reinterpret_cast<KDDockWidgets::Point *>(globalPoint_);
-    return fromPtr(thisObj)->isInDragArea(globalPoint);
+    const auto &result = fromPtr(thisObj)->isInDragArea(globalPoint);
+    return result;
 }
 // isMDI() const
 bool c_KDDockWidgets__Core__FloatingWindow__isMDI(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isMDI_nocallback();} else {    return targetPtr->isMDI();} }();
+    return result;
 }
 // isUtilityWindow() const
 bool c_KDDockWidgets__Core__FloatingWindow__isUtilityWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->isUtilityWindow();
+    const auto &result = fromPtr(thisObj)->isUtilityWindow();
+    return result;
 }
 // isWindow() const
 bool c_KDDockWidgets__Core__FloatingWindow__isWindow(void *thisObj)
 {
-    return [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->isWindow_nocallback();} else {    return targetPtr->isWindow();} }();
+    return result;
 }
 // layout() const
 void *c_KDDockWidgets__Core__FloatingWindow__layout(void *thisObj)
 {
-    return fromPtr(thisObj)->layout();
+    const auto &result = fromPtr(thisObj)->layout();
+    return result;
 }
 // mainWindow() const
 void *c_KDDockWidgets__Core__FloatingWindow__mainWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->mainWindow();
+    const auto &result = fromPtr(thisObj)->mainWindow();
+    return result;
 }
 // maybeCreateResizeHandler()
 void c_KDDockWidgets__Core__FloatingWindow__maybeCreateResizeHandler(void *thisObj)
@@ -345,7 +363,8 @@ void c_KDDockWidgets__Core__FloatingWindow__maybeCreateResizeHandler(void *thisO
 // multiSplitter() const
 void *c_KDDockWidgets__Core__FloatingWindow__multiSplitter(void *thisObj)
 {
-    return fromPtr(thisObj)->multiSplitter();
+    const auto &result = fromPtr(thisObj)->multiSplitter();
+    return result;
 }
 // scheduleDeleteLater()
 void c_KDDockWidgets__Core__FloatingWindow__scheduleDeleteLater(void *thisObj)
@@ -368,27 +387,32 @@ void c_KDDockWidgets__Core__FloatingWindow__setSuggestedGeometry_Rect(void *this
 // singleDockWidget() const
 void *c_KDDockWidgets__Core__FloatingWindow__singleDockWidget(void *thisObj)
 {
-    return fromPtr(thisObj)->singleDockWidget();
+    const auto &result = fromPtr(thisObj)->singleDockWidget();
+    return result;
 }
 // singleFrame() const
 void *c_KDDockWidgets__Core__FloatingWindow__singleFrame(void *thisObj)
 {
-    return fromPtr(thisObj)->singleFrame();
+    const auto &result = fromPtr(thisObj)->singleFrame();
+    return result;
 }
 // supportsMaximizeButton() const
 bool c_KDDockWidgets__Core__FloatingWindow__supportsMaximizeButton(void *thisObj)
 {
-    return fromPtr(thisObj)->supportsMaximizeButton();
+    const auto &result = fromPtr(thisObj)->supportsMaximizeButton();
+    return result;
 }
 // supportsMinimizeButton() const
 bool c_KDDockWidgets__Core__FloatingWindow__supportsMinimizeButton(void *thisObj)
 {
-    return fromPtr(thisObj)->supportsMinimizeButton();
+    const auto &result = fromPtr(thisObj)->supportsMinimizeButton();
+    return result;
 }
 // titleBar() const
 void *c_KDDockWidgets__Core__FloatingWindow__titleBar(void *thisObj)
 {
-    return fromPtr(thisObj)->titleBar();
+    const auto &result = fromPtr(thisObj)->titleBar();
+    return result;
 }
 // updateTitleAndIcon()
 void c_KDDockWidgets__Core__FloatingWindow__updateTitleAndIcon(void *thisObj)
@@ -403,7 +427,8 @@ void c_KDDockWidgets__Core__FloatingWindow__updateTitleBarVisibility(void *thisO
 // userType() const
 int c_KDDockWidgets__Core__FloatingWindow__userType(void *thisObj)
 {
-    return fromPtr(thisObj)->userType();
+    const auto &result = fromPtr(thisObj)->userType();
+    return result;
 }
 void c_KDDockWidgets__Core__FloatingWindow__destructor(void *thisObj)
 {

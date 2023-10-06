@@ -71,17 +71,20 @@ void *c_KDDockWidgets__Core__CreateViewOptions__constructor()
 // getMaxSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getMaxSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getMaxSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getMaxSize() };
+    return result;
 }
 // getMinSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getMinSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getMinSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getMinSize() };
+    return result;
 }
 // getSize() const
 void *c_KDDockWidgets__Core__CreateViewOptions__getSize(void *thisObj)
 {
-    return new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getSize() };
+    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->getSize() };
+    return result;
 }
 void c_KDDockWidgets__Core__CreateViewOptions__destructor(void *thisObj)
 {

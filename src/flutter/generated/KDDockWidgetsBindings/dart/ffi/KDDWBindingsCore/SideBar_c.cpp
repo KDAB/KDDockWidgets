@@ -112,22 +112,26 @@ void c_KDDockWidgets__Core__SideBar__clear(void *thisObj)
 bool c_KDDockWidgets__Core__SideBar__containsDockWidget_DockWidget(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
-    return fromPtr(thisObj)->containsDockWidget(arg__1);
+    const auto &result = fromPtr(thisObj)->containsDockWidget(arg__1);
+    return result;
 }
 // isEmpty() const
 bool c_KDDockWidgets__Core__SideBar__isEmpty(void *thisObj)
 {
-    return fromPtr(thisObj)->isEmpty();
+    const auto &result = fromPtr(thisObj)->isEmpty();
+    return result;
 }
 // isVertical() const
 bool c_KDDockWidgets__Core__SideBar__isVertical(void *thisObj)
 {
-    return fromPtr(thisObj)->isVertical();
+    const auto &result = fromPtr(thisObj)->isVertical();
+    return result;
 }
 // mainWindow() const
 void *c_KDDockWidgets__Core__SideBar__mainWindow(void *thisObj)
 {
-    return fromPtr(thisObj)->mainWindow();
+    const auto &result = fromPtr(thisObj)->mainWindow();
+    return result;
 }
 // onButtonClicked(KDDockWidgets::Core::DockWidget * dw)
 void c_KDDockWidgets__Core__SideBar__onButtonClicked_DockWidget(void *thisObj, void *dw_)
