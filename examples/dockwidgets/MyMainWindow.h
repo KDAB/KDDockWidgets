@@ -24,7 +24,8 @@ public:
         RestoreIsRelative = 4,
         MaxSizeForDockWidget8 = 8,
         Dockwidget5DoesntCloseBeforeRestore = 16,
-        Dock0BlocksCloseEvent = 32
+        Dock0BlocksCloseEvent = 32,
+        ProgrammaticDragEvent = 64
     };
     Q_DECLARE_FLAGS(ExampleOptions, ExampleOption)
 

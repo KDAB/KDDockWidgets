@@ -15,6 +15,8 @@
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/LayoutSaver.h>
 
+#include <kddockwidgets/core/DockWidget.h>
+
 #include <QMenu>
 #include <QMenuBar>
 #include <QEvent>
@@ -189,21 +191,28 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
 
     auto myWidget = newMyWidget();
-    if (count == 8 && (m_exampleOptions & ExampleOption::MaxSizeForDockWidget8)) {
-        // Set a maximum size on dock #8
-        myWidget->setMaximumSize(200, 200);
-        auto button = new QPushButton("dump debug info", myWidget);
-        connect(button, &QPushButton::clicked, this, [myWidget] {
-            KDDockWidgets::Config::self().printDebug();
+    if (count == 8) {
+        if (m_exampleOptions & ExampleOption::MaxSizeForDockWidget8) {
+            // Set a maximum size on dock #8
+            myWidget->setMaximumSize(200, 200);
+            auto button = new QPushButton("dump debug info", myWidget);
+            connect(button, &QPushButton::clicked, this, [myWidget] {
+                KDDockWidgets::Config::self().printDebug();
 
-            qDebug() << "Widget: " << myWidget->geometry() << myWidget->minimumSize() << myWidget->minimumSizeHint() << myWidget->maximumSize() << myWidget->sizeHint() << myWidget->window();
+                qDebug() << "Widget: " << myWidget->geometry() << myWidget->minimumSize() << myWidget->minimumSizeHint() << myWidget->maximumSize() << myWidget->sizeHint() << myWidget->window();
 
-            auto tlw = myWidget->window();
-            qDebug() << "TLW   : " << tlw << tlw->geometry() << tlw->minimumSize() << tlw->minimumSizeHint() << tlw->maximumSize() << tlw->sizeHint();
+                auto tlw = myWidget->window();
+                qDebug() << "TLW   : " << tlw << tlw->geometry() << tlw->minimumSize() << tlw->minimumSizeHint() << tlw->maximumSize() << tlw->sizeHint();
 
-            auto window = tlw->windowHandle();
-            qDebug() << "Window   : " << window << window->frameGeometry() << window->geometry() << window->minimumSize() << window->maximumSize() << window->frameGeometry() << window->flags();
-        });
+                auto window = tlw->windowHandle();
+                qDebug() << "Window   : " << window << window->frameGeometry() << window->geometry() << window->minimumSize() << window->maximumSize() << window->frameGeometry() << window->flags();
+            });
+        } else if (count == 8 && (m_exampleOptions & ExampleOption::ProgrammaticDragEvent)) {
+            auto button = new QPushButton("Start Drag", myWidget);
+            connect(button, &QPushButton::pressed, this, [dock] {
+                dock->asDockWidgetController()->startDragging();
+            });
+        }
     }
 
     if (count == 0 && (m_exampleOptions & ExampleOption::Dock0BlocksCloseEvent))

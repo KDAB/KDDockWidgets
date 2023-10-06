@@ -187,6 +187,11 @@ int main(int argc, char **argv)
         QCoreApplication::translate("main", "DockWidget #0 will block close events"));
     parser.addOption(blockCloseEvent);
 
+    QCommandLineOption programmaticDragEvent(
+        "programmatic-drag",
+        QCoreApplication::translate("main", "Shows how to start a drag programmatically (advanced usage)"));
+    parser.addOption(programmaticDragEvent);
+
     QCommandLineOption showButtonsInTabBarIfTitleBarHidden(
         "show-buttons-in-tabbar-if-titlebar-hidden",
         QCoreApplication::translate("main",
@@ -385,6 +390,8 @@ int main(int argc, char **argv)
         exampleOptions |= MyMainWindow::ExampleOption::Dockwidget5DoesntCloseBeforeRestore;
     if (parser.isSet(blockCloseEvent))
         exampleOptions |= MyMainWindow::ExampleOption::Dock0BlocksCloseEvent;
+    if (parser.isSet(programmaticDragEvent))
+        exampleOptions |= MyMainWindow::ExampleOption::ProgrammaticDragEvent;
 
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
 
