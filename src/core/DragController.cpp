@@ -801,7 +801,7 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
     }
 
     manhattanLengthMove.emit();
-    if (activeState() == m_statePreDrag || activeState() == m_stateNone) {
+    if (activeState() != m_stateDragging) {
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in drag state");
         return false;
     }
