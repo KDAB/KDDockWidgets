@@ -1130,6 +1130,32 @@ void DockWidget::resizeInLayout(int left, int top, int right, int bottom)
     item->requestResize(left, top, right, bottom);
 }
 
+namespace {
+Draggable *draggableForDockWidget(DockWidget *dw, bool singleTab)
+{
+    Group *group = dw->d->group();
+    if (!group) {
+        KDDW_WARN("draggableForDockWidget: Expected a group");
+        return nullptr;
+    }
+
+    if (singleTab && !group->hasSingleDockWidget()) {
+        // Case #1: Detaching a single tab if the group has multiple tabs
+        return group->tabBar();
+    }
+
+
+    // Case #2: All other cases can just go through titlebar
+    Core::TitleBar *titleBar = dw->titleBar();
+    if (!titleBar) {
+        KDDW_WARN("DockWidget::startDragging: No titlebar found");
+        return nullptr;
+    }
+
+    return titleBar;
+}
+}
+
 bool DockWidget::startDragging(bool singleTab)
 {
     auto dc = DragController::instance();
@@ -1138,31 +1164,16 @@ bool DockWidget::startDragging(bool singleTab)
         return false;
     }
 
-    Group *group = d->group();
-    if (!group) {
-        KDDW_WARN("DockWidget::startDragging: Expected a group");
+    Draggable *const draggable = draggableForDockWidget(this, singleTab);
+    if (!draggable) {
+        KDDW_WARN("DockWidget::startDragging: Could not find a suitable draggable");
         return false;
     }
 
-    Draggable *draggable = nullptr;
-
-    if (singleTab && !group->hasSingleDockWidget()) {
-        // Case #1: Detaching a single tab if the group has multiple tabs
-        Core::TabBar *tabBar = group->tabBar();
-
+    Core::TabBar *tabBar = d->group()->tabBar();
+    if (draggable->asView() == tabBar->view()) {
         // minor hack, so we can reuse the normal mouse interaction code path
         tabBar->dptr()->m_lastPressedDockWidget = this;
-
-        draggable = tabBar;
-    } else {
-        // Case #2: All other cases can just go through titlebar
-        Core::TitleBar *titleBar = this->titleBar();
-        if (!titleBar) {
-            KDDW_WARN("DockWidget::startDragging: No titlebar found");
-            return false;
-        }
-
-        draggable = titleBar;
     }
 
     const Point globalPos = Platform::instance()->cursorPos();

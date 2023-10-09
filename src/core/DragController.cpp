@@ -783,6 +783,9 @@ DropLocation DragController::currentDropLocation() const
 
 bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset)
 {
+    // Here we manually force state machine states instead of having a 2nd/parallel API.
+    // As sharing 99.99% of the code path gives us some comfort.
+
     if (!draggable) {
         KDDW_WARN("DragController::programmaticStartDrag: draggable is null");
         return false;
@@ -793,7 +796,6 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
         return false;
     }
 
-    // No mouse involved but sharing 99.99% of the code path gives some comfort
     m_stateNone->handleMouseButtonPress(draggable, globalPos, offset);
     if (activeState() != m_statePreDrag) {
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in pre-drag state");
@@ -805,6 +807,9 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in drag state");
         return false;
     }
+
+    // Also fake the 1st mouse move, so code that positions the frame gets run
+    m_stateDragging->handleMouseMove(globalPos);
 
     return true;
 }
