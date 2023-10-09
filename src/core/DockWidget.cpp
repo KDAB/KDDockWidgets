@@ -21,6 +21,7 @@
 #include "core/SideBar.h"
 #include "core/DropArea.h"
 #include "core/TabBar.h"
+#include "core/TabBar_p.h"
 #include "core/MainWindow.h"
 #include "core/Utils_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -1129,7 +1130,7 @@ void DockWidget::resizeInLayout(int left, int top, int right, int bottom)
     item->requestResize(left, top, right, bottom);
 }
 
-bool DockWidget::startDragging()
+bool DockWidget::startDragging(bool singleTab)
 {
     auto dc = DragController::instance();
     if (dc->isDragging()) {
@@ -1143,12 +1144,26 @@ bool DockWidget::startDragging()
         return false;
     }
 
-    Core::TitleBar *titleBar = this->titleBar();
-    if (!titleBar) {
-        KDDW_WARN("DockWidget::startDragging: No titlebar found");
-        return false;
+    Draggable *draggable = nullptr;
+
+    if (singleTab && !group->hasSingleDockWidget()) {
+        // Case #1: Detaching a single tab if the group has multiple tabs
+        Core::TabBar *tabBar = group->tabBar();
+
+        // minor hack, so we can reuse the normal mouse interaction code path
+        tabBar->dptr()->m_lastPressedDockWidget = this;
+
+        draggable = tabBar;
+    } else {
+        // Case #2: All other cases can just go through titlebar
+        Core::TitleBar *titleBar = this->titleBar();
+        if (!titleBar) {
+            KDDW_WARN("DockWidget::startDragging: No titlebar found");
+            return false;
+        }
+
+        draggable = titleBar;
     }
 
-    // For now titlebar only. Tabs come next.
-    return dc->programmaticStartDrag(titleBar);
+    return dc->programmaticStartDrag(draggable);
 }

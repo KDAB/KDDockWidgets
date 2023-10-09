@@ -25,6 +25,7 @@
 #include <QTextEdit>
 #include <QWindow>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QRandomGenerator>
 
 #include <QApplication>
@@ -207,12 +208,26 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
                 auto window = tlw->windowHandle();
                 qDebug() << "Window   : " << window << window->frameGeometry() << window->geometry() << window->minimumSize() << window->maximumSize() << window->frameGeometry() << window->flags();
             });
-        } else if (count == 8 && (m_exampleOptions & ExampleOption::ProgrammaticDragEvent)) {
-            auto button = new QPushButton("Start Drag", myWidget);
-            connect(button, &QPushButton::pressed, this, [dock] {
-                dock->asDockWidgetController()->startDragging();
-            });
         }
+    }
+
+    if (count == 5 && (m_exampleOptions & ExampleOption::ProgrammaticDragEvent)) {
+        qDeleteAll(myWidget->children());
+
+        auto button = new QPushButton("Start Drag (by tab)", myWidget);
+        connect(button, &QPushButton::pressed, this, [dock] {
+            dock->asDockWidgetController()->startDragging(true);
+        });
+
+        auto button2 = new QPushButton("Start Drag (by titlebar)", myWidget);
+        connect(button2, &QPushButton::pressed, this, [dock] {
+            dock->asDockWidgetController()->startDragging(false);
+        });
+
+        auto vbox = new QVBoxLayout(myWidget);
+        vbox->addWidget(button);
+        vbox->addWidget(button2);
+        vbox->addStretch();
     }
 
     if (count == 0 && (m_exampleOptions & ExampleOption::Dock0BlocksCloseEvent))

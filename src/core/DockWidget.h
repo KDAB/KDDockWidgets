@@ -474,7 +474,8 @@ public:
 
     /// See documentation for DragController::programmaticStartDrag()
     /// @internal. Do not use until touch UI use case is figured out.
-    bool startDragging();
+    /// @param singleTag If true, detaches and drags a tab, otherwise the titlebar (which might contain a group)
+    bool startDragging(bool singleTab = false);
 
 protected:
     void setParentView_impl(View *parent) override;
