@@ -1165,5 +1165,10 @@ bool DockWidget::startDragging(bool singleTab)
         draggable = titleBar;
     }
 
-    return dc->programmaticStartDrag(draggable);
+    const Point globalPos = Platform::instance()->cursorPos();
+
+    View *draggedView = draggable->asView();
+    const Point offset = draggedView->mapFromGlobal(globalPos);
+
+    return dc->programmaticStartDrag(draggable, globalPos, offset);
 }

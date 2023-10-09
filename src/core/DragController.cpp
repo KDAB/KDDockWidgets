@@ -773,7 +773,7 @@ DropLocation DragController::currentDropLocation() const
     return DropLocation_None;
 }
 
-bool DragController::programmaticStartDrag(Draggable *draggable)
+bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset)
 {
     if (!draggable) {
         KDDW_WARN("DragController::programmaticStartDrag: draggable is null");
@@ -786,7 +786,7 @@ bool DragController::programmaticStartDrag(Draggable *draggable)
     }
 
     // No mouse involved but sharing 99.99% of the code path gives some comfort
-    m_stateNone->handleMouseButtonPress(draggable, {}, {});
+    m_stateNone->handleMouseButtonPress(draggable, globalPos, offset);
     if (activeState() != m_statePreDrag) {
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in pre-drag state");
         return false;

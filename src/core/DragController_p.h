@@ -127,7 +127,7 @@ public:
     /// Do not rely on it. We're still trying to understand the touch use case.
     /// @internal
     /// @param draggable The draggable we want to move (a title-bar, tab-bar or floating window)
-    bool programmaticStartDrag(Draggable *draggable);
+    bool programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset);
     void programaticStopDrag();
 
     KDBindings::Signal<> mousePressed;
