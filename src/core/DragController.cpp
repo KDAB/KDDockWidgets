@@ -552,29 +552,37 @@ bool StateInternalMDIDragging::handleMouseDoubleClick()
     return false;
 }
 
+namespace {
+
+StateDragging *createDraggingState(DragController *parent)
+{
+#ifdef KDDW_FRONTEND_QT
+    return isWayland() ? new StateDraggingWayland(parent) : new StateDragging(parent);
+#else
+    return new StateDragging(this);
+#endif
+}
+
+}
+
 DragController::DragController(Core::Object *parent)
     : MinimalStateMachine(parent)
     , m_stateNone(new StateNone(this))
     , m_statePreDrag(new StatePreDrag(this))
+    , m_stateDragging(createDraggingState(this))
     , m_stateDraggingMDI(new StateInternalMDIDragging(this))
 {
     KDDW_TRACE("DragController CTOR");
 
-#ifdef KDDW_FRONTEND_QT
-    auto stateDragging = isWayland() ? new StateDraggingWayland(this) : new StateDragging(this);
-#else
-    auto stateDragging = new StateDragging(this);
-#endif
-
     m_stateNone->addTransition(mousePressed, m_statePreDrag);
     m_statePreDrag->addTransition(dragCanceled, m_stateNone);
-    m_statePreDrag->addTransition(manhattanLengthMove, stateDragging);
+    m_statePreDrag->addTransition(manhattanLengthMove, m_stateDragging);
     m_statePreDrag->addTransition(manhattanLengthMoveMDI, m_stateDraggingMDI);
-    stateDragging->addTransition(dragCanceled, m_stateNone);
-    stateDragging->addTransition(dropped, m_stateNone);
+    m_stateDragging->addTransition(dragCanceled, m_stateNone);
+    m_stateDragging->addTransition(dropped, m_stateNone);
 
     m_stateDraggingMDI->addTransition(dragCanceled, m_stateNone);
-    m_stateDraggingMDI->addTransition(mdiPopOut, stateDragging);
+    m_stateDraggingMDI->addTransition(mdiPopOut, m_stateDragging);
 
     if (Platform::instance()->usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();

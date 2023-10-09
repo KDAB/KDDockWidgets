@@ -32,6 +32,7 @@ namespace Core {
 
 class StateBase;
 class StatePreDrag;
+class StateDragging;
 class StateNone;
 class StateInternalMDIDragging;
 class FallbackMouseGrabber;
@@ -170,6 +171,7 @@ private:
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
     StateNone *const m_stateNone;
     StatePreDrag *const m_statePreDrag;
+    StateDragging *const m_stateDragging;
     StateInternalMDIDragging *m_stateDraggingMDI = nullptr;
     bool m_inQDrag = false;
 };
