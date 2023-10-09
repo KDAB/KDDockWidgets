@@ -559,7 +559,7 @@ StateDragging *createDraggingState(DragController *parent)
 #ifdef KDDW_FRONTEND_QT
     return isWayland() ? new StateDraggingWayland(parent) : new StateDragging(parent);
 #else
-    return new StateDragging(this);
+    return new StateDragging(parent);
 #endif
 }
 
