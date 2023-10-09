@@ -307,14 +307,14 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
     Rect r = dockWidget->geometry();
     removeWidget(dockWidget);
 
-    auto newFrame = new Group();
+    auto newGroup = new Group();
     const Point globalPoint = mapToGlobal(Point(0, 0));
-    newFrame->addTab(dockWidget);
+    newGroup->addTab(dockWidget);
 
     // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't
     // access members from this point.
 
-    auto floatingWindow = new FloatingWindow(newFrame, {});
+    auto floatingWindow = new FloatingWindow(newGroup, {});
     r.moveTopLeft(globalPoint);
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
