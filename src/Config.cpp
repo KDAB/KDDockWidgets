@@ -63,6 +63,7 @@ public:
     int m_startDragDistance = -1;
     bool m_dropIndicatorsInhibited = false;
     bool m_layoutSaverStrictMode = false;
+    bool m_onlyProgrammaticDrag = false;
 };
 
 Config::Config()
@@ -364,6 +365,16 @@ void Config::setLayoutSaverStrictMode(bool is)
 bool Config::layoutSaverUsesStrictMode() const
 {
     return d->m_layoutSaverStrictMode;
+}
+
+void Config::setOnlyProgrammaticDrag(bool only)
+{
+    d->m_onlyProgrammaticDrag = only;
+}
+
+bool Config::onlyProgrammaticDrag() const
+{
+    return d->m_onlyProgrammaticDrag;
 }
 
 }

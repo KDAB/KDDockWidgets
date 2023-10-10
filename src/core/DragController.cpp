@@ -746,6 +746,10 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         if (me->buttons() & Qt::RightButton)
             break;
 
+        // If this is enabled then only DockWidget::startDragging() can start it
+        if (Config::self().onlyProgrammaticDrag())
+            break;
+
         // For top-level windows that support native dragging all goes through the NonClient*
         // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
         // title area, in the background

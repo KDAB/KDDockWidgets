@@ -390,8 +390,10 @@ int main(int argc, char **argv)
         exampleOptions |= MyMainWindow::ExampleOption::Dockwidget5DoesntCloseBeforeRestore;
     if (parser.isSet(blockCloseEvent))
         exampleOptions |= MyMainWindow::ExampleOption::Dock0BlocksCloseEvent;
-    if (parser.isSet(programmaticDragEvent))
+    if (parser.isSet(programmaticDragEvent)) {
         exampleOptions |= MyMainWindow::ExampleOption::ProgrammaticDragEvent;
+        KDDockWidgets::Config::self().setOnlyProgrammaticDrag(true);
+    }
 
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
 
