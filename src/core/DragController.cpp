@@ -175,9 +175,12 @@ void StateNone::onEntry()
     q->m_draggable = nullptr;
     q->m_draggableGuard.clear();
     q->m_windowBeingDragged.reset();
+
     WidgetResizeHandler::s_disableAllHandlers = false; // Re-enable resize handlers
 
     q->m_nonClientDrag = false;
+    q->m_inProgrammaticDrag = false;
+
     if (q->m_currentDropArea) {
         q->m_currentDropArea->removeHover();
         q->m_currentDropArea = nullptr;
@@ -192,7 +195,7 @@ bool StateNone::handleMouseButtonPress(Draggable *draggable, Point globalPos, Po
     KDDW_DEBUG("StateNone::handleMouseButtonPress: draggable={} ; globalPos={}", ( void * )draggable,
                globalPos);
 
-    if (!draggable->isPositionDraggable(pos))
+    if (!q->m_inProgrammaticDrag && !draggable->isPositionDraggable(pos))
         return false;
 
     q->m_draggable = draggable;
@@ -796,8 +799,10 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
         return false;
     }
 
+    m_inProgrammaticDrag = true;
     m_stateNone->handleMouseButtonPress(draggable, globalPos, offset);
     if (activeState() != m_statePreDrag) {
+        m_inProgrammaticDrag = false;
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in pre-drag state");
         return false;
     }

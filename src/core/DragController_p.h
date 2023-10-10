@@ -167,13 +167,14 @@ private:
         nullptr; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
     Core::DropArea *m_currentDropArea = nullptr;
-    bool m_nonClientDrag = false;
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
     StateNone *const m_stateNone;
     StatePreDrag *const m_statePreDrag;
     StateDragging *const m_stateDragging;
     StateInternalMDIDragging *m_stateDraggingMDI = nullptr;
-    bool m_inQDrag = false;
+    bool m_nonClientDrag = false; // native title bar drag
+    bool m_inQDrag = false; // wayland drag
+    bool m_inProgrammaticDrag = false; // via DockWidget::startDrag()
 };
 
 class StateBase : public State

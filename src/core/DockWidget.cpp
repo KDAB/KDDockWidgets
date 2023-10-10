@@ -17,6 +17,7 @@
 #include "core/MDILayout.h"
 #include "core/TitleBar.h"
 #include "core/Group.h"
+#include "core/Stack.h"
 #include "core/FloatingWindow.h"
 #include "core/SideBar.h"
 #include "core/DropArea.h"
@@ -1144,15 +1145,13 @@ Draggable *draggableForDockWidget(DockWidget *dw, bool singleTab)
         return group->tabBar();
     }
 
-
-    // Case #2: All other cases can just go through titlebar
+    // Case #2: Dragging a group of tabs, via titlebar
     Core::TitleBar *titleBar = dw->titleBar();
-    if (!titleBar) {
-        KDDW_WARN("DockWidget::startDragging: No titlebar found");
-        return nullptr;
-    }
+    if (titleBar && titleBar->isVisible())
+        return titleBar;
 
-    return titleBar;
+    // Case #3: Dragging a group of tabs, via tab bar background. QTabBar background is actually QTabWidget (aka stack)
+    return group->stack();
 }
 }
 
