@@ -761,8 +761,16 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
             draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
 
     case Event::MouseButtonRelease:
-    case Event::NonClientAreaMouseButtonRelease:
-        return activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
+    case Event::NonClientAreaMouseButtonRelease: {
+        const bool inProgrammaticDrag = m_inProgrammaticDrag;
+        const bool result = activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
+
+        // In normal KDDW operation, we consume the mouse release (true is returned), however,
+        // if using programmattic drag (via DockWidget::startDragging()), we do not want to consume the release event.
+        // User might have clicked a button to start the drag. Button needs to be released when it's over.
+        return result && !inProgrammaticDrag;
+    }
+
     case Event::NonClientAreaMouseMove:
     case Event::MouseMove:
         return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
