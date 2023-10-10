@@ -753,12 +753,13 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         // For top-level windows that support native dragging all goes through the NonClient*
         // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
         // title area, in the background
-        if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isRootView()) {
-            assert(activeState());
-            return activeState()->handleMouseButtonPress(
-                draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
-        } else
+        if (KDDockWidgets::usesNativeDraggingAndResizing() && w->isRootView())
             break;
+
+        assert(activeState());
+        return activeState()->handleMouseButtonPress(
+            draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
+
     case Event::MouseButtonRelease:
     case Event::NonClientAreaMouseButtonRelease:
         return activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
