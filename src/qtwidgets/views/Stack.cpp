@@ -121,7 +121,6 @@ void Stack::setupTabBarButtons()
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
         return;
 
-    // TODOm3: Make sure people can only inherit from the Default*variants
     auto factory = static_cast<ViewFactory *>(Config::self().viewFactory());
     d->closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
     d->floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);

@@ -53,9 +53,6 @@ MDIArea::MDIArea(QWidget *parent)
     vlay->addWidget(View_qt::asQWidget(d->layout));
 
     View::d->closeRequested.connect([this](QCloseEvent *ev) { d->layout->onCloseEvent(ev); });
-
-    // TODOm3: for qtquick:
-    // QWidgetAdapter::makeItemFillParent(d->layout);
 }
 
 MDIArea::~MDIArea()

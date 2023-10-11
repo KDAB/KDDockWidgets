@@ -58,7 +58,7 @@ public:
     explicit SideBar(Core::SideBar *, QQuickItem *parent);
 
     void init() override;
-    bool isVertical() const; // TODOm3: Move to a potential base class
+    bool isVertical() const;
 
     void addDockWidget_Impl(Core::DockWidget *) override;
     void removeDockWidget_Impl(Core::DockWidget *) override;

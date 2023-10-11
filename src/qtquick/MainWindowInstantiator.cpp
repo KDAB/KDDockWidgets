@@ -158,7 +158,6 @@ void MainWindowInstantiator::clearSideBarOverlay(bool deleteFrame)
         m_mainWindow->clearSideBarOverlay(deleteFrame);
 }
 
-// TODOm3
 // SideBar *MainWindowInstantiator::sideBarForDockWidget(const Core::DockWidget *dw) const
 // {
 //     return m_mainWindow ? m_mainWindow->sideBarForDockWidget(dw) : nullptr;

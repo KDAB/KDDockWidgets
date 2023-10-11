@@ -41,7 +41,6 @@
         KDDW_WARN("FAILED: at={} ; line={}", KDDW_FUNC_INFO, __LINE__); \
     KDDW_CO_RETURN res;
 
-// TODOm4: Investigate something more fancy
 #define CHECK assert
 #define CHECK_EQ(a, b) assert((a) == (b))
 

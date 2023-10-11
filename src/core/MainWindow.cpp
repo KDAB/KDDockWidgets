@@ -550,9 +550,12 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
 
     if (deleteFrame) {
         overlayedDockWidget->setParent(nullptr);
-        overlayedDockWidget->d->m_removingFromOverlay = true; // TODOm4: Remove soon
-        overlayedDockWidget->setParentView(nullptr);
-        overlayedDockWidget->d->m_removingFromOverlay = false;
+
+        {
+            ScopedValueRollback guard(overlayedDockWidget->d->m_removingFromOverlay, true);
+            overlayedDockWidget->setParentView(nullptr);
+        }
+
         overlayedDockWidget->d->isOverlayedChanged.emit(false);
         overlayedDockWidget = nullptr;
         delete group;

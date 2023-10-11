@@ -11,7 +11,6 @@
 
 // There's a benign warning:
 // Group.qml:221: ReferenceError: parent is not defined
-// TODO: Try to fix the warning
 #define KDDW_TESTS_NO_FATAL_WARNINGS
 
 #include "simple_test_framework.h"

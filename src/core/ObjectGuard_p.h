@@ -106,10 +106,6 @@ private:
             conn = object->aboutToBeDeleted.connect([this] {
                 obj = nullptr;
             });
-        } else if (auto item = dynamic_cast<Core::Item *>(o)) { // TODOm4: Remove
-            conn = item->aboutToBeDeleted.connect([this] {
-                obj = nullptr;
-            });
         }
     }
 

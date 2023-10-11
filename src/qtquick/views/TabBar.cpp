@@ -256,8 +256,8 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
 void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
                               const QString &title)
 {
-    Q_UNUSED(title); // TODO
-    Q_UNUSED(icon); // TODO
+    Q_UNUSED(title);
+    Q_UNUSED(icon);
 
     d->m_dockWidgetModel->insert(dw, index);
 }

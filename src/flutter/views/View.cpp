@@ -194,13 +194,13 @@ void View::setHeight(int h)
 
 void View::setFixedWidth(int w)
 {
-    // TODOm5 Support fixed width
+    // TODO_FLUTTER Support fixed width
     setWidth(w);
 }
 
 void View::setFixedHeight(int h)
 {
-    // TODOm5 Support fixed height
+    // TODO_FLUTTER Support fixed height
     setHeight(h);
 }
 

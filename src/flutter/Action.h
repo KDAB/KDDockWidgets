@@ -24,13 +24,13 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     ~Action() override;
 
-    // TODOm4: Remove. Check others as well
+    // TODO_FLUTTER: Remove. Check others as well
     void setCheckable(bool is) override
     {
         m_checkable = is;
     }
 
-    // TODOm4: Remove
+    // TODO_FLUTTER: Remove
     bool isCheckable() const override
     {
         return m_checkable;

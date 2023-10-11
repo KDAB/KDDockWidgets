@@ -228,6 +228,5 @@ KDDockWidgets::QtQuick::TitleBar *Group::actualTitleBar() const
 
 int Group::userType() const
 {
-    /// TODOm3
     return 0;
 }

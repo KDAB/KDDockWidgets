@@ -434,8 +434,9 @@ void TitleBar::onFloatClicked()
             dockWidgets[0]->setFloating(false);
         } else {
             // Case 2: Multiple dockwidgets are tabbed together and floating
-            // TODO: Just reuse the whole group and put it back. The group currently doesn't
-            // remember the position in the main window so use an hack for now
+            // Possible improvement: Just reuse the whole group and put it back.
+            // The group currently doesn't remember the position in the main window
+            // so use an hack for now
 
             if (!dockWidgets.isEmpty()) { // could be empty during destruction, maybe
                 if (!dockWidgets.constFirst()->hasPreviousDockedLocation()) {

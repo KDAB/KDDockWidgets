@@ -47,7 +47,6 @@ std::shared_ptr<Core::View> Window::rootView() const
         if (Core::View *view = topMostKDDWView(contentItem)) {
             // This block is for retrocompatibility with 1.x. For QtQuick the topmost "widget" is a
             // KDDW known widget and not any arbitrary user QtQuickItem.
-            // TODOm3: I'd like to change it so it's normalized.
             return view->asWrapper();
         } else {
             const auto children = contentItem->childItems();

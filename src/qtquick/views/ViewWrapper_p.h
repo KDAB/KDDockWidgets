@@ -44,7 +44,7 @@ public:
     std::shared_ptr<Core::Window> window() const override;
     std::shared_ptr<Core::View> rootView() const override;
     std::shared_ptr<Core::View> parentView() const override;
-    void setParent(Core::View *) override; // TODOm3: Rename to setParentView
+    void setParent(Core::View *) override;
     void grabMouse() override;
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;

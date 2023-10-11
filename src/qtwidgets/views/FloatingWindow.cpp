@@ -120,7 +120,7 @@ bool FloatingWindow::event(QEvent *ev)
         d->m_controller->dptr()->activatedChanged.emit();
     } else if (ev->type() == QEvent::StatusTip && QWidget::parent()) {
         // show status tips in the main window
-        return QWidget::parent()->event(ev); // TODOm3: Move to base class
+        return QWidget::parent()->event(ev);
     }
 
     return View<QWidget>::event(ev);
