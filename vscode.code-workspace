@@ -29,13 +29,8 @@
     "todo-tree.tree.disableCompactFolders": false,
     "todo-tree.tree.showBadges": true,
     "todo-tree.general.tags": [
-      "BUG",
-      "HACK",
       "FIXME",
       "TODO",
-      "XXX",
-      "[ ]",
-      "[x]",
       "TODOm2",
       "TODOm3",
       "TODOm4"
