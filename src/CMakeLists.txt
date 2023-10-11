@@ -329,20 +329,7 @@ endif()
 
 # Generate C/C++ CamelCase forwarding headers (only public includes)
 include(ECMGenerateHeaders)
-ecm_generate_headers(
-    camelcase_HEADERS
-    ORIGINAL
-    CAMELCASE
-    HEADER_NAMES
-    Config
-    # DockWidget DockWidgetBase
-    # FocusScope
-    # ViewFactory,
-    # DefaultWidgetFactory
-    LayoutSaver
-    # MainWindow MainWindowBase MainWindowMDI
-    # TODOm1
-)
+ecm_generate_headers(camelcase_HEADERS ORIGINAL CAMELCASE HEADER_NAMES Config LayoutSaver)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${KDDW_PUBLIC_HEADERS})
 
