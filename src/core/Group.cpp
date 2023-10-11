@@ -149,8 +149,6 @@ void Group::setLayout(Layout *dt)
                                                       WidgetResizeHandler::WindowMode::MDI, view());
 
         // We keep the connect result so we don't dereference m_layout at shutdown
-        d->m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass.
-                                                                // It's a KDBindings bug.
         d->m_visibleWidgetCountChangedConnection =
             m_layout->d_ptr()->visibleWidgetCountChanged.connect(&Group::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
