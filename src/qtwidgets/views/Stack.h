@@ -37,7 +37,7 @@ public:
     /// @brief Returns the controller
     Core::Stack *stack() const;
 
-public: // TODOm3: make protected
+protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
 

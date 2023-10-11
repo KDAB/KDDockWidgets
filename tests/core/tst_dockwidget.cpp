@@ -82,7 +82,6 @@ KDDW_QCORO_TASK tst_toggleAction()
 
     CHECK(!dw->toggleAction()->isChecked());
     CHECK(dw->toggleAction()->isEnabled());
-    CHECK(dw->toggleAction()->isCheckable());
 
     delete dw;
 

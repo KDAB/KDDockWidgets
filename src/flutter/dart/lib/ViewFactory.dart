@@ -148,7 +148,7 @@ class ViewFactory extends KDDWBindingsFlutter.ViewFactory {
       {required KDDWBindingsCore.MainWindow? parent,
       int windowFlags = 0}) {
     try {
-      // TODO_FLUTTER: What to do with main window pointer
+      // FLUTTER_TODO: What to do with main window pointer
       return FloatingWindow(controller, null);
     } on Exception catch (e) {
       print("Exception $e");

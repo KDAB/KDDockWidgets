@@ -19,6 +19,7 @@ using namespace KDDockWidgets::QtWidgets;
 Action::Action(Core::DockWidget *dw, const char *debugName)
     : Core::Action(dw, debugName)
 {
+    setCheckable(true);
     connect(this, &QAction::toggled, this, [this](bool checked) {
         if (m_lastCheckedState != checked) {
             m_lastCheckedState = checked;
@@ -31,16 +32,6 @@ Action::Action(Core::DockWidget *dw, const char *debugName)
 }
 
 Action::~Action() = default;
-
-void Action::setCheckable(bool is)
-{
-    QAction::setCheckable(is);
-}
-
-bool Action::isCheckable() const
-{
-    return QAction::isCheckable();
-}
 
 void Action::setIcon(const KDDockWidgets::Icon &icon)
 {

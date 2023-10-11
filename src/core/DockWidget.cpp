@@ -1013,9 +1013,6 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
             }
         }
     });
-
-    toggleAction->setCheckable(true);
-    floatAction->setCheckable(true);
 }
 
 void DockWidget::Private::addPlaceholderItem(Core::Item *item)

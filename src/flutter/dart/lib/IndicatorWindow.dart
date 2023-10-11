@@ -54,7 +54,7 @@ class IndicatorWindow extends KDDWBindingsFlutter.IndicatorWindow
   @override
   @pragma("vm:entry-point")
   int hover_flutter(Point pt) {
-    // TODO_FLUTTER: Receive 2 doubles, less allocations and ffi
+    // FLUTTER_TODO: Receive 2 doubles, less allocations and ffi
     try {
       final localPt = Offset(pt.x().toDouble(), pt.y().toDouble());
       return widgetState<IndicatorWindowWidgetState>()?.hover(localPt) ?? 0;

@@ -85,7 +85,7 @@ public:
     /// @brief Enables document mode. Default is false.
     void setDocumentMode(bool);
 
-public: // TODOm3
+public:
     bool onMouseDoubleClick(Point localPos);
 
 private:

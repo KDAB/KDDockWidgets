@@ -3637,7 +3637,7 @@ KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
     CHECK(!dock2->titleBar()->isFocused());
 
     if (Platform::instance()->isQtWidgets()) {
-        // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++
+        // Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++
         // TitleBar for focus
         Tests::clickOn(globalPos, tb2->view());
         CHECK(!dock1->titleBar()->isFocused());

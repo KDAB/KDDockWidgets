@@ -30,7 +30,7 @@
 #include <QVBoxLayout>
 #include <QtConcurrent>
 
-// TODO:
+// WAYLAND_TODO:
 // - Remove QtConcurrent. We shouldn't run widget code on secondary threads.
 // - Replace QThread::msleep() with QTest::qWait(), so event loop still runs
 

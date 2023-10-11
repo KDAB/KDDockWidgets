@@ -110,7 +110,7 @@ bool Platform::isProcessingAppQuitEvent() const
 
 QString Platform::applicationName() const
 {
-    // TODO_FLUTTER
+    // FLUTTER_TODO
     // KDDW_WARN("Platform::applicationName: Not implemented");
     return {};
 }
@@ -127,7 +127,7 @@ void Platform::restoreMouseCursor()
 
 Core::Platform::DisplayType Platform::displayType() const
 {
-    /// TODO_FLUTTER: Improve this
+    /// FLUTTER_TODO: Improve this
     return DisplayType::Other;
 }
 
@@ -166,7 +166,7 @@ void Platform::ungrabMouse()
 
 Core::Screen::List Platform::screens() const
 {
-    /// TODO_FLUTTER, find the actual screens
+    /// FLUTTER_TODO, find the actual screens
     return { primaryScreen() };
 }
 
@@ -248,7 +248,7 @@ class TestView_flutter : public flutter::View
 {
 public:
     explicit TestView_flutter(Core::CreateViewOptions opts, Core::View *)
-        : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO_FLUTTER parent*/)
+        : flutter::View(nullptr, Core::ViewType::None, nullptr /* FLUTTER_TODO parent*/)
         , m_opts(opts)
     {
     }
@@ -268,7 +268,7 @@ class FocusableTestView_flutter : public flutter::View
 {
 public:
     explicit FocusableTestView_flutter(Core::CreateViewOptions opts, Core::View *)
-        : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO_FLUTTER parent*/)
+        : flutter::View(nullptr, Core::ViewType::None, nullptr /* FLUTTER_TODO parent*/)
         , m_opts(opts)
     {
     }
@@ -288,7 +288,7 @@ class NonClosableTestView_flutter : public flutter::View
 {
 public:
     explicit NonClosableTestView_flutter(Core::View *)
-        : flutter::View(nullptr, Core::ViewType::None, nullptr /* TODO_FLUTTER parent*/)
+        : flutter::View(nullptr, Core::ViewType::None, nullptr /* FLUTTER_TODO parent*/)
     {
     }
 
@@ -352,13 +352,13 @@ Core::View *Platform::tests_createView(Core::CreateViewOptions, Core::View *)
 
 Core::View *Platform::tests_createFocusableView(Core::CreateViewOptions opts, Core::View *parent)
 {
-    // TODO_FLUTTER: It's not focusable. To fix when we get to those tests
+    // FLUTTER_TODO: It's not focusable. To fix when we get to those tests
     return tests_createView(opts, parent);
 }
 
 Core::View *Platform::tests_createNonClosableView(Core::View *parent)
 {
-    // TODO_FLUTTER: It's not non-closable. To fix when we get to those tests
+    // FLUTTER_TODO: It's not non-closable. To fix when we get to those tests
     return tests_createView({ .isVisible = true }, parent);
 }
 

@@ -28,9 +28,6 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     ~Action() override;
 
-    void setCheckable(bool) override;
-    bool isCheckable() const override;
-
     void setIcon(const KDDockWidgets::Icon &) override;
     KDDockWidgets::Icon icon() const override;
 

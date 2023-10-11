@@ -24,18 +24,6 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     ~Action() override;
 
-    // TODOm4: Remove. Check others as well
-    void setCheckable(bool is) override
-    {
-        m_checkable = is;
-    }
-
-    // TODOm4: Remove
-    bool isCheckable() const override
-    {
-        return m_checkable;
-    }
-
     void setIcon(const KDDockWidgets::Icon &) override;
     KDDockWidgets::Icon icon() const override;
 
@@ -85,7 +73,6 @@ private:
     QString m_text;
     QString m_toolTip;
 
-    bool m_checkable = true;
     bool m_enabled = true;
     bool m_checked = false;
 };

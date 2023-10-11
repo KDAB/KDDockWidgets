@@ -24,18 +24,6 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     ~Action() override;
 
-    // TODO_FLUTTER: Remove. Check others as well
-    void setCheckable(bool is) override
-    {
-        m_checkable = is;
-    }
-
-    // TODO_FLUTTER: Remove
-    bool isCheckable() const override
-    {
-        return m_checkable;
-    }
-
     void setIcon(const KDDockWidgets::Icon &) override;
     KDDockWidgets::Icon icon() const override;
 

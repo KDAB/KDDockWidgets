@@ -64,7 +64,7 @@ public:
     Core::TabBar *const m_tabBar = nullptr;
     QVector<Core::DockWidget *> m_dockWidgets;
     QHash<Core::DockWidget *, QMetaObject::Connection>
-        m_connections; // TODOm4  Remove once ported away from QObject
+        m_connections;
 
     std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
         m_connections2;

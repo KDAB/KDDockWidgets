@@ -27,9 +27,6 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     virtual ~Action();
 
-    virtual void setCheckable(bool is) = 0;
-    virtual bool isCheckable() const = 0;
-
     virtual void setIcon(const KDDockWidgets::Icon &) = 0;
     virtual KDDockWidgets::Icon icon() const = 0;
 

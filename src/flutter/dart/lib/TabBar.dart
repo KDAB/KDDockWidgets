@@ -117,7 +117,7 @@ class TabBarPositionedWidgetState extends PositionedWidgetState {
         tabBarView().m_controller.setCurrentIndex(index);
       } else {
         // C++ requested it, rebuild
-        // TODO_FLUTTER: ask controller ?
+        // FLUTTER_TODO: ask controller ?
         setState(() {});
       }
     }

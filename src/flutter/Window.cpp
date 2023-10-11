@@ -46,7 +46,7 @@ void Window::setVisible(bool is)
     if (is == m_isVisible)
         return;
 
-    // TODO:  Actually hide the flutter window
+    // FLUTTER_TODO:  Actually hide the flutter window
 
     m_isVisible = is;
 }
@@ -94,7 +94,7 @@ void Window::setFramePosition(Point pt)
 
 Rect Window::frameGeometry() const
 {
-    // TODO: How to get this from flutter
+    // FLUTTER_TODO: How to get this from flutter
     return m_geometry;
 }
 

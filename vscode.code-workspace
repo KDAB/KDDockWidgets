@@ -29,7 +29,6 @@
     "todo-tree.tree.disableCompactFolders": false,
     "todo-tree.tree.showBadges": true,
     "todo-tree.general.tags": [
-      "FIXME",
       "TODO",
       "TODOm2",
       "TODOm3",

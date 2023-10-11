@@ -63,7 +63,7 @@ void View::move(int x, int y)
 
 bool View::close()
 {
-    // TODO: Ask flutter if we should close
+    // FLUTTER_TODO: Ask flutter if we should close
 
     CloseEvent ev;
     d->requestClose(&ev);
@@ -194,13 +194,13 @@ void View::setHeight(int h)
 
 void View::setFixedWidth(int w)
 {
-    // TODO_FLUTTER Support fixed width
+    // FLUTTER_TODO Support fixed width
     setWidth(w);
 }
 
 void View::setFixedHeight(int h)
 {
-    // TODO_FLUTTER Support fixed height
+    // FLUTTER_TODO Support fixed height
     setHeight(h);
 }
 
@@ -541,7 +541,7 @@ void View::onMouseEvent(Event::Type eventType, Point localPos, Point globalPos, 
             onMousePress(me);
     }
 
-    // TODO_FLUTTER: Who deletes the event ?
+    // FLUTTER_TODO: Who deletes the event ?
 }
 
 bool View::isMounted() const
