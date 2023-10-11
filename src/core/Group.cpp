@@ -254,7 +254,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption adding
     insertDockWidget(dockWidget, index);
 
     if (addingOption.startsHidden()) {
-        dockWidget->view()->close(); // Ensure closed. TODOm4: Call controller instead.
+        dockWidget->view()->close(); // Ensure closed.
     } else {
         if (hasSingleDockWidget()) {
             setObjectName(dockWidget->uniqueName());

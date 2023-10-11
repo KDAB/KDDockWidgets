@@ -167,7 +167,6 @@ mixin View_mixin {
       if (!childWidgets.contains(childView.flutterWidget)) {
         print(
             "ASSERT! $flutterWidget does not contain ${childView.flutterWidget}! state=$state ; children={$childWidgets} ; childVisible=${childViewCpp!.isVisible()}");
-        // assert(false); // Should we assert here ? TODOm3
         return;
       }
 

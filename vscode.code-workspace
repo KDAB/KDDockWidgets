@@ -29,10 +29,7 @@
     "todo-tree.tree.disableCompactFolders": false,
     "todo-tree.tree.showBadges": true,
     "todo-tree.general.tags": [
-      "TODO",
-      "TODOm2",
-      "TODOm3",
-      "TODOm4"
+      "TODO"
     ],
     "testMate.cpp.test.executables": "{build-dev}/**/*{tst}*",
     "todo-tree.filtering.excludeGlobs": [

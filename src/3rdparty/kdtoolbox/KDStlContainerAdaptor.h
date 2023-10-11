@@ -60,7 +60,6 @@ struct StdVectorAdaptor : std::vector<T, Args...>
     {
     }
 
-    // TODOm4: Profile KDDW-flutter and see if this is really an issue, as the containers are very small.
     // It's a lot of churn to fix all cases
     //[[deprecated("Use clone() instead; copies of non-Qt containers are not cheap")]]
     StdVectorAdaptor(const StdVectorAdaptor &) = default;
