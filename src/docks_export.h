@@ -11,7 +11,7 @@
 
 #pragma once
 
-#ifdef KDDW_FRONTEND_QT // TODOm4: Let CMake generate this
+#ifdef KDDW_FRONTEND_QT
 
 #include <QtCore/QtGlobal>
 

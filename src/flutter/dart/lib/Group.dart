@@ -79,7 +79,7 @@ class GroupPositionedWidgetState extends PositionedWidgetState {
         Container(color: Colors.black);
     final group = groupView.m_controller;
 
-    /// TODOm4: Move this logic to C++
+    /// TODO_FLUTTER: Move this logic to C++
     final bool showTabBar = !tabBarView.isExplicitlyHidden() &&
         (group.alwaysShowsTabs() || group.dockWidgetCount() > 1);
 

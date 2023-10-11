@@ -204,7 +204,6 @@ public:
 
     /// @brief Waits for the specified view to receive a resize event
     /// Returns true if the view was resized until timeout was reached
-    /// TODOm3: Remove the other overloads and remove the "2" suffix once all tests are using coroutines
     virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = 2000) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = 2000) const = 0;
