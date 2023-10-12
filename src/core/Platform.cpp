@@ -29,6 +29,10 @@
 #endif
 
 #include "Config.h"
+#include "core/layouting/Item_p.h"
+#include "core/Screen_p.h"
+
+#include "QtCompat_p.h"
 
 #include "kdbindings/signal.h"
 
@@ -52,10 +56,19 @@ Platform::Platform()
 {
     assert(!s_platform);
     s_platform = this;
+
+    Item::setDumpScreenInfoFunc([] {
+        const auto screens = Platform::instance()->screens();
+        for (const auto &screen : screens) {
+            std::cerr << "Screen: " << screen->geometry() << "; " << screen->availableGeometry()
+                      << "; drp=" << screen->devicePixelRatio() << "\n";
+        }
+    });
 }
 
 Platform::~Platform()
 {
+    Item::setDumpScreenInfoFunc(nullptr);
     s_platform = nullptr;
     delete d;
 }

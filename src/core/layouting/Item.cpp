@@ -50,6 +50,8 @@ using namespace KDDockWidgets::Core;
 int Core::Item::separatorThickness = 5;
 bool Core::Item::s_silenceSanityChecks = false;
 
+DumpScreenInfoFunc Core::Item::s_dumpScreenInfoFunc = nullptr;
+
 // There are the defaults. They can be changed by the user via Config.h API.
 Size Core::Item::hardcodedMinimumSize = Size(80, 90);
 Size Core::Item::hardcodedMaximumSize = Size(16777215, 16777215);
@@ -276,6 +278,11 @@ Item *Item::createFromJson(View *hostWidget, ItemContainer *parent, const nlohma
     auto item = new Item(hostWidget, parent);
     item->fillFromJson(json, widgets);
     return item;
+}
+
+void Item::setDumpScreenInfoFunc(DumpScreenInfoFunc f)
+{
+    s_dumpScreenInfoFunc = f;
 }
 
 void Item::ref()
@@ -2202,13 +2209,8 @@ int ItemBoxContainer::length() const
 
 void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
 {
-    if (level == 0 && hostView()) {
-        const auto screens = Platform::instance()->screens();
-        for (const auto &screen : screens) {
-            std::cerr << "Screen: " << screen->geometry() << "; " << screen->availableGeometry()
-                      << "; drp=" << screen->devicePixelRatio() << "\n";
-        }
-    }
+    if (level == 0 && hostView() && s_dumpScreenInfoFunc)
+        s_dumpScreenInfoFunc();
 
     std::string indent(LAYOUT_DUMP_INDENT * size_t(level), ' ');
     const std::string beingInserted =

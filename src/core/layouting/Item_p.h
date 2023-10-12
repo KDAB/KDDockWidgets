@@ -24,6 +24,8 @@ namespace KDDockWidgets {
 
 namespace Core {
 
+typedef void (*DumpScreenInfoFunc)();
+
 class Group;
 class Separator;
 class View;
@@ -297,6 +299,8 @@ public:
                                 const nlohmann::json &,
                                 const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
 
+    static void setDumpScreenInfoFunc(DumpScreenInfoFunc);
+
     KDBindings::Signal<> geometryChanged;
     KDBindings::Signal<> xChanged;
     KDBindings::Signal<> yChanged;
@@ -346,6 +350,7 @@ private:
     bool m_isVisible = false;
     KDDockWidgets::Core::View *m_hostWidget = nullptr;
     KDDockWidgets::Core::View *m_guest = nullptr;
+    static DumpScreenInfoFunc s_dumpScreenInfoFunc;
 
     KDBindings::ConnectionHandle m_parentChangedConnection;
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
