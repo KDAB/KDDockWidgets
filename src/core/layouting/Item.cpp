@@ -10,10 +10,10 @@
 */
 
 #include "Item_p.h"
-#include "kddockwidgets/core/Separator.h"
-#include "kddockwidgets/core/Group.h"
 #include "ItemFreeContainer_p.h"
-#include "kdbindings/signal.h"
+
+#include "core/Separator.h"
+#include "core/Group.h"
 #include "core/Window_p.h"
 #include "core/View_p.h"
 #include "core/Controller_p.h"
