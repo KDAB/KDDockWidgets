@@ -20,8 +20,6 @@
 #include <memory>
 #include <unordered_map>
 
-class TestMultiSplitter;
-
 namespace KDDockWidgets {
 
 namespace Core {
@@ -312,7 +310,6 @@ public:
     KDBindings::Signal<> deleted;
 
 public:
-    friend class ::TestMultiSplitter;
     explicit Item(bool isContainer, KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
@@ -581,7 +578,6 @@ private:
 
     static bool s_inhibitSimplify;
     friend class Core::Item;
-    friend class ::TestMultiSplitter;
     struct Private;
     Private *const d;
 };
