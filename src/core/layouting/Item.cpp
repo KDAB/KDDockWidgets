@@ -811,32 +811,6 @@ void Item::setGeometry(Rect rect)
     }
 }
 
-template<typename CharT, typename Traits>
-std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, Size size)
-{
-    os << "Size(" << size.width() << ", " << size.height() << ")";
-    return os;
-}
-
-template<typename CharT, typename Traits>
-std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, Rect rect)
-{
-    os << "Rect(" << rect.x() << "," << rect.y() << " " << rect.width() << "x" << rect.height() << ")";
-    return os;
-}
-
-template<typename CharT, typename Traits>
-std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const Vector<double> &vec)
-{
-    os << "{ ";
-    for (double v : vec) {
-        os << v << ", ";
-    }
-    os << " }";
-    return os;
-}
-
-
 void Item::dumpLayout(int level, bool)
 {
     std::string indent(LAYOUT_DUMP_INDENT * size_t(level), ' ');

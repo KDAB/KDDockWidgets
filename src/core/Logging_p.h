@@ -12,6 +12,9 @@
 #pragma once
 
 #include "KDDockWidgets.h"
+#include "QtCompat_p.h"
+
+#include <iostream>
 
 /// Logging is done via spdlog.
 /// If spdlog isn't available, then no logging is done, except if it's an error (>= level::err), in which
@@ -98,3 +101,28 @@ void printQWarning(Args &&...args)
 #endif
 
 #endif
+
+template<typename CharT, typename Traits>
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, KDDockWidgets::Size size)
+{
+    os << "Size(" << size.width() << ", " << size.height() << ")";
+    return os;
+}
+
+template<typename CharT, typename Traits>
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, KDDockWidgets::Rect rect)
+{
+    os << "Rect(" << rect.x() << "," << rect.y() << " " << rect.width() << "x" << rect.height() << ")";
+    return os;
+}
+
+template<typename CharT, typename Traits>
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, const KDDockWidgets::Vector<double> &vec)
+{
+    os << "{ ";
+    for (double v : vec) {
+        os << v << ", ";
+    }
+    os << " }";
+    return os;
+}
