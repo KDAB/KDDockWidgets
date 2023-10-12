@@ -18,7 +18,6 @@
 #include "core/View_p.h"
 #include "core/Utils_p.h"
 #include "core/Controller_p.h"
-#include "core/Platform_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/nlohmann_helpers_p.h"
@@ -29,6 +28,7 @@
 #include <utility>
 
 #ifdef KDDW_FRONTEND_QT
+#include "core/Platform_p.h"
 #include <QTimer>
 #endif
 
@@ -1105,12 +1105,14 @@ bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
 
+#if KDDW_FRONTEND_QT
     auto plat = Platform::instance();
     if (!plat || plat->d->inDestruction()) {
         // checkSanity() can be called with deleteLater(), so check if we still
         // have a platform
         return true;
     }
+#endif
 
     if (!hostView()) {
         /// This is a dummy ItemBoxContainer, just return true
