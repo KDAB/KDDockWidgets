@@ -3018,7 +3018,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         CHECK_EQ(dock2->dptr()->lastPosition()->lastItem(), oldItem2);
         Item *item2 = fw2->dropArea()->itemForFrame(dock2->dptr()->group());
         CHECK(item2);
-        CHECK(item2->hostView()->m_view->equals(fw2->dropArea()->view()));
+        CHECK(item2->host()->m_view->equals(fw2->dropArea()->view()));
         CHECK(!layout->itemForFrame(dock2->dptr()->group()));
 
         // Move from tab to bottom
@@ -3150,7 +3150,7 @@ KDDW_QCORO_TASK tst_availableSizeWithPlaceholders()
     Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->dptr()->group());
 
     CHECK_EQ(item10->geometry(), item30->geometry());
-    CHECK_EQ(item10->guestView()->minSize(), item10->guestView()->minSize());
+    CHECK_EQ(item10->guest()->minSize(), item10->guest()->minSize());
     CHECK_EQ(item10->minSize(), item30->minSize());
     CHECK_EQ(layout1->availableSize(), layout3->availableSize());
 
