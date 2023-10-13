@@ -103,7 +103,7 @@ void Position::removePlaceholders(const Core::Layout *ms)
                                             if (!itemref->item)
                                                 return true;
                                             return layoutView
-                                                && layoutView->equals(itemref->item->hostView()->m_view);
+                                                && layoutView->equals(itemref->item->host()->m_view);
                                         }),
                          m_placeholders.end());
 }

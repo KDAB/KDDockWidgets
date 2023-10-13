@@ -181,7 +181,7 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
 }
 
 
-void Item::setGuestView(LayoutingGuest *guest)
+void Item::setGuest(LayoutingGuest *guest)
 {
     assert(!guest || !m_guest);
 
@@ -191,12 +191,12 @@ void Item::setGuestView(LayoutingGuest *guest)
     m_layoutInvalidatedConnection->disconnect();
 
     if (m_guest) {
-        m_guest->setHost(m_hostWidget->m_view);
+        m_guest->setHost(m_host->m_view);
         if (Core::Group *group = asGroupController())
             group->setLayoutItem(this);
 
         m_parentChangedConnection = m_guest->m_view->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
-            if (!View::equals(parent, hostView()->m_view)) {
+            if (!View::equals(parent, host()->m_view)) {
                 // Group was detached into floating window. Turn into placeholder
                 assert(isVisible());
                 turnIntoPlaceholder();
@@ -261,9 +261,9 @@ void Item::fillFromJson(const nlohmann::json &j,
     if (!guestId.isEmpty()) {
         auto it = widgets.find(guestId);
         if (it != widgets.cend()) {
-            setGuestView(it->second);
-            m_guest->setHost(hostView()->m_view);
-        } else if (hostView()) {
+            setGuest(it->second);
+            m_guest->setHost(host()->m_view);
+        } else if (host()) {
             KDDW_ERROR("Couldn't find group to restore for item={}", ( void * )this);
             assert(false);
         }
@@ -303,9 +303,14 @@ int Item::refCount() const
     return m_refCount;
 }
 
-LayoutingHost *Item::hostView() const
+LayoutingHost *Item::host() const
 {
-    return m_hostWidget;
+    return m_host;
+}
+
+LayoutingGuest *Item::guest() const
+{
+    return m_guest;
 }
 
 void Item::restore(LayoutingGuest *guest)
@@ -318,7 +323,7 @@ void Item::restore(LayoutingGuest *guest)
     if (isContainer()) {
         KDDW_ERROR("Containers can't be restored");
     } else {
-        setGuestView(guest);
+        setGuest(guest);
         parentContainer()->restore(this);
 
         // When we restore to previous positions, we only still from the immediate neighbours.
@@ -353,10 +358,10 @@ Vector<int> Item::pathFromRoot() const
     return path;
 }
 
-void Item::setHostView(LayoutingHost *host)
+void Item::setHost(LayoutingHost *host)
 {
-    if (m_hostWidget != host) {
-        m_hostWidget = host;
+    if (m_host != host) {
+        m_host = host;
         if (m_guest) {
             m_guest->setHost(host->m_view);
             m_guest->setVisible(true);
@@ -436,7 +441,7 @@ void Item::connectParent(ItemContainer *parent)
 
         // These virtuals are fine to be called from Item ctor, as the ItemContainer is still empty at this point
         // NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
-        setHostView(parent->hostView());
+        setHost(parent->host());
 
         // NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
         updateWidgetGeometries();
@@ -740,7 +745,7 @@ bool Item::checkSanity()
     }
 
     if (m_guest) {
-        if (m_guest->m_view->parentView() && !m_guest->m_view->parentView()->equals(hostView()->m_view)) {
+        if (m_guest->m_view->parentView() && !m_guest->m_view->parentView()->equals(host()->m_view)) {
             if (root())
                 root()->dumpLayout();
             KDDW_ERROR("Unexpected parent for our guest. this={}, item.parentContainer={}, item.root.parent={}",
@@ -843,7 +848,7 @@ Item::Item(LayoutingHost *hostWidget, ItemContainer *parent)
     : Core::Object(parent)
     , m_isContainer(false)
     , m_parent(parent)
-    , m_hostWidget(hostWidget)
+    , m_host(hostWidget)
 {
     connectParent(parent);
 }
@@ -852,7 +857,7 @@ Item::Item(bool isContainer, LayoutingHost *hostWidget, ItemContainer *parent)
     : Core::Object(parent)
     , m_isContainer(isContainer)
     , m_parent(parent)
-    , m_hostWidget(hostWidget)
+    , m_host(hostWidget)
 {
     connectParent(parent);
 }
@@ -884,7 +889,7 @@ void Item::updateObjectName()
     if (isContainer())
         return;
 
-    if (auto w = guestView()) {
+    if (auto w = guest()) {
         setObjectName(w->viewName().isEmpty() ? QStringLiteral("widget") : w->viewName());
     } else if (!isVisible()) {
         setObjectName(QStringLiteral("hidden"));
@@ -910,7 +915,7 @@ void Item::onGuestDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (auto w = guestView()) {
+    if (auto w = guest()) {
         const Size guestSize = w->guestGeometry().size();
         if (guestSize != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
                                                // mouse
@@ -1113,7 +1118,7 @@ bool ItemBoxContainer::checkSanity()
     }
 #endif
 
-    if (!hostView()) {
+    if (!host()) {
         /// This is a dummy ItemBoxContainer, just return true
         return true;
     }
@@ -1224,7 +1229,7 @@ bool ItemBoxContainer::checkSanity()
         const int expectedSeparatorPos =
             mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (!View::equals(separator->view()->parentView().get(), hostView()->m_view)) {
+        if (!View::equals(separator->view()->parentView().get(), host()->m_view)) {
             KDDW_ERROR("Invalid host widget for separator this={}", ( void * )this);
             return false;
         }
@@ -1257,7 +1262,7 @@ bool ItemBoxContainer::checkSanity()
         }
 
         if (separator->view()->parentView()
-            && !separator->view()->parentView()->equals(hostView()->m_view)) {
+            && !separator->view()->parentView()->equals(host()->m_view)) {
             KDDW_ERROR("Unexpected host widget in separator");
             return false;
         }
@@ -1335,7 +1340,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
             root()->numItemsChanged.emit();
     } else {
         item->setIsVisible(false);
-        item->setGuestView(nullptr);
+        item->setGuest(nullptr);
 
         if (!wasVisible && !isContainer) {
             // Was already hidden
@@ -1380,7 +1385,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 
     const auto index = m_children.indexOf(leaf);
     assert(index != -1);
-    auto container = new ItemBoxContainer(hostView(), this);
+    auto container = new ItemBoxContainer(host(), this);
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
@@ -1461,7 +1466,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
     } else {
         // Inserting directly in a container ? Only if it's root.
         assert(isRoot());
-        auto container = new ItemBoxContainer(hostView(), this);
+        auto container = new ItemBoxContainer(host(), this);
         container->setGeometry(rect());
         container->setChildren(m_children, d->m_orientation);
         m_children.clear();
@@ -1783,12 +1788,12 @@ Item *ItemBoxContainer::itemAt_recursive(Point p) const
     return nullptr;
 }
 
-void ItemBoxContainer::setHostView(LayoutingHost *host)
+void ItemBoxContainer::setHost(LayoutingHost *host)
 {
-    Item::setHostView(host);
+    Item::setHost(host);
     d->deleteSeparators_recursive();
     for (Item *item : std::as_const(m_children)) {
-        item->setHostView(host);
+        item->setHost(host);
     }
 
     d->updateSeparators_recursive();
@@ -2141,12 +2146,12 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
 
 bool ItemBoxContainer::hostSupportsHonouringLayoutMinSize() const
 {
-    if (!m_hostWidget) {
+    if (!m_host) {
         // Corner case. No reason not to honour min-size
         return true;
     }
 
-    return m_hostWidget->supportsHonouringLayoutMinSize();
+    return m_host->supportsHonouringLayoutMinSize();
 }
 
 void ItemBoxContainer::setSize_recursive(Size newSize, ChildrenResizeStrategy strategy)
@@ -2205,7 +2210,7 @@ int ItemBoxContainer::length() const
 
 void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
 {
-    if (level == 0 && hostView() && s_dumpScreenInfoFunc)
+    if (level == 0 && host() && s_dumpScreenInfoFunc)
         s_dumpScreenInfoFunc();
 
     std::string indent(LAYOUT_DUMP_INDENT * size_t(level), ' ');
@@ -3182,7 +3187,7 @@ Vector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
 
 void ItemBoxContainer::Private::updateSeparators()
 {
-    if (!q->hostView())
+    if (!q->host())
         return;
 
     const Vector<int> positions = requiredSeparatorPositions();
@@ -3202,7 +3207,7 @@ void ItemBoxContainer::Private::updateSeparators()
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = new Core::Separator(q->hostView()->m_view);
+                separator = new Core::Separator(q->host()->m_view);
                 separator->init(q, m_orientation);
                 newSeparators.push_back(separator);
             }
@@ -3422,14 +3427,14 @@ void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
     for (const auto &child : j.value("children", nlohmann::json::array())) {
         const bool isContainer = child.value<bool>("isContainer", {});
         Item *childItem =
-            isContainer ? new ItemBoxContainer(hostView(), this) : new Item(hostView(), this);
+            isContainer ? new ItemBoxContainer(host(), this) : new Item(host(), this);
         childItem->fillFromJson(child, widgets);
         m_children.push_back(childItem);
     }
 
     if (isRoot()) {
         updateChildPercentages_recursive();
-        if (hostView()) {
+        if (host()) {
             d->updateSeparators_recursive();
             d->updateWidgets_recursive();
         }
@@ -3447,7 +3452,7 @@ void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
 
 bool ItemBoxContainer::Private::isDummy() const
 {
-    return q->hostView() == nullptr;
+    return q->host() == nullptr;
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -3458,7 +3463,7 @@ void ItemBoxContainer::relayoutIfNeeded()
 
 bool ItemBoxContainer::test_suggestedRect()
 {
-    auto itemToDrop = new Item(hostView());
+    auto itemToDrop = new Item(host());
 
     const Item::List children = visibleChildren();
     for (Item *relativeTo : children) {
@@ -3735,7 +3740,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
-                if (auto guest = item->guestView()) {
+                if (auto guest = item->guest()) {
                     guest->setGeometry(q->mapToRoot(item->geometry()));
                     guest->setVisible(true);
                 } else {
@@ -3938,7 +3943,7 @@ Item *ItemContainer::itemForView(const LayoutingGuest *w) const
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForView(w))
                 return result;
-        } else if (item->guestView() == w) {
+        } else if (item->guest() == w) {
             return item;
         }
     }

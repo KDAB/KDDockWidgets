@@ -259,12 +259,10 @@ public:
     int mapFromRoot(int p, Qt::Orientation) const;
 
     KDDockWidgets::Core::Group *asGroupController() const;
-    KDDockWidgets::Core::LayoutingGuest *guestView() const
-    {
-        return m_guest;
-    }
+    LayoutingHost *host() const;
+    LayoutingGuest *guest() const;
 
-    void setGuestView(LayoutingGuest *);
+    void setGuest(LayoutingGuest *);
 
     void ref();
     void unref();
@@ -274,8 +272,7 @@ public:
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
 
-    KDDockWidgets::Core::LayoutingHost *hostView() const;
-    void restore(LayoutingGuest *guestView);
+    void restore(LayoutingGuest *);
 
     Vector<int> pathFromRoot() const;
 
@@ -292,7 +289,7 @@ public:
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(Rect rect);
     virtual void dumpLayout(int level = 0, bool printSeparators = true);
-    virtual void setHostView(KDDockWidgets::Core::LayoutingHost *);
+    virtual void setHost(KDDockWidgets::Core::LayoutingHost *);
     virtual void to_json(nlohmann::json &) const;
 
     virtual void fillFromJson(const nlohmann::json &,
@@ -351,7 +348,7 @@ private:
     void updateObjectName();
     void onGuestDestroyed();
     bool m_isVisible = false;
-    LayoutingHost *m_hostWidget = nullptr;
+    LayoutingHost *m_host = nullptr;
     LayoutingGuest *m_guest = nullptr;
     static DumpScreenInfoFunc s_dumpScreenInfoFunc;
 
@@ -533,7 +530,7 @@ private:
                                    KDDockWidgets::Location) const;
     Item *itemAt(Point p) const;
     Item *itemAt_recursive(Point p) const;
-    void setHostView(KDDockWidgets::Core::LayoutingHost *) override;
+    void setHost(KDDockWidgets::Core::LayoutingHost *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;

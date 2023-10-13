@@ -78,12 +78,12 @@ serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
 
     nlohmann::json serialized;
     root->to_json(serialized);
-    ItemBoxContainer root2(root->hostView());
+    ItemBoxContainer root2(root->host());
 
     std::unordered_map<QString, LayoutingGuest *> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
-        if (auto view = item->guestView())
+        if (auto view = item->guest())
             widgets[view->m_view->d->id()] = view;
 
     root2.fillFromJson(serialized, widgets);
@@ -124,7 +124,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
     guestView->d->beingDestroyed.connect([guest] {
         delete guest;
     });
-    item->setGuestView(guest);
+    item->setGuest(guest);
     return item;
 }
 
@@ -956,7 +956,7 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
         auto root1 = createRoot();
         Item *item1 = createItem();
         root1->insertItem(item1, Location_OnRight);
-        auto host1 = root1->hostView();
+        auto host1 = root1->host();
 
         auto root2 = createRoot();
         Item *item2 = createItem();
@@ -964,11 +964,11 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnBottom);
 
-        CHECK_EQ(root1->hostView(), host1);
-        CHECK_EQ(item2->hostView(), host1);
+        CHECK_EQ(root1->host(), host1);
+        CHECK_EQ(item2->host(), host1);
         const auto &items = root1->items_recursive();
         for (Item *item : items) {
-            CHECK_EQ(item->hostView(), host1);
+            CHECK_EQ(item->host(), host1);
             CHECK(item->isVisible());
         }
         CHECK(root1->checkSanity());
@@ -981,7 +981,7 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
         Item *item2 = createItem();
         root1->insertItem(item1, Location_OnLeft);
         root1->insertItem(item2, Location_OnRight);
-        auto host1 = root1->hostView();
+        auto host1 = root1->host();
 
         auto root2 = createRoot();
         Item *item12 = createItem();
@@ -989,10 +989,10 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnTop);
 
-        CHECK_EQ(root1->hostView(), host1);
-        CHECK_EQ(item2->hostView(), host1);
+        CHECK_EQ(root1->host(), host1);
+        CHECK_EQ(item2->host(), host1);
         for (Item *item : root1->items_recursive()) {
-            CHECK_EQ(item->hostView(), host1);
+            CHECK_EQ(item->host(), host1);
             CHECK(item->isVisible());
         }
         CHECK(root1->checkSanity());
@@ -1600,7 +1600,7 @@ KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
     const int oldW3 = item3->width();
     const int oldW4 = item4->width();
 
-    auto guest3 = item3->guestView();
+    auto guest3 = item3->guest();
     item3->turnIntoPlaceholder();
 
     // Test that both sides reclaimed the space equally
@@ -1630,7 +1630,7 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Location_OnBottom);
     const Size originalSize2 = item2->size();
 
-    auto guest2 = item2->guestView();
+    auto guest2 = item2->guest();
     const Size newMinSize = originalSize2 + Size(10, 10);
 
     item2->turnIntoPlaceholder();
@@ -1726,7 +1726,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
     root->insertItem(item1, Location_OnTop);
     root->setSize_recursive(Size(3000, 3000));
 
-    auto guest2 = item2->guestView();
+    auto guest2 = item2->guest();
     const int maxHeight = 250;
     CHECK_EQ(guest2->m_view->size(), item2->size());
     guest2->m_view->setMaximumSize(Size(250, maxHeight));
