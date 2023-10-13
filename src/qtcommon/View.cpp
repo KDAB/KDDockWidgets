@@ -74,7 +74,6 @@ void View_qt::setViewName(const QString &name)
 {
     if (m_thisObj) {
         m_thisObj->setObjectName(name);
-        d->debugNameChanged.emit();
     }
 }
 

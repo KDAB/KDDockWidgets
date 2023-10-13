@@ -356,7 +356,6 @@ private:
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
     KDBindings::ConnectionHandle m_visibleChangedHandle;
     KDBindings::ScopedConnection m_layoutInvalidatedConnection;
-    KDBindings::ScopedConnection m_guestDebugNameChangedConnection;
     KDBindings::ScopedConnection m_guestDestroyedConnection;
 };
 
