@@ -3018,7 +3018,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         CHECK_EQ(dock2->dptr()->lastPosition()->lastItem(), oldItem2);
         Item *item2 = fw2->dropArea()->itemForFrame(dock2->dptr()->group());
         CHECK(item2);
-        CHECK(item2->hostView()->equals(fw2->dropArea()->view()));
+        CHECK(item2->hostView()->m_view->equals(fw2->dropArea()->view()));
         CHECK(!layout->itemForFrame(dock2->dptr()->group()));
 
         // Move from tab to bottom

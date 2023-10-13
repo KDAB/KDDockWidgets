@@ -18,7 +18,7 @@
 
 namespace KDDockWidgets::Core {
 
-class View;
+class LayoutingHost;
 
 ///@brief An Item container that supports its child widgets to occupy arbitrary positions
 ///
@@ -31,8 +31,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemFreeContainer : public ItemContainer
 public:
     Q_OBJECT
 public:
-    explicit ItemFreeContainer(View *hostWidget, ItemContainer *parent);
-    explicit ItemFreeContainer(View *hostWidget);
+    explicit ItemFreeContainer(LayoutingHost *hostWidget, ItemContainer *parent);
+    explicit ItemFreeContainer(LayoutingHost *hostWidget);
     ~ItemFreeContainer();
 
     /// @brief adds the item to the specified position

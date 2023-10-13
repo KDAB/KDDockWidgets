@@ -25,6 +25,7 @@
 #pragma once
 
 #include "kddockwidgets/core/View.h"
+#include "kddockwidgets/core/layouting/LayoutingHost.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
@@ -52,7 +53,7 @@ class Separator;
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
-class DOCKS_EXPORT Layout : public Controller
+class DOCKS_EXPORT Layout : public Controller, public LayoutingHost
 {
     Q_OBJECT
 public:
@@ -193,6 +194,8 @@ public:
     Core::ItemContainer *rootItem() const;
 
     void onCloseEvent(CloseEvent *);
+
+    bool supportsHonouringLayoutMinSize() const override;
 
     class Private;
     Layout::Private *d_ptr();

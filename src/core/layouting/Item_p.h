@@ -24,6 +24,7 @@ namespace KDDockWidgets {
 
 namespace Core {
 
+class LayoutingHost;
 typedef void (*DumpScreenInfoFunc)();
 
 class Group;
@@ -191,7 +192,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public Core::Object
 public:
     typedef Vector<Item *> List;
 
-    explicit Item(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent = nullptr);
+    explicit Item(KDDockWidgets::Core::LayoutingHost *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
 
     /// @brief returns whether this item is a root container
@@ -271,7 +272,7 @@ public:
     int minLength(Qt::Orientation) const;
     int maxLengthHint(Qt::Orientation) const;
 
-    KDDockWidgets::Core::View *hostView() const;
+    KDDockWidgets::Core::LayoutingHost *hostView() const;
     void restore(KDDockWidgets::Core::View *guestView);
 
     Vector<int> pathFromRoot() const;
@@ -289,13 +290,13 @@ public:
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(Rect rect);
     virtual void dumpLayout(int level = 0, bool printSeparators = true);
-    virtual void setHostView(KDDockWidgets::Core::View *);
+    virtual void setHostView(KDDockWidgets::Core::LayoutingHost *);
     virtual void to_json(nlohmann::json &) const;
 
     virtual void fillFromJson(const nlohmann::json &,
                               const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
 
-    static Item *createFromJson(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent,
+    static Item *createFromJson(LayoutingHost *hostWidget, ItemContainer *parent,
                                 const nlohmann::json &,
                                 const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
 
@@ -314,7 +315,7 @@ public:
     KDBindings::Signal<> deleted;
 
 public:
-    explicit Item(bool isContainer, KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
+    explicit Item(bool isContainer, KDDockWidgets::Core::LayoutingHost *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
     void setPos(Point);
@@ -348,7 +349,7 @@ private:
     void updateObjectName();
     void onGuestDestroyed();
     bool m_isVisible = false;
-    KDDockWidgets::Core::View *m_hostWidget = nullptr;
+    KDDockWidgets::Core::LayoutingHost *m_hostWidget = nullptr;
     KDDockWidgets::Core::View *m_guest = nullptr;
     static DumpScreenInfoFunc s_dumpScreenInfoFunc;
 
@@ -364,8 +365,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemContainer : public Item
 {
     Q_OBJECT
 public:
-    explicit ItemContainer(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
-    explicit ItemContainer(KDDockWidgets::Core::View *hostWidget);
+    explicit ItemContainer(LayoutingHost *hostWidget, ItemContainer *parent);
+    explicit ItemContainer(LayoutingHost *hostWidget);
     ~ItemContainer();
 
     virtual void removeItem(Item *, bool hardRemove = true) = 0;
@@ -410,8 +411,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemBoxContainer : public ItemContainer
 {
     Q_OBJECT
 public:
-    explicit ItemBoxContainer(KDDockWidgets::Core::View *hostWidget, ItemContainer *parent);
-    explicit ItemBoxContainer(KDDockWidgets::Core::View *hostWidget);
+    explicit ItemBoxContainer(LayoutingHost *hostWidget, ItemContainer *parent);
+    explicit ItemBoxContainer(LayoutingHost *hostWidget);
     ~ItemBoxContainer();
     void insertItem(Item *item, int index,
                     KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
@@ -530,7 +531,7 @@ private:
                                    KDDockWidgets::Location) const;
     Item *itemAt(Point p) const;
     Item *itemAt_recursive(Point p) const;
-    void setHostView(KDDockWidgets::Core::View *) override;
+    void setHostView(KDDockWidgets::Core::LayoutingHost *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;
