@@ -1017,7 +1017,7 @@ struct ItemBoxContainer::Private
 
     ~Private()
     {
-        for (const auto &sep : m_separators)
+        for (const auto &sep : std::as_const(m_separators))
             delete sep;
         m_separators.clear();
     }
@@ -3235,7 +3235,7 @@ void ItemBoxContainer::Private::updateSeparators()
 
 void ItemBoxContainer::Private::deleteSeparators()
 {
-    for (const auto &sep : m_separators)
+    for (const auto &sep : std::as_const(m_separators))
         delete sep;
     m_separators.clear();
 }
