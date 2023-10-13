@@ -25,6 +25,7 @@ namespace KDDockWidgets {
 namespace Core {
 
 class LayoutingHost;
+class LayoutingGuest;
 typedef void (*DumpScreenInfoFunc)();
 
 class Group;
@@ -258,11 +259,12 @@ public:
     int mapFromRoot(int p, Qt::Orientation) const;
 
     KDDockWidgets::Core::Group *asGroupController() const;
-    KDDockWidgets::Core::View *guestView() const
+    KDDockWidgets::Core::LayoutingGuest *guestView() const
     {
         return m_guest;
     }
-    void setGuestView(KDDockWidgets::Core::View *);
+
+    void setGuestView(LayoutingGuest *);
 
     void ref();
     void unref();
@@ -273,7 +275,7 @@ public:
     int maxLengthHint(Qt::Orientation) const;
 
     KDDockWidgets::Core::LayoutingHost *hostView() const;
-    void restore(KDDockWidgets::Core::View *guestView);
+    void restore(LayoutingGuest *guestView);
 
     Vector<int> pathFromRoot() const;
 
@@ -294,11 +296,11 @@ public:
     virtual void to_json(nlohmann::json &) const;
 
     virtual void fillFromJson(const nlohmann::json &,
-                              const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
+                              const std::unordered_map<QString, LayoutingGuest *> &);
 
     static Item *createFromJson(LayoutingHost *hostWidget, ItemContainer *parent,
                                 const nlohmann::json &,
-                                const std::unordered_map<QString, KDDockWidgets::Core::View *> &);
+                                const std::unordered_map<QString, LayoutingGuest *> &);
 
     static void setDumpScreenInfoFunc(DumpScreenInfoFunc);
 
@@ -349,8 +351,8 @@ private:
     void updateObjectName();
     void onGuestDestroyed();
     bool m_isVisible = false;
-    KDDockWidgets::Core::LayoutingHost *m_hostWidget = nullptr;
-    KDDockWidgets::Core::View *m_guest = nullptr;
+    LayoutingHost *m_hostWidget = nullptr;
+    LayoutingGuest *m_guest = nullptr;
     static DumpScreenInfoFunc s_dumpScreenInfoFunc;
 
     KDBindings::ConnectionHandle m_parentChangedConnection;
@@ -382,7 +384,7 @@ public:
     int indexOfChild(const Item *child) const;
     bool isEmpty() const;
     bool contains(const Item *item) const;
-    Item *itemForView(const KDDockWidgets::Core::View *) const;
+    Item *itemForView(const LayoutingGuest *) const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     Item::List items_recursive() const;
     bool contains_recursive(const Item *item) const;
@@ -446,7 +448,7 @@ public:
                            KDDockWidgets::Location) const;
     void to_json(nlohmann::json &) const override;
     void fillFromJson(const nlohmann::json &,
-                      const std::unordered_map<QString, KDDockWidgets::Core::View *> &) override;
+                      const std::unordered_map<QString, LayoutingGuest *> &) override;
     void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;

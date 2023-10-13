@@ -48,12 +48,12 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
 
     Core::Item *newItem = new Core::Item(this);
     if (group) {
-        newItem->setGuestView(group->view());
+        newItem->setGuestView(group);
     } else {
         group = new Core::Group();
         group->addTab(dw, addingOption);
 
-        newItem->setGuestView(group->view());
+        newItem->setGuestView(group);
     }
 
     assert(!newItem->geometry().isEmpty());

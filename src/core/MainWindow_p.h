@@ -88,7 +88,7 @@ public:
     void onResized(Size)
     {
         if (m_overlayedDockWidget)
-            updateOverlayGeometry(m_overlayedDockWidget->d->group()->size());
+            updateOverlayGeometry(m_overlayedDockWidget->d->group()->geometry().size());
     }
 
     KDBindings::Signal<> uniqueNameChanged;

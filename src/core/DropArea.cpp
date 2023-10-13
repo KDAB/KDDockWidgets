@@ -134,9 +134,9 @@ Core::Group::List DropArea::groups() const
     Core::Group::List groups;
 
     for (const Core::Item *child : children) {
-        if (auto view = child->guestView()) {
-            if (!view->d->freed()) {
-                if (auto group = view->asGroupController()) {
+        if (auto guest = child->guestView()) {
+            if (!guest->m_view->d->freed()) {
+                if (auto group = guest->m_view->asGroupController()) {
                     groups.push_back(group);
                 }
             }
@@ -594,11 +594,11 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
 
     if (group) {
         newItem = new Core::Item(this);
-        newItem->setGuestView(group->view());
+        newItem->setGuestView(group);
     } else if (dw) {
         newItem = new Core::Item(this);
         group = new Core::Group();
-        newItem->setGuestView(group->view());
+        newItem->setGuestView(group);
         group->addTab(dw, option);
     } else if (auto ms = w->asDropAreaController()) {
         newItem = ms->d->m_rootItem;

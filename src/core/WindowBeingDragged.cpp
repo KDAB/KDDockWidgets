@@ -316,7 +316,7 @@ Size WindowBeingDraggedWayland::size() const
     if (m_floatingWindow)
         return WindowBeingDragged::size();
     else if (m_group)
-        return m_group->size();
+        return m_group->geometry().size();
     else if (m_dockWidget)
         return m_dockWidget->size();
 

@@ -157,7 +157,7 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
 {
     if (item->isPlaceholder()) {
         auto newGroup = new Core::Group(view());
-        item->restore(newGroup->view());
+        item->restore(newGroup);
     }
 
     auto group = item->asGroupController();
@@ -174,7 +174,7 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
         group->addTab(dw);
     }
 
-    group->setVisible(true);
+    group->Controller::setVisible(true);
 }
 
 void Layout::unrefOldPlaceholders(const Core::Group::List &groupsBeingAdded) const
@@ -231,7 +231,7 @@ Core::Item *Layout::itemForFrame(const Core::Group *group) const
     if (!group)
         return nullptr;
 
-    return d->m_rootItem->itemForView(group->view());
+    return d->m_rootItem->itemForView(group);
 }
 
 Core::DockWidget::List Layout::dockWidgets() const
@@ -289,7 +289,7 @@ void Layout::updateSizeConstraints()
 
 bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    std::unordered_map<QString, View *> groups;
+    std::unordered_map<QString, LayoutingGuest *> groups;
     for (const auto &it : l.groups) {
         const LayoutSaver::Group &group = it.second;
         Core::Group *f = Core::Group::deserialize(group);
@@ -297,7 +297,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
             return false;
 
         assert(!group.id.isEmpty());
-        groups[group.id] = f->view();
+        groups[group.id] = f;
     }
 
     d->m_rootItem->fillFromJson(l.layout, groups);
