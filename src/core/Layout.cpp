@@ -36,6 +36,7 @@ using namespace KDDockWidgets::Core;
 
 Layout::Layout(ViewType type, View *view)
     : Controller(type, view)
+    , LayoutingHost(view)
     , d(new Private())
 {
     assert(view);
@@ -57,7 +58,7 @@ Layout::~Layout()
 void Layout::viewAboutToBeDeleted()
 {
     if (view()) {
-        if (view()->equals(d->m_rootItem->hostView())) {
+        if (view()->equals(d->m_rootItem->hostView()->m_view)) {
             delete d->m_rootItem;
             d->m_rootItem = nullptr;
         }
@@ -371,4 +372,14 @@ void Layout::onCloseEvent(CloseEvent *e)
 Layout::Private *Layout::d_ptr()
 {
     return d;
+}
+
+bool Layout::supportsHonouringLayoutMinSize() const
+{
+    if (auto window = view()->window()) {
+        return window->supportsHonouringLayoutMinSize();
+    } else {
+        // Corner case. No reason not to honour min-size
+        return true;
+    }
 }

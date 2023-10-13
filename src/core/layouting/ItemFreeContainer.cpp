@@ -10,18 +10,20 @@
 */
 
 #include "ItemFreeContainer_p.h"
+#include "LayoutingHost.h"
+
 #include "core/View.h"
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
 
 using namespace KDDockWidgets::Core;
 
-ItemFreeContainer::ItemFreeContainer(View *hostWidget, ItemContainer *parent)
+ItemFreeContainer::ItemFreeContainer(LayoutingHost *hostWidget, ItemContainer *parent)
     : ItemContainer(hostWidget, parent)
 {
 }
 
-ItemFreeContainer::ItemFreeContainer(View *hostWidget)
+ItemFreeContainer::ItemFreeContainer(LayoutingHost *hostWidget)
     : ItemContainer(hostWidget)
 {
 }

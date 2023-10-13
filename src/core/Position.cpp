@@ -20,6 +20,7 @@
 #include "Logging_p.h"
 #include "ScopedValueRollback_p.h"
 #include "core/layouting/Item_p.h"
+#include "core/layouting/LayoutingHost.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/MainWindow.h"
@@ -102,7 +103,7 @@ void Position::removePlaceholders(const Core::Layout *ms)
                                             if (!itemref->item)
                                                 return true;
                                             return layoutView
-                                                && layoutView->equals(itemref->item->hostView());
+                                                && layoutView->equals(itemref->item->hostView()->m_view);
                                         }),
                          m_placeholders.end());
 }

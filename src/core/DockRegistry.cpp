@@ -20,6 +20,7 @@
 #include "core/WidgetResizeHandler_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
+#include "core/layouting/LayoutingHost.h"
 #include "core/DockWidget_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/views/MainWindowViewInterface.h"
@@ -294,7 +295,7 @@ Core::Layout *DockRegistry::layoutForItem(const Item *item) const
     if (!item->hostView())
         return nullptr;
 
-    return item->hostView()->asLayout();
+    return item->hostView()->m_view->asLayout();
 }
 
 bool DockRegistry::itemIsInMainWindow(const Item *item) const

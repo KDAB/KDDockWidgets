@@ -12,6 +12,7 @@
 #include "simple_test_framework.h"
 
 #include "core/layouting/Item_p.h"
+#include "core/layouting/LayoutingHost.h"
 #include "core/Separator.h"
 #include "core/Platform.h"
 #include "core/View.h"
@@ -32,7 +33,25 @@ using namespace KDDockWidgets::Core;
 
 static int st = Item::separatorThickness;
 
-static std::vector<View *> s_views;
+namespace {
+class Host : public Core::LayoutingHost
+{
+public:
+    using Core::LayoutingHost::LayoutingHost;
+    ~Host() override
+    {
+        delete m_view;
+    }
+
+    bool supportsHonouringLayoutMinSize() const override
+    {
+        return true;
+    }
+};
+
+}
+
+static std::vector<Host *> s_views;
 struct DeleteViews
 {
     ~DeleteViews()
@@ -66,11 +85,12 @@ serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
 
 static std::unique_ptr<ItemBoxContainer> createRoot()
 {
-    auto hostWidget = Core::Platform::instance()->tests_createView({});
-    hostWidget->setViewName("HostWidget");
-    hostWidget->show();
-    s_views.push_back(hostWidget);
-    auto root = new ItemBoxContainer(hostWidget);
+    auto hostView = Core::Platform::instance()->tests_createView({});
+    hostView->setViewName("hostView");
+    hostView->show();
+    auto host = new Host(hostView);
+    s_views.push_back(host);
+    auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
 
     return std::unique_ptr<ItemBoxContainer>(root);
@@ -98,7 +118,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
 
 static ItemBoxContainer *createRootWithSingleItem()
 {
-    auto host = Core::Platform::instance()->tests_createView({});
+    auto host = new Host(Core::Platform::instance()->tests_createView({}));
     s_views.push_back(host);
     auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
@@ -932,11 +952,11 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnBottom);
 
-        CHECK(root1->hostView()->equals(host1));
-        CHECK(item2->hostView()->equals(host1));
+        CHECK_EQ(root1->hostView(), host1);
+        CHECK_EQ(item2->hostView(), host1);
         const auto &items = root1->items_recursive();
         for (Item *item : items) {
-            CHECK(item->hostView()->equals(host1));
+            CHECK_EQ(item->hostView(), host1);
             CHECK(item->isVisible());
         }
         CHECK(root1->checkSanity());
@@ -957,10 +977,10 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnTop);
 
-        CHECK(root1->hostView()->equals(host1));
-        CHECK(item2->hostView()->equals(host1));
+        CHECK_EQ(root1->hostView(), host1);
+        CHECK_EQ(item2->hostView(), host1);
         for (Item *item : root1->items_recursive()) {
-            CHECK(item->hostView()->equals(host1));
+            CHECK_EQ(item->hostView(), host1);
             CHECK(item->isVisible());
         }
         CHECK(root1->checkSanity());

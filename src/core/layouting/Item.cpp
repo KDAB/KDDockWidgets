@@ -11,6 +11,7 @@
 
 #include "Item_p.h"
 #include "ItemFreeContainer_p.h"
+#include "LayoutingHost.h"
 
 #include "core/Separator.h"
 #include "core/Group.h"
@@ -189,12 +190,12 @@ void Item::setGuestView(View *guest)
     m_layoutInvalidatedConnection->disconnect();
 
     if (m_guest) {
-        m_guest->controller()->setParentView(m_hostWidget);
+        m_guest->controller()->setParentView(m_hostWidget->m_view);
         if (Core::Group *group = asGroupController())
             group->setLayoutItem(this);
 
         m_parentChangedConnection = m_guest->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
-            if (!View::equals(parent, hostView())) {
+            if (!View::equals(parent, hostView()->m_view)) {
                 // Group was detached into floating window. Turn into placeholder
                 assert(isVisible());
                 turnIntoPlaceholder();
@@ -260,7 +261,7 @@ void Item::fillFromJson(const nlohmann::json &j,
         auto it = widgets.find(guestId);
         if (it != widgets.cend()) {
             setGuestView(it->second);
-            m_guest->controller()->setParentView(hostView());
+            m_guest->controller()->setParentView(hostView()->m_view);
         } else if (hostView()) {
             KDDW_ERROR("Couldn't find group to restore for item={}", ( void * )this);
             assert(false);
@@ -268,7 +269,7 @@ void Item::fillFromJson(const nlohmann::json &j,
     }
 }
 
-Item *Item::createFromJson(View *hostWidget, ItemContainer *parent, const nlohmann::json &json,
+Item *Item::createFromJson(LayoutingHost *hostWidget, ItemContainer *parent, const nlohmann::json &json,
                            const std::unordered_map<QString, View *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
@@ -301,7 +302,7 @@ int Item::refCount() const
     return m_refCount;
 }
 
-View *Item::hostView() const
+LayoutingHost *Item::hostView() const
 {
     return m_hostWidget;
 }
@@ -351,12 +352,12 @@ Vector<int> Item::pathFromRoot() const
     return path;
 }
 
-void Item::setHostView(View *host)
+void Item::setHostView(LayoutingHost *host)
 {
     if (m_hostWidget != host) {
         m_hostWidget = host;
         if (m_guest) {
-            m_guest->controller()->setParentView(host);
+            m_guest->controller()->setParentView(host->m_view);
             m_guest->setVisible(true);
             updateWidgetGeometries();
         }
@@ -738,7 +739,7 @@ bool Item::checkSanity()
     }
 
     if (m_guest) {
-        if (m_guest->parentView() && !m_guest->parentView()->equals(hostView())) {
+        if (m_guest->parentView() && !m_guest->parentView()->equals(hostView()->m_view)) {
             if (root())
                 root()->dumpLayout();
             KDDW_ERROR("Unexpected parent for our guest. this={}, item.parentContainer={}, item.root.parent={}",
@@ -837,7 +838,7 @@ void Item::dumpLayout(int level, bool)
     std::cerr << "; guest=" << this << "; name=" << objectName().toStdString() << "\n";
 }
 
-Item::Item(View *hostWidget, ItemContainer *parent)
+Item::Item(LayoutingHost *hostWidget, ItemContainer *parent)
     : Core::Object(parent)
     , m_isContainer(false)
     , m_parent(parent)
@@ -846,7 +847,7 @@ Item::Item(View *hostWidget, ItemContainer *parent)
     connectParent(parent);
 }
 
-Item::Item(bool isContainer, View *hostWidget, ItemContainer *parent)
+Item::Item(bool isContainer, LayoutingHost *hostWidget, ItemContainer *parent)
     : Core::Object(parent)
     , m_isContainer(isContainer)
     , m_parent(parent)
@@ -1053,14 +1054,14 @@ struct ItemBoxContainer::Private
     ItemBoxContainer *const q;
 };
 
-ItemBoxContainer::ItemBoxContainer(View *hostWidget, ItemContainer *parent)
+ItemBoxContainer::ItemBoxContainer(LayoutingHost *hostWidget, ItemContainer *parent)
     : ItemContainer(hostWidget, parent)
     , d(new Private(this))
 {
     assert(parent);
 }
 
-ItemBoxContainer::ItemBoxContainer(View *hostWidget)
+ItemBoxContainer::ItemBoxContainer(LayoutingHost *hostWidget)
     : ItemContainer(hostWidget, /*parent=*/nullptr)
     , d(new Private(this))
 {
@@ -1221,7 +1222,7 @@ bool ItemBoxContainer::checkSanity()
         const int expectedSeparatorPos =
             mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (!View::equals(separator->view()->parentView().get(), hostView())) {
+        if (!View::equals(separator->view()->parentView().get(), hostView()->m_view)) {
             KDDW_ERROR("Invalid host widget for separator this={}", ( void * )this);
             return false;
         }
@@ -1254,7 +1255,7 @@ bool ItemBoxContainer::checkSanity()
         }
 
         if (separator->view()->parentView()
-            && !separator->view()->parentView()->equals(hostView())) {
+            && !separator->view()->parentView()->equals(hostView()->m_view)) {
             KDDW_ERROR("Unexpected host widget in separator");
             return false;
         }
@@ -1780,7 +1781,7 @@ Item *ItemBoxContainer::itemAt_recursive(Point p) const
     return nullptr;
 }
 
-void ItemBoxContainer::setHostView(View *host)
+void ItemBoxContainer::setHostView(LayoutingHost *host)
 {
     Item::setHostView(host);
     d->deleteSeparators_recursive();
@@ -2143,12 +2144,7 @@ bool ItemBoxContainer::hostSupportsHonouringLayoutMinSize() const
         return true;
     }
 
-    if (auto window = m_hostWidget->window()) {
-        return window->supportsHonouringLayoutMinSize();
-    } else {
-        // Corner case. No reason not to honour min-size
-        return true;
-    }
+    return m_hostWidget->supportsHonouringLayoutMinSize();
 }
 
 void ItemBoxContainer::setSize_recursive(Size newSize, ChildrenResizeStrategy strategy)
@@ -3204,7 +3200,7 @@ void ItemBoxContainer::Private::updateSeparators()
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = new Core::Separator(q->hostView());
+                separator = new Core::Separator(q->hostView()->m_view);
                 separator->init(q, m_orientation);
                 newSeparators.push_back(separator);
             }
@@ -3851,7 +3847,7 @@ struct ItemContainer::Private
     ItemContainer *const q;
 };
 
-ItemContainer::ItemContainer(View *hostWidget, ItemContainer *parent)
+ItemContainer::ItemContainer(LayoutingHost *hostWidget, ItemContainer *parent)
     : Item(true, hostWidget, parent)
     , d(new Private(this))
 {
@@ -3868,7 +3864,7 @@ ItemContainer::ItemContainer(View *hostWidget, ItemContainer *parent)
     });
 }
 
-ItemContainer::ItemContainer(View *hostWidget)
+ItemContainer::ItemContainer(LayoutingHost *hostWidget)
     : Item(true, hostWidget, nullptr)
     , d(new Private(this))
 {
@@ -4018,6 +4014,8 @@ int ItemContainer::count_recursive() const
 
     return count;
 }
+
+LayoutingHost::~LayoutingHost() = default;
 
 #ifdef Q_CC_MSVC
 #pragma warning(pop)
