@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/core/FocusScope.h"
+#include "kddockwidgets/core/layouting/LayoutingGuest.h"
 #include "DockWidget.h"
 #include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/LayoutSaver.h"
@@ -36,7 +37,7 @@ class Stack;
 class TabBar;
 class TitleBar;
 
-class DOCKS_EXPORT Group : public Controller, public FocusScope
+class DOCKS_EXPORT Group : public Controller, public FocusScope, public LayoutingGuest
 {
     Q_OBJECT
 public:

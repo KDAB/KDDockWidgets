@@ -81,6 +81,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 Group::Group(View *parent, FrameOptions options, int userType)
     : Controller(ViewType::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
+    , LayoutingGuest(view())
     , d(new Private(userType, actualOptions(options)))
     , m_stack(new Core::Stack(this, tabWidgetOptions(options)))
     , m_tabBar(m_stack->tabBar())
@@ -574,7 +575,7 @@ void Group::restoreToPreviousPosition()
         return;
     }
 
-    d->m_layoutItem->restore(view());
+    d->m_layoutItem->restore(this);
 }
 
 int Group::currentTabIndex() const

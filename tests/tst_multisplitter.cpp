@@ -13,6 +13,7 @@
 
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingHost.h"
+#include "core/layouting/LayoutingGuest.h"
 #include "core/Separator.h"
 #include "core/Platform.h"
 #include "core/View.h"
@@ -49,6 +50,13 @@ public:
     }
 };
 
+class Guest : public Core::LayoutingGuest
+{
+public:
+    using Core::LayoutingGuest::LayoutingGuest;
+    ~Guest() override = default;
+};
+
 }
 
 static std::vector<Host *> s_views;
@@ -72,11 +80,11 @@ serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
     root->to_json(serialized);
     ItemBoxContainer root2(root->hostView());
 
-    std::unordered_map<QString, View *> widgets;
+    std::unordered_map<QString, LayoutingGuest *> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
         if (auto view = item->guestView())
-            widgets[view->d->id()] = view;
+            widgets[view->m_view->d->id()] = view;
 
     root2.fillFromJson(serialized, widgets);
 
@@ -109,9 +117,13 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
         opts.minSize = minSz;
     if (maxSz.isValid())
         opts.maxSize = maxSz;
-    auto guest = Core::Platform::instance()->tests_createView(opts);
+    auto guestView = Core::Platform::instance()->tests_createView(opts);
 
-    guest->setViewName(item->objectName());
+    guestView->setViewName(item->objectName());
+    auto guest = new Guest(guestView);
+    guestView->d->beingDestroyed.connect([guest] {
+        delete guest;
+    });
     item->setGuestView(guest);
     return item;
 }
@@ -1622,7 +1634,7 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
     const Size newMinSize = originalSize2 + Size(10, 10);
 
     item2->turnIntoPlaceholder();
-    guest2->setMinimumSize(newMinSize);
+    guest2->m_view->setMinimumSize(newMinSize);
     item2->restore(guest2);
 
     KDDW_TEST_RETURN(true);
@@ -1716,10 +1728,10 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
 
     auto guest2 = item2->guestView();
     const int maxHeight = 250;
-    CHECK_EQ(guest2->size(), item2->size());
-    guest2->setMaximumSize(Size(250, maxHeight));
-    CHECK_EQ(guest2->size(), item2->size());
-    CHECK_EQ(item2->maxSizeHint(), guest2->maxSizeHint());
+    CHECK_EQ(guest2->m_view->size(), item2->size());
+    guest2->m_view->setMaximumSize(Size(250, maxHeight));
+    CHECK_EQ(guest2->m_view->size(), item2->size());
+    CHECK_EQ(item2->maxSizeHint(), guest2->m_view->maxSizeHint());
 
     root->insertItem(item2, Location_OnBottom);
     CHECK_EQ(item2->height(), maxHeight);

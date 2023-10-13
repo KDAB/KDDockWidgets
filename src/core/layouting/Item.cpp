@@ -12,6 +12,7 @@
 #include "Item_p.h"
 #include "ItemFreeContainer_p.h"
 #include "LayoutingHost.h"
+#include "LayoutingGuest.h"
 
 #include "core/Separator.h"
 #include "core/Group.h"
@@ -180,7 +181,7 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
 }
 
 
-void Item::setGuestView(View *guest)
+void Item::setGuestView(LayoutingGuest *guest)
 {
     assert(!guest || !m_guest);
 
@@ -190,11 +191,11 @@ void Item::setGuestView(View *guest)
     m_layoutInvalidatedConnection->disconnect();
 
     if (m_guest) {
-        m_guest->controller()->setParentView(m_hostWidget->m_view);
+        m_guest->setHost(m_hostWidget->m_view);
         if (Core::Group *group = asGroupController())
             group->setLayoutItem(this);
 
-        m_parentChangedConnection = m_guest->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
+        m_parentChangedConnection = m_guest->m_view->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
             if (!View::equals(parent, hostView()->m_view)) {
                 // Group was detached into floating window. Turn into placeholder
                 assert(isVisible());
@@ -209,14 +210,14 @@ void Item::setGuestView(View *guest)
         }
 
         m_guestDestroyedConnection =
-            m_guest->d->beingDestroyed.connect(&Item::onGuestDestroyed, this);
+            m_guest->m_view->d->beingDestroyed.connect(&Item::onGuestDestroyed, this);
 
         m_layoutInvalidatedConnection =
-            guest->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
+            guest->m_view->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
-            Rect widgetGeo = m_guest->geometry();
+            Rect widgetGeo = m_guest->guestGeometry();
             widgetGeo.setSize(
                 widgetGeo.size().expandedTo(minSize()).expandedTo(Item::hardcodedMinimumSize));
             setGeometry(mapFromRoot(widgetGeo));
@@ -230,7 +231,7 @@ void Item::setGuestView(View *guest)
 
 KDDockWidgets::Core::Group *Item::asGroupController() const
 {
-    return m_guest ? m_guest->asGroupController() : nullptr;
+    return m_guest ? m_guest->m_view->asGroupController() : nullptr;
 }
 
 void Item::updateWidgetGeometries()
@@ -247,11 +248,11 @@ void Item::to_json(nlohmann::json &json) const
     json["isContainer"] = isContainer();
     json["objectName"] = objectName();
     if (m_guest)
-        json["guestId"] = m_guest->d->id(); // just for coorelation purposes when restoring
+        json["guestId"] = m_guest->m_view->d->id(); // just for coorelation purposes when restoring
 }
 
 void Item::fillFromJson(const nlohmann::json &j,
-                        const std::unordered_map<QString, KDDockWidgets::Core::View *> &widgets)
+                        const std::unordered_map<QString, LayoutingGuest *> &widgets)
 {
     m_sizingInfo = j.value("sizingInfo", SizingInfo());
     m_isVisible = j.value("isVisible", false);
@@ -261,7 +262,7 @@ void Item::fillFromJson(const nlohmann::json &j,
         auto it = widgets.find(guestId);
         if (it != widgets.cend()) {
             setGuestView(it->second);
-            m_guest->controller()->setParentView(hostView()->m_view);
+            m_guest->setHost(hostView()->m_view);
         } else if (hostView()) {
             KDDW_ERROR("Couldn't find group to restore for item={}", ( void * )this);
             assert(false);
@@ -270,7 +271,7 @@ void Item::fillFromJson(const nlohmann::json &j,
 }
 
 Item *Item::createFromJson(LayoutingHost *hostWidget, ItemContainer *parent, const nlohmann::json &json,
-                           const std::unordered_map<QString, View *> &widgets)
+                           const std::unordered_map<QString, LayoutingGuest *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
     item->fillFromJson(json, widgets);
@@ -307,7 +308,7 @@ LayoutingHost *Item::hostView() const
     return m_hostWidget;
 }
 
-void Item::restore(View *guest)
+void Item::restore(LayoutingGuest *guest)
 {
     if (isVisible() || m_guest) {
         KDDW_ERROR("Hitting assert. visible={}, guest={}", isVisible(), ( void * )this);
@@ -357,7 +358,7 @@ void Item::setHostView(LayoutingHost *host)
     if (m_hostWidget != host) {
         m_hostWidget = host;
         if (m_guest) {
-            m_guest->controller()->setParentView(host->m_view);
+            m_guest->setHost(host->m_view);
             m_guest->setVisible(true);
             updateWidgetGeometries();
         }
@@ -739,7 +740,7 @@ bool Item::checkSanity()
     }
 
     if (m_guest) {
-        if (m_guest->parentView() && !m_guest->parentView()->equals(hostView()->m_view)) {
+        if (m_guest->m_view->parentView() && !m_guest->m_view->parentView()->equals(hostView()->m_view)) {
             if (root())
                 root()->dumpLayout();
             KDDW_ERROR("Unexpected parent for our guest. this={}, item.parentContainer={}, item.root.parent={}",
@@ -754,9 +755,9 @@ bool Item::checkSanity()
             return false;
         }
 #endif
-        if (m_guest->geometry() != mapToRoot(rect())) {
+        if (m_guest->guestGeometry() != mapToRoot(rect())) {
             root()->dumpLayout();
-            KDDW_ERROR("Guest widget doesn't have correct geometry. has={}, guest.global={}, item.local={}, item.global={}", m_guest->geometry(), geometry(), mapToRoot(rect()), ( void * )this);
+            KDDW_ERROR("Guest widget doesn't have correct geometry. has={}, guest.global={}, item.local={}, item.global={}", m_guest->guestGeometry(), geometry(), mapToRoot(rect()), ( void * )this);
             return false;
         }
     }
@@ -828,8 +829,8 @@ void Item::dumpLayout(int level, bool)
     if (!isVisible())
         std::cerr << ";hidden;";
 
-    if (m_guest && geometry() != m_guest->geometry()) {
-        std::cerr << "; guest geometry=" << m_guest->geometry();
+    if (m_guest && geometry() != m_guest->guestGeometry()) {
+        std::cerr << "; guest geometry=" << m_guest->guestGeometry();
     }
 
     if (m_sizingInfo.isBeingInserted)
@@ -909,12 +910,13 @@ void Item::onGuestDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (View *w = guestView()) {
-        if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
+    if (auto w = guestView()) {
+        const Size guestSize = w->guestGeometry().size();
+        if (guestSize != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
                                                // mouse
             std::cerr << "Item::onWidgetLayoutRequested"
                       << "TODO: Not implemented yet. Widget can't just decide to resize yet"
-                      << "View.size=" << w->size() << "Item.size=" << size() << m_sizingInfo.geometry
+                      << "View.size=" << guestSize << "Item.size=" << size() << m_sizingInfo.geometry
                       << m_sizingInfo.isBeingInserted << "\n";
         }
 
@@ -3405,7 +3407,7 @@ void ItemBoxContainer::to_json(nlohmann::json &j) const
 }
 
 void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
-                                    const std::unordered_map<QString, KDDockWidgets::Core::View *> &widgets)
+                                    const std::unordered_map<QString, LayoutingGuest *> &widgets)
 {
     if (!j.is_object()) {
         KDDW_ERROR("Expected a JSON object");
@@ -3733,9 +3735,9 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
-                if (View *widget = item->guestView()) {
-                    widget->setGeometry(q->mapToRoot(item->geometry()));
-                    widget->setVisible(true);
+                if (auto guest = item->guestView()) {
+                    guest->setGeometry(q->mapToRoot(item->geometry()));
+                    guest->setVisible(true);
                 } else {
                     KDDW_ERROR("visible item doesn't have a guest item=", ( void * )item);
                 }
@@ -3930,7 +3932,7 @@ bool ItemContainer::contains(const Item *item) const
     return m_children.contains(const_cast<Item *>(item));
 }
 
-Item *ItemContainer::itemForView(const View *w) const
+Item *ItemContainer::itemForView(const LayoutingGuest *w) const
 {
     for (Item *item : std::as_const(m_children)) {
         if (item->isContainer()) {
@@ -4016,6 +4018,7 @@ int ItemContainer::count_recursive() const
 }
 
 LayoutingHost::~LayoutingHost() = default;
+LayoutingGuest::~LayoutingGuest() = default;
 
 #ifdef Q_CC_MSVC
 #pragma warning(pop)
