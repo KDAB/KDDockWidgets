@@ -208,7 +208,7 @@ void Item::setGuestView(View *guest)
         }
 
         m_guestDestroyedConnection =
-            m_guest->d->beingDestroyed.connect(&Item::onWidgetDestroyed, this);
+            m_guest->d->beingDestroyed.connect(&Item::onGuestDestroyed, this);
 
         m_layoutInvalidatedConnection =
             guest->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
@@ -893,7 +893,7 @@ void Item::updateObjectName()
     }
 }
 
-void Item::onWidgetDestroyed()
+void Item::onGuestDestroyed()
 {
     m_guest = nullptr;
     m_parentChangedConnection.disconnect();

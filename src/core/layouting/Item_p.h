@@ -346,7 +346,7 @@ private:
     friend class ItemFreeContainer;
     int m_refCount = 0;
     void updateObjectName();
-    void onWidgetDestroyed();
+    void onGuestDestroyed();
     bool m_isVisible = false;
     KDDockWidgets::Core::View *m_hostWidget = nullptr;
     KDDockWidgets::Core::View *m_guest = nullptr;
