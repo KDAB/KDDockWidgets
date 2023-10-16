@@ -81,8 +81,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 Group::Group(View *parent, FrameOptions options, int userType)
     : Controller(ViewType::Frame, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
-    , LayoutingGuest(view())
-    , d(new Private(userType, actualOptions(options)))
+    , d(new Private(this, userType, actualOptions(options)))
     , m_stack(new Core::Stack(this, tabWidgetOptions(options)))
     , m_tabBar(m_stack->tabBar())
     , m_titleBar(new Core::TitleBar(this))
@@ -575,7 +574,7 @@ void Group::restoreToPreviousPosition()
         return;
     }
 
-    d->m_layoutItem->restore(this);
+    d->m_layoutItem->restore(d);
 }
 
 int Group::currentTabIndex() const
@@ -606,19 +605,19 @@ bool Group::anyNonDockable() const
     return false;
 }
 
-void Group::setLayoutItem(Item *item)
+void Group::Private::setLayoutItem(Item *item)
 {
-    if (item == d->m_layoutItem)
+    if (item == m_layoutItem)
         return;
 
-    if (d->m_layoutItem)
-        d->m_layoutItem->unref();
+    if (m_layoutItem)
+        m_layoutItem->unref();
 
     if (item)
         item->ref();
 
-    d->m_layoutItem = item;
-    const auto docks = dockWidgets();
+    m_layoutItem = item;
+    const auto docks = q->dockWidgets();
     if (item) {
         for (DockWidget *dw : docks)
             dw->d->addPlaceholderItem(item);
@@ -660,6 +659,11 @@ Vector<QString> Group::affinities() const
     } else {
         return dockWidgetAt(0)->affinities();
     }
+}
+
+void Group::setLayoutItem(Core::Item *item)
+{
+    d->setLayoutItem(item);
 }
 
 bool Group::isTheOnlyGroup() const
@@ -980,6 +984,11 @@ bool Core::Group::isCentralFrame() const
 }
 
 Group::Private *Group::dptr() const
+{
+    return d;
+}
+
+LayoutingGuest *Group::asLayoutingGuest() const
 {
     return d;
 }

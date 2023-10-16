@@ -19,6 +19,7 @@
 #include "core/Logging_p.h"
 #include "core/Utils_p.h"
 #include "core/layouting/Item_p.h"
+#include "core/layouting/LayoutingGuest.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/DelayedCall_p.h"
 #include "core/Group.h"
@@ -594,11 +595,11 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
 
     if (group) {
         newItem = new Core::Item(this);
-        newItem->setGuest(group);
+        newItem->setGuest(group->asLayoutingGuest());
     } else if (dw) {
         newItem = new Core::Item(this);
         group = new Core::Group();
-        newItem->setGuest(group);
+        newItem->setGuest(group->asLayoutingGuest());
         group->addTab(dw, option);
     } else if (auto ms = w->asDropAreaController()) {
         newItem = ms->d->m_rootItem;

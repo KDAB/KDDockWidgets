@@ -157,7 +157,7 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
 {
     if (item->isPlaceholder()) {
         auto newGroup = new Core::Group(view());
-        item->restore(newGroup);
+        item->restore(newGroup->asLayoutingGuest());
     }
 
     auto group = item->asGroupController();
@@ -231,7 +231,7 @@ Core::Item *Layout::itemForFrame(const Core::Group *group) const
     if (!group)
         return nullptr;
 
-    return d->m_rootItem->itemForView(group);
+    return d->m_rootItem->itemForView(group->asLayoutingGuest());
 }
 
 Core::DockWidget::List Layout::dockWidgets() const
@@ -297,7 +297,7 @@ bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
             return false;
 
         assert(!group.id.isEmpty());
-        groups[group.id] = f;
+        groups[group.id] = f->asLayoutingGuest();
     }
 
     d->m_rootItem->fillFromJson(l.layout, groups);

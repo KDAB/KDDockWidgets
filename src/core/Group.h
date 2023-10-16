@@ -11,13 +11,12 @@
 
 #pragma once
 
+#include "DockWidget.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/LayoutSaver.h"
+#include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/core/Controller.h"
 #include "kddockwidgets/core/FocusScope.h"
-#include "kddockwidgets/core/layouting/LayoutingGuest.h"
-#include "DockWidget.h"
-#include "kddockwidgets/QtCompat_p.h"
-#include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/docks_export.h"
 
 class TestDocks;
@@ -28,6 +27,7 @@ class WidgetResizeHandler;
 
 namespace KDDockWidgets::Core {
 
+class LayoutingGuest;
 class DropArea;
 class MDILayout;
 class DockWidget;
@@ -37,13 +37,14 @@ class Stack;
 class TabBar;
 class TitleBar;
 
-class DOCKS_EXPORT Group : public Controller, public FocusScope, public LayoutingGuest
+class DOCKS_EXPORT Group : public Controller, public FocusScope
 {
     Q_OBJECT
 public:
     typedef Vector<Group *> List;
 
-    explicit Group(View *parent = nullptr, FrameOptions = FrameOption_None, int userType = 0);
+    explicit Group(View *parent = nullptr, FrameOptions = FrameOption_None,
+                   int userType = 0);
     virtual ~Group() override;
 
     static Group *deserialize(const LayoutSaver::Group &);
@@ -219,7 +220,7 @@ public:
     Vector<QString> affinities() const;
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
-    void setLayoutItem(Core::Item *item) override;
+    void setLayoutItem(Core::Item *item);
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.
@@ -287,6 +288,8 @@ public:
 
     /// @brief User requested floating window flags for when this group floats
     FloatingWindowFlags requestedFloatingWindowFlags() const;
+
+    LayoutingGuest *asLayoutingGuest() const;
 
 protected:
     void isFocusedChangedCallback() override;
