@@ -593,7 +593,7 @@ if(KDDW_FRONTEND_QT)
     # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
     install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
     install(FILES ${KDDW_CORE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
-    install(FILES core/layouting/LayoutingHost.h core/layouting/LayoutingGuest.h
+    install(FILES core/layouting/LayoutingHost.h
             DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/layouting/
     )
     install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)

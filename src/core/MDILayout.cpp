@@ -13,7 +13,7 @@
 #include "core/layouting/ItemFreeContainer_p.h"
 #include "Config.h"
 #include "core/ViewFactory.h"
-#include "core/Group.h"
+#include "core/Group_p.h"
 #include "core/DockWidget_p.h"
 #include "core/Logging_p.h"
 
@@ -48,12 +48,12 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
 
     Core::Item *newItem = new Core::Item(this);
     if (group) {
-        newItem->setGuest(group);
+        newItem->setGuest(group->asLayoutingGuest());
     } else {
         group = new Core::Group();
         group->addTab(dw, addingOption);
 
-        newItem->setGuest(group);
+        newItem->setGuest(group->asLayoutingGuest());
     }
 
     assert(!newItem->geometry().isEmpty());

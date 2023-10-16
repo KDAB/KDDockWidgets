@@ -15,6 +15,7 @@
 
 #include "Group.h"
 #include "ObjectGuard_p.h"
+#include "kddockwidgets/core/layouting/LayoutingGuest.h"
 
 #include <kdbindings/signal.h>
 
@@ -25,11 +26,13 @@ namespace KDDockWidgets {
 
 namespace Core {
 
-class Group::Private
+class Group::Private : public LayoutingGuest
 {
 public:
-    explicit Private(int userType, FrameOptions options)
-        : m_userType(userType)
+    explicit Private(Group *qq, int userType, FrameOptions options)
+        : LayoutingGuest(qq->view())
+        , q(qq)
+        , m_userType(userType)
         , m_options(options)
     {
     }
@@ -52,6 +55,10 @@ public:
     std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
         iconChangedConnections;
 
+    ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
+    void setLayoutItem(Core::Item *item) override;
+
+    Group *const q;
     int m_userType = 0;
     FrameOptions m_options = FrameOption_None;
 };

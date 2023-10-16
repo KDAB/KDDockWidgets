@@ -25,6 +25,7 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
+#include "core/layouting/LayoutingGuest.h"
 #include "core/ViewFactory.h"
 #include "core/Action.h"
 #include "core/MDILayout.h"
@@ -3478,7 +3479,7 @@ KDDW_QCORO_TASK tst_stuckSeparator()
 
     Core::Group *group25 = dw25->dptr()->group();
     ItemBoxContainer *root = m1->multiSplitter()->rootItem();
-    Item *item25 = root->itemForView(group25);
+    Item *item25 = root->itemForView(group25->asLayoutingGuest());
     ItemBoxContainer *container25 = item25->parentBoxContainer();
     Vector<Core::Separator *> separators = container25->separators();
     CHECK_EQ(separators.size(), 1);
