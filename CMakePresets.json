@@ -36,6 +36,15 @@
             ]
         },
         {
+            "name": "static-base",
+            "hidden": true,
+            "generator": "Ninja",
+            "cacheVariables": {
+                "KDDockWidgets_STATIC": "ON",
+                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+            }
+        },
+        {
             "name": "dev",
             "displayName": "dev",
             "binaryDir": "${sourceDir}/build-dev",
@@ -265,17 +274,6 @@
             ],
             "cacheVariables": {
                 "Python3_EXECUTABLE": "/opt/homebrew/bin/python3.10"
-            }
-        },
-        {
-            "name": "static",
-            "displayName": "static",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-static",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_STATIC": "ON",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             }
         },
         {
@@ -632,6 +630,38 @@
             },
             "inherits": [
                 "dev-asan6"
+            ]
+        },
+        {
+            "name": "ci-release-static-qt5",
+            "binaryDir": "${sourceDir}/build-ci-release-static-qt5",
+            "inherits": [
+                "static-base",
+                "ci-release-qt5"
+            ]
+        },
+        {
+            "name": "ci-dev-static-qt5",
+            "binaryDir": "${sourceDir}/build-dev-ci-static-qt5",
+            "inherits": [
+                "static-base",
+                "ci-dev-qt5"
+            ]
+        },
+        {
+            "name": "ci-release-static-qt6",
+            "binaryDir": "${sourceDir}/build-ci-release-static-qt6",
+            "inherits": [
+                "static-base",
+                "ci-release-qt6"
+            ]
+        },
+        {
+            "name": "ci-dev-static-qt6",
+            "binaryDir": "${sourceDir}/build-ci-dev-static-qt6",
+            "inherits": [
+                "static-base",
+                "ci-dev-qt6"
             ]
         }
     ],
