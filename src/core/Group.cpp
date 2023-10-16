@@ -992,3 +992,14 @@ LayoutingGuest *Group::asLayoutingGuest() const
 {
     return d;
 }
+
+Group::Private::Private(Group *qq, int userType, FrameOptions options)
+    : LayoutingGuest(qq->view())
+    , q(qq)
+    , m_userType(userType)
+    , m_options(options)
+{
+    m_parentViewChangedConnection = q->Controller::dptr()->parentViewChanged.connect([this] {
+        hostChanged.emit(q->m_layout);
+    });
+}

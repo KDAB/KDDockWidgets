@@ -15,11 +15,14 @@
 #include "kddockwidgets/docks_export.h"
 #include "QtCompat_p.h"
 
+#include <kdbindings/signal.h>
+
 namespace KDDockWidgets {
 
 namespace Core {
 
 class Item;
+class LayoutingHost;
 
 /// The interface graphical components need to implement in order to be hosted by a layout
 /// The layout engine doesn't know about any GUI, only about LayoutingHost and LayoutingGuest
@@ -74,6 +77,7 @@ public:
     }
 
     View *const m_view;
+    KDBindings::Signal<LayoutingHost *> hostChanged;
 };
 
 }
