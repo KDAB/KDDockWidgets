@@ -12,7 +12,7 @@
 #include "Item_p.h"
 #include "ItemFreeContainer_p.h"
 #include "LayoutingHost.h"
-#include "LayoutingGuest.h"
+#include "LayoutingGuest_p.h"
 
 #include "core/Separator.h"
 #include "core/View_p.h"

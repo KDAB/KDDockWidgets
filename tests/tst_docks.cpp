@@ -25,7 +25,7 @@
 #include "core/WindowBeingDragged_p.h"
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
-#include "core/layouting/LayoutingGuest.h"
+#include "core/layouting/LayoutingGuest_p.h"
 #include "core/ViewFactory.h"
 #include "core/Action.h"
 #include "core/MDILayout.h"
