@@ -15,7 +15,6 @@
 #include "LayoutingGuest.h"
 
 #include "core/Separator.h"
-#include "core/Window_p.h"
 #include "core/View_p.h"
 #include "core/Controller_p.h"
 #include "core/Logging_p.h"
