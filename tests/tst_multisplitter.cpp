@@ -13,7 +13,7 @@
 
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingHost.h"
-#include "core/layouting/LayoutingGuest.h"
+#include "core/layouting/LayoutingGuest_p.h"
 #include "core/Separator.h"
 #include "core/Platform.h"
 #include "core/View.h"

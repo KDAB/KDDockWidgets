@@ -15,7 +15,7 @@
 
 #include "Group.h"
 #include "ObjectGuard_p.h"
-#include "kddockwidgets/core/layouting/LayoutingGuest.h"
+#include "core/layouting/LayoutingGuest_p.h"
 
 #include <kdbindings/signal.h>
 
