@@ -219,7 +219,7 @@ public:
     Vector<QString> affinities() const;
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
-    void setLayoutItem(Core::Item *item);
+    void setLayoutItem(Core::Item *item) override;
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.

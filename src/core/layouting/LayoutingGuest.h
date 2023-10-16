@@ -19,6 +19,7 @@ namespace KDDockWidgets {
 
 namespace Core {
 
+class Item;
 
 /// The interface graphical components need to implement in order to be hosted by a layout
 /// The layout engine doesn't know about any GUI, only about LayoutingHost and LayoutingGuest
@@ -35,6 +36,7 @@ public:
     }
 
     virtual ~LayoutingGuest();
+    virtual void setLayoutItem(Item *) = 0;
 
     Size minSize() const
     {

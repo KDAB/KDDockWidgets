@@ -15,7 +15,6 @@
 #include "LayoutingGuest.h"
 
 #include "core/Separator.h"
-#include "core/Group.h"
 #include "core/Window_p.h"
 #include "core/View_p.h"
 #include "core/Controller_p.h"
@@ -180,7 +179,6 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
     return mapFromRoot(Point(p, 0)).x();
 }
 
-
 void Item::setGuest(LayoutingGuest *guest)
 {
     assert(!guest || !m_guest);
@@ -192,8 +190,7 @@ void Item::setGuest(LayoutingGuest *guest)
 
     if (m_guest) {
         m_guest->setHost(m_host->m_view);
-        if (Core::Group *group = asGroupController())
-            group->setLayoutItem(this);
+        m_guest->setLayoutItem(this);
 
         m_parentChangedConnection = m_guest->m_view->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
             if (!View::equals(parent, host()->m_view)) {

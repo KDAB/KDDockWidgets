@@ -55,6 +55,9 @@ class Guest : public Core::LayoutingGuest
 public:
     using Core::LayoutingGuest::LayoutingGuest;
     ~Guest() override = default;
+    void setLayoutItem(Item *) override
+    {
+    }
 };
 
 }
