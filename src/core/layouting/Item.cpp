@@ -16,7 +16,6 @@
 
 #include "core/Separator.h"
 #include "core/View_p.h"
-#include "core/Controller_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/nlohmann_helpers_p.h"
@@ -191,8 +190,8 @@ void Item::setGuest(LayoutingGuest *guest)
         m_guest->setHost(m_host->m_view);
         m_guest->setLayoutItem(this);
 
-        m_parentChangedConnection = m_guest->m_view->controller()->dptr()->parentViewChanged.connect([this](View *parent) {
-            if (!View::equals(parent, host()->m_view)) {
+        m_parentChangedConnection = m_guest->hostChanged.connect([this](LayoutingHost *host) {
+            if (host != this->host()) {
                 // Group was detached into floating window. Turn into placeholder
                 assert(isVisible());
                 turnIntoPlaceholder();

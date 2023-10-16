@@ -15,6 +15,7 @@
 
 #include "Group.h"
 #include "ObjectGuard_p.h"
+#include "core/Controller_p.h"
 #include "core/layouting/LayoutingGuest_p.h"
 
 #include <kdbindings/signal.h>
@@ -29,13 +30,7 @@ namespace Core {
 class Group::Private : public LayoutingGuest
 {
 public:
-    explicit Private(Group *qq, int userType, FrameOptions options)
-        : LayoutingGuest(qq->view())
-        , q(qq)
-        , m_userType(userType)
-        , m_options(options)
-    {
-    }
+    explicit Private(Group *qq, int userType, FrameOptions options);
 
     ObjectGuard<Core::Item> m_layoutItem;
 
@@ -54,6 +49,8 @@ public:
 
     std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
         iconChangedConnections;
+
+    KDBindings::ScopedConnection m_parentViewChangedConnection;
 
     ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
     void setLayoutItem(Core::Item *item) override;
