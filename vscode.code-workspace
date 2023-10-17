@@ -51,6 +51,20 @@
         "cwd": "${command:cmake.buildDirectory}"
       },
       {
+        "name": "Example via Wayland",
+        "type": "lldb",
+        "request": "launch",
+        "program": "kwin_wayland",
+        "args": [
+          "--width",
+          "1600",
+          "--height",
+          "1600",
+          "${command:cmake.launchTargetPath} -platform wayland",
+        ],
+        "cwd": "${command:cmake.buildDirectory}"
+      },
+      {
         "name": "Current Target (VS)",
         "type": "cppvsdbg",
         "request": "launch",
