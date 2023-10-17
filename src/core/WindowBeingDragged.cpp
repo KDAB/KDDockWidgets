@@ -306,6 +306,11 @@ Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
     return {};
 }
 
+bool WindowBeingDraggedWayland::isInWaylandDrag(Group *group) const
+{
+    return group && m_group == group;
+}
+
 Size WindowBeingDraggedWayland::size() const
 {
     if (m_floatingWindow)

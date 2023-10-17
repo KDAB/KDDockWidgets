@@ -18,6 +18,7 @@
 #include "core/Group.h"
 #include "core/Logging_p.h"
 #include "core/Controller_p.h"
+#include "core/WindowBeingDragged_p.h"
 #include "core/DropIndicatorOverlay_p.h"
 
 #include "core/DragController_p.h"
@@ -87,6 +88,16 @@ void DropIndicatorOverlay::setHoveredGroup(Core::Group *group)
 {
     if (group == m_hoveredGroup)
         return;
+
+    if (WindowBeingDragged *wbd = DragController::instance()->windowBeingDragged()) {
+        if (wbd->isInWaylandDrag(group)) {
+            // With wayland, we don't detach the group before the mouse release.
+            // Instead, we start a QDrag, with this group as cursor QPixmap.
+            // Here we catch the case where we're dragging the pixmap onto the group
+            // where're already dragging. That's a no-op.
+            return;
+        }
+    }
 
     if (m_hoveredGroup)
         d->groupConnection = KDBindings::ScopedConnection();
