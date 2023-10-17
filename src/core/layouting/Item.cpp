@@ -13,8 +13,9 @@
 #include "ItemFreeContainer_p.h"
 #include "LayoutingHost.h"
 #include "LayoutingGuest_p.h"
+#include "LayoutingSeparator_p.h"
 
-#include "core/Separator.h"
+// #include "core/Separator.h"
 #include "core/View_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
@@ -49,6 +50,7 @@ int Core::Item::separatorThickness = 5;
 bool Core::Item::s_silenceSanityChecks = false;
 
 DumpScreenInfoFunc Core::Item::s_dumpScreenInfoFunc = nullptr;
+CreateSeparatorFunc Core::Item::s_createSeparatorFunc = nullptr;
 
 // There are the defaults. They can be changed by the user via Config.h API.
 Size Core::Item::hardcodedMinimumSize = Size(80, 90);
@@ -187,7 +189,7 @@ void Item::setGuest(LayoutingGuest *guest)
     m_layoutInvalidatedConnection->disconnect();
 
     if (m_guest) {
-        m_guest->setHost(m_host->m_view);
+        m_guest->setHost(m_host);
         m_guest->setLayoutItem(this);
 
         m_parentChangedConnection = m_guest->hostChanged.connect([this](LayoutingHost *host) {
@@ -257,7 +259,7 @@ void Item::fillFromJson(const nlohmann::json &j,
         auto it = widgets.find(guestId);
         if (it != widgets.cend()) {
             setGuest(it->second);
-            m_guest->setHost(host()->m_view);
+            m_guest->setHost(host());
         } else if (host()) {
             KDDW_ERROR("Couldn't find group to restore for item={}", ( void * )this);
             assert(false);
@@ -276,6 +278,11 @@ Item *Item::createFromJson(LayoutingHost *hostWidget, ItemContainer *parent, con
 void Item::setDumpScreenInfoFunc(DumpScreenInfoFunc f)
 {
     s_dumpScreenInfoFunc = f;
+}
+
+void Item::setCreateSeparatorFunc(CreateSeparatorFunc f)
+{
+    s_createSeparatorFunc = f;
 }
 
 void Item::ref()
@@ -358,7 +365,7 @@ void Item::setHost(LayoutingHost *host)
     if (m_host != host) {
         m_host = host;
         if (m_guest) {
-            m_guest->setHost(host->m_view);
+            m_guest->setHost(host);
             m_guest->setVisible(true);
             updateWidgetGeometries();
         }
@@ -592,7 +599,7 @@ void Item::requestResize(int left, int top, int right, int bottom)
     }
 
     // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-    auto moveSeparators = [](int side1Delta, int side2Delta, Separator *separator1, Separator *separator2) {
+    auto moveSeparators = [](int side1Delta, int side2Delta, LayoutingSeparator *separator1, LayoutingSeparator *separator2) {
         if (side1Delta != 0 && separator1) {
             const auto ancestor = separator1->parentContainer();
             const int min = ancestor->minPosForSeparator_global(separator1);
@@ -740,11 +747,11 @@ bool Item::checkSanity()
     }
 
     if (m_guest) {
-        if (m_guest->m_view->parentView() && !m_guest->m_view->parentView()->equals(host()->m_view)) {
+        if (m_guest->host() != host()) {
             if (root())
                 root()->dumpLayout();
-            KDDW_ERROR("Unexpected parent for our guest. this={}, item.parentContainer={}, item.root.parent={}",
-                       ( void * )this, ( void * )parentContainer(), ( void * )(root() ? root()->parent() : nullptr));
+            KDDW_ERROR("Unexpected host for our guest. m_guest->host()={}, host()={}",
+                       ( void * )m_guest->host(), ( void * )host());
             return false;
         }
 
@@ -757,7 +764,7 @@ bool Item::checkSanity()
 #endif
         if (m_guest->guestGeometry() != mapToRoot(rect())) {
             root()->dumpLayout();
-            KDDW_ERROR("Guest widget doesn't have correct geometry. has={}, guest.global={}, item.local={}, item.global={}", m_guest->guestGeometry(), geometry(), mapToRoot(rect()), ( void * )this);
+            KDDW_ERROR("Guest widget doesn't have correct geometry. m_guest->guestGeometry={}, item.mapToRoot(rect())={}", m_guest->guestGeometry(), mapToRoot(rect()));
             return false;
         }
     }
@@ -1012,12 +1019,18 @@ struct ItemBoxContainer::Private
     explicit Private(ItemBoxContainer *qq)
         : q(qq)
     {
+        if (!Item::s_createSeparatorFunc) {
+            KDDW_ERROR("Item doesn't know how to create separators! Aborting.\n"
+                       "If you're using the layouting engine outside of KDDW, don't forget"
+                       " to call KDDockWidgets::Core::Item::createSeparatorFunc()");
+            std::abort();
+        }
     }
 
     ~Private()
     {
         for (const auto &sep : std::as_const(m_separators))
-            delete sep;
+            sep->free();
         m_separators.clear();
     }
 
@@ -1028,17 +1041,17 @@ struct ItemBoxContainer::Private
                         ChildrenResizeStrategy);
     void honourMaxSizes(SizingInfo::List &sizes);
     void scheduleCheckSanity() const;
-    KDDockWidgets::Core::Separator *neighbourSeparator(const Item *item, Side,
-                                                       Qt::Orientation) const;
-    KDDockWidgets::Core::Separator *neighbourSeparator_recursive(const Item *item, Side,
-                                                                 Qt::Orientation) const;
+    LayoutingSeparator *neighbourSeparator(const Item *item, Side,
+                                           Qt::Orientation) const;
+    LayoutingSeparator *neighbourSeparator_recursive(const Item *item, Side,
+                                                     Qt::Orientation) const;
     void updateWidgets_recursive();
     /// Returns the positions that each separator should have (x position if Qt::Horizontal, y
     /// otherwise)
     Vector<int> requiredSeparatorPositions() const;
     void updateSeparators();
     void deleteSeparators();
-    KDDockWidgets::Core::Separator *separatorAt(int p) const;
+    LayoutingSeparator *separatorAt(int p) const;
     Vector<double> childPercentages() const;
     bool isDummy() const;
     void deleteSeparators_recursive();
@@ -1047,7 +1060,7 @@ struct ItemBoxContainer::Private
     int excessLength() const;
 
     mutable bool m_checkSanityScheduled = false;
-    Vector<KDDockWidgets::Core::Separator *> m_separators;
+    Vector<LayoutingSeparator *> m_separators;
     bool m_convertingItemToContainer = false;
     bool m_blockUpdatePercentages = false;
     bool m_isDeserializing = false;
@@ -1219,12 +1232,12 @@ bool ItemBoxContainer::checkSanity()
     const int pos2 = Core::pos(mapToRoot(Point(0, 0)), oppositeOrientation(d->m_orientation));
 
     for (int i = 0; i < d->m_separators.size(); ++i) {
-        KDDockWidgets::Core::Separator *separator = d->m_separators.at(i);
+        LayoutingSeparator *separator = d->m_separators.at(i);
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos =
             mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (!View::equals(separator->view()->parentView().get(), host()->m_view)) {
+        if (separator->m_host != host()) {
             KDDW_ERROR("Invalid host widget for separator this={}", ( void * )this);
             return false;
         }
@@ -1239,26 +1252,19 @@ bool ItemBoxContainer::checkSanity()
             KDDW_ERROR("Unexpected separator position, expected={}, separator={}, this={}", separator->position(), expectedSeparatorPos, ( void * )separator, ( void * )this);
             return false;
         }
-
-        View *separatorWidget = separator->view();
-        if (separatorWidget->geometry().size() != expectedSeparatorSize) {
-            KDDW_ERROR("Unexpected separator size={}, expected={}, separator={}, this={}", separatorWidget->geometry().size(), expectedSeparatorSize, ( void * )separator, ( void * )this);
+        const Rect separatorGeometry = separator->geometry();
+        if (separatorGeometry.size() != expectedSeparatorSize) {
+            KDDW_ERROR("Unexpected separator size={}, expected={}, separator={}, this={}", separatorGeometry.size(), expectedSeparatorSize, ( void * )separator, ( void * )this);
             return false;
         }
 
-        const int separatorPos2 = Core::pos(separatorWidget->geometry().topLeft(),
+        const int separatorPos2 = Core::pos(separatorGeometry.topLeft(),
                                             oppositeOrientation(d->m_orientation));
-        if (Core::pos(separatorWidget->geometry().topLeft(),
+        if (Core::pos(separatorGeometry.topLeft(),
                       oppositeOrientation(d->m_orientation))
             != pos2) {
             root()->dumpLayout();
             KDDW_ERROR("Unexpected position pos2={}, expected={}, separator={}, this={}", separatorPos2, pos2, ( void * )separator, ( void * )this);
-            return false;
-        }
-
-        if (separator->view()->parentView()
-            && !separator->view()->parentView()->equals(host()->m_view)) {
-            KDDW_ERROR("Unexpected host widget in separator");
             return false;
         }
 
@@ -2239,8 +2245,8 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
             if (i < d->m_separators.size()) {
                 auto separator = d->m_separators.at(i);
                 std::cerr << std::string(LAYOUT_DUMP_INDENT * size_t(level + 1), ' ') << "- Separator: "
-                          << "local.geo=" << mapFromRoot(separator->view()->geometry())
-                          << " ; global.geo=" << separator->view()->geometry() << "; separator=" << separator << "\n";
+                          << "local.geo=" << mapFromRoot(separator->geometry())
+                          << " ; global.geo=" << separator->geometry() << "; separator=" << separator << "\n";
             }
             ++i;
         }
@@ -2361,7 +2367,7 @@ int ItemBoxContainer::oppositeLength() const
     return isVertical() ? width() : height();
 }
 
-void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *separator,
+void ItemBoxContainer::requestSeparatorMove(LayoutingSeparator *separator,
                                             int delta)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
@@ -2453,7 +2459,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
             // Doesn't happen
             KDDW_ERROR("Not enough space to move separator {}", ( void * )this);
         } else {
-            KDDockWidgets::Core::Separator *nextSeparator =
+            LayoutingSeparator *nextSeparator =
                 parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection,
                                                                       d->m_orientation);
             if (!nextSeparator) {
@@ -2469,7 +2475,7 @@ void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Core::Separator *sepa
     }
 }
 
-void ItemBoxContainer::requestEqualSize(KDDockWidgets::Core::Separator *separator)
+void ItemBoxContainer::requestEqualSize(LayoutingSeparator *separator)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
@@ -3192,17 +3198,17 @@ void ItemBoxContainer::Private::updateSeparators()
     if (numSeparatorsChanged) {
         // Instead of just creating N missing ones at the end of the list, let's minimize separators
         // having their position changed, to minimize flicker
-        KDDockWidgets::Core::Separator::List newSeparators;
+        LayoutingSeparator::List newSeparators;
         newSeparators.reserve(requiredNumSeparators);
 
         for (int position : positions) {
-            KDDockWidgets::Core::Separator *separator = separatorAt(position);
+            LayoutingSeparator *separator = separatorAt(position);
             if (separator) {
                 // Already existing, reuse
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = new Core::Separator(q->host()->m_view);
+                separator = s_createSeparatorFunc(q->host());
                 separator->init(q, m_orientation);
                 newSeparators.push_back(separator);
             }
@@ -3230,7 +3236,7 @@ void ItemBoxContainer::Private::updateSeparators()
 void ItemBoxContainer::Private::deleteSeparators()
 {
     for (const auto &sep : std::as_const(m_separators))
-        delete sep;
+        sep->free();
     m_separators.clear();
 }
 
@@ -3303,7 +3309,7 @@ void ItemBoxContainer::simplify()
     }
 }
 
-KDDockWidgets::Core::Separator *ItemBoxContainer::Private::separatorAt(int p) const
+LayoutingSeparator *ItemBoxContainer::Private::separatorAt(int p) const
 {
     for (auto separator : m_separators) {
         if (separator->position() == p)
@@ -3323,7 +3329,7 @@ bool ItemBoxContainer::isHorizontal() const
     return d->m_orientation == Qt::Horizontal;
 }
 
-int ItemBoxContainer::indexOf(KDDockWidgets::Core::Separator *separator) const
+int ItemBoxContainer::indexOf(LayoutingSeparator *separator) const
 {
     return d->m_separators.indexOf(separator);
 }
@@ -3337,21 +3343,21 @@ bool ItemBoxContainer::isInSimplify() const
     return p && p->isInSimplify();
 }
 
-int ItemBoxContainer::minPosForSeparator(KDDockWidgets::Core::Separator *separator,
+int ItemBoxContainer::minPosForSeparator(LayoutingSeparator *separator,
                                          bool honourMax) const
 {
     const int globalMin = minPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMin, d->m_orientation);
 }
 
-int ItemBoxContainer::maxPosForSeparator(KDDockWidgets::Core::Separator *separator,
+int ItemBoxContainer::maxPosForSeparator(LayoutingSeparator *separator,
                                          bool honourMax) const
 {
     const int globalMax = maxPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMax, d->m_orientation);
 }
 
-int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Core::Separator *separator,
+int ItemBoxContainer::minPosForSeparator_global(LayoutingSeparator *separator,
                                                 bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
@@ -3375,7 +3381,7 @@ int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Core::Separator *
     return separator->position() - availableToSqueeze;
 }
 
-int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Core::Separator *separator,
+int ItemBoxContainer::maxPosForSeparator_global(LayoutingSeparator *separator,
                                                 bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
@@ -3499,9 +3505,9 @@ bool ItemBoxContainer::test_suggestedRect()
 }
 #endif
 
-Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators_recursive() const
+Vector<LayoutingSeparator *> ItemBoxContainer::separators_recursive() const
 {
-    KDDockWidgets::Core::Separator::List separators = d->m_separators;
+    LayoutingSeparator::List separators = d->m_separators;
 
     for (Item *item : std::as_const(m_children)) {
         if (auto c = item->asBoxContainer())
@@ -3511,12 +3517,12 @@ Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators_recursive(
     return separators;
 }
 
-Vector<KDDockWidgets::Core::Separator *> ItemBoxContainer::separators() const
+Vector<LayoutingSeparator *> ItemBoxContainer::separators() const
 {
     return d->m_separators;
 }
 
-KDDockWidgets::Core::Separator *ItemBoxContainer::separatorForChild(Item *child, Side side) const
+LayoutingSeparator *ItemBoxContainer::separatorForChild(Item *child, Side side) const
 {
     if (!child || !child->isVisible()) {
         KDDW_ERROR("ItemBoxContainer::separatorForChild: Unexpected nullptr or invisible child");
@@ -3554,7 +3560,7 @@ KDDockWidgets::Core::Separator *ItemBoxContainer::separatorForChild(Item *child,
     return d->m_separators.at(separatorIndex);
 }
 
-Core::Separator *ItemBoxContainer::adjacentSeparatorForChild(Item *child, Side side) const
+LayoutingSeparator *ItemBoxContainer::adjacentSeparatorForChild(Item *child, Side side) const
 {
     if (!child || !child->isVisible()) {
         KDDW_ERROR("ItemBoxContainer::adjacentSeparatorForChild: Unexpected nullptr or invisible child");
@@ -3685,7 +3691,7 @@ const Item *ItemBoxContainer::Private::itemFromPath(const Vector<int> &path) con
     return q;
 }
 
-Core::Separator *
+LayoutingSeparator *
 ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side,
                                               Qt::Orientation orientation) const
 {
@@ -3714,11 +3720,11 @@ ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side,
     return m_separators[separatorIndex];
 }
 
-KDDockWidgets::Core::Separator *
+LayoutingSeparator *
 ItemBoxContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
                                                         Qt::Orientation orientation) const
 {
-    KDDockWidgets::Core::Separator *separator = neighbourSeparator(item, side, orientation);
+    LayoutingSeparator *separator = neighbourSeparator(item, side, orientation);
     if (separator)
         return separator;
 
@@ -4019,6 +4025,12 @@ int ItemContainer::count_recursive() const
 
 LayoutingHost::~LayoutingHost() = default;
 LayoutingGuest::~LayoutingGuest() = default;
+LayoutingSeparator::~LayoutingSeparator() = default;
+
+LayoutingSeparator::LayoutingSeparator(LayoutingHost *host)
+    : m_host(host)
+{
+}
 
 #ifdef Q_CC_MSVC
 #pragma warning(pop)

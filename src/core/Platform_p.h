@@ -24,6 +24,8 @@ class EventFilterInterface;
 class Platform::Private
 {
 public:
+    Private();
+
     /// @brief This signal is emitted when the currently focused view changes
     KDBindings::Signal<std::shared_ptr<View>> focusedViewChanged;
 

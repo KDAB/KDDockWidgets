@@ -20,6 +20,7 @@
 #include "core/Utils_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingGuest_p.h"
+#include "core/layouting/LayoutingSeparator_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/DelayedCall_p.h"
 #include "core/Group.h"
@@ -634,7 +635,7 @@ void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location lo
     updateFloatingActions();
 }
 
-Vector<Core::Separator *> DropArea::separators() const
+Vector<Core::LayoutingSeparator *> DropArea::separators() const
 {
     return d->m_rootItem->separators_recursive();
 }

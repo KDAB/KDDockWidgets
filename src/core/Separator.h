@@ -20,6 +20,8 @@ class Config;
 
 namespace KDDockWidgets::Core {
 
+class LayoutingSeparator;
+class LayoutingHost;
 class ItemBoxContainer;
 
 class DOCKS_EXPORT Separator : public Controller
@@ -28,7 +30,10 @@ class DOCKS_EXPORT Separator : public Controller
 public:
     typedef Vector<Separator *> List;
 
-    explicit Separator(View *host);
+    /// constructs a separator
+    /// @param host the host where this separator is in. Usually a DropArea.
+    explicit Separator(LayoutingHost *host);
+
     virtual ~Separator() override;
 
     void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation);
@@ -39,6 +44,7 @@ public:
     void setGeometry(Rect r);
     void setGeometry(int pos, int pos2, int length);
     Core::ItemBoxContainer *parentContainer() const;
+    LayoutingSeparator *asLayoutingSeparator() const;
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other
     /// work while we're not in the final size

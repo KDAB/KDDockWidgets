@@ -23,18 +23,18 @@
 namespace KDDockWidgets {
 
 namespace Core {
-
-class LayoutingHost;
-class LayoutingGuest;
-typedef void (*DumpScreenInfoFunc)();
-
-class Group;
-class Separator;
 class View;
+class Group;
 class ItemContainer;
 class ItemBoxContainer;
 class Item;
 struct LengthOnSide;
+
+class LayoutingHost;
+class LayoutingGuest;
+class LayoutingSeparator;
+typedef void (*DumpScreenInfoFunc)();
+typedef LayoutingSeparator *(*CreateSeparatorFunc)(Core::LayoutingHost *host);
 
 enum Side {
     Side1,
@@ -300,6 +300,7 @@ public:
                                 const std::unordered_map<QString, LayoutingGuest *> &);
 
     static void setDumpScreenInfoFunc(DumpScreenInfoFunc);
+    static void setCreateSeparatorFunc(CreateSeparatorFunc);
 
     KDBindings::Signal<> geometryChanged;
     KDBindings::Signal<> xChanged;
@@ -351,6 +352,7 @@ private:
     LayoutingHost *m_host = nullptr;
     LayoutingGuest *m_guest = nullptr;
     static DumpScreenInfoFunc s_dumpScreenInfoFunc;
+    static CreateSeparatorFunc s_createSeparatorFunc;
 
     KDBindings::ConnectionHandle m_parentChangedConnection;
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
@@ -421,14 +423,14 @@ public:
     insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,
                          KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
 
-    void requestSeparatorMove(KDDockWidgets::Core::Separator *separator, int delta);
-    int minPosForSeparator(KDDockWidgets::Core::Separator *, bool honourMax = true) const;
-    int maxPosForSeparator(KDDockWidgets::Core::Separator *, bool honourMax = true) const;
-    int minPosForSeparator_global(KDDockWidgets::Core::Separator *,
+    void requestSeparatorMove(LayoutingSeparator *separator, int delta);
+    int minPosForSeparator(LayoutingSeparator *, bool honourMax = true) const;
+    int maxPosForSeparator(LayoutingSeparator *, bool honourMax = true) const;
+    int minPosForSeparator_global(LayoutingSeparator *,
                                   bool honourMax = true) const;
-    int maxPosForSeparator_global(KDDockWidgets::Core::Separator *,
+    int maxPosForSeparator_global(LayoutingSeparator *,
                                   bool honourMax = true) const;
-    void requestEqualSize(KDDockWidgets::Core::Separator *separator);
+    void requestEqualSize(LayoutingSeparator *separator);
     void layoutEqually();
     void layoutEqually_recursive();
     void removeItem(Item *, bool hardRemove = true) override;
@@ -538,12 +540,12 @@ private:
                          ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void applyPositions(const SizingInfo::List &sizes);
 
-    int indexOf(KDDockWidgets::Core::Separator *) const;
+    int indexOf(LayoutingSeparator *) const;
     bool isInSimplify() const;
 
 public:
-    Vector<KDDockWidgets::Core::Separator *> separators_recursive() const;
-    Vector<KDDockWidgets::Core::Separator *> separators() const;
+    Vector<LayoutingSeparator *> separators_recursive() const;
+    Vector<LayoutingSeparator *> separators() const;
 
     /// Returns the separator for the specified child on the specified child
     /// Example:
@@ -551,7 +553,7 @@ public:
     /// - If this layout is horizontal, and side is Side2, then the right separator is returned.
     /// - top, bottom if vertical layout.
     /// @sa adjacentSeparatorForChild
-    Core::Separator *separatorForChild(Item *child, Side side) const;
+    LayoutingSeparator *separatorForChild(Item *child, Side side) const;
 
     /// Returns the separator for the specified child on the specified child
     /// Example:
@@ -559,7 +561,7 @@ public:
     /// - If this layout is horizontal, and side is Side2, then the bottom separator is returned.
     /// - left, right if vertical layout.
     /// @sa separatorForChild
-    Core::Separator *adjacentSeparatorForChild(Item *child, Side side) const;
+    LayoutingSeparator *adjacentSeparatorForChild(Item *child, Side side) const;
 
 #ifdef DOCKS_DEVELOPER_MODE
     bool

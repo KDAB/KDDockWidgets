@@ -627,6 +627,21 @@ void Group::Private::setLayoutItem(Item *item)
     }
 }
 
+LayoutingHost *Group::Private::host() const
+{
+    return q->m_layout;
+}
+
+void Group::Private::setHost(LayoutingHost *host)
+{
+    Core::View *parent = nullptr;
+    if (auto layout = dynamic_cast<Core::Layout *>(host)) {
+        parent = layout->view();
+    }
+
+    m_view->controller()->setParentView(parent);
+}
+
 Item *Group::layoutItem() const
 {
     return d->m_layoutItem;

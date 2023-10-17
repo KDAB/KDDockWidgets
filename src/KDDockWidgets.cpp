@@ -10,8 +10,9 @@
 */
 
 
-#include "kddockwidgets/KDDockWidgets.h"
 #include "Config.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "core/layouting/Item_p.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"

@@ -14,6 +14,7 @@
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingHost.h"
 #include "core/layouting/LayoutingGuest_p.h"
+#include "core/layouting/LayoutingSeparator_p.h"
 #include "core/Separator.h"
 #include "core/Platform.h"
 #include "core/View.h"
@@ -54,10 +55,31 @@ class Guest : public Core::LayoutingGuest
 {
 public:
     using Core::LayoutingGuest::LayoutingGuest;
+
+    Guest(Core::View *view, LayoutingHost *host)
+        : LayoutingGuest(view)
+        , m_host(host)
+    {
+    }
+
     ~Guest() override = default;
     void setLayoutItem(Item *) override
     {
     }
+
+    void setHost(LayoutingHost *host) override
+    {
+        m_host = host;
+        if (m_view && host)
+            m_view->setParent(host->m_view);
+    }
+
+    LayoutingHost *host() const override
+    {
+        return m_host;
+    }
+
+    LayoutingHost *m_host = nullptr;
 };
 
 }
@@ -111,7 +133,6 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
 {
     static int count = 0;
     count++;
-
     auto item = new Item(nullptr);
     item->setGeometry(Rect(0, 0, 200, 200));
     item->setObjectName(QString::number(count));
@@ -123,7 +144,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
     auto guestView = Core::Platform::instance()->tests_createView(opts);
 
     guestView->setViewName(item->objectName());
-    auto guest = new Guest(guestView);
+    auto guest = new Guest(guestView, s_views[s_views.size() - 1]);
     guestView->d->beingDestroyed.connect([guest] {
         delete guest;
     });
@@ -907,8 +928,9 @@ KDDW_QCORO_TASK tst_suggestedRect3()
     CHECK(!item3->parentBoxContainer()
                ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
                .isEmpty());
-    delete itemToDrop->guestView();
-    delete itemToDrop;
+
+    /// insert just to cleanup at shutdown
+    root1->insertItem(itemToDrop, Location_OnRight);
 
     KDDW_TEST_RETURN(true);
 }
@@ -918,11 +940,10 @@ KDDW_QCORO_TASK tst_suggestedRect4()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-
     auto root1 = createRoot();
+
     Item *item1 = createItem();
     root1->insertItem(item1, Location_OnLeft);
-
     root->insertItem(root1.release(), Location_OnLeft);
 
     auto root2 = createRoot();
@@ -943,10 +964,8 @@ KDDW_QCORO_TASK tst_suggestedRect4()
                ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
                .isEmpty());
 
-    delete itemToDrop->guestView();
-    delete itemToDrop;
-
-    KDDW_TEST_RETURN(true);
+    /// insert just to cleanup at shutdown
+    root->insertItem(itemToDrop, Location_OnRight);
 
     KDDW_TEST_RETURN(true);
 }

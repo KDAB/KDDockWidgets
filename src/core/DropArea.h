@@ -36,6 +36,7 @@ class Draggable;
 class DockWidget;
 class Separator;
 class DropIndicatorOverlay;
+class LayoutingSeparator;
 struct WindowBeingDragged;
 
 /**
@@ -120,7 +121,7 @@ public:
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
     ///@brief returns the list of separators
-    Vector<Core::Separator *> separators() const;
+    Vector<Core::LayoutingSeparator *> separators() const;
 
     /// @brief See docs for MainWindowBase::layoutEqually()
     void layoutEqually();

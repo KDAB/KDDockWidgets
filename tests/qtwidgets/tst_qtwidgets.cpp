@@ -20,6 +20,7 @@
 #include "LayoutSaver.h"
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
+#include "core/layouting/LayoutingSeparator_p.h"
 #include "core/WindowBeingDragged_p.h"
 
 #include "qtwidgets/ViewFactory.h"
@@ -1343,7 +1344,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     m1->addDockWidget(dock2, Location_OnBottom);
 
     auto root = m1->multiSplitter()->rootItem();
-    Core::Separator *separator = root->separators().constFirst();
+    auto separator = root->separators().constFirst();
     const int min1 = root->minPosForSeparator_global(separator);
     const int max2 = root->maxPosForSeparator_global(separator);
 
