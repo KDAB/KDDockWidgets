@@ -15,6 +15,8 @@
 #include "core/Window_p.h"
 #include "core/Utils_p.h"
 #include "core/EventFilterInterface.h"
+#include "core/Separator.h"
+#include "core/layouting/LayoutingSeparator_p.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
@@ -71,6 +73,16 @@ Platform::~Platform()
     Item::setDumpScreenInfoFunc(nullptr);
     s_platform = nullptr;
     delete d;
+}
+
+Platform::Private::Private()
+{
+    /// Out layouting engine can be used without KDDW, so by default doesn't
+    /// depend on Core::Separator. Here we tell the layouting that we want to use our
+    /// KDDW separators.
+    Core::Item::setCreateSeparatorFunc([](Core::LayoutingHost *host) -> Core::LayoutingSeparator * {
+        return (new Core::Separator(host))->asLayoutingSeparator();
+    });
 }
 
 Platform *Platform::instance()

@@ -71,10 +71,8 @@ public:
         return m_view->viewName();
     }
 
-    void setHost(View *parent)
-    {
-        m_view->controller()->setParentView(parent);
-    }
+    virtual void setHost(LayoutingHost *parent) = 0;
+    virtual LayoutingHost *host() const = 0;
 
     View *const m_view;
     KDBindings::Signal<LayoutingHost *> hostChanged;

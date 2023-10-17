@@ -54,6 +54,8 @@ public:
 
     ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
     void setLayoutItem(Core::Item *item) override;
+    LayoutingHost *host() const override;
+    void setHost(LayoutingHost *) override;
 
     Group *const q;
     int m_userType = 0;

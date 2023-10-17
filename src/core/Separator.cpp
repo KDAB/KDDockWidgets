@@ -11,6 +11,7 @@
 
 #include "Separator.h"
 #include "layouting/Item_p.h"
+#include "layouting/LayoutingSeparator_p.h"
 #include "View.h"
 #include "core/Logging_p.h"
 #include "Config.h"
@@ -41,13 +42,14 @@ bool rubberBandIsTopLevel()
 
 }
 
-struct Separator::Private
+struct Separator::Private : public LayoutingSeparator
 {
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2
     // otherwise.
 
-    explicit Private(View *host)
-        : m_hostView(host)
+    explicit Private(Core::Separator *qq, LayoutingHost *host)
+        : LayoutingSeparator(host)
+        , q(qq)
     {
         s_numSeparators++;
     }
@@ -57,20 +59,59 @@ struct Separator::Private
         s_numSeparators--;
     }
 
-    Qt::Orientation orientation = Qt::Horizontal;
-    Rect geometry;
+    void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
+    {
+        q->init(parentContainer, orientation);
+    }
+
+    int position() const
+    {
+        return q->position();
+    }
+
+    ItemBoxContainer *parentContainer() const
+    {
+        return q->parentContainer();
+    }
+
+    Qt::Orientation orientation() const
+    {
+        return m_orientation;
+    }
+
+    Rect geometry() const
+    {
+        return m_geometry;
+    }
+
+    void setGeometry(Rect r)
+    {
+        q->setGeometry(r);
+    }
+
+    void setGeometry(int pos, int pos2, int length)
+    {
+        q->setGeometry(pos, pos2, length);
+    }
+
+    void free()
+    {
+        delete q;
+    }
+
+    Core::Separator *const q;
+    Qt::Orientation m_orientation = Qt::Horizontal;
+    Rect m_geometry;
     int lazyPosition = 0;
     View *lazyResizeRubberBand = nullptr;
-    Core::ItemBoxContainer *parentContainer = nullptr;
+    Core::ItemBoxContainer *m_parentContainer = nullptr;
     Core::Side lastMoveDirection = Core::Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
-
-    View *const m_hostView;
 };
 
-Separator::Separator(View *host)
-    : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, host))
-    , d(new Private(host))
+Separator::Separator(LayoutingHost *host)
+    : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, host->m_view))
+    , d(new Private(this, host))
 {
     assert(view());
     view()->show();
@@ -88,18 +129,18 @@ void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation or
         return;
     }
 
-    d->parentContainer = parentContainer;
-    d->orientation = orientation;
+    d->m_parentContainer = parentContainer;
+    d->m_orientation = orientation;
     view()->init();
     d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
-                                  rubberBandIsTopLevel() ? nullptr : d->m_hostView)
+                                  rubberBandIsTopLevel() ? nullptr : d->m_host->m_view)
                                                 : nullptr;
     setVisible(true);
 }
 
 bool Separator::isVertical() const
 {
-    return d->orientation == Qt::Vertical;
+    return d->m_orientation == Qt::Vertical;
 }
 
 void Separator::move(int p)
@@ -107,7 +148,7 @@ void Separator::move(int p)
     if (p == position())
         return;
 
-    Rect geo = d->geometry;
+    Rect geo = d->m_geometry;
     if (isVertical()) {
         geo.moveTop(p);
     } else {
@@ -126,16 +167,16 @@ void Separator::move(int p)
 
 int Separator::position() const
 {
-    const Point topLeft = d->geometry.topLeft();
+    const Point topLeft = d->m_geometry.topLeft();
     return isVertical() ? topLeft.y() : topLeft.x();
 }
 
 void Separator::setGeometry(Rect r)
 {
-    if (r == d->geometry)
+    if (r == d->m_geometry)
         return;
 
-    d->geometry = r;
+    d->m_geometry = r;
 
     if (View *v = view()) {
         v->setGeometry(r);
@@ -147,7 +188,7 @@ void Separator::setGeometry(Rect r)
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void Separator::setGeometry(int pos, int pos2, int length)
 {
-    Rect newGeo = d->geometry;
+    Rect newGeo = d->m_geometry;
     if (isVertical()) {
         // The separator itself is horizontal
         newGeo.setSize(Size(length, Core::Item::separatorThickness));
@@ -163,7 +204,7 @@ void Separator::setGeometry(int pos, int pos2, int length)
 
 Qt::Orientation Separator::orientation() const
 {
-    return d->orientation;
+    return d->m_orientation;
 }
 
 void Separator::setLazyPosition(int pos)
@@ -183,7 +224,7 @@ void Separator::setLazyPosition(int pos)
     }
 
     if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
-        geo.translate(d->m_hostView->mapToGlobal(Point(0, 0)));
+        geo.translate(d->m_host->m_view->mapToGlobal(Point(0, 0)));
     d->lazyResizeRubberBand->setGeometry(geo);
 }
 
@@ -215,7 +256,7 @@ void Separator::onMouseReleased()
 {
     if (d->lazyResizeRubberBand) {
         d->lazyResizeRubberBand->hide();
-        d->parentContainer->requestSeparatorMove(this, d->lazyPosition - position());
+        d->m_parentContainer->requestSeparatorMove(d, d->lazyPosition - position());
     }
 
     s_separatorBeingDragged = nullptr;
@@ -225,7 +266,7 @@ void Separator::onMouseDoubleClick()
 {
     // a double click means we'll resize the left and right neighbour so that they occupy
     // the same size (or top/bottom, depending on orientation).
-    d->parentContainer->requestEqualSize(this);
+    d->m_parentContainer->requestEqualSize(d);
 }
 
 void Separator::onMouseMove(Point pos)
@@ -256,9 +297,9 @@ void Separator::onMouseMove(Point pos)
 #endif
     }
 
-    const int positionToGoTo = Core::pos(pos, d->orientation);
-    const int minPos = d->parentContainer->minPosForSeparator_global(this);
-    const int maxPos = d->parentContainer->maxPosForSeparator_global(this);
+    const int positionToGoTo = Core::pos(pos, d->m_orientation);
+    const int minPos = d->m_parentContainer->minPosForSeparator_global(d);
+    const int maxPos = d->m_parentContainer->maxPosForSeparator_global(d);
 
     if ((positionToGoTo > maxPos && position() <= positionToGoTo)
         || (positionToGoTo < minPos && position() >= positionToGoTo)) {
@@ -280,12 +321,17 @@ void Separator::onMouseMove(Point pos)
     if (d->lazyResizeRubberBand)
         setLazyPosition(positionToGoTo);
     else
-        d->parentContainer->requestSeparatorMove(this, positionToGoTo - position());
+        d->m_parentContainer->requestSeparatorMove(d, positionToGoTo - position());
 }
 
 Core::ItemBoxContainer *Separator::parentContainer() const
 {
-    return d->parentContainer;
+    return d->m_parentContainer;
+}
+
+LayoutingSeparator *Separator::asLayoutingSeparator() const
+{
+    return d;
 }
 
 /** static */

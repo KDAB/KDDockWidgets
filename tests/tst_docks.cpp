@@ -26,6 +26,7 @@
 #include "core/Logging_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingGuest_p.h"
+#include "core/layouting/LayoutingSeparator_p.h"
 #include "core/ViewFactory.h"
 #include "core/Action.h"
 #include "core/MDILayout.h"
@@ -127,7 +128,7 @@ KDDW_QCORO_TASK tst_resizeWindow2()
     m->addDockWidget(dock2, Location_OnBottom);
 
     auto layout = m->multiSplitter();
-    Core::Separator *anchor = layout->separators().at(0);
+    auto anchor = layout->separators().at(0);
     const int oldPosY = anchor->position();
     m->view()->resize(Size(m->width() + 10, m->height()));
     CHECK_EQ(anchor->position(), oldPosY);
@@ -2290,7 +2291,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
         const auto separators = layout->separators();
         CHECK_EQ(separators.size(), 3);
 
-        Core::Separator *anchor1 = separators[0];
+        auto anchor1 = separators[0];
         int boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
         int expectedBoundToTheRight = layout->layoutWidth() - 3 * Item::separatorThickness
             - item2->minLength(Qt::Horizontal) - item3->minLength(Qt::Horizontal)
@@ -3481,10 +3482,10 @@ KDDW_QCORO_TASK tst_stuckSeparator()
     ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item25 = root->itemForView(group25->asLayoutingGuest());
     ItemBoxContainer *container25 = item25->parentBoxContainer();
-    Vector<Core::Separator *> separators = container25->separators();
+    auto separators = container25->separators();
     CHECK_EQ(separators.size(), 1);
 
-    Core::Separator *separator25 = separators.constFirst();
+    auto separator25 = separators.constFirst();
     const int sepMin = container25->minPosForSeparator_global(separator25);
     const int sepMax = container25->maxPosForSeparator_global(separator25);
 
