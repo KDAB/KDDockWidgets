@@ -80,11 +80,8 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
 {
     static int count = 0;
     count++;
-    auto hostWidget = Core::Platform::instance()->tests_createView({});
-    hostWidget->setViewName("HostWidget");
-    hostWidget->show();
-    s_views.push_back(hostWidget);
-    auto item = new Item(hostWidget);
+
+    auto item = new Item(nullptr);
     item->setGeometry(Rect(0, 0, 200, 200));
     item->setObjectName(QString::number(count));
     Core::CreateViewOptions opts;
@@ -679,6 +676,11 @@ KDDW_QCORO_TASK tst_missingSize()
     root->insertItem(item1, Location_OnTop);
     CHECK(serializeDeserializeTest(root));
 
+    // Add just so the views are deleted at the end
+    root->insertItem(item2, Location_OnTop);
+    root->insertItem(item3, Location_OnTop);
+
+    delete item1;
     delete item2;
     delete item3;
 
@@ -870,6 +872,7 @@ KDDW_QCORO_TASK tst_suggestedRect3()
     CHECK(!item3->parentBoxContainer()
                ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
                .isEmpty());
+    delete itemToDrop->guestView();
     delete itemToDrop;
 
     KDDW_TEST_RETURN(true);
@@ -905,6 +908,7 @@ KDDW_QCORO_TASK tst_suggestedRect4()
                ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
                .isEmpty());
 
+    delete itemToDrop->guestView();
     delete itemToDrop;
 
     KDDW_TEST_RETURN(true);
