@@ -15,16 +15,10 @@
 #include "core/layouting/LayoutingHost.h"
 #include "core/layouting/LayoutingGuest_p.h"
 #include "core/layouting/LayoutingSeparator_p.h"
-#include "core/Separator.h"
-#include "core/Platform.h"
-#include "core/View.h"
-#include "core/ViewFactory.h"
 #include "core/View_p.h"
 #include "core/Utils_p.h"
 #include "core/ObjectGuard_p.h"
-#include "core/nlohmann_helpers_p.h"
 #include "core/ScopedValueRollback_p.h"
-#include "Config.h"
 
 #include <memory.h>
 #include <cstdlib>
