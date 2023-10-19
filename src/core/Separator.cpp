@@ -13,7 +13,8 @@
 #include "layouting/Item_p.h"
 #include "layouting/LayoutingSeparator_p.h"
 #include "View.h"
-#include "core/Logging_p.h"
+#include "Logging_p.h"
+#include "Layout.h"
 #include "Config.h"
 #include "Platform.h"
 #include "Controller.h"
@@ -109,8 +110,19 @@ struct Separator::Private : public LayoutingSeparator
     const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
 };
 
+namespace {
+Core::View *viewForLayoutingHost(LayoutingHost *host)
+{
+    // For KDDW, a LayoutingHost is always a Core::Layout
+    if (auto layout = dynamic_cast<Core::Layout *>(host))
+        return layout->view();
+
+    return nullptr;
+}
+}
+
 Separator::Separator(LayoutingHost *host)
-    : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, host->m_view))
+    : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, viewForLayoutingHost(host)))
     , d(new Private(this, host))
 {
     assert(view());
@@ -133,7 +145,7 @@ void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation or
     d->m_orientation = orientation;
     view()->init();
     d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
-                                  rubberBandIsTopLevel() ? nullptr : d->m_host->m_view)
+                                  rubberBandIsTopLevel() ? nullptr : view())
                                                 : nullptr;
     setVisible(true);
 }
@@ -224,7 +236,7 @@ void Separator::setLazyPosition(int pos)
     }
 
     if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
-        geo.translate(d->m_host->m_view->mapToGlobal(Point(0, 0)));
+        geo.translate(view()->mapToGlobal(Point(0, 0)));
     d->lazyResizeRubberBand->setGeometry(geo);
 }
 
