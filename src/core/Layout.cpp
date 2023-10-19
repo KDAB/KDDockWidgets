@@ -36,7 +36,6 @@ using namespace KDDockWidgets::Core;
 
 Layout::Layout(ViewType type, View *view)
     : Controller(type, view)
-    , LayoutingHost(view)
     , d(new Private())
 {
     assert(view);

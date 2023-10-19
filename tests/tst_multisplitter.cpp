@@ -52,7 +52,7 @@ public:
     {
         m_host = host;
         if (m_view && host)
-            m_view->setParent(host->m_view);
+            m_view->setParent(dynamic_cast<DropArea *>(host)->view());
     }
 
     LayoutingHost *host() const override

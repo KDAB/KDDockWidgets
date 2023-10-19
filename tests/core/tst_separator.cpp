@@ -12,37 +12,16 @@
 #include "../simple_test_framework.h"
 #include "core/Separator.h"
 #include "core/Platform.h"
-#include "core/layouting/LayoutingHost.h"
+#include "core/DropArea.h"
 
 using namespace KDDockWidgets;
 
-namespace {
-class Host : public Core::LayoutingHost
-{
-public:
-    using Core::LayoutingHost::LayoutingHost;
-    ~Host() override
-    {
-        delete m_view;
-    }
-
-    bool supportsHonouringLayoutMinSize() const override
-    {
-        return true;
-    }
-};
-}
-
 KDDW_QCORO_TASK tst_separatorCtor()
 {
-    auto view = Core::Platform::instance()->createView(nullptr);
-
-    {
-        Host host(view);
-        Core::Separator separator(&host);
-        CHECK(separator.view()->is(Core::ViewType::Separator));
-        CHECK(separator.view()->asWrapper()->is(Core::ViewType::Separator));
-    }
+    Core::DropArea dropArea(nullptr, MainWindowOption_None);
+    Core::Separator separator(&dropArea);
+    CHECK(separator.view()->is(Core::ViewType::Separator));
+    CHECK(separator.view()->asWrapper()->is(Core::ViewType::Separator));
 
     KDDW_TEST_RETURN(true);
 }

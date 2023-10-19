@@ -295,7 +295,7 @@ Core::Layout *DockRegistry::layoutForItem(const Item *item) const
     if (!item->host())
         return nullptr;
 
-    return item->host()->m_view->asLayout();
+    return dynamic_cast<Core::Layout *>(item->host());
 }
 
 bool DockRegistry::itemIsInMainWindow(const Item *item) const
