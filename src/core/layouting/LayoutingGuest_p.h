@@ -66,7 +66,7 @@ public:
         return m_view->geometry();
     }
 
-    QString viewName() const
+    QString debugName() const
     {
         return m_view->viewName();
     }
