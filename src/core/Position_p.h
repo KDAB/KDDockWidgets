@@ -34,6 +34,7 @@ class Item;
 class DockWidget;
 class Group;
 class Layout;
+class LayoutingHost;
 }
 
 // Just a RAII class so we don't forget to unref
@@ -108,7 +109,7 @@ public:
     }
 
     ///@brief Removes the placeholders that belong to this multisplitter
-    void removePlaceholders(const Core::Layout *);
+    void removePlaceholders(const Core::LayoutingHost *);
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
