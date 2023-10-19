@@ -95,15 +95,13 @@ void Position::removePlaceholders()
     m_placeholders.clear();
 }
 
-void Position::removePlaceholders(const Core::Layout *ms)
+void Position::removePlaceholders(const Core::LayoutingHost *host)
 {
-    auto layoutView = ms->view();
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(),
-                                        [layoutView](const std::unique_ptr<ItemRef> &itemref) {
+                                        [host](const std::unique_ptr<ItemRef> &itemref) {
                                             if (!itemref->item)
                                                 return true;
-                                            return layoutView
-                                                && layoutView->equals(itemref->item->host()->m_view);
+                                            return host == itemref->item->host();
                                         }),
                          m_placeholders.end());
 }
