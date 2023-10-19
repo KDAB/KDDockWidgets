@@ -15,6 +15,7 @@
 #include "core/layouting/LayoutingHost.h"
 #include "core/layouting/LayoutingGuest_p.h"
 #include "core/layouting/LayoutingSeparator_p.h"
+#include "core/DropArea.h"
 #include "core/View_p.h"
 #include "core/Utils_p.h"
 #include "core/ObjectGuard_p.h"
@@ -30,20 +31,6 @@ using namespace KDDockWidgets::Core;
 static int st = Item::separatorThickness;
 
 namespace {
-class Host : public Core::LayoutingHost
-{
-public:
-    using Core::LayoutingHost::LayoutingHost;
-    ~Host() override
-    {
-        delete m_view;
-    }
-
-    bool supportsHonouringLayoutMinSize() const override
-    {
-        return true;
-    }
-};
 
 class Guest : public Core::LayoutingGuest
 {
@@ -78,7 +65,7 @@ public:
 
 }
 
-static std::vector<Host *> s_views;
+static std::vector<LayoutingHost *> s_views;
 struct DeleteViews
 {
     ~DeleteViews()
@@ -112,10 +99,7 @@ serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
 
 static std::unique_ptr<ItemBoxContainer> createRoot()
 {
-    auto hostView = Core::Platform::instance()->tests_createView({});
-    hostView->setViewName("hostView");
-    hostView->show();
-    auto host = new Host(hostView);
+    auto host = new DropArea(nullptr, MainWindowOption_None);
     s_views.push_back(host);
     auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
@@ -148,7 +132,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
 
 static ItemBoxContainer *createRootWithSingleItem()
 {
-    auto host = new Host(Core::Platform::instance()->tests_createView({}));
+    auto host = new DropArea(nullptr, MainWindowOption_None);
     s_views.push_back(host);
     auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
