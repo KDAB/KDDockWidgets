@@ -60,6 +60,15 @@ jobs:
                 - lld
           - os: ubuntu-22.04
             preset:
+              name: ci-python-qt6
+              qt_version: "6.6.0"
+              detect_leaks: 0
+              apt_pgks:
+                - llvm
+              pip_pgks:
+                - shiboken6-generator==6.6.0 pyside6==6.6.0
+          - os: ubuntu-22.04
+            preset:
               name: ci-dev-asan-qtwidgets-qt6
               qt_version: "6.5.*"
               detect_leaks: 1
@@ -111,11 +120,23 @@ jobs:
           sudo apt update -qq
           echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
 
-      - name: Checkout sources
-        uses: actions/checkout@v4
+      - name: Install Python dependencies (${{ join(matrix.preset.pip_pgks, ' ') }})
+        if: ${{ matrix.preset.pip_pgks }}
+        run: echo ${{ join(matrix.preset.pip_pgks, ' ') }} | xargs pip install
+
+      - name: Hackery due Shiboken hardcoded paths
+        if: ${{ matrix.preset.pip_pgks }}
+        run: |
+          sudo mkdir -p /opt/rh/gcc-toolset-10/root/usr/bin/
+          sudo cp /usr/bin/g++-10 /opt/rh/gcc-toolset-10/root/usr/bin/c++
+          sudo mkdir -p /opt/rh/gcc-toolset-10/root/usr/lib/gcc/x86_64-linux-gnu/10/
+          sudo cp /usr/lib/gcc/x86_64-linux-gnu/10/cc1plus /opt/rh/gcc-toolset-10/root/usr/lib/gcc/x86_64-linux-gnu/10/
 
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
 
       - name: Make sure MSVC is found when Ninja generator is in use
         if: ${{ runner.os == 'Windows' }}
