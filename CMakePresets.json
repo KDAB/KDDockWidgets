@@ -265,6 +265,17 @@
             }
         },
         {
+            "name": "ci-python-qt6",
+            "displayName": "CI Qt6 python bindings",
+            "inherits": [
+                "python6"
+            ],
+            "environment": {
+                "CC": "clang",
+                "CXX": "clang++"
+            }
+        },
+        {
             "name": "homebrew-python6",
             "displayName": "Qt6 python bindings on macOS via homebrew",
             "generator": "Ninja",
