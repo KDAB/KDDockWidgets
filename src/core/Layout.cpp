@@ -58,7 +58,7 @@ Layout::~Layout()
 void Layout::viewAboutToBeDeleted()
 {
     if (view()) {
-        if (view()->equals(d->m_rootItem->host()->m_view)) {
+        if (this == d->m_rootItem->host()) {
             delete d->m_rootItem;
             d->m_rootItem = nullptr;
         }
