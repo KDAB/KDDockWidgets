@@ -212,7 +212,7 @@ void Item::setGuest(LayoutingGuest *guest)
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
-            Rect widgetGeo = m_guest->guestGeometry();
+            Rect widgetGeo = m_guest->geometry();
             widgetGeo.setSize(
                 widgetGeo.size().expandedTo(minSize()).expandedTo(Item::hardcodedMinimumSize));
             setGeometry(mapFromRoot(widgetGeo));
@@ -755,9 +755,9 @@ bool Item::checkSanity()
             return false;
         }
 #endif
-        if (m_guest->guestGeometry() != mapToRoot(rect())) {
+        if (m_guest->geometry() != mapToRoot(rect())) {
             root()->dumpLayout();
-            KDDW_ERROR("Guest widget doesn't have correct geometry. m_guest->guestGeometry={}, item.mapToRoot(rect())={}", m_guest->guestGeometry(), mapToRoot(rect()));
+            KDDW_ERROR("Guest widget doesn't have correct geometry. m_guest->guestGeometry={}, item.mapToRoot(rect())={}", m_guest->geometry(), mapToRoot(rect()));
             return false;
         }
     }
@@ -829,8 +829,8 @@ void Item::dumpLayout(int level, bool)
     if (!isVisible())
         std::cerr << ";hidden;";
 
-    if (m_guest && geometry() != m_guest->guestGeometry()) {
-        std::cerr << "; guest geometry=" << m_guest->guestGeometry();
+    if (m_guest && geometry() != m_guest->geometry()) {
+        std::cerr << "; guest geometry=" << m_guest->geometry();
     }
 
     if (m_sizingInfo.isBeingInserted)
@@ -911,7 +911,7 @@ void Item::onGuestDestroyed()
 void Item::onWidgetLayoutRequested()
 {
     if (auto w = guest()) {
-        const Size guestSize = w->guestGeometry().size();
+        const Size guestSize = w->geometry().size();
         if (guestSize != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with
                                                // mouse
             std::cerr << "Item::onWidgetLayoutRequested"

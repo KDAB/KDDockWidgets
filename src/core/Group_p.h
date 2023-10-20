@@ -78,7 +78,7 @@ public:
         q->view()->setVisible(is);
     }
 
-    Rect guestGeometry() const override
+    Rect geometry() const override
     {
         return q->view()->geometry();
     }

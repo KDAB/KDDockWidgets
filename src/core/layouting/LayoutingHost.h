@@ -17,7 +17,6 @@ namespace KDDockWidgets {
 
 namespace Core {
 
-
 /// The interface graphical components need to implement in order to host a layout
 /// The layout engine doesn't know about any GUI, only about LayoutingHost.
 /// This allows to keep the layouting engine separate from the rest of KDDW and even

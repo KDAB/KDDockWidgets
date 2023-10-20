@@ -37,7 +37,7 @@ public:
     virtual Size maxSizeHint() const = 0;
     virtual void setGeometry(Rect r) = 0;
     virtual void setVisible(bool is) const = 0;
-    virtual Rect guestGeometry() const = 0;
+    virtual Rect geometry() const = 0;
     virtual QString debugName() const = 0;
     virtual void setHost(LayoutingHost *parent) = 0;
     virtual LayoutingHost *host() const = 0;
