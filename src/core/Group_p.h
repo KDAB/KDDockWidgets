@@ -17,6 +17,7 @@
 #include "ObjectGuard_p.h"
 #include "core/Controller_p.h"
 #include "core/layouting/LayoutingGuest_p.h"
+#include "core/View_p.h"
 
 #include <kdbindings/signal.h>
 
@@ -31,6 +32,7 @@ class Group::Private : public LayoutingGuest
 {
 public:
     explicit Private(Group *qq, int userType, FrameOptions options);
+    ~Private() override;
 
     ObjectGuard<Core::Item> m_layoutItem;
 
@@ -43,6 +45,7 @@ public:
     KDBindings::Signal<> isMDIChanged;
 
     KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
+    KDBindings::ScopedConnection m_parentViewChangedConnection;
 
     std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
         titleChangedConnections;
@@ -50,12 +53,67 @@ public:
     std::unordered_map<Core::DockWidget *, KDBindings::ScopedConnection>
         iconChangedConnections;
 
-    KDBindings::ScopedConnection m_parentViewChangedConnection;
-
     ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
     void setLayoutItem(Core::Item *item) override;
     LayoutingHost *host() const override;
     void setHost(LayoutingHost *) override;
+
+    Size minSize() const override
+    {
+        return q->view()->minSize();
+    }
+
+    Size maxSizeHint() const override
+    {
+        return q->view()->maxSizeHint();
+    }
+
+    void setGeometry(Rect r) override
+    {
+        q->view()->setGeometry(r);
+    }
+
+    void setVisible(bool is) const override
+    {
+        q->view()->setVisible(is);
+    }
+
+    Rect guestGeometry() const override
+    {
+        return q->view()->geometry();
+    }
+
+    QString debugName() const override
+    {
+        return q->view()->viewName();
+    }
+
+    QString id() const override
+    {
+        return q->view()->d->id();
+    }
+
+    bool freed() const override
+    {
+        return q->view()->d->freed();
+    }
+
+#ifdef DOCKS_DEVELOPER_MODE
+    void setMinimumSize(Size sz) override
+    {
+        return q->view()->setMinimumSize(sz);
+    }
+
+    void setMaximumSize(Size sz) override
+    {
+        return q->view()->setMaximumSize(sz);
+    }
+
+    Size size() const override
+    {
+        return q->view()->size();
+    }
+#endif
 
     Group *const q;
     int m_userType = 0;

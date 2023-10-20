@@ -258,7 +258,6 @@ public:
     Point mapFromParent(Point) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    KDDockWidgets::Core::Group *asGroupController() const;
     LayoutingHost *host() const;
     LayoutingGuest *guest() const;
 

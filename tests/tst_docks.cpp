@@ -520,7 +520,7 @@ KDDW_QCORO_TASK tst_restoreCentralFrame()
     CHECK_EQ(layout->count(), 1);
     Item *item = m->dropArea()->centralFrame();
     CHECK(item);
-    auto group = item->asGroupController();
+    auto group = Group::fromItem(item);
     CHECK_EQ(group->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     CHECK(!group->titleBar()->isVisible());
 
@@ -531,7 +531,7 @@ KDDW_QCORO_TASK tst_restoreCentralFrame()
     CHECK_EQ(layout->count(), 1);
     item = m->dropArea()->centralFrame();
     CHECK(item);
-    group = item->asGroupController();
+    group = Group::fromItem(item);
     CHECK_EQ(group->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     CHECK(!group->titleBar()->isVisible());
 
@@ -754,7 +754,7 @@ KDDW_QCORO_TASK tst_dockInternal()
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
 
-    auto centralFrame = dropArea->items()[0]->asGroupController();
+    auto centralFrame = Group::fromItem(dropArea->items()[0]);
     nestDockWidget(dock1, dropArea, centralFrame, KDDockWidgets::Location_OnRight);
 
     CHECK(dock1->width() < dropArea->layoutWidth() - centralFrame->width());

@@ -38,12 +38,17 @@ public:
     using Core::LayoutingGuest::LayoutingGuest;
 
     Guest(Core::View *view, LayoutingHost *host)
-        : LayoutingGuest(view)
-        , m_host(host)
+        : m_host(host)
+        , m_view(view)
     {
+        view->d->layoutInvalidated.connect([this] { layoutInvalidated.emit(); });
     }
 
-    ~Guest() override = default;
+    ~Guest() override
+    {
+        beingDestroyed.emit();
+    }
+
     void setLayoutItem(Item *) override
     {
     }
@@ -60,7 +65,60 @@ public:
         return m_host;
     }
 
+    Size minSize() const override
+    {
+        return m_view->minSize();
+    }
+
+    Size maxSizeHint() const override
+    {
+        return m_view->maxSizeHint();
+    }
+
+    void setGeometry(Rect r) override
+    {
+        m_view->setGeometry(r);
+    }
+
+    void setVisible(bool is) const override
+    {
+        m_view->setVisible(is);
+    }
+
+    Rect guestGeometry() const override
+    {
+        return m_view->geometry();
+    }
+
+    QString debugName() const override
+    {
+        return m_view->viewName();
+    }
+
+    QString id() const override
+    {
+        return m_view->d->id();
+    }
+
+#ifdef DOCKS_DEVELOPER_MODE
+    void setMinimumSize(Size sz) override
+    {
+        m_view->setMinimumSize(sz);
+    }
+
+    void setMaximumSize(Size sz) override
+    {
+        m_view->setMaximumSize(sz);
+    }
+
+    Size size() const override
+    {
+        return m_view->size();
+    }
+#endif
+
     LayoutingHost *m_host = nullptr;
+    View *const m_view;
 };
 
 }
@@ -89,8 +147,8 @@ serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
     std::unordered_map<QString, LayoutingGuest *> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
-        if (auto view = item->guest())
-            widgets[view->m_view->d->id()] = view;
+        if (auto guest = item->guest())
+            widgets[guest->id()] = guest;
 
     root2.fillFromJson(serialized, widgets);
 
@@ -1634,7 +1692,7 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
     const Size newMinSize = originalSize2 + Size(10, 10);
 
     item2->turnIntoPlaceholder();
-    guest2->m_view->setMinimumSize(newMinSize);
+    guest2->setMinimumSize(newMinSize);
     item2->restore(guest2);
 
     KDDW_TEST_RETURN(true);
@@ -1728,10 +1786,10 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
 
     auto guest2 = item2->guest();
     const int maxHeight = 250;
-    CHECK_EQ(guest2->m_view->size(), item2->size());
-    guest2->m_view->setMaximumSize(Size(250, maxHeight));
-    CHECK_EQ(guest2->m_view->size(), item2->size());
-    CHECK_EQ(item2->maxSizeHint(), guest2->m_view->maxSizeHint());
+    CHECK_EQ(guest2->size(), item2->size());
+    guest2->setMaximumSize(Size(250, maxHeight));
+    CHECK_EQ(guest2->size(), item2->size());
+    CHECK_EQ(item2->maxSizeHint(), guest2->maxSizeHint());
 
     root->insertItem(item2, Location_OnBottom);
     CHECK_EQ(item2->height(), maxHeight);

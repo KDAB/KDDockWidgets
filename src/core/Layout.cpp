@@ -159,7 +159,7 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
         item->restore(newGroup->asLayoutingGuest());
     }
 
-    auto group = item->asGroupController();
+    auto group = Group::fromItem(item);
     assert(group);
     if (group->inDtor() || group->beingDeletedLater()) {
         // Known bug. Let's print diagnostics early, as this is usually difficult to debug
@@ -262,7 +262,7 @@ Core::Group::List Layout::groups() const
     result.reserve(items.size());
 
     for (Core::Item *item : items) {
-        if (auto group = item->asGroupController()) {
+        if (auto group = Group::fromItem(item)) {
             result.push_back(group);
         }
     }
@@ -329,7 +329,7 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     l.groups.reserve(size_t(items.size()));
     for (Core::Item *item : items) {
         if (!item->isContainer()) {
-            if (auto group = item->asGroupController()) {
+            if (auto group = Group::fromItem(item)) {
                 l.groups[group->view()->d->id()] = group->serialize();
             }
         }

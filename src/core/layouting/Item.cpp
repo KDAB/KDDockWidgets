@@ -15,7 +15,6 @@
 #include "LayoutingGuest_p.h"
 #include "LayoutingSeparator_p.h"
 
-#include "core/View_p.h"
 #include "core/Logging_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/nlohmann_helpers_p.h"
@@ -206,10 +205,10 @@ void Item::setGuest(LayoutingGuest *guest)
         }
 
         m_guestDestroyedConnection =
-            m_guest->m_view->d->beingDestroyed.connect(&Item::onGuestDestroyed, this);
+            m_guest->beingDestroyed.connect(&Item::onGuestDestroyed, this);
 
         m_layoutInvalidatedConnection =
-            guest->m_view->d->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
+            guest->layoutInvalidated.connect(&Item::onWidgetLayoutRequested, this);
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
@@ -223,11 +222,6 @@ void Item::setGuest(LayoutingGuest *guest)
     }
 
     updateObjectName();
-}
-
-KDDockWidgets::Core::Group *Item::asGroupController() const
-{
-    return m_guest ? m_guest->m_view->asGroupController() : nullptr;
 }
 
 void Item::updateWidgetGeometries()
@@ -244,7 +238,7 @@ void Item::to_json(nlohmann::json &json) const
     json["isContainer"] = isContainer();
     json["objectName"] = objectName();
     if (m_guest)
-        json["guestId"] = m_guest->m_view->d->id(); // just for coorelation purposes when restoring
+        json["guestId"] = m_guest->id(); // just for coorelation purposes when restoring
 }
 
 void Item::fillFromJson(const nlohmann::json &j,
