@@ -15,26 +15,6 @@
 #define DOCKS_TESTING_METHODS
 #endif
 
-#ifndef QT_NO_CAST_TO_ASCII
-#define QT_NO_CAST_TO_ASCII
-#endif
-
-#ifndef QT_NO_CAST_FROM_ASCII
-#define QT_NO_CAST_FROM_ASCII
-#endif
-
-#ifndef QT_NO_URL_CAST_FROM_STRING
-#define QT_NO_URL_CAST_FROM_STRING
-#endif
-
-#ifndef QT_NO_CAST_FROM_BYTEARRAY
-#define QT_NO_CAST_FROM_BYTEARRAY
-#endif
-
-#ifndef QT_NO_KEYWORDS
-#define QT_NO_KEYWORDS
-#endif
-
 #include "Platform.h"
 #include "ViewFactory.h"
 #include "Window_p.h"
