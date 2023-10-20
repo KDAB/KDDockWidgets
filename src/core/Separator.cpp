@@ -55,47 +55,47 @@ struct Separator::Private : public LayoutingSeparator
         s_numSeparators++;
     }
 
-    ~Private()
+    ~Private() override
     {
         s_numSeparators--;
     }
 
-    void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
+    void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation) override
     {
         q->init(parentContainer, orientation);
     }
 
-    int position() const
+    int position() const override
     {
         return q->position();
     }
 
-    ItemBoxContainer *parentContainer() const
+    ItemBoxContainer *parentContainer() const override
     {
         return q->parentContainer();
     }
 
-    Qt::Orientation orientation() const
+    Qt::Orientation orientation() const override
     {
         return m_orientation;
     }
 
-    Rect geometry() const
+    Rect geometry() const override
     {
         return m_geometry;
     }
 
-    void setGeometry(Rect r)
+    void setGeometry(Rect r) override
     {
         q->setGeometry(r);
     }
 
-    void setGeometry(int pos, int pos2, int length)
+    void setGeometry(int pos, int pos2, int length) override
     {
         q->setGeometry(pos, pos2, length);
     }
 
-    void free()
+    void free() override
     {
         delete q;
     }
