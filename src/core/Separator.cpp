@@ -55,10 +55,7 @@ struct Separator::Private : public LayoutingSeparator
         s_numSeparators++;
     }
 
-    ~Private() override
-    {
-        s_numSeparators--;
-    }
+    ~Private() override;
 
     void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation) override
     {
@@ -356,4 +353,10 @@ bool Separator::isResizing()
 int Separator::numSeparators()
 {
     return s_numSeparators;
+}
+
+
+Separator::Private::~Private()
+{
+    s_numSeparators--;
 }
