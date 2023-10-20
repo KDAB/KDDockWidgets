@@ -88,7 +88,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     : Layout(ViewType::DropArea, Config::self().viewFactory()->createDropArea(this, parent))
     , d(new Private(this, options, isMDIWrapper))
 {
-    setRootItem(new Core::ItemBoxContainer(this));
+    setRootItem(new Core::ItemBoxContainer(asLayoutingHost()));
     DockRegistry::self()->registerLayout(this);
 
     if (parent)
@@ -595,16 +595,16 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     auto dw = w->asDockWidgetController();
 
     if (group) {
-        newItem = new Core::Item(this);
+        newItem = new Core::Item(asLayoutingHost());
         newItem->setGuest(group->asLayoutingGuest());
     } else if (dw) {
-        newItem = new Core::Item(this);
+        newItem = new Core::Item(asLayoutingHost());
         group = new Core::Group();
         newItem->setGuest(group->asLayoutingGuest());
         group->addTab(dw, option);
     } else if (auto ms = w->asDropAreaController()) {
         newItem = ms->d->m_rootItem;
-        newItem->setHost(this);
+        newItem->setHost(asLayoutingHost());
 
         if (auto fw = ms->floatingWindow()) {
             newItem->setSize_recursive(fw->size());
@@ -702,7 +702,7 @@ Rect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
 
 bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    setRootItem(new Core::ItemBoxContainer(this));
+    setRootItem(new Core::ItemBoxContainer(asLayoutingHost()));
     return Layout::deserialize(l);
 }
 

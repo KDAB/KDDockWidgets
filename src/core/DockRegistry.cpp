@@ -20,7 +20,7 @@
 #include "core/WidgetResizeHandler_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
-#include "core/layouting/LayoutingHost.h"
+#include "core/layouting/LayoutingHost_p.h"
 #include "core/DockWidget_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/views/MainWindowViewInterface.h"
@@ -292,10 +292,7 @@ DockRegistry::mainWindowsWithAffinity(const Vector<QString> &affinities) const
 
 Core::Layout *DockRegistry::layoutForItem(const Item *item) const
 {
-    if (!item->host())
-        return nullptr;
-
-    return dynamic_cast<Core::Layout *>(item->host());
+    return Layout::fromLayoutingHost(item->host());
 }
 
 bool DockRegistry::itemIsInMainWindow(const Item *item) const

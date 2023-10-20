@@ -12,7 +12,7 @@
 #include "simple_test_framework.h"
 
 #include "core/layouting/Item_p.h"
-#include "core/layouting/LayoutingHost.h"
+#include "core/layouting/LayoutingHost_p.h"
 #include "core/layouting/LayoutingGuest_p.h"
 #include "core/layouting/LayoutingSeparator_p.h"
 #include "core/DropArea.h"
@@ -57,7 +57,7 @@ public:
     {
         m_host = host;
         if (m_view && host)
-            m_view->setParent(dynamic_cast<DropArea *>(host)->view());
+            m_view->setParent(dynamic_cast<DropArea *>(Layout::fromLayoutingHost(host))->view());
     }
 
     LayoutingHost *host() const override
@@ -123,7 +123,7 @@ public:
 
 }
 
-static std::vector<LayoutingHost *> s_views;
+static std::vector<Core::Layout *> s_views;
 struct DeleteViews
 {
     ~DeleteViews()
@@ -157,9 +157,9 @@ serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
 
 static std::unique_ptr<ItemBoxContainer> createRoot()
 {
-    auto host = new DropArea(nullptr, MainWindowOption_None);
-    s_views.push_back(host);
-    auto root = new ItemBoxContainer(host);
+    auto dropArea = new DropArea(nullptr, MainWindowOption_None);
+    s_views.push_back(dropArea);
+    auto root = new ItemBoxContainer(dropArea->asLayoutingHost());
     root->setSize({ 1000, 1000 });
 
     return std::unique_ptr<ItemBoxContainer>(root);
@@ -180,7 +180,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
     auto guestView = Core::Platform::instance()->tests_createView(opts);
 
     guestView->setViewName(item->objectName());
-    auto guest = new Guest(guestView, s_views[s_views.size() - 1]);
+    auto guest = new Guest(guestView, s_views[s_views.size() - 1]->asLayoutingHost());
     guestView->d->beingDestroyed.connect([guest] {
         delete guest;
     });
@@ -190,9 +190,9 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
 
 static ItemBoxContainer *createRootWithSingleItem()
 {
-    auto host = new DropArea(nullptr, MainWindowOption_None);
-    s_views.push_back(host);
-    auto root = new ItemBoxContainer(host);
+    auto dropArea = new DropArea(nullptr, MainWindowOption_None);
+    s_views.push_back(dropArea);
+    auto root = new ItemBoxContainer(dropArea->asLayoutingHost());
     root->setSize({ 1000, 1000 });
 
     Item *item1 = createItem();

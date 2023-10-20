@@ -11,7 +11,7 @@
 
 #include "Item_p.h"
 #include "ItemFreeContainer_p.h"
-#include "LayoutingHost.h"
+#include "LayoutingHost_p.h"
 #include "LayoutingGuest_p.h"
 #include "LayoutingSeparator_p.h"
 

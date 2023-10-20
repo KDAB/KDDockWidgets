@@ -629,13 +629,13 @@ void Group::Private::setLayoutItem(Item *item)
 
 LayoutingHost *Group::Private::host() const
 {
-    return q->m_layout;
+    return q->m_layout ? q->m_layout->asLayoutingHost() : nullptr;
 }
 
 void Group::Private::setHost(LayoutingHost *host)
 {
     Core::View *parent = nullptr;
-    if (auto layout = dynamic_cast<Core::Layout *>(host)) {
+    if (auto layout = Layout::fromLayoutingHost(host)) {
         parent = layout->view();
     }
 
@@ -1015,7 +1015,7 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
     , m_options(options)
 {
     m_parentViewChangedConnection = q->Controller::dptr()->parentViewChanged.connect([this] {
-        hostChanged.emit(q->m_layout);
+        hostChanged.emit(host());
     });
 
     q->view()->d->layoutInvalidated.connect([this] { layoutInvalidated.emit(); });

@@ -20,7 +20,7 @@
 #include "Logging_p.h"
 #include "ScopedValueRollback_p.h"
 #include "core/layouting/Item_p.h"
-#include "core/layouting/LayoutingHost.h"
+#include "core/layouting/LayoutingHost_p.h"
 #include "kddockwidgets/core/FloatingWindow.h"
 #include "kddockwidgets/core/Layout.h"
 #include "kddockwidgets/core/MainWindow.h"

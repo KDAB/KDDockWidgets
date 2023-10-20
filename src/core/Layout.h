@@ -25,7 +25,6 @@
 #pragma once
 
 #include "kddockwidgets/core/View.h"
-#include "kddockwidgets/core/layouting/LayoutingHost.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
@@ -34,6 +33,7 @@
 namespace KDDockWidgets {
 
 namespace Core {
+class LayoutingHost;
 class Group;
 class FloatingWindow;
 class DockWidget;
@@ -53,7 +53,7 @@ class Separator;
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
-class DOCKS_EXPORT Layout : public Controller, public LayoutingHost
+class DOCKS_EXPORT Layout : public Controller
 {
     Q_OBJECT
 public:
@@ -195,7 +195,8 @@ public:
 
     void onCloseEvent(CloseEvent *);
 
-    bool supportsHonouringLayoutMinSize() const override;
+    LayoutingHost *asLayoutingHost() const;
+    static Layout *fromLayoutingHost(LayoutingHost *);
 
     class Private;
     Layout::Private *d_ptr();

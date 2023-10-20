@@ -12,13 +12,19 @@
 #pragma once
 
 #include "Layout.h"
-
+#include "layouting/LayoutingHost_p.h"
 #include "kdbindings/signal.h"
 
 namespace KDDockWidgets::Core {
-class Layout::Private
+
+class Layout::Private : public LayoutingHost
 {
 public:
+    explicit Private(Layout *);
+    ~Private() override;
+    bool supportsHonouringLayoutMinSize() const override;
+
+    Layout *const q;
     bool m_inResizeEvent = false;
     Core::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
@@ -28,4 +34,5 @@ public:
 
     bool m_viewDeleted = false;
 };
+
 }

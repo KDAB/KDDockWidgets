@@ -10,7 +10,7 @@
 */
 
 #include "ItemFreeContainer_p.h"
-#include "LayoutingHost.h"
+#include "LayoutingHost_p.h"
 
 #include "core/View.h"
 #include "core/Logging_p.h"
