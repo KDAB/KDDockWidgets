@@ -1101,7 +1101,7 @@ bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
 
-#if KDDW_FRONTEND_QT
+#ifdef KDDW_FRONTEND_QT
     auto plat = Platform::instance();
     if (!plat || plat->d->inDestruction()) {
         // checkSanity() can be called with deleteLater(), so check if we still

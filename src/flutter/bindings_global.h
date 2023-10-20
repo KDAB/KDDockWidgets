@@ -11,6 +11,10 @@
 
 #pragma once
 
+#ifndef DOCKS_TESTING_METHODS
+#define DOCKS_TESTING_METHODS
+#endif
+
 #ifndef QT_NO_CAST_TO_ASCII
 #define QT_NO_CAST_TO_ASCII
 #endif
