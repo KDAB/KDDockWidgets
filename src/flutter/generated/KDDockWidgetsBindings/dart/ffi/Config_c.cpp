@@ -53,6 +53,10 @@ int Config_wrapper::mdiPopupThreshold() const
 {
     return ::KDDockWidgets::Config::mdiPopupThreshold();
 }
+bool Config_wrapper::onlyProgrammaticDrag() const
+{
+    return ::KDDockWidgets::Config::onlyProgrammaticDrag();
+}
 void Config_wrapper::printDebug()
 {
     ::KDDockWidgets::Config::printDebug();
@@ -88,6 +92,10 @@ void Config_wrapper::setLayoutSaverStrictMode(bool arg__1)
 void Config_wrapper::setMDIPopupThreshold(int arg__1)
 {
     ::KDDockWidgets::Config::setMDIPopupThreshold(arg__1);
+}
+void Config_wrapper::setOnlyProgrammaticDrag(bool arg__1)
+{
+    ::KDDockWidgets::Config::setOnlyProgrammaticDrag(arg__1);
 }
 void Config_wrapper::setSeparatorThickness(int value)
 {
@@ -170,6 +178,12 @@ int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj)
     const auto &result = fromPtr(thisObj)->mdiPopupThreshold();
     return result;
 }
+// onlyProgrammaticDrag() const
+bool c_KDDockWidgets__Config__onlyProgrammaticDrag(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->onlyProgrammaticDrag();
+    return result;
+}
 // printDebug()
 void c_KDDockWidgets__Config__printDebug(void *thisObj)
 {
@@ -220,6 +234,11 @@ void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool 
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1)
 {
     fromPtr(thisObj)->setMDIPopupThreshold(arg__1);
+}
+// setOnlyProgrammaticDrag(bool arg__1)
+void c_KDDockWidgets__Config__setOnlyProgrammaticDrag_bool(void *thisObj, bool arg__1)
+{
+    fromPtr(thisObj)->setOnlyProgrammaticDrag(arg__1);
 }
 // setSeparatorThickness(int value)
 void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value)

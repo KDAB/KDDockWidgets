@@ -30,10 +30,6 @@ struct ValueWrapper
 }
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
-Separator_wrapper::Separator_wrapper(KDDockWidgets::Core::View *host)
-    : ::KDDockWidgets::Core::Separator(host)
-{
-}
 bool Separator_wrapper::isResizing()
 {
     return ::KDDockWidgets::Core::Separator::isResizing();
@@ -109,14 +105,7 @@ extern "C" {
 void c_KDDockWidgets__Core__Separator_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper *>(cppObj);
-}
-void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_)
-{
-    auto host = reinterpret_cast<KDDockWidgets::Core::View *>(host_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper(host);
-    return reinterpret_cast<void *>(ptr);
-}
-// isResizing()
+} // isResizing()
 bool c_static_KDDockWidgets__Core__Separator__isResizing()
 {
     const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::isResizing();
@@ -193,7 +182,7 @@ void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 338:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

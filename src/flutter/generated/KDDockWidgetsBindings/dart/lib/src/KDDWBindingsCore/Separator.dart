@@ -32,17 +32,8 @@ class Separator extends KDDWBindingsCore.Controller {
   }
   String getFinalizerName() {
     return "c_KDDockWidgets__Core__Separator_Finalizer";
-  } //Separator(KDDockWidgets::Core::View * host)
-
-  Separator(KDDWBindingsCore.View? host) : super.init() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Separator__constructor_View')
-        .asFunction();
-    thisCpp = func(host == null ? ffi.nullptr : host.thisCpp);
-    KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
-    registerCallbacks();
   } // isBeingDragged() const
+
   bool isBeingDragged() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
@@ -183,7 +174,7 @@ class Separator extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 338:
+      case 331:
         return "c_KDDockWidgets__Core__Separator__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -191,7 +182,7 @@ class Separator extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 338:
+      case 331:
         return "setParentView_impl";
     }
     throw Error();
@@ -203,9 +194,9 @@ class Separator extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback')
         .asFunction();
-    final callback338 =
+    final callback331 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback338, 338);
+    registerCallback(thisCpp, callback331, 331);
   }
 }

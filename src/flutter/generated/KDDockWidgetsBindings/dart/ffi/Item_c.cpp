@@ -29,14 +29,6 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-Item_wrapper::Item_wrapper(KDDockWidgets::Core::View *hostWidget)
-    : ::KDDockWidgets::Core::Item(hostWidget)
-{
-}
-KDDockWidgets::Core::Group *Item_wrapper::asGroupController() const
-{
-    return ::KDDockWidgets::Core::Item::asGroupController();
-}
 bool Item_wrapper::checkSanity()
 {
     if (m_checkSanityCallback) {
@@ -67,17 +59,9 @@ KDDockWidgets::Rect Item_wrapper::geometry() const
 {
     return ::KDDockWidgets::Core::Item::geometry();
 }
-KDDockWidgets::Core::View *Item_wrapper::guestView() const
-{
-    return ::KDDockWidgets::Core::Item::guestView();
-}
 int Item_wrapper::height() const
 {
     return ::KDDockWidgets::Core::Item::height();
-}
-KDDockWidgets::Core::View *Item_wrapper::hostView() const
-{
-    return ::KDDockWidgets::Core::Item::hostView();
 }
 bool Item_wrapper::isBeingInserted() const
 {
@@ -182,10 +166,6 @@ void Item_wrapper::requestResize(int left, int top, int right, int bottom)
 {
     ::KDDockWidgets::Core::Item::requestResize(left, top, right, bottom);
 }
-void Item_wrapper::restore(KDDockWidgets::Core::View *guestView)
-{
-    ::KDDockWidgets::Core::Item::restore(guestView);
-}
 void Item_wrapper::setBeingInserted(bool arg__1)
 {
     ::KDDockWidgets::Core::Item::setBeingInserted(arg__1);
@@ -206,23 +186,6 @@ void Item_wrapper::setGeometry_recursive(KDDockWidgets::Rect rect)
 void Item_wrapper::setGeometry_recursive_nocallback(KDDockWidgets::Rect rect)
 {
     ::KDDockWidgets::Core::Item::setGeometry_recursive(rect);
-}
-void Item_wrapper::setGuestView(KDDockWidgets::Core::View *arg__1)
-{
-    ::KDDockWidgets::Core::Item::setGuestView(arg__1);
-}
-void Item_wrapper::setHostView(KDDockWidgets::Core::View *arg__1)
-{
-    if (m_setHostViewCallback) {
-        const void *thisPtr = this;
-        m_setHostViewCallback(const_cast<void *>(thisPtr), arg__1);
-    } else {
-        ::KDDockWidgets::Core::Item::setHostView(arg__1);
-    }
-}
-void Item_wrapper::setHostView_nocallback(KDDockWidgets::Core::View *arg__1)
-{
-    ::KDDockWidgets::Core::Item::setHostView(arg__1);
 }
 void Item_wrapper::setIsVisible(bool arg__1)
 {
@@ -320,20 +283,7 @@ extern "C" {
 void c_KDDockWidgets__Core__Item_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper *>(cppObj);
-}
-void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_)
-{
-    auto hostWidget = reinterpret_cast<KDDockWidgets::Core::View *>(hostWidget_);
-    auto ptr = new KDDockWidgetsBindings_wrappersNS::Item_wrapper(hostWidget);
-    return reinterpret_cast<void *>(ptr);
-}
-// asGroupController() const
-void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj)
-{
-    const auto &result = fromPtr(thisObj)->asGroupController();
-    return result;
-}
-// checkSanity()
+} // checkSanity()
 bool c_KDDockWidgets__Core__Item__checkSanity(void *thisObj)
 {
     const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->checkSanity_nocallback();} else {    return targetPtr->checkSanity();} }();
@@ -350,22 +300,10 @@ void *c_KDDockWidgets__Core__Item__geometry(void *thisObj)
     const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromPtr(thisObj)->geometry() };
     return result;
 }
-// guestView() const
-void *c_KDDockWidgets__Core__Item__guestView(void *thisObj)
-{
-    const auto &result = fromPtr(thisObj)->guestView();
-    return result;
-}
 // height() const
 int c_KDDockWidgets__Core__Item__height(void *thisObj)
 {
     const auto &result = fromPtr(thisObj)->height();
-    return result;
-}
-// hostView() const
-void *c_KDDockWidgets__Core__Item__hostView(void *thisObj)
-{
-    const auto &result = fromPtr(thisObj)->hostView();
     return result;
 }
 // isBeingInserted() const
@@ -490,12 +428,6 @@ void c_KDDockWidgets__Core__Item__requestResize_int_int_int_int(void *thisObj, i
 {
     fromPtr(thisObj)->requestResize(left, top, right, bottom);
 }
-// restore(KDDockWidgets::Core::View * guestView)
-void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_)
-{
-    auto guestView = reinterpret_cast<KDDockWidgets::Core::View *>(guestView_);
-    fromPtr(thisObj)->restore(guestView);
-}
 // setBeingInserted(bool arg__1)
 void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg__1)
 {
@@ -514,18 +446,6 @@ void c_KDDockWidgets__Core__Item__setGeometry_recursive_Rect(void *thisObj, void
     assert(rect_);
     auto &rect = *reinterpret_cast<KDDockWidgets::Rect *>(rect_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setGeometry_recursive_nocallback(rect);} else {    return targetPtr->setGeometry_recursive(rect);} }();
-}
-// setGuestView(KDDockWidgets::Core::View * arg__1)
-void c_KDDockWidgets__Core__Item__setGuestView_View(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
-    fromPtr(thisObj)->setGuestView(arg__1);
-}
-// setHostView(KDDockWidgets::Core::View * arg__1)
-void c_KDDockWidgets__Core__Item__setHostView_View(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
-    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->setHostView_nocallback(arg__1);} else {    return targetPtr->setHostView(arg__1);} }();
 }
 // setIsVisible(bool arg__1)
 void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1)
@@ -649,34 +569,31 @@ void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 260:
+    case 258:
         wrapper->m_checkSanityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_checkSanity>(callback);
         break;
-    case 261:
+    case 259:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
-    case 271:
+    case 267:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 277:
+    case 273:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 278:
+    case 274:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 293:
+    case 288:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 295:
-        wrapper->m_setHostViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setHostView>(callback);
-        break;
-    case 296:
+    case 289:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 308:
+    case 301:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 309:
+    case 302:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

@@ -156,6 +156,10 @@ void Group_wrapper::focusedWidgetChangedCallback_nocallback()
 {
     ::KDDockWidgets::Core::Group::focusedWidgetChangedCallback();
 }
+KDDockWidgets::Core::Group *Group_wrapper::fromItem(const KDDockWidgets::Core::Item *arg__1)
+{
+    return ::KDDockWidgets::Core::Group::fromItem(arg__1);
+}
 bool Group_wrapper::hasNestedMDIDockWidgets() const
 {
     return ::KDDockWidgets::Core::Group::hasNestedMDIDockWidgets();
@@ -532,6 +536,13 @@ void c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback(void *thisObj)
 {
     fromWrapperPtr(thisObj)->focusedWidgetChangedCallback_nocallback();
 }
+// fromItem(const KDDockWidgets::Core::Item * arg__1)
+void *c_static_KDDockWidgets__Core__Group__fromItem_Item(void *arg__1_)
+{
+    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Item *>(arg__1_);
+    const auto &result = KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::fromItem(arg__1);
+    return result;
+}
 // hasNestedMDIDockWidgets() const
 bool c_KDDockWidgets__Core__Group__hasNestedMDIDockWidgets(void *thisObj)
 {
@@ -788,16 +799,16 @@ void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 898:
+    case 890:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_dragRect>(callback);
         break;
-    case 900:
+    case 892:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 915:
+    case 908:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 338:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }
