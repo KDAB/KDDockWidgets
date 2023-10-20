@@ -19,7 +19,7 @@ using namespace KDDockWidgets;
 KDDW_QCORO_TASK tst_separatorCtor()
 {
     Core::DropArea dropArea(nullptr, MainWindowOption_None);
-    Core::Separator separator(&dropArea);
+    Core::Separator separator(dropArea.asLayoutingHost());
     CHECK(separator.view()->is(Core::ViewType::Separator));
     CHECK(separator.view()->asWrapper()->is(Core::ViewType::Separator));
 

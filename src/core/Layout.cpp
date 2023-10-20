@@ -36,7 +36,7 @@ using namespace KDDockWidgets::Core;
 
 Layout::Layout(ViewType type, View *view)
     : Controller(type, view)
-    , d(new Private())
+    , d(new Private(this))
 {
     assert(view);
     view->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
@@ -57,7 +57,7 @@ Layout::~Layout()
 void Layout::viewAboutToBeDeleted()
 {
     if (view()) {
-        if (this == d->m_rootItem->host()) {
+        if (d == d->m_rootItem->host()) {
             delete d->m_rootItem;
             d->m_rootItem = nullptr;
         }
@@ -181,7 +181,7 @@ void Layout::unrefOldPlaceholders(const Core::Group::List &groupsBeingAdded) con
     for (Core::Group *group : groupsBeingAdded) {
         const auto dws = group->dockWidgets();
         for (Core::DockWidget *dw : dws) {
-            dw->d->lastPosition()->removePlaceholders(this);
+            dw->d->lastPosition()->removePlaceholders(d);
         }
     }
 }
@@ -368,17 +368,39 @@ void Layout::onCloseEvent(CloseEvent *e)
     }
 }
 
+LayoutingHost *Layout::asLayoutingHost() const
+{
+    return d;
+}
+
 Layout::Private *Layout::d_ptr()
 {
     return d;
 }
 
-bool Layout::supportsHonouringLayoutMinSize() const
+bool Layout::Private::supportsHonouringLayoutMinSize() const
 {
-    if (auto window = view()->window()) {
+    if (auto window = q->view()->window()) {
         return window->supportsHonouringLayoutMinSize();
     } else {
         // Corner case. No reason not to honour min-size
         return true;
     }
+}
+
+Layout::Private::Private(Layout *qq)
+    : q(qq)
+{
+}
+
+Layout::Private::~Private() = default;
+
+
+/** static */
+Layout *Layout::fromLayoutingHost(LayoutingHost *host)
+{
+    if (auto layoutPriv = dynamic_cast<Core::Layout::Private *>(host))
+        return layoutPriv->q;
+
+    return nullptr;
 }

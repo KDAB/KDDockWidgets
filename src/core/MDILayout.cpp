@@ -22,7 +22,7 @@ using namespace KDDockWidgets::Core;
 
 MDILayout::MDILayout(View *parent)
     : Layout(ViewType::MDILayout, Config::self().viewFactory()->createMDILayout(this, parent))
-    , m_rootItem(new Core::ItemFreeContainer(this))
+    , m_rootItem(new Core::ItemFreeContainer(asLayoutingHost()))
 {
     setRootItem(m_rootItem);
 }
@@ -46,7 +46,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         group->setLayoutItem(nullptr);
     }
 
-    Core::Item *newItem = new Core::Item(this);
+    Core::Item *newItem = new Core::Item(asLayoutingHost());
     if (group) {
         newItem->setGuest(group->asLayoutingGuest());
     } else {

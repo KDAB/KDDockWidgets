@@ -13,7 +13,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "LayoutingHost.h"
+#include "LayoutingHost_p.h"
 
 namespace KDDockWidgets {
 

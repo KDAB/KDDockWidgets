@@ -114,7 +114,7 @@ namespace {
 Core::View *viewForLayoutingHost(LayoutingHost *host)
 {
     // For KDDW, a LayoutingHost is always a Core::Layout
-    if (auto layout = dynamic_cast<Core::Layout *>(host))
+    if (auto layout = Layout::fromLayoutingHost(host))
         return layout->view();
 
     return nullptr;
