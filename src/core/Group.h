@@ -291,6 +291,9 @@ public:
 
     LayoutingGuest *asLayoutingGuest() const;
 
+    /// Returns the group that's in the specified item
+    static Core::Group *fromItem(const Core::Item *);
+
 protected:
     void isFocusedChangedCallback() override;
     void focusedWidgetChangedCallback() override;

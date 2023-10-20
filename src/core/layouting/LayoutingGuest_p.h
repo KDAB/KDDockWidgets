@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "core/View.h"
 #include "kddockwidgets/docks_export.h"
 #include "QtCompat_p.h"
 
@@ -28,54 +27,35 @@ class LayoutingHost;
 /// The layout engine doesn't know about any GUI, only about LayoutingHost and LayoutingGuest
 /// This allows to keep the layouting engine separate from the rest of KDDW and even
 /// reused by non-KDDW projects
-/// TODO: View is only here as a porting aid, to be removed soon.
 
 class DOCKS_EXPORT LayoutingGuest
 {
 public:
-    LayoutingGuest(View *v)
-        : m_view(v)
-    {
-    }
-
     virtual ~LayoutingGuest();
     virtual void setLayoutItem(Item *) = 0;
-
-    Size minSize() const
-    {
-        return m_view->minSize();
-    }
-
-    Size maxSizeHint() const
-    {
-        return m_view->maxSizeHint();
-    }
-
-    void setGeometry(Rect r)
-    {
-        m_view->setGeometry(r);
-    }
-
-    void setVisible(bool is) const
-    {
-        m_view->setVisible(is);
-    }
-
-    Rect guestGeometry() const
-    {
-        return m_view->geometry();
-    }
-
-    QString debugName() const
-    {
-        return m_view->viewName();
-    }
-
+    virtual Size minSize() const = 0;
+    virtual Size maxSizeHint() const = 0;
+    virtual void setGeometry(Rect r) = 0;
+    virtual void setVisible(bool is) const = 0;
+    virtual Rect guestGeometry() const = 0;
+    virtual QString debugName() const = 0;
     virtual void setHost(LayoutingHost *parent) = 0;
     virtual LayoutingHost *host() const = 0;
+    virtual QString id() const = 0;
+    virtual bool freed() const
+    {
+        return false;
+    }
 
-    View *const m_view;
+#ifdef DOCKS_DEVELOPER_MODE
+    virtual void setMinimumSize(Size) = 0;
+    virtual void setMaximumSize(Size) = 0;
+    virtual Size size() const = 0;
+#endif
+
     KDBindings::Signal<LayoutingHost *> hostChanged;
+    KDBindings::Signal<> beingDestroyed;
+    KDBindings::Signal<> layoutInvalidated;
 };
 
 }

@@ -225,28 +225,28 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    ObjectGuard<Core::Group> centralFrame = dropArea->centralFrame()->asGroupController();
+    ObjectGuard<Core::Group> centralGroup = Group::fromItem(dropArea->centralFrame());
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
-    QVERIFY(centralFrame);
-    QCOMPARE(centralFrame->dockWidgetCount(), 0);
+    QVERIFY(centralGroup);
+    QCOMPARE(centralGroup->dockWidgetCount(), 0);
 
     // Add a tab
     auto dock = createDockWidget("doc1");
     m->addDockWidgetAsTab(dock);
     QCOMPARE(dropArea->count(), 1);
-    QCOMPARE(centralFrame->dockWidgetCount(), 1);
+    QCOMPARE(centralGroup->dockWidgetCount(), 1);
 
     // Detach tab
-    QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
-    auto tabBar = centralFrame->tabBar()->view();
+    QPoint globalPressPos = dragPointForWidget(centralGroup.data(), 0);
+    auto tabBar = centralGroup->tabBar()->view();
     QVERIFY(tabBar);
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
 
-    QVERIFY(centralFrame);
+    QVERIFY(centralGroup);
     QCOMPARE(dropArea->count(), 1);
-    QCOMPARE(centralFrame->dockWidgetCount(), 0);
+    QCOMPARE(centralGroup->dockWidgetCount(), 0);
     QVERIFY(dropArea->checkSanity());
 }
 

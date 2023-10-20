@@ -137,8 +137,8 @@ Core::Group::List DropArea::groups() const
 
     for (const Core::Item *child : children) {
         if (auto guest = child->guest()) {
-            if (!guest->m_view->d->freed()) {
-                if (auto group = guest->m_view->asGroupController()) {
+            if (!guest->freed()) {
+                if (auto group = Group::fromItem(child)) {
                     groups.push_back(group);
                 }
             }
@@ -152,7 +152,7 @@ Core::Group *DropArea::groupContainingPos(Point globalPos) const
 {
     const Core::Item::List &items = this->items();
     for (Core::Item *item : items) {
-        auto group = item->asGroupController();
+        auto group = Group::fromItem(item);
         if (!group || !group->isVisible()) {
             continue;
         }
@@ -174,7 +174,7 @@ Core::Item *DropArea::centralFrame() const
 {
     const auto items = this->items();
     for (Core::Item *item : items) {
-        if (auto group = item->asGroupController()) {
+        if (auto group = Group::fromItem(item)) {
             if (group->isCentralFrame())
                 return item;
         }

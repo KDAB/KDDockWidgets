@@ -14,6 +14,8 @@
 #include "kddockwidgets/Config.h"
 #include "kddockwidgets/core/View.h"
 #include "kddockwidgets/core/Platform.h"
+#include "core/layouting/Item_p.h"
+#include "core/Group_p.h"
 
 #include <cstdlib>
 #include <string>

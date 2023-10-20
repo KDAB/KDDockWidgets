@@ -639,7 +639,7 @@ void Group::Private::setHost(LayoutingHost *host)
         parent = layout->view();
     }
 
-    m_view->controller()->setParentView(parent);
+    q->setParentView(parent);
 }
 
 Item *Group::layoutItem() const
@@ -1009,7 +1009,7 @@ LayoutingGuest *Group::asLayoutingGuest() const
 }
 
 Group::Private::Private(Group *qq, int userType, FrameOptions options)
-    : LayoutingGuest(qq->view())
+    : LayoutingGuest()
     , q(qq)
     , m_userType(userType)
     , m_options(options)
@@ -1017,4 +1017,27 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
     m_parentViewChangedConnection = q->Controller::dptr()->parentViewChanged.connect([this] {
         hostChanged.emit(q->m_layout);
     });
+
+    // q->view()->d->beingDestroyed.connect([this] { beingDestroyed.emit(); });
+    q->view()->d->layoutInvalidated.connect([this] { layoutInvalidated.emit(); });
+}
+
+Group::Private::~Private()
+{
+    m_visibleWidgetCountChangedConnection->disconnect();
+
+    beingDestroyed.emit();
+}
+
+Core::Group *Group::fromItem(const Core::Item *item)
+{
+    if (!item)
+        return nullptr;
+
+    if (auto guest = item->guest()) {
+        if (auto group = dynamic_cast<Core::Group::Private *>(guest))
+            return group->q;
+    }
+
+    return nullptr;
 }
