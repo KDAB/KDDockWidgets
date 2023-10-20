@@ -68,6 +68,7 @@ public:
     void show();
     KDDockWidgets::Size sizeInLayout() const;
     bool skipsRestore() const;
+    bool startDragging(bool singleTab = false);
     int tabIndex() const;
     QString title() const;
     KDDockWidgets::Core::TitleBar *titleBar() const;
@@ -165,6 +166,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__show(void *thisObj);
 DOCKS_EXPORT void *c_KDDockWidgets__Core__DockWidget__sizeInLayout(void *thisObj);
 // KDDockWidgets::Core::DockWidget::skipsRestore() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__DockWidget__skipsRestore(void *thisObj);
+// KDDockWidgets::Core::DockWidget::startDragging(bool singleTab)
+DOCKS_EXPORT bool c_KDDockWidgets__Core__DockWidget__startDragging_bool(void *thisObj, bool singleTab);
 // KDDockWidgets::Core::DockWidget::tabIndex() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__DockWidget__tabIndex(void *thisObj);
 // KDDockWidgets::Core::DockWidget::title() const

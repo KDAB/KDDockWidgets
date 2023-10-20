@@ -211,6 +211,10 @@ bool DockWidget_wrapper::skipsRestore() const
 {
     return ::KDDockWidgets::Core::DockWidget::skipsRestore();
 }
+bool DockWidget_wrapper::startDragging(bool singleTab)
+{
+    return ::KDDockWidgets::Core::DockWidget::startDragging(singleTab);
+}
 int DockWidget_wrapper::tabIndex() const
 {
     return ::KDDockWidgets::Core::DockWidget::tabIndex();
@@ -514,6 +518,12 @@ bool c_KDDockWidgets__Core__DockWidget__skipsRestore(void *thisObj)
     const auto &result = fromPtr(thisObj)->skipsRestore();
     return result;
 }
+// startDragging(bool singleTab)
+bool c_KDDockWidgets__Core__DockWidget__startDragging_bool(void *thisObj, bool singleTab)
+{
+    const auto &result = fromPtr(thisObj)->startDragging(singleTab);
+    return result;
+}
 // tabIndex() const
 int c_KDDockWidgets__Core__DockWidget__tabIndex(void *thisObj)
 {
@@ -552,7 +562,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 338:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

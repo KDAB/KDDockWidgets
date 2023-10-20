@@ -555,22 +555,14 @@ void *c_KDDockWidgets__flutter__ViewFactory__createTabBar_TabBar_View(void *this
 void *c_KDDockWidgets__flutter__ViewFactory__createTitleBar_TitleBar_View(void *thisObj, void *arg__1_, void *parent_);
 void c_KDDockWidgets__flutter__ViewFactory__destructor(void *thisObj);
 void c_KDDockWidgets__flutter__ViewFactory__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *cppObj); // KDDockWidgets::Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
-void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_);
-// KDDockWidgets::Core::Item::asGroupController() const
-void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj);
-// KDDockWidgets::Core::Item::checkSanity()
+void c_KDDockWidgets__flutter__ViewFactory_Finalizer(void *cppObj); // KDDockWidgets::Core::Item::checkSanity()
 bool c_KDDockWidgets__Core__Item__checkSanity(void *thisObj);
 // KDDockWidgets::Core::Item::dumpLayout(int level, bool printSeparators)
 void c_KDDockWidgets__Core__Item__dumpLayout_int_bool(void *thisObj, int level, bool printSeparators);
 // KDDockWidgets::Core::Item::geometry() const
 void *c_KDDockWidgets__Core__Item__geometry(void *thisObj);
-// KDDockWidgets::Core::Item::guestView() const
-void *c_KDDockWidgets__Core__Item__guestView(void *thisObj);
 // KDDockWidgets::Core::Item::height() const
 int c_KDDockWidgets__Core__Item__height(void *thisObj);
-// KDDockWidgets::Core::Item::hostView() const
-void *c_KDDockWidgets__Core__Item__hostView(void *thisObj);
 // KDDockWidgets::Core::Item::isBeingInserted() const
 bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj);
 // KDDockWidgets::Core::Item::isContainer() const
@@ -609,18 +601,12 @@ void c_KDDockWidgets__Core__Item__ref(void *thisObj);
 int c_KDDockWidgets__Core__Item__refCount(void *thisObj);
 // KDDockWidgets::Core::Item::requestResize(int left, int top, int right, int bottom)
 void c_KDDockWidgets__Core__Item__requestResize_int_int_int_int(void *thisObj, int left, int top, int right, int bottom);
-// KDDockWidgets::Core::Item::restore(KDDockWidgets::Core::View * guestView)
-void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_);
 // KDDockWidgets::Core::Item::setBeingInserted(bool arg__1)
 void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Item::setGeometry(KDDockWidgets::Rect rect)
 void c_KDDockWidgets__Core__Item__setGeometry_Rect(void *thisObj, void *rect_);
 // KDDockWidgets::Core::Item::setGeometry_recursive(KDDockWidgets::Rect rect)
 void c_KDDockWidgets__Core__Item__setGeometry_recursive_Rect(void *thisObj, void *rect_);
-// KDDockWidgets::Core::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
-void c_KDDockWidgets__Core__Item__setGuestView_View(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::setHostView(KDDockWidgets::Core::View * arg__1)
-void c_KDDockWidgets__Core__Item__setHostView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Item::setIsVisible(bool arg__1)
 void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Item::setMaxSizeHint(KDDockWidgets::Size arg__1)
@@ -2083,9 +2069,7 @@ void c_KDDockWidgets__Core__SideBar__setParentView_impl_View(void *thisObj, void
 void c_KDDockWidgets__Core__SideBar__toggleOverlay_DockWidget(void *thisObj, void *arg__1_);
 void c_KDDockWidgets__Core__SideBar__destructor(void *thisObj);
 void c_KDDockWidgets__Core__SideBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
-void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj); // KDDockWidgets::Core::Separator::Separator(KDDockWidgets::Core::View * host)
-void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_);
-// KDDockWidgets::Core::Separator::isResizing()
+void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj); // KDDockWidgets::Core::Separator::isResizing()
 bool c_static_KDDockWidgets__Core__Separator__isResizing();
 // KDDockWidgets::Core::Separator::isVertical() const
 bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj);
@@ -2231,24 +2215,16 @@ void c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidg
 void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeTo_, void *option_);
 // KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo, KDDockWidgets::InitialOption option)
 void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeTo_, void *option_);
-// KDDockWidgets::Core::DropArea::availableSize() const
-void *c_KDDockWidgets__Core__DropArea__availableSize(void *thisObj);
 // KDDockWidgets::Core::DropArea::centralFrame() const
 void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj);
-// KDDockWidgets::Core::DropArea::centralGroup() const
-void *c_KDDockWidgets__Core__DropArea__centralGroup(void *thisObj);
 // KDDockWidgets::Core::DropArea::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
 void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_);
 // KDDockWidgets::Core::DropArea::currentDropLocation() const
 int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj);
-// KDDockWidgets::Core::DropArea::drop(KDDockWidgets::Core::View * droppedwindow, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeTo)
-bool c_KDDockWidgets__Core__DropArea__drop_View_Location_Group(void *thisObj, void *droppedwindow_, int location, void *relativeTo_);
 // KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
 void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
-// KDDockWidgets::Core::DropArea::groupContainingPos(KDDockWidgets::Point globalPos) const
-void *c_KDDockWidgets__Core__DropArea__groupContainingPos_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
 bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
 // KDDockWidgets::Core::DropArea::hasSingleFrame() const
@@ -2265,10 +2241,6 @@ void *c_KDDockWidgets__Core__DropArea__mdiDockWidgetWrapper(void *thisObj);
 void c_KDDockWidgets__Core__DropArea__removeHover(void *thisObj);
 // KDDockWidgets::Core::DropArea::setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__DropArea__setParentView_impl_View(void *thisObj, void *parent_);
-// KDDockWidgets::Core::DropArea::updateFloatingActions()
-void c_KDDockWidgets__Core__DropArea__updateFloatingActions(void *thisObj);
-// KDDockWidgets::Core::DropArea::validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Group * relativeToFrame, KDDockWidgets::InitialOption option) const
-bool c_KDDockWidgets__Core__DropArea__validateInputs_View_Location_Group_InitialOption(void *thisObj, void *widget_, int location, void *relativeToFrame_, void *option_);
 void c_KDDockWidgets__Core__DropArea__destructor(void *thisObj);
 void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Core__DropArea_Finalizer(void *cppObj); // KDDockWidgets::Core::Group::Group(KDDockWidgets::Core::View * parent)
@@ -2325,6 +2297,8 @@ void *c_KDDockWidgets__Core__Group__dragRect(void *thisObj);
 void *c_KDDockWidgets__Core__Group__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Group::focusedWidgetChangedCallback()
 void c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback(void *thisObj);
+// KDDockWidgets::Core::Group::fromItem(const KDDockWidgets::Core::Item * arg__1)
+void *c_static_KDDockWidgets__Core__Group__fromItem_Item(void *arg__1_);
 // KDDockWidgets::Core::Group::hasNestedMDIDockWidgets() const
 bool c_KDDockWidgets__Core__Group__hasNestedMDIDockWidgets(void *thisObj);
 // KDDockWidgets::Core::Group::hasSingleDockWidget() const
@@ -2607,6 +2581,8 @@ void c_KDDockWidgets__Core__DockWidget__show(void *thisObj);
 void *c_KDDockWidgets__Core__DockWidget__sizeInLayout(void *thisObj);
 // KDDockWidgets::Core::DockWidget::skipsRestore() const
 bool c_KDDockWidgets__Core__DockWidget__skipsRestore(void *thisObj);
+// KDDockWidgets::Core::DockWidget::startDragging(bool singleTab)
+bool c_KDDockWidgets__Core__DockWidget__startDragging_bool(void *thisObj, bool singleTab);
 // KDDockWidgets::Core::DockWidget::tabIndex() const
 int c_KDDockWidgets__Core__DockWidget__tabIndex(void *thisObj);
 // KDDockWidgets::Core::DockWidget::title() const
@@ -2823,6 +2799,8 @@ bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
 bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
+// KDDockWidgets::Config::onlyProgrammaticDrag() const
+bool c_KDDockWidgets__Config__onlyProgrammaticDrag(void *thisObj);
 // KDDockWidgets::Config::printDebug()
 void c_KDDockWidgets__Config__printDebug(void *thisObj);
 // KDDockWidgets::Config::self()
@@ -2841,6 +2819,8 @@ void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, boo
 void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
+// KDDockWidgets::Config::setOnlyProgrammaticDrag(bool arg__1)
+void c_KDDockWidgets__Config__setOnlyProgrammaticDrag_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Config::setSeparatorThickness(int value)
 void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value);
 // KDDockWidgets::Config::setStartDragDistance(int arg__1)

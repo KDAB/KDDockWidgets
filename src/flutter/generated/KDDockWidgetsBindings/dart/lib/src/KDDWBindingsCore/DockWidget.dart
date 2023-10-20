@@ -409,6 +409,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__skipsRestore')
         .asFunction();
     return func(thisCpp) != 0;
+  } // startDragging(bool singleTab)
+
+  bool startDragging({bool singleTab = false}) {
+    final bool_Func_voidstar_bool func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_ffi_Int8_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__startDragging_bool')
+        .asFunction();
+    return func(thisCpp, singleTab ? 1 : 0) != 0;
   } // tabIndex() const
 
   int tabIndex() {
@@ -464,7 +472,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 338:
+      case 331:
         return "c_KDDockWidgets__Core__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -472,7 +480,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 338:
+      case 331:
         return "setParentView_impl";
     }
     throw Error();
@@ -484,9 +492,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback')
         .asFunction();
-    final callback338 =
+    final callback331 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback338, 338);
+    registerCallback(thisCpp, callback331, 331);
   }
 }

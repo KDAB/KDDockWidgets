@@ -265,7 +265,7 @@ void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 338:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -10,27 +10,21 @@
 */
 #include "kddockwidgets_export.h"
 #include <Item_p.h>
-#include <core/View.h>
 #include <geometry_helpers_p.h>
-#include <core/Group.h>
-#include <Object_p.h>
 #include <string_p.h>
+#include <Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::KDDockWidgets::Core::Item
 {
 public:
     ~Item_wrapper();
-    Item_wrapper(KDDockWidgets::Core::View *hostWidget);
-    KDDockWidgets::Core::Group *asGroupController() const;
     virtual bool checkSanity();
     virtual bool checkSanity_nocallback();
     virtual void dumpLayout(int level = 0, bool printSeparators = true);
     virtual void dumpLayout_nocallback(int level = 0, bool printSeparators = true);
     KDDockWidgets::Rect geometry() const;
-    KDDockWidgets::Core::View *guestView() const;
     int height() const;
-    KDDockWidgets::Core::View *hostView() const;
     bool isBeingInserted() const;
     bool isContainer() const;
     bool isMDI() const;
@@ -53,14 +47,10 @@ public:
     void ref();
     int refCount() const;
     void requestResize(int left, int top, int right, int bottom);
-    void restore(KDDockWidgets::Core::View *guestView);
     void setBeingInserted(bool arg__1);
     void setGeometry(KDDockWidgets::Rect rect);
     virtual void setGeometry_recursive(KDDockWidgets::Rect rect);
     virtual void setGeometry_recursive_nocallback(KDDockWidgets::Rect rect);
-    void setGuestView(KDDockWidgets::Core::View *arg__1);
-    virtual void setHostView(KDDockWidgets::Core::View *arg__1);
-    virtual void setHostView_nocallback(KDDockWidgets::Core::View *arg__1);
     virtual void setIsVisible(bool arg__1);
     virtual void setIsVisible_nocallback(bool arg__1);
     void setMaxSizeHint(KDDockWidgets::Size arg__1);
@@ -89,8 +79,6 @@ public:
     Callback_minSize m_minSizeCallback = nullptr;
     typedef void (*Callback_setGeometry_recursive)(void *, KDDockWidgets::Rect *rect);
     Callback_setGeometry_recursive m_setGeometry_recursiveCallback = nullptr;
-    typedef void (*Callback_setHostView)(void *, KDDockWidgets::Core::View *arg__1);
-    Callback_setHostView m_setHostViewCallback = nullptr;
     typedef void (*Callback_setIsVisible)(void *, bool arg__1);
     Callback_setIsVisible m_setIsVisibleCallback = nullptr;
     typedef void (*Callback_updateWidgetGeometries)(void *);
@@ -100,22 +88,14 @@ public:
 };
 }
 extern "C" {
-// KDDockWidgets::Core::Item::Item(KDDockWidgets::Core::View * hostWidget)
-DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__constructor_View(void *hostWidget_);
-// KDDockWidgets::Core::Item::asGroupController() const
-DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__asGroupController(void *thisObj);
 // KDDockWidgets::Core::Item::checkSanity()
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Item__checkSanity(void *thisObj);
 // KDDockWidgets::Core::Item::dumpLayout(int level, bool printSeparators)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Item__dumpLayout_int_bool(void *thisObj, int level, bool printSeparators);
 // KDDockWidgets::Core::Item::geometry() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__geometry(void *thisObj);
-// KDDockWidgets::Core::Item::guestView() const
-DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__guestView(void *thisObj);
 // KDDockWidgets::Core::Item::height() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Item__height(void *thisObj);
-// KDDockWidgets::Core::Item::hostView() const
-DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__hostView(void *thisObj);
 // KDDockWidgets::Core::Item::isBeingInserted() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj);
 // KDDockWidgets::Core::Item::isContainer() const
@@ -154,18 +134,12 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Item__ref(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__Item__refCount(void *thisObj);
 // KDDockWidgets::Core::Item::requestResize(int left, int top, int right, int bottom)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Item__requestResize_int_int_int_int(void *thisObj, int left, int top, int right, int bottom);
-// KDDockWidgets::Core::Item::restore(KDDockWidgets::Core::View * guestView)
-DOCKS_EXPORT void c_KDDockWidgets__Core__Item__restore_View(void *thisObj, void *guestView_);
 // KDDockWidgets::Core::Item::setBeingInserted(bool arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Item__setBeingInserted_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Item::setGeometry(KDDockWidgets::Rect rect)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_Rect(void *thisObj, void *rect_);
 // KDDockWidgets::Core::Item::setGeometry_recursive(KDDockWidgets::Rect rect)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Item__setGeometry_recursive_Rect(void *thisObj, void *rect_);
-// KDDockWidgets::Core::Item::setGuestView(KDDockWidgets::Core::View * arg__1)
-DOCKS_EXPORT void c_KDDockWidgets__Core__Item__setGuestView_View(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::Item::setHostView(KDDockWidgets::Core::View * arg__1)
-DOCKS_EXPORT void c_KDDockWidgets__Core__Item__setHostView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Item::setIsVisible(bool arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Item__setIsVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::Item::setMaxSizeHint(KDDockWidgets::Size arg__1)

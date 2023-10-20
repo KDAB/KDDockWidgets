@@ -59,6 +59,7 @@ public:
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
     virtual void focusedWidgetChangedCallback();
     virtual void focusedWidgetChangedCallback_nocallback();
+    static KDDockWidgets::Core::Group *fromItem(const KDDockWidgets::Core::Item *arg__1);
     bool hasNestedMDIDockWidgets() const;
     bool hasSingleDockWidget() const;
     bool hasTabsVisible() const;
@@ -169,6 +170,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Group__dragRect(void *thisObj);
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Group__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Group::focusedWidgetChangedCallback()
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback(void *thisObj);
+// KDDockWidgets::Core::Group::fromItem(const KDDockWidgets::Core::Item * arg__1)
+DOCKS_EXPORT void *c_static_KDDockWidgets__Core__Group__fromItem_Item(void *arg__1_);
 // KDDockWidgets::Core::Group::hasNestedMDIDockWidgets() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__hasNestedMDIDockWidgets(void *thisObj);
 // KDDockWidgets::Core::Group::hasSingleDockWidget() const

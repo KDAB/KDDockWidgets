@@ -10,8 +10,8 @@
 */
 #include "kddockwidgets_export.h"
 #include <Separator.h>
-#include <core/View.h>
 #include <geometry_helpers_p.h>
+#include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {
@@ -19,7 +19,6 @@ class Separator_wrapper : public ::KDDockWidgets::Core::Separator
 {
 public:
     ~Separator_wrapper();
-    Separator_wrapper(KDDockWidgets::Core::View *host);
     static bool isResizing();
     bool isVertical() const;
     void move(int p);
@@ -39,8 +38,6 @@ public:
 }
 }
 extern "C" {
-// KDDockWidgets::Core::Separator::Separator(KDDockWidgets::Core::View * host)
-DOCKS_EXPORT void *c_KDDockWidgets__Core__Separator__constructor_View(void *host_);
 // KDDockWidgets::Core::Separator::isResizing()
 DOCKS_EXPORT bool c_static_KDDockWidgets__Core__Separator__isResizing();
 // KDDockWidgets::Core::Separator::isVertical() const
