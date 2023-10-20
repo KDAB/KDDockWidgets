@@ -1009,8 +1009,7 @@ LayoutingGuest *Group::asLayoutingGuest() const
 }
 
 Group::Private::Private(Group *qq, int userType, FrameOptions options)
-    : LayoutingGuest()
-    , q(qq)
+    : q(qq)
     , m_userType(userType)
     , m_options(options)
 {
