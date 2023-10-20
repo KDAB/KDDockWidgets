@@ -1018,7 +1018,6 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
         hostChanged.emit(q->m_layout);
     });
 
-    // q->view()->d->beingDestroyed.connect([this] { beingDestroyed.emit(); });
     q->view()->d->layoutInvalidated.connect([this] { layoutInvalidated.emit(); });
 }
 

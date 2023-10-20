@@ -85,7 +85,7 @@ public:
         m_view->setVisible(is);
     }
 
-    Rect guestGeometry() const override
+    Rect geometry() const override
     {
         return m_view->geometry();
     }
