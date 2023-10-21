@@ -29,10 +29,15 @@ namespace Core {
 class DOCKS_EXPORT LayoutingHost
 {
 public:
+    LayoutingHost() = default;
     virtual ~LayoutingHost();
 
     /// Weather this layout host supports min size constraints or not
     virtual bool supportsHonouringLayoutMinSize() const = 0;
+
+private:
+    LayoutingHost(const LayoutingHost &) = delete;
+    LayoutingHost &operator=(const LayoutingHost &) = delete;
 };
 
 }
