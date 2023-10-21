@@ -31,6 +31,7 @@ class LayoutingHost;
 class DOCKS_EXPORT LayoutingGuest
 {
 public:
+    LayoutingGuest() = default;
     virtual ~LayoutingGuest();
     virtual void setLayoutItem(Item *) = 0;
     virtual Size minSize() const = 0;
@@ -56,6 +57,10 @@ public:
     KDBindings::Signal<LayoutingHost *> hostChanged;
     KDBindings::Signal<> beingDestroyed;
     KDBindings::Signal<> layoutInvalidated;
+
+private:
+    LayoutingGuest(const LayoutingGuest &) = delete;
+    LayoutingGuest &operator=(const LayoutingGuest &) = delete;
 };
 
 }

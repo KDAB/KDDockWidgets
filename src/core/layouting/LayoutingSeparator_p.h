@@ -41,6 +41,10 @@ public:
     virtual void free() = 0;
 
     LayoutingHost *const m_host;
+
+private:
+    LayoutingSeparator(const LayoutingSeparator &) = delete;
+    LayoutingSeparator &operator=(const LayoutingSeparator &) = delete;
 };
 
 }
