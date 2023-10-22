@@ -28,7 +28,10 @@
 
 #else
 
+#ifdef KDDW_FRONTEND_FLUTTER
 #include "flutter/qcoro.h"
+#endif
+
 #include "qtcompat/geometry_helpers_p.h"
 #include "qtcompat/enums_p.h"
 #include "qtcompat/string_p.h"
@@ -284,13 +287,14 @@ public:
 
 }
 
-#if defined(KDDW_FRONTEND_QT)
-
+#ifndef KDDW_FRONTEND_FLUTTER
+// Only the flutter uses the coroutines
 #define KDDW_QCORO_TASK bool
 #define KDDW_CO_AWAIT
 #define KDDW_CO_RETURN return
+#endif
 
-#else
+#ifndef KDDW_FRONTEND_QT
 
 // Dummy Qt macros, to avoid too much ifdefs in core/
 #define Q_NAMESPACE
