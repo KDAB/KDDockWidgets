@@ -30,6 +30,7 @@ target_include_directories(
            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../..> $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
 )
 
+include(../../kdbindings.cmake)
 target_link_libraries(kddockwidgetslayouting PRIVATE kdbindings)
 
 if(KDDockWidgets_HAS_SPDLOG)
