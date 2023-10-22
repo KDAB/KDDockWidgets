@@ -215,7 +215,7 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
     }
 };
 
-#ifdef KDDW_FRONTEND_FLUTTER
+#ifndef KDDW_FRONTEND_QT
 template<typename T>
 struct fmt::formatter<KDDockWidgets::Vector<T>>
 {

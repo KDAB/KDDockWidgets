@@ -32,6 +32,10 @@ target_include_directories(
 
 target_link_libraries(kddockwidgetslayouting PRIVATE kdbindings)
 
+if(KDDockWidgets_HAS_SPDLOG)
+    target_link_libraries(kddockwidgets PRIVATE spdlog::spdlog)
+endif()
+
 include(../../nlohmann.cmake)
 link_to_nlohman(kddockwidgetslayouting)
 
