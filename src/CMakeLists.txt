@@ -555,18 +555,7 @@ if(KDDockWidgets_XLib)
     target_link_libraries(kddockwidgets PRIVATE X11)
 endif()
 
-find_package(nlohmann_json QUIET)
-
-# Function to link to nlohmann
-function(link_to_nlohman target)
-    if(nlohmann_json_FOUND)
-        target_link_libraries(${target} PRIVATE nlohmann_json::nlohmann_json)
-    else()
-        message("nlohmann_json not found in system. Using our own bundled one")
-        target_include_directories(${target} SYSTEM PRIVATE ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/3rdparty/nlohmann)
-    endif()
-endfunction()
-
+include(nlohmann.cmake)
 link_to_nlohman(kddockwidgets)
 
 set_target_properties(kddockwidgets PROPERTIES SOVERSION ${KDDockWidgets_SOVERSION} VERSION ${KDDockWidgets_VERSION})
@@ -748,4 +737,8 @@ if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QTWIDGETS)
         target_link_libraries(kddockwidgets_linter PRIVATE kddockwidgets)
         link_to_nlohman(kddockwidgets_linter)
     endif()
+endif()
+
+if(KDDockWidgets_SEPARATE_LAYOUTING_LIBRARY)
+    add_subdirectory(core/layouting)
 endif()

@@ -109,6 +109,11 @@ option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
 
+# Layouting engine library can be reused by non-KDDW projects
+option(KDDockWidgets_SEPARATE_LAYOUTING_LIBRARY
+       "Additionally builds the layouting engine as a standalone library. (Experimental)" OFF
+)
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
