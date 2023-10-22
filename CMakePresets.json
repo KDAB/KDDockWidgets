@@ -187,6 +187,7 @@
             "binaryDir": "${sourceDir}/build-dev-none",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_WERROR": "ON",
                 "KDDockWidgets_FRONTENDS": "none",
                 "KDDockWidgets_NO_SPDLOG": "ON"
             },
