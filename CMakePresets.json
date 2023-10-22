@@ -196,6 +196,20 @@
             ]
         },
         {
+            "name": "dev-layouting",
+            "description": "Builds the layouting engine library, for non-KDDW projects",
+            "binaryDir": "${sourceDir}/build-dev-layouting",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_SEPARATE_LAYOUTING_LIBRARY": "ON",
+                "KDDockWidgets_FRONTENDS": "none",
+                "KDDockWidgets_NO_SPDLOG": "ON"
+            },
+            "inherits": [
+                "base"
+            ]
+        },
+        {
             "name": "clazy",
             "displayName": "clazy",
             "generator": "Ninja",
