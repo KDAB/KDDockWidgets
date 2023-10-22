@@ -446,10 +446,13 @@ if(KDDW_FRONTEND_NONE)
     )
 endif()
 
-target_compile_definitions(
-    kddockwidgets PRIVATE QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII QT_NO_URL_CAST_FROM_STRING
-                          QT_NO_CAST_FROM_BYTEARRAY
-)
+if(KDDW_FRONTEND_QT)
+    target_compile_definitions(
+        kddockwidgets PRIVATE QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII QT_NO_URL_CAST_FROM_STRING
+                              QT_NO_CAST_FROM_BYTEARRAY
+    )
+endif()
+
 if(KDDockWidgets_STATIC)
     target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_STATICLIB)
 else()
