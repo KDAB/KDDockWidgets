@@ -152,7 +152,7 @@ set(KDDW_FRONTEND_QTQUICK OFF)
 set(KDDW_FRONTEND_FLUTTER OFF)
 
 if(KDDockWidgets_FRONTENDS)
-    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter;none")
 
     foreach(frontend ${KDDockWidgets_FRONTENDS})
         if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
@@ -162,23 +162,23 @@ if(KDDockWidgets_FRONTENDS)
 endif()
 
 if(KDDockWidgets_FRONTENDS)
-    # qtwidgets
     if("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
         find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Widgets)
         set(KDDW_FRONTEND_QTWIDGETS ON)
     endif()
 
-    # qtquick
     if("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
         find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
         set(KDDW_FRONTEND_QTQUICK ON)
     endif()
 
-    # flutter
     if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
         set(KDDW_FRONTEND_FLUTTER ON)
     endif()
 
+    if("none" IN_LIST KDDockWidgets_FRONTENDS)
+        set(KDDW_FRONTEND_NONE ON)
+    endif()
 else()
     set(ENABLED_FRONTENDS "")
     message("No frontends specified explicitly.")
@@ -222,6 +222,10 @@ if(KDDW_FRONTEND_FLUTTER)
                             "You can still develop on Windows/macOS but wait for test results from KDAB CI."
         )
     endif()
+endif()
+
+if(KDDW_FRONTEND_NONE AND (KDDW_FRONTEND_QT OR KDDW_FRONTEND_FLUTTER))
+    message(FATAL_ERROR "Frontend value \"none\" needs to be specified alone")
 endif()
 
 # END frontend enabling

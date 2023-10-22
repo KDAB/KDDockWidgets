@@ -183,6 +183,19 @@
             ]
         },
         {
+            "name": "dev-none",
+            "description": "Builds KDDW with no frontend. Not useful for users, but nice to see if core/ builds independently.",
+            "binaryDir": "${sourceDir}/build-dev-none",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_FRONTENDS": "none",
+                "KDDockWidgets_NO_SPDLOG": "ON"
+            },
+            "inherits": [
+                "base"
+            ]
+        },
+        {
             "name": "clazy",
             "displayName": "clazy",
             "generator": "Ninja",

@@ -13,10 +13,12 @@ if(POLICY CMP0043)
     cmake_policy(SET CMP0043 NEW)
 endif()
 
-add_definitions(
-    -DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_USE_QSTRINGBUILDER -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
-    -DQT_STRICT_ITERATORS -DQT_NO_KEYWORDS -DQT_NO_FOREACH
-)
+if(KDDW_FRONTEND_QT)
+    add_definitions(
+        -DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_USE_QSTRINGBUILDER -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
+        -DQT_STRICT_ITERATORS -DQT_NO_KEYWORDS -DQT_NO_FOREACH
+    )
+endif()
 
 set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
@@ -327,6 +329,10 @@ if(KDDW_FRONTEND_FLUTTER)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_FLUTTER_SRCS})
 endif()
 
+if(KDDW_FRONTEND_NONE)
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} qtcompat/Object.cpp)
+endif()
+
 # Generate C/C++ CamelCase forwarding headers (only public includes)
 include(ECMGenerateHeaders)
 ecm_generate_headers(camelcase_HEADERS ORIGINAL CAMELCASE HEADER_NAMES Config LayoutSaver)
@@ -433,6 +439,13 @@ if(KDDW_FRONTEND_FLUTTER)
     endif()
 endif()
 
+if(KDDW_FRONTEND_NONE)
+    target_include_directories(
+        kddockwidgets PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
+                              $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
+    )
+endif()
+
 target_compile_definitions(
     kddockwidgets PRIVATE QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII QT_NO_URL_CAST_FROM_STRING
                           QT_NO_CAST_FROM_BYTEARRAY
@@ -498,12 +511,14 @@ if(KDDW_FRONTEND_QTQUICK)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK KDDW_FRONTEND_QT)
 endif()
 
-if(KDDW_FRONTEND_FLUTTER)
+if(NOT KDDW_FRONTEND_QT)
     include(GenerateExportHeader)
     generate_export_header(
         kddockwidgets EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/kddockwidgets_export.h" EXPORT_MACRO_NAME DOCKS_EXPORT
     )
+endif()
 
+if(KDDW_FRONTEND_FLUTTER)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 
