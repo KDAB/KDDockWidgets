@@ -49,6 +49,11 @@ public:
     {
         return fromStdString(std::to_string(n));
     }
+
+    static QString number(long n)
+    {
+        return fromStdString(std::to_string(n));
+    }
 #endif
 
     static QString fromUtf8(const char *str)

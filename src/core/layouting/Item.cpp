@@ -3077,8 +3077,8 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
 
     if (strategy == NeighbourSqueezeStrategy::AllNeighbours) {
         while (missing > 0) {
-            const int numDonors = std::count_if(availabilities.cbegin(), availabilities.cend(),
-                                                [](int num) { return num > 0; });
+            const int numDonors = int(std::count_if(availabilities.cbegin(), availabilities.cend(),
+                                                    [](int num) { return num > 0; }));
 
             if (numDonors == 0) {
                 root()->dumpLayout();
