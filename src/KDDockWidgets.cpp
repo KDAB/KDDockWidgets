@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-
 #include "Config.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "core/layouting/Item_p.h"
+#include "core/Platform.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
