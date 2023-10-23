@@ -10,24 +10,24 @@
 */
 
 #include "TitleBar.h"
+#include "TitleBar_p.h"
 #include "Config.h"
-#include "core/ViewFactory.h"
+#include "ViewFactory.h"
 #include "View.h"
-#include "core/WindowBeingDragged_p.h"
-#include "core/Utils_p.h"
-#include "core/Logging_p.h"
-#include "core/TitleBar_p.h"
-#include "core/Group_p.h"
+#include "WindowBeingDragged_p.h"
+#include "Utils_p.h"
+#include "Logging_p.h"
+#include "Group_p.h"
 
 #include "views/TitleBarViewInterface.h"
-#include "core/DockWidget_p.h"
-#include "core/FloatingWindow.h"
+#include "DockWidget_p.h"
+#include "FloatingWindow.h"
 #include "DockRegistry.h"
-#include "core/FloatingWindow_p.h"
-#include "core/TabBar.h"
-#include "core/MainWindow.h"
-#include "core/MDILayout.h"
-#include "core/Stack.h"
+#include "FloatingWindow_p.h"
+#include "TabBar.h"
+#include "MainWindow.h"
+#include "MDILayout.h"
+#include "Stack.h"
 
 #ifdef KDDW_FRONTEND_QT
 #include <QTimer>

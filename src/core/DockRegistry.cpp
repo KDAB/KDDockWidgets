@@ -10,8 +10,8 @@
 */
 
 #include "DockRegistry.h"
-#include "DelayedCall_p.h"
 #include "DockRegistry_p.h"
+#include "DelayedCall_p.h"
 #include "Config.h"
 #include "core/Logging_p.h"
 #include "core/Position_p.h"

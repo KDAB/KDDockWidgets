@@ -9,24 +9,23 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "core/LayoutSaver_p.h"
-#include "core/Position_p.h"
+#include "Layout.h"
+#include "Layout_p.h"
+#include "LayoutSaver_p.h"
+#include "Position_p.h"
 #include "Config.h"
 #include "Platform.h"
-#include "core/ViewFactory.h"
-#include "core/Utils_p.h"
-#include "core/View_p.h"
-#include "core/Layout.h"
-#include "core/Layout_p.h"
-#include "core/Logging_p.h"
-#include "core/ScopedValueRollback_p.h"
-#include "core/DropArea.h"
-#include "core/DockWidget_p.h"
-#include "core/Group.h"
-#include "core/FloatingWindow.h"
-#include "core/MainWindow.h"
-
-#include "core/layouting/Item_p.h"
+#include "ViewFactory.h"
+#include "Utils_p.h"
+#include "View_p.h"
+#include "Logging_p.h"
+#include "ScopedValueRollback_p.h"
+#include "DropArea.h"
+#include "DockWidget_p.h"
+#include "Group.h"
+#include "FloatingWindow.h"
+#include "MainWindow.h"
+#include "layouting/Item_p.h"
 
 #include <unordered_map>
 

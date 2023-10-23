@@ -9,7 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DropIndicatorOverlay.h"
+#include "core/DropIndicatorOverlay.h"
+#include "core/DropIndicatorOverlay_p.h"
 #include "Config.h"
 #include "Platform.h"
 #include "ViewFactory.h"
@@ -19,7 +20,6 @@
 #include "core/Logging_p.h"
 #include "core/Controller_p.h"
 #include "core/WindowBeingDragged_p.h"
-#include "core/DropIndicatorOverlay_p.h"
 
 #include "core/DragController_p.h"
 #include "core/DockRegistry_p.h"

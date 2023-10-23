@@ -16,6 +16,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#include "Group.h"
+
 #include "qtquick/views/DockWidget.h"
 #include "qtquick/ViewFactory.h"
 #include "qtquick/Platform.h"
@@ -27,9 +29,8 @@
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "core/DockWidget_p.h"
-
-#include "Group.h"
 #include "core/Group_p.h"
+
 #include "Stack.h"
 #include "Config.h"
 #include "core/WidgetResizeHandler_p.h"

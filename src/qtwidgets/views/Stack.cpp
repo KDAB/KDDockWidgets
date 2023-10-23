@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "qtwidgets/views/DockWidget.h"
 #include "Stack.h"
+#include "qtwidgets/views/DockWidget.h"
 #include "core/Controller.h"
 #include "core/Stack.h"
 #include "core/TitleBar.h"

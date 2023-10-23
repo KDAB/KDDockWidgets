@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DockWidget.h"
 #include "TabBar.h"
+#include "DockWidget.h"
 #include "Stack.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/TabBar.h"

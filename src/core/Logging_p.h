@@ -23,7 +23,6 @@
 
 #ifdef KDDW_HAS_SPDLOG
 
-#include "QtCompat_p.h"
 #include "spdlog_formatters_p.h"
 
 #include <spdlog/spdlog.h>

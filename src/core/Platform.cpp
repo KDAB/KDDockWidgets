@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Platform.h"
+#include "core/Platform.h"
 #include "core/Platform_p.h"
 #include "core/Logging_p.h"
 #include "core/Window_p.h"

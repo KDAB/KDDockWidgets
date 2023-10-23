@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "View.h"
+#include "core/View.h"
 #include "core/View_p.h"
 #include "core/Utils_p.h"
 #include "core/layouting/Item_p.h"

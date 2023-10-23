@@ -10,12 +10,12 @@
 */
 
 #include "Controller.h"
+#include "Controller_p.h"
 #include "Platform.h"
 #include "DelayedCall_p.h"
 #include "View.h"
 #include "View_p.h"
 #include "Logging_p.h"
-#include "Controller_p.h"
 #include "DragController_p.h"
 
 using namespace KDDockWidgets;

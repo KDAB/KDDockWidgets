@@ -10,6 +10,7 @@
 */
 
 #include "Group.h"
+#include "Group_p.h"
 
 #include "kddockwidgets/Config.h"
 #include "core/ViewFactory.h"
@@ -30,7 +31,6 @@
 #include "core/Layout.h"
 #include "core/MainWindow.h"
 #include "core/TabBar_p.h"
-#include "core/Group_p.h"
 
 #include "DockRegistry.h"
 #include "DockWidget_p.h"
