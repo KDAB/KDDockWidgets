@@ -45,11 +45,6 @@ public:
         return find(needle) != std::string::npos;
     }
 
-    static QString number(int n)
-    {
-        return fromStdString(std::to_string(n));
-    }
-
     static QString number(long n)
     {
         return fromStdString(std::to_string(n));
