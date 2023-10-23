@@ -98,3 +98,4 @@ kddockwidgets_example.iml
 /src/flutter/dart/build/flutter_assets/
 /src/flutter/dart/layout_*
 /CMakeUserPresets.json
+/src/core/layouting/build/
