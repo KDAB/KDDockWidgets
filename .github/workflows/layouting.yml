@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: CI for the standalone layouting library
+
+on:
+  push:
+    branches:
+      - 2.0
+  pull_request:
+    branches:
+      - 2.0
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-22.04
+          - windows-2022
+          - macos-12
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Install ninja
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Configure
+        run: cmake -S src/core/layouting/ -B src/core/layouting/build/ -G Ninja
+
+      - name: Build
+        run: cmake --build src/core/layouting/build/
