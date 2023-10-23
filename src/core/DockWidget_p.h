@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_DOCKWIDGET_BASE_P_H
-#define KD_DOCKWIDGET_BASE_P_H
+#ifndef KD_DOCKWIDGET_P_H
+#define KD_DOCKWIDGET_P_H
 
 #include "DockWidget.h"
 #include "DockRegistry.h"
