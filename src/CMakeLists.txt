@@ -349,10 +349,7 @@ else()
     set(DOCKS_INCLUDES_INSTALL_PATH "include/")
 endif()
 
-# Use a separate target for our kdbindings/signal.h header as it doesn't compile
-# with -Wweak-vtables
-add_library(kdbindings INTERFACE)
-target_include_directories(kdbindings SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty>)
+include(kdbindings.cmake)
 
 target_include_directories(
     kddockwidgets
