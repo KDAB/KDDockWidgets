@@ -26,3 +26,8 @@ add_subdirectory(customtabbar)
 set_target_properties(
     qtquick_customtabbar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
 )
+
+add_subdirectory(customseparator)
+set_target_properties(
+    qtquick_customseparator PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+)
