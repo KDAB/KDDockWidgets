@@ -14,7 +14,7 @@
 
 # Instructions:
 # docker build -t kddw-tests .
-# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ -v ~/Qt/5.15.2/gcc_64/:/Qt5/ -v ~/Qt/6.3.2/gcc_64/:/Qt6/ --ulimit nofile=1024:4096 -u 1000:1000 kddw-tests
+# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ -v ~/Qt/5.15.2/gcc_64/:/Qt5/ -v ~/Qt/6.6.0/gcc_64/:/Qt6/ --ulimit nofile=1024:4096 -u 1000:1000 kddw-tests
 # cd /kddockwidgets/
 # cmake --preset=dev
 # cd build-dev && ninja
@@ -37,8 +37,7 @@ RUN apt install build-essential software-properties-common lld git cmake ninja-b
                 libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
                 vim clang-tidy-14 valgrind pip libxslt-dev llvm -y
 
-RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
-              --trusted-host download.qt.io shiboken6-generator==6.3.2 shiboken6==6.3.2 pyside6==6.3.2
+RUN pip install shiboken6-generator==6.6.0 shiboken6==6.6.0 pyside6==6.6.0
 
 RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
               --trusted-host download.qt.io shiboken2-generator==5.15.2.1 shiboken2==5.15.2.1 pyside2==5.15.2.1
