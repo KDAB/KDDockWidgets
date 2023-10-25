@@ -46,7 +46,7 @@ jobs:
         uses: turtlesec-no/get-ninja@main
 
       - name: Configure
-        run: cmake --preset=release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/
+        run: cmake --preset=release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
         run: cmake --build build-release --parallel
