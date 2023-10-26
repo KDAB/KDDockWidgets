@@ -302,3 +302,8 @@ QSize WindowBeingDraggedWayland::maxSize() const
     qWarning() << Q_FUNC_INFO << "Unknown maxSize, shouldn't happen";
     return {};
 }
+
+bool WindowBeingDraggedWayland::isInWaylandDrag(Frame *frame) const
+{
+    return frame && m_frame == frame;
+}

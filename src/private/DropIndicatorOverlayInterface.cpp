@@ -65,6 +65,16 @@ void DropIndicatorOverlayInterface::setHoveredFrame(Frame *frame)
     if (frame == m_hoveredFrame)
         return;
 
+    if (WindowBeingDragged *wbd = DragController::instance()->windowBeingDragged()) {
+        if (wbd->isInWaylandDrag(frame)) {
+            // With wayland, we don't detach the group before the mouse release.
+            // Instead, we start a QDrag, with this group as cursor QPixmap.
+            // Here we catch the case where we're dragging the pixmap onto the group
+            // where're already dragging. That's a no-op.
+            return;
+        }
+    }
+
     if (m_hoveredFrame)
         disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
 
