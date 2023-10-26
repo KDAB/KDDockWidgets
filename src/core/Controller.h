@@ -22,6 +22,7 @@ namespace Core {
 
 class View;
 
+/// Each View type also has a specific Controller associated with, except for ViewType::None
 enum class ViewType {
     FIRST = 1, // Keep first
     None = 0,
@@ -32,7 +33,6 @@ enum class ViewType {
     FloatingWindow = 16,
     Separator = 32,
     DockWidget = 64,
-    MDIArea = 128,
     LayoutItem = 256,
     SideBar = 512,
     MainWindow = 1024,

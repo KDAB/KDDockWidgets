@@ -86,8 +86,6 @@ static Core::Controller *controllerForItem(QQuickItem *item)
             if (auto view = qobject_cast<MDILayout *>(item))
                 return view->controller();
             break;
-
-        case Core::ViewType::MDIArea:
         case Core::ViewType::SideBar:
             // Not implemented for QtQuick yet
             break;
@@ -291,8 +289,6 @@ bool ViewWrapper::is(Core::ViewType t) const
         return qobject_cast<MDILayout *>(m_item);
     case Core::ViewType::RubberBand:
         return qobject_cast<RubberBand *>(m_item);
-    case Core::ViewType::MDIArea:
-        return false; // Not support by qtquick
     case Core::ViewType::LayoutItem:
     case Core::ViewType::None:
     case Core::ViewType::DropAreaIndicatorOverlay:

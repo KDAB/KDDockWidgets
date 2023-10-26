@@ -82,11 +82,6 @@ static Core::Controller *controllerForWidget(QWidget *widget)
             if (auto view = qobject_cast<MDILayout *>(widget))
                 return view->controller();
             break;
-
-        case Core::ViewType::MDIArea:
-            if (auto view = qobject_cast<MDIArea *>(widget))
-                return view->controller();
-            break;
         case Core::ViewType::SideBar:
             if (auto view = qobject_cast<SideBar *>(widget))
                 return view->controller();
@@ -243,8 +238,6 @@ bool ViewWrapper::is(Core::ViewType t) const
         return qobject_cast<MDILayout *>(m_widget);
     case Core::ViewType::RubberBand:
         return qobject_cast<RubberBand *>(m_widget);
-    case Core::ViewType::MDIArea:
-        return qobject_cast<MDIArea *>(m_widget);
     case Core::ViewType::LayoutItem:
     case Core::ViewType::None:
     case Core::ViewType::DropAreaIndicatorOverlay:
