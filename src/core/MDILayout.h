@@ -43,19 +43,19 @@ public:
     /// @brief Moves a dock widget @p dw to point @p pos
     void moveDockWidget(Core::DockWidget *dw, Point pos);
 
-    /// @brief Moves a dock widget @p f to point @p pos
+    /// @brief Moves a dock widget @p group to point @p pos
     /// Convenience overload.
-    void moveDockWidget(Core::Group *f, Point pos);
+    void moveDockWidget(Core::Group *group, Point pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
     void resizeDockWidget(Core::DockWidget *dw, Size size);
 
-    /// @brief Sets the size of dock widget @p f to @p size
+    /// @brief Sets the size of dock widget @p group to @p size
     /// Convenience overload.
-    void resizeDockWidget(Core::Group *f, Size size);
+    void resizeDockWidget(Core::Group *group, Size size);
 
-    /// @brief sets the size and position of the dock widget @p f
-    void setDockWidgetGeometry(Core::Group *f, Rect);
+    /// @brief sets the size and position of the dock widget @p group
+    void setDockWidgetGeometry(Core::Group *group, Rect);
 
 private:
     Core::ItemFreeContainer *const m_rootItem;
