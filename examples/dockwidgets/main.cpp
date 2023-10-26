@@ -117,7 +117,7 @@ int main(int argc, char **argv)
     parser.addOption(closeOnlyCurrentTab);
 
     QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", // krazy:exclude=spelling
-                                              QCoreApplication::translate("main", "DockWidget #5 won't be closed before a restore. Illustrates LayoutSaverOption::Skip"));
+                                              QCoreApplication::translate("main", "DockWidget #3 and #5 won't be closed before a restore. Illustrates LayoutSaverOption::Skip"));
     parser.addOption(dontCloseBeforeRestore);
 
     QCommandLineOption blockCloseEvent("block-close-event",
@@ -288,7 +288,7 @@ int main(int argc, char **argv)
     const bool restoreIsRelative = parser.isSet(relativeRestore);
     const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
     const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
-    const bool dontCloseDockWidget5BeforeRestore = parser.isSet(dontCloseBeforeRestore);
+    const bool dontCloseDockWidgetBeforeRestore = parser.isSet(dontCloseBeforeRestore);
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
     const bool dock0BlocksCloseEvent = parser.isSet(blockCloseEvent);
 
@@ -300,7 +300,7 @@ int main(int argc, char **argv)
 
     MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
                             nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
-                            dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent);
+                            dontCloseDockWidgetBeforeRestore, dock0BlocksCloseEvent);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -319,7 +319,7 @@ int main(int argc, char **argv)
         auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
                                             nonClosableDockWidget0, nonDockableDockWidget9,
                                             restoreIsRelative, maxSizeForDockWidget8,
-                                            dontCloseDockWidget5BeforeRestore, dock0BlocksCloseEvent, affinity);
+                                            dontCloseDockWidgetBeforeRestore, dock0BlocksCloseEvent, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else

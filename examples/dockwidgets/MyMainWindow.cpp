@@ -46,7 +46,7 @@ static MyWidget *newMyWidget()
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                            bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
-                           bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore,
+                           bool maxSizeForDockWidget8, bool dockwidgetDoesntCloseBeforeRestore,
                            bool dock0BlocksCloseEvent,
                            const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
@@ -54,7 +54,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
     , m_maxSizeForDockWidget8(maxSizeForDockWidget8)
-    , m_dockwidget5DoesntCloseBeforeRestore(dockwidget5DoesntCloseBeforeRestore)
+    , m_dockwidget35DontCloseBeforeRestore(dockwidgetDoesntCloseBeforeRestore)
     , m_dock0BlocksCloseEvent(dock0BlocksCloseEvent)
 {
     auto menubar = menuBar();
@@ -180,7 +180,7 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
     if (count == 9 && m_dockWidget9IsNonDockable)
         options |= KDDockWidgets::DockWidget::Option_NotDockable;
 
-    if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
+    if ((count == 3 || count == 5) && m_dockwidget35DontCloseBeforeRestore)
         layoutSaverOptions |= KDDockWidgets::DockWidget::LayoutSaverOption::Skip;
 
     auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);

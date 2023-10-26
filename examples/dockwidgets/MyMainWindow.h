@@ -34,7 +34,7 @@ private:
     const bool m_dockWidget9IsNonDockable;
     const bool m_restoreIsRelative;
     const bool m_maxSizeForDockWidget8;
-    const bool m_dockwidget5DoesntCloseBeforeRestore;
+    const bool m_dockwidget35DontCloseBeforeRestore;
     const bool m_dock0BlocksCloseEvent;
     KDDockWidgets::DockWidget::List m_dockwidgets;
 };
