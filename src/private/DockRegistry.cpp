@@ -536,13 +536,14 @@ const MainWindowBase::List DockRegistry::mainWindows(const QStringList &names)
     return result;
 }
 
-const DockWidgetBase::List DockRegistry::closedDockwidgets() const
+const DockWidgetBase::List DockRegistry::closedDockwidgets(bool honourSkipped) const
 {
     DockWidgetBase::List result;
     result.reserve(m_dockWidgets.size());
 
     for (DockWidgetBase *dw : m_dockWidgets) {
-        if (dw->parent() == nullptr && !dw->isVisible())
+        const bool shouldSkip = honourSkipped && (dw->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip);
+        if (!shouldSkip && dw->parent() == nullptr && !dw->isVisible())
             result.push_back(dw);
     }
 

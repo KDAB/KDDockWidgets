@@ -6679,6 +6679,9 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
     QVERIFY(dock3->isOpen());
     QVERIFY(dock3->isVisible());
     QCOMPARE(dock3->dptr()->frame(), dock2->dptr()->frame());
+
+    auto doc = QJsonDocument::fromJson(saved);
+    QVERIFY(doc.object()["closedDockWidgets"].toArray().isEmpty());
 }
 
 void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()

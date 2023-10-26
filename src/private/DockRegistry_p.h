@@ -88,7 +88,8 @@ public:
     const DockWidgetBase::List dockWidgets(const QStringList &names);
 
     ///@brief returns all closed DockWidget instances
-    const DockWidgetBase::List closedDockwidgets() const;
+    /// @param honourSkipped If true, won't include dock widgets with LayoutSaverOption::Skip
+    const DockWidgetBase::List closedDockwidgets(bool honourSkipped) const;
 
     ///@brief returns all MainWindow instances
     const MainWindowBase::List mainwindows() const;
