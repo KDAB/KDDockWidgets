@@ -73,6 +73,17 @@ public:
     /// @brief Returns the list of dock widgets being dragged
     virtual QVector<DockWidgetBase *> dockWidgets() const;
 
+    /// @brief Returns whether the specified Group is being dragged (and on Wayland)
+    /// In Wayland we use QDrag. If the group is being dragged then true is returned.
+    /// false on non-wayland
+    /// false on wayland if we're dragging a single dock widget instead of group
+    /// @sa WindowBeingDraggedWayland::isInWaylandDrag()
+    virtual bool isInWaylandDrag(Frame *) const
+    {
+        /// This is not a wayland platform
+        return false;
+    }
+
     /// @brief Returns the draggable
     Draggable *draggable() const;
 
@@ -96,6 +107,7 @@ public:
     QPixmap pixmap() const override;
     QStringList affinities() const override;
     QVector<DockWidgetBase *> dockWidgets() const override;
+    bool isInWaylandDrag(Frame *) const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
     // So we're dragging either a frame with multiple dock widgets or a single tab, keep them here.
