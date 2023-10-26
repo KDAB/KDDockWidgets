@@ -180,7 +180,7 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
     if (count == 9 && (m_exampleOptions & ExampleOption::NonDockableDockWidget9))
         options |= KDDockWidgets::DockWidgetOption_NotDockable;
 
-    if (count == 5 && (m_exampleOptions & ExampleOption::Dockwidget5DoesntCloseBeforeRestore))
+    if ((count == 6 || count == 7 || count == 8) && (m_exampleOptions & ExampleOption::DockWidgets678DontCloseBeforeRestore))
         layoutSaverOptions |= KDDockWidgets::LayoutSaverOption::Skip;
 
     auto dock = new KDDockWidgets::QtWidgets::DockWidget(

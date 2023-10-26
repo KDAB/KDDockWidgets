@@ -178,7 +178,7 @@ int main(int argc, char **argv)
     QCommandLineOption dontCloseBeforeRestore(
         "dont-close-widget-before-restore", // krazy:exclude=spelling
         QCoreApplication::translate("main",
-                                    "DockWidget #5 won't be closed before a restore. Illustrates "
+                                    "DockWidgets 6, 7 and 8 won't be closed before a restore. Illustrates "
                                     "LayoutSaverOption::Skip"));
     parser.addOption(dontCloseBeforeRestore);
 
@@ -387,7 +387,7 @@ int main(int argc, char **argv)
     if (parser.isSet(maxSizeOption))
         exampleOptions |= MyMainWindow::ExampleOption::MaxSizeForDockWidget8;
     if (parser.isSet(dontCloseBeforeRestore))
-        exampleOptions |= MyMainWindow::ExampleOption::Dockwidget5DoesntCloseBeforeRestore;
+        exampleOptions |= MyMainWindow::ExampleOption::DockWidgets678DontCloseBeforeRestore;
     if (parser.isSet(blockCloseEvent))
         exampleOptions |= MyMainWindow::ExampleOption::Dock0BlocksCloseEvent;
     if (parser.isSet(programmaticDragEvent)) {

@@ -23,7 +23,7 @@ public:
         NonDockableDockWidget9 = 2,
         RestoreIsRelative = 4,
         MaxSizeForDockWidget8 = 8,
-        Dockwidget5DoesntCloseBeforeRestore = 16,
+        DockWidgets678DontCloseBeforeRestore = 16,
         Dock0BlocksCloseEvent = 32,
         ProgrammaticDragEvent = 64
     };
