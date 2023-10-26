@@ -610,7 +610,7 @@ QStringList LayoutSaver::Layout::dockWidgetNames() const
 
 QStringList LayoutSaver::Layout::dockWidgetsToClose() const
 {
-    // Before restoring a layout we close all dock widgets, unless they're a floating window with the DontCloseBeforeRestore flag
+    // Before restoring a layout we close all dock widgets, unless they're a floating window with the Skip flag
 
     QStringList names;
     names.reserve(allDockWidgets.size());
