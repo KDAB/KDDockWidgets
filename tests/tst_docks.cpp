@@ -4004,6 +4004,11 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore2()
     CHECK(dock3->isOpen());
     CHECK(dock3->isVisible());
     CHECK_EQ(dock3->dptr()->group(), dock2->dptr()->group());
+
+    LayoutSaver::Layout layout;
+    layout.fromJson(saved);
+    CHECK(layout.closedDockWidgets.isEmpty());
+
     KDDW_TEST_RETURN(true);
 }
 

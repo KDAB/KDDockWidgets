@@ -97,7 +97,8 @@ public:
     Vector<Core::DockWidget *> dockWidgets(const Vector<QString> &names);
 
     ///@brief returns all closed DockWidget instances
-    Vector<Core::DockWidget *> closedDockwidgets() const;
+    /// @param honourSkipped If true, won't include dock widgets with LayoutSaverOption::Skip
+    Vector<Core::DockWidget *> closedDockwidgets(bool honourSkipped) const;
 
     ///@brief returns all MainWindow instances
     Vector<Core::MainWindow *> mainwindows() const;

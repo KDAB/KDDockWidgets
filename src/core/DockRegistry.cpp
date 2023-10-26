@@ -525,13 +525,14 @@ Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &names)
     return result;
 }
 
-::DockWidget::List DockRegistry::closedDockwidgets() const
+::DockWidget::List DockRegistry::closedDockwidgets(bool honourSkipped) const
 {
     Core::DockWidget::List result;
     result.reserve(m_dockWidgets.size());
 
     for (Core::DockWidget *dw : m_dockWidgets) {
-        if (dw->parent() == nullptr && !dw->isVisible())
+        const bool shouldSkip = honourSkipped && (dw->layoutSaverOptions() & LayoutSaverOption::Skip);
+        if (!shouldSkip && dw->parent() == nullptr && !dw->isVisible())
             result.push_back(dw);
     }
 

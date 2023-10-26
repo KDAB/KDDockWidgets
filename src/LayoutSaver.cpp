@@ -433,7 +433,7 @@ QByteArray LayoutSaver::serializeLayout() const
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
-    const Core::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
+    const Core::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets(/*honourSkipped=*/true);
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (Core::DockWidget *dockWidget : closedDockWidgets) {
         if (d->matchesAffinity(dockWidget->affinities()))
