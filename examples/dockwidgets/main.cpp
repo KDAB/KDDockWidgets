@@ -179,7 +179,7 @@ int main(int argc, char **argv)
         "dont-close-widget-before-restore", // krazy:exclude=spelling
         QCoreApplication::translate("main",
                                     "DockWidget #5 won't be closed before a restore. Illustrates "
-                                    "LayoutSaverOption::DontCloseBeforeRestore"));
+                                    "LayoutSaverOption::Skip"));
     parser.addOption(dontCloseBeforeRestore);
 
     QCommandLineOption blockCloseEvent(
