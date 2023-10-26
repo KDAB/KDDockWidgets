@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "MDIDockingAreaInstantiator.h"
+#include "MainWindowMDIInstantiator.h"
 #include "qtquick/views/MainWindow.h"
 #include "qtquick/views/MainWindowMDI.h"
 #include "kddockwidgets/core/DockWidget.h"
@@ -23,16 +23,16 @@
 
 using namespace KDDockWidgets;
 
-MDIDockingAreaInstantiator::MDIDockingAreaInstantiator()
+MainWindowMDIInstantiator::MainWindowMDIInstantiator()
 {
 }
 
-QString MDIDockingAreaInstantiator::uniqueName() const
+QString MainWindowMDIInstantiator::uniqueName() const
 {
     return m_uniqueName;
 }
 
-void MDIDockingAreaInstantiator::setUniqueName(const QString &name)
+void MainWindowMDIInstantiator::setUniqueName(const QString &name)
 {
     if (name != m_uniqueName) {
         m_uniqueName = name;
@@ -40,13 +40,13 @@ void MDIDockingAreaInstantiator::setUniqueName(const QString &name)
     }
 }
 
-QVector<QString> MDIDockingAreaInstantiator::affinities() const
+QVector<QString> MainWindowMDIInstantiator::affinities() const
 {
     return m_mainWindow ? m_mainWindow->affinities() : QVector<QString>();
 }
 
-void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,
-                                               InitialOption addingOption)
+void MainWindowMDIInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,
+                                              InitialOption addingOption)
 {
     if (!dockWidget || !m_mainWindow)
         return;
@@ -56,17 +56,17 @@ void MDIDockingAreaInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint lo
     m_mainWindow->mdiLayout()->addDockWidget(dw, localPos, addingOption);
 }
 
-bool MDIDockingAreaInstantiator::closeDockWidgets(bool force)
+bool MainWindowMDIInstantiator::closeDockWidgets(bool force)
 {
     return m_mainWindow && m_mainWindow->closeDockWidgets(force);
 }
 
-void MDIDockingAreaInstantiator::classBegin()
+void MainWindowMDIInstantiator::classBegin()
 {
     // Nothing interesting to do here.
 }
 
-void MDIDockingAreaInstantiator::componentComplete()
+void MainWindowMDIInstantiator::componentComplete()
 {
     if (m_uniqueName.isEmpty()) {
         qWarning() << Q_FUNC_INFO

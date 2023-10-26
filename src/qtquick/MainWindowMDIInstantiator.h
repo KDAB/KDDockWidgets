@@ -27,14 +27,14 @@ class SideBar;
 
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through
 /// MainWindow's ctor So instead, user instantiates a MainWindowWrapper in QML and calls init.
-class DOCKS_EXPORT MDIDockingAreaInstantiator : public QQuickItem
+class DOCKS_EXPORT MainWindowMDIInstantiator : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QVector<QString> affinities READ affinities CONSTANT)
 public:
     ///@brief ctor, called by QML engine
-    MDIDockingAreaInstantiator();
+    MainWindowMDIInstantiator();
 
     QString uniqueName() const;
     void setUniqueName(const QString &);
