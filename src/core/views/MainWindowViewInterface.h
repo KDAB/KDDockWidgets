@@ -18,6 +18,7 @@ namespace KDDockWidgets {
 
 namespace Core {
 
+class View;
 class SideBar;
 class MainWindow;
 class DockWidgetViewInterface;
@@ -69,6 +70,8 @@ public:
     void addDockWidgetAsTab(const QString &dockId);
     void addDockWidget(const QString &dockId, KDDockWidgets::Location,
                        const QString &relativeToDockId = {}, KDDockWidgets::InitialOption = {});
+
+    void setPersistentCentralView(std::shared_ptr<Core::View>);
 
 protected:
     MainWindow *const m_mainWindow;

@@ -12,7 +12,6 @@
 #include "MainWindowViewInterface.h"
 #include "DockWidgetViewInterface.h"
 #include "core/Logging_p.h"
-
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockRegistry.h"
 
@@ -210,6 +209,12 @@ void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets
     } else {
         KDDW_ERROR("Could not find dock widget {}", dockId);
     }
+}
+
+void MainWindowViewInterface::setPersistentCentralView(std::shared_ptr<Core::View> view)
+{
+    Q_ASSERT(m_mainWindow);
+    m_mainWindow->setPersistentCentralView(view);
 }
 
 }

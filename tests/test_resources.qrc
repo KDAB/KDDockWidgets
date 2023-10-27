@@ -14,7 +14,9 @@
         <file>main350.qml</file>
         <file>main343.qml</file>
         <file>main343_2.qml</file>
+        <file>main_persistentCentralWidget.qml</file>
         <file>MyRectangle.qml</file>
-	<file>main_tst_focusBetweenTabs.qml</file>
+	    <file>main_tst_focusBetweenTabs.qml</file>
+        <file>MyRectangle2.qml</file>
     </qresource>
 </RCC>
