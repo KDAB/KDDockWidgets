@@ -63,6 +63,7 @@ jobs:
           cmake -G Ninja -S mdi_with_docking/ -B mdi_with_docking/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/dockwidgets/ -B qtquick/dockwidgets/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/customseparator/ -B qtquick/customseparator/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake -G Ninja -S qtquick/mdi_with_docking/ -B qtquick/mdi_with_docking/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/customtabbar/ -B qtquick/customtabbar/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/customtitlebar/ -B qtquick/customtitlebar/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/mdi/ -B qtquick/mdi/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
@@ -71,6 +72,7 @@ jobs:
           cmake --build minimal/b
           cmake --build mdi_with_docking/b
           cmake --build qtquick/dockwidgets/b
+          cmake --build qtquick/mdi_with_docking/b
           cmake --build qtquick/customseparator/b
           cmake --build qtquick/customtabbar/b
           cmake --build qtquick/mdi/b
