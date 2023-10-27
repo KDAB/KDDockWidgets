@@ -296,9 +296,8 @@
             "inherits": [
                 "python6"
             ],
-            "environment": {
-                "CC": "clang",
-                "CXX": "clang++"
+            "cacheVariables": {
+                "Python3_FIND_VIRTUALENV": "ONLY"
             }
         },
         {
