@@ -9,25 +9,16 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-add_subdirectory(dockwidgets)
-set_target_properties(
-    qtquick_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
-)
+# Adds a qtquick example target
+function(kddw_add_qtquick_example name)
+    add_subdirectory(${name})
+    set_target_properties(
+        qtquick_${name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+    )
+endfunction()
 
-add_subdirectory(mdi)
-set_target_properties(qtquick_mdi PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/")
-
-add_subdirectory(customtitlebar)
-set_target_properties(
-    qtquick_customtitlebar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
-)
-
-add_subdirectory(customtabbar)
-set_target_properties(
-    qtquick_customtabbar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
-)
-
-add_subdirectory(customseparator)
-set_target_properties(
-    qtquick_customseparator PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
-)
+kddw_add_qtquick_example(dockwidgets)
+kddw_add_qtquick_example(mdi)
+kddw_add_qtquick_example(customtitlebar)
+kddw_add_qtquick_example(customtabbar)
+kddw_add_qtquick_example(customseparator)
