@@ -58,6 +58,10 @@ public:
     /// @reimp
     QSize maxSizeHint() const override;
 
+    /// Sets a persistent central widget. It can't be detached.
+    /// Se docs for Core::MainWindow::setPersistentCentralView
+    void setPersistentCentralView(const QString &qmlFilename);
+
 #ifdef Q_MOC_RUN
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
     Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;

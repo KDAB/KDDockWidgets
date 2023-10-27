@@ -16,6 +16,8 @@
 #include "qtquick/Platform.h"
 #include "qtquick/views/TitleBar.h"
 #include "qtquick/views/DockWidget.h"
+#include "qtquick/views/MainWindow.h"
+#include "core/views/MainWindowViewInterface.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
 #include "core/Platform.h"
@@ -53,6 +55,7 @@ private Q_SLOTS:
 
     void tst_shutdownCrash();
     void tst_childQmlContext();
+    void tst_setPersistentCentralView();
 };
 
 
@@ -290,6 +293,21 @@ void TestQtQuick::tst_childQmlContext()
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+}
+
+void TestQtQuick::tst_setPersistentCentralView()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_persistentCentralWidget.qml");
+    const auto mainWindows = DockRegistry::self()->mainwindows();
+    QCOMPARE(mainWindows.size(), 1);
+    auto mainWindow = mainWindows.first();
+    static_cast<QtQuick::MainWindow *>(mainWindow->view())->setPersistentCentralView(":/MyRectangle2.qml");
+
+    Core::Layout *layout = mainWindow->layout();
+    auto rootItem = layout->rootItem();
+    QCOMPARE(rootItem->count_recursive(), 1);
+    QCOMPARE(mainWindow->size(), rootItem->size());
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()
