@@ -54,7 +54,7 @@
 # -DKDDockWidgets_CODE_COVERAGE=[true|false] Enable coverage reporting. Ignored
 # unless KDDockWidgets_DEVELOPER_MODE=True Default=false
 
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.15)
 
 # Allow using a non-KDAB install location.
 set(KDAB_INSTALL

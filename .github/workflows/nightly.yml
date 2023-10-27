@@ -1,0 +1,79 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: CI
+
+on:
+  schedule:
+  - cron: '0 3 * * *'
+
+  push:
+    branches:
+      - 2.0
+  pull_request:
+    branches:
+      - 2.0
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-22.04
+          - windows-2022
+          - macos-13
+
+        preset:
+          - name: ci-python-qt6
+            qt_version: "6.6.0"
+            apt_pgks:
+              - llvm
+
+    steps:
+      - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ matrix.preset.qt_version }}
+          cache: true
+
+      - name: Install ninja-build tool (must be after Qt due PATH changes)
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
+        if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
+        run: |
+          sudo apt update -qq
+          echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
+
+      - uses: actions/checkout@v4
+        #with:
+          #ref: '2.0' # schedule.cron do not allow branch setting
+
+      - uses: actions/setup-python@v4
+        with:
+          cache: 'pip'
+          cache-dependency-path: '.github/workflows/pip-requirements.txt'
+          python-version: '3.9'
+
+      - run: pip3.9 install -r .github/workflows/pip-requirements.txt
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Hackery due Shiboken hardcoded paths
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          sudo mkdir -p /opt/rh/gcc-toolset-10/root/usr/bin/
+          sudo cp /usr/bin/g++-10 /opt/rh/gcc-toolset-10/root/usr/bin/c++
+          sudo mkdir -p /opt/rh/gcc-toolset-10/root/usr/lib/gcc/x86_64-linux-gnu/10/
+          sudo cp /usr/lib/gcc/x86_64-linux-gnu/10/cc1plus /opt/rh/gcc-toolset-10/root/usr/lib/gcc/x86_64-linux-gnu/10/
+
+      - name: Configure project
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
+
+      - name: Build Project ${{ matrix.preset.build_preset_arg }}
+        run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
