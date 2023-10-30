@@ -32,23 +32,53 @@ KDDW.TitleBarBase {
         }
     }
 
-    Rectangle {
-        id: closeButton
-        enabled: root.closeButtonEnabled
-        radius: 5
-        color: isFocused ? "cyan" : "green"
+    Row {
+        id: buttonRow
+        spacing: 10
+
         height: root.height - 20
-        width: height
         anchors {
             right: root.right
             rightMargin: 10
             verticalCenter: root.verticalCenter
         }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                root.closeButtonClicked();
+
+        Rectangle {
+            id: floatButton
+            visible: root.floatButtonVisible
+            radius: 5
+            color: isFocused ? "red" : "white"
+            height: parent.height
+            width: height
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.floatButtonClicked();
+                }
             }
         }
+
+        Rectangle {
+            id: closeButton
+            enabled: root.closeButtonEnabled
+            radius: 5
+            color: isFocused ? "cyan" : "green"
+            height: parent.height
+            width: height
+
+            Text {
+                anchors.centerIn: parent
+                text: "X"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.closeButtonClicked();
+                }
+            }
+        }
+
     }
 }
