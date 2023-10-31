@@ -6682,6 +6682,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
 
     auto doc = QJsonDocument::fromJson(saved);
     QVERIFY(doc.object()["closedDockWidgets"].toArray().isEmpty());
+    QVERIFY(doc.object()["floatingWindows"].toArray().isEmpty());
 }
 
 void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()

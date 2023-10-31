@@ -565,14 +565,19 @@ const Frame::List DockRegistry::frames() const
     return m_frames;
 }
 
-const QVector<FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
+const QVector<FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted, bool honourSkipped) const
 {
     // Returns all the FloatingWindow which aren't being deleted
     QVector<FloatingWindow *> result;
     result.reserve(m_floatingWindows.size());
     for (FloatingWindow *fw : m_floatingWindows) {
-        if (includeBeingDeleted || !fw->beingDeleted())
-            result.push_back(fw);
+        if (!includeBeingDeleted && fw->beingDeleted())
+            continue;
+
+        if (honourSkipped && fw->allDockWidgetsHave(DockWidgetBase::LayoutSaverOption::Skip))
+            continue;
+
+        result.push_back(fw);
     }
 
     return result;

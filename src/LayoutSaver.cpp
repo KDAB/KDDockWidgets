@@ -163,7 +163,7 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<KDDockWidgets::FloatingWindow *> floatingWindows = d->m_dockRegistry->floatingWindows();
+    const QVector<KDDockWidgets::FloatingWindow *> floatingWindows = d->m_dockRegistry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
     layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))
@@ -184,7 +184,8 @@ QByteArray LayoutSaver::serializeLayout() const
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (DockWidgetBase *dockWidget : dockWidgets) {
-        if (d->matchesAffinity(dockWidget->affinities())) {
+        const bool skipsRestore = dockWidget->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip;
+        if (!skipsRestore && d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
             dw->lastPosition = dockWidget->d->lastPosition()->serialize();
             layout.allDockWidgets.push_back(dw);
