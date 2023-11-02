@@ -186,11 +186,6 @@ bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
         if (!m_hoveredGroup || !m_hoveredGroup->isDockable())
             return false;
 
-        if (auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc()) {
-            if (!tabbingAllowedFunc(source, target))
-                return false;
-        }
-
         // Only allow to dock to center if the affinities match
         if (!DockRegistry::self()->affinitiesMatch(m_hoveredGroup->affinities(),
                                                    windowBeingDragged->affinities()))

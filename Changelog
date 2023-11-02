@@ -8,6 +8,7 @@
     - Each controller has a gui counter part, implemented for each supported frontend
   - Uses nlohmann JSON library (MIT) instead of QJsonDocument, for saving/restoring layouts
   - Added Config::setStartDragDistance()
+  - Removed Config::setTabbingAllowedFunc() which was already deprecated in favor of Config::setDropIndicatorAllowedFunc()
 
 * v1.7.1 (unreleased)
  -

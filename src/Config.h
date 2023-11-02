@@ -51,15 +51,6 @@ typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
                                          const Vector<Core::DockWidget *> &target,
                                          Core::DropArea *dropArea);
 
-/// @deprecated Use DropIndicatorAllowedFunc instead.
-/// @brief Function to allow the user more granularity to disallow dock widgets to tab together
-/// @param source The dock widgets being dragged
-/// @param target The dock widgets within an existing docked tab group
-/// @return true if the docking is allowed.
-/// @sa setTabbingAllowedFunc
-typedef bool (*TabbingAllowedFunc)(const Vector<Core::DockWidget *> &source,
-                                   const Vector<Core::DockWidget *> &target);
-
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.
  *
@@ -270,39 +261,6 @@ public:
     /// @brief Returns whether drop indicators are inhibited.
     /// by default this is false unless you call setDropIndicatorsInhibited(true)
     bool dropIndicatorsInhibited() const;
-
-    /**
-     * @deprecated Use setDropIndicatorAllowedFunc() instead, and catch the DropLocation_Center
-     * case.
-     *
-     * @brief Allows the user to intercept a docking attempt to center (tabbed) and disallow it.
-     *
-     * Whenever the user tries to tab two widgets together, the framework will call @p func. If
-     * it returns true, then tabbing is allowed, otherwise not.
-     *
-     * Example:
-     * @code
-     * #include <kddockwidgets/Config.h>
-     * (...)
-     *
-     * auto func = [] (const KDDockWidgets::Core::DockWidget::List &source,
-     *                 const KDDockWidgets::Core::DockWidget::List &target)
-     * {
-     *    // disallows dockFoo to be tabbed with dockBar.
-     *    return !(source.contains(dockFoo) && target.contains(dockBar));
-     * };
-     *
-     * KDDockWidgets::Config::self().setTabbingAllowedFunc(func);
-     *
-     * @endcode
-     */
-    void setTabbingAllowedFunc(TabbingAllowedFunc func);
-
-    ///@brief Used internally by the framework. Returns the function which was passed to
-    /// setTabbingAllowedFunc()
-    /// By default it's nullptr.
-    ///@sa setTabbingAllowedFunc().
-    TabbingAllowedFunc tabbingAllowedFunc() const;
 
     /**
      * @brief Allows the client app to disallow certain docking indicators.

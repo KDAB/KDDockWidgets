@@ -51,7 +51,6 @@ public:
 
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
-    TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
     DropIndicatorAllowedFunc m_dropIndicatorAllowedFunc = nullptr;
     ViewFactory *m_viewFactory = nullptr;
     Flags m_flags = Flag_Default;
@@ -191,16 +190,6 @@ double Config::draggedWindowOpacity() const
 bool Config::transparencyOnlyOverDropIndicator() const
 {
     return d->m_transparencyOnlyOverDropIndicator;
-}
-
-void Config::setTabbingAllowedFunc(TabbingAllowedFunc func)
-{
-    d->m_tabbingAllowedFunc = func;
-}
-
-TabbingAllowedFunc Config::tabbingAllowedFunc() const
-{
-    return d->m_tabbingAllowedFunc;
 }
 
 void Config::setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func)
