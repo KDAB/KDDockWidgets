@@ -8,13 +8,6 @@ on:
   schedule:
   - cron: '0 3 * * *'
 
-  push:
-    branches:
-      - 2.0
-  pull_request:
-    branches:
-      - 2.0
-
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -31,6 +24,20 @@ jobs:
             qt_version: "6.6.0"
             apt_pgks:
               - llvm
+
+        include:
+          - os: ubuntu-22.04
+            preset:
+              name: ci-clang-tidy-qt5
+              qt_version: "5.15"
+
+          - os: ubuntu-22.04
+            preset:
+              name: clazy
+              build_preset_arg: '--preset=clazy'
+              qt_version: "5.15"
+              apt_pgks:
+                - clazy
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
