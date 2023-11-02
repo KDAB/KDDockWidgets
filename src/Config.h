@@ -221,18 +221,16 @@ public:
     MainWindowFactoryFunc mainWindowFactoryFunc() const;
 
     /**
-     * @brief Sets the WidgetFactory.
+     * @brief Sets the ViewFactory.
      *
-     * By default DefaultWidgetFactory is used, which gives you FrameWidget, TitleBarWidget,
-     * TabBarWidget, TabWidgetWidget etc. You can set your own factory, to supply your own variants
-     * of those classes, for the purposes of changing GUI appearance and such.
+     * To draw things on screen, KDDW uses QtWidgets::{Group, TitleBar, TabBar, Separator, DockWidget, etc} (same for QtQuick::*)
+     * You can set your own factory and provide classes derived from the above list to override visual behaviour.
      *
-     * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
      * Ownership is taken.
      */
     void setViewFactory(Core::ViewFactory *);
 
-    ///@brief getter for the framework widget factory
+    ///@brief getter for the framework view factory
     Core::ViewFactory *viewFactory() const;
 
     /**
