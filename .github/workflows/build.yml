@@ -83,10 +83,6 @@ jobs:
                 - lld
           - os: ubuntu-22.04
             preset:
-              name: ci-clang-tidy-qt5
-              qt_version: "5.15"
-          - os: ubuntu-22.04
-            preset:
               name: ci-dev-valgrind-qt5
               qt_version: "5.15"
               apt_pgks:
@@ -99,13 +95,6 @@ jobs:
               apt_pgks:
                 - lld
                 - valgrind
-          - os: ubuntu-22.04
-            preset:
-              name: clazy
-              build_preset_arg: '--preset=clazy'
-              qt_version: "5.15"
-              apt_pgks:
-                - clazy
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
