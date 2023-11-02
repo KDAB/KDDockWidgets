@@ -16,6 +16,7 @@
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/qtwidgets/ViewFactory.h>
 #include <kddockwidgets/core/DockWidget.h>
+#include <kddockwidgets/core/Draggable_p.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -392,7 +393,13 @@ int main(int argc, char **argv)
         exampleOptions |= MyMainWindow::ExampleOption::Dock0BlocksCloseEvent;
     if (parser.isSet(programmaticDragEvent)) {
         exampleOptions |= MyMainWindow::ExampleOption::ProgrammaticDragEvent;
-        KDDockWidgets::Config::self().setOnlyProgrammaticDrag(true);
+
+        KDDockWidgets::Config::self().setAboutToStartDragFunc([](Core::Draggable *draggable) -> KDDockWidgets::DragOptions {
+            if (draggable->isWindow())
+                return KDDockWidgets::DragOption::InhibitDrop;
+
+            return KDDockWidgets::DragOption::InhibitDrag;
+        });
     }
 
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);

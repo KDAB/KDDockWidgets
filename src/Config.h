@@ -28,11 +28,13 @@ namespace Core {
 class DockWidget;
 class MainWindow;
 class DropArea;
+class Draggable;
 class ViewFactory;
 }
 
 typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name, KDDockWidgets::MainWindowOptions);
+typedef KDDockWidgets::DragOptions (*AboutToStartDragFunc)(Core::Draggable *draggable);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///
@@ -288,6 +290,16 @@ public:
      * Run "examples/qtwidgets_dockwidgets --hide-certain-docking-indicators" to see this in action.
      */
     void setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func);
+
+    /// @brief Allows to stop a drag or a drop from happening
+    ///
+    /// Set a function that will be called just before a drag starts.
+    ///
+    /// @param draggable The thing about to be dragged. Can be a tab, a group of tabs, a floating window or
+    ///                  the tabbar's background.
+    /// Your lambda should return the DragOptions to be honoured
+    void setAboutToStartDragFunc(AboutToStartDragFunc func);
+    AboutToStartDragFunc aboutToStartDragFunc() const;
 
     ///@brief Used internally by the framework. Returns the function which was passed to
     /// setDropIndicatorAllowedFunc()

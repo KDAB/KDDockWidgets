@@ -287,6 +287,17 @@ enum class TitleBarButtonType {
 };
 Q_ENUM_NS(TitleBarButtonType)
 
+/// @brief Very low level options to tune dragging behaviour
+/// Unneeded unless you want to inhibit dragging or dropping for particular dock widgets
+/// @sa KDDockWidgets::setAboutToStartDrag()
+enum class DragOption {
+    None = 0,
+    InhibitDrop = 1, ///< Windows can be dragged to move, but not dock
+    InhibitDrag = 2 ///< Windows can't be dragged (and can't be dropped, as a consequence)
+};
+Q_ENUM_NS(DragOption)
+Q_DECLARE_FLAGS(DragOptions, DragOption)
+
 ///@brief Enum describing the different drop indicator types
 enum DropLocation {
     DropLocation_None = 0,

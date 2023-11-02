@@ -231,6 +231,14 @@ bool StatePreDrag::handleMouseMove(Point globalPos)
         return false;
     }
 
+    if (!q->m_inProgrammaticDrag) {
+        if (auto func = Config::self().aboutToStartDragFunc()) {
+            const DragOptions opts = func(q->m_draggable);
+            if (opts & DragOption::InhibitDrag)
+                return false;
+        }
+    }
+
     if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
         if (q->m_draggable->isMDI())
             q->manhattanLengthMoveMDI.emit();
@@ -744,10 +752,6 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
     case Event::MouseButtonPress:
         // We don't care about the secondary button
         if (me->buttons() & Qt::RightButton)
-            break;
-
-        // If this is enabled then only DockWidget::startDragging() can start it
-        if (Config::self().onlyProgrammaticDrag())
             break;
 
         // For top-level windows that support native dragging all goes through the NonClient*
