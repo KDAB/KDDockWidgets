@@ -31,6 +31,7 @@ public:
     KDBindings::Signal<> hoveredGroupRectChanged;
     KDBindings::Signal<> currentDropLocationChanged;
     KDBindings::ScopedConnection groupConnection;
+    KDBindings::ScopedConnection dropIndicatorsInhibitedConnection;
 };
 
 }
