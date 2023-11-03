@@ -405,8 +405,12 @@ int main(int argc, char **argv)
             }
 
             if (draggable->isWindow()) {
-                KDDockWidgets::Config::self().setDropIndicatorsInhibited(true);
                 qApp->installEventFilter(s_ctrlKeyEventFilter);
+
+                // ctrl might be already pressed before the DnD even starts, so honour that as well
+                const bool ctrlIsPressed = qApp->keyboardModifiers() & Qt::ControlModifier;
+                KDDockWidgets::Config::self().setDropIndicatorsInhibited(!ctrlIsPressed);
+
                 return true;
             }
 
