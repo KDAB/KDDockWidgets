@@ -236,11 +236,9 @@ bool StatePreDrag::handleMouseMove(Point globalPos)
     if (!q->m_draggable->dragCanStart(q->m_pressPos, globalPos))
         return false;
 
-    if (!q->m_inProgrammaticDrag) {
-        if (auto func = Config::self().dragAboutToStartFunc()) {
-            if (!func(q->m_draggable))
-                return false;
-        }
+    if (auto func = Config::self().dragAboutToStartFunc()) {
+        if (!func(q->m_draggable))
+            return false;
     }
 
     if (q->m_draggable->isMDI())
@@ -639,6 +637,11 @@ bool DragController::isInNonClientDrag() const
 bool DragController::isInClientDrag() const
 {
     return isDragging() && !m_nonClientDrag;
+}
+
+bool DragController::isInProgrammaticDrag() const
+{
+    return m_inProgrammaticDrag;
 }
 
 bool DragController::isIdle() const

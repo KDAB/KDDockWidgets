@@ -12,6 +12,7 @@
 #include "MyWidget.h"
 #include "MyMainWindow.h"
 #include "MyViewFactory.h"
+#include "CtrlKeyEventFilter.h"
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/qtwidgets/ViewFactory.h>
@@ -28,6 +29,8 @@
 // clazy:excludeall=qstring-allocations
 
 using namespace KDDockWidgets;
+
+static CtrlKeyEventFilter *s_ctrlKeyEventFilter = nullptr;
 
 int main(int argc, char **argv)
 {
@@ -394,11 +397,24 @@ int main(int argc, char **argv)
     if (parser.isSet(programmaticDragEvent)) {
         exampleOptions |= MyMainWindow::ExampleOption::ProgrammaticDragEvent;
 
+        s_ctrlKeyEventFilter = new CtrlKeyEventFilter(qApp);
         KDDockWidgets::Config::self().setDragAboutToStartFunc([](Core::Draggable *draggable) -> bool {
-            if (draggable->isWindow())
+            if (draggable->isInProgramaticDrag()) {
+                KDDockWidgets::Config::self().setDropIndicatorsInhibited(false);
                 return true;
+            }
+
+            if (draggable->isWindow()) {
+                KDDockWidgets::Config::self().setDropIndicatorsInhibited(true);
+                qApp->installEventFilter(s_ctrlKeyEventFilter);
+                return true;
+            }
 
             return false;
+        });
+
+        KDDockWidgets::Config::self().setDragEndedFunc([]() {
+            qApp->removeEventFilter(s_ctrlKeyEventFilter);
         });
     }
 
