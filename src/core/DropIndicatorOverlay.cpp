@@ -39,7 +39,7 @@ DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
     // overlay
     view->enableAttribute(Qt::WA_TransparentForMouseEvents);
 
-    DockRegistry::self()->dptr()->dropIndicatorsInhibitedChanged.connect([this](bool inhibited) {
+    d->dropIndicatorsInhibitedConnection = DockRegistry::self()->dptr()->dropIndicatorsInhibitedChanged.connect([this](bool inhibited) {
         if (inhibited) {
             removeHover();
         } else {
