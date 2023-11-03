@@ -186,6 +186,8 @@ void StateNone::onEntry()
         q->m_currentDropArea = nullptr;
     }
 
+    /// Note that although this is unneedesly emitted at startup, there's nobody connected
+    /// to it, since we're in DragController ctor, so it's fine.
     q->isDraggingChanged.emit();
 }
 
@@ -231,21 +233,22 @@ bool StatePreDrag::handleMouseMove(Point globalPos)
         return false;
     }
 
+    if (!q->m_draggable->dragCanStart(q->m_pressPos, globalPos))
+        return false;
+
     if (!q->m_inProgrammaticDrag) {
-        if (auto func = Config::self().aboutToStartDragFunc()) {
+        if (auto func = Config::self().dragAboutToStartFunc()) {
             if (!func(q->m_draggable))
                 return false;
         }
     }
 
-    if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
-        if (q->m_draggable->isMDI())
-            q->manhattanLengthMoveMDI.emit();
-        else
-            q->manhattanLengthMove.emit();
-        return true;
-    }
-    return false;
+    if (q->m_draggable->isMDI())
+        q->manhattanLengthMoveMDI.emit();
+    else
+        q->manhattanLengthMove.emit();
+
+    return true;
 }
 
 bool StatePreDrag::handleMouseButtonRelease(Point)
@@ -385,6 +388,11 @@ void StateDragging::onExit()
 #if defined(KDDW_FRONTEND_QT_WINDOWS) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.stop();
 #endif
+
+    if (auto callback = Config::self().dragEndedFunc()) {
+        // this user is interested in knowing the drag ended
+        callback();
+    }
 }
 
 bool StateDragging::handleMouseButtonRelease(Point globalPos)

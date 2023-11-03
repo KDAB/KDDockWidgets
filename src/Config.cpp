@@ -52,7 +52,8 @@ public:
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     DropIndicatorAllowedFunc m_dropIndicatorAllowedFunc = nullptr;
-    AboutToStartDragFunc m_aboutToStartDragFunc = nullptr;
+    DragAboutToStartFunc m_dragAboutToStartFunc = nullptr;
+    DragEndedFunc m_dragEndedFunc = nullptr;
     ViewFactory *m_viewFactory = nullptr;
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
@@ -203,14 +204,24 @@ DropIndicatorAllowedFunc Config::dropIndicatorAllowedFunc() const
     return d->m_dropIndicatorAllowedFunc;
 }
 
-void Config::setAboutToStartDragFunc(AboutToStartDragFunc func)
+void Config::setDragAboutToStartFunc(DragAboutToStartFunc func)
 {
-    d->m_aboutToStartDragFunc = func;
+    d->m_dragAboutToStartFunc = func;
 }
 
-AboutToStartDragFunc Config::aboutToStartDragFunc() const
+DragAboutToStartFunc Config::dragAboutToStartFunc() const
 {
-    return d->m_aboutToStartDragFunc;
+    return d->m_dragAboutToStartFunc;
+}
+
+void Config::setDragEndedFunc(DragEndedFunc func)
+{
+    d->m_dragEndedFunc = func;
+}
+
+DragEndedFunc Config::dragEndedFunc() const
+{
+    return d->m_dragEndedFunc;
 }
 
 void Config::setAbsoluteWidgetMinSize(Size size)
