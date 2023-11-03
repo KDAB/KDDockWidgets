@@ -121,6 +121,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         setPersistentCentralWidget(new MyWidget1());
     }
 
+    // WIP: Add option to enable this
     // optional, just for demo purposes regarding pressing Ctrl key to hide drop indicators
     // qApp->installEventFilter(this);
 }
