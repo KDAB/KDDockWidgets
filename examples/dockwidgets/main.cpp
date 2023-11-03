@@ -400,6 +400,7 @@ int main(int argc, char **argv)
         s_ctrlKeyEventFilter = new CtrlKeyEventFilter(qApp);
         KDDockWidgets::Config::self().setDragAboutToStartFunc([](Core::Draggable *draggable) -> bool {
             if (draggable->isInProgramaticDrag()) {
+
                 KDDockWidgets::Config::self().setDropIndicatorsInhibited(false);
                 return true;
             }

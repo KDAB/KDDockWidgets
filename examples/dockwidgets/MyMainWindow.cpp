@@ -122,7 +122,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     }
 
     // optional, just for demo purposes regarding pressing Ctrl key to hide drop indicators
-    qApp->installEventFilter(this);
+    // qApp->installEventFilter(this);
 }
 
 MyMainWindow::~MyMainWindow()

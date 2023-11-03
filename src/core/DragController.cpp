@@ -834,6 +834,11 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
         return false;
     }
 
+    if (auto func = Config::self().dragAboutToStartFunc()) {
+        if (!func(m_draggable))
+            return false;
+    }
+
     manhattanLengthMove.emit();
     if (activeState() != m_stateDragging && !isWayland()) { // wayland blocks on a QDrag::exec(). When it reaches here we're already done
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in drag state");
