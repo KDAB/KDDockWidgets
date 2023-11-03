@@ -34,7 +34,7 @@ class ViewFactory;
 
 typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name, KDDockWidgets::MainWindowOptions);
-typedef KDDockWidgets::DragOptions (*AboutToStartDragFunc)(Core::Draggable *draggable);
+typedef bool (*AboutToStartDragFunc)(Core::Draggable *draggable);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///

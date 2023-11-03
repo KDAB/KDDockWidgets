@@ -394,11 +394,11 @@ int main(int argc, char **argv)
     if (parser.isSet(programmaticDragEvent)) {
         exampleOptions |= MyMainWindow::ExampleOption::ProgrammaticDragEvent;
 
-        KDDockWidgets::Config::self().setAboutToStartDragFunc([](Core::Draggable *draggable) -> KDDockWidgets::DragOptions {
+        KDDockWidgets::Config::self().setAboutToStartDragFunc([](Core::Draggable *draggable) -> bool {
             if (draggable->isWindow())
-                return KDDockWidgets::DragOption::InhibitDrop;
+                return true;
 
-            return KDDockWidgets::DragOption::InhibitDrag;
+            return false;
         });
     }
 

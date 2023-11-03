@@ -233,8 +233,7 @@ bool StatePreDrag::handleMouseMove(Point globalPos)
 
     if (!q->m_inProgrammaticDrag) {
         if (auto func = Config::self().aboutToStartDragFunc()) {
-            const DragOptions opts = func(q->m_draggable);
-            if (opts & DragOption::InhibitDrag)
+            if (!func(q->m_draggable))
                 return false;
         }
     }
