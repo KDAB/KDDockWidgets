@@ -492,3 +492,5 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
+
+CtrlKeyEventFilter::~CtrlKeyEventFilter() = default;

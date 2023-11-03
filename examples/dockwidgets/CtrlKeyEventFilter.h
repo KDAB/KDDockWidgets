@@ -21,6 +21,8 @@ class CtrlKeyEventFilter : public QObject
 public:
     using QObject::QObject;
 
+    ~CtrlKeyEventFilter() override;
+
     bool eventFilter(QObject *, QEvent *ev) override
     {
         if (ev->type() != QEvent::KeyPress && ev->type() != QEvent::KeyRelease)
