@@ -34,3 +34,9 @@ jobs:
 
       - name: Build
         run: cmake --build src/core/layouting/build/
+
+      - name: Configure from top-level
+        run: cmake --preset=dev-layouting
+
+      - name: Build from top-level
+        run: cmake --build build-dev-layouting --parallel
