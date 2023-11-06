@@ -19,12 +19,10 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-22.04
-          - ubuntu-20.04
-          - windows-2022
-          - windows-2019
-          - macos-12
-          - macos-11
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
         preset:
           - name: ci-dev-qt5
             qt_version: "5.15"
@@ -44,14 +42,14 @@ jobs:
             qt_version: "6.3.*"
 
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-latest
             preset:
               name: ci-dev-asan-qt5
               qt_version: "5.15"
               detect_leaks: 0
               apt_pgks:
                 - lld
-          - os: ubuntu-22.04
+          - os: ubuntu-latest
             preset:
               name: ci-python-qt6
               qt_version: "6.6.0"
@@ -60,28 +58,28 @@ jobs:
                 - llvm
               pip_pgks:
                 - shiboken6-generator==6.6.0 pyside6==6.6.0
-          - os: ubuntu-22.04
+          - os: ubuntu-latest
             preset:
               name: ci-dev-asan-qtwidgets-qt6
               qt_version: "6.5.*"
               detect_leaks: 1
               apt_pgks:
                 - lld
-          - os: ubuntu-22.04
+          - os: ubuntu-latest
             preset:
               name: ci-dev-asan-qtquick-qt6
               qt_version: "6.5.*"
               detect_leaks: 1
               apt_pgks:
                 - lld
-          - os: ubuntu-22.04
+          - os: ubuntu-latest
             preset:
               name: ci-dev-valgrind-qt5
               qt_version: "5.15"
               apt_pgks:
                 - lld
                 - valgrind
-          - os: ubuntu-22.04
+          - os: ubuntu-latest
             preset:
               name: ci-dev-valgrind-qt6
               qt_version: "6.5.*"

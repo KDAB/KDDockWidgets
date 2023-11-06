@@ -7,13 +7,6 @@ name: Nightly CI
 on:
   schedule:
   - cron: '0 3 * * *'
-  # TODO remove if green
-  push:
-    branches:
-      - 2.0
-  pull_request:
-    branches:
-      - 2.0
 
 jobs:
   build:
@@ -23,8 +16,12 @@ jobs:
       matrix:
         os:
           - ubuntu-22.04
+          - ubuntu-20.04
           - windows-2022
+          - windows-2019
           - macos-13
+          - macos-12
+          - macos-11
 
         preset:
           - name: ci-release-static-qt5
