@@ -11,6 +11,7 @@
 
 #include "MyMainWindow.h"
 #include "MyWidget.h"
+#include "CtrlKeyEventFilter.h"
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/LayoutSaver.h>
@@ -121,8 +122,11 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         setPersistentCentralWidget(new MyWidget1());
     }
 
-    // optional, just for demo purposes regarding pressing Ctrl key to hide drop indicators
-    qApp->installEventFilter(this);
+    if (m_exampleOptions & ExampleOption::CtrlKeyFiltersDropIndicators) {
+        /// Drop indicators will only be visible when ctrl is pressed
+        KDDockWidgets::Config::self().setDropIndicatorsInhibited(true);
+        qApp->installEventFilter(new CtrlKeyEventFilter(this));
+    }
 }
 
 MyMainWindow::~MyMainWindow()
@@ -249,25 +253,4 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
     return dock;
 }
 
-bool MyMainWindow::eventFilter(QObject *obj, QEvent *ev)
-{
-    // This event filter is just for examplify how to use the KDDW API to hide
-    // the drag indicators when ctrl is pressed
-
-    switch (ev->type()) {
-    case QEvent::KeyPress:
-    case QEvent::KeyRelease: {
-        auto kev = static_cast<QKeyEvent *>(ev);
-        if (kev->key() == Qt::Key_Control && qobject_cast<QWindow *>(obj)) {
-            const bool hideIndicators = ev->type() == QEvent::KeyPress;
-            KDDockWidgets::Config::self().setDropIndicatorsInhibited(hideIndicators);
-        }
-    }
-
-    break;
-    default:
-        break;
-    }
-
-    return KDDockWidgets::QtWidgets::MainWindow::eventFilter(obj, ev);
-}
+CtrlKeyEventFilter::~CtrlKeyEventFilter() = default;

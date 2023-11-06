@@ -25,7 +25,8 @@ public:
         MaxSizeForDockWidget8 = 8,
         DockWidgets678DontCloseBeforeRestore = 16,
         Dock0BlocksCloseEvent = 32,
-        ProgrammaticDragEvent = 64
+        ProgrammaticDragEvent = 64,
+        CtrlKeyFiltersDropIndicators = 128,
     };
     Q_DECLARE_FLAGS(ExampleOptions, ExampleOption)
 
@@ -38,7 +39,6 @@ public:
 
 private:
     void createDockWidgets();
-    bool eventFilter(QObject *obj, QEvent *ev) override;
     KDDockWidgets::QtWidgets::DockWidget *newDockWidget();
     QMenu *m_toggleMenu = nullptr;
     const ExampleOptions m_exampleOptions;

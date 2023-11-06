@@ -216,6 +216,11 @@ int main(int argc, char **argv)
                                     "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
     parser.addOption(hideCertainDockingIndicators);
 
+    QCommandLineOption ctrlTogglesDropIndicators(
+        "ctrl-toggles-drop-indicators",
+        QCoreApplication::translate("main", "Ctrl key toggles drop indicators"));
+    parser.addOption(ctrlTogglesDropIndicators);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
 
@@ -378,6 +383,8 @@ int main(int argc, char **argv)
 
     MyMainWindow::ExampleOptions exampleOptions = {};
 
+    if (parser.isSet(ctrlTogglesDropIndicators))
+        exampleOptions |= MyMainWindow::ExampleOption::CtrlKeyFiltersDropIndicators;
     if (parser.isSet(nonClosableDockWidget))
         exampleOptions |= MyMainWindow::ExampleOption::DockWidget0IsNonClosable;
     if (parser.isSet(relativeRestore))
