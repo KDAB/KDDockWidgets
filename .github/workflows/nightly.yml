@@ -7,6 +7,13 @@ name: Nightly CI
 on:
   schedule:
   - cron: '0 3 * * *'
+  # TODO remove if green
+  push:
+    branches:
+      - 2.0
+  pull_request:
+    branches:
+      - 2.0
 
 jobs:
   build:
@@ -20,10 +27,18 @@ jobs:
           - macos-13
 
         preset:
+          - name: ci-release-static-qt5
+            qt_version: "5.15"
+          - name: ci-dev-static-qt5
+            qt_version: "5.15"
           - name: ci-python-qt6
             qt_version: "6.6.0"
             apt_pgks:
               - llvm
+          - name: ci-release-static-qt6
+            qt_version: "6.3.*"
+          - name: ci-dev-static-qt6
+            qt_version: "6.3.*"
 
         include:
           - os: ubuntu-22.04
