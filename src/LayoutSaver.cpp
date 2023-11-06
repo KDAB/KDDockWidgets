@@ -425,7 +425,7 @@ QByteArray LayoutSaver::serializeLayout() const
     }
 
     const Vector<Core::FloatingWindow *> floatingWindows =
-        d->m_dockRegistry->floatingWindows();
+        d->m_dockRegistry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
     layout.floatingWindows.reserve(floatingWindows.size());
     for (Core::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))
@@ -446,7 +446,9 @@ QByteArray LayoutSaver::serializeLayout() const
     const Core::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (Core::DockWidget *dockWidget : dockWidgets) {
-        if (d->matchesAffinity(dockWidget->affinities())) {
+        const bool skipsRestore = dockWidget->layoutSaverOptions() & LayoutSaverOption::Skip;
+
+        if (!skipsRestore && d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
             dw->lastPosition = dockWidget->d->lastPosition()->serialize();
             layout.allDockWidgets.push_back(dw);

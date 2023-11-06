@@ -568,14 +568,19 @@ Core::Group::List DockRegistry::groups() const
     return m_groups;
 }
 
-Vector<Core::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
+Vector<Core::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted, bool honourSkipped) const
 {
     // Returns all the FloatingWindow which aren't being deleted
     Vector<Core::FloatingWindow *> result;
     result.reserve(m_floatingWindows.size());
     for (Core::FloatingWindow *fw : m_floatingWindows) {
-        if (includeBeingDeleted || !fw->beingDeleted())
-            result.push_back(fw);
+        if (!includeBeingDeleted && fw->beingDeleted())
+            continue;
+
+        if (honourSkipped && fw->allDockWidgetsHave(LayoutSaverOption::Skip))
+            continue;
+
+        result.push_back(fw);
     }
 
     return result;

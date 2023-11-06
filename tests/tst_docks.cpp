@@ -4008,6 +4008,7 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore2()
     LayoutSaver::Layout layout;
     layout.fromJson(saved);
     CHECK(layout.closedDockWidgets.isEmpty());
+    CHECK(layout.floatingWindows.isEmpty());
 
     KDDW_TEST_RETURN(true);
 }

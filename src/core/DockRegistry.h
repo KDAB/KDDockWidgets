@@ -120,7 +120,7 @@ public:
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
     Vector<Core::FloatingWindow *>
-    floatingWindows(bool includeBeingDeleted = false) const;
+    floatingWindows(bool includeBeingDeleted = false, bool honourSkipped = false) const;
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both
     /// QtWidgets and QtQuick
