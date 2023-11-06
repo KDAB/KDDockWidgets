@@ -28,11 +28,14 @@ namespace Core {
 class DockWidget;
 class MainWindow;
 class DropArea;
+class Draggable;
 class ViewFactory;
 }
 
 typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name, KDDockWidgets::MainWindowOptions);
+typedef bool (*DragAboutToStartFunc)(Core::Draggable *draggable);
+typedef void (*DragEndedFunc)();
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///
@@ -288,6 +291,26 @@ public:
      * Run "examples/qtwidgets_dockwidgets --hide-certain-docking-indicators" to see this in action.
      */
     void setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func);
+
+    /// @brief set a callback to be called once a drag starts
+    ///
+    /// This function is for advanced usage only. Allows more granularity for
+    /// inhibiting DnD.
+    ///
+    /// Return true/false whether you allow the drag or not.
+    ///
+    /// @param draggable The thing about to be dragged. Can be a tab, a group of tabs, a floating window or
+    ///                  the tabbar's background.
+    ///
+    /// @sa setDragEndedFunc
+    void setDragAboutToStartFunc(DragAboutToStartFunc func);
+    DragAboutToStartFunc dragAboutToStartFunc() const;
+
+    /// @brief set a callback to be called once drag ends
+    ///
+    /// @sa setAboutToStartDragFunc
+    void setDragEndedFunc(DragEndedFunc func);
+    DragEndedFunc dragEndedFunc() const;
 
     ///@brief Used internally by the framework. Returns the function which was passed to
     /// setDropIndicatorAllowedFunc()

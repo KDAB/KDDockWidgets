@@ -233,14 +233,20 @@ bool StatePreDrag::handleMouseMove(Point globalPos)
         return false;
     }
 
-    if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
-        if (q->m_draggable->isMDI())
-            q->manhattanLengthMoveMDI.emit();
-        else
-            q->manhattanLengthMove.emit();
-        return true;
+    if (!q->m_draggable->dragCanStart(q->m_pressPos, globalPos))
+        return false;
+
+    if (auto func = Config::self().dragAboutToStartFunc()) {
+        if (!func(q->m_draggable))
+            return false;
     }
-    return false;
+
+    if (q->m_draggable->isMDI())
+        q->manhattanLengthMoveMDI.emit();
+    else
+        q->manhattanLengthMove.emit();
+
+    return true;
 }
 
 bool StatePreDrag::handleMouseButtonRelease(Point)
@@ -380,6 +386,11 @@ void StateDragging::onExit()
 #if defined(KDDW_FRONTEND_QT_WINDOWS) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.stop();
 #endif
+
+    if (auto callback = Config::self().dragEndedFunc()) {
+        // this user is interested in knowing the drag ended
+        callback();
+    }
 }
 
 bool StateDragging::handleMouseButtonRelease(Point globalPos)
@@ -753,10 +764,6 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         if (me->buttons() & Qt::RightButton)
             break;
 
-        // If this is enabled then only DockWidget::startDragging() can start it
-        if (Config::self().onlyProgrammaticDrag())
-            break;
-
         // For top-level windows that support native dragging all goes through the NonClient*
         // events. This also forbids dragging a FloatingWindow simply by pressing outside of the
         // title area, in the background
@@ -825,6 +832,11 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
         m_inProgrammaticDrag = false;
         KDDW_WARN("DragController::programmaticStartDrag: Expected to be in pre-drag state");
         return false;
+    }
+
+    if (auto func = Config::self().dragAboutToStartFunc()) {
+        if (!func(m_draggable))
+            return false;
     }
 
     manhattanLengthMove.emit();
