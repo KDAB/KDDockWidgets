@@ -200,3 +200,8 @@ void TitleBar::toggleMaximized()
 {
     m_titleBar->toggleMaximized();
 }
+
+bool TitleBar::isFloating() const
+{
+    return m_titleBar->isFloating();
+}

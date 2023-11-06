@@ -79,6 +79,5 @@ KDDW.TitleBarBase {
                 }
             }
         }
-
     }
 }

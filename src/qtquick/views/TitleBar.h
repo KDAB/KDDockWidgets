@@ -84,6 +84,7 @@ protected:
     Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void onAutoHideClicked();
     Q_INVOKABLE void toggleMaximized();
+    Q_INVOKABLE bool isFloating() const;
 
 Q_SIGNALS:
     void titleBarQmlItemChanged();
