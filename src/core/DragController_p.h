@@ -96,6 +96,7 @@ public:
     bool isDragging() const;
     bool isInNonClientDrag() const;
     bool isInClientDrag() const;
+    bool isInProgrammaticDrag() const;
     bool isIdle() const;
 
     void grabMouseFor(View *);

@@ -75,3 +75,8 @@ void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
     assert(w);
     d->widgetResizeHandler = w;
 }
+
+bool Draggable::isInProgramaticDrag() const
+{
+    return DragController::instance()->isInProgrammaticDrag();
+}

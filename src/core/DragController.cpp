@@ -186,6 +186,8 @@ void StateNone::onEntry()
         q->m_currentDropArea = nullptr;
     }
 
+    /// Note that although this is unneedesly emitted at startup, there's nobody connected
+    /// to it, since we're in DragController ctor, so it's fine.
     q->isDraggingChanged.emit();
 }
 
@@ -624,6 +626,11 @@ bool DragController::isInNonClientDrag() const
 bool DragController::isInClientDrag() const
 {
     return isDragging() && !m_nonClientDrag;
+}
+
+bool DragController::isInProgrammaticDrag() const
+{
+    return m_inProgrammaticDrag;
 }
 
 bool DragController::isIdle() const
