@@ -97,7 +97,13 @@
             },
             "inherits": [
                 "base"
-            ]
+            ],
+            "warnings": {
+                "uninitialized": false
+            },
+            "errors": {
+                "dev": false
+            }
         },
         {
             "name": "dev-flutter",
