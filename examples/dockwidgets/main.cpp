@@ -420,7 +420,7 @@ int main(int argc, char **argv)
         KDDockWidgets::Config::self().setDragAboutToStartFunc([](Core::Draggable *draggable) -> bool {
             const bool ctrlIsPressed = qApp->keyboardModifiers() & Qt::ControlModifier;
 
-            if (ctrlIsPressed || draggable->isInProgramaticDrag()) {
+            if (ctrlIsPressed || draggable->isInProgrammaticDrag()) {
                 KDDockWidgets::Config::self().setDropIndicatorsInhibited(false);
                 return true;
             }

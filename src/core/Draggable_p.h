@@ -114,7 +114,7 @@ public:
 
     ///@brief Returns whether this draggable is within a programmatic drag
     /// i.e. one started with DockWidget::startDragging()
-    bool isInProgramaticDrag() const;
+    bool isInProgrammaticDrag() const;
 
 private:
     class Private;

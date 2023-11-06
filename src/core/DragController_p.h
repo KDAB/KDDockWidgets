@@ -130,7 +130,7 @@ public:
     /// @internal
     /// @param draggable The draggable we want to move (a title-bar, tab-bar or floating window)
     bool programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset);
-    void programaticStopDrag();
+    void programmaticStopDrag();
 
     KDBindings::Signal<> mousePressed;
     KDBindings::Signal<> manhattanLengthMove;

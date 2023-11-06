@@ -851,7 +851,7 @@ bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos
     return true;
 }
 
-void DragController::programaticStopDrag()
+void DragController::programmaticStopDrag()
 {
     dragCanceled.emit();
 }

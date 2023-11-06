@@ -2716,7 +2716,7 @@ KDDW_QCORO_TASK tst_startDragging()
         CHECK(dc->isDragging());
         CHECK(dock1->isFloating());
 
-        dc->programaticStopDrag();
+        dc->programmaticStopDrag();
         CHECK(!dc->isDragging());
     }
 
