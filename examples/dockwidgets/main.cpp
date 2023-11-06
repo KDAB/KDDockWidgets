@@ -12,10 +12,12 @@
 #include "MyWidget.h"
 #include "MyMainWindow.h"
 #include "MyViewFactory.h"
+#include "CtrlKeyEventFilter.h"
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/qtwidgets/ViewFactory.h>
 #include <kddockwidgets/core/DockWidget.h>
+#include <kddockwidgets/core/Draggable_p.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -354,6 +356,12 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    if (parser.isSet(programmaticDragEvent) && parser.isSet(ctrlTogglesDropIndicators)) {
+        qWarning() << "Error: Arguments --programmatic-drag and --ctrl-toggles-drop-indicators are "
+                      "mutually exclusive. The latter is already included in the former.";
+        return 1;
+    }
+
     if (parser.isSet(hideCertainDockingIndicators)) {
         // Here we exemplify adding a restriction to "Dock Widget 8"
         // Dock widget 8 will only be allowed to dock to the outer areas
@@ -399,7 +407,40 @@ int main(int argc, char **argv)
         exampleOptions |= MyMainWindow::ExampleOption::Dock0BlocksCloseEvent;
     if (parser.isSet(programmaticDragEvent)) {
         exampleOptions |= MyMainWindow::ExampleOption::ProgrammaticDragEvent;
-        KDDockWidgets::Config::self().setOnlyProgrammaticDrag(true);
+
+        static auto s_ctrlKeyEventFilter = new CtrlKeyEventFilter(qApp);
+
+        /// Here we demonstrate how to use setDragAboutToStartFunc()/setDragEndedFunc() to prevent a drag from happening
+        /// In this made up example:
+        /// 1. If ctrl is pressed, we always allow the drag
+        /// 2. If the drag is programmatic (DockWidget::startDrag()), we always allow the drag as well
+        /// 3. If the dragged widget is already a window, we allow a drag to move it, but not dock it
+        ///   3.1. We also install an event filter to show the drop indicators when ctrl is pressed
+
+        KDDockWidgets::Config::self().setDragAboutToStartFunc([](Core::Draggable *draggable) -> bool {
+            const bool ctrlIsPressed = qApp->keyboardModifiers() & Qt::ControlModifier;
+
+            if (ctrlIsPressed || draggable->isInProgramaticDrag()) {
+                KDDockWidgets::Config::self().setDropIndicatorsInhibited(false);
+                return true;
+            }
+
+            if (draggable->isWindow()) {
+                qApp->installEventFilter(s_ctrlKeyEventFilter);
+
+                // Ctrl might already be pressed before the DnD even starts, so honour that as well
+                KDDockWidgets::Config::self().setDropIndicatorsInhibited(!ctrlIsPressed);
+
+                return true;
+            }
+
+            return false;
+        });
+
+        KDDockWidgets::Config::self().setDragEndedFunc([]() {
+            // cleanup
+            qApp->removeEventFilter(s_ctrlKeyEventFilter);
+        });
     }
 
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
