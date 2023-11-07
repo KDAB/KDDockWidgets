@@ -267,7 +267,7 @@ public:
 
     bool isNull() const
     {
-        return m_pos.isNull() and m_size.isNull();
+        return m_pos.isNull() && m_size.isNull();
     }
 
     bool isValid() const
