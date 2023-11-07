@@ -12,7 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "QtCompat_p.h"
+#include "kddockwidgets/QtCompat_p.h"
 
 #include <kdbindings/signal.h>
 
