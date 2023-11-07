@@ -80,7 +80,7 @@ public:
         m_view->setGeometry(r);
     }
 
-    void setVisible(bool is) const override
+    void setVisible(bool is) override
     {
         m_view->setVisible(is);
     }
