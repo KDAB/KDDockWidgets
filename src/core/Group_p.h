@@ -73,7 +73,7 @@ public:
         q->view()->setGeometry(r);
     }
 
-    void setVisible(bool is) const override
+    void setVisible(bool is) override
     {
         q->view()->setVisible(is);
     }

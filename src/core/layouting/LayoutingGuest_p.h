@@ -37,7 +37,7 @@ public:
     virtual Size minSize() const = 0;
     virtual Size maxSizeHint() const = 0;
     virtual void setGeometry(Rect r) = 0;
-    virtual void setVisible(bool is) const = 0;
+    virtual void setVisible(bool is) = 0;
     virtual Rect geometry() const = 0;
     virtual QString debugName() const = 0;
     virtual void setHost(LayoutingHost *parent) = 0;
