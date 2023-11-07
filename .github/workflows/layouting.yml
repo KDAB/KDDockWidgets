@@ -34,13 +34,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure
-        run: cmake -S src/core/layouting/ -B src/core/layouting/build/ -G Ninja
-
-      - name: Build
-        run: cmake --build src/core/layouting/build/
-
-      - name: Configure from top-level
-        run: cmake --preset=dev-layouting
+        run: cmake --preset=dev-none
 
       - name: Build from top-level
-        run: cmake --build build-dev-layouting --parallel
+        run: cmake --build build-dev-none --parallel
