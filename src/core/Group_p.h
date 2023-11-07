@@ -98,23 +98,6 @@ public:
         return q->view()->d->freed();
     }
 
-#ifdef DOCKS_DEVELOPER_MODE
-    void setMinimumSize(Size sz) override
-    {
-        return q->view()->setMinimumSize(sz);
-    }
-
-    void setMaximumSize(Size sz) override
-    {
-        return q->view()->setMaximumSize(sz);
-    }
-
-    Size size() const override
-    {
-        return q->view()->size();
-    }
-#endif
-
     Group *const q;
     int m_userType = 0;
     FrameOptions m_options = FrameOption_None;
