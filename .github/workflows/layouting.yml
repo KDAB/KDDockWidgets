@@ -29,6 +29,10 @@ jobs:
       - name: Install ninja
         uses: turtlesec-no/get-ninja@main
 
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Configure
         run: cmake -S src/core/layouting/ -B src/core/layouting/build/ -G Ninja
 
