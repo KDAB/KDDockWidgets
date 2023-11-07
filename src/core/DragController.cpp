@@ -776,12 +776,20 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
 
     case Event::MouseButtonRelease:
     case Event::NonClientAreaMouseButtonRelease: {
+        ViewGuard guard(w);
         const bool inProgrammaticDrag = m_inProgrammaticDrag;
         const bool result = activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
 
+        if (!guard) {
+            // Always consume the event if the view was deleted during a DND. For example
+            // tabbing A into B will destroy tabwidget A. Qt would then try to deliver event to A and crash.
+            return true;
+        }
+
         // In normal KDDW operation, we consume the mouse release (true is returned), however,
         // if using programmattic drag (via DockWidget::startDragging()), we do not want to consume the release event.
-        // User might have clicked a button to start the drag. Button needs to be released when it's over.
+        // User might have clicked a button to start the drag. Button needs to be released when it's over, otherwise
+        // it will look visually pressed.
         return result && !inProgrammaticDrag;
     }
 
