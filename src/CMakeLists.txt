@@ -738,7 +738,3 @@ if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QTWIDGETS)
         link_to_nlohman(kddockwidgets_linter)
     endif()
 endif()
-
-if(KDDockWidgets_SEPARATE_LAYOUTING_LIBRARY)
-    add_subdirectory(core/layouting)
-endif()

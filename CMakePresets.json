@@ -192,25 +192,11 @@
         },
         {
             "name": "dev-none",
-            "description": "Builds KDDW with no frontend. Not useful for users, but nice to see if core/ builds independently.",
+            "description": "Builds KDDW with no frontend. For using only the layouting engine.",
             "binaryDir": "${sourceDir}/build-dev-none",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_WERROR": "ON",
-                "KDDockWidgets_FRONTENDS": "none"
-            },
-            "inherits": [
-                "base"
-            ]
-        },
-        {
-            "name": "dev-layouting",
-            "description": "Builds the layouting engine library, for non-KDDW projects",
-            "binaryDir": "${sourceDir}/build-dev-layouting",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_WERROR": "ON",
-                "KDDockWidgets_SEPARATE_LAYOUTING_LIBRARY": "ON",
                 "KDDockWidgets_FRONTENDS": "none"
             },
             "inherits": [
