@@ -100,23 +100,6 @@ public:
         return m_view->d->id();
     }
 
-#ifdef DOCKS_DEVELOPER_MODE
-    void setMinimumSize(Size sz) override
-    {
-        m_view->setMinimumSize(sz);
-    }
-
-    void setMaximumSize(Size sz) override
-    {
-        m_view->setMaximumSize(sz);
-    }
-
-    Size size() const override
-    {
-        return m_view->size();
-    }
-#endif
-
     LayoutingHost *m_host = nullptr;
     View *const m_view;
 };
@@ -1692,7 +1675,7 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
     const Size newMinSize = originalSize2 + Size(10, 10);
 
     item2->turnIntoPlaceholder();
-    guest2->setMinimumSize(newMinSize);
+    dynamic_cast<Guest *>(guest2)->m_view->setMinimumSize(newMinSize);
     item2->restore(guest2);
 
     KDDW_TEST_RETURN(true);
@@ -1786,9 +1769,9 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
 
     auto guest2 = item2->guest();
     const int maxHeight = 250;
-    CHECK_EQ(guest2->size(), item2->size());
-    guest2->setMaximumSize(Size(250, maxHeight));
-    CHECK_EQ(guest2->size(), item2->size());
+    CHECK_EQ(dynamic_cast<Guest *>(guest2)->m_view->size(), item2->size());
+    dynamic_cast<Guest *>(guest2)->m_view->setMaximumSize(Size(250, maxHeight));
+    CHECK_EQ(dynamic_cast<Guest *>(guest2)->m_view->size(), item2->size());
     CHECK_EQ(item2->maxSizeHint(), guest2->maxSizeHint());
 
     root->insertItem(item2, Location_OnBottom);

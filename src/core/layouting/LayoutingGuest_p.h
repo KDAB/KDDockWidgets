@@ -48,12 +48,6 @@ public:
         return false;
     }
 
-#ifdef DOCKS_DEVELOPER_MODE
-    virtual void setMinimumSize(Size) = 0;
-    virtual void setMaximumSize(Size) = 0;
-    virtual Size size() const = 0;
-#endif
-
     KDBindings::Signal<LayoutingHost *> hostChanged;
     KDBindings::Signal<> beingDestroyed;
     KDBindings::Signal<> layoutInvalidated;
