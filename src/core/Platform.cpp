@@ -80,8 +80,8 @@ Platform::Private::Private()
     /// Out layouting engine can be used without KDDW, so by default doesn't
     /// depend on Core::Separator. Here we tell the layouting that we want to use our
     /// KDDW separators.
-    Core::Item::setCreateSeparatorFunc([](Core::LayoutingHost *host) -> Core::LayoutingSeparator * {
-        return (new Core::Separator(host))->asLayoutingSeparator();
+    Core::Item::setCreateSeparatorFunc([](Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container) -> Core::LayoutingSeparator * {
+        return (new Core::Separator(host, orientation, container))->asLayoutingSeparator();
     });
 }
 

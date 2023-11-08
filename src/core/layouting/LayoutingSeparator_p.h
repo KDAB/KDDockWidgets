@@ -28,21 +28,22 @@ class DOCKS_EXPORT LayoutingSeparator
 public:
     typedef Vector<LayoutingSeparator *> List;
 
-    explicit LayoutingSeparator(LayoutingHost *);
+    explicit LayoutingSeparator(LayoutingHost *, Qt::Orientation, Core::ItemBoxContainer *container);
 
     virtual ~LayoutingSeparator();
-    virtual void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation) = 0;
-    virtual ItemBoxContainer *parentContainer() const = 0;
-    virtual Qt::Orientation orientation() const = 0;
     virtual Rect geometry() const = 0;
     virtual void setGeometry(Rect r) = 0;
-    virtual void setGeometry(int pos, int pos2, int length) = 0;
-    virtual void free() = 0;
+    virtual void free();
 
     int position() const;
     bool isVertical() const;
+    ItemBoxContainer *parentContainer() const;
+    Qt::Orientation orientation() const;
+    void setGeometry(int pos, int pos2, int length);
 
     LayoutingHost *const m_host;
+    const Qt::Orientation m_orientation;
+    Core::ItemBoxContainer *const m_parentContainer;
 
 private:
     LayoutingSeparator(const LayoutingSeparator &) = delete;

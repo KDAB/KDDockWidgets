@@ -48,29 +48,14 @@ struct Separator::Private : public LayoutingSeparator
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2
     // otherwise.
 
-    explicit Private(Core::Separator *qq, LayoutingHost *host)
-        : LayoutingSeparator(host)
+    explicit Private(Core::Separator *qq, LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *parentContainer)
+        : LayoutingSeparator(host, orientation, parentContainer)
         , q(qq)
     {
         s_numSeparators++;
     }
 
     ~Private() override;
-
-    void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation) override
-    {
-        q->init(parentContainer, orientation);
-    }
-
-    ItemBoxContainer *parentContainer() const override
-    {
-        return q->parentContainer();
-    }
-
-    Qt::Orientation orientation() const override
-    {
-        return m_orientation;
-    }
 
     Rect geometry() const override
     {
@@ -82,22 +67,15 @@ struct Separator::Private : public LayoutingSeparator
         q->setGeometry(r);
     }
 
-    void setGeometry(int pos, int pos2, int length) override
-    {
-        q->setGeometry(pos, pos2, length);
-    }
-
     void free() override
     {
         delete q;
     }
 
     Core::Separator *const q;
-    Qt::Orientation m_orientation = Qt::Horizontal;
     Rect m_geometry;
     int lazyPosition = 0;
     View *lazyResizeRubberBand = nullptr;
-    Core::ItemBoxContainer *m_parentContainer = nullptr;
     Core::Side lastMoveDirection = Core::Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
 };
@@ -113,33 +91,21 @@ Core::View *viewForLayoutingHost(LayoutingHost *host)
 }
 }
 
-Separator::Separator(LayoutingHost *host)
+Separator::Separator(LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *parentContainer)
     : Controller(ViewType::Separator, Config::self().viewFactory()->createSeparator(this, viewForLayoutingHost(host)))
-    , d(new Private(this, host))
+    , d(new Private(this, host, orientation, parentContainer))
 {
-    assert(view());
     view()->show();
-}
-
-Separator::~Separator()
-{
-    delete d;
-}
-
-void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation)
-{
-    if (!parentContainer) {
-        KDDW_ERROR("null parentContainer");
-        return;
-    }
-
-    d->m_parentContainer = parentContainer;
-    d->m_orientation = orientation;
     view()->init();
     d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
                                   rubberBandIsTopLevel() ? nullptr : view())
                                                 : nullptr;
     setVisible(true);
+}
+
+Separator::~Separator()
+{
+    delete d;
 }
 
 bool Separator::isVertical() const
@@ -191,18 +157,7 @@ void Separator::setGeometry(Rect r)
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void Separator::setGeometry(int pos, int pos2, int length)
 {
-    Rect newGeo = d->m_geometry;
-    if (isVertical()) {
-        // The separator itself is horizontal
-        newGeo.setSize(Size(length, Core::Item::separatorThickness));
-        newGeo.moveTo(pos2, pos);
-    } else {
-        // The separator itself is vertical
-        newGeo.setSize(Size(Core::Item::separatorThickness, length));
-        newGeo.moveTo(pos, pos2);
-    }
-
-    setGeometry(newGeo);
+    d->LayoutingSeparator::setGeometry(pos, pos2, length);
 }
 
 Qt::Orientation Separator::orientation() const

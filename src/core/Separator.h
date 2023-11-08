@@ -32,10 +32,9 @@ public:
 
     /// constructs a separator
     /// @param host the host where this separator is in. Usually a DropArea.
-    explicit Separator(LayoutingHost *host);
+    explicit Separator(LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *parentContainer);
     virtual ~Separator() override;
 
-    void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation);
     bool isVertical() const;
     void move(int p);
     int position() const;
