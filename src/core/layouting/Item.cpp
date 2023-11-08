@@ -3201,8 +3201,7 @@ void ItemBoxContainer::Private::updateSeparators()
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = s_createSeparatorFunc(q->host());
-                separator->init(q, m_orientation);
+                separator = s_createSeparatorFunc(q->host(), m_orientation, q);
                 newSeparators.push_back(separator);
             }
         }
@@ -4020,20 +4019,53 @@ LayoutingHost::~LayoutingHost() = default;
 LayoutingGuest::~LayoutingGuest() = default;
 LayoutingSeparator::~LayoutingSeparator() = default;
 
-LayoutingSeparator::LayoutingSeparator(LayoutingHost *host)
+LayoutingSeparator::LayoutingSeparator(LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container)
     : m_host(host)
+    , m_orientation(orientation)
+    , m_parentContainer(container)
 {
 }
 
 bool LayoutingSeparator::isVertical() const
 {
-    return orientation() == Qt::Vertical;
+    return m_orientation == Qt::Vertical;
 }
 
 int LayoutingSeparator::position() const
 {
     const Point topLeft = geometry().topLeft();
     return isVertical() ? topLeft.y() : topLeft.x();
+}
+
+ItemBoxContainer *LayoutingSeparator::parentContainer() const
+{
+    return m_parentContainer;
+}
+
+Qt::Orientation LayoutingSeparator::orientation() const
+{
+    return m_orientation;
+}
+
+void LayoutingSeparator::setGeometry(int pos, int pos2, int length)
+{
+    Rect newGeo = geometry();
+    if (isVertical()) {
+        // The separator itself is horizontal
+        newGeo.setSize(Size(length, Core::Item::separatorThickness));
+        newGeo.moveTo(pos2, pos);
+    } else {
+        // The separator itself is vertical
+        newGeo.setSize(Size(Core::Item::separatorThickness, length));
+        newGeo.moveTo(pos, pos2);
+    }
+
+    setGeometry(newGeo);
+}
+
+void LayoutingSeparator::free()
+{
+    delete this;
 }
 
 #ifdef Q_CC_MSVC

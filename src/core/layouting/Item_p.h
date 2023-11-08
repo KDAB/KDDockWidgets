@@ -34,7 +34,7 @@ class LayoutingHost;
 class LayoutingGuest;
 class LayoutingSeparator;
 typedef void (*DumpScreenInfoFunc)();
-typedef LayoutingSeparator *(*CreateSeparatorFunc)(Core::LayoutingHost *host);
+typedef LayoutingSeparator *(*CreateSeparatorFunc)(Core::LayoutingHost *host, Qt::Orientation, Core::ItemBoxContainer *);
 
 enum Side {
     Side1,
