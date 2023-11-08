@@ -62,11 +62,6 @@ struct Separator::Private : public LayoutingSeparator
         q->init(parentContainer, orientation);
     }
 
-    int position() const override
-    {
-        return q->position();
-    }
-
     ItemBoxContainer *parentContainer() const override
     {
         return q->parentContainer();
@@ -152,6 +147,11 @@ bool Separator::isVertical() const
     return d->isVertical();
 }
 
+int Separator::position() const
+{
+    return d->position();
+}
+
 void Separator::move(int p)
 {
     if (p == position())
@@ -172,12 +172,6 @@ void Separator::move(int p)
             v->move(p, v->y());
         }
     }
-}
-
-int Separator::position() const
-{
-    const Point topLeft = d->m_geometry.topLeft();
-    return isVertical() ? topLeft.y() : topLeft.x();
 }
 
 void Separator::setGeometry(Rect r)

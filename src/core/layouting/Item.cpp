@@ -4030,6 +4030,12 @@ bool LayoutingSeparator::isVertical() const
     return orientation() == Qt::Vertical;
 }
 
+int LayoutingSeparator::position() const
+{
+    const Point topLeft = geometry().topLeft();
+    return isVertical() ? topLeft.y() : topLeft.x();
+}
+
 #ifdef Q_CC_MSVC
 #pragma warning(pop)
 #endif

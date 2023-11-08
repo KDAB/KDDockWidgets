@@ -32,7 +32,6 @@ public:
 
     virtual ~LayoutingSeparator();
     virtual void init(Core::ItemBoxContainer *parentContainer, Qt::Orientation orientation) = 0;
-    virtual int position() const = 0;
     virtual ItemBoxContainer *parentContainer() const = 0;
     virtual Qt::Orientation orientation() const = 0;
     virtual Rect geometry() const = 0;
@@ -40,6 +39,7 @@ public:
     virtual void setGeometry(int pos, int pos2, int length) = 0;
     virtual void free() = 0;
 
+    int position() const;
     bool isVertical() const;
 
     LayoutingHost *const m_host;
