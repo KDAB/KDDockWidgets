@@ -149,7 +149,7 @@ void Separator::init(Core::ItemBoxContainer *parentContainer, Qt::Orientation or
 
 bool Separator::isVertical() const
 {
-    return d->m_orientation == Qt::Vertical;
+    return d->isVertical();
 }
 
 void Separator::move(int p)

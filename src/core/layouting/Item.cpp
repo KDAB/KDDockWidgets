@@ -4025,6 +4025,11 @@ LayoutingSeparator::LayoutingSeparator(LayoutingHost *host)
 {
 }
 
+bool LayoutingSeparator::isVertical() const
+{
+    return orientation() == Qt::Vertical;
+}
+
 #ifdef Q_CC_MSVC
 #pragma warning(pop)
 #endif

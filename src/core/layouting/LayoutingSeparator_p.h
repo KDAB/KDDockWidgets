@@ -40,6 +40,8 @@ public:
     virtual void setGeometry(int pos, int pos2, int length) = 0;
     virtual void free() = 0;
 
+    bool isVertical() const;
+
     LayoutingHost *const m_host;
 
 private:
