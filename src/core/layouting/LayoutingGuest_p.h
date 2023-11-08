@@ -14,6 +14,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/QtCompat_p.h"
 
+#include "../ObjectGuard_p.h"
 #include <kdbindings/signal.h>
 
 namespace KDDockWidgets {
@@ -33,24 +34,34 @@ class DOCKS_EXPORT LayoutingGuest
 public:
     LayoutingGuest() = default;
     virtual ~LayoutingGuest();
-    virtual void setLayoutItem(Item *) = 0;
     virtual Size minSize() const = 0;
     virtual Size maxSizeHint() const = 0;
     virtual void setGeometry(Rect r) = 0;
     virtual void setVisible(bool is) = 0;
     virtual Rect geometry() const = 0;
-    virtual QString debugName() const = 0;
     virtual void setHost(LayoutingHost *parent) = 0;
     virtual LayoutingHost *host() const = 0;
     virtual QString id() const = 0;
+
     virtual bool freed() const
     {
         return false;
     }
 
+    virtual QString debugName() const
+    {
+        return {};
+    }
+
+    void setLayoutItem(Item *);
+    virtual void setLayoutItem_impl(Core::Item *)
+    {
+    }
+
     KDBindings::Signal<LayoutingHost *> hostChanged;
     KDBindings::Signal<> beingDestroyed;
     KDBindings::Signal<> layoutInvalidated;
+    ObjectGuard<Core::Item> layoutItem;
 
 private:
     LayoutingGuest(const LayoutingGuest &) = delete;

@@ -54,7 +54,7 @@ public:
         iconChangedConnections;
 
     ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
-    void setLayoutItem(Core::Item *item) override;
+    void setLayoutItem_impl(Core::Item *item) override;
     LayoutingHost *host() const override;
     void setHost(LayoutingHost *) override;
 

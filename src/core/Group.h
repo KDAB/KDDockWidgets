@@ -219,7 +219,7 @@ public:
 
     Vector<QString> affinities() const;
 
-    ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
+    ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
     void setLayoutItem(Core::Item *item);
 
     /**

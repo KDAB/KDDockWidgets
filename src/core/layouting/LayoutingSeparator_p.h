@@ -29,7 +29,6 @@ public:
     typedef Vector<LayoutingSeparator *> List;
 
     explicit LayoutingSeparator(LayoutingHost *, Qt::Orientation, Core::ItemBoxContainer *container);
-
     virtual ~LayoutingSeparator();
     virtual Rect geometry() const = 0;
     virtual void setGeometry(Rect r) = 0;
