@@ -605,18 +605,10 @@ bool Group::anyNonDockable() const
     return false;
 }
 
-void Group::Private::setLayoutItem(Item *item)
+void Group::Private::setLayoutItem_impl(Item *item)
 {
-    if (item == m_layoutItem)
-        return;
-
-    if (m_layoutItem)
-        m_layoutItem->unref();
-
-    if (item)
-        item->ref();
-
     m_layoutItem = item;
+
     const auto docks = q->dockWidgets();
     if (item) {
         for (DockWidget *dw : docks)

@@ -49,10 +49,6 @@ public:
         beingDestroyed.emit();
     }
 
-    void setLayoutItem(Item *) override
-    {
-    }
-
     void setHost(LayoutingHost *host) override
     {
         m_host = host;
@@ -755,7 +751,6 @@ KDDW_QCORO_TASK tst_missingSize()
     root->insertItem(item2, Location_OnTop);
     root->insertItem(item3, Location_OnTop);
 
-    delete item1;
     delete item2;
     delete item3;
 

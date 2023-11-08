@@ -4068,6 +4068,22 @@ void LayoutingSeparator::free()
     delete this;
 }
 
+void LayoutingGuest::setLayoutItem(Item *item)
+{
+    if (layoutItem == item)
+        return;
+
+    if (layoutItem)
+        layoutItem->unref();
+
+    if (item)
+        item->ref();
+
+    layoutItem = item;
+
+    setLayoutItem_impl(item);
+}
+
 #ifdef Q_CC_MSVC
 #pragma warning(pop)
 #endif
