@@ -496,6 +496,9 @@ if(KDDockWidgets_EXAMPLES)
         set_compiler_flags(qtwidgets_minimal)
         set_compiler_flags(qtwidgets_mdi_with_docking)
 
+        # Standalone layouting example
+        add_subdirectory(src/core/layouting/examples/qtwidgets/)
+
         set_target_properties(
             qtwidgets_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
         )
