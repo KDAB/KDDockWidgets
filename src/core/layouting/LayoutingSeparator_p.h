@@ -44,7 +44,7 @@ public:
     void onMousePress();
     void onMouseReleased();
 
-    int onMouseMove(Point pos, bool moveSeparator);
+    int onMouseMove(Point pos, bool moveSeparator = true);
 
     LayoutingHost *const m_host;
     const Qt::Orientation m_orientation;

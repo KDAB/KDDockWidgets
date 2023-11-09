@@ -45,6 +45,34 @@ public:
     {
         QWidget::setGeometry(r);
     }
+
+    void mousePressEvent(QMouseEvent *) override
+    {
+        onMousePress();
+    }
+
+    void mouseReleaseEvent(QMouseEvent *) override
+    {
+        onMouseReleased();
+    }
+
+    void mouseMoveEvent(QMouseEvent *ev) override
+    {
+        onMouseMove(mapToParent(ev->pos()));
+    }
+
+    void enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *) override
+    {
+        if (isVertical())
+            setCursor(Qt::SizeVerCursor);
+        else
+            setCursor(Qt::SizeHorCursor);
+    }
+
+    void leaveEvent(QEvent *) override
+    {
+        setCursor(Qt::ArrowCursor);
+    }
 };
 
 /// The Host is the widget which will contain (parent) all the Guest and Separator widgets
