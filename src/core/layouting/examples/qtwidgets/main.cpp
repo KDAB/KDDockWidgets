@@ -53,7 +53,7 @@ public:
 
     void mouseReleaseEvent(QMouseEvent *) override
     {
-        onMouseReleased();
+        onMouseRelease();
     }
 
     void mouseMoveEvent(QMouseEvent *ev) override
