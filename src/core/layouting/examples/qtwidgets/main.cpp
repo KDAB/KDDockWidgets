@@ -240,7 +240,8 @@ int main(int argc, char **argv)
     // Guest4 goes on top of everything, but with 200px height (width is ignored)
     host.insertItem(guest4, KDDockWidgets::Location_OnTop, Size(0, 200));
 
-    host.root.dumpLayout();
+    // For debugging only:
+    // host.root.dumpLayout();
 
     host.show();
 
