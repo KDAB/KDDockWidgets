@@ -72,20 +72,6 @@ jobs:
               detect_leaks: 1
               apt_pgks:
                 - lld
-          - os: ubuntu-latest
-            preset:
-              name: ci-dev-valgrind-qt5
-              qt_version: "5.15"
-              apt_pgks:
-                - lld
-                - valgrind
-          - os: ubuntu-latest
-            preset:
-              name: ci-dev-valgrind-qt6
-              qt_version: "6.5.*"
-              apt_pgks:
-                - lld
-                - valgrind
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion

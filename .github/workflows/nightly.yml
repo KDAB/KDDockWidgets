@@ -51,6 +51,22 @@ jobs:
               apt_pgks:
                 - clazy
 
+          - os: ubuntu-22.04
+            preset:
+              name: ci-dev-valgrind-qt5
+              qt_version: "5.15"
+              apt_pgks:
+                - lld
+                - valgrind
+
+          - os: ubuntu-22.04
+            preset:
+              name: ci-dev-valgrind-qt6
+              qt_version: "6.5.*"
+              apt_pgks:
+                - lld
+                - valgrind
+
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
         uses: jurplel/install-qt-action@v3
@@ -96,3 +112,10 @@ jobs:
 
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
+
+      - name: Run tests on Linux (offscreen)
+        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
+        env:
+          QT_QPA_PLATFORM: offscreen
+          QT_QUICK_BACKEND: software
