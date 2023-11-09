@@ -69,7 +69,6 @@ private:
     struct Private;
     Private *const d;
 
-    static bool s_isResizing;
     static Separator *s_separatorBeingDragged;
 };
 
