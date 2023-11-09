@@ -4079,7 +4079,7 @@ void LayoutingSeparator::onMousePress()
     LayoutingSeparator::s_separatorBeingDragged = this;
 }
 
-void LayoutingSeparator::onMouseReleased()
+void LayoutingSeparator::onMouseRelease()
 {
     LayoutingSeparator::s_separatorBeingDragged = nullptr;
 }

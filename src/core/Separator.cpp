@@ -209,7 +209,7 @@ void Separator::onMouseReleased()
         d->m_parentContainer->requestSeparatorMove(d, d->lazyPosition - position());
     }
 
-    d->onMouseReleased();
+    d->onMouseRelease();
 }
 
 void Separator::onMouseDoubleClick()

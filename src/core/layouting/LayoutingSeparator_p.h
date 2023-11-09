@@ -42,7 +42,7 @@ public:
 
     bool isBeingDragged() const;
     void onMousePress();
-    void onMouseReleased();
+    void onMouseRelease();
 
     int onMouseMove(Point pos, bool moveSeparator = true);
 
