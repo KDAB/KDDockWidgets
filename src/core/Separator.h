@@ -63,13 +63,10 @@ private:
 
     KDDW_DELETE_COPY_CTOR(Separator)
     void setLazyPosition(int);
-    bool isBeingDragged() const;
     bool usesLazyResize() const;
 
     struct Private;
     Private *const d;
-
-    static Separator *s_separatorBeingDragged;
 };
 
 }

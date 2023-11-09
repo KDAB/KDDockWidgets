@@ -28,8 +28,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-Separator *Separator::s_separatorBeingDragged = nullptr;
-
 /// @brief internal counter just for unit-tests
 static int s_numSeparators = 0;
 
@@ -76,7 +74,6 @@ struct Separator::Private : public LayoutingSeparator
     Rect m_geometry;
     int lazyPosition = 0;
     View *lazyResizeRubberBand = nullptr;
-    Core::Side lastMoveDirection = Core::Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
 };
 
@@ -186,11 +183,6 @@ void Separator::setLazyPosition(int pos)
     d->lazyResizeRubberBand->setGeometry(geo);
 }
 
-bool Separator::isBeingDragged() const
-{
-    return s_separatorBeingDragged == this;
-}
-
 bool Separator::usesLazyResize() const
 {
     return d->usesLazyResize;
@@ -198,7 +190,7 @@ bool Separator::usesLazyResize() const
 
 void Separator::onMousePress()
 {
-    s_separatorBeingDragged = this;
+    d->onMousePress();
 
     KDDW_DEBUG("Drag started");
 
@@ -217,7 +209,7 @@ void Separator::onMouseReleased()
         d->m_parentContainer->requestSeparatorMove(d, d->lazyPosition - position());
     }
 
-    s_separatorBeingDragged = nullptr;
+    d->onMouseReleased();
 }
 
 void Separator::onMouseDoubleClick()
@@ -229,7 +221,7 @@ void Separator::onMouseDoubleClick()
 
 void Separator::onMouseMove(Point pos)
 {
-    if (!isBeingDragged())
+    if (!d->isBeingDragged())
         return;
 
     if (Platform::instance()->isQt()) {
@@ -255,31 +247,13 @@ void Separator::onMouseMove(Point pos)
 #endif
     }
 
-    const int positionToGoTo = Core::pos(pos, d->m_orientation);
-    const int minPos = d->m_parentContainer->minPosForSeparator_global(d);
-    const int maxPos = d->m_parentContainer->maxPosForSeparator_global(d);
-
-    if ((positionToGoTo > maxPos && position() <= positionToGoTo)
-        || (positionToGoTo < minPos && position() >= positionToGoTo)) {
-        // if current pos is 100, and max is 80, we do allow going to 90.
-        // Would continue to violate, but only by 10, so allow.
-
-        // On the other hand, if we're already past max-pos, don't make it worse and just
-        // return if positionToGoTo is further away from maxPos.
-
-        // Same reasoning for minPos
-        return;
+    if (d->lazyResizeRubberBand) {
+        const int positionToGoTo = d->onMouseMove(pos, /*moveSeparator=*/false);
+        if (positionToGoTo != -1)
+            setLazyPosition(positionToGoTo);
+    } else {
+        d->onMouseMove(pos, /*moveSeparator=*/true);
     }
-
-    d->lastMoveDirection = positionToGoTo < position()
-        ? Core::Side1
-        : (positionToGoTo > position() ? Core::Side2
-                                       : Core::Side1); // Last case shouldn't happen though.
-
-    if (d->lazyResizeRubberBand)
-        setLazyPosition(positionToGoTo);
-    else
-        d->m_parentContainer->requestSeparatorMove(d, positionToGoTo - position());
 }
 
 Core::ItemBoxContainer *Separator::parentContainer() const
@@ -295,7 +269,7 @@ LayoutingSeparator *Separator::asLayoutingSeparator() const
 /** static */
 bool Separator::isResizing()
 {
-    return s_separatorBeingDragged != nullptr;
+    return LayoutingSeparator::s_separatorBeingDragged != nullptr;
 }
 
 /** static */
@@ -303,7 +277,6 @@ int Separator::numSeparators()
 {
     return s_numSeparators;
 }
-
 
 Separator::Private::~Private()
 {

@@ -40,9 +40,17 @@ public:
     Qt::Orientation orientation() const;
     void setGeometry(int pos, int pos2, int length);
 
+    bool isBeingDragged() const;
+    void onMousePress();
+    void onMouseReleased();
+
+    int onMouseMove(Point pos, bool moveSeparator);
+
     LayoutingHost *const m_host;
     const Qt::Orientation m_orientation;
     Core::ItemBoxContainer *const m_parentContainer;
+
+    static LayoutingSeparator *s_separatorBeingDragged;
 
 private:
     LayoutingSeparator(const LayoutingSeparator &) = delete;

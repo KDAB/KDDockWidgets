@@ -55,6 +55,7 @@ Size Core::Item::hardcodedMinimumSize = Size(80, 90);
 Size Core::Item::hardcodedMaximumSize = Size(16777215, 16777215);
 
 bool Core::ItemBoxContainer::s_inhibitSimplify = false;
+LayoutingSeparator *LayoutingSeparator::s_separatorBeingDragged = nullptr;
 
 inline bool locationIsVertical(Location loc)
 {
@@ -4066,6 +4067,48 @@ void LayoutingSeparator::setGeometry(int pos, int pos2, int length)
 void LayoutingSeparator::free()
 {
     delete this;
+}
+
+bool LayoutingSeparator::isBeingDragged() const
+{
+    return LayoutingSeparator::s_separatorBeingDragged != nullptr;
+}
+
+void LayoutingSeparator::onMousePress()
+{
+    LayoutingSeparator::s_separatorBeingDragged = this;
+}
+
+void LayoutingSeparator::onMouseReleased()
+{
+    LayoutingSeparator::s_separatorBeingDragged = nullptr;
+}
+
+int LayoutingSeparator::onMouseMove(Point pos, bool moveSeparator)
+{
+    if (!isBeingDragged())
+        return -1;
+
+    const int positionToGoTo = Core::pos(pos, m_orientation);
+    const int minPos = m_parentContainer->minPosForSeparator_global(this);
+    const int maxPos = m_parentContainer->maxPosForSeparator_global(this);
+
+    if ((positionToGoTo > maxPos && position() <= positionToGoTo)
+        || (positionToGoTo < minPos && position() >= positionToGoTo)) {
+        // if current pos is 100, and max is 80, we do allow going to 90.
+        // Would continue to violate, but only by 10, so allow.
+
+        // On the other hand, if we're already past max-pos, don't make it worse and just
+        // return if positionToGoTo is further away from maxPos.
+
+        // Same reasoning for minPos
+        return -1;
+    }
+
+    if (moveSeparator)
+        m_parentContainer->requestSeparatorMove(this, positionToGoTo - position());
+
+    return positionToGoTo;
 }
 
 void LayoutingGuest::setLayoutItem(Item *item)
