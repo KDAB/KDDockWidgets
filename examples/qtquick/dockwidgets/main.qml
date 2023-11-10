@@ -103,7 +103,8 @@ ApplicationWindow {
             uniqueName: "dock5"
             Rectangle {
                 id: guest
-                color: "pink"
+                color: "#2E8BC0"
+                anchors.fill: parent
             }
         }
 
@@ -111,7 +112,8 @@ ApplicationWindow {
             id: dock6
             uniqueName: "dock6"
             Rectangle {
-                color: "black"
+                color: "#2E8BC0"
+                anchors.fill: parent
             }
         }
 
@@ -119,7 +121,8 @@ ApplicationWindow {
             id: dock7
             uniqueName: "dock7"
             Rectangle {
-                color: "green"
+                color: "#145DA0"
+                anchors.fill: parent
             }
         }
 

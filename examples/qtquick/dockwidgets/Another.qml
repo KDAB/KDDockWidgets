@@ -13,6 +13,6 @@ import QtQuick 2.9
 
 Rectangle {
     id: root
-    color: "green"
+    color: "#0C2D48"
     anchors.fill: parent
 }
