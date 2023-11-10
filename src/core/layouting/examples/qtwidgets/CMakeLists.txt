@@ -35,10 +35,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # For KDBindings
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/)
 
-add_executable(qtwidgets_layouting_example main.cpp)
-target_link_libraries(qtwidgets_layouting_example PRIVATE KDAB::kddockwidgets)
+add_executable(qtwidgets_standalone_layouting main.cpp)
+target_link_libraries(qtwidgets_standalone_layouting PRIVATE KDAB::kddockwidgets)
 
 if(NOT TARGET nlohmann_json::nlohmann_json)
     include(../../../../nlohmann.cmake)
-    link_to_nlohman(qtwidgets_layouting_example)
+    link_to_nlohman(qtwidgets_standalone_layouting)
 endif()
+
+set_target_properties(
+    qtwidgets_standalone_layouting PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
+)
