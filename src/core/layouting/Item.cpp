@@ -4048,6 +4048,7 @@ Qt::Orientation LayoutingSeparator::orientation() const
     return m_orientation;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void LayoutingSeparator::setGeometry(int pos, int pos2, int length)
 {
     Rect newGeo = geometry();
