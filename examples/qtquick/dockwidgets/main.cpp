@@ -20,6 +20,7 @@
 #include <QQmlApplicationEngine>
 #include <QGuiApplication>
 #include <QCommandLineParser>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
@@ -135,6 +136,8 @@ int main(int argc, char *argv[])
 
     // Create your engine which loads main.qml. A simple QQuickView would work too.
     QQmlApplicationEngine appEngine;
+    appEngine.rootContext()->setContextProperty("_exampleShowsMaximize", parser.isSet(maximizeButtonOption));
+
     KDDockWidgets::QtQuick::Platform::instance()->setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
 

@@ -80,11 +80,14 @@ protected:
     Q_INVOKABLE bool onDoubleClicked();
     Q_INVOKABLE void onCloseClicked();
     Q_INVOKABLE void onFloatClicked();
-    Q_INVOKABLE void onMaximizeClicked();
+
     Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void onAutoHideClicked();
-    Q_INVOKABLE void toggleMaximized();
     Q_INVOKABLE bool isFloating() const;
+
+    /// These 2 are the same, both just toggle window maximization
+    Q_INVOKABLE void toggleMaximized();
+    Q_INVOKABLE void onMaximizeClicked();
 
 Q_SIGNALS:
     void titleBarQmlItemChanged();

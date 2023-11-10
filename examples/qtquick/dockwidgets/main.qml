@@ -123,6 +123,21 @@ ApplicationWindow {
             Rectangle {
                 color: "#145DA0"
                 anchors.fill: parent
+                Button {
+                    // This button is just to show some API where we maximize from docked state
+                    text: "Toggle Maximized"
+                    visible: _exampleShowsMaximize
+                    anchors {
+                        right: parent.right
+                        bottom: parent.bottom
+                        margins: 5
+                    }
+
+                    onClicked: {
+                        dock7.isFloating = true;
+                        dock7.actualTitleBar.toggleMaximized();
+                    }
+                }
             }
         }
 
