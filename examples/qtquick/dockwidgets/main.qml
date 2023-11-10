@@ -134,7 +134,7 @@ ApplicationWindow {
                     }
 
                     onClicked: {
-                        dock7.isFloating = true;
+                        dock7.actualTitleBar.onFloatClicked();
                         dock7.actualTitleBar.toggleMaximized();
                     }
                 }
