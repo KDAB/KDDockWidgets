@@ -215,10 +215,10 @@ void DockWidgetInstantiator::componentComplete()
     m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(m_dockWidget->guestView().get())); });
     m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
 
+    auto view = this->dockWidget();
     if (m_sourceFilename.isEmpty()) {
-        m_dockWidget->setGuestView(QtQuick::View::asQQuickWrapper(childItems.constFirst()));
+        view->setGuestItem(childItems.constFirst());
     } else {
-        auto view = this->dockWidget();
         view->setGuestItem(m_sourceFilename);
     }
 
