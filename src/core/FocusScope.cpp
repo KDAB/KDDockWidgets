@@ -90,7 +90,9 @@ bool FocusScope::isFocused() const
 
 void FocusScope::focus(Qt::FocusReason reason)
 {
-    if (d->m_lastFocusedInScope && !d->m_lastFocusedInScope->isNull()
+    // Note: For QtQuick, qGuiApp->focusObject().isVisible() can be false! Because QtQuick.
+
+    if (d->m_lastFocusedInScope && !d->m_lastFocusedInScope->isNull() && d->m_lastFocusedInScope->isVisible()
         && !d->lastFocusedIsTabWidget()) {
         // When we focus the FocusScope, we give focus to the last focused widget, but let's
         // do better than focusing a tab widget. The tab widget itself being focused isn't
@@ -102,6 +104,7 @@ void FocusScope::focus(Qt::FocusReason reason)
                 if (auto dwView = dynamic_cast<Core::DockWidgetViewInterface *>(dw->view())) {
                     if (auto candidate = dwView->focusCandidate()) {
                         if (candidate->focusPolicy() != Qt::NoFocus) {
+                            KDDW_DEBUG("FocusScope::focus: Setting focus on candidate!");
                             candidate->setFocus(reason);
                         } else {
                             KDDW_DEBUG("FocusScope::focus: Candidate has no focus policy");
@@ -117,6 +120,7 @@ void FocusScope::focus(Qt::FocusReason reason)
             }
         } else {
             // Not a use case right now
+            KDDW_DEBUG("FocusScope::focus: No group found");
             d->m_thisView->setFocus(reason);
         }
     }

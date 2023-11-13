@@ -313,6 +313,50 @@ void TestQtQuick::tst_focusBetweenTabs()
     QVERIFY(!dock2->isFocused());
     QVERIFY(!dock3->isFocused());
 
+    auto view1 = QtCommon::View_qt::asQQuickItem(dock1->view());
+    auto view2 = QtCommon::View_qt::asQQuickItem(dock2->view());
+    auto view3 = QtCommon::View_qt::asQQuickItem(dock3->view());
+
+    // Refocus these, as they were unfocused due to reparenting:
+    auto field1 = view1->findChild<QQuickItem *>("field1");
+    auto field2 = view2->findChild<QQuickItem *>("field2");
+    auto field3 = view3->findChild<QQuickItem *>("field3");
+    field2->setFocus(true);
+    field3->setFocus(true);
+
+    QVERIFY(dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+    QVERIFY(!dock3->isFocused());
+
+    // All 3 have focus, but only #1 has active focus
+    QVERIFY(field1->hasActiveFocus());
+    QVERIFY(!field2->hasActiveFocus());
+    QVERIFY(!field3->hasActiveFocus());
+    QVERIFY(field1->hasFocus());
+    QVERIFY(field2->hasFocus());
+    QVERIFY(field3->hasFocus());
+
+    dock2->dptr()->group()->focus();
+
+    // Dock3, the current tab, has focus now
+    QVERIFY(!field1->hasActiveFocus());
+    QVERIFY(!field2->hasActiveFocus());
+    QVERIFY(field3->hasActiveFocus());
+    QVERIFY(field1->hasFocus());
+    QVERIFY(field2->hasFocus());
+    QVERIFY(field3->hasFocus());
+
+    // A mouse event instead of these 2 lines would do as well
+    dock2->setAsCurrentTab();
+    dock2->dptr()->group()->focus();
+
+    QVERIFY(field1->hasFocus());
+    QVERIFY(field2->hasFocus());
+    QVERIFY(field3->hasFocus());
+    QVERIFY(!field1->hasActiveFocus());
+    QVERIFY(field2->hasActiveFocus());
+    QVERIFY(!field3->hasActiveFocus());
+
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 }

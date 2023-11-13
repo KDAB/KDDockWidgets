@@ -209,7 +209,7 @@ void Core::TabBar::onMousePress(Point localPos)
 {
     d->m_lastPressedDockWidget = dockWidgetAt(localPos);
     Group *group = this->group();
-    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !group->isFocused()) {
+    if (Config::self().flags() & Config::Flag_TitleBarIsFocusable) {
         // User clicked on a tab which was already focused
         // A tab changing also counts as a change of scope
         group->FocusScope::focus(Qt::MouseFocusReason);

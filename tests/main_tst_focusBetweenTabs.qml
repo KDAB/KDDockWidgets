@@ -28,10 +28,10 @@ ApplicationWindow {
             id: dock1
             uniqueName: "dock1"
             Rectangle {
-                objectName: "guest1rectangle"
                 anchors.fill: parent
                 color: "#475B63"
                 TextInput {
+                    objectName: "field1"
                     text: "dock1 focus=" + focus + "; activeFocus=" + activeFocus
                     focus: true
                     anchors.margins: 10
@@ -48,6 +48,7 @@ ApplicationWindow {
                 color: "#729B79"
                 TextInput {
                     id: field2
+                    objectName: "field2"
                     text: "dock2 focus=" + focus + "; activeFocus=" + activeFocus
                     focus: true
                     anchors.margins: 10
@@ -71,6 +72,7 @@ ApplicationWindow {
                 color: "#BACDB0"
                 TextInput {
                     id: field3
+                    objectName: "field3"
                     text: "dock3 focus=" + focus + "; activeFocus=" + activeFocus
                     focus: true
                     anchors.margins: 10
