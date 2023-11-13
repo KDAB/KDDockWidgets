@@ -464,6 +464,9 @@ else()
     set(KDDockWidgets_DOCS FALSE)
 endif()
 
+# workaround for CMAKE_CURRENT_FUNCTION_LIST_DIR below CMake 3.17
+set(KKDockWidgets_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+
 if(KDDockWidgets_TESTS)
     enable_testing()
 endif()
