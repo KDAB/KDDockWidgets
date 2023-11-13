@@ -23,8 +23,10 @@
 #include "core/Group.h"
 #include "DockRegistry.h"
 #include "core/Platform_p.h"
+#include "core/Logging_p.h"
 #include "core/ViewGuard.h"
 #include "View.h"
+#include "core/views/DockWidgetViewInterface.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -97,10 +99,21 @@ void FocusScope::focus(Qt::FocusReason reason)
     } else {
         if (auto group = d->m_thisView->asGroupController()) {
             if (auto dw = group->currentDockWidget()) {
-                if (auto guest = dw->guestView()) {
-                    if (guest->focusPolicy() != Qt::NoFocus)
-                        guest->setFocus(reason);
+                if (auto dwView = dynamic_cast<Core::DockWidgetViewInterface *>(dw->view())) {
+                    if (auto candidate = dwView->focusCandidate()) {
+                        if (candidate->focusPolicy() != Qt::NoFocus) {
+                            candidate->setFocus(reason);
+                        } else {
+                            KDDW_DEBUG("FocusScope::focus: Candidate has no focus policy");
+                        }
+                    } else {
+                        KDDW_DEBUG("FocusScope::focus: Candidate not found");
+                    }
+                } else {
+                    KDDW_DEBUG("FocusScope::focus: Dw doesn't have view");
                 }
+            } else {
+                KDDW_DEBUG("FocusScope::focus: Group doesn't have current DW");
             }
         } else {
             // Not a use case right now

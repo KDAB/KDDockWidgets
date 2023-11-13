@@ -107,6 +107,8 @@ public:
     Q_INVOKABLE KDDockWidgets::QtQuick::Action *toggleAction() const;
     Q_INVOKABLE KDDockWidgets::QtQuick::Action *floatAction() const;
 
+    std::shared_ptr<Core::View> focusCandidate() const override;
+
 #ifdef Q_MOC_RUN
     // DockWidgetViewInterface is not a QObject, so trick moc
     Q_INVOKABLE void setAsCurrentTab();

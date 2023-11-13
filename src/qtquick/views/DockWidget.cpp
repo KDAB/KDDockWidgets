@@ -19,6 +19,7 @@
 #include "qtquick/views/TitleBar.h"
 #include "qtquick/views/Group.h"
 #include "qtquick/ViewFactory.h"
+#include "qtquick/views/ViewWrapper_p.h"
 
 #include <Config.h>
 #include <QQuickItem>
@@ -60,6 +61,9 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     , Core::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, engine ? engine : plat()->qmlEngine()))
 {
+    QQuickItem::setFlag(ItemIsFocusScope);
+    setFocusPolicy(Qt::StrongFocus);
+
     // To mimic what QtWidgets does when creating a new QWidget.
     setVisible(false);
 
@@ -177,4 +181,12 @@ QtQuick::Action *DockWidget::toggleAction() const
 QtQuick::Action *DockWidget::floatAction() const
 {
     return static_cast<QtQuick::Action *>(m_dockWidget->toggleAction());
+}
+
+std::shared_ptr<Core::View> DockWidget::focusCandidate() const
+{
+    // For QtWidgets, if we focus the dock widget, we actually focus the user/guest widget
+    // But for QtQuick, the dock widget itself is a QtQuick FocusScope, so focus that instead. QtQuick will then focus the right inner
+    // widget.
+    return ViewWrapper::create(const_cast<QtQuick::DockWidget *>(this));
 }

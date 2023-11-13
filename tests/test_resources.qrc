@@ -15,5 +15,6 @@
         <file>main343.qml</file>
         <file>main343_2.qml</file>
         <file>MyRectangle.qml</file>
+	<file>main_tst_focusBetweenTabs.qml</file>
     </qresource>
 </RCC>

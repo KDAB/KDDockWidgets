@@ -136,3 +136,11 @@ QAction *DockWidget::floatAction() const
 {
     return dynamic_cast<QAction *>(m_dockWidget->floatAction());
 }
+
+std::shared_ptr<Core::View> DockWidget::focusCandidate() const
+{
+    // For QtWidgets, if we focus the dock widget, we actually focus the user/guest widget
+    // For QtQuick, the dock widget itself is a QtQuick FocusScope, so focus that instead. QtQuick will then focus the right inner
+    // widget.
+    return m_dockWidget->guestView();
+}

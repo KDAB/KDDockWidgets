@@ -53,6 +53,8 @@ private Q_SLOTS:
 
     void tst_shutdownCrash();
     void tst_childQmlContext();
+
+    void tst_focusBetweenTabs();
 };
 
 
@@ -287,6 +289,29 @@ void TestQtQuick::tst_childQmlContext()
         delete dock3->dockWidget()->dptr()->group();
         delete dock4->dockWidget()->dptr()->group();
     }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+}
+
+void TestQtQuick::tst_focusBetweenTabs()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("_kddwDockRegistry", DockRegistry::self());
+    engine.load(":/main_tst_focusBetweenTabs.qml");
+
+    auto dock1 = DockRegistry::self()->dockByName("dock1");
+    auto dock2 = DockRegistry::self()->dockByName("dock2");
+    auto dock3 = DockRegistry::self()->dockByName("dock3");
+
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(2000);
+    dock1->dptr()->group()->focus();
+
+    QVERIFY(dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+    QVERIFY(!dock3->isFocused());
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);

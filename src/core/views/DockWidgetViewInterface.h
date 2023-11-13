@@ -20,6 +20,7 @@ namespace Core {
 class DockWidget;
 class Group;
 class TitleBar;
+class View;
 
 /// @brief The interface that DockWidget views should implement
 class DOCKS_EXPORT DockWidgetViewInterface
@@ -64,6 +65,8 @@ public:
 
     /// @deprecated. Use open() instead.
     void show();
+
+    virtual std::shared_ptr<Core::View> focusCandidate() const = 0;
 
 protected:
     DockWidget *const m_dockWidget;
