@@ -36,13 +36,6 @@ ApplicationWindow {
                     focus: true
                     anchors.margins: 10
                     anchors.left: parent.left
-                    onFocusChanged: {
-                      console.log("FOO111 " + focus);
-                      _kddwDockRegistry.halt();
-                    }
-                }
-                onFocusChanged: {
-                    console.log("Guest1.focusChanged " + focus);
                 }
             }
         }
@@ -64,7 +57,7 @@ ApplicationWindow {
                     text: "focus"
                     anchors.right: parent.right
                     onClicked: {
-                      field2.focus = true;
+                        field2.focus = true;
                     }
                 }
             }
@@ -82,16 +75,12 @@ ApplicationWindow {
                     focus: true
                     anchors.margins: 10
                     anchors.left: parent.left
-                    // onFocusChanged: {
-                    //   console.log("FOO " + focus);
-                    //   _kddwDockRegistry.halt();
-                    // }
                 }
                 Button {
                     text: "focus"
                     anchors.right: parent.right
                     onClicked: {
-                      field3.focus = true;
+                        field3.focus = true;
                     }
                 }
             }
