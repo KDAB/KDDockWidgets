@@ -166,6 +166,7 @@ private Q_SLOTS:
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowToggle_data();
+    void tst_focusBetweenTabs();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -1976,6 +1977,49 @@ void TestQtWidgets::tstQGraphicsProxyWidget()
     QVERIFY(lineEdit->isWindow());
 
     scene->addItem(proxyWidget);
+}
+
+void TestQtWidgets::tst_focusBetweenTabs()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "mw1");
+
+    auto dock1 = new QtWidgets::DockWidget(QStringLiteral("MyDock1"));
+    auto le1 = new QLineEdit("text1");
+    dock1->setWidget(le1);
+
+    auto dock2 = new QtWidgets::DockWidget(QStringLiteral("MyDock2"));
+    auto le2 = new QLineEdit("text2");
+    dock2->setWidget(le2);
+
+    auto dock3 = new QtWidgets::DockWidget(QStringLiteral("MyDock3"));
+    auto le3 = new QLineEdit("text3");
+    dock3->setWidget(le3);
+
+    m1->addDockWidget(dock1->asDockWidgetController(), Location_OnLeft);
+    m1->addDockWidget(dock2->asDockWidgetController(), Location_OnRight);
+    dock2->addDockWidgetAsTab(dock3);
+
+    // 1. Setup: Give focus to le2 and le3, just so our focus scope remembers they were focused.
+    QVERIFY(dock3->dockWidget()->isCurrentTab());
+    le3->setFocus();
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    QVERIFY(le3->hasFocus());
+    dock2->setAsCurrentTab();
+    QVERIFY(dock2->dockWidget()->isCurrentTab());
+    le2->setFocus();
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    QVERIFY(le2->hasFocus());
+
+    // 2. Now, cycling tabs should toggle focus between le2 and le3
+    dock3->setAsCurrentTab();
+    QVERIFY(le3->hasFocus());
+    QVERIFY(!le2->hasFocus());
+
+    dock2->setAsCurrentTab();
+    QVERIFY(le2->hasFocus());
+    QVERIFY(!le3->hasFocus());
 }
 
 int main(int argc, char *argv[])
