@@ -1985,6 +1985,11 @@ void TestQtWidgets::tst_focusBetweenTabs()
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "mw1");
 
+    auto floatingDock = new QtWidgets::DockWidget(QStringLiteral("floatingDock"));
+    auto leFloating = new QLineEdit("floating");
+    floatingDock->setWidget(leFloating);
+    floatingDock->show();
+
     auto dock1 = new QtWidgets::DockWidget(QStringLiteral("MyDock1"));
     auto le1 = new QLineEdit("text1");
     dock1->setWidget(le1);
@@ -2003,9 +2008,12 @@ void TestQtWidgets::tst_focusBetweenTabs()
 
     // 1. Setup: Give focus to le2 and le3, just so our focus scope remembers they were focused.
     le1->setFocus();
+    leFloating->setFocus();
     QVERIFY(dock3->dockWidget()->isCurrentTab());
-    le3->setFocus();
+    m1->view()->activateWindow();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    le3->setFocus();
+
     QVERIFY(le3->hasFocus());
     dock2->setAsCurrentTab();
     QVERIFY(dock2->dockWidget()->isCurrentTab());
@@ -2026,6 +2034,18 @@ void TestQtWidgets::tst_focusBetweenTabs()
     auto titlebar1 = dock1->actualTitleBar()->view();
     titlebar1->setFocus(Qt::MouseFocusReason);
     QVERIFY(le1->hasFocus());
+    QVERIFY(!le2->hasFocus());
+    QVERIFY(!le3->hasFocus());
+
+    // 4. Test with a floating window as well
+    auto titlebarFloating = floatingDock->actualTitleBar()->view();
+    titlebarFloating->setFocus(Qt::MouseFocusReason);
+
+    QEXPECT_FAIL("", "o be fixed", Continue);
+    QVERIFY(leFloating->hasFocus());
+    QEXPECT_FAIL("", "o be fixed", Continue);
+    QVERIFY(!le1->hasFocus());
+
     QVERIFY(!le2->hasFocus());
     QVERIFY(!le3->hasFocus());
 }
