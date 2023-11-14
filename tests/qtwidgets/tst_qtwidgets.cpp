@@ -2002,6 +2002,7 @@ void TestQtWidgets::tst_focusBetweenTabs()
     dock2->addDockWidgetAsTab(dock3);
 
     // 1. Setup: Give focus to le2 and le3, just so our focus scope remembers they were focused.
+    le1->setFocus();
     QVERIFY(dock3->dockWidget()->isCurrentTab());
     le3->setFocus();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
@@ -2019,6 +2020,13 @@ void TestQtWidgets::tst_focusBetweenTabs()
 
     dock2->setAsCurrentTab();
     QVERIFY(le2->hasFocus());
+    QVERIFY(!le3->hasFocus());
+
+    // 3. Check that focusing titlebar focuses the previous focused line edit as well
+    auto titlebar1 = dock1->actualTitleBar()->view();
+    titlebar1->setFocus(Qt::MouseFocusReason);
+    QVERIFY(le1->hasFocus());
+    QVERIFY(!le2->hasFocus());
     QVERIFY(!le3->hasFocus());
 }
 

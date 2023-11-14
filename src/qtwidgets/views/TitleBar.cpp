@@ -320,7 +320,7 @@ QSize TitleBar::sizeHint() const
 
 void TitleBar::focusInEvent(QFocusEvent *ev)
 {
-    if (!View::d->freed())
+    if (View::d->freed())
         return;
 
     QWidget::focusInEvent(ev);
