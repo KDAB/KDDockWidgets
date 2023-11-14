@@ -61,7 +61,7 @@ Rectangle {
 
     MouseArea {
         id: titleBarDragMouseArea
-        objectName: "titleBarMouseArea"
+        objectName: "titleBarMouseArea" // Name used by tests only
         anchors.fill: parent
         onDoubleClicked: {
             if (titleBarCpp)

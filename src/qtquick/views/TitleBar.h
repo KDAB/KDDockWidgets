@@ -105,6 +105,7 @@ Q_SIGNALS:
 
 protected:
     void init() override final;
+    bool event(QEvent *) override;
 
 private:
     QQuickItem *floatButton() const;

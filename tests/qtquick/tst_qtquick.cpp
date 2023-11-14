@@ -357,8 +357,20 @@ void TestQtQuick::tst_focusBetweenTabs()
     QVERIFY(field2->hasActiveFocus());
     QVERIFY(!field3->hasActiveFocus());
 
+    // Now test if clicking on the dock1 titlebar also forwards focus
+    auto tb = dock1->titleBar()->view();
+    Tests::clickOn(tb->mapToGlobal({ 10, 10 }), tb);
+    QVERIFY(field1->hasFocus());
+    QVERIFY(field2->hasFocus());
+    QVERIFY(field3->hasFocus());
+    QVERIFY(field1->hasActiveFocus());
+    QVERIFY(!field2->hasActiveFocus());
+    QVERIFY(!field3->hasActiveFocus());
+
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_CO_AWAIT
+    Platform::instance()
+        ->tests_wait(1);
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()

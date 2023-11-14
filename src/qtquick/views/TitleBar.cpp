@@ -51,6 +51,18 @@ void TitleBar::init()
     m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible) { minimizeButtonVisibleChanged(visible); });
 }
 
+bool TitleBar::event(QEvent *ev)
+{
+    if (Config::self().flags() & KDDockWidgets::Config::Flag_TitleBarIsFocusable) {
+        if (ev->type() == QEvent::MouseButtonPress) {
+            // Core::TitleBar will forward focus to the correct group
+            m_titleBar->focus(Qt::MouseFocusReason);
+        }
+    }
+
+    return QtQuick::View::event(ev);
+}
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 bool TitleBar::isCloseButtonEnabled() const
