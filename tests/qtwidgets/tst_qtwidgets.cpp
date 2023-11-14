@@ -2038,14 +2038,16 @@ void TestQtWidgets::tst_focusBetweenTabs()
     QVERIFY(!le3->hasFocus());
 
     // 4. Test with a floating window as well
+    floatingDock->rootView()->activateWindow();
+    QVERIFY(Platform::instance()->tests_waitForWindowActive(floatingDock->window(), 1000));
+    QVERIFY(floatingDock->window()->isActive());
     auto titlebarFloating = floatingDock->actualTitleBar()->view();
+    QVERIFY(titlebarFloating->isVisible());
     titlebarFloating->setFocus(Qt::MouseFocusReason);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
-    QEXPECT_FAIL("", "o be fixed", Continue);
     QVERIFY(leFloating->hasFocus());
-    QEXPECT_FAIL("", "o be fixed", Continue);
     QVERIFY(!le1->hasFocus());
-
     QVERIFY(!le2->hasFocus());
     QVERIFY(!le3->hasFocus());
 }

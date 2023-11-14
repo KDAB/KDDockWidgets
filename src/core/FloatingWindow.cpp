@@ -781,6 +781,15 @@ FloatingWindow::Private *FloatingWindow::dptr() const
     return d;
 }
 
+void FloatingWindow::focus(Qt::FocusReason reason)
+{
+    const auto groups = this->groups();
+    if (groups.isEmpty())
+        return; // doesn't really happen
+
+    groups.constFirst()->focus(reason);
+}
+
 inline FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
 {
     if (!(requestedFlags & FloatingWindowFlag::FromGlobalConfig)) {

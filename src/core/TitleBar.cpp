@@ -268,10 +268,14 @@ Core::FloatingWindow *TitleBar::floatingWindow() const
 
 void TitleBar::focus(Qt::FocusReason reason)
 {
-    if (!m_group || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
+    if (!(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
         return;
 
-    m_group->FocusScope::focus(reason);
+    if (m_group) {
+        m_group->FocusScope::focus(reason);
+    } else if (m_floatingWindow) {
+        m_floatingWindow->focus(reason);
+    }
 }
 
 void TitleBar::updateButtons()

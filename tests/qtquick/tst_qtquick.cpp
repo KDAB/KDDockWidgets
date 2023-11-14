@@ -305,36 +305,44 @@ void TestQtQuick::tst_focusBetweenTabs()
     auto dock1 = DockRegistry::self()->dockByName("dock1");
     auto dock2 = DockRegistry::self()->dockByName("dock2");
     auto dock3 = DockRegistry::self()->dockByName("dock3");
+    auto floatingDock = DockRegistry::self()->dockByName("floatingDock");
 
+    dock1->view()->rootView()->activateWindow();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(2000);
     dock1->dptr()->group()->focus();
 
     QVERIFY(dock1->isFocused());
     QVERIFY(!dock2->isFocused());
     QVERIFY(!dock3->isFocused());
+    QVERIFY(!floatingDock->isFocused());
 
     auto view1 = QtCommon::View_qt::asQQuickItem(dock1->view());
     auto view2 = QtCommon::View_qt::asQQuickItem(dock2->view());
     auto view3 = QtCommon::View_qt::asQQuickItem(dock3->view());
+    auto floatingDockView = QtCommon::View_qt::asQQuickItem(floatingDock->view());
 
     // Refocus these, as they were unfocused due to reparenting:
     auto field1 = view1->findChild<QQuickItem *>("field1");
     auto field2 = view2->findChild<QQuickItem *>("field2");
     auto field3 = view3->findChild<QQuickItem *>("field3");
+    auto floatingDockField = floatingDockView->findChild<QQuickItem *>("floatingDockField");
     field2->setFocus(true);
     field3->setFocus(true);
+    floatingDockField->setFocus(true);
 
     QVERIFY(dock1->isFocused());
     QVERIFY(!dock2->isFocused());
     QVERIFY(!dock3->isFocused());
 
-    // All 3 have focus, but only #1 has active focus
+    // All 4 have focus, but only #1 has active focus
     QVERIFY(field1->hasActiveFocus());
     QVERIFY(!field2->hasActiveFocus());
     QVERIFY(!field3->hasActiveFocus());
+    QVERIFY(!floatingDockField->hasActiveFocus());
     QVERIFY(field1->hasFocus());
     QVERIFY(field2->hasFocus());
     QVERIFY(field3->hasFocus());
+    QVERIFY(floatingDockField->hasFocus());
 
     dock2->dptr()->group()->focus();
 
@@ -366,6 +374,21 @@ void TestQtQuick::tst_focusBetweenTabs()
     QVERIFY(field1->hasActiveFocus());
     QVERIFY(!field2->hasActiveFocus());
     QVERIFY(!field3->hasActiveFocus());
+
+    // Now test titlebar of a floating window
+    floatingDock->view()->rootView()->activateWindow();
+    QVERIFY(Platform::instance()->tests_waitForWindowActive(floatingDock->view()->window(), 1000));
+    auto floatingTb = floatingDock->titleBar()->view();
+    Tests::clickOn(floatingTb->mapToGlobal({ 10, 10 }), floatingTb);
+
+    Platform::instance()->tests_wait(1000);
+
+    QVERIFY(field1->hasFocus());
+    QVERIFY(field2->hasFocus());
+    QVERIFY(field3->hasFocus());
+    QVERIFY(floatingDockField->hasFocus());
+
+    QVERIFY(floatingDockField->hasActiveFocus());
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     KDDW_CO_AWAIT

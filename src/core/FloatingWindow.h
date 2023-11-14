@@ -200,6 +200,8 @@ public:
     /// Returns the per-floating window flags
     FloatingWindowFlags floatingWindowFlags() const;
 
+    void focus(Qt::FocusReason reason);
+
     class Private;
     Private *dptr() const;
 

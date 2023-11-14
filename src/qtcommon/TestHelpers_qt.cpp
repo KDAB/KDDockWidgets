@@ -46,6 +46,7 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
         || msg.contains(QLatin1String("outside any known screen, using primary screen"))
         || msg.contains(QLatin1String("Populating font family aliases took"))
         || msg.contains(QLatin1String("QSGThreadedRenderLoop: expose event received for window"))
+        || msg.contains(QLatin1String("Group.qml:0: ReferenceError: parent is not defined"))
 
         // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in
         // Qt.

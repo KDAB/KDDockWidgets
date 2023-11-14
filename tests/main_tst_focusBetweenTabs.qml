@@ -88,11 +88,29 @@ ApplicationWindow {
             }
         }
 
+        KDDW.DockWidget {
+            id: floatingDock
+            uniqueName: "floatingDock"
+            Rectangle {
+                anchors.fill: parent
+                color: "#475B63"
+                TextInput {
+                    objectName: "floatingDockField"
+                    text: "focus=" + focus + "; activeFocus=" + activeFocus
+                    focus: true
+                    anchors.margins: 10
+                    anchors.left: parent.left
+                }
+            }
+        }
+
         Component.onCompleted: {
             // Add dock4 to the Bottom location
             addDockWidget(dock1, KDDW.KDDockWidgets.Location_OnLeft);
             addDockWidget(dock2, KDDW.KDDockWidgets.Location_OnRight);
             dock2.addDockWidgetAsTab(dock3);
+
+            floatingDock.show();
         }
     }
 }
