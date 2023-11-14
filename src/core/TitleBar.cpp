@@ -266,13 +266,12 @@ Core::FloatingWindow *TitleBar::floatingWindow() const
     return m_floatingWindow;
 }
 
-void TitleBar::focusInEvent(FocusEvent *ev)
+void TitleBar::focus(Qt::FocusReason reason)
 {
     if (!m_group || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
         return;
 
-    // For some reason QWidget::setFocusProxy() isn't working, so forward manually
-    m_group->FocusScope::focus(ev->reason());
+    m_group->FocusScope::focus(reason);
 }
 
 void TitleBar::updateButtons()
@@ -315,7 +314,6 @@ void TitleBar::updateMaximizeButton()
 
 void TitleBar::updateCloseButton()
 {
-
     const bool anyNonClosable = group()
         ? group()->anyNonClosable()
         : (floatingWindow() ? floatingWindow()->anyNonClosable() : false);

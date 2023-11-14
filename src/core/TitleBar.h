@@ -113,7 +113,9 @@ public:
     /// It's only nullptr for the case of having a Floating Window with more than one nested Frame
     TabBar *tabBar() const;
 
-    void focusInEvent(FocusEvent *);
+    /// Will focus the last user widget (below this titlebar) that had focus
+    /// Requires Config::Flag_TitleBarIsFocusable
+    void focus(Qt::FocusReason reason);
 
     /// @brief updates the close button enabled state
     void updateButtons();

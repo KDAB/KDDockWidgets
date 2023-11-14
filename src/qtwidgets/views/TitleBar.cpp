@@ -324,7 +324,7 @@ void TitleBar::focusInEvent(QFocusEvent *ev)
         return;
 
     QWidget::focusInEvent(ev);
-    m_titleBar->focusInEvent(ev);
+    m_titleBar->focus(ev->reason());
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
