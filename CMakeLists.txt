@@ -109,6 +109,18 @@ option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
 
+# Deprecated alias for KDDockWidgets_PRETTY_QTWIDGETS_HEADERS option
+if(DEFINED CACHE{KDockWidgets_PRETTY_QTWIDGETS_HEADERS}
+   AND NOT DEFINED CACHE{KDDockWidgets_PRETTY_QTWIDGETS_HEADERS})
+
+    set(KDDockWidgets_PRETTY_QTWIDGETS_HEADERS
+        $CACHE{KDockWidgets_QTWIDGETS_HEADERS}
+        CACHE STRING
+        "Install headers under kddockwidgets/ as synonyms to the kddockwidgets/qtwidgets/view/*.h counterparts."
+        FORCE
+    )
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
@@ -251,8 +263,9 @@ endif()
 
 add_definitions(-DQT_NO_KEYWORDS)
 
-option(KDockWidgets_PRETTY_QTWIDGETS_HEADERS
-       "Install DockWidget.h and MainWindow.h as synonyms to the *.h counterparts." ${KDDW_FRONTEND_QTWIDGETS}
+option(KDDockWidgets_PRETTY_QTWIDGETS_HEADERS
+    "Install headers under kddockwidgets/ as synonyms to the kddockwidgets/qtwidgets/view/*.h counterparts."
+    ${KDDW_FRONTEND_QTWIDGETS}
 )
 
 set(KDDockWidgets_DEPS "")

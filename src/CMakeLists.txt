@@ -359,7 +359,7 @@ target_include_directories(
 )
 
 if(KDDW_FRONTEND_QTWIDGETS)
-    if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
+    if(KDDockWidgets_PRETTY_QTWIDGETS_HEADERS)
         target_include_directories(
             kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtwidgets_pretty>
         )
@@ -633,7 +633,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
             DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtwidgets/views/
     )
 
-    if(KDockWidgets_PRETTY_QTWIDGETS_HEADERS)
+    if(KDDockWidgets_PRETTY_QTWIDGETS_HEADERS)
         set(KDDW_QTWIDGET_PRETTY_HEADERS
             fwd_headers/qtwidgets_pretty/kddockwidgets/MainWindow.h
             fwd_headers/qtwidgets_pretty/kddockwidgets/DockWidget.h
