@@ -110,14 +110,13 @@ option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
 
 # Deprecated alias for KDDockWidgets_PRETTY_QTWIDGETS_HEADERS option
-if(DEFINED CACHE{KDockWidgets_PRETTY_QTWIDGETS_HEADERS}
-   AND NOT DEFINED CACHE{KDDockWidgets_PRETTY_QTWIDGETS_HEADERS})
+if(DEFINED CACHE{KDockWidgets_PRETTY_QTWIDGETS_HEADERS} AND NOT DEFINED CACHE{KDDockWidgets_PRETTY_QTWIDGETS_HEADERS})
 
     set(KDDockWidgets_PRETTY_QTWIDGETS_HEADERS
         $CACHE{KDockWidgets_QTWIDGETS_HEADERS}
         CACHE STRING
-        "Install headers under kddockwidgets/ as synonyms to the kddockwidgets/qtwidgets/view/*.h counterparts."
-        FORCE
+              "Install headers under kddockwidgets/ as synonyms to the kddockwidgets/qtwidgets/view/*.h counterparts."
+              FORCE
     )
 endif()
 
@@ -264,8 +263,8 @@ endif()
 add_definitions(-DQT_NO_KEYWORDS)
 
 option(KDDockWidgets_PRETTY_QTWIDGETS_HEADERS
-    "Install headers under kddockwidgets/ as synonyms to the kddockwidgets/qtwidgets/view/*.h counterparts."
-    ${KDDW_FRONTEND_QTWIDGETS}
+       "Install headers under kddockwidgets/ as synonyms to the kddockwidgets/qtwidgets/view/*.h counterparts."
+       ${KDDW_FRONTEND_QTWIDGETS}
 )
 
 set(KDDockWidgets_DEPS "")
