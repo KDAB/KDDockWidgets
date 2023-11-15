@@ -60,7 +60,8 @@ namespace KDDockWidgets {
 
 static FrameOptions actualOptions(FrameOptions options)
 {
-    if (Config::self().flags() & Config::Flag_AlwaysShowTabs)
+    const bool isCentralGroup = options & FrameOption_IsCentralFrame;
+    if (!isCentralGroup && (Config::self().flags() & Config::Flag_AlwaysShowTabs))
         options |= FrameOption_AlwaysShowsTabs;
 
     return options;
