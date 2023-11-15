@@ -99,3 +99,14 @@ kddockwidgets_example.iml
 /src/flutter/dart/layout_*
 /CMakeUserPresets.json
 /src/core/layouting/build/
+
+# Flutter auto generated files
+/examples/flutter/linux/flutter/generated_plugin_registrant.cc
+/examples/flutter/linux/flutter/generated_plugin_registrant.h
+/examples/flutter/linux/flutter/generated_plugins.cmake
+/examples/flutter/windows/flutter/generated_plugin_registrant.cc
+/examples/flutter/windows/flutter/generated_plugin_registrant.h
+/examples/flutter/windows/flutter/generated_plugins.cmake
+/tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.cc
+/tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.h
+/tests/flutter_tests_embedder/linux/flutter/generated_plugins.cmake
