@@ -20,6 +20,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <map>
 
 /**
  * Bump whenever the format changes, so we can still load old layouts.
@@ -106,7 +107,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     // Using shared ptr, as we need to modify shared instances
     typedef std::shared_ptr<LayoutSaver::DockWidget> Ptr;
     typedef Vector<Ptr> List;
-    static std::unordered_map<QString, Ptr> s_dockWidgets;
+    static std::map<QString, Ptr> s_dockWidgets;
 
     bool isValid() const;
 

@@ -17,8 +17,7 @@
 #include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
 
-#include <unordered_map>
-
+#include <map>
 #include <memory>
 
 /**
@@ -268,9 +267,9 @@ private:
     ///
     /// When LayoutSaver is trying to restore dock widget "foo", but it doesn't exist, it will
     /// attempt to call a user provided factory function. That function can however return a dock
-    /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
+    /// widget with another ID, such as "bar". When that happens this map gets a "foo" : "bar"
     /// entry
-    mutable std::unordered_map<QString, QString> m_dockWidgetIdRemapping;
+    mutable std::map<QString, QString> m_dockWidgetIdRemapping;
 
     // To honour Config::Flag_AutoHideAsTabGroups
     Core::SideBarGroupings *const m_sideBarGroupings;

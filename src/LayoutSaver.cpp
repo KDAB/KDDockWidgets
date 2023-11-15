@@ -64,7 +64,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-std::unordered_map<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
+std::map<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
 
 
