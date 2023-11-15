@@ -1179,3 +1179,8 @@ bool DockWidget::startDragging(bool singleTab)
 
     return dc->programmaticStartDrag(draggable, globalPos, offset);
 }
+
+bool DockWidget::wasRestored() const
+{
+    return d->m_wasRestored;
+}

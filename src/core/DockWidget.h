@@ -477,6 +477,10 @@ public:
     /// @param singleTab If true, detaches and drags a tab, otherwise the titlebar (which might contain a group)
     bool startDragging(bool singleTab = false);
 
+    /// Returns whether this dock widget was successfully restored in the last LayoutSaver::restore*() call
+    /// Reasons for this to be false can be for example the DockWidget not existing at restore time
+    bool wasRestored() const;
+
 protected:
     void setParentView_impl(View *parent) override;
 
