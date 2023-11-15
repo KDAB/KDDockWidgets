@@ -35,7 +35,7 @@
 # install path for Python bindings Default=CMAKE_INSTALL_PREFIX
 #
 # -DKDDockWidgets_FRONTENDS='qtwidgets;qtquick' Semicolon separated list of
-# frontends to enable. If not specified, frontends will be enabled based on
+# frontends to enable. If not specified, Qt frontends will be enabled based on
 # availability of libraries on your system.
 
 # ## DO NOT USE IF YOU ARE AN END-USER.  FOR THE DEVELOPERS ONLY!! # Special
@@ -87,6 +87,11 @@ set(KDDockWidgets_SOVERSION "2.0")
 
 include(FeatureSummary)
 
+set(KDDockWidgets_FRONTENDS
+    ""
+    CACHE STRING "Semicolon separated list of frontends to enable (blank for autodetect)"
+)
+
 option(KDDockWidgets_QT6 "Build against Qt 6" OFF)
 option(KDDockWidgets_DEVELOPER_MODE "Developer Mode" OFF)
 option(KDDockWidgets_PYTHON_BINDINGS "Build python bindings" OFF)
@@ -102,7 +107,6 @@ option(KDDockWidgets_X11EXTRAS
 )
 option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
-option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
 option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
