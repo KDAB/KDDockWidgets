@@ -89,8 +89,7 @@ include(FeatureSummary)
 
 set(KDDockWidgets_FRONTENDS
     ""
-    CACHE STRING
-    "Semicolon separated list of frontends to enable (blank for autodetect)"
+    CACHE STRING "Semicolon separated list of frontends to enable (blank for autodetect)"
 )
 
 option(KDDockWidgets_QT6 "Build against Qt 6" OFF)
