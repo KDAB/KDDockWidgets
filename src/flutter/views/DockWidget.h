@@ -66,6 +66,7 @@ public:
     Size maxSizeHint() const override;
 
     Core::DockWidget *dockWidget() const;
+    std::shared_ptr<Core::View> focusCandidate() const override;
 
 protected:
     void init() override;

@@ -21,6 +21,7 @@
 #include "flutter/views/TitleBar.h"
 #include "flutter/views/Group.h"
 #include "flutter/ViewFactory.h"
+#include "flutter/views/ViewWrapper_p.h"
 
 #include <Config.h>
 
@@ -59,7 +60,6 @@ void DockWidget::init()
 {
 }
 
-
 Size DockWidget::minSize() const
 {
     if (auto guestWidget = dockWidget()->guestView()) {
@@ -83,4 +83,9 @@ Size DockWidget::maxSizeHint() const
 Core::DockWidget *DockWidget::dockWidget() const
 {
     return m_dockWidget;
+}
+
+std::shared_ptr<Core::View> DockWidget::focusCandidate() const
+{
+    return ViewWrapper::create(const_cast<flutter::DockWidget *>(this));
 }
