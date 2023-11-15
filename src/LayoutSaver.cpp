@@ -349,6 +349,7 @@ void to_json(nlohmann::json &json, const typename LayoutSaver::DockWidget::List 
         json.push_back(*mw);
     }
 }
+
 void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidget::List &list)
 {
     list.clear();
@@ -460,6 +461,7 @@ QByteArray LayoutSaver::serializeLayout() const
 
 bool LayoutSaver::restoreLayout(const QByteArray &data)
 {
+    LayoutSaver::DockWidget::s_dockWidgets.clear();
     d->clearRestoredProperty();
     if (data.isEmpty())
         return true;
