@@ -27,7 +27,7 @@ A demo is available at <https://demos.kdab.com/wasm/kddockwidgets/dockwidgets.ht
     (Adapt the paths to your own situation)
 ```
 
-## Builds tips for your own app ==
+## Builds tips for your own app
 
 - Link to KDDW (libkddockwidgets.a, or similar)
 

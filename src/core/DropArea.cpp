@@ -46,7 +46,7 @@ createDropIndicatorOverlay(Core::DropArea *dropArea)
 {
 #ifdef Q_OS_WASM
     // On WASM windows don't support translucency, which is required for the classic indicators.
-    return new SegmentedIndicators(dropArea);
+    return new Core::SegmentedDropIndicatorOverlay(dropArea);
 #endif
 
     switch (ViewFactory::s_dropIndicatorType) {
