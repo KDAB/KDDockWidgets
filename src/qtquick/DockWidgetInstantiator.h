@@ -80,6 +80,14 @@ public:
     Q_INVOKABLE void raise();
     Q_INVOKABLE void moveToSideBar();
 
+    /// Deletes the dock widget
+    ///
+    /// Deleting involves deleting the controller (Core::DockWidget), the view (View::DockWidget)
+    /// and this instantiator itself as well.
+    ///
+    /// It's more usual to just hide dock widgets though.
+    Q_INVOKABLE void deleteDockWidget();
+
 protected:
     void classBegin() override;
     void componentComplete() override;

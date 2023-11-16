@@ -64,6 +64,14 @@ ApplicationWindow {
                 }
             }
 
+            Action {
+                // Shows how to use direct deletion
+                text: qsTr("Delete widget #5")
+                onTriggered: {
+                   dock5.deleteDockWidget();
+                }
+            }
+
             MenuSeparator { }
             Action { text: qsTr("&Quit")
                 onTriggered: {

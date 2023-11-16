@@ -166,6 +166,12 @@ void DockWidgetInstantiator::moveToSideBar()
         m_dockWidget->moveToSideBar();
 }
 
+void DockWidgetInstantiator::deleteDockWidget()
+{
+    delete m_dockWidget;
+    delete this;
+}
+
 void DockWidgetInstantiator::classBegin()
 {
     // Nothing interesting to do here.
