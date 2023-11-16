@@ -2,10 +2,11 @@
 
 > ⚠️ This document is intended for KDDW developers.
 > ⚠️ The flutter port is not ready for the general public.
+> ⚠️ The flutter port is on hold, waiting for multi-window support upstream.
 
 ## Requirements
 
-- Flutter >= 3.10 && Dart 3
+- Flutter >= 3.13 && Dart 3.1
 
 - CMake, Ninja
 
@@ -71,22 +72,6 @@ On Linux, get a developer build (see above), then run:
 
 ```bash
 dart run_flutter_tests.dart build-dev-flutter/
-```
-
-## Minimize git noise
-
-`flutter build` likes to regenerate some files, which we've added licenses headers and clang-formatted.<br>
-We can tell git to ignore these:
-
-```bash
-git update-index --assume-unchanged tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.cc
-git update-index --assume-unchanged tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.h
-git update-index --assume-unchanged tests/flutter_tests_embedder/linux/flutter/generated_plugins.cmake
-git update-index --assume-unchanged examples/flutter/linux/flutter/generated_plugin_registrant.*
-git update-index --assume-unchanged examples/flutter/linux/flutter/generated_plugins.cmake
-git update-index --assume-unchanged examples/flutter/windows/flutter/generated_plugins.cmake
-git update-index --assume-unchanged examples/flutter/windows/flutter/generated_plugin_registrant.*
-
 ```
 
 ## TODO
