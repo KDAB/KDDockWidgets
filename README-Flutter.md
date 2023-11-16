@@ -74,12 +74,12 @@ On Linux, get a developer build (see above), then run:
 dart run_flutter_tests.dart build-dev-flutter/
 ```
 
-## TODO
-
-- Styling
+## Pending work
 
 - Support flutter multi-window
 
+- More styling
+
 - Make more tests pass
 
-- Package
+- Figure out packaging, probably once Dart's Native Assets is released
