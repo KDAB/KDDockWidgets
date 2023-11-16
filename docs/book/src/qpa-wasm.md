@@ -1,4 +1,4 @@
-# KDDockWidgets with WebAssembly
+# WebAssembly
 
 KDDockWidgets works with WebAssembly with the following known limitations:
 

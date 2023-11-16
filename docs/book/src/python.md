@@ -1,6 +1,10 @@
-# KDDockWidgets and Python bindings
+# Python bindings
 
-These are the instructions for building the Python bindings for KDDockWidgets.
+```
+NOTE: This document needs to be rewritten for Qt6, which is the recommended Python version.
+```
+
+These are the instructions for building the `Python bindings` for KDDockWidgets.
 
 Make sure you have PySide2, shiboken2 and shiboken2-generator installed.
 As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.

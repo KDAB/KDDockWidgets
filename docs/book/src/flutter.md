@@ -1,7 +1,7 @@
-# KDDockWidgets for Flutter
+# Flutter
 
-> ⚠️ This document is intended for KDDW developers.
-> ⚠️ The flutter port is not ready for the general public.
+> ⚠️ This document is intended for KDDW developers.<br>
+> ⚠️ The flutter port is not ready for the general public.<br>
 > ⚠️ The flutter port is on hold, waiting for multi-window support upstream.
 
 ## Requirements
