@@ -1317,6 +1317,13 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
     assert(!item->isRoot());
 
     if (!contains(item)) {
+        if (item->parentContainer() == this) {
+            // This should never happen, but we've seen infinite recursion here before
+            KDDW_ERROR("ItemBoxContainer::removeItem: Could not find item as children, but it has us as parent!");
+            assert(false); // crash early during debug
+            return;
+        }
+
         // Not ours, ask parent
         item->parentContainer()->removeItem(item, hardRemove);
         return;
