@@ -1,10 +1,10 @@
-# KDDockWidgets and Wayland
+# Wayland
 
-Wayland support is done and has been tested on KDE (Kwin) and weston.
+Wayland is supported and has been tested on KDE (Kwin) and weston.
 
 ## Limitations
 
-Wayland works very differently than traditional desktops and imposes us some,
+Wayland works very differently than traditional desktops and imposes us some
 limitations. Here's a list of different behaviours which KDDockWidgets will have
 when running on Wayland:
 
