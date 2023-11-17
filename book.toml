@@ -2,5 +2,5 @@
 authors = ["Sergio Martins"]
 language = "en"
 multilingual = false
-src = "src"
+src = "docs/book/src/"
 title = "KDDockWidgets"
