@@ -2,9 +2,19 @@
 
 [Introduction](introduction.md)
 
-- [Installation](installation.md)
-- [Basic Usage](basic.md)
-- [Examples](examples.md)
+- [Installation and Usage](installation_and_usage.md)
+- [Examples]()
+  - [QtWidgets]()
+    - [minimal](examples_qtwidgets_minimal.md)
+    - [full example](examples_qtwidgets_full.md)
+    - [mdi](examples_qtwidgets_mdi.md)
+    - [mdi with docking](examples_qtwidgets_mdi_with_docking.md)
+  - [QtQuick]()
+    - [full example](examples_qtquick_full.md)
+    - [customtabbar](examples_qtquick_customtabbar.md)
+    - [customtitlebar](examples_qtquick_customtitlebar.md)
+    - [customseparator](examples_qtquick_customseparator.md)
+    - [mdi](examples_qtquick_mdi.md)
 - [Python Bindings](python.md)
 
 ---
