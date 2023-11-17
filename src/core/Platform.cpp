@@ -49,10 +49,6 @@ static Platform *s_platform = nullptr;
 
 EventFilterInterface::~EventFilterInterface() = default;
 
-#if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
-int Platform::s_logicalDpiFactorOverride = 0;
-#endif
-
 Platform::Platform()
     : d(new Private())
 {
@@ -222,11 +218,6 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         std::abort();
         return;
     }
-
-    // We want stability during tests.
-    // QMainWindow uses the factor for its margins, we don't want tests failing due
-    // to off by 1 or 2 pixels. Use 96dpi everywhere.
-    Platform::s_logicalDpiFactorOverride = 1;
 
     /// Reset the default framework factory, so we can test several frontends in the same test run
     Config::self().setViewFactory(Platform::instance()->createDefaultViewFactory());

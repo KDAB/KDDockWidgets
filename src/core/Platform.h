@@ -241,7 +241,6 @@ public:
     static void tests_deinitPlatform();
 
     std::string m_expectedWarning;
-    static int s_logicalDpiFactorOverride;
 #endif
 
 #ifdef DOCKS_TESTING_METHODS

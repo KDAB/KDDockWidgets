@@ -27,6 +27,11 @@ using namespace KDDockWidgets::QtCommon;
 
 // clazy:excludeall=missing-qobject-macro
 
+
+#if defined(DOCKS_DEVELOPER_MODE)
+int View_qt::s_logicalDpiFactorOverride = 0;
+#endif
+
 class View_qt::EventFilter : public QObject
 {
 public:

@@ -52,6 +52,10 @@ public:
         return m_thisObj->property(name);
     }
 
+#if defined(DOCKS_DEVELOPER_MODE)
+    static int s_logicalDpiFactorOverride;
+#endif
+
 protected:
     class EventFilter;
     EventFilter *const m_eventFilter;

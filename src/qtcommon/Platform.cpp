@@ -183,6 +183,10 @@ Platform_qt::Platform_qt()
 Platform_qt::Platform_qt(QCoreApplication *)
     : m_globalEventFilter(new GlobalEventFilter(this))
 {
+    // We want stability during tests.
+    // QMainWindow uses the factor for its margins, we don't want tests failing due
+    // to off by 1 or 2 pixels. Use 96dpi everywhere.
+    View_qt::s_logicalDpiFactorOverride = 1;
 }
 
 #endif

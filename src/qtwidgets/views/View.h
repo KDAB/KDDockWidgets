@@ -12,7 +12,6 @@
 #pragma once
 
 #include "kddockwidgets/core/Controller.h"
-#include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/qtcommon/View.h"
 
 #include <QDebug>
@@ -396,8 +395,8 @@ private:
 inline qreal logicalDpiFactor(const QWidget *w)
 {
 #ifdef DOCKS_DEVELOPER_MODE
-    if (Core::Platform::s_logicalDpiFactorOverride > 0)
-        return Core::Platform::s_logicalDpiFactorOverride;
+    if (QtCommon::View_qt::s_logicalDpiFactorOverride > 0)
+        return QtCommon::View_qt::s_logicalDpiFactorOverride;
 #endif
 
 #ifdef Q_OS_MACOS
