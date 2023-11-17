@@ -42,13 +42,6 @@ repos:
     exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
   - id: cmake-format
     exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
-- repo: https://github.com/markdownlint/markdownlint
-  rev: v0.12.0
-  hooks:
-  - id: markdownlint
-    entry: mdl
-    language: ruby
-    files: \.(md|mdown|markdown)$
 - repo: https://github.com/fsfe/reuse-tool
   rev: v2.1.0
   hooks:
