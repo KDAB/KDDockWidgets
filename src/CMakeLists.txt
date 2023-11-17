@@ -644,8 +644,13 @@ endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     set(KDDW_QTQUICK_HEADERS
-        qtquick/Action.h qtquick/ViewFactory.h qtquick/DockWidgetInstantiator.h qtquick/LayoutSaverInstantiator.h
-        qtquick/MainWindowInstantiator.h qtquick/MainWindowMDIInstantiator.h
+        qtquick/Platform.h
+        qtquick/Action.h
+        qtquick/ViewFactory.h
+        qtquick/DockWidgetInstantiator.h
+        qtquick/LayoutSaverInstantiator.h
+        qtquick/MainWindowInstantiator.h
+        qtquick/MainWindowMDIInstantiator.h
     )
 
     set(KDDW_QTQUICK_VIEW_HEADERS
