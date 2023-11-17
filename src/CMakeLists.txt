@@ -265,7 +265,6 @@ set(KDDW_PUBLIC_HEADERS
     # ViewFactory.h
     Qt5Qt6Compat_p.h
     QtCompat_p.h
-    # Platform.h
 )
 
 set(KDDW_CORE_HEADERS
@@ -291,7 +290,6 @@ set(KDDW_CORE_HEADERS
     core/DockRegistry.h
     core/Controller.h
     core/ViewFactory.h
-    core/Platform.h
     core/Action.h
 )
 
@@ -603,7 +601,7 @@ endif()
 
 if(KDDW_FRONTEND_QTWIDGETS)
 
-    set(KDDW_QTWIDGET_HEADERS qtwidgets/Platform.h qtwidgets/ViewFactory.h)
+    set(KDDW_QTWIDGET_HEADERS qtwidgets/ViewFactory.h)
 
     set(KDDW_QTWIDGET_VIEW_HEADERS
         qtwidgets/views/DockWidget.h
@@ -646,13 +644,8 @@ endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     set(KDDW_QTQUICK_HEADERS
-        qtquick/Action.h
-        qtquick/ViewFactory.h
-        qtquick/Platform.h
-        qtquick/DockWidgetInstantiator.h
-        qtquick/LayoutSaverInstantiator.h
-        qtquick/MainWindowInstantiator.h
-        qtquick/MainWindowMDIInstantiator.h
+        qtquick/Action.h qtquick/ViewFactory.h qtquick/DockWidgetInstantiator.h qtquick/LayoutSaverInstantiator.h
+        qtquick/MainWindowInstantiator.h qtquick/MainWindowMDIInstantiator.h
     )
 
     set(KDDW_QTQUICK_VIEW_HEADERS
@@ -682,7 +675,7 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
-    set(KDDW_QTCOMMON_HEADERS qtcommon/Platform.h qtcommon/View.h)
+    set(KDDW_QTCOMMON_HEADERS qtcommon/View.h)
     install(FILES ${KDDW_QTCOMMON_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtcommon)
 
     # Generate library version files
