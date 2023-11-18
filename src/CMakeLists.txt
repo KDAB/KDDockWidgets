@@ -290,6 +290,7 @@ set(KDDW_CORE_HEADERS
     core/DockRegistry.h
     core/Controller.h
     core/ViewFactory.h
+    core/Platform.h
     core/Action.h
 )
 
@@ -680,7 +681,7 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
-    set(KDDW_QTCOMMON_HEADERS qtcommon/View.h)
+    set(KDDW_QTCOMMON_HEADERS qtcommon/Platform.h qtcommon/View.h)
     install(FILES ${KDDW_QTCOMMON_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtcommon)
 
     # Generate library version files
