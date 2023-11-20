@@ -204,6 +204,18 @@
             ]
         },
         {
+            "name": "dev-slint",
+            "description": "Non-Qt KDDW build with only the layouting engine and a slint layouting example. No docking.",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-slint",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_WERROR": "ON",
+                "KDDockWidgets_SLINT_LAYOUTING_EXAMPLE": "ON",
+                "KDDockWidgets_FRONTENDS": "none"
+            }
+        },
+        {
             "name": "clazy",
             "displayName": "clazy",
             "generator": "Ninja",

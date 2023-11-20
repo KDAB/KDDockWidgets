@@ -543,6 +543,10 @@ if(KDDockWidgets_EXAMPLES)
             COMMENT "Building flutter example"
         )
     endif()
+
+    if(KDDockWidgets_SLINT_LAYOUTING_EXAMPLE)
+        add_subdirectory(src/core/layouting/examples/slint/)
+    endif()
 endif()
 
 if(KDDockWidgets_TESTS)
