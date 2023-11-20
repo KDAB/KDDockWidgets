@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/KDAB/KDDockWidgets/actions/workflows/build.yml/badge.svg)
 
-![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/1.7/images/kddockwidgets.png?raw=true)
+![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/2.0/images/kddockwidgets.png?raw=true)
 
 
 Our brand new [manual](https://kdab.github.io/KDDockWidgets/) is now the entry point for everything related to `KDDockWidgets`.
