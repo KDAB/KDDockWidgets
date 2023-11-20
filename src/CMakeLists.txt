@@ -253,19 +253,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
-set(KDDW_PUBLIC_HEADERS
-    docks_export.h
-    Config.h
-    KDDockWidgets.h
-    # FocusScope.h
-    LayoutSaver.h
-    # Controller.h
-    # View.h
-    # Window.h
-    # ViewFactory.h
-    Qt5Qt6Compat_p.h
-    QtCompat_p.h
-)
+set(KDDW_PUBLIC_HEADERS docks_export.h Config.h KDDockWidgets.h LayoutSaver.h Qt5Qt6Compat_p.h QtCompat_p.h)
 
 set(KDDW_CORE_HEADERS
     core/DockWidget.h
