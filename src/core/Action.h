@@ -14,7 +14,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/QtCompat_p.h"
 
-/// Class to abstract QAction, so code still works with Flutter and QtQuicks
+/// Class to abstract QAction, so code still works with QtQuick and Flutter
 
 namespace KDDockWidgets {
 

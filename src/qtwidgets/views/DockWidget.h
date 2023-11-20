@@ -83,8 +83,6 @@ public:
     QAction *toggleAction() const;
     QAction *floatAction() const;
 
-    std::shared_ptr<Core::View> focusCandidate() const override;
-
 Q_SIGNALS:
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
     void guestViewChanged();
@@ -99,6 +97,7 @@ Q_SIGNALS:
 protected:
     bool event(QEvent *) override;
     void resizeEvent(QResizeEvent *) override;
+    std::shared_ptr<Core::View> focusCandidate() const override;
 
 private:
     class Private;

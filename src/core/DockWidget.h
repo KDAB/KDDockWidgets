@@ -11,7 +11,10 @@
 
 /**
  * @file
- * @brief The DockWidget base-class that's shared between QtWidgets and QtQuick stack.
+ * @brief The DockWidget controller that's shared between QtWidgets and QtQuick frontends.
+ *
+ * For most users, this is an internal detail. QtWidgets::DockWidget (or QtQuick::DockWidget)
+ * is enough as API.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
