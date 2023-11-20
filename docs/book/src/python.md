@@ -1,35 +1,26 @@
 # Python bindings
 
-```
-NOTE: This document needs to be rewritten for Qt6, which is the recommended Python version.
-```
-
 These are the instructions for building the `Python bindings` for KDDockWidgets.
 
-Make sure you have PySide2, shiboken2 and shiboken2-generator installed.
-As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.
-To use the wheels do this:
+Make sure you have PySide6, shiboken6 and shiboken6-generator installed. Their versions need to match your **exact** Qt version.
+Since `Qt 6.6` all these 3 packages are in `PyPi`, so you can simply install them with `pip`. For other Qt versions, consult
+the respective documentation.
+
+```bash
+% python3 -m pip install shiboken6==6.6 pyside6==6.6 shiboken6_generator==6.6
+```
 
 A C++17 compliant C++ compiler is also required.
 
-```bash
-% python3 -m pip install \
-    --index-url=http://download.qt.io/official_releases/QtForPython/ \
-    --trusted-host download.qt.io \
-    shiboken2 pyside2 shiboken2_generator
-```
-
-For more info visit <https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html>.
-
-afterwards run 'python3 -m pip list | grep PySide2'
-Note the version *must* match the same Qt you intend to use when building KDDockWidgets.
+For more info visit <https://doc.qt.io/qtforpython/shiboken6/gettingstarted.html>.
 
 Not supported:
 
 - debug builds
 - static builds
-- python2 bindings
+- python2
 - only some 32-bit platforms are supported (see <https://wiki.qt.io/Qt_for_Python>)
+- Qt5. It probably works, but don't report bugs unless they are reproducible with Qt 6 as well
 
 Tell CMake to build the bindings by passing the `-DKDDockWidgets_PYTHON_BINDINGS=True' option,
 followed by the make command.
@@ -75,8 +66,8 @@ Build Issues
   Try:
 
 ```bash
-    export LD_LIBRARY_PATH=/usr/local/lib/python/dist-packages/PySide2/Qt/lib #linux
-    export DYLD_LIBRARY_PATH=/usr/local/lib/python/dist-packages/PySide2/Qt/lib #Mac
+    export LD_LIBRARY_PATH=/usr/local/lib/python/dist-packages/PySide6/Qt/lib #linux
+    export DYLD_LIBRARY_PATH=/usr/local/lib/python/dist-packages/PySide6/Qt/lib #Mac
     (Adjust to wherever your PySide is installed)
 ```
 
@@ -84,7 +75,7 @@ Build Issues
   To fix this, copy the `libclang.dll` that comes with llvm into shiboken2, like so:
 
 ```bash
-    cd C:\Python39\Lib\site-packages\shiboken2_generator
+    cd C:\Python39\Lib\site-packages\shiboken6_generator
     copy libclang.dll libclang.dll.save
     copy "C:\Program Files\llvm\bin\libclang.dll" libclang.dll
     (Python3 installation in C:\Python39 and llvm in c:\Program Files\llvm. adjust as needed)
