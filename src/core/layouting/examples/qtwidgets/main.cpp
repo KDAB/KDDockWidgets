@@ -104,12 +104,12 @@ public:
     void insertItem(Core::LayoutingGuest *guest, Location loc,
                     InitialOption initialOption = {})
     {
-        if (!guest || !guest->layoutItem) {
+        if (!guest || !guest->layoutItem()) {
             qWarning() << "insertItem: Something is null!";
             return;
         }
 
-        root.insertItem(guest->layoutItem, loc, initialOption);
+        root.insertItem(guest->layoutItem(), loc, initialOption);
     }
 
     /// Inserts a guest widget into the layout but relative to another widget
@@ -118,12 +118,12 @@ public:
     void insertItemRelativeTo(Core::LayoutingGuest *guest, Core::LayoutingGuest *relativeTo, Location loc,
                               InitialOption initialOption = {})
     {
-        if (!guest || !relativeTo || !guest->layoutItem || !relativeTo->layoutItem) {
+        if (!guest || !relativeTo || !guest->layoutItem() || !relativeTo->layoutItem()) {
             qWarning() << "insertItemRelativeTo: Something is null!";
             return;
         }
 
-        root.insertItemRelativeTo(guest->layoutItem, relativeTo->layoutItem, loc, initialOption);
+        root.insertItemRelativeTo(guest->layoutItem(), relativeTo->layoutItem(), loc, initialOption);
     }
 
     Core::ItemBoxContainer root;

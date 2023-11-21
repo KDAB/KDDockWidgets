@@ -16,6 +16,7 @@
 #include "LayoutingSeparator_p.h"
 
 #include "core/Logging_p.h"
+#include "core/ObjectGuard_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/nlohmann_helpers_p.h"
 
@@ -4024,7 +4025,6 @@ int ItemContainer::count_recursive() const
 }
 
 LayoutingHost::~LayoutingHost() = default;
-LayoutingGuest::~LayoutingGuest() = default;
 LayoutingSeparator::~LayoutingSeparator() = default;
 
 LayoutingSeparator::LayoutingSeparator(LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container)
@@ -4119,20 +4119,41 @@ int LayoutingSeparator::onMouseMove(Point pos, bool moveSeparator)
     return positionToGoTo;
 }
 
+class LayoutingGuest::Private
+{
+public:
+    ObjectGuard<Core::Item> layoutItem;
+};
+
+Core::Item *LayoutingGuest::layoutItem() const
+{
+    return d->layoutItem;
+}
+
 void LayoutingGuest::setLayoutItem(Item *item)
 {
-    if (layoutItem == item)
+    if (d->layoutItem == item)
         return;
 
-    if (layoutItem)
-        layoutItem->unref();
+    if (d->layoutItem)
+        d->layoutItem->unref();
 
     if (item)
         item->ref();
 
-    layoutItem = item;
+    d->layoutItem = item;
 
     setLayoutItem_impl(item);
+}
+
+LayoutingGuest::LayoutingGuest()
+    : d(new Private())
+{
+}
+
+LayoutingGuest::~LayoutingGuest()
+{
+    delete d;
 }
 
 #ifdef Q_CC_MSVC
