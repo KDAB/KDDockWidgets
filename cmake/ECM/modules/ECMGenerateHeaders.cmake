@@ -118,8 +118,6 @@ Example usage (with ``PREFIX``):
 Since pre-1.0.0.
 #]=======================================================================]
 
-include(CMakeParseArguments)
-
 function(ECM_GENERATE_HEADERS camelcase_forwarding_headers_var)
     set(options)
     set(oneValueArgs ORIGINAL HEADER_EXTENSION OUTPUT_DIR PREFIX REQUIRED_HEADERS COMMON_HEADER RELATIVE)
