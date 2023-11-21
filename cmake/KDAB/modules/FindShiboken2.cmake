@@ -87,15 +87,13 @@ else()
 
     message(STATUS "ShibokenGenerator base dir: ${SHIBOKEN_GENERATOR_BASEDIR}")
     message(STATUS "Shiboken base dir:          ${SHIBOKEN_BASEDIR}")
-    message(STATUS "Shiboken custom path:       [${SHIBOKEN_CUSTOM_PREFIX}]")
+    message(STATUS "Shiboken custom path:       ${SHIBOKEN_CUSTOM_PREFIX}")
 
     if(SHIBOKEN_BASEDIR)
         find_path(
             SHIBOKEN_INCLUDE_DIR shiboken.h
             PATHS ${SHIBOKEN_CUSTOM_PREFIX} ${SHIBOKEN_GENERATOR_BASEDIR}/include
-            NO_DEFAULT_PATH
-            NO_CACHE
-            NO_SYSTEM_ENVIRONMENT_PATH
+            NO_DEFAULT_PATH NO_CACHE NO_SYSTEM_ENVIRONMENT_PATH
         )
         if(MSVC)
             set(SHIBOKEN_LIBRARY_BASENAMES "shiboken2.abi3.lib")
