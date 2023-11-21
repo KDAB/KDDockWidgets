@@ -1,5 +1,5 @@
 Name:           qt6-kddockwidgets
-Version:        1.7.0
+Version:        2.0.0
 Release:        1
 Summary:        KDAB's Dock Widget Framework for Qt6
 Source0:        %{name}-%{version}.tar.gz
@@ -87,6 +87,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=
 #%{_prefix}/mkspecs/modules/* ECMGeneratePriFile isn't ported to Qt6 yet
 
 %changelog
+* Tue Nov 21 2023 Allen Winter <allen.winter@kdab.com> 2.0.0
+  1.7.0 final
 * Wed May 03 2023 Allen Winter <allen.winter@kdab.com> 1.7.0
   1.7.0 final
 * Wed Sep 14 2022 Allen Winter <allen.winter@kdab.com> 1.6.0
