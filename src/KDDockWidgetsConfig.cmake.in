@@ -11,14 +11,14 @@
 
 include(CMakeFindDependencyMacro)
 
-find_dependency(Qt@Qt_VERSION_MAJOR@Widgets REQUIRED)
+find_dependency(Qt@QT_VERSION_MAJOR@Widgets REQUIRED)
 if (@KDDW_FRONTEND_QTQUICK@)
-    find_dependency(Qt@Qt_VERSION_MAJOR@Quick REQUIRED)
-    find_dependency(Qt@Qt_VERSION_MAJOR@QuickControls2 REQUIRED)
+    find_dependency(Qt@QT_VERSION_MAJOR@Quick REQUIRED)
+    find_dependency(Qt@QT_VERSION_MAJOR@QuickControls2 REQUIRED)
 endif()
 
 if (@KDDockWidgets_DEVELOPER_MODE@)
-    find_dependency(Qt@Qt_VERSION_MAJOR@Test REQUIRED)
+    find_dependency(Qt@QT_VERSION_MAJOR@Test REQUIRED)
 endif()
 
 if (NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT @KDDockWidgets_QT6@ AND @KDDockWidgets_X11EXTRAS@)
