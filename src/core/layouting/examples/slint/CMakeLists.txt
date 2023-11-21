@@ -19,8 +19,14 @@ if(NOT Slint_FOUND)
 endif(NOT Slint_FOUND)
 
 add_executable(my_application src/main.cpp)
-target_link_libraries(my_application PRIVATE Slint::Slint)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/)
+include_directories(${CMAKE_BINARY_DIR})
+
+target_link_libraries(my_application PRIVATE Slint::Slint KDAB::kddockwidgets)
+
 slint_target_sources(my_application ui/appwindow.slint)
+
 # On Windows, copy the Slint DLL next to the application binary so that it's found.
 if(WIN32)
     add_custom_command(

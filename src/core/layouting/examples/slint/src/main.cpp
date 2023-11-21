@@ -1,4 +1,8 @@
 #include "appwindow.h"
+#include "../../../Item_p.h"
+#include "../../../LayoutingHost_p.h"
+#include "../../../LayoutingGuest_p.h"
+#include "../../../LayoutingSeparator_p.h"
 
 int main(int argc, char **argv)
 {
