@@ -74,7 +74,7 @@ public:
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-    /// Theses methods are implemented in TestHelpers_qt.cpp
+    /// These methods are implemented in TestHelpers_qt.cpp
 
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);
