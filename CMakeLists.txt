@@ -142,10 +142,10 @@ if(MSVC AND MSVC_TOOLSET_VERSION LESS 142)
 endif()
 
 if(KDDockWidgets_QT6)
-    set(Qt_VERSION_MAJOR 6)
+    set(QT_VERSION_MAJOR 6)
     set(QT_MIN_VERSION "6.2.0")
 else()
-    set(Qt_VERSION_MAJOR 5)
+    set(QT_VERSION_MAJOR 5)
     set(QT_MIN_VERSION "5.15")
 endif()
 
@@ -167,12 +167,12 @@ endif()
 
 if(KDDockWidgets_FRONTENDS)
     if("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
-        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Widgets)
+        find_package(Qt${QT_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Widgets)
         set(KDDW_FRONTEND_QTWIDGETS ON)
     endif()
 
     if("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
-        find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
+        find_package(Qt${QT_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
         set(KDDW_FRONTEND_QTQUICK ON)
     endif()
 
@@ -188,15 +188,15 @@ else()
     message("No frontends specified explicitly.")
 
     # qtwidgets
-    find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE COMPONENTS Widgets Quick QuickControls2)
+    find_package(Qt${QT_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE COMPONENTS Widgets Quick QuickControls2)
 
-    if(Qt${Qt_VERSION_MAJOR}Widgets_FOUND)
+    if(Qt${QT_VERSION_MAJOR}Widgets_FOUND)
         list(APPEND ENABLED_FRONTENDS "qtwidgets")
         set(KDDW_FRONTEND_QTWIDGETS ON)
     endif()
 
     # qtquick
-    if(Qt${Qt_VERSION_MAJOR}Quick_FOUND AND Qt${Qt_VERSION_MAJOR}QuickControls2_FOUND)
+    if(Qt${QT_VERSION_MAJOR}Quick_FOUND AND Qt${QT_VERSION_MAJOR}QuickControls2_FOUND)
         list(APPEND ENABLED_FRONTENDS "qtquick")
         set(KDDW_FRONTEND_QTQUICK ON)
     endif()
@@ -442,7 +442,7 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 
     # Generate .pri file for qmake users
     if(NOT CMAKE_CONFIGURATION_TYPES AND KDDW_FRONTEND_QT)
-        if(Qt_VERSION_MAJOR EQUAL 5 OR (Qt_VERSION_MAJOR EQUAL 6 AND Qt6Core_VERSION VERSION_GREATER "6.2"))
+        if(QT_VERSION_MAJOR EQUAL 5 OR (QT_VERSION_MAJOR EQUAL 6 AND Qt6Core_VERSION VERSION_GREATER "6.2"))
             include(ECMGeneratePriFile)
             set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
             ecm_generate_pri_file(

@@ -9,8 +9,8 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-find_package(KF${Qt_VERSION_MAJOR}Wayland CONFIG)
-find_package(Qt${Qt_VERSION_MAJOR} COMPONENTS WaylandClient Concurrent)
+find_package(KF${QT_VERSION_MAJOR}Wayland CONFIG)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS WaylandClient Concurrent)
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
@@ -32,7 +32,7 @@ function(add_wayland_test test srcs)
         kdbindings
         Wayland::Client
         Qt::WaylandClient
-        KF${Qt_VERSION_MAJOR}::WaylandClient
+        KF${QT_VERSION_MAJOR}::WaylandClient
         Qt::Concurrent
     )
     if(KDDockWidgets_HAS_SPDLOG)

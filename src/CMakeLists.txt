@@ -486,15 +486,15 @@ endif()
 if(KDDW_FRONTEND_QTWIDGETS)
     target_link_libraries(
         kddockwidgets
-        PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets
-        PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate
+        PUBLIC Qt${QT_VERSION_MAJOR}::Widgets
+        PRIVATE Qt${QT_VERSION_MAJOR}::WidgetsPrivate
     )
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTWIDGETS KDDW_FRONTEND_QT)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
-    target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
-    target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate Qt${Qt_VERSION_MAJOR}::QuickPrivate)
+    target_link_libraries(kddockwidgets PUBLIC Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::QuickControls2)
+    target_link_libraries(kddockwidgets PRIVATE Qt${QT_VERSION_MAJOR}::GuiPrivate Qt${QT_VERSION_MAJOR}::QuickPrivate)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK KDDW_FRONTEND_QT)
 endif()
 
@@ -521,20 +521,20 @@ endif()
 
 if(KDDW_FRONTEND_QT)
     if(WIN32)
-        target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)
+        target_link_libraries(kddockwidgets PRIVATE Qt${QT_VERSION_MAJOR}::GuiPrivate dwmapi)
     elseif(
         NOT APPLE
         AND NOT EMSCRIPTEN
         AND NOT KDDockWidgets_QT6
         AND KDDockWidgets_X11EXTRAS
     )
-        find_package(Qt${Qt_VERSION_MAJOR}X11Extras CONFIG)
-        target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
+        find_package(Qt${QT_VERSION_MAJOR}X11Extras CONFIG)
+        target_link_libraries(kddockwidgets PUBLIC Qt${QT_VERSION_MAJOR}::X11Extras)
     endif()
 
     if(KDDockWidgets_DEVELOPER_MODE)
-        find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
-        target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
+        find_package(Qt${QT_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
+        target_link_libraries(kddockwidgets PUBLIC Qt${QT_VERSION_MAJOR}::Test)
     endif()
 endif()
 
