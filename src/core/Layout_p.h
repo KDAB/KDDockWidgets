@@ -26,7 +26,6 @@ public:
 
     Layout *const q;
     bool m_inResizeEvent = false;
-    Core::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
 
     /// @brief Emitted when the count of visible widgets changes

@@ -12,10 +12,14 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 namespace KDDockWidgets {
 
 namespace Core {
+
+class LayoutingGuest;
+class ItemContainer;
 
 /// The interface graphical components need to implement in order to host a layout
 /// The layout engine doesn't know about any GUI, only about LayoutingHost.
@@ -34,6 +38,14 @@ public:
 
     /// Weather this layout host supports min size constraints or not
     virtual bool supportsHonouringLayoutMinSize() const = 0;
+
+    void insertItem(Core::LayoutingGuest *guest, KDDockWidgets::Location loc,
+                    InitialOption initialOption = {});
+
+    void insertItemRelativeTo(Core::LayoutingGuest *guest, Core::LayoutingGuest *relativeTo, Location loc,
+                              InitialOption initialOption = {});
+
+    Core::ItemContainer *m_rootItem = nullptr;
 
 private:
     LayoutingHost(const LayoutingHost &) = delete;

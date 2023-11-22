@@ -80,10 +80,11 @@ class Host : public QWidget, public Core::LayoutingHost
 {
 public:
     Host()
-        : root(Core::ItemBoxContainer(this))
     {
+        m_rootItem = new Core::ItemBoxContainer(this);
+
         setObjectName("LayoutingHost QWidget");
-        root.setSize_recursive(size());
+        m_rootItem->setSize_recursive(size());
     }
 
     bool supportsHonouringLayoutMinSize() const override
@@ -95,38 +96,8 @@ public:
     /// Our layout needs to be resized as well
     void resizeEvent(QResizeEvent *) override
     {
-        root.setSize_recursive(size());
+        m_rootItem->setSize_recursive(size());
     }
-
-    /// Inserts a guest widget into the layout, to the specified location with some initial options
-    /// the location is relative to the window, meaning Location_OnBottom will make the widget fill
-    /// the entire bottom
-    void insertItem(Core::LayoutingGuest *guest, Location loc,
-                    InitialOption initialOption = {})
-    {
-        if (!guest || !guest->layoutItem()) {
-            qWarning() << "insertItem: Something is null!";
-            return;
-        }
-
-        root.insertItem(guest->layoutItem(), loc, initialOption);
-    }
-
-    /// Inserts a guest widget into the layout but relative to another widget
-    /// Similar to insertItem() but it's not relative to the window.
-    /// See example in src/core/layouting/examples/qtwidgets/main.cpp
-    void insertItemRelativeTo(Core::LayoutingGuest *guest, Core::LayoutingGuest *relativeTo, Location loc,
-                              InitialOption initialOption = {})
-    {
-        if (!guest || !relativeTo || !guest->layoutItem() || !relativeTo->layoutItem()) {
-            qWarning() << "insertItemRelativeTo: Something is null!";
-            return;
-        }
-
-        root.insertItemRelativeTo(guest->layoutItem(), relativeTo->layoutItem(), loc, initialOption);
-    }
-
-    Core::ItemBoxContainer root;
 };
 
 /// The Guest wraps the widget you want to put into the layout

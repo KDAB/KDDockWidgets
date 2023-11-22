@@ -4156,6 +4156,36 @@ LayoutingGuest::~LayoutingGuest()
     delete d;
 }
 
+/// Inserts a guest widget into the layout, to the specified location with some initial options
+/// the location is relative to the window, meaning Location_OnBottom will make the widget fill
+/// the entire bottom
+void LayoutingHost::insertItem(Core::LayoutingGuest *guest, Location loc,
+                               InitialOption initialOption)
+{
+    if (!guest || !guest->layoutItem()) {
+        // qWarning() << "insertItem: Something is null!";
+        return;
+    }
+
+    if (auto box = m_rootItem->asBoxContainer())
+        box->insertItem(guest->layoutItem(), loc, initialOption);
+}
+
+/// Inserts a guest widget into the layout but relative to another widget
+/// Similar to insertItem() but it's not relative to the window.
+/// See example in src/core/layouting/examples/qtwidgets/main.cpp
+void LayoutingHost::insertItemRelativeTo(Core::LayoutingGuest *guest, Core::LayoutingGuest *relativeTo, Location loc,
+                                         InitialOption initialOption)
+{
+    if (!guest || !relativeTo || !guest->layoutItem() || !relativeTo->layoutItem()) {
+        // qWarning() << "insertItemRelativeTo: Something is null!";
+        return;
+    }
+
+    if (auto box = m_rootItem->asBoxContainer())
+        box->insertItemRelativeTo(guest->layoutItem(), relativeTo->layoutItem(), loc, initialOption);
+}
+
 #ifdef Q_CC_MSVC
 #pragma warning(pop)
 #endif
