@@ -32,20 +32,6 @@ public:
 
 namespace {
 
-void update_model_row(DockWidgetDescriptor desc, slint::ComponentHandle<AppWindow> ui)
-{
-    auto model = ui->get_dockWidgets();
-    assert(model);
-    for (int i = 0, end = model->row_count(); i < end; ++i) {
-        auto dw = model->row_data(0);
-        if (dw->uniqueName == desc.uniqueName) {
-            model->set_row_data(i, desc);
-            return;
-        }
-    }
-    std::cerr << "Failed to find descriptor for" << desc.uniqueName << "\n";
-}
-
 int index_of_row(std::string name, slint::ComponentHandle<AppWindow> ui)
 {
     auto model = ui->get_dockWidgets();
@@ -53,13 +39,52 @@ int index_of_row(std::string name, slint::ComponentHandle<AppWindow> ui)
         return -1;
 
     for (int i = 0, end = model->row_count(); i < end; ++i) {
-        auto dw = model->row_data(0);
+        auto dw = model->row_data(i);
         if (dw->uniqueName.data() == name) {
             return i;
         }
     }
 
     return -1;
+}
+
+int index_of_separator_row(int id, slint::ComponentHandle<AppWindow> ui)
+{
+    auto model = ui->get_separators();
+    if (!model)
+        return -1;
+
+    for (int i = 0, end = model->row_count(); i < end; ++i) {
+        auto dw = model->row_data(i);
+        if (dw->id == id) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+void dump_model(slint::ComponentHandle<AppWindow> ui)
+{
+    if (auto model = ui->get_dockWidgets()) {
+        for (int i = 0, end = model->row_count(); i < end; ++i) {
+            std::cout << "i=" << i << "name=" << model->row_data(i)->uniqueName.data() << "\n";
+        }
+    } else {
+        std::cerr << "null model\n";
+    }
+}
+
+void update_model_row(DockWidgetDescriptor desc, slint::ComponentHandle<AppWindow> ui)
+{
+    const int index = index_of_row(desc.uniqueName.data(), ui);
+    if (index == -1) {
+        std::cerr << "Failed to find descriptor for: " << desc.uniqueName << "; count is: " << ui->get_dockWidgets()->row_count() << "\n";
+    } else {
+        auto model = ui->get_dockWidgets();
+        assert(model);
+        model->set_row_data(index, desc);
+    }
 }
 
 void add_model_row(DockWidgetDescriptor desc, slint::ComponentHandle<AppWindow> ui)
@@ -79,6 +104,41 @@ void add_model_row(DockWidgetDescriptor desc, slint::ComponentHandle<AppWindow> 
         };
 
         ui->set_dockWidgets(std::make_shared<slint::VectorModel<DockWidgetDescriptor>>(dockDescriptors));
+    }
+}
+
+void add_separator_model_row(SeparatorDescriptor desc, slint::ComponentHandle<AppWindow> ui)
+{
+    auto separatorModel = ui->get_separators();
+    if (separatorModel) {
+        auto vecModel = std::static_pointer_cast<slint::VectorModel<SeparatorDescriptor>>(separatorModel);
+        vecModel->push_back(desc);
+    } else {
+        std::vector<SeparatorDescriptor> sepDescriptors { desc };
+        ui->set_separators(std::make_shared<slint::VectorModel<SeparatorDescriptor>>(sepDescriptors));
+    }
+}
+
+void update_separator_model_row(SeparatorDescriptor desc, slint::ComponentHandle<AppWindow> ui)
+{
+    const int index = index_of_separator_row(desc.id, ui);
+    if (index == -1) {
+        std::cerr << "Failed to find separator descriptor for: " << desc.id << "; count is: " << ui->get_separators()->row_count() << "\n";
+    } else {
+        auto model = ui->get_separators();
+        assert(model);
+        model->set_row_data(index, desc);
+    }
+}
+
+void remove_separator_model_row(int id, slint::ComponentHandle<AppWindow> ui)
+{
+    const int index = index_of_separator_row(id, ui);
+    if (index == -1) {
+        std::cerr << "remove_separator_model_row: Failed to find separator descriptor for: " << id << "; count is: " << ui->get_separators()->row_count() << "\n";
+    } else {
+        auto vecModel = std::static_pointer_cast<slint::VectorModel<SeparatorDescriptor>>(ui->get_separators());
+        vecModel->erase(index);
     }
 }
 
@@ -102,7 +162,7 @@ public:
 
     Size maxSizeHint() const override
     {
-        return { -1, -1 };
+        return { 1000, 1000 };
     }
 
     void setGeometry(Rect r) override
@@ -111,17 +171,21 @@ public:
             return;
 
         _geometry = r;
-        update_model_row(DockWidgetDescriptor { slint::SharedString(_uniqueName), 0, 0, 200, 300 }, ui);
+        update_model_row(descriptor(), ui);
     }
 
     DockWidgetDescriptor descriptor() const
     {
-        return DockWidgetDescriptor { slint::SharedString(_uniqueName), float(_geometry.x()), float(geometry().y()), 200, 300 };
+        return DockWidgetDescriptor { _isVisible, slint::SharedString(_uniqueName), float(_geometry.x()), float(geometry().y()), float(_geometry.width()), float(_geometry.height()) };
     }
 
     void setVisible(bool is) override
     {
+        if (_isVisible == is)
+            return;
+
         _isVisible = is;
+        update_model_row(descriptor(), ui);
     }
 
     Rect geometry() const override
@@ -134,7 +198,6 @@ public:
         if (_layoutingHost == parent)
             return;
 
-        std::cout << "Adding row\n";
         add_model_row(descriptor(), ui);
         _layoutingHost = parent;
     }
@@ -153,37 +216,85 @@ public:
     QString _uniqueName;
     slint::ComponentHandle<AppWindow> ui;
     Rect _geometry;
-    bool _isVisible = true;
+    bool _isVisible = false;
 };
 
 class Separator : public Core::LayoutingSeparator
 {
 public:
-    using Core::LayoutingSeparator::LayoutingSeparator;
+    explicit Separator(Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container)
+        : Core::LayoutingSeparator(host, orientation, container)
+        , host(static_cast<Host *>(host))
+    {
+        static int counter = 0;
+        id = ++counter;
 
-    Rect geometry() const override
+        add_separator_model_row(descriptor(), this->host->ui);
+
+        this->host->ui->on_separator_event([&](int id, slint::private_api::PointerEvent ev) {
+            if (id == this->id) {
+                if (ev.kind == slint::cbindgen_private::PointerEventKind::Down) {
+                    onMousePress();
+                } else if (ev.kind == slint::cbindgen_private::PointerEventKind::Up) {
+                    onMouseRelease();
+                }
+            }
+        });
+
+        this->host->ui->on_separator_moved([&](int id, float x, float y) {
+            if (id == this->id) {
+                if (isVertical()) {
+                    const int oldPos = position();
+                    onMouseMove({ 0, int(oldPos + y) });
+                } else {
+                    const int oldPos = position();
+                    onMouseMove({ int(oldPos + x), 0 });
+                }
+            }
+        });
+    }
+
+    ~Separator() override
+    {
+        remove_separator_model_row(id, host->ui);
+    }
+
+    Rect
+    geometry() const override
     {
         return geo;
     }
 
     void setGeometry(Rect g) override
     {
+        if (g == geo)
+            return;
+
+        std::cout << "geo changed" << geo.x() << " " << g.x() << "\n";
         geo = g;
+        update_separator_model_row(descriptor(), host->ui);
+    }
+
+    SeparatorDescriptor descriptor() const
+    {
+        return SeparatorDescriptor { float(geo.x()), float(geo.y()), float(geo.width()), float(geo.height()), id, isVertical() };
     }
 
     Rect geo;
+    int id = 0;
+    Host *const host;
 };
 
 int main(int argc, char **argv)
 {
     auto ui = AppWindow::create();
-    ui->on_clickme([&] {
-        auto docks = ui->get_dockWidgets();
-        auto dock = docks->row_data(0);
-        dock->height = 200;
-        std::cout << "clicked!\n";
-        docks->set_row_data(0, { "name", 0, 0, 200, 200 });
-    });
+    // ui->on_clickme([&] {
+    //     auto docks = ui->get_dockWidgets();
+    //     auto dock = docks->row_data(0);
+    //     dock->height = 200;
+    //     std::cout << "clicked!\n";
+    //     docks->set_row_data(0, { "name", 0, 0, 200, 200 });
+    // });
 
     /// Tell KDDW about our separators
     Core::Item::setCreateSeparatorFunc([](Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container) -> Core::LayoutingSeparator * {
@@ -200,13 +311,6 @@ int main(int argc, char **argv)
     host.root.insertItem(guest2->layoutItem(), KDDockWidgets::Location_OnRight);
     host.root.insertItemRelativeTo(guest3->layoutItem(), /*relativeTo=*/guest2->layoutItem(), KDDockWidgets::Location_OnBottom);
     host.root.insertItem(guest4->layoutItem(), KDDockWidgets::Location_OnTop, Size(0, 200));
-
-    std::vector<DockWidgetDescriptor> dockDescriptors = {
-        { "name", 0, 0, 100, 100 }
-    };
-
-    auto model = std::make_shared<slint::VectorModel<DockWidgetDescriptor>>(dockDescriptors);
-    ui->set_dockWidgets(model);
 
     ui->run();
     return 0;
