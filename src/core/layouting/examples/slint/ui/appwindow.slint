@@ -1,17 +1,46 @@
 import { Button, VerticalBox } from "std-widgets.slint";
 
+struct DockWidgetDescriptor {
+    uniqueName: string,
+    x: length,
+    y: length,
+    width: length,
+    height: length
+}
+
+struct Size {
+    width: length,
+    height: length,
+}
+
 export component AppWindow inherits Window {
-    in-out property<int> counter: 42;
-    callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
+    preferred-width: 800px;
+    preferred-height: 800px;
+
+    callback clickme();
+    pure callback window_size_changed_callback(length, length) -> bool;
+    in property <[DockWidgetDescriptor]> dockWidgets;
+
+    layout := Rectangle {
+        visible: root.window_size_changed_callback(root.width, root.height);
+        background: white;
+        for dw in dockWidgets : Rectangle {
+            x: dw.x;
+            y: dw.y;
+            width: dw.width;
+            height: dw.height;
+            background: blue;
         }
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
+    }
+
+    Button {
+        x: 0;
+        y: 0;
+        text: "click me";
+        z: 1;
+
+        clicked => {
+            root.clickme();
         }
-     }
+    }
 }
