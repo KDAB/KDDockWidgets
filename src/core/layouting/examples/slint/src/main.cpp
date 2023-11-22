@@ -8,18 +8,14 @@
 
 using namespace KDDockWidgets;
 
+class Separator;
 class Host : public KDDockWidgets::Core::LayoutingHost
 {
 public:
-    explicit Host(slint::ComponentHandle<AppWindow> ui)
-        : ui(ui)
-        , root(Core::ItemBoxContainer(this))
-    {
-        ui->on_window_size_changed_callback([this](float w, float h) -> bool {
-            root.setSize_recursive({ int(w), int(h) });
-            return true;
-        });
-    }
+    explicit Host(slint::ComponentHandle<AppWindow> ui);
+
+    Separator *
+    separatorForId(int id) const;
 
     bool supportsHonouringLayoutMinSize() const override
     {
@@ -224,77 +220,95 @@ class Separator : public Core::LayoutingSeparator
 public:
     explicit Separator(Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container)
         : Core::LayoutingSeparator(host, orientation, container)
-        , host(static_cast<Host *>(host))
+        , _host(static_cast<Host *>(host))
     {
         static int counter = 0;
-        id = ++counter;
+        _id = ++counter;
 
-        add_separator_model_row(descriptor(), this->host->ui);
-
-        this->host->ui->on_separator_event([&](int id, slint::private_api::PointerEvent ev) {
-            if (id == this->id) {
-                if (ev.kind == slint::cbindgen_private::PointerEventKind::Down) {
-                    onMousePress();
-                } else if (ev.kind == slint::cbindgen_private::PointerEventKind::Up) {
-                    onMouseRelease();
-                }
-            }
-        });
-
-        this->host->ui->on_separator_moved([&](int id, float x, float y) {
-            if (id == this->id) {
-                if (isVertical()) {
-                    const int oldPos = position();
-                    onMouseMove({ 0, int(oldPos + y) });
-                } else {
-                    const int oldPos = position();
-                    onMouseMove({ int(oldPos + x), 0 });
-                }
-            }
-        });
+        add_separator_model_row(descriptor(), this->_host->ui);
     }
 
     ~Separator() override
     {
-        remove_separator_model_row(id, host->ui);
+        remove_separator_model_row(_id, _host->ui);
     }
 
     Rect
     geometry() const override
     {
-        return geo;
+        return _geo;
     }
 
     void setGeometry(Rect g) override
     {
-        if (g == geo)
+        if (g == _geo)
             return;
 
-        std::cout << "geo changed" << geo.x() << " " << g.x() << "\n";
-        geo = g;
-        update_separator_model_row(descriptor(), host->ui);
+        _geo = g;
+        update_separator_model_row(descriptor(), _host->ui);
     }
 
     SeparatorDescriptor descriptor() const
     {
-        return SeparatorDescriptor { float(geo.x()), float(geo.y()), float(geo.width()), float(geo.height()), id, isVertical() };
+        return SeparatorDescriptor { float(_geo.x()), float(_geo.y()), float(_geo.width()), float(_geo.height()), _id, isVertical() };
     }
 
-    Rect geo;
-    int id = 0;
-    Host *const host;
+    Rect _geo;
+    int _id = 0;
+    Host *const _host;
 };
+
+Host::Host(slint::ComponentHandle<AppWindow> ui)
+    : ui(ui)
+    , root(Core::ItemBoxContainer(this))
+{
+    ui->on_window_size_changed_callback([this](float w, float h) -> bool {
+        root.setSize_recursive({ int(w), int(h) });
+        return true;
+    });
+
+    ui->on_separator_event([&](int id, slint::private_api::PointerEvent ev) {
+        if (Separator *separator = separatorForId(id)) {
+            if (ev.kind == slint::cbindgen_private::PointerEventKind::Down) {
+                separator->onMousePress();
+            } else if (ev.kind == slint::cbindgen_private::PointerEventKind::Up) {
+                separator->onMouseRelease();
+            }
+        } else {
+            std::cerr << "on_separator_event: Expected separator with id=" << id << "\n";
+        }
+    });
+
+    ui->on_separator_moved([&](int id, float x, float y) {
+        if (Separator *sep = separatorForId(id)) {
+            if (sep->isVertical()) {
+                const int oldPos = sep->position();
+                sep->onMouseMove({ 0, int(oldPos + y) });
+            } else {
+                const int oldPos = sep->position();
+                sep->onMouseMove({ int(oldPos + x), 0 });
+            }
+        } else {
+            std::cerr << "on_separator_moved: Expected separator with id=" << id << "\n";
+        }
+    });
+}
+
+Separator *Host::separatorForId(int id) const
+{
+    auto separators = root.separators_recursive();
+    for (auto separator : separators) {
+        auto slintSeparator = static_cast<Separator *>(separator);
+        if (slintSeparator->_id == id)
+            return slintSeparator;
+    }
+
+    return nullptr;
+}
 
 int main(int argc, char **argv)
 {
     auto ui = AppWindow::create();
-    // ui->on_clickme([&] {
-    //     auto docks = ui->get_dockWidgets();
-    //     auto dock = docks->row_data(0);
-    //     dock->height = 200;
-    //     std::cout << "clicked!\n";
-    //     docks->set_row_data(0, { "name", 0, 0, 200, 200 });
-    // });
 
     /// Tell KDDW about our separators
     Core::Item::setCreateSeparatorFunc([](Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container) -> Core::LayoutingSeparator * {
