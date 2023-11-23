@@ -2,13 +2,13 @@
 
 KDDockWidgets works with WebAssembly with the following known limitations:
 
-- Classic drop indicators are not supported, only the segmented ones. This is because
-  WASM doesn't support windows with translucency.
-
-- Might be slow on Linux, depending on your browser, while dragging or resizing windows.
-  Please file a bug with Qt, as it's out of scope for KDDW to fix.
+- Depending on the browser, glitches, slowness, or lack of transparency while dragging windows might happen.
+This is specially true on Linux on browsers with 3D acceleration disabled.
+Please file a bug with Qt or your distro as it's out of scope for KDDW to fix.
 
 - Qt 5 WASM probably works, but is unsupported and untested.
+
+- KDDW QtQuick is untested on WASM
 
 ## Demo
 
@@ -26,15 +26,12 @@ $ cd KDDockWidgets/
 $ ~/Qt/6.6.0/wasm_multithread/bin/qt-cmake --preset=wasm-release
 $ cd build-wasm-release/
 $ ninja kddockwidgets
-$ ninja qtwidgets_dockwidgets
-$ ninja qtquick_dockwidgets
 ```
-
-Above we're building just 2 examples, as they take very long to compile. But feel free to just run `ninja`.
 
 
 ## Builds tips for your own app
 
+- Use `qt_add_executable` instead of `add_executable`, otherwise the `*.html` file won't be generated.
 - Link to `libkddockwidgets-qt6.a`
 - As the build is static, don't forget to initialize KDDW's resources:
 
