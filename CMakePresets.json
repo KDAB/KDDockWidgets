@@ -463,6 +463,17 @@
             }
         },
         {
+            "name": "wasm-release",
+            "generator": "Ninja",
+            "description": "WASM release build",
+            "binaryDir": "${sourceDir}/build-wasm-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_STATIC": "ON"
+            }
+        },
+        {
             "name": "ci-clang-tidy-qt5",
             "binaryDir": "${sourceDir}/build-clang-tidy-qt5",
             "inherits": [
