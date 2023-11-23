@@ -44,11 +44,6 @@ namespace KDDockWidgets {
 static Core::DropIndicatorOverlay *
 createDropIndicatorOverlay(Core::DropArea *dropArea)
 {
-#ifdef Q_OS_WASM
-    // On WASM windows don't support translucency, which is required for the classic indicators.
-    return new Core::SegmentedDropIndicatorOverlay(dropArea);
-#endif
-
     switch (ViewFactory::s_dropIndicatorType) {
     case DropIndicatorType::Classic:
         return new Core::ClassicDropIndicatorOverlay(dropArea);
