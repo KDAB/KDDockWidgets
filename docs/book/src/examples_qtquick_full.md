@@ -8,7 +8,7 @@ that are supported by our QtQuick implementation but just not showed in the exam
 
 View the source at [GitHub](https://github.com/KDAB/KDDockWidgets/blob/2.0/examples/qtquick/dockwidgets/).
 
-Run `./bin/examples/qtquick_dockwidgets --help` to see the available options:
+Run `./bin/qtquick_dockwidgets --help` to see the available options:
 
 ```bash
 KDDockWidgets example application

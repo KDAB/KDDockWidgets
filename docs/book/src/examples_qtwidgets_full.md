@@ -7,10 +7,10 @@ View the source in [GitHub](https://github.com/KDAB/KDDockWidgets/blob/2.0/examp
 
 If you just want to get started quickly, see the [minimal](examples_qtwidgets_minimal.md) instead.
 
-Run `./bin/examples/qtwidgets_dockwidgets --help` to see the available options:
+Run `./bin/qtwidgets_dockwidgets --help` to see the available options:
 
 ```bash
-Usage: ./bin/examples/qtwidgets_dockwidgets [options] savedlayout
+Usage: ./bin/qtwidgets_dockwidgets [options] savedlayout
 KDDockWidgets example application
 
 Options:
