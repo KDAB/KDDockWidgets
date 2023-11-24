@@ -1121,12 +1121,15 @@ void TestQtWidgets::tst_restoreWithRemapping()
     LayoutSaver saver;
     savedState = saver.serializeLayout();
 
-    dock1->dptr()->setUniqueName("2");
-    dock2->dptr()->setUniqueName("1");
+    dock1->setUniqueName("2");
+    dock2->setUniqueName("1");
 
     // 2. Restore the dock widgets via factory
     LayoutSaver restorer;
     restorer.restoreLayout(savedState);
+
+    // dock 1 is now on the right of dock 2
+    QVERIFY(dock1->dptr()->group()->view()->x() > dock2->dptr()->group()->view()->x());
 }
 
 void TestQtWidgets::tst_restoreResizesLayout()
