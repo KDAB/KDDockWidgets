@@ -484,6 +484,13 @@ public:
     /// Reasons for this to be false can be for example the DockWidget not existing at restore time
     bool wasRestored() const;
 
+    /// @internal
+    /// Sets the dock widget unique name.
+    /// DockWidgets have their name set once (passed in ctor), therefore this method doesn't need
+    /// to be called, unless you know what you're doing (like reusing dock widgets during restore).
+    /// Don't open bug reports about this method.
+    void setUniqueName(const QString &);
+
 protected:
     void setParentView_impl(View *parent) override;
 

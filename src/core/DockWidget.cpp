@@ -1198,3 +1198,8 @@ bool DockWidget::wasRestored() const
 {
     return d->m_wasRestored;
 }
+
+void DockWidget::setUniqueName(const QString &uniqueName)
+{
+    d->setUniqueName(uniqueName);
+}
