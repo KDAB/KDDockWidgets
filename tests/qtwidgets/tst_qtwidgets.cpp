@@ -175,6 +175,7 @@ private Q_SLOTS:
     void tst_maxSizePropagates();
     void tst_maxSizePropagates2();
     void tst_maxSizedFloatingWindow();
+    void tst_restoreWithRemapping();
     void tst_restoreResizesLayout();
     void tst_restoreNonRelativeFloatingWindowGeometry();
     void tst_maxSizeHonouredWhenDropped();
@@ -1102,6 +1103,30 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
     layout->checkSanity();
 
     delete static_cast<QtWidgets::ViewWrapper *>(m->window().get())->widget();
+}
+
+// For #443
+void TestQtWidgets::tst_restoreWithRemapping()
+{
+    EnsureTopLevelsDeleted e;
+    QByteArray savedState;
+
+    // 1. Create a saved state and immediately delete the main window and dock widgets
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None, "mainWindow1");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    m->addDockWidget(dock2, Location_OnRight);
+
+    LayoutSaver saver;
+    savedState = saver.serializeLayout();
+
+    dock1->dptr()->setUniqueName("2");
+    dock2->dptr()->setUniqueName("1");
+
+    // 2. Restore the dock widgets via factory
+    LayoutSaver restorer;
+    restorer.restoreLayout(savedState);
 }
 
 void TestQtWidgets::tst_restoreResizesLayout()

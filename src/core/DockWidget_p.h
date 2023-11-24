@@ -244,7 +244,19 @@ public:
     /// @param isCurrent true if it became current
     KDBindings::Signal<bool> isCurrentTabChanged;
 
-    const QString name;
+    /// Each dock widget has a unique name which is used for layout save/restore
+    QString uniqueName() const;
+
+    /// Sets the dock widget unique name.
+    /// DockWidgets have their name set once (passed in ctor), therefore this method doesn't need
+    /// to be called, unless you know what you're doing (like reusing dock widgets during restore)
+    void setUniqueName(const QString &);
+
+private:
+    // Go through the setter
+    QString m_uniqueName;
+
+public:
     Vector<QString> affinities;
     QString title;
     Icon titleBarIcon;

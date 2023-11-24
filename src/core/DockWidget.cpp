@@ -261,7 +261,7 @@ Action *DockWidget::floatAction() const
 
 QString DockWidget::uniqueName() const
 {
-    return d->name;
+    return d->uniqueName();
 }
 
 QString DockWidget::title() const
@@ -976,7 +976,7 @@ void DockWidget::Private::forceClose()
 DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_,
                              LayoutSaverOptions layoutSaverOptions_, DockWidget *qq)
 
-    : name(dockName)
+    : m_uniqueName(dockName)
     , title(dockName)
     , q(qq)
     , options(options_)
@@ -1095,6 +1095,20 @@ void DockWidget::Private::setIsOpen(bool is)
     }
 
     isOpenChanged.emit(is);
+}
+
+QString DockWidget::Private::uniqueName() const
+{
+    return m_uniqueName;
+}
+
+void DockWidget::Private::setUniqueName(const QString &name)
+{
+    if (name.isEmpty()) {
+        KDDW_ERROR("DockWidget::Private::setUniqueName: Name is empty");
+    } else {
+        m_uniqueName = name;
+    }
 }
 
 void DockWidget::setFloatingWindowFlags(FloatingWindowFlags flags)
