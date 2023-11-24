@@ -36,7 +36,9 @@
   - [Custom Behaviour](custom_behaviour.md)
   - [Custom Styling](custom_styling.md)
   - [Public and Private API](private_api.md)
-
+---
+- [For Developers]()
+  - [Architecture and Concepts](architecture_and_concepts.md)
 ---
 - [Roadmap](roadmap.md)
 - [Get Involved](involved.md)
