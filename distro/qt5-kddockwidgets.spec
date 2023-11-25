@@ -104,7 +104,7 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
   1.7.0 final
 * Wed Sep 14 2022 Allen Winter <allen.winter@kdab.com> 1.6.0
   1.6.0 final
-* Mon Nov 24 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
+* Wed Nov 24 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
   1.5.0 final
 * Fri Jul 16 2021 Allen Winter <allen.winter@kdab.com> 1.4.0
   1.4.0 final

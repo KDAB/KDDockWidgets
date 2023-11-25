@@ -84,7 +84,7 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=
 %dir %{_libdir}/cmake/KDDockWidgets-qt6
 %{_libdir}/cmake/KDDockWidgets-qt6/*
 %{_libdir}/libkddockwidgets-qt6.so
-#%{_prefix}/mkspecs/modules/* ECMGeneratePriFile isn't ported to Qt6 yet
+%{_libdir}/qt6/mkspecs/modules/*
 
 %changelog
 * Tue Nov 21 2023 Allen Winter <allen.winter@kdab.com> 2.0.0
@@ -93,7 +93,7 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=
   1.7.0 final
 * Wed Sep 14 2022 Allen Winter <allen.winter@kdab.com> 1.6.0
   1.6.0 final
-* Mon Nov 24 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
+* Wed Nov 24 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
   1.5.0 final
 * Fri Jul 16 2021 Allen Winter <allen.winter@kdab.com> 1.4.0
   1.4.0 final
