@@ -46,7 +46,7 @@ else()
 endif()
 set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX "${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}/${BINDINGS_DIR}")
 
-include(PySide${PYSIDE_MAJOR_VERSION}ModuleBuild)
+include(KDPySide${PYSIDE_MAJOR_VERSION}ModuleBuild)
 add_subdirectory(PyKDDockWidgets)
 if(${PROJECT_NAME}_TESTS)
     add_subdirectory(tests)
