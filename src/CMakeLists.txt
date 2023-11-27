@@ -575,7 +575,7 @@ if(KDDW_FRONTEND_QT)
     if(MSVC AND NOT KDDockWidgets_STATIC)
         install(
             FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>"
-            DESTINATION ${INSTALL_LIBRARY_DIR}
+            DESTINATION ${INSTALL_RUNTIME_DIR}
             CONFIGURATIONS Debug RelWithDebInfo
         )
     endif()
