@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_SEGMENTEDDROPINDICATOROVERLAY_QTWIDGETS_H
+#define KD_SEGMENTEDDROPINDICATOROVERLAY_QTWIDGETS_H
+
 #pragma once
 
 #include "View.h"
@@ -45,3 +48,5 @@ private:
 }
 
 }
+
+#endif

@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_VIEWWRAPPER_QTWIDGETS_H
+#define KD_VIEWWRAPPER_QTWIDGETS_H
+
 #pragma once
 
 #include "../../qtcommon/ViewWrapper_p.h"
@@ -72,3 +75,5 @@ private:
 };
 
 }
+
+#endif

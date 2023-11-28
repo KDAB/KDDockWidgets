@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_TITLEBAR_QTWIDGETS_H
+#define KD_TITLEBAR_QTWIDGETS_H
+
 #pragma once
 
 #include "View.h"
@@ -103,3 +106,5 @@ protected:
 };
 
 }
+
+#endif
