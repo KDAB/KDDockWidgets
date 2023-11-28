@@ -145,61 +145,61 @@ void TitleBar::init()
     if (m_titleBar->titleBarIsFocusable())
         setFocusPolicy(Qt::StrongFocus);
 
-    m_dockWidgetIcon = new QLabel(this);
-    m_layout->addWidget(m_dockWidgetIcon);
+    if (!hasCustomLayout()) {
+        m_dockWidgetIcon = new QLabel(this);
+        m_layout->addWidget(m_dockWidgetIcon);
+        m_layout->addStretch();
+        updateMargins();
 
-    m_layout->addStretch();
-    updateMargins();
+        auto factory = static_cast<ViewFactory *>(Config::self().viewFactory());
+        m_maximizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Maximize);
+        m_minimizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Minimize);
+        m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
+        m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
+        m_autoHideButton = factory->createTitleBarButton(this, TitleBarButtonType::AutoHide);
 
-    auto factory = static_cast<ViewFactory *>(Config::self().viewFactory());
+        m_layout->addWidget(m_autoHideButton);
+        m_layout->addWidget(m_minimizeButton);
+        m_layout->addWidget(m_maximizeButton);
+        m_layout->addWidget(m_floatButton);
+        m_layout->addWidget(m_closeButton);
 
-    m_maximizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Maximize);
-    m_minimizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Minimize);
-    m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
-    m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
-    m_autoHideButton = factory->createTitleBarButton(this, TitleBarButtonType::AutoHide);
+        m_autoHideButton->setVisible(false);
 
-    m_layout->addWidget(m_autoHideButton);
-    m_layout->addWidget(m_minimizeButton);
-    m_layout->addWidget(m_maximizeButton);
-    m_layout->addWidget(m_floatButton);
-    m_layout->addWidget(m_closeButton);
+        connect(m_floatButton, &QAbstractButton::clicked, m_titleBar,
+                &Core::TitleBar::onFloatClicked);
+        connect(m_closeButton, &QAbstractButton::clicked, m_titleBar,
+                &Core::TitleBar::onCloseClicked);
+        connect(m_maximizeButton, &QAbstractButton::clicked, m_titleBar,
+                &Core::TitleBar::onMaximizeClicked);
+        connect(m_minimizeButton, &QAbstractButton::clicked, m_titleBar,
+                &Core::TitleBar::onMinimizeClicked);
+        connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar,
+                &Core::TitleBar::onAutoHideClicked);
 
-    m_autoHideButton->setVisible(false);
+        m_minimizeButton->setToolTip(tr("Minimize"));
+        m_closeButton->setToolTip(tr("Close"));
 
-    connect(m_floatButton, &QAbstractButton::clicked, m_titleBar,
-            &Core::TitleBar::onFloatClicked);
-    connect(m_closeButton, &QAbstractButton::clicked, m_titleBar,
-            &Core::TitleBar::onCloseClicked);
-    connect(m_maximizeButton, &QAbstractButton::clicked, m_titleBar,
-            &Core::TitleBar::onMaximizeClicked);
-    connect(m_minimizeButton, &QAbstractButton::clicked, m_titleBar,
-            &Core::TitleBar::onMinimizeClicked);
-    connect(m_autoHideButton, &QAbstractButton::clicked, m_titleBar,
-            &Core::TitleBar::onAutoHideClicked);
+        m_floatButton->setVisible(m_titleBar->floatButtonVisible());
+        m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
-    m_minimizeButton->setToolTip(tr("Minimize"));
-    m_closeButton->setToolTip(tr("Close"));
+        d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
+        d->floatButtonToolTipConnection = m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
+        d->floatButtonVisibleConnection = m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
+        d->autoHideButtonConnection = m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });
+        d->minimizeButtonConnection = m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible, bool enabled) { updateMinimizeButton(visible, enabled); });
+        d->maximizeButtonConnection = m_titleBar->dptr()->maximizeButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateMaximizeButton(visible, enabled, type); });
 
-    d->titleChangedConnection = m_titleBar->dptr()->titleChanged.connect([this] { update(); });
-
-    d->iconChangedConnection = m_titleBar->dptr()->iconChanged.connect([this] { if (m_titleBar->icon().isNull()) {
+        d->iconChangedConnection = m_titleBar->dptr()->iconChanged.connect([this] { if (m_titleBar->icon().isNull()) {
             m_dockWidgetIcon->setPixmap(QPixmap());
         } else {
             const QPixmap pix = m_titleBar->icon().pixmap(QSize(28, 28));
             m_dockWidgetIcon->setPixmap(pix);
         }
         update(); });
+    }
 
-    d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
-    d->floatButtonToolTipConnection = m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
-    d->floatButtonVisibleConnection = m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
-    d->autoHideButtonConnection = m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });
-    d->minimizeButtonConnection = m_titleBar->dptr()->minimizeButtonChanged.connect([this](bool visible, bool enabled) { updateMinimizeButton(visible, enabled); });
-    d->maximizeButtonConnection = m_titleBar->dptr()->maximizeButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateMaximizeButton(visible, enabled, type); });
-
-    m_floatButton->setVisible(m_titleBar->floatButtonVisible());
-    m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
+    d->titleChangedConnection = m_titleBar->dptr()->titleChanged.connect([this] { update(); });
 
     d->screenChangedConnection = DockRegistry::self()->dptr()->windowChangedScreen.connect([this](Core::Window::Ptr w) {
         if (View::d->isInWindow(w))
@@ -241,12 +241,18 @@ void TitleBar::paintEvent(QPaintEvent *)
 
 void TitleBar::updateMinimizeButton(bool visible, bool enabled)
 {
+    if (!m_minimizeButton)
+        return;
+
     m_minimizeButton->setEnabled(enabled);
     m_minimizeButton->setVisible(visible);
 }
 
 void TitleBar::updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType type)
 {
+    if (!m_autoHideButton)
+        return;
+
     m_autoHideButton->setToolTip(type == TitleBarButtonType::AutoHide ? tr("Auto-hide")
                                                                       : tr("Disable auto-hide"));
     auto factory = Config::self().viewFactory();
@@ -257,6 +263,9 @@ void TitleBar::updateAutoHideButton(bool visible, bool enabled, TitleBarButtonTy
 
 void TitleBar::updateMaximizeButton(bool visible, bool enabled, TitleBarButtonType type)
 {
+    if (!m_maximizeButton)
+        return;
+
     m_maximizeButton->setEnabled(enabled);
     m_maximizeButton->setVisible(visible);
     if (visible) {
@@ -282,7 +291,7 @@ int TitleBar::buttonAreaWidth() const
 
     for (auto button :
          { m_autoHideButton, m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
-        if (button->isVisible() && button->x() < smallestX)
+        if (button && button->isVisible() && button->x() < smallestX)
             smallestX = button->x();
     }
 
@@ -331,17 +340,17 @@ void TitleBar::focusInEvent(QFocusEvent *ev)
 
 bool TitleBar::isCloseButtonVisible() const
 {
-    return m_closeButton->isVisible();
+    return m_closeButton && m_closeButton->isVisible();
 }
 
 bool TitleBar::isCloseButtonEnabled() const
 {
-    return m_closeButton->isEnabled();
+    return m_closeButton && m_closeButton->isEnabled();
 }
 
 bool TitleBar::isFloatButtonVisible() const
 {
-    return m_floatButton->isVisible();
+    return m_floatButton && m_floatButton->isVisible();
 }
 
 #endif

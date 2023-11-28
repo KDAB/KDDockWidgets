@@ -71,6 +71,11 @@ protected:
     void updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType);
     void updateMinimizeButton(bool visible, bool enabled);
 
+    virtual bool hasCustomLayout() const
+    {
+        return false;
+    }
+
     QHBoxLayout *const m_layout;
     QAbstractButton *m_closeButton = nullptr;
     QAbstractButton *m_floatButton = nullptr;
