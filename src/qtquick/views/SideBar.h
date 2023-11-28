@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_SIDEBAR_QTQUICK_H
+#define KD_SIDEBAR_QTQUICK_H
+
 #pragma once
 
 #include "View.h"
