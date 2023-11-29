@@ -213,7 +213,7 @@ void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets
 
 void MainWindowViewInterface::setPersistentCentralView(std::shared_ptr<Core::View> view)
 {
-    Q_ASSERT(m_mainWindow);
+    assert(m_mainWindow);
     m_mainWindow->setPersistentCentralView(view);
 }
 
