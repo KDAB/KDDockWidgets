@@ -16,6 +16,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#ifndef KD_DROPAREA_QTWIDGETS_H
+#define KD_DROPAREA_QTWIDGETS_H
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
@@ -43,4 +45,7 @@ private:
 };
 
 }
+
 }
+
+#endif

@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_STACK_QTWIDGETS_H
+#define KD_STACK_QTWIDGETS_H
 
 #pragma once
 
@@ -57,3 +59,5 @@ private:
 
 }
 }
+
+#endif

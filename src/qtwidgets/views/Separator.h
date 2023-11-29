@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_SEPARATOR_QTWIDGETS_H
+#define KD_SEPARATOR_QTWIDGETS_H
+
 #pragma once
 
 #include "View.h"
@@ -41,3 +44,5 @@ private:
 };
 
 }
+
+#endif

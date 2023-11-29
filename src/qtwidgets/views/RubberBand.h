@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_RUBBERBAND_QTWIDGETS_H
+#define KD_RUBBERBAND_QTWIDGETS_H
+
 #pragma once
 
 #include "View.h"
@@ -30,3 +33,5 @@ public:
 }
 
 }
+
+#endif

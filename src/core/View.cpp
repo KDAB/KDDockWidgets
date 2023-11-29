@@ -183,6 +183,14 @@ int View::minimumHeight() const
     return minSize().height();
 }
 
+Size View::screenSize() const
+{
+    if (auto screen = d->screen())
+        return screen->size();
+
+    return {};
+}
+
 Controller *View::controller() const
 {
     return m_controller;

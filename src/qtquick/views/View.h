@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_VIEW_QTQUICK_H
+#define KD_VIEW_QTQUICK_H
+
 #pragma once
 
 #include "kddockwidgets/core/Controller.h"
@@ -218,3 +221,5 @@ inline qreal logicalDpiFactor(const QQuickItem *item)
 }
 
 }
+
+#endif

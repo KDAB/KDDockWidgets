@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_GROUP_QTWIDGETS_H
+#define KD_GROUP_QTWIDGETS_H
+
 #pragma once
 
 #include "View.h"
@@ -41,3 +44,5 @@ protected:
 };
 
 }
+
+#endif

@@ -42,7 +42,3 @@ if(NOT TARGET nlohmann_json::nlohmann_json)
     include(../../../../nlohmann.cmake)
     link_to_nlohman(qtwidgets_standalone_layouting)
 endif()
-
-set_target_properties(
-    qtwidgets_standalone_layouting PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/"
-)

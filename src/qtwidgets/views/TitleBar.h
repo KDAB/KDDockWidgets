@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_TITLEBAR_QTWIDGETS_H
+#define KD_TITLEBAR_QTWIDGETS_H
+
 #pragma once
 
 #include "View.h"
@@ -68,6 +71,11 @@ protected:
     void updateAutoHideButton(bool visible, bool enabled, TitleBarButtonType);
     void updateMinimizeButton(bool visible, bool enabled);
 
+    virtual bool hasCustomLayout() const
+    {
+        return false;
+    }
+
     QHBoxLayout *const m_layout;
     QAbstractButton *m_closeButton = nullptr;
     QAbstractButton *m_floatButton = nullptr;
@@ -103,3 +111,5 @@ protected:
 };
 
 }
+
+#endif

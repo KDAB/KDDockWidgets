@@ -207,6 +207,9 @@ public:
     int minimumWidth() const;
     int minimumHeight() const;
 
+    /// Returns the size of the screen that this view belongs to
+    Size screenSize() const;
+
     /// The minimum minimum size a dock widget can have
     static Size hardcodedMinimumSize();
 

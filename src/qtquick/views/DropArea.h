@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_DROPAREA_QTQUICK_H
+#define KD_DROPAREA_QTQUICK_H
+
 #pragma once
 
 #include "View.h"
@@ -33,4 +36,7 @@ private:
 };
 
 }
+
 }
+
+#endif

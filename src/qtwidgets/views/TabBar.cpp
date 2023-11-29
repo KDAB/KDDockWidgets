@@ -222,6 +222,11 @@ void TabBar::setTabsAreMovable(bool are)
     QTabBar::setMovable(are);
 }
 
+Core::TabBar *TabBar::tabBar() const
+{
+    return d->m_controller;
+}
+
 void TabBar::Private::onTabMoved(int from, int to)
 {
     if (from == to || m_controller->isMovingTab())

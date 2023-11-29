@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_MDILAYOUT_QTQUICK_H
+#define KD_MDILAYOUT_QTQUICK_H
+
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
@@ -35,4 +38,7 @@ private:
 };
 
 }
+
 }
+
+#endif

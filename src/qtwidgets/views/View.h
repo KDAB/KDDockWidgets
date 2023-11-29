@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_VIEW_QTWIDGETS_H
+#define KD_VIEW_QTWIDGETS_H
+
 #pragma once
 
 #include "kddockwidgets/core/Controller.h"
@@ -425,3 +428,5 @@ inline void setTopLevelGeometry(QRect geometry, const QWidget *widget)
 }
 
 }
+
+#endif

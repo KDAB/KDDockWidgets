@@ -260,7 +260,9 @@ void Platform_qt::tests_deinitPlatform_impl()
 }
 
 /*static*/
+QT_BEGIN_NAMESPACE
 extern quintptr Q_CORE_EXPORT qtHookData[];
+QT_END_NAMESPACE
 bool Platform_qt::isGammaray()
 {
     static bool is = qtHookData[3] != 0;
