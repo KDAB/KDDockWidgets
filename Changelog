@@ -9,6 +9,7 @@
   - Uses nlohmann JSON library (MIT) instead of QJsonDocument, for saving/restoring layouts
   - Added Config::setStartDragDistance()
   - Removed Config::setTabbingAllowedFunc() which was already deprecated in favor of Config::setDropIndicatorAllowedFunc()
+  - Slint and Flutter WIP. Waiting for these frameworks to support multi-window before finishing.
 
 * v1.7.1 (unreleased)
  -
