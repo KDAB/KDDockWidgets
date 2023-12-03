@@ -280,12 +280,16 @@ QString Core::TabBar::text(int index) const
 {
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         return tvi->text(index);
+
+    return {};
 }
 
 Rect Core::TabBar::rectForTab(int index) const
 {
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         return tvi->rectForTab(index);
+
+    return {};
 }
 
 DockWidget *TabBar::currentDockWidget() const
