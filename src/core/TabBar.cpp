@@ -37,7 +37,8 @@ Core::TabBar::TabBar(Stack *stack)
     , d(new Private(stack))
 {
     view()->init();
-    dynamic_cast<Core::TabBarViewInterface *>(view())->setTabsAreMovable(tabsAreMovable());
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->setTabsAreMovable(tabsAreMovable());
 }
 
 Core::TabBar::~TabBar()
@@ -129,7 +130,8 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
     d->m_removeGuard = true;
     // The view might call setCurrenteIndex() before our d->m_dockWidgets reflectig the state.
     // d->m_removeGuard protects against that.
-    dynamic_cast<Core::TabBarViewInterface *>(view())->removeDockWidget(dw);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->removeDockWidget(dw);
     d->m_removeGuard = false;
 
     d->m_dockWidgets.removeOne(dw);
@@ -276,12 +278,14 @@ void Core::TabBar::moveTabTo(int from, int to)
 
 QString Core::TabBar::text(int index) const
 {
-    return dynamic_cast<Core::TabBarViewInterface *>(view())->text(index);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        return tvi->text(index);
 }
 
 Rect Core::TabBar::rectForTab(int index) const
 {
-    return dynamic_cast<Core::TabBarViewInterface *>(view())->rectForTab(index);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        return tvi->rectForTab(index);
 }
 
 DockWidget *TabBar::currentDockWidget() const
@@ -323,7 +327,8 @@ void TabBar::setCurrentIndex(int index)
 
     d->m_currentDockWidget = newCurrentDw;
     d->currentDockWidgetChanged.emit(newCurrentDw);
-    dynamic_cast<Core::TabBarViewInterface *>(view())->setCurrentIndex(index);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->setCurrentIndex(index);
 
     if (newCurrentDw)
         newCurrentDw->d->isCurrentTabChanged.emit(true);
@@ -331,12 +336,14 @@ void TabBar::setCurrentIndex(int index)
 
 void TabBar::renameTab(int index, const QString &text)
 {
-    dynamic_cast<Core::TabBarViewInterface *>(view())->renameTab(index, text);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->renameTab(index, text);
 }
 
 void TabBar::changeTabIcon(int index, const Icon &icon)
 {
-    dynamic_cast<Core::TabBarViewInterface *>(view())->changeTabIcon(index, icon);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->changeTabIcon(index, icon);
 }
 
 bool TabBar::isMovingTab() const
