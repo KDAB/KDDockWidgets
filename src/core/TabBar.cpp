@@ -97,7 +97,10 @@ Core::DockWidget *Core::TabBar::dockWidgetAt(int index) const
 
 Core::DockWidget *Core::TabBar::dockWidgetAt(Point localPos) const
 {
-    return dockWidgetAt(dynamic_cast<Core::TabBarViewInterface *>(view())->tabAt(localPos));
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        return dockWidgetAt(tvi->tabAt(localPos));
+
+    return nullptr;
 }
 
 int TabBar::indexOfDockWidget(const Core::DockWidget *dw) const
@@ -267,7 +270,8 @@ void Core::TabBar::moveTabTo(int from, int to)
     d->moveTabTo(from, to);
 
     // Tell GUI:
-    dynamic_cast<Core::TabBarViewInterface *>(view())->moveTabTo(from, to);
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->moveTabTo(from, to);
 }
 
 QString Core::TabBar::text(int index) const
