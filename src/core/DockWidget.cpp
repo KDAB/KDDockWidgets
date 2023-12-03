@@ -144,6 +144,9 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location loc
                                                  DockWidget *relativeTo,
                                                  InitialOption initialOption)
 {
+    if (!other)
+        return;
+
     if (auto mainWindow = view()->rootView()->asMainWindowController()) {
         // It's inside a main window. Simply use the main window API.
         mainWindow->addDockWidget(other, location, relativeTo, initialOption);

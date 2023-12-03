@@ -564,4 +564,11 @@ if(WIN32)
     )
 endif()
 
+add_custom_target(
+    build-book
+    COMMAND mdbook build --dest-dir ${CMAKE_CURRENT_BINARY_DIR}/book
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Building KDDW book"
+)
+
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

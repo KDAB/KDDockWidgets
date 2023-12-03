@@ -54,7 +54,10 @@ StackOptions Stack::options() const
 
 bool Stack::isPositionDraggable(Point p) const
 {
-    return dynamic_cast<Core::StackViewInterface *>(view())->isPositionDraggable(p);
+    if (auto svi = dynamic_cast<Core::StackViewInterface *>(view()))
+        return svi->isPositionDraggable(p);
+
+    return false;
 }
 
 void Stack::addDockWidget(DockWidget *dock)

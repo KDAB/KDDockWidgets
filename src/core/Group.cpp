@@ -293,7 +293,8 @@ void Group::removeWidget(DockWidget *dw)
     if (it != d->iconChangedConnections.end())
         d->iconChangedConnections.erase(it);
 
-    dynamic_cast<Core::GroupViewInterface *>(view())->removeDockWidget(dw);
+    if (auto gvi = dynamic_cast<Core::GroupViewInterface *>(view()))
+        gvi->removeDockWidget(dw);
 }
 
 FloatingWindow *Group::detachTab(DockWidget *dockWidget)
@@ -844,7 +845,10 @@ Rect Group::dragRect() const
     if (rect.isValid())
         return rect;
 
-    return dynamic_cast<Core::GroupViewInterface *>(view())->dragRect();
+    if (auto gvi = dynamic_cast<Core::GroupViewInterface *>(view()))
+        return gvi->dragRect();
+
+    return {};
 }
 
 MainWindow *Group::mainWindow() const
