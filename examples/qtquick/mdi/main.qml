@@ -25,15 +25,15 @@ ApplicationWindow {
     }
 
     KDDW.DockWidget {
-        id: greenDock
-        uniqueName: "greenDock"
+        id: someDock
+        uniqueName: "someDock"
         Rectangle {
-            color: "green"
+            color: "#413C58"
             anchors.fill: parent
         }
     }
 
     Component.onCompleted: {
-        dockingArea.addDockWidget(greenDock, Qt.point(200, 200));
+        dockingArea.addDockWidget(someDock, Qt.point(200, 200));
     }
 }
