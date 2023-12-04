@@ -18,8 +18,8 @@ Rectangle {
     property alias imageSource: image.source
 
     color: "transparent"
-    height: 16
-    width: 16
+    height: image.implicitHeight + 5
+    width: image.implicitWidth + 5
 
     radius: 3
     border {
