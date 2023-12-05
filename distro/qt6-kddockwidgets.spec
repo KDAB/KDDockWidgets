@@ -87,8 +87,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=
 %{_libdir}/qt6/mkspecs/modules/*
 
 %changelog
-* Tue Nov 21 2023 Allen Winter <allen.winter@kdab.com> 2.0.0
-  1.7.0 final
+* Tue Dec 05 2023 Allen Winter <allen.winter@kdab.com> 2.0.0
+  2.0.0 final
 * Wed May 03 2023 Allen Winter <allen.winter@kdab.com> 1.7.0
   1.7.0 final
 * Wed Sep 14 2022 Allen Winter <allen.winter@kdab.com> 1.6.0
