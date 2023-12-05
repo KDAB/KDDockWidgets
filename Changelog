@@ -1,4 +1,4 @@
-* v2.0.0 (unreleased)
+* v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.
     2.0 isn't very interesting for users, but will allow developers to make KDDW
     support other GUI frameworks more easily. Also QtQuick is now better integrated,
