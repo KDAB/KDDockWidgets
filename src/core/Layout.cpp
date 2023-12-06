@@ -72,9 +72,6 @@ bool Layout::isInMainWindow(bool honourNesting) const
 
 Core::MainWindow *Layout::mainWindow(bool honourNesting) const
 {
-    // QtQuick doesn't support nesting yet
-    honourNesting = honourNesting && Platform::instance()->isQtWidgets();
-
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
         if (Controller *c = view()->d->firstParentOfType(ViewType::MainWindow))

@@ -4822,6 +4822,28 @@ KDDW_QCORO_TASK tst_addMDIDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_mixedMDIRestoreToArea()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_HasCentralWidget);
+    auto mdiLayout = new Core::MDILayout(nullptr);
+    m->setPersistentCentralView(mdiLayout->view()->asWrapper());
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+    mdiLayout->addDockWidget(dock0, { 10, 10 });
+
+    auto pos = dock0->d->lastPosition();
+    CHECK(pos->isValid());
+    auto originalWindow = dock0->view()->window();
+    dock0->setFloating(true);
+    dock0->setFloating(false);
+    CHECK_EQ(dock0->view()->window()->handle(), originalWindow->handle());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
 {
     // Tests that setFloating(false) puts the dock widget where it was before floating
@@ -5549,6 +5571,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_toggleTabbed),
         TEST(tst_currentTabMatchesDockWidget),
         TEST(tst_addMDIDockWidget),
+        TEST(tst_mixedMDIRestoreToArea),
         TEST(tst_redockToMDIRestoresPosition),
         TEST(tst_maximizeButton),
 #endif
