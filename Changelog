@@ -2,8 +2,8 @@
   - Added standalone layouting example using Slint
   - Fixed DPI of icons in TitleBar.qml Looks better when using 150% and 200% scalling now.
   - QtQuick: Fixed redock not working when mixing MDI with docking
+  - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
   - Planned: #448 Implement docking indicator for MDI area
-  - Planned: QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.

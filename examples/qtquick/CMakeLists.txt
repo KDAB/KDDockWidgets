@@ -15,5 +15,4 @@ add_subdirectory(customtitlebar)
 add_subdirectory(customtabbar)
 add_subdirectory(customseparator)
 
-# uncomment once mouse bugs are fixed
-# add_subdirectory(mdi_with_docking)
+add_subdirectory(mdi_with_docking)

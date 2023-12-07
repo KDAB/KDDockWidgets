@@ -28,3 +28,11 @@ MDILayout::~MDILayout()
     if (!Core::View::d->freed())
         m_controller->viewAboutToBeDeleted();
 }
+
+void MDILayout::setParent(Core::View *parent)
+{
+    QtQuick::View::setParent(parent);
+    if (parent) {
+        makeItemFillParent(this);
+    }
+}

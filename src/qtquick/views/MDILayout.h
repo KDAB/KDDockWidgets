@@ -34,6 +34,7 @@ public:
     ~MDILayout();
 
 private:
+    void setParent(Core::View *parent) override;
     Core::MDILayout *const m_controller;
 };
 

@@ -4834,6 +4834,8 @@ KDDW_QCORO_TASK tst_mixedMDIRestoreToArea()
         "dock0", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
     mdiLayout->addDockWidget(dock0, { 10, 10 });
 
+    CHECK(!mdiLayout->layoutSize().isEmpty());
+
     auto pos = dock0->d->lastPosition();
     CHECK(pos->isValid());
     auto originalWindow = dock0->view()->window();
