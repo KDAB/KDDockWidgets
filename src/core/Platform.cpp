@@ -17,6 +17,7 @@
 #include "core/EventFilterInterface.h"
 #include "core/Separator.h"
 #include "core/layouting/LayoutingSeparator_p.h"
+#include <core/DockRegistry.h>
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
@@ -233,6 +234,7 @@ void Platform::tests_deinitPlatform()
     plat->d->m_inDestruction = true;
 
     plat->tests_deinitPlatform_impl();
+    delete DockRegistry::self();
     delete plat;
 }
 #endif
