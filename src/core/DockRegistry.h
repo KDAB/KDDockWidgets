@@ -78,6 +78,9 @@ public:
     void registerLayoutSaver();
     void unregisterLayoutSaver();
 
+    /// Returns the dock widget that contains the widget with active focus
+    /// Doesn't necessarily mean that this DockWidget has QWidget::focus, but that it contains
+    /// the QApplication::focusObject() widget.
     Q_INVOKABLE KDDockWidgets::Core::DockWidget *focusedDockWidget() const;
 
     Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;
