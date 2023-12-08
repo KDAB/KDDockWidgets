@@ -468,7 +468,12 @@ void DockWidgetModel::setCurrentIndex(int index)
     Core::DockWidget *dw = dockWidgetAt(index);
 
     if (d->m_currentDockWidget != dw) {
+        const bool wasFocused = d->m_currentDockWidget && d->m_currentDockWidget->isFocused();
         setCurrentDockWidget(dw);
+        if (wasFocused && dw) {
+            // Because QtQuick doesn't do this for us, while QtWidgets does
+            dw->view()->setFocus(Qt::OtherFocusReason);
+        }
 
         // NOLINTNEXTLINE(clang-analyzer-core.CallAndMessage)
         d->m_tabBar->setCurrentIndex(index);

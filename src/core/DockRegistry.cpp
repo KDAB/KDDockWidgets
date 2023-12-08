@@ -116,21 +116,14 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
     if (d->m_focusedDockWidget.data() == dw)
         return;
 
-    if (d->m_focusedDockWidget) {
-        // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
-        // as the FocusScope hasn't been updated yet.
-        // It's just for styling purposes, so can be delayed
-        Platform::instance()->runDelayed(0, new DelayedEmitFocusChanged(d->m_focusedDockWidget, false));
-    }
-
+    auto old = d->m_focusedDockWidget;
     d->m_focusedDockWidget = dw;
 
-    if (dw) {
-        // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
-        // as the FocusScope hasn't been updated yet.
-        // It's just for styling purposes, so can be delayed
-        Platform::instance()->runDelayed(0, new DelayedEmitFocusChanged(d->m_focusedDockWidget, true));
-    }
+    if (old)
+        old->d->isFocusedChanged.emit(false);
+
+    if (dw)
+        dw->d->isFocusedChanged.emit(true);
 }
 
 bool DockRegistry::isEmpty(bool excludeBeingDeleted) const

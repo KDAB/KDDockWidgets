@@ -473,8 +473,7 @@ MainWindow *DockWidget::mainWindow() const
 
 bool DockWidget::isFocused() const
 {
-    auto group = d->group();
-    return group && group->isFocused() && isCurrentTab();
+    return DockRegistry::self()->focusedDockWidget() == this;
 }
 
 void DockWidget::setAffinityName(const QString &affinity)
