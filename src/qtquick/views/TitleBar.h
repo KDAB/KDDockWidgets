@@ -84,6 +84,7 @@ protected:
     Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void onAutoHideClicked();
     Q_INVOKABLE bool isFloating() const;
+    Q_INVOKABLE bool isMaximized() const;
 
     /// These 2 are the same, both just toggle window maximization
     Q_INVOKABLE void toggleMaximized();

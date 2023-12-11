@@ -217,3 +217,9 @@ bool TitleBar::isFloating() const
 {
     return m_titleBar->isFloating();
 }
+
+bool TitleBar::isMaximized() const
+{
+    /// Overridden just so we add Q_INVOKABLE
+    return QtQuick::View::isMaximized();
+}
