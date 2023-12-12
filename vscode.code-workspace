@@ -4,6 +4,15 @@
       "path": "."
     }
   ],
+  "extensions": {
+    "recommendations": [
+      "vadimcn.vscode-lldb",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "mhutchie.git-graph",
+      "ms-vscode.cmake-tools",
+      "ms-vscode-remote.remote-containers"
+    ],
+  },
   "settings": {
     "files.trimTrailingWhitespace": true,
     "editor.formatOnType": true,
