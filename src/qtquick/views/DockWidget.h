@@ -53,9 +53,6 @@ class DOCKS_EXPORT DockWidget : public QtQuick::View,
     Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
 public:
-    using Core::DockWidgetViewInterface::raise;
-    using Core::DockWidgetViewInterface::show;
-
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible
@@ -108,6 +105,19 @@ public:
     Q_INVOKABLE KDDockWidgets::QtQuick::Action *floatAction() const;
 
     std::shared_ptr<Core::View> focusCandidate() const override;
+
+    // Override QQuickItem::show() as there's more to do.
+    void show() override
+    {
+        Core::DockWidgetViewInterface::open();
+    }
+
+    // Override QQuickItem::raise() as there's more to do, like setting it as current tab
+    // if it's tabbed
+    void raise() override
+    {
+        Core::DockWidgetViewInterface::raise();
+    }
 
 #ifdef Q_MOC_RUN
     // DockWidgetViewInterface is not a QObject, so trick moc

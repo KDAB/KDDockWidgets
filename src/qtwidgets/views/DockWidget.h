@@ -44,8 +44,6 @@ class DOCKS_EXPORT DockWidget : public QtWidgets::View<QWidget>,
 {
     Q_OBJECT
 public:
-    using Core::DockWidgetViewInterface::raise;
-    using Core::DockWidgetViewInterface::show;
     using QWidget::size;
 
     /**
@@ -82,6 +80,19 @@ public:
 
     QAction *toggleAction() const;
     QAction *floatAction() const;
+
+    // Override QWidget::show() as there's more to do.
+    void show() override
+    {
+        Core::DockWidgetViewInterface::open();
+    }
+
+    // Override QWidget::raise() as there's more to do, like setting it as current tab
+    // if it's tabbed
+    void raise() override
+    {
+        Core::DockWidgetViewInterface::raise();
+    }
 
 Q_SIGNALS:
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
