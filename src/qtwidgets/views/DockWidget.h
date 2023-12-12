@@ -81,6 +81,7 @@ public:
     QAction *toggleAction() const;
     QAction *floatAction() const;
 
+#ifndef PYTHON_BINDINGS
     // Override QWidget::show() as there's more to do.
     void show() override
     {
@@ -93,6 +94,7 @@ public:
     {
         Core::DockWidgetViewInterface::raise();
     }
+#endif
 
 Q_SIGNALS:
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
