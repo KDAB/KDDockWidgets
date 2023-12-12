@@ -220,7 +220,7 @@ std::shared_ptr<Core::Window> Platform_qt::qobjectAsWindow(QObject *obj) const
     return nullptr;
 }
 
-int Platform_qt::screenNumberFor(std::shared_ptr<Core::Window> window) const
+int Platform_qt::screenNumberForWindow(std::shared_ptr<Core::Window> window) const
 {
     if (!window)
         return -1;

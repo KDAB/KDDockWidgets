@@ -145,7 +145,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
     return {};
 }
 
-int Platform::screenNumberFor(Core::View *view) const
+int Platform::screenNumberForView(Core::View *view) const
 {
     if (auto widget = QtCommon::View_qt::asQWidget(view)) {
         if (QWindow *qtwindow = widget->window()->windowHandle())

@@ -73,8 +73,8 @@ public:
 
     /// @brief Returns the screen index for the specified view or window.
     /// It's up to the platform to decide how screens are ordered, kddw won't care.
-    virtual int screenNumberFor(View *) const = 0;
-    virtual int screenNumberFor(std::shared_ptr<Core::Window>) const = 0;
+    virtual int screenNumberForView(View *) const = 0;
+    virtual int screenNumberForWindow(std::shared_ptr<Core::Window>) const = 0;
 
     /// @brief Returns the size of the screen where this view is in
     virtual Size screenSizeFor(View *) const = 0;

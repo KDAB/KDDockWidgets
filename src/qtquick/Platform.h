@@ -46,8 +46,7 @@ public:
     Core::ViewFactory *createDefaultViewFactory() override;
     QtQuick::ViewFactory *viewFactory() const;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
-    using Platform_qt::screenNumberFor;
-    int screenNumberFor(Core::View *) const override;
+    int screenNumberForView(Core::View *) const override;
     QSize screenSizeFor(Core::View *) const override;
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;

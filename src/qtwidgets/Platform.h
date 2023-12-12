@@ -37,8 +37,7 @@ public:
     Core::ViewFactory *createDefaultViewFactory() override;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
 
-    using Platform_qt::screenNumberFor;
-    int screenNumberFor(Core::View *) const override;
+    int screenNumberForView(Core::View *) const override;
     QSize screenSizeFor(Core::View *) const override;
 
     int startDragDistance_impl() const override;

@@ -135,7 +135,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
     return {};
 }
 
-int Platform::screenNumberFor(Core::View *view) const
+int Platform::screenNumberForView(Core::View *view) const
 {
     if (auto item = qobject_cast<QQuickItem *>(QtCommon::View_qt::asQObject(view))) {
         if (QWindow *qtwindow = item->window())

@@ -710,7 +710,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.normalGeometry = view()->normalGeometry();
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
-    m.screenIndex = Platform::instance()->screenNumberFor(view());
+    m.screenIndex = Platform::instance()->screenNumberForView(view());
     m.screenSize = Platform::instance()->screenSizeFor(view());
     m.multiSplitterLayout = layout()->serialize();
     m.affinities = d->affinities;
