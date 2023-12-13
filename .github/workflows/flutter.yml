@@ -26,6 +26,7 @@ jobs:
 
         preset:
           - name: release-flutter
+          - name: dev-flutter
 
     steps:
       - name: Checkout sources
