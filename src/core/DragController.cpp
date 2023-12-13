@@ -197,6 +197,11 @@ bool StateNone::handleMouseButtonPress(Draggable *draggable, Point globalPos, Po
     KDDW_DEBUG("StateNone::handleMouseButtonPress: draggable={} ; globalPos={}", ( void * )draggable,
                globalPos);
 
+    if (!draggable) {
+        KDDW_ERROR("StateNone::handleMouseButtonPress: null draggable");
+        return false;
+    }
+
     if (!q->m_inProgrammaticDrag && !draggable->isPositionDraggable(pos))
         return false;
 
@@ -291,6 +296,12 @@ void StateDragging::onEntry()
 #if defined(KDDW_FRONTEND_QT_WINDOWS) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.start();
 #endif
+
+    if (!q->m_draggableGuard) {
+        KDDW_ERROR("Draggable was destroyed, canceling the drag");
+        q->dragCanceled.emit();
+        return;
+    }
 
     if (DockWidget *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the
@@ -502,6 +513,12 @@ void StateInternalMDIDragging::onEntry()
 {
     KDDW_DEBUG("StateInternalMDIDragging entered. draggable={}", ( void * )q->m_draggable);
 
+    if (!q->m_draggableGuard) {
+        KDDW_ERROR("Draggable was destroyed, canceling the drag");
+        q->dragCanceled.emit();
+        return;
+    }
+
     // Raise the dock widget being dragged
     if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
         if (Group *f = tb->group())
@@ -519,6 +536,12 @@ bool StateInternalMDIDragging::handleMouseButtonRelease(Point)
 
 bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
 {
+    if (!q->m_draggableGuard) {
+        KDDW_ERROR("Draggable was destroyed, canceling the drag");
+        q->dragCanceled.emit();
+        return false;
+    }
+
     // for MDI we only support dragging via the title bar, other cases don't make sense conceptually
     auto tb = q->m_draggable->asView()->asTitleBarController();
     if (!tb) {
