@@ -30,8 +30,14 @@ jobs:
     steps:
       - name: Install ninja
         uses: turtlesec-no/get-ninja@main
+
       - name: Checkout sources
         uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.7'
+          channel: 'stable'
 
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
