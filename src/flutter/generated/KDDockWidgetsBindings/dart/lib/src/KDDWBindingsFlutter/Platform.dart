@@ -442,16 +442,16 @@ class Platform extends KDDWBindingsCore.Platform {
     dartInstance.scheduleResumeCoRoutines(ms);
   }
 
-  static int screenNumberFor_calledFromC(
+  static int screenNumberForView_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
     var dartInstance = KDDWBindingsCore
         .Platform.s_dartInstanceByCppPtr[thisCpp.address] as Platform;
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::screenNumberForView(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.screenNumberFor(
+    final result = dartInstance.screenNumberForView(
         (arg__1 == null || arg__1.address == 0)
             ? null
             : KDDWBindingsCore.View.fromCppPointer(arg__1));
@@ -709,7 +709,7 @@ class Platform extends KDDWBindingsCore.Platform {
       case 189:
         return "c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int";
       case 158:
-        return "c_KDDockWidgets__flutter__Platform__screenNumberFor_View";
+        return "c_KDDockWidgets__flutter__Platform__screenNumberForView_View";
       case 159:
         return "c_KDDockWidgets__flutter__Platform__screenSizeFor_View";
       case 160:
@@ -793,7 +793,7 @@ class Platform extends KDDWBindingsCore.Platform {
       case 189:
         return "scheduleResumeCoRoutines";
       case 158:
-        return "screenNumberFor";
+        return "screenNumberForView";
       case 159:
         return "screenSizeFor";
       case 160:
@@ -927,7 +927,7 @@ class Platform extends KDDWBindingsCore.Platform {
     const callbackExcept158 = 0;
     final callback158 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsFlutter.Platform.screenNumberFor_calledFromC,
+            KDDWBindingsFlutter.Platform.screenNumberForView_calledFromC,
             callbackExcept158);
     registerCallback(thisCpp, callback158, 158);
     final callback159 =

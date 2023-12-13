@@ -71,8 +71,8 @@ public:
     virtual void restoreMouseCursor_nocallback();
     virtual void runDelayed(int ms, KDDockWidgets::Core::DelayedCall *c);
     virtual void runDelayed_nocallback(int ms, KDDockWidgets::Core::DelayedCall *c);
-    virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
-    virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
+    virtual int screenNumberForView(KDDockWidgets::Core::View *arg__1) const;
+    virtual int screenNumberForView_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual KDDockWidgets::Size screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
     virtual KDDockWidgets::Size screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual void sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
@@ -140,8 +140,8 @@ public:
     Callback_restoreMouseCursor m_restoreMouseCursorCallback = nullptr;
     typedef void (*Callback_runDelayed)(void *, int ms, KDDockWidgets::Core::DelayedCall *c);
     Callback_runDelayed m_runDelayedCallback = nullptr;
-    typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
-    Callback_screenNumberFor m_screenNumberForCallback = nullptr;
+    typedef int (*Callback_screenNumberForView)(void *, KDDockWidgets::Core::View *arg__1);
+    Callback_screenNumberForView m_screenNumberForViewCallback = nullptr;
     typedef KDDockWidgets::Size *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenSizeFor m_screenSizeForCallback = nullptr;
     typedef void (*Callback_sendEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2);
@@ -224,8 +224,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisOb
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::Core::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
-// KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-DOCKS_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::screenNumberForView(KDDockWidgets::Core::View * arg__1) const
+DOCKS_EXPORT int c_KDDockWidgets__Core__Platform__screenNumberForView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const

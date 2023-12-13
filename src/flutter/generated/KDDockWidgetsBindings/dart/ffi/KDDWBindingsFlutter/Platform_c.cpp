@@ -362,18 +362,18 @@ void Platform_wrapper::scheduleResumeCoRoutines_nocallback(int ms) const
 {
     ::KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(ms);
 }
-int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
+int Platform_wrapper::screenNumberForView(KDDockWidgets::Core::View *arg__1) const
 {
-    if (m_screenNumberForCallback) {
+    if (m_screenNumberForViewCallback) {
         const void *thisPtr = this;
-        return m_screenNumberForCallback(const_cast<void *>(thisPtr), arg__1);
+        return m_screenNumberForViewCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        return ::KDDockWidgets::flutter::Platform::screenNumberFor(arg__1);
+        return ::KDDockWidgets::flutter::Platform::screenNumberForView(arg__1);
     }
 }
-int Platform_wrapper::screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const
+int Platform_wrapper::screenNumberForView_nocallback(KDDockWidgets::Core::View *arg__1) const
 {
-    return ::KDDockWidgets::flutter::Platform::screenNumberFor(arg__1);
+    return ::KDDockWidgets::flutter::Platform::screenNumberForView(arg__1);
 }
 KDDockWidgets::Size Platform_wrapper::screenSizeFor(KDDockWidgets::Core::View *arg__1) const
 {
@@ -749,11 +749,11 @@ void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *this
 {
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->scheduleResumeCoRoutines_nocallback(ms);} else {    return targetPtr->scheduleResumeCoRoutines(ms);} }();
 }
-// screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_)
+// screenNumberForView(KDDockWidgets::Core::View * arg__1) const
+int c_KDDockWidgets__flutter__Platform__screenNumberForView_View(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
-    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenNumberFor_nocallback(arg__1);} else {    return targetPtr->screenNumberFor(arg__1);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenNumberForView_nocallback(arg__1);} else {    return targetPtr->screenNumberForView(arg__1);} }();
     return result;
 }
 // screenSizeFor(KDDockWidgets::Core::View * arg__1) const
@@ -926,7 +926,7 @@ void c_KDDockWidgets__flutter__Platform__registerVirtualMethodCallback(void *ptr
         wrapper->m_scheduleResumeCoRoutinesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_scheduleResumeCoRoutines>(callback);
         break;
     case 158:
-        wrapper->m_screenNumberForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_screenNumberFor>(callback);
+        wrapper->m_screenNumberForViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_screenNumberForView>(callback);
         break;
     case 159:
         wrapper->m_screenSizeForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsFlutter::Platform_wrapper::Callback_screenSizeFor>(callback);

@@ -64,6 +64,7 @@ public:
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     void setTitle(const QString &title);
+    void setUniqueName(const QString &arg__1);
     void setUserType(int userType);
     void show();
     KDDockWidgets::Size sizeInLayout() const;
@@ -74,6 +75,7 @@ public:
     KDDockWidgets::Core::TitleBar *titleBar() const;
     QString uniqueName() const;
     int userType() const;
+    bool wasRestored() const;
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
     Callback_setParentView_impl m_setParentView_implCallback = nullptr;
 };
@@ -158,6 +160,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setOptions_DockWidgetOption
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DockWidget::setTitle(const QString & title)
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::Core::DockWidget::setUniqueName(const QString & arg__1)
+DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setUniqueName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::DockWidget::setUserType(int userType)
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__setUserType_int(void *thisObj, int userType);
 // KDDockWidgets::Core::DockWidget::show()
@@ -178,6 +182,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__DockWidget__titleBar(void *thisObj);
 DOCKS_EXPORT void *c_KDDockWidgets__Core__DockWidget__uniqueName(void *thisObj);
 // KDDockWidgets::Core::DockWidget::userType() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__DockWidget__userType(void *thisObj);
+// KDDockWidgets::Core::DockWidget::wasRestored() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__DockWidget__wasRestored(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget_Finalizer(void *cppObj);

@@ -325,19 +325,19 @@ void Platform_wrapper::runDelayed_nocallback(int ms, KDDockWidgets::Core::Delaye
     std::cerr << "runDelayed: Warning: Calling pure-virtual\n";
     return;
 }
-int Platform_wrapper::screenNumberFor(KDDockWidgets::Core::View *arg__1) const
+int Platform_wrapper::screenNumberForView(KDDockWidgets::Core::View *arg__1) const
 {
-    if (m_screenNumberForCallback) {
+    if (m_screenNumberForViewCallback) {
         const void *thisPtr = this;
-        return m_screenNumberForCallback(const_cast<void *>(thisPtr), arg__1);
+        return m_screenNumberForViewCallback(const_cast<void *>(thisPtr), arg__1);
     } else {
-        std::cerr << "screenNumberFor: Warning: Calling pure-virtual\n";
+        std::cerr << "screenNumberForView: Warning: Calling pure-virtual\n";
         return {};
     }
 }
-int Platform_wrapper::screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const
+int Platform_wrapper::screenNumberForView_nocallback(KDDockWidgets::Core::View *arg__1) const
 {
-    std::cerr << "screenNumberFor: Warning: Calling pure-virtual\n";
+    std::cerr << "screenNumberForView: Warning: Calling pure-virtual\n";
     return {};
 }
 KDDockWidgets::Size Platform_wrapper::screenSizeFor(KDDockWidgets::Core::View *arg__1) const
@@ -720,11 +720,11 @@ void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, 
     auto c = reinterpret_cast<KDDockWidgets::Core::DelayedCall *>(c_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->runDelayed_nocallback(ms,c);} else {    return targetPtr->runDelayed(ms,c);} }();
 }
-// screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_)
+// screenNumberForView(KDDockWidgets::Core::View * arg__1) const
+int c_KDDockWidgets__Core__Platform__screenNumberForView_View(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::View *>(arg__1_);
-    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenNumberFor_nocallback(arg__1);} else {    return targetPtr->screenNumberFor(arg__1);} }();
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->screenNumberForView_nocallback(arg__1);} else {    return targetPtr->screenNumberForView(arg__1);} }();
     return result;
 }
 // screenSizeFor(KDDockWidgets::Core::View * arg__1) const
@@ -888,7 +888,7 @@ void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, v
         wrapper->m_runDelayedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_runDelayed>(callback);
         break;
     case 158:
-        wrapper->m_screenNumberForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenNumberFor>(callback);
+        wrapper->m_screenNumberForViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenNumberForView>(callback);
         break;
     case 159:
         wrapper->m_screenSizeForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenSizeFor>(callback);

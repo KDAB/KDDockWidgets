@@ -376,6 +376,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__setTitle_QString')
         .asFunction();
     func(thisCpp, title?.toNativeUtf8() ?? ffi.nullptr);
+  } // setUniqueName(const QString & arg__1)
+
+  setUniqueName(String? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__setUniqueName_QString')
+        .asFunction();
+    func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   } // setUserType(int userType)
 
   setUserType(int userType) {
@@ -460,6 +468,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__userType')
         .asFunction();
     return func(thisCpp);
+  } // wasRestored() const
+
+  bool wasRestored() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__wasRestored')
+        .asFunction();
+    return func(thisCpp) != 0;
   }
 
   void release() {

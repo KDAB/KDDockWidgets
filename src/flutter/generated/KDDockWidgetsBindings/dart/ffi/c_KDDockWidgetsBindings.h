@@ -305,8 +305,8 @@ void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 void c_KDDockWidgets__Core__Platform__restoreMouseCursor(void *thisObj);
 // KDDockWidgets::Core::Platform::runDelayed(int ms, KDDockWidgets::Core::DelayedCall * c)
 void c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall(void *thisObj, int ms, void *c_);
-// KDDockWidgets::Core::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-int c_KDDockWidgets__Core__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::screenNumberForView(KDDockWidgets::Core::View * arg__1) const
+int c_KDDockWidgets__Core__Platform__screenNumberForView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 void *c_KDDockWidgets__Core__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
@@ -397,8 +397,8 @@ void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall(void *thisOb
 void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(int ms) const
 void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *thisObj, int ms);
-// KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::screenNumberForView(KDDockWidgets::Core::View * arg__1) const
+int c_KDDockWidgets__flutter__Platform__screenNumberForView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
@@ -813,6 +813,8 @@ void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj);
 void c_KDDockWidgets__Core__View__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::resize(int w, int h)
 void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::Core::View::screenSize() const
+void *c_KDDockWidgets__Core__View__screenSize(void *thisObj);
 // KDDockWidgets::Core::View::setCursor(Qt::CursorShape arg__1)
 void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setFixedHeight(int arg__1)
@@ -2573,6 +2575,8 @@ void c_KDDockWidgets__Core__DockWidget__setOptions_DockWidgetOptions(void *thisO
 void c_KDDockWidgets__Core__DockWidget__setParentView_impl_View(void *thisObj, void *parent_);
 // KDDockWidgets::Core::DockWidget::setTitle(const QString & title)
 void c_KDDockWidgets__Core__DockWidget__setTitle_QString(void *thisObj, const char *title_);
+// KDDockWidgets::Core::DockWidget::setUniqueName(const QString & arg__1)
+void c_KDDockWidgets__Core__DockWidget__setUniqueName_QString(void *thisObj, const char *arg__1_);
 // KDDockWidgets::Core::DockWidget::setUserType(int userType)
 void c_KDDockWidgets__Core__DockWidget__setUserType_int(void *thisObj, int userType);
 // KDDockWidgets::Core::DockWidget::show()
@@ -2593,6 +2597,8 @@ void *c_KDDockWidgets__Core__DockWidget__titleBar(void *thisObj);
 void *c_KDDockWidgets__Core__DockWidget__uniqueName(void *thisObj);
 // KDDockWidgets::Core::DockWidget::userType() const
 int c_KDDockWidgets__Core__DockWidget__userType(void *thisObj);
+// KDDockWidgets::Core::DockWidget::wasRestored() const
+bool c_KDDockWidgets__Core__DockWidget__wasRestored(void *thisObj);
 void c_KDDockWidgets__Core__DockWidget__destructor(void *thisObj);
 void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Core__DockWidget_Finalizer(void *cppObj); // KDDockWidgets::Core::ClassicIndicatorWindowViewInterface::ClassicIndicatorWindowViewInterface()

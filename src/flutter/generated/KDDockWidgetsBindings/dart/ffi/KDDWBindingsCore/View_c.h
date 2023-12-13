@@ -112,6 +112,7 @@ public:
     virtual void releaseMouse_nocallback();
     void resize(KDDockWidgets::Size arg__1);
     void resize(int w, int h);
+    KDDockWidgets::Size screenSize() const;
     virtual void setCursor(Qt::CursorShape arg__1);
     virtual void setCursor_nocallback(Qt::CursorShape arg__1);
     virtual void setFixedHeight(int arg__1);
@@ -373,6 +374,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::resize(int w, int h)
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::Core::View::screenSize() const
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__screenSize(void *thisObj);
 // KDDockWidgets::Core::View::setCursor(Qt::CursorShape arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setFixedHeight(int arg__1)

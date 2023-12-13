@@ -11,8 +11,8 @@
 #include "kddockwidgets_export.h"
 #include <Item_p.h>
 #include <geometry_helpers_p.h>
-#include <string_p.h>
 #include <Object_p.h>
+#include <string_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::KDDockWidgets::Core::Item

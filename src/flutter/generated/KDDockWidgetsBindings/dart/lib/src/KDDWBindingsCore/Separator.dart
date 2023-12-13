@@ -32,14 +32,6 @@ class Separator extends KDDWBindingsCore.Controller {
   }
   String getFinalizerName() {
     return "c_KDDockWidgets__Core__Separator_Finalizer";
-  } // isBeingDragged() const
-
-  bool isBeingDragged() {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Separator__isBeingDragged')
-        .asFunction();
-    return func(thisCpp) != 0;
   }
 
   static // isResizing()

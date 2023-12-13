@@ -28,7 +28,6 @@ class Core_ViewType {
   static const FloatingWindow = 16;
   static const Separator = 32;
   static const DockWidget = 64;
-  static const MDIArea = 128;
   static const LayoutItem = 256;
   static const SideBar = 512;
   static const MainWindow = 1024;

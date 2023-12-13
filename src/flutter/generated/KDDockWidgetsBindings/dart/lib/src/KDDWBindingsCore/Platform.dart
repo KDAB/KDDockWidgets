@@ -547,9 +547,9 @@ class Platform implements ffi.Finalizable {
         (c == null || c.address == 0)
             ? null
             : KDDWBindingsCore.DelayedCall.fromCppPointer(c));
-  } // screenNumberFor(KDDockWidgets::Core::View * arg__1) const
+  } // screenNumberForView(KDDockWidgets::Core::View * arg__1) const
 
-  int screenNumberFor(KDDWBindingsCore.View? arg__1) {
+  int screenNumberForView(KDDWBindingsCore.View? arg__1) {
     final int_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<int_Func_voidstar_voidstar_FFI>>(
             cFunctionSymbolName(158))
@@ -557,16 +557,16 @@ class Platform implements ffi.Finalizable {
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   }
 
-  static int screenNumberFor_calledFromC(
+  static int screenNumberForView_calledFromC(
       ffi.Pointer<void> thisCpp, ffi.Pointer<void>? arg__1) {
     var dartInstance =
         KDDWBindingsCore.Platform.s_dartInstanceByCppPtr[thisCpp.address];
     if (dartInstance == null) {
       print(
-          "Dart instance not found for Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
+          "Dart instance not found for Platform::screenNumberForView(KDDockWidgets::Core::View * arg__1) const! (${thisCpp.address})");
       throw Error();
     }
-    final result = dartInstance.screenNumberFor(
+    final result = dartInstance.screenNumberForView(
         (arg__1 == null || arg__1.address == 0)
             ? null
             : KDDWBindingsCore.View.fromCppPointer(arg__1));
@@ -954,7 +954,7 @@ class Platform implements ffi.Finalizable {
       case 157:
         return "c_KDDockWidgets__Core__Platform__runDelayed_int_DelayedCall";
       case 158:
-        return "c_KDDockWidgets__Core__Platform__screenNumberFor_View";
+        return "c_KDDockWidgets__Core__Platform__screenNumberForView_View";
       case 159:
         return "c_KDDockWidgets__Core__Platform__screenSizeFor_View";
       case 160:
@@ -1028,7 +1028,7 @@ class Platform implements ffi.Finalizable {
       case 157:
         return "runDelayed";
       case 158:
-        return "screenNumberFor";
+        return "screenNumberForView";
       case 159:
         return "screenSizeFor";
       case 160:
@@ -1143,7 +1143,7 @@ class Platform implements ffi.Finalizable {
     const callbackExcept158 = 0;
     final callback158 =
         ffi.Pointer.fromFunction<int_Func_voidstar_voidstar_FFI>(
-            KDDWBindingsCore.Platform.screenNumberFor_calledFromC,
+            KDDWBindingsCore.Platform.screenNumberForView_calledFromC,
             callbackExcept158);
     registerCallback(thisCpp, callback158, 158);
     final callback159 =

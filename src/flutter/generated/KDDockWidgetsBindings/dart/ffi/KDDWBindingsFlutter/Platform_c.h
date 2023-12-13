@@ -82,8 +82,8 @@ public:
     void runTests();
     virtual void scheduleResumeCoRoutines(int ms) const;
     virtual void scheduleResumeCoRoutines_nocallback(int ms) const;
-    virtual int screenNumberFor(KDDockWidgets::Core::View *arg__1) const;
-    virtual int screenNumberFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
+    virtual int screenNumberForView(KDDockWidgets::Core::View *arg__1) const;
+    virtual int screenNumberForView_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual KDDockWidgets::Size screenSizeFor(KDDockWidgets::Core::View *arg__1) const;
     virtual KDDockWidgets::Size screenSizeFor_nocallback(KDDockWidgets::Core::View *arg__1) const;
     virtual void sendEvent(KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2) const;
@@ -160,8 +160,8 @@ public:
     Callback_runDelayed m_runDelayedCallback = nullptr;
     typedef void (*Callback_scheduleResumeCoRoutines)(void *, int ms);
     Callback_scheduleResumeCoRoutines m_scheduleResumeCoRoutinesCallback = nullptr;
-    typedef int (*Callback_screenNumberFor)(void *, KDDockWidgets::Core::View *arg__1);
-    Callback_screenNumberFor m_screenNumberForCallback = nullptr;
+    typedef int (*Callback_screenNumberForView)(void *, KDDockWidgets::Core::View *arg__1);
+    Callback_screenNumberForView m_screenNumberForViewCallback = nullptr;
     typedef KDDockWidgets::Size *(*Callback_screenSizeFor)(void *, KDDockWidgets::Core::View *arg__1);
     Callback_screenSizeFor m_screenSizeForCallback = nullptr;
     typedef void (*Callback_sendEvent)(void *, KDDockWidgets::Core::View *arg__1, KDDockWidgets::Event *arg__2);
@@ -252,8 +252,8 @@ DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__runDelayed_int_DelayedCall
 DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__runTests(void *thisObj);
 // KDDockWidgets::flutter::Platform::scheduleResumeCoRoutines(int ms) const
 DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__scheduleResumeCoRoutines_int(void *thisObj, int ms);
-// KDDockWidgets::flutter::Platform::screenNumberFor(KDDockWidgets::Core::View * arg__1) const
-DOCKS_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberFor_View(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::screenNumberForView(KDDockWidgets::Core::View * arg__1) const
+DOCKS_EXPORT int c_KDDockWidgets__flutter__Platform__screenNumberForView_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::screenSizeFor(KDDockWidgets::Core::View * arg__1) const
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__Platform__screenSizeFor_View(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::sendEvent(KDDockWidgets::Core::View * arg__1, KDDockWidgets::Event * arg__2) const
