@@ -90,13 +90,13 @@ Core::Window::Ptr Platform::windowAt(Point) const
     return {};
 }
 
-int Platform::screenNumberFor(Core::View *) const
+int Platform::screenNumberForView(Core::View *) const
 {
     KDDW_WARN("Platform::screenNumberFor: Not implemented");
     return -1;
 }
 
-int Platform::screenNumberFor(std::shared_ptr<Core::Window>) const
+int Platform::screenNumberForWindow(std::shared_ptr<Core::Window>) const
 {
     KDDW_WARN("Platform::screenNumberFor: Not implemented");
     return {};

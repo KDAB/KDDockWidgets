@@ -38,9 +38,6 @@ class DOCKS_EXPORT DockWidget : public flutter::View,
                                 public Core::DockWidgetViewInterface
 {
 public:
-    using Core::DockWidgetViewInterface::show;
-    using flutter::View::raise;
-
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible
@@ -67,6 +64,16 @@ public:
 
     Core::DockWidget *dockWidget() const;
     std::shared_ptr<Core::View> focusCandidate() const override;
+
+    void show() override
+    {
+        Core::DockWidgetViewInterface::open();
+    }
+
+    void raise() override
+    {
+        Core::DockWidgetViewInterface::raise();
+    }
 
 protected:
     void init() override;

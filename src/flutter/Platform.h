@@ -51,7 +51,7 @@ public:
     Core::ViewFactory *createDefaultViewFactory() override;
     std::shared_ptr<Core::Window> windowAt(Point globalPos) const override;
 
-    int screenNumberFor(Core::View *) const override;
+    int screenNumberForView(Core::View *) const override;
     Size screenSizeFor(Core::View *) const override;
 
     Core::View *createView(Core::Controller *controller, Core::View *parent = nullptr) const override;
@@ -136,7 +136,7 @@ public:
     std::shared_ptr<Core::View> focusedView() const override;
     Vector<std::shared_ptr<Core::Window>> windows() const override;
     void sendEvent(Core::View *, Event *) const override;
-    int screenNumberFor(std::shared_ptr<Core::Window>) const override;
+    int screenNumberForWindow(std::shared_ptr<Core::Window>) const override;
     bool isProcessingAppQuitEvent() const override;
     QString applicationName() const override;
     void setMouseCursor(Qt::CursorShape, bool discardLast = false) override;
