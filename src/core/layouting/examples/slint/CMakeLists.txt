@@ -28,5 +28,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/)
 include_directories(${CMAKE_BINARY_DIR})
 
 target_link_libraries(slint_standalone_layouting PRIVATE Slint::Slint KDAB::kddockwidgets)
+target_compile_definitions(slint_standalone_layouting PRIVATE SRC_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 slint_target_sources(slint_standalone_layouting ui/appwindow.slint)

@@ -321,6 +321,7 @@ Separator *Host::separatorForId(int id) const
 int main(int argc, char **argv)
 {
     auto ui = AppWindow::create();
+    ui->set_image(slint::Image::load_from_path(SRC_DIR "/slint-logo-full-dark-large.png"));
 
     /// Tell KDDW about our separators
     Core::Item::setCreateSeparatorFunc([](Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container) -> Core::LayoutingSeparator * {

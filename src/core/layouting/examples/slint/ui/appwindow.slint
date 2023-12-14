@@ -39,6 +39,7 @@ export component AppWindow inherits Window {
     pure callback window_size_changed_callback(length, length) -> bool;
     in property <[DockWidgetDescriptor]> dockWidgets;
     in property <[SeparatorDescriptor]> separators;
+    in property <image> image;
 
     layout := Rectangle {
         visible: root.window_size_changed_callback(root.width, root.height);
@@ -64,7 +65,7 @@ export component AppWindow inherits Window {
             Image {
                 width: dw.width - 40px;
                 height: dw.height - 40px;
-                source: @image-url("/data/sources/slint/logo/slint-logo-full-dark-large.png");
+                source: root.image;
 
                 image-fit: contain;
                 colorize: {

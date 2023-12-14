@@ -37,3 +37,8 @@ License: MIT
 Files: tests/flutter_tests_embedder/tests_embedder.* examples/flutter/assets/* examples/flutter/macos/Runner/Configs/AppInfo.xcconfig examples/flutter/.metadata examples/flutter/macos/Runner/Assets.xcassets/* examples/flutter/macos/Runner.xcodeproj/* examples/flutter/macos/Flutter/* examples/flutter/macos/Runner.xcworkspace/* examples/flutter/macos/.gitignore examples/flutter/macos/Runner/Configs/*.xcconfig examples/flutter/macos/Runner/Base.lproj/MainMenu.xib examples/flutter/macos/Runner/DebugProfile.entitlements examples/flutter/macos/Runner/Info.plist examples/flutter/macos/Runner/Release.entitlements examples/flutter/windows/runner/resources/app_icon.ico examples/flutter/windows/runner/runner.exe.manifest
 Copyright: Copyright 2013-2014 The Flutter Authors
 License: LicenseRef-FlutterBSD
+
+# Slint
+Files: src/core/layouting/examples/slint/slint-logo-full-dark-large.png
+Copyright: Copyright SixtyFPS GmbH <info@slint.dev>
+License: GPL-3.0-only
