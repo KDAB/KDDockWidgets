@@ -502,11 +502,15 @@ void View::setHeight(int h)
 void View::setFixedWidth(int w)
 {
     setWidth(w);
+    setMinimumSize({ w, minSize().height() });
+    setMaximumSize({ w, maxSizeHint().height() });
 }
 
 void View::setFixedHeight(int h)
 {
     setHeight(h);
+    setMinimumSize({ minSize().width(), h });
+    setMaximumSize({ maxSizeHint().width(), h });
 }
 
 void View::show()

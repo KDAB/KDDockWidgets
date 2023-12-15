@@ -5215,14 +5215,26 @@ KDDW_QCORO_TASK tst_minMaxGuest()
     auto guest = Platform::instance()->tests_createView({ true });
     auto dockA = createDockWidget("0", guest);
 
-    const Size newMinSize = { 500, 501 };
-    CHECK_EQ(dockA->view()->minSize(), guest->minSize());
-    CHECK(newMinSize != dockA->view()->minSize());
+    {
+        const Size newMinSize = { 500, 501 };
+        CHECK_EQ(dockA->view()->minSize(), guest->minSize());
+        CHECK(newMinSize != dockA->view()->minSize());
 
-    dockA->view()->setMinimumSize(newMinSize);
+        dockA->view()->setMinimumSize(newMinSize);
 
-    // There was a QtQuick bug where the returned minSize() wasn't correct
-    CHECK(newMinSize == dockA->view()->minSize());
+        // There was a QtQuick bug where the returned minSize() wasn't correct
+        CHECK(newMinSize == dockA->view()->minSize());
+    }
+
+    {
+        const int newWidth = 502;
+        CHECK(newWidth != dockA->view()->minSize().width());
+
+        dockA->view()->setFixedWidth(newWidth);
+
+        // There was a QtQuick bug where the returned minSize() wasn't correct
+        CHECK(newWidth == dockA->view()->minSize().width());
+    }
 
     KDDW_TEST_RETURN(true);
 }
