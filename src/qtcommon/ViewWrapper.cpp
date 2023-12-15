@@ -107,17 +107,29 @@ void ViewWrapper::setWindowIcon(const QIcon &)
 
 void ViewWrapper::showNormal()
 {
-    qFatal("Not implemented");
+    if (m_controller) {
+        if (auto v = m_controller->view()) {
+            v->showNormal();
+        }
+    }
 }
 
 void ViewWrapper::showMinimized()
 {
-    qFatal("Not implemented");
+    if (m_controller) {
+        if (auto v = m_controller->view()) {
+            v->showMinimized();
+        }
+    }
 }
 
 void ViewWrapper::showMaximized()
 {
-    qFatal("Not implemented");
+    if (m_controller) {
+        if (auto v = m_controller->view()) {
+            v->showMaximized();
+        }
+    }
 }
 
 void ViewWrapper::setMaximumSize(QSize)

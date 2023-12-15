@@ -5147,6 +5147,36 @@ KDDW_QCORO_TASK tst_maximizeButton()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_restoreAfterUnminimized()
+{
+    // Save a layout with a minimized window, then unminimize (show it), restore layout
+    // Result should be that the widget gets minimized again
+
+    EnsureTopLevelsDeleted e;
+    auto dock0 = createDockWidget("0", Platform::instance()->tests_createView({ true }));
+    dock0->show();
+
+    CHECK(!dock0->window()->isMinimized());
+
+    dock0->window()->showMinimized();
+
+    CHECK(dock0->window()->isMinimized());
+
+    LayoutSaver saver;
+    const auto saved = saver.serializeLayout();
+    saver.saveToFile("filename.txt");
+    dock0->window()->showNormal();
+
+    Platform::instance()->tests_wait(1000);
+    CHECK(!dock0->window()->isMinimized());
+    CHECK(saver.restoreLayout(saved));
+
+    Platform::instance()->tests_wait(100000000);
+    CHECK(dock0->window()->isMinimized());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreFlagsFromVersion16()
 {
     EnsureTopLevelsDeleted e;
@@ -5610,6 +5640,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_mixedMDIRestoreToArea),
         TEST(tst_redockToMDIRestoresPosition),
         TEST(tst_maximizeButton),
+        TEST(tst_restoreAfterUnminimized),
 #endif
         TEST(tst_keepLast)
 };
