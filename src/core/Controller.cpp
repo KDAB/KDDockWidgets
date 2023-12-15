@@ -155,3 +155,19 @@ Controller::Private *Controller::dptr() const
 {
     return d;
 }
+
+bool Controller::isFixedHeight() const
+{
+    if (auto v = view())
+        return v->minSize().height() == v->maxSizeHint().height();
+
+    return false;
+}
+
+bool Controller::isFixedWidth() const
+{
+    if (auto v = view())
+        return v->minSize().width() == v->maxSizeHint().width();
+
+    return false;
+}

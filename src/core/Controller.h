@@ -91,6 +91,9 @@ public:
     /// but works with Flutter as well
     void destroyLater();
 
+    bool isFixedHeight() const;
+    bool isFixedWidth() const;
+
     class Private;
     Controller::Private *dptr() const;
 
