@@ -241,8 +241,7 @@ public:
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
     bool anyDockWidgetsHas(LayoutSaverOption) const;
 
-    /// @brief Usually we do resize via the native window manager, but if a widget is docked like
-    /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse
+    /// @brief To allow resizing the overlayed dock widget (auto-hide feature)
     void setAllowedResizeSides(CursorPositions sides);
 
     /// @brief Returns whether this group is in a MDI layout
@@ -250,7 +249,7 @@ public:
     bool isMDI() const;
 
     /// @brief Returns whether this group was created automatically just for the purpose of
-    /// supporting DockWidget::Option_MDINestable
+    /// supporting DockWidgetOption_MDINestable
     bool isMDIWrapper() const;
 
     /// @brief If this is an MDI wrapper group, return the DockWidget MDI wrapper
@@ -269,7 +268,7 @@ public:
     MDILayout *mdiLayout() const;
 
     /// @brief If this group is a MDI group (isMDI() == true), returns whether it contains nested
-    /// dock widgets (DockWidget::Option_MDINestable)
+    /// dock widgets (DockWidgetOption_MDINestable)
     /// @sa isMDI()
     bool hasNestedMDIDockWidgets() const;
 

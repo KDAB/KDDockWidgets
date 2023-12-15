@@ -82,12 +82,12 @@ public:
     Vector<QString> affinities() const;
     void layoutParentContainerEqually(DockWidget *);
 
-    /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside
+    /// When DockWidgetOption_MDINestable is used, docked MDI dock widgets will be wrapped inside
     /// a DropArea, so they accept drops This DropArea is created implicitly while docking, and this
     /// function will return true
     bool isMDIWrapper() const;
 
-    /// Returns the helper dock widget for implementing DockWidget::Option_MDINestable.
+    /// Returns the helper dock widget for implementing DockWidgetOption_MDINestable.
     Core::DockWidget *mdiDockWidgetWrapper() const;
 
     static Core::Group *createCentralFrame(MainWindowOptions options);

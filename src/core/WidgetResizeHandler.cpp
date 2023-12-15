@@ -168,7 +168,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
         if (mTarget->isMaximized())
             break;
 
-        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(e));
+        CursorPosition cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(e));
         updateCursor(cursorPos);
         if (cursorPos == CursorPosition_Undefined)
             return false;
