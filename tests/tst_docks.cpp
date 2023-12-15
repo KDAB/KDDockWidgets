@@ -5171,7 +5171,7 @@ KDDW_QCORO_TASK tst_restoreAfterUnminimized()
     CHECK(!dock0->window()->isMinimized());
     CHECK(saver.restoreLayout(saved));
 
-    Platform::instance()->tests_wait(100000000);
+    // Platform::instance()->tests_wait(100000000);
     CHECK(dock0->window()->isMinimized());
 
     KDDW_TEST_RETURN(true);
