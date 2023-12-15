@@ -571,19 +571,18 @@ void WidgetResizeHandler::restoreMouseCursor()
     }
 }
 
-CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
+CursorPosition WidgetResizeHandler::cursorPosition_(Point globalPos) const
 {
-    if (!mTargetGuard)
-        return CursorPosition_Undefined;
-
 #ifdef KDDW_FRONTEND_QTQUICK
     if (Platform::instance()->isQtQuick() && isMDI()) {
         // Special case for QtQuick. The MouseAreas are driving it and know better what's the
         // cursor position
         auto qtview = static_cast<KDDockWidgets::QtCommon::View_qt *>(mTarget);
         const QVariant v = qtview->viewProperty("cursorPosition");
-        if (v.isValid())
-            return CursorPosition(v.toInt());
+        if (v.isValid()) {
+            auto pos = CursorPosition(v.toInt());
+            return pos;
+        }
     }
 #endif
 
@@ -612,6 +611,34 @@ CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
     result = result & mAllowedResizeSides;
 
     return static_cast<CursorPosition>(result);
+}
+
+CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
+{
+    if (!mTargetGuard)
+        return CursorPosition_Undefined;
+
+    auto candidatePos = cursorPosition_(globalPos);
+
+    if (isMDI()) {
+        int result = int(candidatePos);
+
+        if (auto group = mTarget->asGroupController()) {
+            // Honour fixed size. Don't show mouse shape for resizing.
+            if (group->isFixedHeight())
+                result &= ~CursorPosition_Vertical;
+
+            if (group->isFixedWidth())
+                result &= ~CursorPosition_Horizontal;
+        } else {
+            KDDW_ERROR("WidgetResizeHandler::cursorPosition: Expected group");
+        }
+
+        return static_cast<CursorPosition>(result);
+    } else {
+        // For regular docking there's other mechanisms to enforce fixed size
+        return candidatePos;
+    }
 }
 
 /** static */

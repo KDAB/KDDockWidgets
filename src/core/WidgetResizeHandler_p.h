@@ -161,7 +161,14 @@ private:
     void updateCursor(CursorPosition);
     void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();
+
+    /// Returns which widget side the cursor is at for resize purposes
+    /// Honours fixed size widgets. If fixed size, no position will be reported.
     CursorPosition cursorPosition(Point) const;
+
+    /// Lower level overload of cursorPosition, which does not honour fixed size
+    CursorPosition cursorPosition_(Point) const;
+
     Core::View *mTarget = nullptr;
     Core::ViewGuard mTargetGuard = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
