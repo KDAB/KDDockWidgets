@@ -704,6 +704,18 @@
                 "static-base",
                 "ci-dev-qt6"
             ]
+        },
+        {
+            "name": "debug-qtwidgets6",
+            "description": "Preset to debug qtwidgets onlk",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-qtwidgets6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "OFF",
+                "KDDockWidgets_FRONTENDS": "qtwidgets",
+                "KDDockWidgets_QT6": "ON"
+            }
         }
     ],
     "buildPresets": [
