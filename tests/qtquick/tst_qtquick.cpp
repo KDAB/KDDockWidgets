@@ -437,6 +437,10 @@ void TestQtQuick::tst_mdiFixedSize()
     Group *group = dock0->dptr()->group();
     QVERIFY(group->isMDI());
     QVERIFY(group->isFixedWidth());
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    Platform::instance()
+        ->tests_wait(1);
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()
