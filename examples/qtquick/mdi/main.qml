@@ -23,17 +23,4 @@ ApplicationWindow {
         anchors.fill: parent
         uniqueName: "MyMainLayout"
     }
-
-    KDDW.DockWidget {
-        id: someDock
-        uniqueName: "someDock"
-        Rectangle {
-            color: "#413C58"
-            anchors.fill: parent
-        }
-    }
-
-    Component.onCompleted: {
-        dockingArea.addDockWidget(someDock, Qt.point(200, 200));
-    }
 }
