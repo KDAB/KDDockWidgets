@@ -48,7 +48,7 @@ Rectangle {
             groupCpp.geometryUpdated();
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             left: parent ? parent.left : undefined
             top: parent ? parent.top : undefined
@@ -63,7 +63,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Left
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             right: parent ? parent.right : undefined
             top: parent ? parent.top : undefined
@@ -78,7 +78,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Right
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             right: parent ? parent.right : undefined
             top: parent ? parent.top : undefined
@@ -93,7 +93,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Top
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             right: parent ? parent.right : undefined
             left: parent ? parent.left : undefined
@@ -108,7 +108,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Bottom
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             right: parent ? parent.right : undefined
             bottom: parent ? parent.bottom : undefined
@@ -123,7 +123,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Bottom | KDDockWidgets.CursorPosition_Right
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             left:  parent ? parent.left : undefined
             top:  parent ? parent.top : undefined
@@ -138,7 +138,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Left
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             right: parent ? parent.right : undefined
             top: parent ? parent.top : undefined
@@ -153,7 +153,7 @@ Rectangle {
         cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Right
     }
 
-    ResizeHandlerHelper {
+    MDIResizeHandlerHelper {
         anchors {
             left: parent ? parent.left : undefined
             bottom: parent ? parent.bottom : undefined

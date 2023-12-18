@@ -7,7 +7,7 @@
         <file>views/qml/TabBar.qml</file>
         <file>views/qml/Group.qml</file>
         <file>views/qml/MainWindowMDI.qml</file>
-        <file>views/qml/ResizeHandlerHelper.qml</file>
+        <file>views/qml/MDIResizeHandlerHelper.qml</file>
         <file>views/qml/RubberBand.qml</file>
         <file>views/qml/Separator.qml</file>
         <file>views/qml/TitleBarBase.qml</file>
