@@ -52,6 +52,8 @@ DOCKS_EXPORT QQmlContext *qmlContextFor(QQuickItem *);
 class DOCKS_EXPORT View : public QQuickItem, public QtCommon::View_qt
 {
     Q_OBJECT
+    Q_PROPERTY(bool isFixedHeight READ isFixedHeight NOTIFY geometryUpdated)
+    Q_PROPERTY(bool isFixedWidth READ isFixedWidth NOTIFY geometryUpdated)
 public:
     using Core::View::close;
     using Core::View::height;

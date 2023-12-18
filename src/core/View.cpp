@@ -365,6 +365,16 @@ void View::dumpDebug()
     KDDW_DEBUG("View::dumpDebug: controller={}, type={}, rootController={}\n", ( void * )m_controller, int(d->type()), ( void * )rootView()->controller());
 }
 
+bool View::isFixedWidth() const
+{
+    return minSize().width() == maxSizeHint().width();
+}
+
+bool View::isFixedHeight() const
+{
+    return minSize().height() == maxSizeHint().height();
+}
+
 /** static */
 Controller *View::firstParentOfType(View *view, ViewType type)
 {

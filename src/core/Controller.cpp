@@ -159,7 +159,7 @@ Controller::Private *Controller::dptr() const
 bool Controller::isFixedHeight() const
 {
     if (auto v = view())
-        return v->minSize().height() == v->maxSizeHint().height();
+        return v->isFixedHeight();
 
     return false;
 }
@@ -167,7 +167,7 @@ bool Controller::isFixedHeight() const
 bool Controller::isFixedWidth() const
 {
     if (auto v = view())
-        return v->minSize().width() == v->maxSizeHint().width();
+        return v->isFixedWidth();
 
     return false;
 }

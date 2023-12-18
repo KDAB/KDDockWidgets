@@ -30,13 +30,20 @@ MouseArea {
             return Qt.ArrowCursor;
         }
 
-        if ((cursorPosition === KDDockWidgets.CursorPosition_TopLeft || cursorPosition === KDDockWidgets.CursorPosition_BottomRight)) {
+        var isFixedHeight = groupCpp && groupCpp.isFixedHeight
+        var isFixedWidth = groupCpp && groupCpp.isFixedWidth
+        if (isFixedHeight && isFixedWidth)
+            return Qt.ArrowCursor;
+
+        var noFixed = !isFixedHeight && !isFixedWidth;
+
+        if (noFixed && (cursorPosition === KDDockWidgets.CursorPosition_TopLeft || cursorPosition === KDDockWidgets.CursorPosition_BottomRight)) {
             return Qt.SizeFDiagCursor;
-        } else if ((cursorPosition === KDDockWidgets.CursorPosition_TopRight || cursorPosition === KDDockWidgets.CursorPosition_BottomLeft)) {
+        } else if (noFixed && (cursorPosition === KDDockWidgets.CursorPosition_TopRight || cursorPosition === KDDockWidgets.CursorPosition_BottomLeft)) {
             return Qt.SizeBDiagCursor;
-        } else if (cursorPosition & KDDockWidgets.CursorPosition_Horizontal) {
+        } else if (!isFixedWidth && (cursorPosition & KDDockWidgets.CursorPosition_Horizontal)) {
             return Qt.SizeHorCursor;
-        } else if (cursorPosition & KDDockWidgets.CursorPosition_Vertical) {
+        } else if (!isFixedHeight && (cursorPosition & KDDockWidgets.CursorPosition_Vertical)) {
             return Qt.SizeVerCursor;
         } else {
             return Qt.ArrowCursor;

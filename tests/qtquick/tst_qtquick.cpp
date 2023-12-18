@@ -17,6 +17,7 @@
 #include "qtquick/views/TitleBar.h"
 #include "qtquick/views/DockWidget.h"
 #include "qtquick/views/MainWindow.h"
+#include "core/MDILayout.h"
 #include "core/views/MainWindowViewInterface.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
@@ -58,6 +59,8 @@ private Q_SLOTS:
 
     void tst_focusBetweenTabs();
     void tst_setPersistentCentralView();
+
+    void tst_mdiFixedSize();
 };
 
 
@@ -412,6 +415,28 @@ void TestQtQuick::tst_setPersistentCentralView()
     auto rootItem = layout->rootItem();
     QCOMPARE(rootItem->count_recursive(), 1);
     QCOMPARE(mainWindow->size(), rootItem->size());
+}
+
+void TestQtQuick::tst_mdiFixedSize()
+{
+    // Tests that the mdi group is fixed size if the dock widget is fixed size
+
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
+    const int fixedWidth = 201;
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(fixedWidth, 400) }));
+    dock0->view()->setFixedWidth(fixedWidth);
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
+    m->view()->resize(1000, 1000);
+
+    QCOMPARE(dock0->view()->minimumWidth(), fixedWidth);
+    QCOMPARE(dock0->view()->maxSizeHint().width(), fixedWidth);
+    QVERIFY(dock0->isFixedWidth());
+    Group *group = dock0->dptr()->group();
+    QVERIFY(group->isMDI());
+    QVERIFY(group->isFixedWidth());
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()

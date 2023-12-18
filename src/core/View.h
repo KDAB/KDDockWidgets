@@ -245,6 +245,9 @@ public:
     /// Prints some debug to stderr
     void dumpDebug();
 
+    bool isFixedWidth() const;
+    bool isFixedHeight() const;
+
 public:
     class Private;
     Private *const d;
