@@ -23,22 +23,4 @@ Guest {
         uniqueName: "another1"
         source: ":/Another.qml"
     }
-
-    Button {
-        text: "Toggle Another"
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            margins: 5
-        }
-
-        onClicked: {
-
-            if (another.dockWidget.visible) {
-                another.dockWidget.close();
-            } else {
-                another.dockWidget.show();
-            }
-        }
-    }
 }
