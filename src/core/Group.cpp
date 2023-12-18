@@ -803,7 +803,6 @@ Size Group::dockWidgetsMinSize() const
             size = size.expandedTo(dw->view()->minSize());
     }
 
-
     return size;
 }
 

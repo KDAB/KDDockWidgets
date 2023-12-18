@@ -52,6 +52,9 @@ public:
     /// @reimp
     QSize minSize() const override;
 
+    /// @reimp
+    QSize maxSizeHint() const override;
+
     /// @brief Returns the QQuickItem which represents this group on the screen
     QQuickItem *visualItem() const override;
 

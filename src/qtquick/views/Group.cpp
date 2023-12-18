@@ -30,6 +30,8 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/Group_p.h"
+#include "core/layouting/Item_p.h"
+#include "core/Logging_p.h"
 
 #include "Stack.h"
 #include "Config.h"
@@ -176,6 +178,20 @@ QSize Group::minSize() const
 {
     const QSize contentsSize = m_group->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
+}
+
+QSize Group::maxSizeHint() const
+{
+    if (isMDI()) {
+        const auto dockwidgets = m_group->dockWidgets();
+        if (dockwidgets.size() == 1) {
+            return (dockwidgets[0]->view()->maxSizeHint() + QSize(0, nonContentsHeight())).boundedTo(Core::Item::hardcodedMaximumSize);
+        } else {
+            KDDW_WARN("Group::maxSizeHint: Max size not supported for mixed MDI case yet");
+        }
+    }
+
+    return View::maxSizeHint();
 }
 
 QObject *Group::tabBarObj() const
