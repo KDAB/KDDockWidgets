@@ -27,6 +27,8 @@ Rectangle {
     readonly property bool resizeAllowed: root.isMDI && !_kddwHelpers.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
     readonly property bool hasCustomMouseEventRedirector: false
+    readonly property bool isFixedHeight: groupCpp && groupCpp.isFixedHeight
+    readonly property bool isFixedWidth: groupCpp && groupCpp.isFixedWidth
 
     anchors.fill: parent
 
@@ -58,7 +60,7 @@ Rectangle {
         width: resizeMargin
         z: 100
         groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
+        resizeAllowed: root.resizeAllowed && !root.isFixedWidth
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Left
     }
@@ -73,7 +75,7 @@ Rectangle {
         width: resizeMargin
         z: 100
         groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
+        resizeAllowed: root.resizeAllowed && !root.isFixedWidth
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Right
     }
@@ -88,7 +90,7 @@ Rectangle {
         height: resizeMargin
         z: 100
         groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
+        resizeAllowed: root.resizeAllowed && !root.isFixedHeight
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Top
     }
@@ -103,7 +105,7 @@ Rectangle {
         height: resizeMargin
         z: 100
         groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
+        resizeAllowed: root.resizeAllowed && !root.isFixedHeight
         resizeMargin: root.mouseResizeMargin
         cursorPosition: KDDockWidgets.CursorPosition_Bottom
     }

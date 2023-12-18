@@ -148,6 +148,9 @@ public:
 
     void onWindowStateChangeEvent(QWindowStateChangeEvent *);
 
+    bool isFixedWidth() const;
+    bool isFixedHeight() const;
+
     /// @brief This is equivalent to "anchors.fill: parent but in C++
     static void makeItemFillParent(QQuickItem *item);
 

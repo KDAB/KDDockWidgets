@@ -835,6 +835,16 @@ void View::onWindowStateChangeEvent(QWindowStateChangeEvent *)
     }
 }
 
+bool View::isFixedWidth() const
+{
+    return m_controller && m_controller->isFixedWidth();
+}
+
+bool View::isFixedHeight() const
+{
+    return m_controller && m_controller->isFixedHeight();
+}
+
 namespace KDDockWidgets {
 inline QString cleanQRCFilename(const QString &filename)
 {
