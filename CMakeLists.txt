@@ -217,7 +217,7 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
         message(
             FATAL_ERROR
                 "Qt 6.5.3 and 6.6.1 are not supported on Windows, as they suffer from a Qt regression: QTBUG-117704. "
-                "Please downgrade to 6.6.0 or 6.5.2."
+                "Please either downgrade or upgrade to 6.6.2 or superior"
         )
     endif()
 
