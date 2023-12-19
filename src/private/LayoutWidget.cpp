@@ -149,7 +149,10 @@ void LayoutWidget::unrefOldPlaceholders(const Frame::List &framesBeingAdded) con
 void LayoutWidget::setLayoutSize(QSize size)
 {
     if (size != this->size()) {
-        m_rootItem->setSize_recursive(size);
+        Layouting::ChildrenResizeStrategy strategy = Layouting::ChildrenResizeStrategy::Percentage;
+        if (!LayoutSaver::restoreInProgress())
+            strategy = Layouting::ChildrenResizeStrategy::GiveDropAreaWithCentralFrameAllExtra;
+        m_rootItem->setSize_recursive(size, strategy);
         if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
             resize(size);
     }
