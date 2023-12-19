@@ -156,4 +156,19 @@ Vector<QString> DockWidgetViewInterface::affinities() const
     return m_dockWidget->affinities();
 }
 
+void DockWidgetViewInterface::setMDIPosition(Point pos)
+{
+    m_dockWidget->setMDIPosition(pos);
+}
+
+void DockWidgetViewInterface::setMDISize(Size size)
+{
+    m_dockWidget->setMDISize(size);
+}
+
+void DockWidgetViewInterface::setMDIZ(int z)
+{
+    m_dockWidget->setMDIZ(z);
+}
+
 } // namespace
