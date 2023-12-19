@@ -162,9 +162,15 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
     // For QtQuick we do it a bit later, once we have the QQuickWindow
     if (Platform::instance()->isQtWidgets()) {
         view()->createPlatformWindow(); // QWidget::create
+
+        // Handle WM_NCHITTEST
         m_nchittestFilter = new NCHITTESTEventFilter(view());
         qGuiApp->installNativeEventFilter(m_nchittestFilter);
+
+        // Enables native drop-shadow
         WidgetResizeHandler::setupWindow(view()->window());
+
+        // WM_NCCALCSIZE is handled in the views's nativeEvent(), not here.
     }
 #endif
 
