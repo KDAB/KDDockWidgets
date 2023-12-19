@@ -163,6 +163,14 @@ else()
     add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
 endif()
 
+if(WIN32 AND (Qt6Core_VERSION VERSION_EQUAL "6.5.3" OR Qt6Core_VERSION VERSION_EQUAL "6.6.1"))
+    message(
+        FATAL_ERROR
+            "Qt 6.5.3 and 6.6.1 are not supported on Windows, as they suffer from a Qt regression: QTBUG-117704. "
+            "Please either downgrade or upgrade to 6.6.2 or superior"
+    )
+endif()
+
 if(NOT WIN32
    AND NOT APPLE
    AND NOT EMSCRIPTEN
