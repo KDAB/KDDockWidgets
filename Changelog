@@ -13,9 +13,13 @@
   - Added Config::setStartDragDistance()
   - Removed Config::setTabbingAllowedFunc() which was already deprecated in favor of Config::setDropIndicatorAllowedFunc()
   - Slint and Flutter WIP. Waiting for these frameworks to support multi-window before finishing.
+  - Blacklisted Qt 6.6.1 and 6.5.3 on Windows due to QTBUG-117704
 
 * v1.7.1 (unreleased)
- -
+ - Fixed pin button appearing by mistake when using Flag_TitleBarNoFloatButton (#359)
+ - Added Config::Flag_AutoHideAsTabGroups, which allows all tabs to go to/from sidebar at once.
+ - Fixed resize gap of auto-hide overlay resize on its left border
+ - Blacklisted Qt 6.6.1 and 6.5.3 on Windows due to QTBUG-117704
 
 * v1.7.0 (03 May 2023)
  - Introduce DockWidget::setFloatingWindowFlags(flags). Allows for different
