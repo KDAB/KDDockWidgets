@@ -377,7 +377,7 @@ macro(set_compiler_flags targetName)
 
     # Enable -Werror
     if(KDDockWidgets_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
-        target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
+        target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations -Wno-error=unknown-argument)
     endif()
 
     if(KDDockWidgets_HAS_SPDLOG)
