@@ -85,6 +85,7 @@ public:
     void setHeight(int h) override;
     void setFixedWidth(int w) override;
     void setFixedHeight(int h) override;
+    void setFixedSize(Size);
     void show() override;
     void hide() override;
     void updateGeometry();

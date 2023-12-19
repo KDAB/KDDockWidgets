@@ -513,6 +513,12 @@ void View::setFixedHeight(int h)
     setMaximumSize({ maxSizeHint().width(), h });
 }
 
+void View::setFixedSize(Size sz)
+{
+    setFixedWidth(sz.width());
+    setFixedHeight(sz.height());
+}
+
 void View::show()
 {
     setVisible(true);
