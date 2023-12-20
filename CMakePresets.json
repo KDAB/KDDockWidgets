@@ -385,26 +385,6 @@
             }
         },
         {
-            "name": "dev-clangcl-asan",
-            "displayName": "dev-clangcl-asan",
-            "binaryDir": "${sourceDir}/build-dev-clangcl-asan",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-                "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
-            },
-            "warnings": {
-                "uninitialized": true
-            },
-            "environment": {
-                "CC": "clang-cl",
-                "CXX": "clang-cl"
-            },
-            "inherits": [
-                "asan-base"
-            ]
-        },
-        {
             "name": "dev-clangcl6",
             "displayName": "dev-clangcl6",
             "binaryDir": "${sourceDir}/build-dev-clangcl6",
