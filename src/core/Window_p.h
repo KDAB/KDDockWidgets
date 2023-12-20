@@ -155,6 +155,15 @@ public:
     /// Multiple callbacks can be registered
     virtual void onScreenChanged(Core::Object *context, WindowScreenChangedCallback) = 0;
 
+    /// Restoring a QWindow directly with showMinimized() is buggy on Qt on Windows, due to WM_NCCALCSIZE not handled correctly
+    virtual void setHasBeenMinimizedDirectlyFromRestore(bool)
+    {
+    }
+    virtual bool hasBeenMinimizedDirectlyFromRestore() const
+    {
+        return false;
+    }
+
 private:
     bool containsView(Controller *) const;
     bool containsView(View *) const;

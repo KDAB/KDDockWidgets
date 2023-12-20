@@ -65,6 +65,17 @@ void Window::setProperty(const char *name, const QVariant &value)
     m_window->setProperty(name, value);
 }
 
+static const char *const s_kddw_hasBeenMinimizedDirectlyFromRestore = "kddw_hasBeenMinimizedDirectlyFromRestore";
+void Window::setHasBeenMinimizedDirectlyFromRestore(bool has)
+{
+    setProperty(s_kddw_hasBeenMinimizedDirectlyFromRestore, has);
+}
+
+bool Window::hasBeenMinimizedDirectlyFromRestore() const
+{
+    return property(s_kddw_hasBeenMinimizedDirectlyFromRestore).toBool();
+}
+
 bool Window::isVisible() const
 {
     return m_window->isVisible();
