@@ -150,6 +150,9 @@ public:
                                          const NativeFeatures &);
     static bool handleWindowsNativeEvent(Core::FloatingWindow *, const QByteArray &eventType,
                                          void *message, Qt5Qt6Compat::qintptr *result);
+
+    /// Tells Qt to query window margins
+    static void requestNCCALCSIZE(HWND);
 #endif
     static bool s_disableAllHandlers;
 

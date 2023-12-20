@@ -346,6 +346,12 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
 
+void WidgetResizeHandler::requestNCCALCSIZE(HWND winId)
+{
+    SetWindowPos(winId, 0, 0, 0, 0, 0,
+                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+}
+
 /// Handler to enable Aero-snap
 bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
                                                    const QByteArray &eventType, void *message,
@@ -655,9 +661,7 @@ void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
             // nudge. Otherwise what Qt thinks is the client area is not what Windows knows it is.
             // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take
             // note of the margins we're using.
-            const auto winId = HWND(win->handle());
-            SetWindowPos(winId, 0, 0, 0, 0, 0,
-                         SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+            requestNCCALCSIZE(HWND(win->handle()));
         });
 
         const bool usesTransparentFloatingWindow =
