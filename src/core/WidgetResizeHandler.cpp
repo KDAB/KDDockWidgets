@@ -396,6 +396,12 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg
                                                    const NativeFeatures &features)
 {
     if (msg->message == WM_NCCALCSIZE && features.hasShadow()) {
+        if (w->windowState() == WindowState::Minimized && w->hasBeenMinimizedDirectlyFromRestore()) {
+            // Qt is buggy with custom WM_NCCALCSIZE if window is minimized.
+            // Use full frame when minimized. We'll trigger WM_NCCALCSIZE when un-minimized.
+            return false;
+        }
+
         *result = 0;
         return true;
     } else if (msg->message == WM_NCHITTEST && (features.hasResize() || features.hasDrag())) {
@@ -652,7 +658,6 @@ void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
 {
     // Does some minor setup on our QWindow.
     // Like adding the drop shadow on Windows and two other workarounds.
-
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         const auto wid = HWND(window->handle());

@@ -580,6 +580,10 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
         if (int(fw.windowState) & int(WindowState::Maximized)) {
             view()->showMaximized();
         } else if (int(fw.windowState) & int(WindowState::Minimized)) {
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+            // Workaround for WM_NCCALCSIZE not being honoured if directly minimized
+            view()->window()->setHasBeenMinimizedDirectlyFromRestore(true);
+#endif
             view()->showMinimized();
         } else {
             view()->showNormal();

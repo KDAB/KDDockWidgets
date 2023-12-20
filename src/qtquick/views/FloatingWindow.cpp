@@ -252,8 +252,16 @@ Core::Item *FloatingWindow::rootItem() const
 
 void FloatingWindow::onWindowStateChanged(Qt::WindowState state)
 {
-    m_controller->setLastWindowManagerState(WindowState(state));
+    const auto newState = WindowState(state);
+    m_controller->setLastWindowManagerState(newState);
     m_controller->dptr()->windowStateChanged.emit();
+#if defined(Q_OS_WIN)
+    if (window()->hasBeenMinimizedDirectlyFromRestore() && newState != WindowState::Minimized) {
+        window()->setHasBeenMinimizedDirectlyFromRestore(false);
+        // restore our nice frames
+        WidgetResizeHandler::requestNCCALCSIZE(HWND(window()->handle()));
+    }
+#endif
 }
 
 #include "FloatingWindow.moc"
