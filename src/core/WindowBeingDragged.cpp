@@ -247,6 +247,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     } else if (auto tabBar = draggable->asView()->asTabBarController()) {
         if (Platform::instance()->isQtWidgets())
             m_dockWidget = tabBar->currentDockWidget();
+        m_group = tabBar->group();
     } else if (auto stack = draggable->asView()->asStackController()) {
         if (Platform::instance()->isQtWidgets())
             m_group = stack->group();
