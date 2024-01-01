@@ -15,6 +15,7 @@
 #include "Logging_p.h"
 #include "Utils_p.h"
 
+#include "core/DockWidget_p.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "kddockwidgets/core/Stack.h"
 #include "kddockwidgets/core/Group.h"
@@ -308,7 +309,10 @@ Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
 
 bool WindowBeingDraggedWayland::isInWaylandDrag(Group *group) const
 {
-    return group && m_group == group;
+    // Returns whether the specified group is being dragged. We honour 2 cases:
+    // - The whole group is being dragged, for example a group of tabs being dragged via titlebar
+    // - A single tab is being dragged
+    return (group && m_group == group) || (m_dockWidget && m_dockWidget->dptr()->group() == group);
 }
 
 Size WindowBeingDraggedWayland::size() const
