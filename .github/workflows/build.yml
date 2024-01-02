@@ -88,6 +88,12 @@ jobs:
           sudo apt update -qq
           echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
 
+      # Not using apt_pgks, since spdlog is needed for all configurations:
+      - name: Install spdlog on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          sudo apt install libspdlog-dev -y
+
       - name: Install Python dependencies (${{ join(matrix.preset.pip_pgks, ' ') }})
         if: ${{ matrix.preset.pip_pgks }}
         run: echo ${{ join(matrix.preset.pip_pgks, ' ') }} | xargs pip install

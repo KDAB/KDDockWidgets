@@ -35,7 +35,7 @@ RUN apt update
 RUN apt install build-essential software-properties-common lld git cmake ninja-build \
                 mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
                 libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                vim clang-tidy-14 valgrind pip libxslt-dev llvm -y
+                vim clang-tidy-14 valgrind pip libxslt-dev llvm libspdlog-dev -y
 
 RUN pip install shiboken6-generator==6.6.0 shiboken6==6.6.0 pyside6==6.6.0
 
