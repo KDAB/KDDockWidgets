@@ -125,15 +125,15 @@ struct fmt::formatter<QFlags<F>>
 
 namespace KDDockWidgets {
 template<typename Enum, typename std::enable_if<std::is_enum<Enum>::value, int>::type = 0>
-constexpr auto format_as(Enum e) noexcept -> fmt::underlying_t<Enum>
+constexpr auto format_as(Enum e) noexcept -> typename std::underlying_type<Enum>::type
 {
-    return static_cast<fmt::underlying_t<Enum>>(e);
+    return static_cast<typename std::underlying_type<Enum>::type>(e);
 }
 namespace Core {
 template<typename Enum, fmt::enable_if_t<std::is_enum<Enum>::value, int> = 0>
-constexpr auto format_as(Enum e) noexcept -> fmt::underlying_t<Enum>
+constexpr auto format_as(Enum e) noexcept -> typename std::underlying_type<Enum>::type
 {
-    return static_cast<fmt::underlying_t<Enum>>(e);
+    return static_cast<typename std::underlying_type<Enum>::type>(e);
 }
 }
 }
