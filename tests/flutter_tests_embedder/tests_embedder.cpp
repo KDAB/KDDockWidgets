@@ -258,7 +258,7 @@ void TestsEmbedder::deinit()
     }
 
     glfwTerminate();
-    KDDW_WARN("TestsEmbedder::deinit: glfw terminated}");
+    KDDW_INFO("TestsEmbedder::deinit: glfw terminated}");
 }
 
 int TestsEmbedder::run()
