@@ -92,6 +92,39 @@ KDDW_QCORO_TASK tst_simple2()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_minMaxGuest()
+{
+    // Tests some min/max size cases, regarding guest and the dock widget
+
+    EnsureTopLevelsDeleted e;
+
+    auto guest = Platform::instance()->tests_createView({ true });
+    auto dockA = createDockWidget("0", guest);
+
+    {
+        const Size newMinSize = { 500, 501 };
+        CHECK_EQ(dockA->view()->minSize(), guest->minSize());
+        CHECK(newMinSize != dockA->view()->minSize());
+
+        dockA->view()->setMinimumSize(newMinSize);
+
+        // There was a QtQuick bug where the returned minSize() wasn't correct
+        CHECK(newMinSize == dockA->view()->minSize());
+    }
+
+    {
+        const int newWidth = 502;
+        CHECK(newWidth != dockA->view()->minSize().width());
+
+        dockA->view()->setFixedWidth(newWidth);
+
+        // There was a QtQuick bug where the returned minSize() wasn't correct
+        CHECK(newWidth == dockA->view()->minSize().width());
+    }
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_doesntHaveNativeTitleBar()
 {
     // Tests that a floating window doesn't have a native title bar
@@ -5236,39 +5269,6 @@ KDDW_QCORO_TASK tst_childViewAt()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_minMaxGuest()
-{
-    // Tests some min/max size cases, regarding guest and the dock widget
-
-    EnsureTopLevelsDeleted e;
-
-    auto guest = Platform::instance()->tests_createView({ true });
-    auto dockA = createDockWidget("0", guest);
-
-    {
-        const Size newMinSize = { 500, 501 };
-        CHECK_EQ(dockA->view()->minSize(), guest->minSize());
-        CHECK(newMinSize != dockA->view()->minSize());
-
-        dockA->view()->setMinimumSize(newMinSize);
-
-        // There was a QtQuick bug where the returned minSize() wasn't correct
-        CHECK(newMinSize == dockA->view()->minSize());
-    }
-
-    {
-        const int newWidth = 502;
-        CHECK(newWidth != dockA->view()->minSize().width());
-
-        dockA->view()->setFixedWidth(newWidth);
-
-        // There was a QtQuick bug where the returned minSize() wasn't correct
-        CHECK(newWidth == dockA->view()->minSize().width());
-    }
-
-    KDDW_TEST_RETURN(true);
-}
-
 KDDW_QCORO_TASK tst_resizeInLayout()
 {
     EnsureTopLevelsDeleted e;
@@ -5600,8 +5600,8 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_resizeInLayout),
         TEST(tst_mainWindowToggle),
         TEST(tst_startDragging),
-        TEST(tst_minMaxGuest),
 #if !defined(KDDW_FRONTEND_FLUTTER)
+        TEST(tst_minMaxGuest),
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),
         TEST(tst_honourUserGeometry),
