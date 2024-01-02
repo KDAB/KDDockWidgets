@@ -286,8 +286,17 @@ if(NOT WIN32
 endif()
 
 if(NOT KDDockWidgets_NO_SPDLOG)
-    find_package(spdlog 1.8.0 QUIET)
-    find_package(fmt QUIET)
+    if(KDDockWidgets_DEVELOPER_MODE AND LINUX)
+        # Make sure we have at least one CI configuration running tests with spdlog enabled.
+        # Our tests are log error free. Any error printed should result in a fatal failure.
+        # For that we want spdlog enabled.
+        find_package(spdlog 1.8.0 REQUIRED)
+        find_package(fmt REQUIRED)
+    else()
+        # For regular user builds we don't care if people use it or not.
+        find_package(spdlog 1.8.0 QUIET)
+        find_package(fmt QUIET)
+    endif()
 endif()
 
 if(spdlog_FOUND AND fmt_FOUND)
