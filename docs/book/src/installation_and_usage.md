@@ -29,6 +29,8 @@ cmake --build .
 cmake --build . --target install
 ```
 
+If you don't have Qt in PATH, then you'll also need `-DCMAKE_PREFIX_PATH=/<path_to_qt>/5.15/gcc_x64/` (adjust to your case). It's important that this path contains the `lib/cmake/` folder, otherwise you'll get errors about Qt not being found.
+
 Feel free to use your favorite IDE instead.
 
 The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Windows
