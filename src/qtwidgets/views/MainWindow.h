@@ -88,6 +88,13 @@ public:
     /// @brief for internal use only
     void updateMargins();
 
+    /// These *_legacy overloads provide QDockWidget compatibility, during porting. See MainWindowOption_QDockWidgets
+    void setCentralWidget_legacy(QWidget *);
+    void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget);
+    void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
+                              Qt::Orientation orientation);
+    bool onlySupportsQDockWidgets() const;
+
 protected:
     QRect centralAreaGeometry() const override;
 

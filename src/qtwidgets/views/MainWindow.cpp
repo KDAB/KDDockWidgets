@@ -94,6 +94,9 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(controller()))
     , d(new Private(this))
 {
+    if (options & MainWindowOption_QDockWidgets)
+        return;
+
     m_mainWindow->init(uniqueName);
 
     d->m_layout->setSpacing(0);
@@ -116,7 +119,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
         d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->layout()->view()));
     }
 
-    setCentralWidget(d->m_centralWidget);
+    QMainWindow::setCentralWidget(d->m_centralWidget);
 
     const bool isWindow = !parentWidget() || (flags & Qt::Window);
     if (isWindow) {
@@ -190,4 +193,37 @@ QHBoxLayout *MainWindow::internalLayout() const
 void MainWindow::updateMargins()
 {
     d->updateMargins();
+}
+
+bool MainWindow::onlySupportsQDockWidgets() const
+{
+    return d->m_controller && (d->m_controller->options() & MainWindowOption_QDockWidgets);
+}
+
+void MainWindow::setCentralWidget_legacy(QWidget *widget)
+{
+    if (onlySupportsQDockWidgets()) {
+        QMainWindow::setCentralWidget(widget);
+    } else {
+        qFatal("Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget)
+{
+    if (onlySupportsQDockWidgets()) {
+        QMainWindow::addDockWidget(area, dockwidget);
+    } else {
+        qFatal("Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
+                                      Qt::Orientation orientation)
+{
+    if (onlySupportsQDockWidgets()) {
+        QMainWindow::addDockWidget(area, dockwidget, orientation);
+    } else {
+        qFatal("Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
 }

@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include <kddockwidgets/MainWindow.h>
+
 #include <QDockWidget>
 #include <QApplication>
 #include <QMainWindow>
@@ -41,8 +43,9 @@ int main(int argc, char **argv)
 #endif
     QApplication app(argc, argv);
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
+    KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 
-    QMainWindow mainWindow;
+    KDDockWidgets::QtWidgets::MainWindow mainWindow("mainwindow1", KDDockWidgets::MainWindowOption_QDockWidgets);
     mainWindow.resize(1000, 1000);
 
     auto dock1 = new QDockWidget("d1", &mainWindow);
@@ -53,10 +56,10 @@ int main(int argc, char **argv)
     dock2->setWidget(new Widget(QColor("#F6CA83")));
     dock3->setWidget(new Widget(QColor("#ADB993")));
 
-    mainWindow.addDockWidget(Qt::LeftDockWidgetArea, dock1);
-    mainWindow.addDockWidget(Qt::RightDockWidgetArea, dock2);
-    mainWindow.addDockWidget(Qt::BottomDockWidgetArea, dock3);
-    mainWindow.setCentralWidget(new Widget(Qt::black));
+    mainWindow.addDockWidget_legacy(Qt::LeftDockWidgetArea, dock1);
+    mainWindow.addDockWidget_legacy(Qt::RightDockWidgetArea, dock2);
+    mainWindow.addDockWidget_legacy(Qt::BottomDockWidgetArea, dock3);
+    mainWindow.setCentralWidget_legacy(new Widget(Qt::black));
 
     mainWindow.show();
 
