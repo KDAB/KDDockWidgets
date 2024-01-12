@@ -80,6 +80,31 @@ public:
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
+    void setupCentralLayout()
+    {
+        m_layout->setSpacing(0);
+        updateMargins();
+
+        if (m_supportsAutoHide) {
+            m_layout->addWidget(
+                View_qt::asQWidget(m_controller->sideBar(SideBarLocation::West)->view()));
+            auto innerVLayout = new QVBoxLayout();
+            innerVLayout->setSpacing(0);
+            innerVLayout->setContentsMargins(0, 0, 0, 0);
+            innerVLayout->addWidget(
+                View_qt::asQWidget(m_controller->sideBar(SideBarLocation::North)));
+            innerVLayout->addWidget(View_qt::asQWidget(m_controller->layout()));
+            innerVLayout->addWidget(
+                View_qt::asQWidget(m_controller->sideBar(SideBarLocation::South)));
+            m_layout->addLayout(innerVLayout);
+            m_layout->addWidget(View_qt::asQWidget(m_controller->sideBar(SideBarLocation::East)));
+        } else {
+            m_layout->addWidget(View_qt::asQWidget(m_controller->layout()->view()));
+        }
+
+        q->QMainWindow::setCentralWidget(m_centralWidget);
+    }
+
     MainWindow *const q;
     Core::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
@@ -102,27 +127,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 
     m_mainWindow->init(uniqueName);
 
-    d->m_layout->setSpacing(0);
-    d->updateMargins();
-
-    if (d->m_supportsAutoHide) {
-        d->m_layout->addWidget(
-            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
-        auto innerVLayout = new QVBoxLayout();
-        innerVLayout->setSpacing(0);
-        innerVLayout->setContentsMargins(0, 0, 0, 0);
-        innerVLayout->addWidget(
-            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
-        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->layout()));
-        innerVLayout->addWidget(
-            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
-        d->m_layout->addLayout(innerVLayout);
-        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
-    } else {
-        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->layout()->view()));
-    }
-
-    QMainWindow::setCentralWidget(d->m_centralWidget);
+    d->setupCentralLayout();
 
     const bool isWindow = !parentWidget() || (flags & Qt::Window);
     if (isWindow) {
