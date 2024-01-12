@@ -52,7 +52,10 @@ endfunction()
 
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
-    add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+    set(CMAKE_AUTOUIC ON)
+    add_executable(
+        tst_qtwidgets qtwidgets/tst_qtwidgets.cpp qtwidgets/mainwindow.ui ${TESTING_SRCS} ${TESTING_RESOURCES}
+    )
     target_link_libraries(tst_qtwidgets kdbindings kddockwidgets Qt${QT_VERSION_MAJOR}::Test)
     if(KDDockWidgets_HAS_SPDLOG)
         target_link_libraries(tst_qtwidgets spdlog::spdlog)
