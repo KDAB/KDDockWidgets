@@ -195,6 +195,7 @@ void TestQtWidgets::tst_designerMainWindow()
 {
     // Tests that a KDDW main window doesn't crash if the user used setupUI() on it.
     EnsureTopLevelsDeleted e;
+    SetExpectedWarning sew("MainWindow: Expected our own central widget");
     QtWidgets::MainWindow mw("mw1", KDDockWidgets::MainWindowOption_HasCentralWidget);
     auto dock1 = createDockWidget("dock1", new QWidget());
     mw.show();

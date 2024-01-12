@@ -41,13 +41,16 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
 namespace KDDockWidgets {
+
+char const *const s_centralWidgetObjectName = "MyCentralWidget";
+
 class MyCentralWidget : public QWidget
 {
 public:
     explicit MyCentralWidget(QWidget *parent = nullptr)
         : QWidget(parent)
     {
-        setObjectName(QStringLiteral("MyCentralWidget"));
+        setObjectName(QLatin1String(s_centralWidgetObjectName));
     }
 
     ~MyCentralWidget() override;
@@ -143,6 +146,17 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 
 MainWindow::~MainWindow()
 {
+    {
+        // Minor sanity-check to see if someone called QMainWindow::setCentralWidget() directly
+
+        auto cw = centralWidget();
+        const QString centralWidgetName = cw ? cw->objectName() : QString();
+
+        if (centralWidgetName != QLatin1String(s_centralWidgetObjectName)) {
+            qWarning() << "MainWindow: Expected our own central widget, not " << centralWidgetName;
+        }
+    }
+
     delete d;
 }
 
