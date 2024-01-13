@@ -66,9 +66,8 @@ to expose every internal widget and every knob for the app developer to tune.
 
 ## Licensing
 
-KDDockWidgets is (C) 2019-2023, Klarälvdalens Datakonsult AB (KDAB) and is
-licensed according to the terms of the [GPL 2.0](LICENSES/GPL-2.0-only.txt)
-or [GPL 3.0](LICENSES/GPL-3.0-only.txt).
+KDDockWidgets is © Klarälvdalens Datakonsult AB (KDAB) and is licensed according
+to the terms of the [GPL 2.0](LICENSES/GPL-2.0-only.txt) or [GPL 3.0](LICENSES/GPL-3.0-only.txt).
 
 Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
 
