@@ -34,6 +34,7 @@
 #include <QScreen>
 #include <QVBoxLayout>
 #include <QWindow>
+#include <QTimer>
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
 
@@ -115,6 +116,16 @@ public:
         return m_controller && (m_controller->options() & MainWindowOption_ManualInit);
     }
 
+    /// Sanity-check to see if someone called QMainWindow::setCentralWidget() directly
+    void sanityCheckCentralWidget() const
+    {
+        if (auto cw = q->centralWidget()) {
+            if (cw->objectName() != QLatin1String(s_centralWidgetObjectName)) {
+                qWarning() << "MainWindow: Expected our own central widget, not " << cw->objectName();
+            }
+        }
+    }
+
     MainWindow *const q;
     Core::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
@@ -159,21 +170,15 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
             DockRegistry::self()->dptr()->windowChangedScreen.emit(window);
         });
     }
+
+    QTimer::singleShot(0, this, [this] {
+        d->sanityCheckCentralWidget();
+    });
 }
 
 MainWindow::~MainWindow()
 {
-    {
-        // Minor sanity-check to see if someone called QMainWindow::setCentralWidget() directly
-
-        auto cw = centralWidget();
-        const QString centralWidgetName = cw ? cw->objectName() : QString();
-
-        if (centralWidgetName != QLatin1String(s_centralWidgetObjectName)) {
-            qWarning() << "MainWindow: Expected our own central widget, not " << centralWidgetName;
-        }
-    }
-
+    d->sanityCheckCentralWidget();
     delete d;
 }
 
