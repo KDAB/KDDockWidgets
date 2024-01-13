@@ -105,6 +105,16 @@ public:
         q->QMainWindow::setCentralWidget(m_centralWidget);
     }
 
+    bool onlySupportsQDockWidgets() const
+    {
+        return m_controller && (m_controller->options() & MainWindowOption_QDockWidgets);
+    }
+
+    bool needsManualInit() const
+    {
+        return m_controller && (m_controller->options() & MainWindowOption_ManualInit);
+    }
+
     MainWindow *const q;
     Core::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
@@ -127,7 +137,9 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 
     m_mainWindow->init(uniqueName);
 
-    d->setupCentralLayout();
+    const bool requiresManualInit = options & MainWindowOption_ManualInit;
+    if (!requiresManualInit)
+        d->setupCentralLayout();
 
     const bool isWindow = !parentWidget() || (flags & Qt::Window);
     if (isWindow) {
@@ -214,14 +226,9 @@ void MainWindow::updateMargins()
     d->updateMargins();
 }
 
-bool MainWindow::onlySupportsQDockWidgets() const
-{
-    return d->m_controller && (d->m_controller->options() & MainWindowOption_QDockWidgets);
-}
-
 void MainWindow::setCentralWidget_legacy(QWidget *widget)
 {
-    if (onlySupportsQDockWidgets()) {
+    if (d->onlySupportsQDockWidgets()) {
         QMainWindow::setCentralWidget(widget);
     } else {
         qFatal("Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
@@ -230,7 +237,7 @@ void MainWindow::setCentralWidget_legacy(QWidget *widget)
 
 void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget)
 {
-    if (onlySupportsQDockWidgets()) {
+    if (d->onlySupportsQDockWidgets()) {
         QMainWindow::addDockWidget(area, dockwidget);
     } else {
         qFatal("Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
@@ -240,9 +247,18 @@ void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dock
 void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
                                       Qt::Orientation orientation)
 {
-    if (onlySupportsQDockWidgets()) {
+    if (d->onlySupportsQDockWidgets()) {
         QMainWindow::addDockWidget(area, dockwidget, orientation);
     } else {
         qFatal("Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::manualInit()
+{
+    if (d->needsManualInit()) {
+        d->setupCentralLayout();
+    } else {
+        qFatal("MainWindow::manualInit requires MainWindowOption_ManualInit");
     }
 }

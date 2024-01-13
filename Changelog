@@ -4,7 +4,7 @@
   - QtQuick: Fixed redock not working when mixing MDI with docking
   - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
   - MDI: Don't show resize handles if widget is fixed size
-  - QtWidgets: Introduced MainWindowOption_QDockWidgets
+  - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - Planned: #448 Implement docking indicator for MDI area
 
 * v2.0.0 (05 December 2023)

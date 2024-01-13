@@ -80,8 +80,9 @@ enum MainWindowOption {
         4 | MainWindowOption_HasCentralFrame, ///> Similar to MainWindowOption_HasCentralFrame but
     ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa
     /// MainWindowBase::setPersistentCentralWidget()
-    MainWindowOption_QDockWidgets = 8 ///> Allows the user to use QDockWidget instead of KDDW DockWidget, while using the KDDW MainWindow
-                                      ///> Useful as a porting aid, where you want to migrate your main windows 1 by 1
+    MainWindowOption_QDockWidgets = 8, ///> Allows the user to use QDockWidget instead of KDDW DockWidget, while using the KDDW MainWindow
+                                       ///> Useful as a porting aid, where you want to migrate your main windows 1 by 1
+    MainWindowOption_ManualInit = 16 ///> For compatibility with setupUi() from UIC. See manualInit() for more details
 };
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)

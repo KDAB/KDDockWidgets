@@ -93,7 +93,12 @@ public:
     void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget);
     void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
                               Qt::Orientation orientation);
-    bool onlySupportsQDockWidgets() const;
+
+    /// Setups the QMainWindow central widget needed by KDDW
+    /// This should almost never be used. The rare use case is if your main window is backed by a .ui file
+    /// and you need to call setupUi() on it. In that case, call manualInit() after setupUi(), and don't forget to
+    /// use MainWindowOption_ManualInit
+    void manualInit();
 
 protected:
     QRect centralAreaGeometry() const override;
