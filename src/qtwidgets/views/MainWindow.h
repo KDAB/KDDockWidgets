@@ -93,6 +93,16 @@ public:
     void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget);
     void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
                               Qt::Orientation orientation);
+    bool restoreDockWidget_legacy(QDockWidget *dockwidget);
+    void removeDockWidget_legacy(QDockWidget *dockwidget);
+    Qt::DockWidgetArea dockWidgetArea_legacy(QDockWidget *dockwidget) const;
+    void resizeDocks_legacy(const QList<QDockWidget *> &docks,
+                            const QList<int> &sizes, Qt::Orientation orientation);
+    void tabifyDockWidget_legacy(QDockWidget *first, QDockWidget *second);
+    QList<QDockWidget *> tabifiedDockWidgets_legacy(QDockWidget *dockwidget) const;
+    void splitDockWidget_split(QDockWidget *after, QDockWidget *dockwidget,
+                               Qt::Orientation orientation);
+
 
     /// Setups the QMainWindow central widget needed by KDDW
     /// This should almost never be used. The rare use case is if your main window is backed by a .ui file
