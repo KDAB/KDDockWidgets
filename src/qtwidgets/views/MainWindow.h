@@ -100,8 +100,8 @@ public:
                             const QList<int> &sizes, Qt::Orientation orientation);
     void tabifyDockWidget_legacy(QDockWidget *first, QDockWidget *second);
     QList<QDockWidget *> tabifiedDockWidgets_legacy(QDockWidget *dockwidget) const;
-    void splitDockWidget_split(QDockWidget *after, QDockWidget *dockwidget,
-                               Qt::Orientation orientation);
+    void splitDockWidget_split_legacy(QDockWidget *after, QDockWidget *dockwidget,
+                                      Qt::Orientation orientation);
 
 
     /// Setups the QMainWindow central widget needed by KDDW

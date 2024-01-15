@@ -314,13 +314,13 @@ QList<QDockWidget *> MainWindow::tabifiedDockWidgets_legacy(QDockWidget *dockwid
     }
 }
 
-void MainWindow::splitDockWidget_split(QDockWidget *after, QDockWidget *dockwidget,
-                                       Qt::Orientation orientation)
+void MainWindow::splitDockWidget_split_legacy(QDockWidget *after, QDockWidget *dockwidget,
+                                              Qt::Orientation orientation)
 {
     if (d->onlySupportsQDockWidgets()) {
-        splitDockWidget_split(after, dockwidget, orientation);
+        splitDockWidget_split_legacy(after, dockwidget, orientation);
     } else {
-        qFatal("MainWindow::splitDockWidget_split: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        qFatal("MainWindow::splitDockWidget_split_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
     }
 }
 
