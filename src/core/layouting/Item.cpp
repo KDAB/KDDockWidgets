@@ -518,6 +518,83 @@ void Item::setMaxSizeHint(Size sz)
     }
 }
 
+Item *Item::outermostNeighbor(Location loc) const
+{
+    Side side;
+    Qt::Orientation o;
+
+    switch (loc) {
+    case Location_None:
+        return nullptr;
+    case Location_OnLeft:
+        side = Side1;
+        o = Qt::Horizontal;
+        break;
+    case Location_OnRight:
+        side = Side2;
+        o = Qt::Horizontal;
+        break;
+    case Location_OnTop:
+        side = Side1;
+        o = Qt::Vertical;
+        break;
+    case Location_OnBottom:
+        side = Side2;
+        o = Qt::Vertical;
+        break;
+    }
+
+    return outermostNeighbor(side, o);
+}
+
+Item *Item::outermostNeighbor(Side side, Qt::Orientation o) const
+{
+    auto p = parentBoxContainer();
+    if (!p)
+        return nullptr;
+
+    const auto siblings = p->visibleChildren();
+    const int index = siblings.indexOf(const_cast<Item *>(this));
+    if (index == -1 || siblings.isEmpty()) {
+        // Doesn't happen
+        KDDW_ERROR("Item::outermostNeighbor: item not in parent's child list");
+        return nullptr;
+    }
+
+    const int lastIndex = siblings.count() - 1;
+    if (p->orientation() == o) {
+        if ((index == 0 && side == Side1) || (index == lastIndex && side == Side2)) {
+            // No item on the sides
+            return nullptr;
+        } else {
+            // outermost sibling
+            auto sibling = siblings.at(side == Side1 ? 0 : lastIndex);
+
+            if (auto siblingContainer = object_cast<ItemBoxContainer *>(sibling)) {
+                if (siblingContainer->orientation() == o) {
+                    // case of 2 sibling containers with the same orientation, it's redundant.
+                    return siblingContainer->outermostNeighbor(side, o);
+                }
+            }
+
+            return sibling;
+        }
+    } else {
+        if (auto ancestor = p->ancestorBoxContainerWithOrientation(o)) {
+            const int indexInAncestor = this->indexInAncestor(ancestor);
+            if (indexInAncestor == -1) {
+                // Doesn't happen
+                KDDW_ERROR("Item::outermostNeighbor: item not in ancestor's child list")
+                return nullptr;
+            } else {
+                return ancestor->childItems()[index]->outermostNeighbor(side, o);
+            }
+        } else {
+            return nullptr;
+        }
+    }
+}
+
 Size Item::minSize() const
 {
     return m_sizingInfo.minSize;

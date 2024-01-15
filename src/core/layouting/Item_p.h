@@ -280,6 +280,9 @@ public:
 
     static bool s_silenceSanityChecks;
 
+    Item *outermostNeighbor(Location) const;
+    Item *outermostNeighbor(Side, Qt::Orientation) const;
+
     virtual Size minSize() const;
     virtual Size maxSizeHint() const;
     virtual void
