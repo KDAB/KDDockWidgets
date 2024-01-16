@@ -125,6 +125,68 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
     dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 
+void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
+                                     KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+{
+    if (!dockWidget || location == Location_None || isMDI())
+        return;
+
+    if (d->m_options & MainWindowOption_HasCentralFrame) {
+        Group *group = dropArea()->centralGroup();
+        if (!group || !group->layoutItem()) {
+            // Doesn't happen
+            KDDW_ERROR("MainWindow::addDockWidgetToSide: no group");
+            return;
+        }
+
+        auto locToUse = [](Location loc) {
+            switch (loc) {
+            case Location_None:
+                return Location_None;
+            case Location_OnLeft:
+                return Location_OnBottom;
+            case Location_OnTop:
+                return Location_OnRight;
+            case Location_OnRight:
+                return Location_OnBottom;
+            case Location_OnBottom:
+                return Location_OnRight;
+            }
+        };
+
+        Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location);
+        if (neighbor) {
+            if (neighbor->isContainer()) {
+                auto container = qobject_cast<ItemBoxContainer *>(neighbor);
+                auto children = container->visibleChildren();
+                if (children.isEmpty()) {
+                    // Doesn't happen
+                    KDDW_ERROR("MainWindow::addDockWidgetToSide: no children");
+                } else {
+                    if (auto relativeToGroup = Group::fromItem(children.last())) {
+                        // There's an existing container with opposite orientation, add there but to end
+                        dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
+                    } else {
+                        // Doesn't happen
+                        KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup.");
+                    }
+                }
+            } else {
+                if (auto relativeToGroup = Group::fromItem(neighbor)) {
+                    dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
+                } else {
+                    // Doesn't happen
+                    KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup");
+                }
+            }
+        } else {
+            addDockWidget(dockWidget, location, nullptr, initialOption);
+        }
+    } else {
+        KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralFrame or MainWindowOption_HasCentralWidget");
+    }
+}
+
 QString MainWindow::uniqueName() const
 {
     return d->name;

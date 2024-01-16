@@ -6,6 +6,7 @@
   - MDI: Don't show resize handles if widget is fixed size
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - Planned: #448 Implement docking indicator for MDI area
+  - Added MainWindow::addDockWidgetToSide() for QDockWidget compatibility
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.

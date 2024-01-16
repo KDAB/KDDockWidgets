@@ -170,6 +170,7 @@ private Q_SLOTS:
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowToggle_data();
     void tst_focusBetweenTabs();
+    void addDockWidgetToSide();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2106,6 +2107,52 @@ void TestQtWidgets::tst_focusBetweenTabs()
     QVERIFY(!le1->hasFocus());
     QVERIFY(!le2->hasFocus());
     QVERIFY(!le3->hasFocus());
+}
+
+void TestQtWidgets::addDockWidgetToSide()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    auto d3 = new QtWidgets::DockWidget("d3");
+    auto d4 = new QtWidgets::DockWidget("d4");
+    auto dTop = new QtWidgets::DockWidget("dTop");
+    auto dTop2 = new QtWidgets::DockWidget("dTop2");
+    m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    m1->addDockWidgetToSide(d3->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    m1->addDockWidgetToSide(dTop->asDockWidgetController(), KDDockWidgets::Location_OnTop);
+    m1->addDockWidgetToSide(dTop2->asDockWidgetController(), KDDockWidgets::Location_OnTop);
+    m1->addDockWidgetToSide(d4->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+
+    auto root = m1->layout()->rootItem()->asBoxContainer();
+    QVERIFY(root->isVertical());
+
+    auto topContainer = root->childItems()[0]->asBoxContainer();
+    QVERIFY(!topContainer->isVertical());
+    QCOMPARE(topContainer->numChildren(), 2);
+
+    QCOMPARE(Group::fromItem(topContainer->childItems()[0])->objectName(), "dTop");
+    QCOMPARE(Group::fromItem(topContainer->childItems()[1])->objectName(), "dTop2");
+
+    auto bottomContainer = root->childItems()[1]->asBoxContainer();
+    QVERIFY(!bottomContainer->isVertical());
+    QCOMPARE(bottomContainer->numChildren(), 3);
+
+    auto leftContainer = bottomContainer->childItems()[0]->asBoxContainer();
+    auto rightContainer = bottomContainer->childItems()[2]->asBoxContainer();
+    QVERIFY(leftContainer->isVertical());
+    QVERIFY(rightContainer->isVertical());
+    QCOMPARE(leftContainer->numChildren(), 2);
+    QCOMPARE(rightContainer->numChildren(), 2);
+
+    QCOMPARE(Group::fromItem(leftContainer->childItems()[0])->objectName(), "d1");
+    QCOMPARE(Group::fromItem(leftContainer->childItems()[1])->objectName(), "d2");
+    QCOMPARE(Group::fromItem(rightContainer->childItems()[0])->objectName(), "d3");
+    QCOMPARE(Group::fromItem(rightContainer->childItems()[1])->objectName(), "d4");
 }
 
 int main(int argc, char *argv[])

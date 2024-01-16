@@ -92,6 +92,28 @@ public:
                        KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
                        KDDockWidgets::InitialOption initialOption = {});
 
+
+    /**
+     * Docks a DockWidget into this main window at the specified side.
+     * To be used only with MainWindowOption_HasCentralWidget or MainWindowOption_HasCentralFrame.
+     * This is to mimic old QDockWidget system where there were 4 sides around the central widget (not infinite nesting).
+     *
+     * Example:
+     * Adding dock widget D1 to Right results in:
+     *   +---------+--+
+     *   | central |D1|
+     *   +---------+--+
+     * but adding D2 to Right as well will result in
+     *   +---------+--+
+     *   |         |D1|
+     *   | central +--+
+     *   |         |D2|
+     *   +---------+--+
+     *   which is actually equivalent to addDockWidget(D2, Location_onBottom, /relativeTo=/D1);
+     */
+    void addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
+                             KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption = {});
+
     /**
      * @brief Sets a persistent central widget. It can't be detached.
      *
