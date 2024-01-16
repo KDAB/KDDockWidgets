@@ -152,6 +152,8 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
             case Location_OnBottom:
                 return Location_OnRight;
             }
+
+            return Location_None;
         };
 
         Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location);
