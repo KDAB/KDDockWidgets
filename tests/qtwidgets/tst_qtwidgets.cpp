@@ -171,6 +171,7 @@ private Q_SLOTS:
     void tst_nestedMainWindowToggle_data();
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
+    void addDockWidgetToSide2();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2153,6 +2154,27 @@ void TestQtWidgets::addDockWidgetToSide()
     QCOMPARE(Group::fromItem(leftContainer->childItems()[1])->objectName(), "d2");
     QCOMPARE(Group::fromItem(rightContainer->childItems()[0])->objectName(), "d3");
     QCOMPARE(Group::fromItem(rightContainer->childItems()[1])->objectName(), "d4");
+}
+
+void TestQtWidgets::addDockWidgetToSide2()
+{
+    // Tests with StartHidden
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+
+    d1->show();
+
+    auto root = m1->layout()->rootItem()->asBoxContainer();
+    QVERIFY(root->isHorizontal());
+
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QCOMPARE(root->numChildren(), 2);
 }
 
 int main(int argc, char *argv[])
