@@ -63,7 +63,7 @@ public:
     explicit Private(DropArea *q, MainWindowOptions options, bool isMDIWrapper)
         : m_isMDIWrapper(isMDIWrapper)
         , m_dropIndicatorOverlay(createDropIndicatorOverlay(q))
-        , m_centralFrame(createCentralFrame(options))
+        , m_centralGroup(createCentralGroup(options))
     {
     }
 
@@ -71,7 +71,7 @@ public:
     const bool m_isMDIWrapper;
     QString m_affinityName;
     ObjectGuard<DropIndicatorOverlay> m_dropIndicatorOverlay;
-    Core::Group *const m_centralFrame = nullptr;
+    Core::Group *const m_centralGroup = nullptr;
     Core::ItemBoxContainer *m_rootItem = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };
@@ -113,8 +113,8 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
         });
     }
 
-    if (d->m_centralFrame)
-        addWidget(d->m_centralFrame->view(), KDDockWidgets::Location_OnTop, {});
+    if (d->m_centralGroup)
+        addWidget(d->m_centralGroup->view(), KDDockWidgets::Location_OnTop, {});
 }
 
 DropArea::~DropArea()
@@ -170,7 +170,7 @@ Core::Item *DropArea::centralFrame() const
     const auto items = this->items();
     for (Core::Item *item : items) {
         if (auto group = Group::fromItem(item)) {
-            if (group->isCentralFrame())
+            if (group->isCentralGroup())
                 return item;
         }
     }
@@ -500,7 +500,7 @@ Core::DockWidget *DropArea::mdiDockWidgetWrapper() const
     return nullptr;
 }
 
-Core::Group *DropArea::createCentralFrame(MainWindowOptions options)
+Core::Group *DropArea::createCentralGroup(MainWindowOptions options)
 {
     Core::Group *group = nullptr;
 
@@ -573,7 +573,7 @@ bool DropArea::validateInputs(View *widget, Location location,
     return true;
 }
 
-void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidget,
+void DropArea::addWidget(View *w, Location location, Core::Group *relativeToGroup,
                          InitialOption option)
 {
 
@@ -587,12 +587,12 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     }
 
     // Make some sanity checks:
-    if (!validateInputs(w, location, relativeToWidget, option))
+    if (!validateInputs(w, location, relativeToGroup, option))
         return;
 
-    Core::Item *relativeTo = itemForFrame(relativeToWidget);
-    if (!relativeTo)
-        relativeTo = d->m_rootItem;
+    Core::Item *relativeToItem = itemForFrame(relativeToGroup);
+    if (!relativeToItem)
+        relativeToItem = d->m_rootItem;
 
     Core::Item *newItem = nullptr;
 
@@ -625,17 +625,17 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToWidg
     }
 
     assert(!newItem->geometry().isEmpty());
-    Core::ItemBoxContainer::insertItemRelativeTo(newItem, relativeTo, location, option);
+    Core::ItemBoxContainer::insertItemRelativeTo(newItem, relativeToItem, location, option);
 
     if (dw && option.startsHidden())
         delete group;
 }
 
 void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location location,
-                                Core::Group *relativeTo, InitialOption option)
+                                Core::Group *relativeToGroup, InitialOption option)
 {
-    KDDW_DEBUG("DropArea::addMultiSplitter: {} {} {}", ( void * )sourceMultiSplitter, ( int )location, ( void * )relativeTo);
-    addWidget(sourceMultiSplitter->view(), location, relativeTo, option);
+    KDDW_DEBUG("DropArea::addMultiSplitter: {} {} {}", ( void * )sourceMultiSplitter, ( int )location, ( void * )relativeToGroup);
+    addWidget(sourceMultiSplitter->view(), location, relativeToGroup, option);
 
     // Some widgets changed to/from floating
     updateFloatingActions();
@@ -724,5 +724,5 @@ DropLocation DropArea::currentDropLocation() const
 
 Core::Group *DropArea::centralGroup() const
 {
-    return d->m_centralFrame;
+    return d->m_centralGroup;
 }

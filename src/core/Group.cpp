@@ -389,7 +389,7 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    if (isEmpty() && !isCentralFrame()) {
+    if (isEmpty() && !isCentralGroup()) {
         scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
@@ -433,7 +433,7 @@ void Group::updateTitleBarVisibility()
     ScopedValueRollback guard(m_updatingTitleBar, true);
 
     bool visible = false;
-    if (isCentralFrame()) {
+    if (isCentralGroup()) {
         visible = false;
     } else if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
                && hasTabsVisible()) {
@@ -989,7 +989,7 @@ bool Core::Group::isDockable() const
 {
     return !(d->m_options & FrameOption_NonDockable);
 }
-bool Core::Group::isCentralFrame() const
+bool Core::Group::isCentralGroup() const
 {
     return d->m_options & FrameOption_IsCentralFrame;
 }

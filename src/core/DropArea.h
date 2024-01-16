@@ -92,13 +92,13 @@ public:
     /// Returns the helper dock widget for implementing DockWidgetOption_MDINestable.
     Core::DockWidget *mdiDockWidgetWrapper() const;
 
-    static Core::Group *createCentralFrame(MainWindowOptions options);
+    static Core::Group *createCentralGroup(MainWindowOptions options);
 
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
     void addWidget(View *widget, KDDockWidgets::Location location,
-                   Core::Group *relativeTo = nullptr,
+                   Core::Group *relativeToGroup = nullptr,
                    InitialOption option = DefaultSizeMode::Fair);
 
     /**
@@ -108,7 +108,7 @@ public:
      * at left of widgetBar when the whole splitter is dropped into this one.
      */
     void addMultiSplitter(Core::DropArea *splitter, KDDockWidgets::Location location,
-                          Core::Group *relativeTo = nullptr,
+                          Core::Group *relativeToGroup = nullptr,
                           InitialOption option = DefaultSizeMode::Fair);
 
     /**

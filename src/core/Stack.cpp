@@ -172,7 +172,7 @@ bool Stack::onMouseDoubleClick(Point localPos)
     Group *group = this->group();
 
     // When using MainWindowOption_HasCentralFrame. The central group is never detachable.
-    if (group->isCentralFrame())
+    if (group->isCentralGroup())
         return false;
 
     if (FloatingWindow *fw = group->floatingWindow()) {

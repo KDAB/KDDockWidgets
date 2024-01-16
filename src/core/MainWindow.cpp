@@ -159,7 +159,7 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
         Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location);
         if (neighbor) {
             if (neighbor->isContainer()) {
-                auto container = qobject_cast<ItemBoxContainer *>(neighbor);
+                auto container = object_cast<ItemBoxContainer *>(neighbor);
                 auto children = container->visibleChildren();
                 if (children.isEmpty()) {
                     // Doesn't happen

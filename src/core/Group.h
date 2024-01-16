@@ -142,7 +142,7 @@ public:
      *
      * @return whether this widget is the central group in a main window
      */
-    bool isCentralFrame() const;
+    bool isCentralGroup() const;
 
     /// @brief Returns whether you can DND dock widgets over this group and tab into it
     bool isDockable() const;

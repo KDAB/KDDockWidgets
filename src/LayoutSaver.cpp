@@ -688,7 +688,7 @@ void LayoutSaver::Private::deleteEmptyGroups() const
 
     const auto groups = m_dockRegistry->groups();
     for (auto group : groups) {
-        if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralFrame()) {
+        if (!group->beingDeletedLater() && group->isEmpty() && !group->isCentralGroup()) {
             if (auto item = group->layoutItem()) {
                 item->turnIntoPlaceholder();
             } else {
