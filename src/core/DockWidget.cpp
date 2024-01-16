@@ -811,7 +811,8 @@ void DockWidget::Private::close()
         }
     }
 
-    if (!m_isMovingToSideBar && (options & DockWidgetOption_DeleteOnClose)) {
+    const bool shouldDeleteOnClose = (options & DockWidgetOption_DeleteOnClose) || (q->view() && q->view()->shouldDeleteOnClose());
+    if (!m_isMovingToSideBar && shouldDeleteOnClose) {
         aboutToDeleteOnClose.emit();
         q->destroyLater();
     }

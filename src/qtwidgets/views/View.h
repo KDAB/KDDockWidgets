@@ -334,6 +334,11 @@ public:
         return QWidget::hasFocus();
     }
 
+    bool shouldDeleteOnClose() const override
+    {
+        return QWidget::testAttribute(Qt::WA_DeleteOnClose);
+    }
+
     std::shared_ptr<Core::View> childViewAt(QPoint localPos) const override;
 
     std::shared_ptr<Core::Window> window() const override;

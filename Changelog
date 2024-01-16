@@ -7,6 +7,7 @@
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - Planned: #448 Implement docking indicator for MDI area
   - Added MainWindow::addDockWidgetToSide() for QDockWidget compatibility
+  - QtWidgets: Honour Qt::WA_DeleteOnClose on the dock widget, equivalent to DockWidgetOption_DeleteOnClose
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.
