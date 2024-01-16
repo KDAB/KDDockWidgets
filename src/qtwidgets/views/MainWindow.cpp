@@ -265,6 +265,7 @@ bool MainWindow::restoreDockWidget_legacy(QDockWidget *dockwidget)
         return restoreDockWidget_legacy(dockwidget);
     } else {
         qFatal("MainWindow::restoreDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        return {};
     }
 }
 
@@ -283,6 +284,7 @@ Qt::DockWidgetArea MainWindow::dockWidgetArea_legacy(QDockWidget *dockwidget) co
         return dockWidgetArea_legacy(dockwidget);
     } else {
         qFatal("MainWindow::dockWidgetArea_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        return {};
     }
 }
 
@@ -311,6 +313,7 @@ QList<QDockWidget *> MainWindow::tabifiedDockWidgets_legacy(QDockWidget *dockwid
         return tabifiedDockWidgets_legacy(dockwidget);
     } else {
         qFatal("MainWindow::tabifiedDockWidgets_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        return {};
     }
 }
 
