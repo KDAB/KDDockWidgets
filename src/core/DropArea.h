@@ -68,6 +68,8 @@ public:
     DropIndicatorOverlay *dropIndicatorOverlay() const;
     void addDockWidget(DockWidget *dw, KDDockWidgets::Location location, DockWidget *relativeTo,
                        InitialOption initialOption = {});
+    void _addDockWidget(DockWidget *dw, KDDockWidgets::Location location, Group *relativeTo,
+                        InitialOption initialOption);
 
     bool containsDockWidget(DockWidget *) const;
 

@@ -190,6 +190,18 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
         return;
     }
 
+    Core::Group *relativeToGroup = relativeTo ? relativeTo->d->group() : nullptr;
+    _addDockWidget(dw, location, relativeToGroup, option);
+}
+
+void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
+                              Core::Group *relativeToGroup, InitialOption option)
+{
+    if (!dw || location == Location_None) {
+        KDDW_ERROR("Invalid parameters {}, {} {}", ( void * )dw, location);
+        return;
+    }
+
     if ((option.visibility == InitialVisibilityOption::StartHidden) && dw->d->group() != nullptr) {
         // StartHidden is just to be used at startup, not to moving stuff around
         KDDW_ERROR("Dock widget already exists in the layout");
@@ -202,7 +214,6 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
     Core::DockWidget::Private::UpdateActions actionsUpdater(dw);
 
     Core::Group *group = nullptr;
-    Core::Group *relativeToFrame = relativeTo ? relativeTo->d->group() : nullptr;
 
     dw->d->saveLastFloatingGeometry();
 
@@ -226,9 +237,9 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
     }
 
     if (option.startsHidden()) {
-        addWidget(dw->view(), location, relativeToFrame, option);
+        addWidget(dw->view(), location, relativeToGroup, option);
     } else {
-        addWidget(group->view(), location, relativeToFrame, option);
+        addWidget(group->view(), location, relativeToGroup, option);
     }
 
     if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
