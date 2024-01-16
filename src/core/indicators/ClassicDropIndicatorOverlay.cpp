@@ -164,7 +164,7 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
     auto windowBeingDragged = DragController::instance()->windowBeingDragged();
 
     Rect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
-                                        m_dropArea->itemForFrame(relativeToFrame));
+                                        m_dropArea->itemForGroup(relativeToFrame));
 
     m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);

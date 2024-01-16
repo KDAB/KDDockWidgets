@@ -217,16 +217,16 @@ void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
 
     dw->d->saveLastFloatingGeometry();
 
-    const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
+    const bool hadSingleFloatingGroup = hasSingleFloatingGroup();
 
     // Check if the dock widget already exists in the layout
     if (containsDockWidget(dw)) {
-        Core::Group *oldFrame = dw->d->group();
-        if (oldFrame->hasSingleDockWidget()) {
-            assert(oldFrame->containsDockWidget(dw));
+        Core::Group *oldGroup = dw->d->group();
+        if (oldGroup->hasSingleDockWidget()) {
+            assert(oldGroup->containsDockWidget(dw));
             // The group only has this dock widget, and the group is already in the layout. So move
             // the group instead
-            group = oldFrame;
+            group = oldGroup;
         } else {
             group = new Core::Group();
             group->addTab(dw);
@@ -242,7 +242,7 @@ void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
         addWidget(group->view(), location, relativeToGroup, option);
     }
 
-    if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
+    if (hadSingleFloatingGroup && !hasSingleFloatingGroup()) {
         // The dock widgets that already existed in our layout need to have their floatAction()
         // updated otherwise it's still checked. Only the dropped dock widget got updated
         updateFloatingActions();
@@ -251,16 +251,16 @@ void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
 
 bool DropArea::containsDockWidget(Core::DockWidget *dw) const
 {
-    return dw->d->group() && Layout::containsFrame(dw->d->group());
+    return dw->d->group() && Layout::containsGroup(dw->d->group());
 }
 
-bool DropArea::hasSingleFloatingFrame() const
+bool DropArea::hasSingleFloatingGroup() const
 {
     const Core::Group::List groups = this->groups();
     return groups.size() == 1 && groups.first()->isFloating();
 }
 
-bool DropArea::hasSingleFrame() const
+bool DropArea::hasSingleGroup() const
 {
     return visibleCount() == 1;
 }
@@ -278,7 +278,7 @@ Vector<QString> DropArea::affinities() const
 
 void DropArea::layoutParentContainerEqually(Core::DockWidget *dw)
 {
-    Core::Item *item = itemForFrame(dw->d->group());
+    Core::Item *item = itemForGroup(dw->d->group());
     if (!item) {
         KDDW_ERROR("Item not found for dw={}, group={}", ( void * )dw, ( void * )dw->d->group());
         return;
@@ -436,7 +436,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
 bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
                     Core::Group *relativeTo)
 {
-    KDDW_DEBUG("DropArea::addFrame");
+    KDDW_DEBUG("DropArea::drop");
 
     if (auto dock = droppedWindow->asDockWidgetController()) {
         if (!validateAffinity(dock))
@@ -524,7 +524,7 @@ Core::Group *DropArea::createCentralGroup(MainWindowOptions options)
 
 
 bool DropArea::validateInputs(View *widget, Location location,
-                              const Core::Group *relativeToFrame, InitialOption option) const
+                              const Core::Group *relativeToGroup, InitialOption option) const
 {
     if (!widget) {
         KDDW_ERROR("Widget is null");
@@ -545,12 +545,12 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    if (relativeToFrame && relativeToFrame->view()->equals(widget)) {
+    if (relativeToGroup && relativeToGroup->view()->equals(widget)) {
         KDDW_ERROR("widget can't be relative to itself");
         return false;
     }
 
-    Core::Item *item = itemForFrame(widget->asGroupController());
+    Core::Item *item = itemForGroup(widget->asGroupController());
 
     if (containsItem(item)) {
         KDDW_ERROR("DropArea::addWidget: Already contains w={}", ( void * )widget);
@@ -562,11 +562,11 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    const bool relativeToThis = relativeToFrame == nullptr;
+    const bool relativeToThis = relativeToGroup == nullptr;
 
-    Core::Item *relativeToItem = itemForFrame(relativeToFrame);
+    Core::Item *relativeToItem = itemForGroup(relativeToGroup);
     if (!relativeToThis && !containsItem(relativeToItem)) {
-        KDDW_ERROR("DropArea::addWidget: Doesn't contain relativeTo: relativeToGroup={}, relativeToItem{}, options={}", ( void * )relativeToFrame, "; relativeToItem=", ( void * )relativeToItem, option);
+        KDDW_ERROR("DropArea::addWidget: Doesn't contain relativeTo: relativeToGroup={}, relativeToItem{}, options={}", ( void * )relativeToGroup, "; relativeToItem=", ( void * )relativeToItem, option);
         return false;
     }
 
@@ -578,7 +578,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToGrou
 {
 
     auto group = w->asGroupController();
-    if (itemForFrame(group) != nullptr) {
+    if (itemForGroup(group) != nullptr) {
         // Item already exists, remove it.
         // Changing the group parent will make the item clean itself up. It turns into a placeholder
         // and is removed by unrefOldPlaceholders
@@ -590,7 +590,7 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToGrou
     if (!validateInputs(w, location, relativeToGroup, option))
         return;
 
-    Core::Item *relativeToItem = itemForFrame(relativeToGroup);
+    Core::Item *relativeToItem = itemForGroup(relativeToGroup);
     if (!relativeToItem)
         relativeToItem = d->m_rootItem;
 

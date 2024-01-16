@@ -224,7 +224,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
         DockWidget *dwMDIWrapper = group->dockWidgetAt(0);
         DropArea *dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
 
-        if (dropAreaMDIWrapper->hasSingleFrame()) {
+        if (dropAreaMDIWrapper->hasSingleGroup()) {
             Core::Group *innerFrame = dropAreaMDIWrapper->groups().constFirst();
             if (innerFrame->hasSingleDockWidget()) {
                 // When pressing the unfloat button, the dock widgets gets docked to the previous
@@ -439,7 +439,7 @@ bool FloatingWindow::anyNonDockable() const
 
 bool FloatingWindow::hasSingleFrame() const
 {
-    return d->m_dropArea->hasSingleFrame();
+    return d->m_dropArea->hasSingleGroup();
 }
 
 bool FloatingWindow::hasSingleDockWidget() const

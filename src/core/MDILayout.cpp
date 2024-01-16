@@ -40,7 +40,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
     }
 
     auto group = object_cast<Core::Group *>(dw->d->group());
-    if (itemForFrame(group) != nullptr) {
+    if (itemForGroup(group) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
         group->setParentView(nullptr);
         group->setLayoutItem(nullptr);
@@ -69,7 +69,7 @@ void MDILayout::setDockWidgetGeometry(Core::Group *group, Rect geometry)
     if (!group)
         return;
 
-    Core::Item *item = itemForFrame(group);
+    Core::Item *item = itemForGroup(group);
     if (!item) {
         KDDW_ERROR("Group not found in the layout {}", ( void * )group);
         return;
@@ -88,7 +88,7 @@ void MDILayout::moveDockWidget(Core::Group *group, Point pos)
     if (!group)
         return;
 
-    Core::Item *item = itemForFrame(group);
+    Core::Item *item = itemForGroup(group);
     if (!item) {
         KDDW_ERROR("Group not found in the layout {}.", ( void * )group);
         return;
@@ -109,7 +109,7 @@ void MDILayout::resizeDockWidget(Core::Group *group, Size size)
     if (!group)
         return;
 
-    Core::Item *item = itemForFrame(group);
+    Core::Item *item = itemForGroup(group);
     if (!item) {
         KDDW_ERROR("Group not found in the layout {} isMDI={}, isMDIWrapper={}", ( void * )group, group->isMDI(), group->isMDIWrapper());
         return;

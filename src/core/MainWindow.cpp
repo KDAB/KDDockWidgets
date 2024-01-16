@@ -379,7 +379,7 @@ static SideBarLocation sideBarLocationForBorder(Core::LayoutBorderLocations loc)
 
 SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) const
 {
-    Core::Item *item = q->layout()->itemForFrame(dw->d->group());
+    Core::Item *item = q->layout()->itemForGroup(dw->d->group());
     if (!item) {
         KDDW_ERROR("No item for dock widget");
         return SideBarLocation::None;

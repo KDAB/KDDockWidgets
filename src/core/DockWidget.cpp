@@ -274,7 +274,7 @@ QString DockWidget::title() const
         // dock widget we're hosting.
         auto dropAreaGuest = d->guest ? guestView()->asDropAreaController() : nullptr;
         assert(dropAreaGuest);
-        if (dropAreaGuest->hasSingleFrame()) {
+        if (dropAreaGuest->hasSingleGroup()) {
             return dropAreaGuest->groups().constFirst()->title();
         } else {
             return Platform::instance()->applicationName();

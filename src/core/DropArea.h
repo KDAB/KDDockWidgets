@@ -75,11 +75,11 @@ public:
 
     /// Returns whether this layout has a single dock widget which is floating
     /// Implies it's in a FloatingWindow and that it has only one dock widget
-    bool hasSingleFloatingFrame() const;
+    bool hasSingleFloatingGroup() const;
 
     /// Returns whether this drop area has only 1 group.
     /// See further explanation in FloatingWindow::hasSingleFrame()
-    bool hasSingleFrame() const;
+    bool hasSingleGroup() const;
 
     Vector<QString> affinities() const;
     void layoutParentContainerEqually(DockWidget *);

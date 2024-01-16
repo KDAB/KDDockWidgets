@@ -1281,7 +1281,7 @@ void TestQtWidgets::tst_minSizeChanges()
     w2->setMinimumSize(QSize(800, 800));
     d2->open();
 
-    Item *item2 = layout->itemForFrame(d2->dptr()->group());
+    Item *item2 = layout->itemForGroup(d2->dptr()->group());
 
     QVERIFY(layout->checkSanity());
 

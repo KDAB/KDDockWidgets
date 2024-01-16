@@ -443,7 +443,7 @@ void Group::updateTitleBarVisibility()
         visible = !fw->hasSingleFrame();
     } else if (isMDIWrapper()) {
         auto dropArea = this->mdiDropAreaWrapper();
-        visible = !dropArea->hasSingleFrame();
+        visible = !dropArea->hasSingleGroup();
     } else {
         visible = true;
     }
@@ -490,7 +490,7 @@ Core::TitleBar *Group::actualTitleBar() const
         if (fw->hasSingleFrame())
             return fw->titleBar();
     } else if (auto mdiDropArea = mdiDropAreaWrapper()) {
-        if (mdiDropArea->hasSingleFrame()) {
+        if (mdiDropArea->hasSingleGroup()) {
             return mdiFrame()->titleBar();
         }
     }

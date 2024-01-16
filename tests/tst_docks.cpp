@@ -1151,7 +1151,7 @@ KDDW_QCORO_TASK tst_crash()
     auto layout = m->multiSplitter();
 
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    Item *item1 = layout->itemForFrame(dock1->dptr()->group());
+    Item *item1 = layout->itemForGroup(dock1->dptr()->group());
     dock1->addDockWidgetAsTab(dock2);
 
     CHECK(!dock1->isFloating());
@@ -1186,8 +1186,8 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     auto layout = dropArea;
     ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
     ObjectGuard<Core::Group> group2 = dock2->dptr()->group();
-    ObjectGuard<Item> item1 = layout->itemForFrame(group1);
-    ObjectGuard<Item> item2 = layout->itemForFrame(group2);
+    ObjectGuard<Item> item1 = layout->itemForGroup(group1);
+    ObjectGuard<Item> item2 = layout->itemForGroup(group2);
     CHECK(item1.data());
     CHECK(item2.data());
     CHECK_EQ(item1->refCount(), 2); // 2 - the item and its group, which can be persistent
@@ -1228,7 +1228,7 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     m->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
 
     ObjectGuard<Core::Group> group4 = dock4->dptr()->group();
-    ObjectGuard<Item> item4 = layout->itemForFrame(group4);
+    ObjectGuard<Item> item4 = layout->itemForGroup(group4);
     dock4->close();
     KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group4);
     CHECK_EQ(item4->refCount(), 1);
@@ -1320,9 +1320,9 @@ KDDW_QCORO_TASK tst_availableLengthForOrientation()
     m->addDockWidget(dock1, Location_OnLeft);
 
     const int dock1MinWidth =
-        layout->itemForFrame(dock1->dptr()->group())->minLength(Qt::Horizontal);
+        layout->itemForGroup(dock1->dptr()->group())->minLength(Qt::Horizontal);
     const int dock1MinHeight =
-        layout->itemForFrame(dock1->dptr()->group())->minLength(Qt::Vertical);
+        layout->itemForGroup(dock1->dptr()->group())->minLength(Qt::Vertical);
 
     availableWidth = layout->availableLengthForOrientation(Qt::Horizontal);
     availableHeight = layout->availableLengthForOrientation(Qt::Vertical);
@@ -1589,7 +1589,7 @@ KDDW_QCORO_TASK tst_stealFrame()
     m1->addDockWidget(dock3, Location_OnRight);
     m1->addDockWidget(dock4, Location_OnRight);
     m2->addDockWidget(dock1, Location_OnRight);
-    ObjectGuard<Item> item2 = dropArea1->itemForFrame(dock2->dptr()->group());
+    ObjectGuard<Item> item2 = dropArea1->itemForGroup(dock2->dptr()->group());
     m2->addDockWidget(dock2, Location_OnRight);
     CHECK(!item2.data());
 
@@ -2133,7 +2133,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow4()
     CHECK(m->dropArea()->checkSanity());
 
     const int item2MinHeight =
-        layout->itemForFrame(dock2->dptr()->group())->minLength(Qt::Vertical);
+        layout->itemForGroup(dock2->dptr()->group())->minLength(Qt::Vertical);
     CHECK_EQ(dropArea->layoutHeight(),
              dock1->dptr()->group()->height() + item2MinHeight + Item::separatorThickness);
     KDDW_TEST_RETURN(true);
@@ -2316,10 +2316,10 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         Core::DropArea *layout = m->multiSplitter();
 
-        Item *item1 = layout->itemForFrame(dock1->dptr()->group());
-        Item *item2 = layout->itemForFrame(dock2->dptr()->group());
-        Item *item3 = layout->itemForFrame(dock3->dptr()->group());
-        Item *item4 = layout->itemForFrame(dock4->dptr()->group());
+        Item *item1 = layout->itemForGroup(dock1->dptr()->group());
+        Item *item2 = layout->itemForGroup(dock2->dptr()->group());
+        Item *item3 = layout->itemForGroup(dock3->dptr()->group());
+        Item *item4 = layout->itemForGroup(dock4->dptr()->group());
 
         const auto separators = layout->separators();
         CHECK_EQ(separators.size(), 3);
@@ -2537,7 +2537,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
         auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
         auto fw2 = dock2->floatingWindow();
-        item2MinSize = fw2->layout()->itemForFrame(dock2->dptr()->group())->minSize();
+        item2MinSize = fw2->layout()->itemForGroup(dock2->dptr()->group())->minSize();
         LayoutSaver saver;
         CHECK(saver.saveToFile(QStringLiteral("layout_tst_restoreSideBySide.json")));
         CHECK(layout->checkSanity());
@@ -3042,7 +3042,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
         Item *oldItem2 = dock2->dptr()->lastPosition()->lastItem();
-        CHECK_EQ(oldItem2, layout->itemForFrame(dock2->dptr()->group()));
+        CHECK_EQ(oldItem2, layout->itemForGroup(dock2->dptr()->group()));
 
 
         // Detach tab
@@ -3051,10 +3051,10 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         auto fw2 = dock2->floatingWindow();
         CHECK(fw2);
         CHECK_EQ(dock2->dptr()->lastPosition()->lastItem(), oldItem2);
-        Item *item2 = fw2->dropArea()->itemForFrame(dock2->dptr()->group());
+        Item *item2 = fw2->dropArea()->itemForGroup(dock2->dptr()->group());
         CHECK(item2);
         CHECK(item2->host() == fw2->dropArea()->asLayoutingHost());
-        CHECK(!layout->itemForFrame(dock2->dptr()->group()));
+        CHECK(!layout->itemForGroup(dock2->dptr()->group()));
 
         // Move from tab to bottom
         layout->addWidget(fw2->dropArea()->view(), KDDockWidgets::Location_OnRight, nullptr);
@@ -3181,8 +3181,8 @@ KDDW_QCORO_TASK tst_availableSizeWithPlaceholders()
     CHECK_EQ(layout1->layoutSize(), layout3->layoutSize());
 
     Core::Group *f10 = docks1.at(0).createdDock->dptr()->group();
-    Item *item10 = layout1->itemForFrame(f10);
-    Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->dptr()->group());
+    Item *item10 = layout1->itemForGroup(f10);
+    Item *item30 = layout3->itemForGroup(docks2.at(0).createdDock->dptr()->group());
 
     CHECK_EQ(item10->geometry(), item30->geometry());
     CHECK_EQ(item10->guest()->minSize(), item10->guest()->minSize());
@@ -4586,8 +4586,8 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
     dock1->close();
     KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
 
-    Item *item2 = layout->itemForFrame(dock2->dptr()->group());
-    Item *item3 = layout->itemForFrame(dock3->dptr()->group());
+    Item *item2 = layout->itemForGroup(dock2->dptr()->group());
+    Item *item3 = layout->itemForGroup(dock3->dptr()->group());
 
     Margins margins = m->centerWidgetMargins();
     const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical)
@@ -4909,7 +4909,7 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     dock0->setFloating(false);
     group = dock0->DockWidget::d->group();
 
-    Item *item = layout->itemForFrame(group);
+    Item *item = layout->itemForGroup(group);
     CHECK_EQ(item->pos(), anotherPos);
     CHECK_EQ(item->geometry(), group->geometry());
     CHECK_EQ(group->view()->pos(), anotherPos);
@@ -4918,7 +4918,7 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     const Size anotherSize = Size(500, 500);
     dock0->setMDISize(anotherSize);
     CHECK_EQ(group->size(), anotherSize);
-    item = layout->itemForFrame(group);
+    item = layout->itemForGroup(group);
     CHECK_EQ(item->geometry(), group->geometry());
     KDDW_TEST_RETURN(true);
 }

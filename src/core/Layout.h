@@ -137,7 +137,7 @@ public:
     /**
      * @brief  Returns true if this layout contains the specified group.
      */
-    bool containsFrame(const Core::Group *) const;
+    bool containsGroup(const Core::Group *) const;
 
     /**
      * @brief Returns the number of Item objects in this layout.
@@ -163,7 +163,7 @@ public:
     /**
      * @brief returns the Item that holds @p group in this layout
      */
-    Core::Item *itemForFrame(const Core::Group *group) const;
+    Core::Item *itemForGroup(const Core::Group *group) const;
 
     /**
      * @brief Returns this list of Group objects contained in this layout
