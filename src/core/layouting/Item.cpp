@@ -584,7 +584,7 @@ Item *Item::outermostNeighbor(Side side, Qt::Orientation o) const
             const int indexInAncestor = this->indexInAncestor(ancestor);
             if (indexInAncestor == -1) {
                 // Doesn't happen
-                KDDW_ERROR("Item::outermostNeighbor: item not in ancestor's child list")
+                KDDW_ERROR("Item::outermostNeighbor: item not in ancestor's child list");
                 return nullptr;
             } else {
                 return ancestor->childItems()[index]->outermostNeighbor(side, o);
