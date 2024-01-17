@@ -134,8 +134,8 @@ class DropArea extends KDDWBindingsCore.Layout {
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   }
 
-  static // createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
-      KDDWBindingsCore.Group createCentralFrame(int options) {
+  static // createCentralGroup(QFlags<KDDockWidgets::MainWindowOption> options)
+      KDDWBindingsCore.Group createCentralGroup(int options) {
     final voidstar_Func_int func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int32_FFI>>(
             'c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions')
@@ -185,17 +185,17 @@ class DropArea extends KDDWBindingsCore.Layout {
     ffi.Pointer<void> result =
         func(thisCpp, globalPos == null ? ffi.nullptr : globalPos.thisCpp);
     return KDDWBindingsCore.Group.fromCppPointer(result, false);
-  } // hasSingleFloatingFrame() const
+  } // hasSingleFloatingGroup() const
 
-  bool hasSingleFloatingFrame() {
+  bool hasSingleFloatingGroup() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame')
         .asFunction();
     return func(thisCpp) != 0;
-  } // hasSingleFrame() const
+  } // hasSingleGroup() const
 
-  bool hasSingleFrame() {
+  bool hasSingleGroup() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__DropArea__hasSingleFrame')

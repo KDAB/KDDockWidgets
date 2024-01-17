@@ -178,9 +178,9 @@ class FloatingWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget')
         .asFunction();
     return func(thisCpp) != 0;
-  } // hasSingleFrame() const
+  } // hasSingleGroup() const
 
-  bool hasSingleFrame() {
+  bool hasSingleGroup() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame')

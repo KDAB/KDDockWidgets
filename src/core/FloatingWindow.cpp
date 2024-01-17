@@ -437,7 +437,7 @@ bool FloatingWindow::anyNonDockable() const
     return false;
 }
 
-bool FloatingWindow::hasSingleFrame() const
+bool FloatingWindow::hasSingleGroup() const
 {
     return d->m_dropArea->hasSingleGroup();
 }
@@ -522,7 +522,7 @@ void FloatingWindow::updateTitleBarVisibility()
     if (KDDockWidgets::usesClientTitleBar()) {
         if ((d->m_flags & FloatingWindowFlag::HideTitleBarWhenTabsVisible)
             && !(d->m_flags & FloatingWindowFlag::AlwaysTitleBarWhenFloating)) {
-            if (hasSingleFrame()) {
+            if (hasSingleGroup()) {
                 visible = !groups.first()->hasTabsVisible();
             }
         }
@@ -545,7 +545,7 @@ void FloatingWindow::updateTitleAndIcon()
 {
     QString title;
     Icon icon;
-    if (hasSingleFrame()) {
+    if (hasSingleGroup()) {
         const Core::Group *group = groups().constFirst();
         title = group->title();
         icon = group->icon();
@@ -624,7 +624,7 @@ Rect FloatingWindow::dragRect() const
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));
-    } else if (hasSingleFrame()) {
+    } else if (hasSingleGroup()) {
         rect = groups().constFirst()->dragRect();
     } else {
         KDDW_ERROR("Expected a title bar");

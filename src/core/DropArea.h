@@ -78,7 +78,7 @@ public:
     bool hasSingleFloatingGroup() const;
 
     /// Returns whether this drop area has only 1 group.
-    /// See further explanation in FloatingWindow::hasSingleFrame()
+    /// See further explanation in FloatingWindow::hasSingleGroup()
     bool hasSingleGroup() const;
 
     Vector<QString> affinities() const;

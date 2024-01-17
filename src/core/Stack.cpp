@@ -116,7 +116,7 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
     // For detaching individual tabs, TabBar::makeWindow() is called.
 
     if (auto fw = view()->rootView()->asFloatingWindowController()) {
-        if (fw->hasSingleFrame()) {
+        if (fw->hasSingleGroup()) {
             // We're already in a floating window, and it only has 1 dock widget.
             // So there's no detachment to be made, we just move the window.
             return std::make_unique<WindowBeingDragged>(fw, this);
@@ -139,7 +139,7 @@ bool Stack::isWindow() const
 {
     if (auto fw = view()->rootView()->asFloatingWindowController()) {
         // Case of dragging via the tab widget when the title bar is hidden
-        return fw->hasSingleFrame();
+        return fw->hasSingleGroup();
     }
 
     return false;
@@ -176,7 +176,7 @@ bool Stack::onMouseDoubleClick(Point localPos)
         return false;
 
     if (FloatingWindow *fw = group->floatingWindow()) {
-        if (!fw->hasSingleFrame()) {
+        if (!fw->hasSingleGroup()) {
             makeWindow();
             return true;
         }

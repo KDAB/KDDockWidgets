@@ -215,7 +215,7 @@ bool TitleBar::supportsFloatingButton() const
 
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
-    return !m_floatingWindow || m_floatingWindow->hasSingleFrame();
+    return !m_floatingWindow || m_floatingWindow->hasSingleGroup();
 }
 
 bool TitleBar::supportsMaximizeButton() const
@@ -664,7 +664,7 @@ QString TitleBar::floatButtonToolTip() const
 
 TabBar *TitleBar::tabBar() const
 {
-    if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
+    if (m_floatingWindow && m_floatingWindow->hasSingleGroup()) {
         if (Group *group = m_floatingWindow->singleFrame()) {
             return group->stack()->tabBar();
         } else {

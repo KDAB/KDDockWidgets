@@ -29,13 +29,13 @@ public:
     KDDockWidgets::Core::DropArea *asDropArea() const;
     bool checkSanity() const;
     void clearLayout();
-    bool containsFrame(const KDDockWidgets::Core::Group *arg__1) const;
+    bool containsGroup(const KDDockWidgets::Core::Group *arg__1) const;
     bool containsItem(const KDDockWidgets::Core::Item *arg__1) const;
     int count() const;
     void dumpLayout() const;
     KDDockWidgets::Core::FloatingWindow *floatingWindow() const;
     bool isInMainWindow(bool honourNesting = false) const;
-    KDDockWidgets::Core::Item *itemForFrame(const KDDockWidgets::Core::Group *group) const;
+    KDDockWidgets::Core::Item *itemForGroup(const KDDockWidgets::Core::Group *group) const;
     int layoutHeight() const;
     KDDockWidgets::Size layoutMaximumSizeHint() const;
     KDDockWidgets::Size layoutMinimumSize() const;
@@ -66,7 +66,7 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj);
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj);
 // KDDockWidgets::Core::Layout::clearLayout()
 DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj);
-// KDDockWidgets::Core::Layout::containsFrame(const KDDockWidgets::Core::Group * arg__1) const
+// KDDockWidgets::Core::Layout::containsGroup(const KDDockWidgets::Core::Group * arg__1) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::containsItem(const KDDockWidgets::Core::Item * arg__1) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_);
@@ -78,7 +78,7 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj);
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Layout::isInMainWindow(bool honourNesting) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
-// KDDockWidgets::Core::Layout::itemForFrame(const KDDockWidgets::Core::Group * group) const
+// KDDockWidgets::Core::Layout::itemForGroup(const KDDockWidgets::Core::Group * group) const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_);
 // KDDockWidgets::Core::Layout::layoutHeight() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj);

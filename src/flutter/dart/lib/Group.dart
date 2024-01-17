@@ -52,7 +52,7 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
       return KDDWBindingsFlutter.View.fromCache(dw.view().thisCpp)
           as DockWidget;
 
-    if (!m_controller.isCentralFrame())
+    if (!m_controller.isCentralGroup())
       print("Group: No dock widget in the Group!");
     return null;
   }

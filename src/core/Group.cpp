@@ -192,7 +192,7 @@ void Group::updateTitleAndIcon()
         m_titleBar->setIcon(dw->icon());
 
         if (auto fw = floatingWindow()) {
-            if (fw->hasSingleFrame()) {
+            if (fw->hasSingleGroup()) {
                 fw->updateTitleAndIcon();
             }
         }
@@ -440,7 +440,7 @@ void Group::updateTitleBarVisibility()
         visible = false;
     } else if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested groups then show each Frame's title bar
-        visible = !fw->hasSingleFrame();
+        visible = !fw->hasSingleGroup();
     } else if (isMDIWrapper()) {
         auto dropArea = this->mdiDropAreaWrapper();
         visible = !dropArea->hasSingleGroup();
@@ -487,7 +487,7 @@ Core::TitleBar *Group::actualTitleBar() const
 {
     if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested groups then show each Group's title bar
-        if (fw->hasSingleFrame())
+        if (fw->hasSingleGroup())
             return fw->titleBar();
     } else if (auto mdiDropArea = mdiDropAreaWrapper()) {
         if (mdiDropArea->hasSingleGroup()) {

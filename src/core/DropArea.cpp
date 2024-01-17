@@ -198,7 +198,7 @@ void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
                               Core::Group *relativeToGroup, InitialOption option)
 {
     if (!dw || location == Location_None) {
-        KDDW_ERROR("Invalid parameters {}, {} {}", ( void * )dw, location);
+        KDDW_ERROR("Invalid parameters {}, {}", ( void * )dw, location);
         return;
     }
 

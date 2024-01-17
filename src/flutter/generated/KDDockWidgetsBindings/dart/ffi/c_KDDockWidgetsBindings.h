@@ -2163,7 +2163,7 @@ void *c_KDDockWidgets__Core__Layout__asDropArea(void *thisObj);
 bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj);
 // KDDockWidgets::Core::Layout::clearLayout()
 void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj);
-// KDDockWidgets::Core::Layout::containsFrame(const KDDockWidgets::Core::Group * arg__1) const
+// KDDockWidgets::Core::Layout::containsGroup(const KDDockWidgets::Core::Group * arg__1) const
 bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::containsItem(const KDDockWidgets::Core::Item * arg__1) const
 bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_);
@@ -2175,7 +2175,7 @@ void c_KDDockWidgets__Core__Layout__dumpLayout(void *thisObj);
 void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Layout::isInMainWindow(bool honourNesting) const
 bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
-// KDDockWidgets::Core::Layout::itemForFrame(const KDDockWidgets::Core::Group * group) const
+// KDDockWidgets::Core::Layout::itemForGroup(const KDDockWidgets::Core::Group * group) const
 void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_);
 // KDDockWidgets::Core::Layout::layoutHeight() const
 int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj);
@@ -2221,16 +2221,16 @@ void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group_InitialOptio
 void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj);
 // KDDockWidgets::Core::DropArea::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
+// KDDockWidgets::Core::DropArea::createCentralGroup(QFlags<KDDockWidgets::MainWindowOption> options)
 void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_);
 // KDDockWidgets::Core::DropArea::currentDropLocation() const
 int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj);
 // KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
 void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
-// KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
-bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
-// KDDockWidgets::Core::DropArea::hasSingleFrame() const
-bool c_KDDockWidgets__Core__DropArea__hasSingleFrame(void *thisObj);
+// KDDockWidgets::Core::DropArea::hasSingleFloatingGroup() const
+bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingGroup(void *thisObj);
+// KDDockWidgets::Core::DropArea::hasSingleGroup() const
+bool c_KDDockWidgets__Core__DropArea__hasSingleGroup(void *thisObj);
 // KDDockWidgets::Core::DropArea::isMDIWrapper() const
 bool c_KDDockWidgets__Core__DropArea__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Core::DropArea::layoutEqually()
@@ -2313,8 +2313,8 @@ int c_KDDockWidgets__Core__Group__indexOfDockWidget_DockWidget(void *thisObj, vo
 void c_KDDockWidgets__Core__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index);
 // KDDockWidgets::Core::Group::insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
 void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_);
-// KDDockWidgets::Core::Group::isCentralFrame() const
-bool c_KDDockWidgets__Core__Group__isCentralFrame(void *thisObj);
+// KDDockWidgets::Core::Group::isCentralGroup() const
+bool c_KDDockWidgets__Core__Group__isCentralGroup(void *thisObj);
 // KDDockWidgets::Core::Group::isDockable() const
 bool c_KDDockWidgets__Core__Group__isDockable(void *thisObj);
 // KDDockWidgets::Core::Group::isEmpty() const
@@ -2417,8 +2417,8 @@ void *c_KDDockWidgets__Core__FloatingWindow__dropArea(void *thisObj);
 void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect(void *geometry_);
 // KDDockWidgets::Core::FloatingWindow::hasSingleDockWidget() const
 bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::hasSingleFrame() const
-bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj);
+// KDDockWidgets::Core::FloatingWindow::hasSingleGroup() const
+bool c_KDDockWidgets__Core__FloatingWindow__hasSingleGroup(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::isInDragArea(KDDockWidgets::Point globalPoint) const
 bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_Point(void *thisObj, void *globalPoint_);
 // KDDockWidgets::Core::FloatingWindow::isMDI() const

@@ -306,7 +306,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     auto fw = m2Container->floatingWindow();
     Core::TitleBar *fwTitleBar = fw->titleBar();
 
-    QVERIFY(fw->hasSingleFrame());
+    QVERIFY(fw->hasSingleGroup());
     QVERIFY(fw->hasSingleDockWidget());
 
     // Check that the inner-inner dock widgets have a visible title-bar

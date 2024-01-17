@@ -66,9 +66,9 @@ class Layout extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Layout__clearLayout')
         .asFunction();
     func(thisCpp);
-  } // containsFrame(const KDDockWidgets::Core::Group * arg__1) const
+  } // containsGroup(const KDDockWidgets::Core::Group * arg__1) const
 
-  bool containsFrame(KDDWBindingsCore.Group? arg__1) {
+  bool containsGroup(KDDWBindingsCore.Group? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Layout__containsFrame_Group')
@@ -115,9 +115,9 @@ class Layout extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Layout__isInMainWindow_bool')
         .asFunction();
     return func(thisCpp, honourNesting ? 1 : 0) != 0;
-  } // itemForFrame(const KDDockWidgets::Core::Group * group) const
+  } // itemForGroup(const KDDockWidgets::Core::Group * group) const
 
-  Item itemForFrame(KDDWBindingsCore.Group? group) {
+  Item itemForGroup(KDDWBindingsCore.Group? group) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Layout__itemForFrame_Group')

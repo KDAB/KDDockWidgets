@@ -100,11 +100,11 @@ public:
      * as they can be tabbed into the single group.
      * @return true if this FloatingWindow has a single group.
      */
-    bool hasSingleFrame() const;
+    bool hasSingleGroup() const;
 
     /**
      * @brief checks if this FloatingWindow only has one dockwidget.
-     * This is a more specific case than hasSingleFrame(), it implies not only a single group,
+     * This is a more specific case than hasSingleGroup(), it implies not only a single group,
      * but that group must only have 1 dock widget.
      * @return true if this FloatingWindow only has one dockwidget.
      */

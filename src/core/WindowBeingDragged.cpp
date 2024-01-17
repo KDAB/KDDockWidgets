@@ -185,7 +185,7 @@ bool WindowBeingDragged::contains(Layout *layout) const
     if (auto fw = m_draggableView->rootView()->asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might
         // represent floating window though.
-        return fw->layout() == layout && fw->hasSingleFrame();
+        return fw->layout() == layout && fw->hasSingleGroup();
     }
 
     return false;

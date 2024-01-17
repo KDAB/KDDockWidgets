@@ -159,7 +159,7 @@ inline Core::View *draggableFor(Core::View *view)
         if (auto group = dw->d->group())
             draggable = group->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Core::Group *group = fw->hasSingleFrame()
+        Core::Group *group = fw->hasSingleGroup()
             ? static_cast<Core::Group *>(fw->groups().first())
             : nullptr;
 

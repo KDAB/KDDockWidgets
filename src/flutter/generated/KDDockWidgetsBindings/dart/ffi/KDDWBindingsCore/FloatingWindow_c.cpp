@@ -90,9 +90,9 @@ bool FloatingWindow_wrapper::hasSingleDockWidget() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::hasSingleDockWidget();
 }
-bool FloatingWindow_wrapper::hasSingleFrame() const
+bool FloatingWindow_wrapper::hasSingleGroup() const
 {
-    return ::KDDockWidgets::Core::FloatingWindow::hasSingleFrame();
+    return ::KDDockWidgets::Core::FloatingWindow::hasSingleGroup();
 }
 bool FloatingWindow_wrapper::isInDragArea(KDDockWidgets::Point globalPoint) const
 {
@@ -311,10 +311,10 @@ bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj)
     const auto &result = fromPtr(thisObj)->hasSingleDockWidget();
     return result;
 }
-// hasSingleFrame() const
-bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj)
+// hasSingleGroup() const
+bool c_KDDockWidgets__Core__FloatingWindow__hasSingleGroup(void *thisObj)
 {
-    const auto &result = fromPtr(thisObj)->hasSingleFrame();
+    const auto &result = fromPtr(thisObj)->hasSingleGroup();
     return result;
 }
 // isInDragArea(KDDockWidgets::Point globalPoint) const

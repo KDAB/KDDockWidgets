@@ -32,11 +32,11 @@ public:
     void addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeTo = nullptr, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     KDDockWidgets::Core::Item *centralFrame() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *arg__1) const;
-    static KDDockWidgets::Core::Group *createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options);
+    static KDDockWidgets::Core::Group *createCentralGroup(QFlags<KDDockWidgets::MainWindowOption> options);
     KDDockWidgets::DropLocation currentDropLocation() const;
     KDDockWidgets::Core::DropIndicatorOverlay *dropIndicatorOverlay() const;
-    bool hasSingleFloatingFrame() const;
-    bool hasSingleFrame() const;
+    bool hasSingleFloatingGroup() const;
+    bool hasSingleGroup() const;
     bool isMDIWrapper() const;
     void layoutEqually();
     void layoutParentContainerEqually(KDDockWidgets::Core::DockWidget *arg__1);
@@ -62,16 +62,16 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Group
 DOCKS_EXPORT void *c_KDDockWidgets__Core__DropArea__centralFrame(void *thisObj);
 // KDDockWidgets::Core::DropArea::containsDockWidget(KDDockWidgets::Core::DockWidget * arg__1) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__DropArea__containsDockWidget_DockWidget(void *thisObj, void *arg__1_);
-// KDDockWidgets::Core::DropArea::createCentralFrame(QFlags<KDDockWidgets::MainWindowOption> options)
+// KDDockWidgets::Core::DropArea::createCentralGroup(QFlags<KDDockWidgets::MainWindowOption> options)
 DOCKS_EXPORT void *c_static_KDDockWidgets__Core__DropArea__createCentralFrame_MainWindowOptions(int options_);
 // KDDockWidgets::Core::DropArea::currentDropLocation() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__DropArea__currentDropLocation(void *thisObj);
 // KDDockWidgets::Core::DropArea::dropIndicatorOverlay() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__DropArea__dropIndicatorOverlay(void *thisObj);
-// KDDockWidgets::Core::DropArea::hasSingleFloatingFrame() const
-DOCKS_EXPORT bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingFrame(void *thisObj);
-// KDDockWidgets::Core::DropArea::hasSingleFrame() const
-DOCKS_EXPORT bool c_KDDockWidgets__Core__DropArea__hasSingleFrame(void *thisObj);
+// KDDockWidgets::Core::DropArea::hasSingleFloatingGroup() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__DropArea__hasSingleFloatingGroup(void *thisObj);
+// KDDockWidgets::Core::DropArea::hasSingleGroup() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__DropArea__hasSingleGroup(void *thisObj);
 // KDDockWidgets::Core::DropArea::isMDIWrapper() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__DropArea__isMDIWrapper(void *thisObj);
 // KDDockWidgets::Core::DropArea::layoutEqually()

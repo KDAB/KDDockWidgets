@@ -352,9 +352,9 @@ class Group extends KDDWBindingsCore.Controller {
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp, index,
         arg__3 == null ? ffi.nullptr : arg__3.thisCpp);
-  } // isCentralFrame() const
+  } // isCentralGroup() const
 
-  bool isCentralFrame() {
+  bool isCentralGroup() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Group__isCentralFrame')

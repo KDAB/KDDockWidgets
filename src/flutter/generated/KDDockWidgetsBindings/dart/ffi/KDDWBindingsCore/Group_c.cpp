@@ -184,9 +184,9 @@ void Group_wrapper::insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int in
 {
     ::KDDockWidgets::Core::Group::insertWidget(arg__1, index, arg__3);
 }
-bool Group_wrapper::isCentralFrame() const
+bool Group_wrapper::isCentralGroup() const
 {
-    return ::KDDockWidgets::Core::Group::isCentralFrame();
+    return ::KDDockWidgets::Core::Group::isCentralGroup();
 }
 bool Group_wrapper::isDockable() const
 {
@@ -582,10 +582,10 @@ void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(voi
     auto &arg__3 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__3_);
     fromPtr(thisObj)->insertWidget(arg__1, index, arg__3);
 }
-// isCentralFrame() const
-bool c_KDDockWidgets__Core__Group__isCentralFrame(void *thisObj)
+// isCentralGroup() const
+bool c_KDDockWidgets__Core__Group__isCentralGroup(void *thisObj)
 {
-    const auto &result = fromPtr(thisObj)->isCentralFrame();
+    const auto &result = fromPtr(thisObj)->isCentralGroup();
     return result;
 }
 // isDockable() const
