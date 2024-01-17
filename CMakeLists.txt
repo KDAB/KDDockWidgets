@@ -91,6 +91,11 @@ set(KDDockWidgets_FRONTENDS
     CACHE STRING "Semicolon separated list of frontends to enable (blank for autodetect)"
 )
 
+set(KDDockWidgets_LIBRARY_POSTFIX
+    ""
+    CACHE STRING "Appends the specified string to the library name. Not applicable to VS generator."
+)
+
 option(KDDockWidgets_QT6 "Build against Qt 6" OFF)
 option(KDDockWidgets_DEVELOPER_MODE "Developer Mode" OFF)
 option(KDDockWidgets_PYTHON_BINDINGS "Build python bindings" OFF)
