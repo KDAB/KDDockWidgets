@@ -248,11 +248,6 @@ public:
     bool isFixedWidth() const;
     bool isFixedHeight() const;
 
-    virtual bool shouldDeleteOnClose() const
-    {
-        return false;
-    }
-
 public:
     class Private;
     Private *const d;

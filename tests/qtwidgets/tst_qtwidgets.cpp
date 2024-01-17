@@ -136,7 +136,6 @@ private Q_SLOTS:
     void tst_mdi_mixed_with_docking2();
     void tst_mdi_mixed_with_docking_setMDISize();
     void tst_deleteOnClose();
-    void tst_deleteOnClose2();
     void tstCloseNestedMdi();
     void tstCloseNestedMDIPropagates();
     void tstQGraphicsProxyWidget();
@@ -1618,6 +1617,7 @@ void TestQtWidgets::tst_complex()
     qDeleteAll(DockRegistry::self()->groups());
 }
 
+
 void TestQtWidgets::tst_deleteOnClose()
 {
     // QtQuick doesn't support autohide/pin/sidebar yet.
@@ -1635,34 +1635,6 @@ void TestQtWidgets::tst_deleteOnClose()
     ObjectGuard<Core::DockWidget> dock1 =
         createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
                          DockWidgetOption_DeleteOnClose);
-    m->addDockWidget(dock1, Location_OnLeft);
-    m->moveToSideBar(dock1);
-    m->overlayOnSideBar(dock1);
-    LayoutSaver saver;
-    const QByteArray saved = saver.serializeLayout();
-
-    QVERIFY(dock1->isVisible());
-    dock1->close();
-    QVERIFY(Platform::instance()->tests_waitForDeleted(dock1));
-    QVERIFY(!dock1.data());
-
-    saver.restoreLayout(saved);
-}
-
-void TestQtWidgets::tst_deleteOnClose2()
-{
-    // like tst_deleteOnClose2() but with QWidget::WA_DeleteOnClose
-    EnsureTopLevelsDeleted e;
-    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
-    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) {
-        return createDockWidget(
-            name, Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-    });
-
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    ObjectGuard<Core::DockWidget> dock1 =
-        createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-    QtCommon::View_qt::asQWidget(dock1->view())->setAttribute(Qt::WA_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
     m->moveToSideBar(dock1);
     m->overlayOnSideBar(dock1);
