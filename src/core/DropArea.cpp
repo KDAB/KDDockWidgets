@@ -203,8 +203,8 @@ void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
     }
 
     if ((option.visibility == InitialVisibilityOption::StartHidden) && dw->d->group() != nullptr) {
-        // StartHidden is just to be used at startup, not to moving stuff around
-        KDDW_ERROR("Dock widget already exists in the layout");
+        // StartHidden is just to be used at startup, not for moving stuff around
+        KDDW_ERROR("Dock widget was already opened, can't be used with InitialVisibilityOption::StartHidden");
         return;
     }
 
