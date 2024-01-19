@@ -117,5 +117,25 @@
         ],
       }
     ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Run current target under valgrind",
+        "command": "/usr/bin/valgrind",
+        "type": "shell",
+        "args": [
+          "${command:cmake.launchTargetPath}"
+        ],
+        "presentation": {
+          "reveal": "always"
+        },
+        "options": {
+          "cwd": "${command:cmake.buildDirectory}"
+        },
+        "problemMatcher": []
+      }
+    ]
   }
 }
