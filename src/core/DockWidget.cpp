@@ -899,7 +899,7 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
 {
     auto dr = DockRegistry::self();
     DockWidget *dw =
-        dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
+        dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlags(DockRegistry::DockByNameFlag::CreateIfNotFound) | DockRegistry::DockByNameFlag::SilentIfNotFound);
     if (dw) {
         if (auto guest = dw->guestView())
             guest->setVisible(true);

@@ -247,12 +247,8 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
     // #3. Tests after a restore but with a fresh main window
     {
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None, "mainWindow1");
-        {
-            SetExpectedWarning sew("Couldn't find dock widget name");
-            SetExpectedWarning sew2("Couldn't find dock widget");
-            LayoutSaver saver;
-            saver.restoreLayout(saved);
-        }
+        LayoutSaver saver;
+        saver.restoreLayout(saved);
 
         // QEXPECT_FAIL: We can't uncomment this yet, not supported, but we should.
         // auto dock1 = createDockWidget("1");

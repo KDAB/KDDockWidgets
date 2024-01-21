@@ -433,8 +433,8 @@ Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags 
                 m_dockWidgetIdRemapping[name] = dw->uniqueName();
             }
             return dw;
-        } else {
-            KDDW_ERROR("Couldn't find dock widget name={}", name);
+        } else if (!flags.testFlags(DockByNameFlag::SilentIfNotFound)) {
+            KDDW_ERROR("Couldn't find dock widget named={}", name);
         }
     }
 

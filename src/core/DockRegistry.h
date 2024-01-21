@@ -54,7 +54,8 @@ public:
         None = 0,
         ConsultRemapping = 1,
         CreateIfNotFound =
-            2 ///< Creates the dock widget via the user's widget factory in case it doesn't exist
+            2, ///< Creates the dock widget via the user's widget factory in case it doesn't exist
+        SilentIfNotFound = 4 ///< don't print errors if not found, it will be created later
     };
     Q_DECLARE_FLAGS(DockByNameFlags, DockByNameFlag)
 

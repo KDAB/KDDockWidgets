@@ -573,7 +573,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
                 dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
-            KDDW_ERROR("Couldn't find dock widget {}", dw->uniqueName);
+            KDDW_INFO("Couldn't find dock widget {}", dw->uniqueName);
         }
     }
 
