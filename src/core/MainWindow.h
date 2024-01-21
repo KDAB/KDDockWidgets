@@ -93,6 +93,9 @@ public:
                        KDDockWidgets::InitialOption initialOption = {});
 
 
+#ifdef DOCKS_DEVELOPER_MODE
+    // dev mode only for now, as it still has bugs.
+    // We need to be able to dock to relativeTo=hidden dock
     /**
      * Docks a DockWidget into this main window at the specified side.
      * To be used only with MainWindowOption_HasCentralWidget or MainWindowOption_HasCentralFrame.
@@ -113,7 +116,7 @@ public:
      */
     void addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
                              KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption = {});
-
+#endif
     /**
      * @brief Sets a persistent central widget. It can't be detached.
      *

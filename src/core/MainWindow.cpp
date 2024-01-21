@@ -125,6 +125,8 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
     dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 
+#ifdef DOCKS_DEVELOPER_MODE
+
 void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
                                      KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
 {
@@ -188,6 +190,8 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
         KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralFrame or MainWindowOption_HasCentralWidget");
     }
 }
+
+#endif
 
 QString MainWindow::uniqueName() const
 {
