@@ -917,7 +917,7 @@ void Item::dumpLayout(int level, bool)
 
     std::cerr << "; item=" << this;
     if (m_guest)
-        std::cerr << "; m_guest=" << m_guest->toDebugString().toStdString() << "\n";
+        std::cerr << "; m_guest=" << m_guest->toDebugString() << "\n";
     std::cerr << "\n";
 }
 

@@ -53,7 +53,7 @@ public:
     {
     }
 
-    virtual QString toDebugString() const
+    virtual std::string toDebugString() const
     {
         return {};
     }
