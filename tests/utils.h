@@ -131,7 +131,7 @@ Core::DockWidget *createDockWidget(const QString &name, Core::View *guest,
                                    LayoutSaverOptions layoutSaverOptions = {},
                                    bool show = true, const QString &affinityName = {});
 
-Core::DockWidget *createDockWidget(const QString &name);
+Core::DockWidget *createDockWidget(const QString &name, LayoutSaverOptions layoutSaverOptions = {});
 
 void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
                     Core::Group *relativeTo, KDDockWidgets::Location location);

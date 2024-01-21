@@ -66,6 +66,11 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
         &DockWidget::Private::onWindowActivated, d);
     d->m_windowDeactivatedConnection = Platform::instance()->d->windowDeactivated.connect(
         &DockWidget::Private::onWindowDeactivated, d);
+
+    // If user called LayoutSaver::restoreLayout() before creating the dock widget, we need to
+    // keep the previous known dock widget position
+    if (layoutSaverOptions & LayoutSaverOption::CheckForPreviousRestore)
+        LayoutSaver::Private::restorePendingPositions(this);
 }
 
 DockWidget::~DockWidget()

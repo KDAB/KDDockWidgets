@@ -38,6 +38,7 @@ class FloatingWindow;
 class View;
 }
 
+class Position;
 class DockRegistry;
 
 /// @brief A more granular version of KDDockWidgets::RestoreOption
@@ -324,6 +325,8 @@ public:
 
     explicit Private(RestoreOptions options);
 
+    static void restorePendingPositions(Core::DockWidget *);
+
     bool matchesAffinity(const Vector<QString> &affinities) const;
     void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
@@ -336,6 +339,10 @@ public:
     DockRegistry *const m_dockRegistry;
     InternalRestoreOptions m_restoreOptions = {};
     Vector<QString> m_affinityNames;
+
+    /// If a layout is restored but the dock widget doesn't exist, we store its last position here
+    /// so when we create the dock widget we can finally restore
+    static std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Position>> s_unrestoredPositions;
 
     static bool s_restoreInProgress;
 };

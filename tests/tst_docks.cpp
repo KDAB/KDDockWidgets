@@ -2879,9 +2879,8 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory()
 
     {
         // We don't know how to create the dock widget
-        SetExpectedWarning expectedWarning("Couldn't find dock widget");
         CHECK(saver.restoreLayout(saved));
-        CHECK_EQ(layout->count(), 0);
+        CHECK_EQ(layout->count(), 1);
     }
 
     // Now try with a factory func

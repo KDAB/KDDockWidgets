@@ -33,6 +33,7 @@
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/MainWindow.h"
+#include "core/Position_p.h"
 #include "core/nlohmann_helpers_p.h"
 #include "core/layouting/Item_p.h"
 
@@ -66,7 +67,7 @@ using namespace KDDockWidgets::Core;
 
 std::map<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
-
+std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Position>> LayoutSaver::Private::s_unrestoredPositions;
 
 inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
 {
@@ -564,6 +565,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         }
     }
 
+    LayoutSaver::Private::s_unrestoredPositions.clear();
+
     // 4. Restore the placeholder info, now that the Items have been created
     for (const auto &dw : std::as_const(layout.allDockWidgets)) {
         if (!d->matchesAffinity(dw->affinities))
@@ -574,6 +577,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
             KDDW_INFO("Couldn't find dock widget {}", dw->uniqueName);
+            auto pos = std::make_shared<KDDockWidgets::Position>();
+            pos->deserialize(dw->lastPosition);
+            LayoutSaver::Private::s_unrestoredPositions[dw->uniqueName] = pos;
         }
     }
 
@@ -638,6 +644,19 @@ LayoutSaver::Private::Private(RestoreOptions options)
     : m_dockRegistry(DockRegistry::self())
     , m_restoreOptions(internalRestoreOptions(options))
 {
+}
+
+/*static*/
+void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
+{
+    if (!dw)
+        return;
+
+    auto it = s_unrestoredPositions.find(dw->uniqueName());
+    if (it != s_unrestoredPositions.end()) {
+        dw->d->m_lastPosition = it->second;
+        s_unrestoredPositions.erase(it);
+    }
 }
 
 bool LayoutSaver::Private::matchesAffinity(const Vector<QString> &affinities) const

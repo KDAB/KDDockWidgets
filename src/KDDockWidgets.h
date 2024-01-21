@@ -106,6 +106,8 @@ enum class LayoutSaverOption {
     None = 0, ///< Just use the defaults
     Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for
               ///< floating windows.
+    CheckForPreviousRestore = 2, ///< When the DockWidget is created it will check if there was a layout restore
+    ///< before, and try to recover its previous main window position
 };
 Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
