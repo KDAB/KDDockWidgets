@@ -83,6 +83,24 @@ public:
         return q->view()->geometry();
     }
 
+    QString toDebugString() const override
+    {
+        const auto docks = q->dockWidgets();
+        QString result;
+        QTextStream s(&result);
+        s << "[ ";
+
+        for (auto dock : docks) {
+            s << dock->uniqueName();
+            if (!dock->isVisible())
+                s << ", hidden";
+            s << "; ";
+        }
+        s << " ]";
+
+        return result;
+    }
+
     QString id() const override
     {
         return q->view()->d->id();

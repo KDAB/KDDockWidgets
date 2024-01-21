@@ -53,6 +53,11 @@ public:
     {
     }
 
+    virtual QString toDebugString() const
+    {
+        return {};
+    }
+
     KDBindings::Signal<LayoutingHost *> hostChanged;
     KDBindings::Signal<> beingDestroyed;
     KDBindings::Signal<> layoutInvalidated;

@@ -915,7 +915,10 @@ void Item::dumpLayout(int level, bool)
     if (m_sizingInfo.isBeingInserted)
         std::cerr << ";beingInserted;";
 
-    std::cerr << "; guest=" << this << "; name=" << objectName().toStdString() << "\n";
+    std::cerr << "; item=" << this;
+    if (m_guest)
+        std::cerr << "; m_guest=" << m_guest->toDebugString().toStdString() << "\n";
+    std::cerr << "\n";
 }
 
 Item::Item(LayoutingHost *hostWidget, ItemContainer *parent)
