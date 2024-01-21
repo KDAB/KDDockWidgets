@@ -348,7 +348,6 @@ private:
     friend class ItemBoxContainer;
     friend class ItemFreeContainer;
     int m_refCount = 0;
-    void updateObjectName();
     void onGuestDestroyed();
     bool m_isVisible = false;
     LayoutingHost *m_host = nullptr;

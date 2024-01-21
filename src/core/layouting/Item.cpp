@@ -222,8 +222,6 @@ void Item::setGuest(LayoutingGuest *guest)
             updateWidgetGeometries();
         }
     }
-
-    updateObjectName();
 }
 
 void Item::updateWidgetGeometries()
@@ -238,7 +236,6 @@ void Item::to_json(nlohmann::json &json) const
     json["sizingInfo"] = m_sizingInfo;
     json["isVisible"] = m_isVisible;
     json["isContainer"] = isContainer();
-    json["objectName"] = objectName();
     if (m_guest)
         json["guestId"] = m_guest->id(); // just for coorelation purposes when restoring
 }
@@ -248,7 +245,6 @@ void Item::fillFromJson(const nlohmann::json &j,
 {
     m_sizingInfo = j.value("sizingInfo", SizingInfo());
     m_isVisible = j.value("isVisible", false);
-    setObjectName(j.value("objectName", QString()));
     const QString guestId = j.value("guestId", QString());
     if (!guestId.isEmpty()) {
         auto it = widgets.find(guestId);
@@ -797,8 +793,6 @@ void Item::setIsVisible(bool is)
         m_guest->setGeometry(mapToRoot(rect()));
         m_guest->setVisible(true); // Only set visible when apply*() ?
     }
-
-    updateObjectName();
 }
 
 void Item::setGeometry_recursive(Rect rect)
@@ -959,22 +953,6 @@ void Item::turnIntoPlaceholder()
     // position. Call removeItem() so we share the code for making the neighbours grow into the
     // space that becomes available after hiding this one
     parentContainer()->removeItem(this, /*hardRemove=*/false);
-}
-
-void Item::updateObjectName()
-{
-    if (isContainer())
-        return;
-
-    if (auto w = guest()) {
-        setObjectName(QStringLiteral("widget"));
-    } else if (!isVisible()) {
-        setObjectName(QStringLiteral("hidden"));
-    } else if (!m_guest) {
-        setObjectName(QStringLiteral("null"));
-    } else {
-        setObjectName(QStringLiteral("empty"));
-    }
 }
 
 void Item::onGuestDestroyed()
