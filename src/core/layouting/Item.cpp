@@ -828,6 +828,9 @@ bool Item::checkSanity()
             return false;
         }
 #endif
+        // Reminder: m_guest->geometry() is in the coordspace of the host widget (DropArea)
+        // while Item::m_sizingInfo.geometry is in the coordspace of the parent container
+
         if (m_guest->geometry() != mapToRoot(rect())) {
             root()->dumpLayout();
             KDDW_ERROR("Guest widget doesn't have correct geometry. m_guest->guestGeometry={}, item.mapToRoot(rect())={}", m_guest->geometry(), mapToRoot(rect()));
@@ -902,6 +905,9 @@ void Item::dumpLayout(int level, bool)
     if (!isVisible())
         std::cerr << ";hidden;";
 
+    // Reminder: that m_guest->geometry() is in the coordspace of the host widget (DropArea)
+    // while Item::m_sizingInfo.geometry is in the coordspace of the parent container.
+    // We print only if different to save space.
     if (m_guest && geometry() != m_guest->geometry()) {
         std::cerr << "; guest geometry=" << m_guest->geometry();
     }
