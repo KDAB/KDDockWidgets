@@ -47,11 +47,6 @@ public:
         return false;
     }
 
-    virtual QString debugName() const
-    {
-        return {};
-    }
-
     Core::Item *layoutItem() const;
     void setLayoutItem(Item *);
     virtual void setLayoutItem_impl(Core::Item *)

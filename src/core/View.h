@@ -149,7 +149,7 @@ public:
         return false;
     }
 
-    /// Equivalent to Qt's QObject::objectProperty()
+    /// Equivalent to Qt's QObject::objectName()
     virtual void setViewName(const QString &) = 0;
     virtual QString viewName() const = 0;
 

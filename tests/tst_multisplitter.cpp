@@ -86,11 +86,6 @@ public:
         return m_view->geometry();
     }
 
-    QString debugName() const override
-    {
-        return m_view->viewName();
-    }
-
     QString id() const override
     {
         return m_view->d->id();

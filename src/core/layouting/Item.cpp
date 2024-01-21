@@ -964,7 +964,7 @@ void Item::updateObjectName()
         return;
 
     if (auto w = guest()) {
-        setObjectName(w->debugName().isEmpty() ? QStringLiteral("widget") : w->debugName());
+        setObjectName(QStringLiteral("widget"));
     } else if (!isVisible()) {
         setObjectName(QStringLiteral("hidden"));
     } else if (!m_guest) {
