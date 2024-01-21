@@ -2305,10 +2305,11 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
     const std::string isOverflowStr = isOverflow ? "; overflowing ;" : "";
     const std::string missingSizeStr = missingSize_.isNull() ? "" : (std::string("; missingSize=") + std::to_string(missingSize_.width()) + "x" + std::to_string(missingSize_.height()));
 
-    const std::string typeStr = isRoot() ? "- Root: " : "- Layout: ";
+    const std::string typeStr = isRoot() ? "- Root " : "- Layout ";
 
     {
-        std::cerr << indent << typeStr << "; isVertical=" << (d->m_orientation == Qt::Vertical) << "; "
+        const std::string orientationStr = d->m_orientation == Qt::Vertical ? "↕" : "↔";
+        std::cerr << indent << typeStr << orientationStr << ": "
                   << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" <<
                                               m_geometry.bottom()*/
                   << "; min=" << minSize() << "; this=" << this << beingInserted << visible
