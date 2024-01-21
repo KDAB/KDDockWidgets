@@ -173,7 +173,7 @@ KDDW_QCORO_TASK tst_resizeWindow2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_hasLastDockedLocation()
+KDDW_QCORO_TASK tst_hasPreviousDockedLocation()
 {
     // Tests Core::DockWidget::hasPreviousDockedLocation()
 
@@ -208,7 +208,7 @@ KDDW_QCORO_TASK tst_hasLastDockedLocation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_hasLastDockedLocation2()
+KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
 {
     // Tests with LayoutSaver
     EnsureTopLevelsDeleted e;
@@ -5575,8 +5575,8 @@ static const auto s_tests = std::vector<KDDWTest>
     TEST(tst_simple1),
         TEST(tst_simple2),
         TEST(tst_resizeWindow2),
-        TEST(tst_hasLastDockedLocation),
-        TEST(tst_hasLastDockedLocation2),
+        TEST(tst_hasPreviousDockedLocation),
+        TEST(tst_hasPreviousDockedLocation2),
         TEST(tst_ghostSeparator),
         TEST(tst_detachFromMainWindow),
         TEST(tst_floatingWindowSize),
