@@ -69,7 +69,9 @@
         "type": "cppvsdbg",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [],
+        "args": [
+          "tst_restoreWithDockFactory"
+        ],
         "cwd": "${command:cmake.buildDirectory}"
       },
       {
