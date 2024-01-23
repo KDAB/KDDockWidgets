@@ -467,25 +467,25 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     if (data.isEmpty())
         return true;
 
-    struct FrameCleanup
+    struct GroupCleanup
     {
-        explicit FrameCleanup(LayoutSaver *saver)
+        explicit GroupCleanup(LayoutSaver *saver)
             : m_saver(saver)
         {
         }
 
-        ~FrameCleanup()
+        ~GroupCleanup()
         {
             m_saver->d->deleteEmptyGroups();
         }
 
-        FrameCleanup(const FrameCleanup &) = delete;
-        FrameCleanup &operator=(const FrameCleanup) = delete;
+        GroupCleanup(const GroupCleanup &) = delete;
+        GroupCleanup &operator=(const GroupCleanup) = delete;
 
         LayoutSaver *const m_saver;
     };
 
-    FrameCleanup cleanup(this);
+    GroupCleanup cleanup(this);
     LayoutSaver::Layout layout;
     if (!layout.fromJson(data)) {
         KDDW_ERROR("Failed to parse json data");
