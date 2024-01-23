@@ -581,10 +581,17 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
             view()->showMaximized();
         } else if (int(fw.windowState) & int(WindowState::Minimized)) {
 #ifdef KDDW_FRONTEND_QT_WINDOWS
-            // Workaround for WM_NCCALCSIZE not being honoured if directly minimized
-            view()->window()->setHasBeenMinimizedDirectlyFromRestore(true);
-#endif
+            if (Platform::instance()->isQtQuick()) {
+                // We'll minimized it after the 1st frameSwap(), so it appears in alt-tab and taskbar thumbnails.
+                // Also fixes non-client area size, due to Qt not honouring WM_NCCALCSIZE correctly when showing minimized without a show normal before
+                d->m_minimizationPending = true;
+            } else {
+                // Workaround not implemented for QtWidgets, needs to be tested there.
+                view()->showMinimized();
+            }
+#else
             view()->showMinimized();
+#endif
         } else {
             view()->showNormal();
         }

@@ -681,7 +681,16 @@ KDDW_QCORO_TASK tst_restoreFloatingMinimizedState()
     const QByteArray saved = saver.serializeLayout();
 
     saver.restoreLayout(saved);
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+    // QtQuick is using hack for QTBUG-120269
+    if (Platform::instance()->isQtQuick())
+        Platform::instance()->tests_wait(1000);
+
+    // For QtWidgets we're not using the workaround. Needs to be tested.
     CHECK_EQ(dock1->floatingWindow()->view()->window()->windowState(), WindowState::Minimized);
+#else
+    CHECK_EQ(dock1->floatingWindow()->view()->window()->windowState(), WindowState::Minimized);
+#endif
 
     KDDW_TEST_RETURN(true);
 }
@@ -5280,8 +5289,17 @@ KDDW_QCORO_TASK tst_restoreAfterUnminimized()
     CHECK(!dock0->window()->isMinimized());
     CHECK(saver.restoreLayout(saved));
 
-    // Platform::instance()->tests_wait(100000000);
+
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+    // QtQuick is using hack for QTBUG-120269
+    if (Platform::instance()->isQtQuick())
+        Platform::instance()->tests_wait(1000);
+
+    // For QtWidgets we're not using the workaround. Needs to be tested.
     CHECK(dock0->window()->isMinimized());
+#else
+    CHECK(dock0->window()->isMinimized());
+#endif
 
     KDDW_TEST_RETURN(true);
 }
