@@ -58,6 +58,32 @@ ApplicationWindow {
             }
 
             Action {
+                text: qsTr("Create widget with min-size")
+                onTriggered: {
+                    /// Do not use random uuids if you're planing to use layout save/restore!
+                    /// Using them here for convenience of the exercise
+                    var uniqueName = _kddwHelpers.generateUuid();
+
+                    var code = `import com.kdab.dockwidgets 2.0 as KDDW;
+                                import QtQuick 2.6;
+                                KDDW.DockWidget {
+                                    uniqueName: "${uniqueName}";
+                                    title: "min-size=" + guest.kddockwidgets_min_size
+                                    Rectangle {
+                                        id: guest
+                                        property var kddockwidgets_min_size: Qt.size(800, 200)
+                                        // property var kddockwidgets_max_size: Qt.size(800, 400) Not yet supported
+                                        color: "#85baa1";
+                                        anchors.fill: parent;
+                                    }
+                                }`;
+
+                    var newDW = Qt.createQmlObject(code, root);
+                    newDW.open();
+                }
+            }
+
+            Action {
                 text: qsTr("Close All")
                 onTriggered: {
                    _kddwDockRegistry.clear();
@@ -82,6 +108,7 @@ ApplicationWindow {
     }
 
     KDDW.DockingArea {
+        id: root
         anchors.fill: parent
 
         // Each main layout needs a unique id
