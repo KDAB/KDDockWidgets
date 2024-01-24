@@ -285,7 +285,8 @@ enum class TitleBarButtonType {
     Maximize = 8,
     Normal = 16, // Restore from maximized state
     AutoHide = 32,
-    UnautoHide = 64
+    UnautoHide = 64,
+    All = Close | Float | Minimize | Maximize | Normal | AutoHide | UnautoHide
 };
 Q_ENUM_NS(TitleBarButtonType)
 Q_DECLARE_FLAGS(TitleBarButtonTypes, TitleBarButtonType)
