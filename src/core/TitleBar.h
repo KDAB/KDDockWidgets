@@ -129,13 +129,19 @@ public:
     void onAutoHideClicked();
     void toggleMaximized();
 
+    // TODO: Refactor into a QHash<Button,State> ?
     bool closeButtonEnabled() const;
+    void setCloseButtonVisible(bool);
     bool floatButtonVisible() const;
     bool maximizeButtonVisible() const;
     void setCloseButtonEnabled(bool);
     void setFloatButtonVisible(bool);
 
     TitleBarButtonType maximizeButtonType() const;
+
+    /// Allows to override's KDDW's default visibility logic and force hide a button
+    void setUserHiddenButtons(TitleBarButtonTypes);
+    bool buttonIsUserHidden(TitleBarButtonType) const;
 
     class Private;
     Private *dptr() const;
@@ -167,6 +173,7 @@ private:
     const bool m_supportsAutoHide;
     const bool m_isStandalone;
     bool m_closeButtonEnabled = true;
+    bool m_closeButtonVisible = true;
     bool m_floatButtonVisible = true;
     bool m_maximizeButtonVisible = false;
     TitleBarButtonType m_maximizeButtonType = TitleBarButtonType::Maximize;

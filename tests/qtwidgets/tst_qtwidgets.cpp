@@ -172,6 +172,7 @@ private Q_SLOTS:
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
+    void userHiddenButton();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2175,6 +2176,32 @@ void TestQtWidgets::addDockWidgetToSide2()
 
     QEXPECT_FAIL("", "To be fixed", Continue);
     QCOMPARE(root->numChildren(), 2);
+}
+
+void TestQtWidgets::userHiddenButton()
+{
+    EnsureTopLevelsDeleted e;
+    auto d1 = new QtWidgets::DockWidget("d1");
+    d1->show();
+    auto tb = d1->actualTitleBar();
+    auto tbWidget = QtCommon::View_qt::asQWidget(tb->view());
+    auto buttons = tbWidget->findChildren<QAbstractButton *>();
+    QCOMPARE(buttons.size(), 5);
+
+    const auto numVisible = std::count_if(buttons.cbegin(), buttons.cend(), [](auto button) {
+        return button->isVisible();
+    });
+
+    QCOMPARE(numVisible, 2);
+
+    // Hide float and close:
+    tb->setUserHiddenButtons(TitleBarButtonTypes(TitleBarButtonType::Close) | TitleBarButtonType::Float);
+
+    // 0 visible buttons now:
+    QCOMPARE(std::count_if(buttons.cbegin(), buttons.cend(), [](auto button) {
+                 return button->isVisible();
+             }),
+             0);
 }
 
 int main(int argc, char *argv[])

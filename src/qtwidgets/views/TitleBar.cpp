@@ -183,7 +183,8 @@ void TitleBar::init()
         m_floatButton->setVisible(m_titleBar->floatButtonVisible());
         m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
-        d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
+        d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonChanged.connect([this](bool visible, bool enabled) { m_closeButton->setVisible(visible);
+        m_closeButton->setEnabled(enabled); });
         d->floatButtonToolTipConnection = m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
         d->floatButtonVisibleConnection = m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
         d->autoHideButtonConnection = m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });

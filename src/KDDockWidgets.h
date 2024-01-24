@@ -279,15 +279,16 @@ enum class SideBarLocation {
 
 ///@brief describes a type of button you can have in the title bar
 enum class TitleBarButtonType {
-    Close,
-    Float,
-    Minimize,
-    Maximize,
-    Normal, // Restore from maximized state
-    AutoHide,
-    UnautoHide
+    Close = 1,
+    Float = 2,
+    Minimize = 4,
+    Maximize = 8,
+    Normal = 16, // Restore from maximized state
+    AutoHide = 32,
+    UnautoHide = 64
 };
 Q_ENUM_NS(TitleBarButtonType)
+Q_DECLARE_FLAGS(TitleBarButtonTypes, TitleBarButtonType)
 
 ///@brief Enum describing the different drop indicator types
 enum DropLocation {
