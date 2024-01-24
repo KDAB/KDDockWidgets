@@ -45,7 +45,7 @@ void TitleBar::init()
     m_titleBar->dptr()->isFocusedChanged.connect([this] { isFocusedChanged(); });
 
     // close button visibility not supported for QtQuick yet
-    m_titleBar->dptr()->closeButtonChanged.connect([this](bool visible, bool enabled) { closeButtonEnabledChanged(enabled); });
+    m_titleBar->dptr()->closeButtonChanged.connect([this](bool /*visible*/, bool enabled) { closeButtonEnabledChanged(enabled); });
 
     m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { floatButtonVisibleChanged(visible); });
     m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { floatButtonToolTipChanged(text); });
