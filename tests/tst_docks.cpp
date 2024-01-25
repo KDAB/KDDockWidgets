@@ -308,7 +308,7 @@ KDDW_QCORO_TASK tst_LayoutSaverOpenedDocks()
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("1");
-        auto dock2 = createDockWidget("2");
+        createDockWidget("2");
         auto dock3 = createDockWidget("3");
         dock3->close();
         m->addDockWidget(dock1, KDDockWidgets::Location_OnRight);
