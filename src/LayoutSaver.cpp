@@ -753,7 +753,7 @@ bool LayoutSaver::Layout::isValid() const
     return true;
 }
 
-QStringList LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilename)
+Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilename)
 {
     bool ok = false;
     const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
@@ -764,13 +764,13 @@ QStringList LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilename)
     return openedDockWidgetsInLayout(data);
 }
 
-QStringList LayoutSaver::openedDockWidgetsInLayout(const QByteArray &serialized)
+Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &serialized)
 {
     LayoutSaver::Layout layout;
     if (!layout.fromJson(serialized))
         return {};
 
-    QStringList names;
+    Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
     for (auto dock : qAsConst(layout.allDockWidgets)) {

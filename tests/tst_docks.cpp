@@ -318,7 +318,7 @@ KDDW_QCORO_TASK tst_LayoutSaverOpenedDocks()
     }
 
     CHECK(LayoutSaver::openedDockWidgetsInLayout(saved1).isEmpty());
-    CHECK(LayoutSaver::openedDockWidgetsInLayout(saved2) == QStringList({ "1", "2" }));
+    CHECK(LayoutSaver::openedDockWidgetsInLayout(saved2) == Vector<String>({ "1", "2" }));
 
     KDDW_TEST_RETURN(true);
 }

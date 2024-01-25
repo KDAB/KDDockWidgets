@@ -120,8 +120,8 @@ public:
      *
      * This operation does not have side-effects, no dock widget will be actually restored.
      */
-    static QStringList openedDockWidgetsInLayout(const QString &jsonFilename);
-    static QStringList openedDockWidgetsInLayout(const QByteArray &serialized);
+    static Vector<QString> openedDockWidgetsInLayout(const QString &jsonFilename);
+    static Vector<QString> openedDockWidgetsInLayout(const QByteArray &serialized);
 
     /// @internal Returns the private-impl. Not intended for public use.
     class Private;
