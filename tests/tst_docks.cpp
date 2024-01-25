@@ -285,6 +285,44 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_LayoutSaverOpenedDocks()
+{
+    QByteArray saved1;
+    QByteArray saved2;
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("1");
+        auto dock2 = createDockWidget("2");
+        auto dock3 = createDockWidget("3");
+        dock1->close();
+        dock2->close();
+        dock3->close();
+
+        LayoutSaver saver;
+        saved1 = saver.serializeLayout();
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("1");
+        auto dock2 = createDockWidget("2");
+        auto dock3 = createDockWidget("3");
+        dock3->close();
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnRight);
+
+        LayoutSaver saver;
+        saved2 = saver.serializeLayout();
+    }
+
+    CHECK(LayoutSaver::openedDockWidgetsInLayout(saved1).isEmpty());
+    CHECK(LayoutSaver::openedDockWidgetsInLayout(saved2) == QStringList({ "1", "2" }));
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_ghostSeparator()
 {
     // Tests a situation where a separator wouldn't be removed after a widget had been removed
@@ -5590,6 +5628,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_resizeWindow2),
         TEST(tst_hasPreviousDockedLocation),
         TEST(tst_hasPreviousDockedLocation2),
+        TEST(tst_LayoutSaverOpenedDocks),
         TEST(tst_ghostSeparator),
         TEST(tst_detachFromMainWindow),
         TEST(tst_floatingWindowSize),

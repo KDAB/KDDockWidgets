@@ -753,6 +753,39 @@ bool LayoutSaver::Layout::isValid() const
     return true;
 }
 
+QStringList LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilename)
+{
+    bool ok = false;
+    const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
+
+    if (!ok)
+        return {};
+
+    return openedDockWidgetsInLayout(data);
+}
+
+QStringList LayoutSaver::openedDockWidgetsInLayout(const QByteArray &serialized)
+{
+    LayoutSaver::Layout layout;
+    if (!layout.fromJson(serialized))
+        return {};
+
+    QStringList names;
+    names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
+
+    for (auto dock : qAsConst(layout.allDockWidgets)) {
+        auto it = std::find_if(layout.closedDockWidgets.cbegin(), layout.closedDockWidgets.cend(), [&dock](auto closedDock) {
+            return dock->uniqueName == closedDock->uniqueName;
+        });
+
+        const bool itsOpen = it == layout.closedDockWidgets.cend();
+        if (itsOpen)
+            names.push_back(dock->uniqueName);
+    }
+
+    return names;
+}
+
 namespace KDDockWidgets {
 void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 {

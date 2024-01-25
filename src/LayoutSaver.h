@@ -115,6 +115,14 @@ public:
      */
     void setAffinityNames(const Vector<QString> &affinityNames);
 
+    /**
+     * @brief Returns the list of opened dock widgets in the specified layout
+     *
+     * This operation does not have side-effects, no dock widget will be actually restored.
+     */
+    static QStringList openedDockWidgetsInLayout(const QString &jsonFilename);
+    static QStringList openedDockWidgetsInLayout(const QByteArray &serialized);
+
     /// @internal Returns the private-impl. Not intended for public use.
     class Private;
     Private *dptr() const;
