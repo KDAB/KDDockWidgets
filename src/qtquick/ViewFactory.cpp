@@ -141,7 +141,7 @@ QIcon ViewFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
     case TitleBarButtonType::Float:
         iconName = QStringLiteral("dock-float");
         break;
-    case TitleBarButtonType::All:
+    case TitleBarButtonType::AllTitleBarButtonTypes:
         break;
     }
 
