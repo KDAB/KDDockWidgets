@@ -299,7 +299,7 @@ void TitleBar::updateAutoHideButton()
             type = TitleBarButtonType::UnautoHide;
     }
 
-    const bool visible = m_supportsAutoHide && !buttonIsUserHidden(type);
+    const bool visible = m_supportsAutoHide && !buttonIsUserHidden(type) && !m_floatingWindow;
     d->autoHideButtonChanged.emit(visible, /*enabled=*/true, type);
 }
 
