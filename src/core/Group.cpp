@@ -1014,7 +1014,14 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
     });
 
     q->view()->d->layoutInvalidated.connect([this] {
-        if (q->layoutItem()) {
+        if (auto item = q->layoutItem()) {
+
+            if (item->m_sizingInfo.minSize == minSize() && item->m_sizingInfo.maxSizeHint == maxSizeHint()) {
+                // No point in disturbing the layout if constraints didn't change.
+                // QTabWidget::resizeEvent for example will issue layout invalidation even if constraints haven't changed
+                return;
+            }
+
             if (m_invalidatingLayout) {
                 // Fixes case where we're in the middle of adding a widget to layout and that triggers
                 // another unrelated widget to emit layoutInvalidated due to resize. It would trigger a relayout while
