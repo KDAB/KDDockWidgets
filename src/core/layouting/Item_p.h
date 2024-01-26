@@ -277,6 +277,7 @@ public:
 
     Q_REQUIRED_RESULT virtual bool checkSanity();
     bool isMDI() const;
+    virtual bool inSetSize() const;
 
     static bool s_silenceSanityChecks;
 
@@ -350,6 +351,7 @@ private:
     int m_refCount = 0;
     void onGuestDestroyed();
     bool m_isVisible = false;
+    bool m_inSetSize = false;
     LayoutingHost *m_host = nullptr;
     LayoutingGuest *m_guest = nullptr;
     static DumpScreenInfoFunc s_dumpScreenInfoFunc;
@@ -391,6 +393,7 @@ public:
     int visibleCount_recursive() const override;
     int count_recursive() const;
     virtual void clear() = 0;
+    bool inSetSize() const override;
 
 public:
     KDBindings::Signal<> itemsChanged;

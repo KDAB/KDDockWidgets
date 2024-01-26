@@ -19,12 +19,14 @@
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/TitleBar.h"
 #include "Config.h"
+#include "core/layouting/Item_p.h"
 #include "core/View_p.h"
 #include "core/Group_p.h"
 
 #include <QPainter>
 #include <QTabBar>
 #include <QVBoxLayout>
+#include <QTimer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -45,7 +47,22 @@ public:
         if (m_groupWidget->inDtor())
             return;
         QVBoxLayout::invalidate();
-        m_groupWidget->d->layoutInvalidated.emit();
+
+        if (auto item = m_groupWidget->group()->layoutItem()) {
+            if (auto root = item->root()) {
+                if (root->inSetSize()) {
+                    // There's at least one item currently in the middle of a resize
+                    // schedule relayout, do not interrupt.
+                    QTimer::singleShot(0, m_groupWidget, [this] {
+                        if (!m_groupWidget->inDtor())
+                            m_groupWidget->d->layoutInvalidated.emit();
+                    });
+                } else {
+                    // normal case
+                    m_groupWidget->d->layoutInvalidated.emit();
+                }
+            }
+        }
     }
 
     Group *const m_groupWidget;

@@ -649,6 +649,8 @@ Size Item::size() const
 
 void Item::setSize(Size sz)
 {
+    ScopedValueRollback guard(m_inSetSize, true);
+
     Rect newGeo = m_sizingInfo.geometry;
     newGeo.setSize(sz);
     setGeometry(newGeo);
@@ -844,6 +846,11 @@ bool Item::checkSanity()
 bool Item::isMDI() const
 {
     return object_cast<ItemFreeContainer *>(parentContainer()) != nullptr;
+}
+
+bool Item::inSetSize() const
+{
+    return m_inSetSize;
 }
 
 void Item::setGeometry(Rect rect)
@@ -4087,6 +4094,13 @@ int ItemContainer::count_recursive() const
     }
 
     return count;
+}
+
+bool ItemContainer::inSetSize() const
+{
+    return std::any_of(m_children.cbegin(), m_children.cend(), [](Item *child) {
+        return child->inSetSize();
+    });
 }
 
 LayoutingHost::~LayoutingHost() = default;
