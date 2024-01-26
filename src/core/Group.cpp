@@ -1013,7 +1013,13 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
         hostChanged.emit(host());
     });
 
-    q->view()->d->layoutInvalidated.connect([this] { layoutInvalidated.emit(); });
+    q->view()->d->layoutInvalidated.connect([this] {
+        if (q->layoutItem()) {
+            // Here we tell the KDDW layout that a widget change min/max sizes.
+            // KDDW will do some resizing to honour the new min/max constraint
+            layoutInvalidated.emit();
+        }
+    });
 }
 
 Group::Private::~Private()
