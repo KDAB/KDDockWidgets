@@ -1015,6 +1015,16 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
 
     q->view()->d->layoutInvalidated.connect([this] {
         if (q->layoutItem()) {
+            if (m_invalidatingLayout) {
+                // Fixes case where we're in the middle of adding a widget to layout and that triggers
+                // another unrelated widget to emit layoutInvalidated due to resize. It would trigger a relayout while
+                // we were in a middle of adding a dock widget.
+                // An example is QTabWidget::resizeEvent(), it calls updateGeometry() unconditionally.
+                return;
+            }
+
+            ScopedValueRollback guard(m_invalidatingLayout, true);
+
             // Here we tell the KDDW layout that a widget change min/max sizes.
             // KDDW will do some resizing to honour the new min/max constraint
             layoutInvalidated.emit();

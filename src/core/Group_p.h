@@ -118,6 +118,7 @@ public:
     Group *const q;
     int m_userType = 0;
     FrameOptions m_options = FrameOption_None;
+    bool m_invalidatingLayout = false;
 };
 
 }

@@ -173,6 +173,7 @@ private Q_SLOTS:
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
     void userHiddenButton();
+    void tst_tabAsCentralWidget();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2202,6 +2203,26 @@ void TestQtWidgets::userHiddenButton()
                  return button->isVisible();
              }),
              0);
+}
+
+void TestQtWidgets::tst_tabAsCentralWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralWidget);
+    auto tabWidget = new QTabWidget();
+    auto tab1 = new QWidget();
+    auto tab2 = new QWidget();
+    tabWidget->addTab(tab1, "tab1");
+    tabWidget->addTab(tab2, "tab2");
+
+    m->setPersistentCentralView(QtWidgets::ViewWrapper::create(tabWidget));
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    auto d3 = new QtWidgets::DockWidget("d3");
+    m->addDockWidget(d1->dockWidget(), KDDockWidgets::Location_OnRight);
+    m->addDockWidget(d2->dockWidget(), KDDockWidgets::Location_OnRight);
+    m->addDockWidget(d3->dockWidget(), KDDockWidgets::Location_OnRight);
 }
 
 int main(int argc, char *argv[])
