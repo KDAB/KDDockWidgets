@@ -151,6 +151,7 @@ private Q_SLOTS:
     void tst_restoreSideBar();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
+    void tst_openWhenOnSideBar();
     void tst_sidebarOverlayShowsAutohide();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_sidebarGrouping();
@@ -763,6 +764,29 @@ void TestQtWidgets::tst_restoreSideBar()
     QVERIFY(dw1->isVisible());
     QVERIFY(!dw1->isFloating());
     QVERIFY(dw1->isInMainWindow());
+    QVERIFY(!m1->anySideBarIsVisible());
+}
+
+void TestQtWidgets::tst_openWhenOnSideBar()
+{
+    // Calling DW::open() when on sidebar should open it in its previous docked position
+    // and remove it from overlay
+
+    EnsureTopLevelsDeleted e;
+
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = newDockWidget("1");
+    m1->addDockWidget(dw1, Location_OnBottom);
+    dw1->moveToSideBar();
+    QTest::qWait(100);
+
+    QVERIFY(!m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+
+    dw1->open();
+
+    QVERIFY(!m1->overlayedDockWidget());
     QVERIFY(!m1->anySideBarIsVisible());
 }
 

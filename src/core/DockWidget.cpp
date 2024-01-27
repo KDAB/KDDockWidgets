@@ -509,6 +509,15 @@ void DockWidget::moveToSideBar()
         m->moveToSideBar(this);
 }
 
+void DockWidget::removeFromSideBar()
+{
+    if (MainWindow *m = mainWindow()) {
+        if (auto sb = m->sideBarForDockWidget(this)) {
+            sb->removeDockWidget(this);
+        }
+    }
+}
+
 bool DockWidget::isOverlayed() const
 {
     if (MainWindow *m = mainWindow())
@@ -1096,6 +1105,12 @@ void DockWidget::Private::setIsOpen(bool is)
 
     updateToggleAction();
     updateFloatAction();
+
+    if (is && !q->isOverlayed()) {
+        // If we're open, we can't be in the sidebar without overlay, both or nothing.
+        // nothing in this case
+        q->removeFromSideBar();
+    }
 
     if (!is) {
         closed.emit();

@@ -375,6 +375,9 @@ public:
      */
     void moveToSideBar();
 
+    /// Removes itself from the sidebar, if it's in the sidebar.
+    void removeFromSideBar();
+
     /// @brief Returns whether this dock widget is overlayed from the side-bar.
     ///
     /// This is only relevant when using the auto-hide and side-bar feature.
