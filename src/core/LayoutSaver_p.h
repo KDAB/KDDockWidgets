@@ -345,6 +345,10 @@ public:
     /// so when we create the dock widget we can finally restore
     static std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Position>> s_unrestoredPositions;
 
+    /// Misc unrestored properties we might want to restore. Only CloseReason for now
+    /// TODO: If we keep needing to expose more stuff, we can just expose the entire LayoutSaver::Layout instead
+    static std::unordered_map<QString, CloseReason> s_unrestoredProperties;
+
     static bool s_restoreInProgress;
 };
 }

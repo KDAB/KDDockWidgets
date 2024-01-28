@@ -868,6 +868,17 @@ KDDW_QCORO_TASK tst_closeReason()
         CHECK_EQ(dock1->lastCloseReason(), CloseReason::Action);
     }
 
+    {
+        // Restore before having the actual dock widget:
+
+        EnsureTopLevelsDeleted e;
+        LayoutSaver restorer;
+        restorer.restoreLayout(saved);
+
+        auto dock1 = createDockWidget("d1", LayoutSaverOption::CheckForPreviousRestore);
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::Action);
+    }
+
     KDDW_TEST_RETURN(true);
 }
 

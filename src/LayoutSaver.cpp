@@ -68,6 +68,7 @@ using namespace KDDockWidgets::Core;
 std::map<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
 std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Position>> LayoutSaver::Private::s_unrestoredPositions;
+std::unordered_map<QString, CloseReason> LayoutSaver::Private::s_unrestoredProperties;
 
 inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
 {
@@ -572,6 +573,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     }
 
     LayoutSaver::Private::s_unrestoredPositions.clear();
+    LayoutSaver::Private::s_unrestoredProperties.clear();
 
     // 4. Restore the placeholder info, now that the Items have been created
     for (const auto &dw : std::as_const(layout.allDockWidgets)) {
@@ -586,6 +588,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             auto pos = std::make_shared<KDDockWidgets::Position>();
             pos->deserialize(dw->lastPosition);
             LayoutSaver::Private::s_unrestoredPositions[dw->uniqueName] = pos;
+            LayoutSaver::Private::s_unrestoredProperties[dw->uniqueName] = dw->lastCloseReason;
         }
     }
 
@@ -658,10 +661,20 @@ void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
     if (!dw)
         return;
 
-    auto it = s_unrestoredPositions.find(dw->uniqueName());
-    if (it != s_unrestoredPositions.end()) {
-        dw->d->m_lastPosition = it->second;
-        s_unrestoredPositions.erase(it);
+    {
+        auto it = s_unrestoredPositions.find(dw->uniqueName());
+        if (it != s_unrestoredPositions.end()) {
+            dw->d->m_lastPosition = it->second;
+            s_unrestoredPositions.erase(it);
+        }
+    }
+
+    {
+        auto it = s_unrestoredProperties.find(dw->uniqueName());
+        if (it != s_unrestoredProperties.end()) {
+            dw->d->m_lastCloseReason = it->second;
+            s_unrestoredProperties.erase(it);
+        }
     }
 }
 
