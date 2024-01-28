@@ -62,6 +62,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
+namespace {
+
 // For testing overriding DockWidget::closeEvent()
 // You can override the guest's closeEvent() instead. That's already tested elsewhere.
 class NonClosableDockWidget : public QtWidgets::DockWidget
@@ -73,6 +75,8 @@ public:
         ev->ignore();
     }
 };
+
+}
 
 inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
                                           DockWidgetOptions options = {},
