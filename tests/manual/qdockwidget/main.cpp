@@ -16,14 +16,46 @@
 #include <QMainWindow>
 #include <QStyleFactory>
 #include <QPainter>
+#include <QMenuBar>
+#include <QMenu>
+#include <QDebug>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 class Widget : public QWidget
 {
 public:
-    explicit Widget(QColor c)
+    explicit Widget(QColor c, bool showButtons = false)
         : color(c)
     {
         setMinimumSize(300, 300);
+        if (showButtons) {
+            auto lay = new QVBoxLayout(this);
+            auto button1 = new QPushButton("close()");
+            auto button2 = new QPushButton("setVisible(false)");
+            auto button3 = new QPushButton("hide()");
+            lay->addStretch();
+            lay->addWidget(button1);
+            lay->addWidget(button2);
+            lay->addWidget(button3);
+
+            connect(button1, &QPushButton::clicked, this, [this] {
+                dockWidget()->close();
+            });
+
+            connect(button2, &QPushButton::clicked, this, [this] {
+                dockWidget()->setVisible(false);
+            });
+
+            connect(button3, &QPushButton::clicked, this, [this] {
+                dockWidget()->hide();
+            });
+        }
+    }
+
+    QDockWidget *dockWidget() const
+    {
+        return qobject_cast<QDockWidget *>(parentWidget());
     }
 
     void paintEvent(QPaintEvent *) override
@@ -33,6 +65,17 @@ public:
     }
 
     QColor color;
+};
+
+class CustomDockWidget : public QDockWidget
+{
+public:
+    using QDockWidget::QDockWidget;
+    void closeEvent(QCloseEvent *ev) override
+    {
+        QDockWidget::closeEvent(ev);
+        qDebug() << "CustomDockWidget::closeEvent";
+    }
 };
 
 int main(int argc, char **argv)
@@ -48,11 +91,11 @@ int main(int argc, char **argv)
     KDDockWidgets::QtWidgets::MainWindow mainWindow("mainwindow1", KDDockWidgets::MainWindowOption_QDockWidgets);
     mainWindow.resize(1000, 1000);
 
-    auto dock1 = new QDockWidget("d1", &mainWindow);
+    auto dock1 = new CustomDockWidget("d1", &mainWindow);
     auto dock2 = new QDockWidget("d2", &mainWindow);
     auto dock3 = new QDockWidget("d3", &mainWindow);
 
-    dock1->setWidget(new Widget(QColor("#9CAFB7")));
+    dock1->setWidget(new Widget(QColor("#9CAFB7"), true));
     dock2->setWidget(new Widget(QColor("#F6CA83")));
     dock3->setWidget(new Widget(QColor("#ADB993")));
 
@@ -60,6 +103,12 @@ int main(int argc, char **argv)
     mainWindow.addDockWidget_legacy(Qt::RightDockWidgetArea, dock2);
     mainWindow.addDockWidget_legacy(Qt::BottomDockWidgetArea, dock3);
     mainWindow.setCentralWidget_legacy(new Widget(Qt::black));
+
+    QMenuBar *menuBar = mainWindow.menuBar();
+    QMenu *toggleMenu = menuBar->addMenu("Toggle");
+    toggleMenu->addAction(dock1->toggleViewAction());
+    toggleMenu->addAction(dock2->toggleViewAction());
+    toggleMenu->addAction(dock3->toggleViewAction());
 
     mainWindow.show();
 
