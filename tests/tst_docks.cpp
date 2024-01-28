@@ -830,27 +830,43 @@ KDDW_QCORO_TASK tst_closeDockWidgets()
 
 KDDW_QCORO_TASK tst_closeReason()
 {
-    EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("d1");
-    dock1->open();
-    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
+    QByteArray saved;
 
-    // TitleBar close
-    dock1->titleBar()->onCloseClicked();
-    CHECK(!dock1->isOpen());
-    CHECK_EQ(dock1->lastCloseReason(), CloseReason::TitleBarButton);
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("d1");
+        dock1->open();
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
 
-    // Programattic close
-    dock1->open();
-    dock1->close();
-    CHECK(!dock1->isOpen());
-    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
+        // TitleBar close
+        dock1->titleBar()->onCloseClicked();
+        CHECK(!dock1->isOpen());
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::TitleBarButton);
 
-    // Close via QAction
-    dock1->open();
-    dock1->toggleAction()->setChecked(false);
-    CHECK(!dock1->isOpen());
-    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Action);
+        // Programattic close
+        dock1->open();
+        dock1->close();
+        CHECK(!dock1->isOpen());
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
+
+        // Close via QAction
+        dock1->open();
+        dock1->toggleAction()->setChecked(false);
+        CHECK(!dock1->isOpen());
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::Action);
+
+        LayoutSaver saver;
+        saved = saver.serializeLayout();
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("d1");
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
+        LayoutSaver restorer;
+        restorer.restoreLayout(saved);
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::Action);
+    }
 
     KDDW_TEST_RETURN(true);
 }

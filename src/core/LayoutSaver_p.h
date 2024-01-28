@@ -135,6 +135,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     QString uniqueName;
     Vector<QString> affinities;
     LayoutSaver::Position lastPosition;
+    CloseReason lastCloseReason;
 
 private:
     DockWidget()

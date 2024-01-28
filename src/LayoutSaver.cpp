@@ -330,6 +330,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::DockWidget &dw)
         json["affinities"] = dw.affinities;
     json["uniqueName"] = dw.uniqueName;
     json["lastPosition"] = dw.lastPosition;
+    json["lastCloseReason"] = dw.lastCloseReason;
 }
 void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 {
@@ -342,6 +343,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
         KDDW_ERROR("Unexpected no uniqueName for dockWidget");
 
     dw.lastPosition = jsonValue(json, "lastPosition", LayoutSaver::Position());
+    dw.lastCloseReason = jsonValue(json, "lastCloseReason", CloseReason::Unspecified);
 }
 
 void to_json(nlohmann::json &json, const typename LayoutSaver::DockWidget::List &list)

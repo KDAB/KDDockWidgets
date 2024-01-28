@@ -929,6 +929,8 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
             KDDW_ERROR("Affinity name changed from {} to {}", dw->affinities(), "; to", saved->affinities);
             dw->d->affinities = saved->affinities;
         }
+
+        dw->dptr()->m_lastCloseReason = saved->lastCloseReason;
     }
 
     return dw;
@@ -985,6 +987,7 @@ LayoutSaver::DockWidget::Ptr DockWidget::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());
     ptr->affinities = q->affinities();
+    ptr->lastCloseReason = m_lastCloseReason;
 
     return ptr;
 }
