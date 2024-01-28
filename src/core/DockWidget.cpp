@@ -1082,14 +1082,27 @@ void DockWidget::Private::saveLastFloatingGeometry()
 
 void DockWidget::Private::onCloseEvent(CloseEvent *e)
 {
+    if (m_inCloseEvent)
+        return;
+    ScopedValueRollback guard(m_inCloseEvent, true);
+
     e->accept(); // By default we accept, means DockWidget closes
+
+    if (auto v = q->view()) {
+        // Give a chance for QtWidgets::DockWidgets::closeEvent(ev) to ignore
+        Platform::instance()->sendEvent(v, e);
+        if (!e->isAccepted())
+            return;
+    }
+
     if (guest) {
         // Give a chance for the widget to ignore
         Platform::instance()->sendEvent(guest.get(), e);
+        if (!e->isAccepted())
+            return;
     }
 
-    if (e->isAccepted())
-        close();
+    close();
 }
 
 void DockWidget::Private::setIsOpen(bool is)

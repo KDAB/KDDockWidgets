@@ -5,6 +5,7 @@
   - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
   - MDI: Don't show resize handles if widget is fixed size
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
+  - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
   - Planned: #448 Implement docking indicator for MDI area
 
 * v2.0.0 (05 December 2023)

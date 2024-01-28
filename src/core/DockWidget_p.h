@@ -279,6 +279,7 @@ public:
     bool m_isOpen = false;
     bool m_inOpenSetter = false;
     bool m_inClose = false;
+    bool m_inCloseEvent = false;
     bool m_removingFromOverlay = false;
     bool m_wasRestored = false;
     Size m_lastOverlayedSize = Size(0, 0);

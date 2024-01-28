@@ -62,6 +62,17 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
+// For testing overriding DockWidget::closeEvent()
+// You can override the guest's closeEvent() instead. That's already tested elsewhere.
+class NonClosableDockWidget : public QtWidgets::DockWidget
+{
+public:
+    using QtWidgets::DockWidget::DockWidget;
+    void closeEvent(QCloseEvent *ev) override
+    {
+        ev->ignore();
+    }
+};
 
 inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
                                           DockWidgetOptions options = {},
@@ -175,6 +186,7 @@ private Q_SLOTS:
     void addDockWidgetToSide2();
     void userHiddenButton();
     void tst_tabAsCentralWidget();
+    void tst_nonClosable();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2247,6 +2259,18 @@ void TestQtWidgets::tst_tabAsCentralWidget()
     m->addDockWidget(d1->dockWidget(), KDDockWidgets::Location_OnRight);
     m->addDockWidget(d2->dockWidget(), KDDockWidgets::Location_OnRight);
     m->addDockWidget(d3->dockWidget(), KDDockWidgets::Location_OnRight);
+}
+
+void TestQtWidgets::tst_nonClosable()
+{
+    EnsureTopLevelsDeleted e;
+    auto d1 = NonClosableDockWidget("d1");
+    d1.open();
+    QVERIFY(d1.isOpen());
+    d1.close();
+    QVERIFY(d1.isOpen());
+    d1.forceClose();
+    QVERIFY(!d1.isOpen());
 }
 
 int main(int argc, char *argv[])
