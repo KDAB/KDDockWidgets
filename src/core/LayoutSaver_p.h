@@ -66,7 +66,7 @@ struct LayoutSaver::Placeholder
 
 ///@brief contains info about how a main window is scaled.
 /// Used for RestoreOption_RelativeToMainWindow
-struct LayoutSaver::ScalingInfo
+struct DOCKS_EXPORT LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
     explicit ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo, int screenIndex);
@@ -90,7 +90,7 @@ struct LayoutSaver::ScalingInfo
     bool mainWindowChangedScreen = false;
 };
 
-struct LayoutSaver::Position
+struct DOCKS_EXPORT LayoutSaver::Position
 {
     Rect lastFloatingGeometry;
     int tabIndex;
@@ -153,7 +153,7 @@ inline Vector<QString> dockWidgetNames(const LayoutSaver::DockWidget::List &list
     return result;
 }
 
-struct LayoutSaver::Group
+struct DOCKS_EXPORT LayoutSaver::Group
 {
     bool isValid() const;
 
@@ -177,7 +177,7 @@ struct LayoutSaver::Group
     LayoutSaver::DockWidget::List dockWidgets;
 };
 
-struct LayoutSaver::MultiSplitter
+struct DOCKS_EXPORT LayoutSaver::MultiSplitter
 {
     bool isValid() const;
 
@@ -189,7 +189,7 @@ struct LayoutSaver::MultiSplitter
     std::unordered_map<QString, LayoutSaver::Group> groups;
 };
 
-struct LayoutSaver::FloatingWindow
+struct DOCKS_EXPORT LayoutSaver::FloatingWindow
 {
     typedef Vector<LayoutSaver::FloatingWindow> List;
 
@@ -218,7 +218,7 @@ struct LayoutSaver::FloatingWindow
     KDDockWidgets::WindowState windowState = KDDockWidgets::WindowState::None;
 };
 
-struct LayoutSaver::MainWindow
+struct DOCKS_EXPORT LayoutSaver::MainWindow
 {
 public:
     typedef Vector<LayoutSaver::MainWindow> List;
@@ -259,7 +259,7 @@ struct LayoutSaver::ScreenInfo
     double devicePixelRatio;
 };
 
-struct DOCKS_EXPORT_FOR_UNIT_TESTS LayoutSaver::Layout
+struct DOCKS_EXPORT LayoutSaver::Layout
 {
 public:
     Layout()
@@ -314,7 +314,7 @@ private:
     KDDW_DELETE_COPY_CTOR(Layout)
 };
 
-class LayoutSaver::Private
+class DOCKS_EXPORT LayoutSaver::Private
 {
 public:
     struct RAIIIsRestoring
