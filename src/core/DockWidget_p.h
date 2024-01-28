@@ -288,7 +288,7 @@ public:
     KDBindings::ScopedConnection m_windowDeactivatedConnection;
     KDBindings::ScopedConnection m_toggleActionConnection;
     KDBindings::ScopedConnection m_floatActionConnection;
-    CloseReason m_lastCloseReason = CloseReason::Unspecifised;
+    CloseReason m_lastCloseReason = CloseReason::Unspecified;
 };
 
 }

@@ -1013,7 +1013,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
                                                   // widget is inserted into a tab widget it might get
                                                   // hide events, ignore those. The Dock Widget is open.
                 m_processingToggleAction = true;
-                CloseReasonSetter reason(enabled ? CloseReason::Unspecifised : CloseReason::Action);
+                CloseReasonSetter reason(enabled ? CloseReason::Unspecified : CloseReason::Action);
                 toggle(enabled);
                 toggleAction->blockSignals(false);
                 m_processingToggleAction = false;

@@ -40,7 +40,7 @@ public:
 
     int m_numLayoutSavers = 0;
 
-    CloseReason m_currentCloseReason = CloseReason::Unspecifised;
+    CloseReason m_currentCloseReason = CloseReason::Unspecified;
 };
 
 }

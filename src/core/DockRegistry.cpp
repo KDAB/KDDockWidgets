@@ -857,5 +857,5 @@ CloseReasonSetter::CloseReasonSetter(CloseReason reason)
 
 CloseReasonSetter::~CloseReasonSetter()
 {
-    DockRegistry::self()->setCurrentCloseReason(CloseReason::Unspecifised);
+    DockRegistry::self()->setCurrentCloseReason(CloseReason::Unspecified);
 }

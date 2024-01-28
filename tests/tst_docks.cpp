@@ -833,7 +833,7 @@ KDDW_QCORO_TASK tst_closeReason()
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("d1");
     dock1->open();
-    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecifised);
+    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
 
     // TitleBar close
     dock1->titleBar()->onCloseClicked();
@@ -844,7 +844,7 @@ KDDW_QCORO_TASK tst_closeReason()
     dock1->open();
     dock1->close();
     CHECK(!dock1->isOpen());
-    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecifised);
+    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecified);
 
     // Close via QAction
     dock1->open();
