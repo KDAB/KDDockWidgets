@@ -94,6 +94,8 @@ int main(int argc, char **argv)
     auto dock1 = new CustomDockWidget("d1", &mainWindow);
     auto dock2 = new QDockWidget("d2", &mainWindow);
     auto dock3 = new QDockWidget("d3", &mainWindow);
+    auto hiddenDock = new QDockWidget("hiddenDock", &mainWindow);
+    hiddenDock->setVisible(false);
 
     dock1->setWidget(new Widget(QColor("#9CAFB7"), true));
     dock2->setWidget(new Widget(QColor("#F6CA83")));
@@ -102,6 +104,7 @@ int main(int argc, char **argv)
     mainWindow.addDockWidget_legacy(Qt::LeftDockWidgetArea, dock1);
     mainWindow.addDockWidget_legacy(Qt::RightDockWidgetArea, dock2);
     mainWindow.addDockWidget_legacy(Qt::BottomDockWidgetArea, dock3);
+    mainWindow.addDockWidget_legacy(Qt::BottomDockWidgetArea, hiddenDock);
     mainWindow.setCentralWidget_legacy(new Widget(Qt::black));
 
     QMenuBar *menuBar = mainWindow.menuBar();
@@ -109,6 +112,7 @@ int main(int argc, char **argv)
     toggleMenu->addAction(dock1->toggleViewAction());
     toggleMenu->addAction(dock2->toggleViewAction());
     toggleMenu->addAction(dock3->toggleViewAction());
+    toggleMenu->addAction(hiddenDock->toggleViewAction());
 
     mainWindow.show();
 
