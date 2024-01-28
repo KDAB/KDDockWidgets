@@ -438,6 +438,9 @@ public:
     /// @brief Returns whether this widget has the LayoutSaverOption::Skip flag
     bool skipsRestore() const;
 
+    /// Returns the last reason why the dock widget was closed
+    CloseReason lastCloseReason() const;
+
     /// @brief If this dock widget is floating, then sets its geometry to @p geo.
     ///
     /// If this dock widget is hidden then it stores the geometry so it can be used the next

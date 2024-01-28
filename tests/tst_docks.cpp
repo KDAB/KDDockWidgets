@@ -828,6 +828,33 @@ KDDW_QCORO_TASK tst_closeDockWidgets()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_closeReason()
+{
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("d1");
+    dock1->open();
+    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecifised);
+
+    // TitleBar close
+    dock1->titleBar()->onCloseClicked();
+    CHECK(!dock1->isOpen());
+    CHECK_EQ(dock1->lastCloseReason(), CloseReason::TitleBarButton);
+
+    // Programattic close
+    dock1->open();
+    dock1->close();
+    CHECK(!dock1->isOpen());
+    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Unspecifised);
+
+    // Close via QAction
+    dock1->open();
+    dock1->toggleAction()->setChecked(false);
+    CHECK(!dock1->isOpen());
+    CHECK_EQ(dock1->lastCloseReason(), CloseReason::Action);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_layoutEqually()
 {
     EnsureTopLevelsDeleted e;
@@ -5642,6 +5669,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_restoreNonExistingDockWidget),
         TEST(tst_shutdown),
         TEST(tst_closeDockWidgets),
+        TEST(tst_closeReason),
         TEST(tst_layoutEqually),
         TEST(tst_doubleClose),
         TEST(tst_maximizeAndRestore),

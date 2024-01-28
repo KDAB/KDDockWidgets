@@ -42,7 +42,6 @@ class FocusScope;
 struct WindowBeingDragged;
 }
 
-
 class MainWindowMDI;
 
 class DOCKS_EXPORT DockRegistry : public Core::Object, public Core::EventFilterInterface
@@ -237,6 +236,9 @@ public:
     ///@brief Returns the Group which is being resized in a MDI layout. nullptr if none
     Core::Group *groupInMDIResize() const;
 
+    void setCurrentCloseReason(CloseReason);
+    CloseReason currentCloseReason();
+
     class Private;
     Private *dptr() const;
 
@@ -277,6 +279,16 @@ private:
 
     // To honour Config::Flag_AutoHideAsTabGroups
     Core::SideBarGroupings *const m_sideBarGroupings;
+};
+
+struct CloseReasonSetter
+{
+    CloseReasonSetter(CloseReason);
+    ~CloseReasonSetter();
+
+private:
+    CloseReasonSetter(CloseReasonSetter &) = delete;
+    CloseReasonSetter &operator=(CloseReason &) = delete;
 };
 
 }

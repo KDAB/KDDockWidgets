@@ -39,6 +39,8 @@ public:
     KDBindings::ConnectionHandle m_connection;
 
     int m_numLayoutSavers = 0;
+
+    CloseReason m_currentCloseReason = CloseReason::Unspecifised;
 };
 
 }

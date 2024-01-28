@@ -566,6 +566,11 @@ bool DockWidget::skipsRestore() const
     return d->layoutSaverOptions & LayoutSaverOption::Skip;
 }
 
+CloseReason DockWidget::lastCloseReason() const
+{
+    return d->m_lastCloseReason;
+}
+
 void DockWidget::setFloatingGeometry(Rect geometry)
 {
     if (isOpen() && isFloating()) {
@@ -795,6 +800,7 @@ void DockWidget::Private::close()
     if (m_isPersistentCentralDockWidget)
         return;
 
+    m_lastCloseReason = DockRegistry::self()->currentCloseReason();
     setIsOpen(false);
 
     // If it's overlayed and we're closing, we need to close the overlay
@@ -1007,6 +1013,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
                                                   // widget is inserted into a tab widget it might get
                                                   // hide events, ignore those. The Dock Widget is open.
                 m_processingToggleAction = true;
+                CloseReasonSetter reason(enabled ? CloseReason::Unspecifised : CloseReason::Action);
                 toggle(enabled);
                 toggleAction->blockSignals(false);
                 m_processingToggleAction = false;

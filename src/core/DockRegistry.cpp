@@ -263,6 +263,16 @@ Core::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
+void DockRegistry::setCurrentCloseReason(CloseReason reason)
+{
+    d->m_currentCloseReason = reason;
+}
+
+CloseReason DockRegistry::currentCloseReason()
+{
+    return d->m_currentCloseReason;
+}
+
 DockRegistry::Private *DockRegistry::dptr() const
 {
     return d;
@@ -838,4 +848,14 @@ DockWidget::List &SideBarGroupings::groupingByRef(DockWidget *dw)
     }
 
     return empty;
+}
+
+CloseReasonSetter::CloseReasonSetter(CloseReason reason)
+{
+    DockRegistry::self()->setCurrentCloseReason(reason);
+}
+
+CloseReasonSetter::~CloseReasonSetter()
+{
+    DockRegistry::self()->setCurrentCloseReason(CloseReason::Unspecifised);
 }

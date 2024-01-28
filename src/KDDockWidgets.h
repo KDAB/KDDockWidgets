@@ -379,6 +379,12 @@ enum class WindowState {
 };
 Q_DECLARE_FLAGS(WindowStates, WindowState)
 
+/// @internal
+enum class CloseReason {
+    Unspecifised = 0, /// probably programatically
+    TitleBarButton = 1, /// User clicked titlebar close button
+    Action = 2 /// User clicked menu with QAction
+};
 
 /// @brief Initializes the desired frontend
 /// This function should be called before using any docking.
