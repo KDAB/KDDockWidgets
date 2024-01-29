@@ -402,7 +402,7 @@ void TitleBar::onCloseClicked()
                 dw->view()->close();
             } else {
                 // Doesn't happen
-                KDDW_ERROR("Frame with no dock widgets");
+                KDDW_ERROR("Group with no dock widgets");
             }
         } else {
             if (m_group->isTheOnlyGroup() && m_group->isInFloatingWindow()) {
@@ -419,7 +419,7 @@ void TitleBar::onCloseClicked()
                     dw->view()->close();
                 } else {
                     // Doesn't happen
-                    KDDW_ERROR("Frame with no dock widgets");
+                    KDDW_ERROR("Group with no dock widgets");
                 }
             } else {
                 m_floatingWindow->view()->close();
