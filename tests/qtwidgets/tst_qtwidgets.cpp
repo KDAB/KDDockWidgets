@@ -179,6 +179,7 @@ private Q_SLOTS:
     void tst_restoreWithIncompleteFactory();
     void tst_deleteDockWidget();
     void tst_standaloneTitleBar();
+    void tst_titleBarTitle();
     void tst_widgetAddQAction();
     void tst_currentTabChanged();
     void tst_moveTab();
@@ -1891,6 +1892,21 @@ void TestQtWidgets::tst_standaloneTitleBar()
     QVERIFY(window.isVisible());
     titleBar.asTitleBarController()->onCloseClicked();
     QVERIFY(!window.isVisible());
+}
+
+void TestQtWidgets::tst_titleBarTitle()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
+    m1->addDockWidget(dock1->asDockWidgetController(), Location_OnBottom);
+
+    auto tb = dock1->actualTitleBar();
+    QCOMPARE(dock1->asDockWidgetController()->title(), "MyDock1");
+    QCOMPARE(tb->title(), "MyDock1");
+
+    dock1->setTitle("Other");
+    QCOMPARE(tb->title(), "Other");
 }
 
 void TestQtWidgets::tst_widgetAddQAction()
