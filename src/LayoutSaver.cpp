@@ -801,6 +801,36 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &seriali
     return names;
 }
 
+Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QString &jsonFilename)
+{
+    bool ok = false;
+    const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
+
+    if (!ok)
+        return {};
+
+    return sideBarDockWidgetsInLayout(data);
+}
+
+Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QByteArray &serialized)
+{
+    LayoutSaver::Layout layout;
+    if (!layout.fromJson(serialized))
+        return {};
+
+    Vector<QString> names;
+    names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
+
+    for (auto mainWindow : std::as_const(layout.mainWindows)) {
+        for (auto it : mainWindow.dockWidgetsPerSideBar) {
+            for (auto name : it.second)
+                names.push_back(name);
+        }
+    }
+
+    return names;
+}
+
 namespace KDDockWidgets {
 void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 {

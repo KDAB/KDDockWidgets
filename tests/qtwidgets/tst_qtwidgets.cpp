@@ -781,6 +781,8 @@ void TestQtWidgets::tst_restoreSideBar()
     QVERIFY(!dw1->isFloating());
     QVERIFY(dw1->isInMainWindow());
     QVERIFY(!m1->anySideBarIsVisible());
+
+    QCOMPARE(LayoutSaver::sideBarDockWidgetsInLayout(serialized), { "1" });
 }
 
 void TestQtWidgets::tst_openWhenOnSideBar()

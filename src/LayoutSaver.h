@@ -123,6 +123,9 @@ public:
     static Vector<QString> openedDockWidgetsInLayout(const QString &jsonFilename);
     static Vector<QString> openedDockWidgetsInLayout(const QByteArray &serialized);
 
+    static Vector<QString> sideBarDockWidgetsInLayout(const QString &jsonFilename);
+    static Vector<QString> sideBarDockWidgetsInLayout(const QByteArray &serialized);
+
     /// @internal Returns the private-impl. Not intended for public use.
     class Private;
     Private *dptr() const;
