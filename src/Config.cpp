@@ -26,6 +26,7 @@
 #include "core/Separator.h"
 #include "core/Platform.h"
 #include "core/View.h"
+#include "core/Logging_p.h"
 
 #include <iostream>
 #include <limits>
@@ -34,11 +35,21 @@ using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets {
 
+static ViewFactory *createDefaultViewFactory()
+{
+    if (auto platform = Platform::instance())
+        return platform->createDefaultViewFactory();
+
+    KDDW_ERROR("No Platform found. Forgot to call KDDockWidgets::initFrontend(<platform>) ?");
+    std::terminate();
+    return nullptr;
+}
+
 class Config::Private
 {
 public:
     Private()
-        : m_viewFactory(Platform::instance()->createDefaultViewFactory())
+        : m_viewFactory(createDefaultViewFactory())
     {
     }
 
