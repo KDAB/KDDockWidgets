@@ -1465,7 +1465,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 
     insertItem(container, index, DefaultSizeMode::NoDefaultSizeMode);
     m_children.removeOne(leaf);
-    container->setGeometry(leaf->isVisible() ? leaf->geometry() : QRect());
+    container->setGeometry(leaf->isVisible() ? leaf->geometry() : Rect());
     KDDockWidgets::InitialOption opt(DefaultSizeMode::NoDefaultSizeMode);
     if (!leaf->isVisible())
         opt.visibility = InitialVisibilityOption::StartHidden;
