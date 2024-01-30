@@ -2124,7 +2124,7 @@ KDDW_QCORO_TASK tst_itemSerialization()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_outermostNeighbor()
+KDDW_QCORO_TASK tst_outermostVisibleNeighbor()
 {
     DeleteViews deleteViews;
 
@@ -2164,6 +2164,50 @@ KDDW_QCORO_TASK tst_outermostNeighbor()
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), itemTop);
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_outermostNeighbor()
+{
+    DeleteViews deleteViews;
+
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    CHECK(!root->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
+
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item0 = createItem();
+    auto itemTop = createItem();
+
+    root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK(item1->parentBoxContainer() == root.get());
+    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false));
+    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
+
+    root->insertItem(item2, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item2);
+
+    root->insertItem(item3, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+
+    root->insertItem(item0, Location_OnLeft, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+
+    root->insertItem(itemTop, Location_OnTop, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), itemTop);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
 
     KDDW_TEST_RETURN(true);
 }
@@ -2262,6 +2306,7 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_sizingInfoSerialization),
     TEST(tst_itemSerialization),
     TEST(tst_relayoutIfNeeded),
+    TEST(tst_outermostVisibleNeighbor),
     TEST(tst_outermostNeighbor),
 };
 

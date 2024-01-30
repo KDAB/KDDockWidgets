@@ -235,7 +235,7 @@ public:
     /// Returns the parent container, but casted to ItemBoxContainer
     ItemBoxContainer *parentBoxContainer() const;
 
-    int indexInAncestor(ItemContainer *) const;
+    int indexInAncestor(ItemContainer *, bool visibleOnly = true) const;
 
     /// Returns the 1st ancestor container that has the desired orientation
     /// Example:
@@ -281,8 +281,8 @@ public:
 
     static bool s_silenceSanityChecks;
 
-    Item *outermostNeighbor(Location) const;
-    Item *outermostNeighbor(Side, Qt::Orientation) const;
+    Item *outermostNeighbor(Location, bool visibleOnly = true) const;
+    Item *outermostNeighbor(Side, Qt::Orientation, bool visibleOnly) const;
 
     virtual Size minSize() const;
     virtual Size maxSizeHint() const;

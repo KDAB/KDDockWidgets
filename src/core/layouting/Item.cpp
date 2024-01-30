@@ -454,13 +454,13 @@ ItemBoxContainer *Item::parentBoxContainer() const
     return object_cast<ItemBoxContainer *>(m_parent);
 }
 
-int Item::indexInAncestor(ItemContainer *ancestor) const
+int Item::indexInAncestor(ItemContainer *ancestor, bool visibleOnly) const
 {
     auto it = this;
     while (auto p = it->parentBoxContainer()) {
         if (p == ancestor) {
             // We found the ancestor
-            const auto children = ancestor->visibleChildren();
+            const auto children = visibleOnly ? ancestor->visibleChildren() : ancestor->childItems();
             return children.indexOf(const_cast<Item *>(it));
         }
         it = p;
@@ -514,7 +514,7 @@ void Item::setMaxSizeHint(Size sz)
     }
 }
 
-Item *Item::outermostNeighbor(Location loc) const
+Item *Item::outermostNeighbor(Location loc, bool visibleOnly) const
 {
     Side side;
     Qt::Orientation o;
@@ -540,16 +540,16 @@ Item *Item::outermostNeighbor(Location loc) const
         break;
     }
 
-    return outermostNeighbor(side, o);
+    return outermostNeighbor(side, o, visibleOnly);
 }
 
-Item *Item::outermostNeighbor(Side side, Qt::Orientation o) const
+Item *Item::outermostNeighbor(Side side, Qt::Orientation o, bool visibleOnly) const
 {
     auto p = parentBoxContainer();
     if (!p)
         return nullptr;
 
-    const auto siblings = p->visibleChildren();
+    const auto siblings = visibleOnly ? p->visibleChildren() : p->m_children;
     const int index = siblings.indexOf(const_cast<Item *>(this));
     if (index == -1 || siblings.isEmpty()) {
         // Doesn't happen
@@ -569,7 +569,7 @@ Item *Item::outermostNeighbor(Side side, Qt::Orientation o) const
             if (auto siblingContainer = object_cast<ItemBoxContainer *>(sibling)) {
                 if (siblingContainer->orientation() == o) {
                     // case of 2 sibling containers with the same orientation, it's redundant.
-                    return siblingContainer->outermostNeighbor(side, o);
+                    return siblingContainer->outermostNeighbor(side, o, visibleOnly);
                 }
             }
 
@@ -577,13 +577,13 @@ Item *Item::outermostNeighbor(Side side, Qt::Orientation o) const
         }
     } else {
         if (auto ancestor = p->ancestorBoxContainerWithOrientation(o)) {
-            const int indexInAncestor = this->indexInAncestor(ancestor);
+            const int indexInAncestor = this->indexInAncestor(ancestor, visibleOnly);
             if (indexInAncestor == -1) {
                 // Doesn't happen
                 KDDW_ERROR("Item::outermostNeighbor: item not in ancestor's child list");
                 return nullptr;
             } else {
-                return ancestor->childItems()[index]->outermostNeighbor(side, o);
+                return ancestor->childItems()[index]->outermostNeighbor(side, o, visibleOnly);
             }
         } else {
             return nullptr;
