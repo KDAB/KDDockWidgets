@@ -1465,7 +1465,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 
     insertItem(container, index, DefaultSizeMode::NoDefaultSizeMode);
     m_children.removeOne(leaf);
-    container->setGeometry(leaf->geometry());
+    container->setGeometry(leaf->isVisible() ? leaf->geometry() : QRect());
     KDDockWidgets::InitialOption opt(DefaultSizeMode::NoDefaultSizeMode);
     if (!leaf->isVisible())
         opt.visibility = InitialVisibilityOption::StartHidden;
@@ -1515,7 +1515,20 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
         parent->insertItem(item, indexInParent, option);
     } else {
         ItemBoxContainer *container = parent->convertChildToContainer(relativeTo);
+
+        const bool relativeToHiddenCase = !container->isVisible() && !option.startsHidden();
+        if (relativeToHiddenCase) {
+            // We're inserting into an invisible container.
+            // Historically we never allowed to insert a visible item relative to an invisible one
+            // As a workaround, hide the new item first, then restore its visibility, which will
+            // trigger the parent layout propagating size and shrinking its neighbours.
+            option.visibility = InitialVisibilityOption::StartHidden;
+        }
+
         container->insertItem(item, loc, option);
+
+        if (relativeToHiddenCase)
+            container->restoreChild(item, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
     }
 }
 

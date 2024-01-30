@@ -2228,8 +2228,9 @@ KDDW_QCORO_TASK tst_relativeToHidden()
     root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
     CHECK(!item1->isVisible());
 
+    CHECK(root->checkSanity());
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
-
+    CHECK(root->checkSanity());
     CHECK(!item1->isVisible());
     CHECK(item2->isVisible());
 
