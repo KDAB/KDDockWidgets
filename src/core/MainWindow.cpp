@@ -133,61 +133,62 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
     if (!dockWidget || location == Location_None || isMDI())
         return;
 
-    if (d->m_options & MainWindowOption_HasCentralFrame) {
-        Group *group = dropArea()->centralGroup();
-        if (!group || !group->layoutItem()) {
-            // Doesn't happen
-            KDDW_ERROR("MainWindow::addDockWidgetToSide: no group");
-            return;
+    if (!(d->m_options & MainWindowOption_HasCentralFrame)) {
+        KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralFrame or MainWindowOption_HasCentralWidget");
+        return;
+    }
+
+    Group *group = dropArea()->centralGroup();
+    if (!group || !group->layoutItem()) {
+        // Doesn't happen
+        KDDW_ERROR("MainWindow::addDockWidgetToSide: no group");
+        return;
+    }
+
+    auto locToUse = [](Location loc) {
+        switch (loc) {
+        case Location_None:
+            return Location_None;
+        case Location_OnLeft:
+            return Location_OnBottom;
+        case Location_OnTop:
+            return Location_OnRight;
+        case Location_OnRight:
+            return Location_OnBottom;
+        case Location_OnBottom:
+            return Location_OnRight;
         }
 
-        auto locToUse = [](Location loc) {
-            switch (loc) {
-            case Location_None:
-                return Location_None;
-            case Location_OnLeft:
-                return Location_OnBottom;
-            case Location_OnTop:
-                return Location_OnRight;
-            case Location_OnRight:
-                return Location_OnBottom;
-            case Location_OnBottom:
-                return Location_OnRight;
-            }
+        return Location_None;
+    };
 
-            return Location_None;
-        };
-
-        Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location);
-        if (neighbor) {
-            if (neighbor->isContainer()) {
-                auto container = object_cast<ItemBoxContainer *>(neighbor);
-                auto children = container->visibleChildren();
-                if (children.isEmpty()) {
-                    // Doesn't happen
-                    KDDW_ERROR("MainWindow::addDockWidgetToSide: no children");
-                } else {
-                    if (auto relativeToGroup = Group::fromItem(children.last())) {
-                        // There's an existing container with opposite orientation, add there but to end
-                        dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
-                    } else {
-                        // Doesn't happen
-                        KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup.");
-                    }
-                }
+    Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location);
+    if (neighbor) {
+        if (neighbor->isContainer()) {
+            auto container = object_cast<ItemBoxContainer *>(neighbor);
+            auto children = container->visibleChildren();
+            if (children.isEmpty()) {
+                // Doesn't happen
+                KDDW_ERROR("MainWindow::addDockWidgetToSide: no children");
             } else {
-                if (auto relativeToGroup = Group::fromItem(neighbor)) {
+                if (auto relativeToGroup = Group::fromItem(children.last())) {
+                    // There's an existing container with opposite orientation, add there but to end
                     dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
                 } else {
                     // Doesn't happen
-                    KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup");
+                    KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup.");
                 }
             }
         } else {
-            addDockWidget(dockWidget, location, nullptr, initialOption);
+            if (auto relativeToGroup = Group::fromItem(neighbor)) {
+                dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
+            } else {
+                // Doesn't happen
+                KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup");
+            }
         }
     } else {
-        KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralFrame or MainWindowOption_HasCentralWidget");
+        addDockWidget(dockWidget, location, nullptr, initialOption);
     }
 }
 
