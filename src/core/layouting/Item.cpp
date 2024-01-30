@@ -1466,7 +1466,11 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
     insertItem(container, index, DefaultSizeMode::NoDefaultSizeMode);
     m_children.removeOne(leaf);
     container->setGeometry(leaf->geometry());
-    container->insertItem(leaf, Location_OnTop, DefaultSizeMode::NoDefaultSizeMode);
+    KDDockWidgets::InitialOption opt(DefaultSizeMode::NoDefaultSizeMode);
+    if (!leaf->isVisible())
+        opt.visibility = InitialVisibilityOption::StartHidden;
+
+    container->insertItem(leaf, Location_OnTop, opt);
     itemsChanged.emit();
     d->updateSeparators_recursive();
 

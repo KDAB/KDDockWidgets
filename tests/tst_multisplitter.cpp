@@ -2212,6 +2212,39 @@ KDDW_QCORO_TASK tst_outermostNeighbor()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_relativeToHidden()
+{
+    // Tests that we can insert relative to an hidden item
+
+    DeleteViews deleteViews;
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    auto item0 = createItem();
+    auto item1 = createItem();
+    auto item2 = createItem();
+
+    root->insertItem(item0, Location_OnRight);
+    root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK(!item1->isVisible());
+
+    ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
+
+    CHECK(!item1->isVisible());
+    CHECK(item2->isVisible());
+
+    CHECK_EQ(root->childItems().size(), 2);
+    auto innerContainer = root->childItems().constLast()->asBoxContainer();
+    CHECK(innerContainer);
+
+    CHECK_EQ(innerContainer->childItems().size(), 2);
+    CHECK(innerContainer->isVertical());
+    CHECK_EQ(innerContainer->childItems()[0], item1);
+    CHECK_EQ(innerContainer->childItems()[1], item2);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_relayoutIfNeeded()
 {
     DeleteViews deleteViews;
@@ -2308,6 +2341,7 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_relayoutIfNeeded),
     TEST(tst_outermostVisibleNeighbor),
     TEST(tst_outermostNeighbor),
+    TEST(tst_relativeToHidden),
 };
 
 #include "tests_main.h"
