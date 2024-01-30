@@ -201,6 +201,6 @@ void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *drop
     group->addTab(dock);
     dock->d->group()->setObjectName(dock->objectName());
 
-    dropArea->addWidget(group->view(), location, relativeTo);
+    dropArea->addWidget(group->view(), location, relativeTo ? relativeTo->layoutItem() : nullptr);
     assert(dropArea->checkSanity());
 }

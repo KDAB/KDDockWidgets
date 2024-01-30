@@ -68,7 +68,7 @@ public:
     DropIndicatorOverlay *dropIndicatorOverlay() const;
     void addDockWidget(DockWidget *dw, KDDockWidgets::Location location, DockWidget *relativeTo,
                        InitialOption initialOption = {});
-    void _addDockWidget(DockWidget *dw, KDDockWidgets::Location location, Group *relativeTo,
+    void _addDockWidget(DockWidget *dw, KDDockWidgets::Location location, Item *relativeTo,
                         InitialOption initialOption);
 
     bool containsDockWidget(DockWidget *) const;
@@ -98,7 +98,7 @@ public:
      * @brief Adds a widget to this MultiSplitter.
      */
     void addWidget(View *widget, KDDockWidgets::Location location,
-                   Core::Group *relativeToGroup = nullptr,
+                   Core::Item *relativeToItem = nullptr,
                    InitialOption option = DefaultSizeMode::Fair);
 
     /**
@@ -154,7 +154,7 @@ private:
 
     // For debug/hardening
     bool validateInputs(View *widget, KDDockWidgets::Location location,
-                        const Core::Group *relativeToFrame, InitialOption option) const;
+                        const Core::Item *relativeToItem, InitialOption option) const;
 
 
     void setRootItem(Core::ItemBoxContainer *);

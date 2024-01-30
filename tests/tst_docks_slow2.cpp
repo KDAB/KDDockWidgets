@@ -91,7 +91,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
                  + item4->minSize().width());
 
     // Drop left of dock3
-    layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group());
+    layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group()->layoutItem());
 
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw2));
     CHECK_EQ(layout->layoutWidth(), oldContentsWidth);

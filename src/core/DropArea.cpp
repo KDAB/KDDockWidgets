@@ -191,11 +191,12 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
     }
 
     Core::Group *relativeToGroup = relativeTo ? relativeTo->d->group() : nullptr;
-    _addDockWidget(dw, location, relativeToGroup, option);
+    Core::Item *relativeToItem = relativeToGroup ? relativeToGroup->layoutItem() : nullptr;
+    _addDockWidget(dw, location, relativeToItem, option);
 }
 
 void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
-                              Core::Group *relativeToGroup, InitialOption option)
+                              Core::Item *relativeToItem, InitialOption option)
 {
     if (!dw || location == Location_None) {
         KDDW_ERROR("Invalid parameters {}, {}", ( void * )dw, location);
@@ -237,9 +238,9 @@ void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
     }
 
     if (option.startsHidden()) {
-        addWidget(dw->view(), location, relativeToGroup, option);
+        addWidget(dw->view(), location, relativeToItem, option);
     } else {
-        addWidget(group->view(), location, relativeToGroup, option);
+        addWidget(group->view(), location, relativeToItem, option);
     }
 
     if (hadSingleFloatingGroup && !hasSingleFloatingGroup()) {
@@ -444,7 +445,8 @@ bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location,
 
         auto group = new Core::Group();
         group->addTab(dock);
-        addWidget(group->view(), location, relativeTo, DefaultSizeMode::FairButFloor);
+        Item *relativeToItem = relativeTo ? relativeTo->layoutItem() : nullptr;
+        addWidget(group->view(), location, relativeToItem, DefaultSizeMode::FairButFloor);
     } else if (auto floatingWindow = droppedWindow->asFloatingWindowController()) {
         if (!validateAffinity(floatingWindow))
             return false;
@@ -522,9 +524,8 @@ Core::Group *DropArea::createCentralGroup(MainWindowOptions options)
     return group;
 }
 
-
 bool DropArea::validateInputs(View *widget, Location location,
-                              const Core::Group *relativeToGroup, InitialOption option) const
+                              const Core::Item *relativeToItem, InitialOption option) const
 {
     if (!widget) {
         KDDW_ERROR("Widget is null");
@@ -545,9 +546,12 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    if (relativeToGroup && relativeToGroup->view()->equals(widget)) {
-        KDDW_ERROR("widget can't be relative to itself");
-        return false;
+    if (relativeToItem) {
+        auto relativeToGroup = Group::fromItem(relativeToItem);
+        if (relativeToGroup && relativeToGroup->view()->equals(widget)) {
+            KDDW_ERROR("widget can't be relative to itself");
+            return false;
+        }
     }
 
     Core::Item *item = itemForGroup(widget->asGroupController());
@@ -562,18 +566,16 @@ bool DropArea::validateInputs(View *widget, Location location,
         return false;
     }
 
-    const bool relativeToThis = relativeToGroup == nullptr;
-
-    Core::Item *relativeToItem = itemForGroup(relativeToGroup);
+    const bool relativeToThis = relativeToItem == nullptr;
     if (!relativeToThis && !containsItem(relativeToItem)) {
-        KDDW_ERROR("DropArea::addWidget: Doesn't contain relativeTo: relativeToGroup={}, relativeToItem{}, options={}", ( void * )relativeToGroup, "; relativeToItem=", ( void * )relativeToItem, option);
+        KDDW_ERROR("DropArea::addWidget: Doesn't contain relativeTo: relativeToItem{}, options={}", "; relativeToItem=", ( void * )relativeToItem, option);
         return false;
     }
 
     return true;
 }
 
-void DropArea::addWidget(View *w, Location location, Core::Group *relativeToGroup,
+void DropArea::addWidget(View *w, Location location, Core::Item *relativeToItem,
                          InitialOption option)
 {
 
@@ -587,10 +589,9 @@ void DropArea::addWidget(View *w, Location location, Core::Group *relativeToGrou
     }
 
     // Make some sanity checks:
-    if (!validateInputs(w, location, relativeToGroup, option))
+    if (!validateInputs(w, location, relativeToItem, option))
         return;
 
-    Core::Item *relativeToItem = itemForGroup(relativeToGroup);
     if (!relativeToItem)
         relativeToItem = d->m_rootItem;
 
@@ -635,7 +636,9 @@ void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location lo
                                 Core::Group *relativeToGroup, InitialOption option)
 {
     KDDW_DEBUG("DropArea::addMultiSplitter: {} {} {}", ( void * )sourceMultiSplitter, ( int )location, ( void * )relativeToGroup);
-    addWidget(sourceMultiSplitter->view(), location, relativeToGroup, option);
+    Item *relativeToItem = relativeToGroup ? relativeToGroup->layoutItem() : nullptr;
+
+    addWidget(sourceMultiSplitter->view(), location, relativeToItem, option);
 
     // Some widgets changed to/from floating
     updateFloatingActions();

@@ -227,11 +227,11 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
     auto fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock1->dptr()->group());
+    dropArea->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock1->dptr()->group()->layoutItem());
     dock2->setFloating(true);
     fw2 = dock2->floatingWindow();
 
-    dropArea->addWidget(fw2->dropArea()->view(), Location_OnRight, dock1->dptr()->group());
+    dropArea->addWidget(fw2->dropArea()->view(), Location_OnRight, dock1->dptr()->group()->layoutItem());
 
     layout->checkSanity();
     docks.at(0).createdDock->destroyLater();

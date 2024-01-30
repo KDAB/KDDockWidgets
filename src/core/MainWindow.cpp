@@ -171,21 +171,11 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
                 // Doesn't happen
                 KDDW_ERROR("MainWindow::addDockWidgetToSide: no children");
             } else {
-                if (auto relativeToGroup = Group::fromItem(children.last())) {
-                    // There's an existing container with opposite orientation, add there but to end
-                    dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
-                } else {
-                    // Doesn't happen
-                    KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup.");
-                }
+                // There's an existing container with opposite orientation, add there but to end
+                dropArea()->_addDockWidget(dockWidget, locToUse(location), children.last(), initialOption);
             }
         } else {
-            if (auto relativeToGroup = Group::fromItem(neighbor)) {
-                dropArea()->_addDockWidget(dockWidget, locToUse(location), relativeToGroup, initialOption);
-            } else {
-                // Doesn't happen
-                KDDW_ERROR("MainWindow::addDockWidgetToSide: no relativeToGroup");
-            }
+            dropArea()->_addDockWidget(dockWidget, locToUse(location), neighbor, initialOption);
         }
     } else {
         addDockWidget(dockWidget, location, nullptr, initialOption);
