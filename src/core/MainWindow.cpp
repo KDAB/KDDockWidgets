@@ -162,7 +162,7 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
         return Location_None;
     };
 
-    Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location);
+    Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location, /*visibleOnly=*/false);
     if (neighbor) {
         if (neighbor->isContainer()) {
             auto container = object_cast<ItemBoxContainer *>(neighbor);

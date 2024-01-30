@@ -189,6 +189,7 @@ private Q_SLOTS:
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
+    void addDockWidgetToSide3();
     void userHiddenButton();
     void tst_tabAsCentralWidget();
     void tst_nonClosable();
@@ -2219,7 +2220,7 @@ void TestQtWidgets::addDockWidgetToSide()
 
 void TestQtWidgets::addDockWidgetToSide2()
 {
-    // Tests with StartHidden
+    // Tests adding relative to a StartHidden
 
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
@@ -2233,9 +2234,32 @@ void TestQtWidgets::addDockWidgetToSide2()
 
     auto root = m1->layout()->rootItem()->asBoxContainer();
     QVERIFY(root->isHorizontal());
-
-    QEXPECT_FAIL("", "To be fixed", Continue);
     QCOMPARE(root->numChildren(), 2);
+}
+
+void TestQtWidgets::addDockWidgetToSide3()
+{
+    // Tests adding relative to a StartHidden but the new one is also hidden
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+
+    auto root = m1->layout()->rootItem()->asBoxContainer();
+    QVERIFY(root->isHorizontal());
+    QCOMPARE(root->numChildren(), 2);
+
+    d1->show();
+    d2->show();
+
+    auto inner = root->childItems()[1]->asBoxContainer();
+    QVERIFY(inner);
+    QVERIFY(inner->isVertical());
+    QCOMPARE(inner->numChildren(), 2);
+    QCOMPARE(inner->numVisibleChildren(), 2);
 }
 
 void TestQtWidgets::userHiddenButton()
