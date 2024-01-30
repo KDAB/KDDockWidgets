@@ -192,6 +192,7 @@ private Q_SLOTS:
     void userHiddenButton();
     void tst_tabAsCentralWidget();
     void tst_nonClosable();
+    void tst_crashDuringRestore();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2293,6 +2294,27 @@ void TestQtWidgets::tst_nonClosable()
     QVERIFY(d1.isOpen());
     d1.forceClose();
     QVERIFY(!d1.isOpen());
+}
+
+void TestQtWidgets::tst_crashDuringRestore()
+{
+    // Contrived case where if dockWidget->open() was called during restore it would crash
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d3 = new QtWidgets::DockWidget("d3");
+    m1->addDockWidget(d1->asDockWidgetController(), Location_OnRight);
+    d1->addDockWidgetAsTab(d3);
+
+    connect(d3->toggleAction(), &QAction::toggled, this, [d3](bool) {
+        d3->open();
+    });
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    saver.restoreLayout(saved);
 }
 
 int main(int argc, char *argv[])

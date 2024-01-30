@@ -1117,7 +1117,7 @@ void DockWidget::Private::setIsOpen(bool is)
 
     m_isOpen = is;
 
-    if (is) {
+    if (is && !LayoutSaver::restoreInProgress()) {
         maybeRestoreToPreviousPosition();
 
 #ifdef KDDW_FRONTEND_QT
