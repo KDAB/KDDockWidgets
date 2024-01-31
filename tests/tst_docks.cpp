@@ -2362,7 +2362,7 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
     CHECK_EQ(layout->placeholderCount(), 0);
 
     delete dock2;
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock1->view()));
+    Platform::instance()->tests_waitForDeleted(group2);
     CHECK(!group2);
 
     CHECK_EQ(layout->count(), 2);

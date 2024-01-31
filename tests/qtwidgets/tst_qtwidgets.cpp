@@ -968,9 +968,6 @@ void TestQtWidgets::tst_sidebarGrouping()
         QVERIFY(dw1->isOverlayed());
         QVERIFY(!dw2->isOverlayed());
 
-        /// Remove this expected warning after #326 is fixed
-        SetExpectedWarning expected("Trying to use a group that's being deleted");
-
         dw1->titleBar()->onAutoHideClicked();
         QVERIFY(!dw1->isInSideBar());
         QVERIFY(!dw2->isInSideBar());
@@ -995,8 +992,6 @@ void TestQtWidgets::tst_sidebarCrash()
 
     m1->overlayOnSideBar(dw1);
 
-    /// Remove this expected warning after #326 is fixed
-    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dw1->titleBar()->onAutoHideClicked();
     QVERIFY(!dw1->isInSideBar());
     QVERIFY(!dw1->isOverlayed());
@@ -1799,17 +1794,14 @@ void TestQtWidgets::tst_crash326()
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
     auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    ObjectGuard<Group> originalFrame = dock1->d->group();
+    ObjectGuard<Group> originalGroup = dock1->d->group();
     dock1->close();
     QVERIFY(dock1->parent() == nullptr);
-    QVERIFY(originalFrame != dock1->d->group());
-    QVERIFY(originalFrame->beingDeletedLater());
+    QVERIFY(originalGroup != dock1->d->group());
+    QVERIFY(originalGroup->beingDeletedLater());
 
-    // In bug #326, the dock widget is reparented to the frame that's being deleted
-    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dock1->show();
-    QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
-    QVERIFY(originalFrame != dock1->d->group());
+    QVERIFY(originalGroup != dock1->d->group());
 }
 
 void TestQtWidgets::tst_restoreWithIncompleteFactory()

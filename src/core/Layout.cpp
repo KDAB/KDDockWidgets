@@ -160,7 +160,7 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
     if (group->inDtor() || group->beingDeletedLater()) {
         // Known bug. Let's print diagnostics early, as this is usually difficult to debug
         // further up the stack. Will also fatal the tests.
-        KDDW_ERROR("Layout::restorePlaceholder: Trying to use a group that's being deleted");
+        KDDW_ERROR("Layout::restorePlaceholder: Trying to use a group that's being deleted. InDtor=", group->inDtor());
     }
 
     if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {

@@ -789,6 +789,11 @@ void Group::scheduleDeleteLater()
     KDDW_TRACE("Group::scheduleDeleteLater: {}", ( void * )this);
     m_beingDeleted = true;
 
+    if (auto item = layoutItem()) {
+        if (item->parentContainer())
+            item->turnIntoPlaceholder();
+    }
+
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
     // triggered by a sendEvent() before event loop starts)
     destroyLater();
