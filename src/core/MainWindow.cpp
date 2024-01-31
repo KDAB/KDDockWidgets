@@ -125,8 +125,6 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
     dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 
-#ifdef DOCKS_DEVELOPER_MODE
-
 void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
                                      KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
 {
@@ -181,8 +179,6 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
         addDockWidget(dockWidget, location, nullptr, initialOption);
     }
 }
-
-#endif
 
 QString MainWindow::uniqueName() const
 {
