@@ -2267,29 +2267,49 @@ void TestQtWidgets::addDockWidgetToSideCrash()
 {
     // There used to be a crash when adding this layout setup.
     // This test just ensures it doesn't regress
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    {
+        EnsureTopLevelsDeleted e;
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
 
-    auto bottom1 = new QtWidgets::DockWidget("bottom1");
-    auto left1 = new QtWidgets::DockWidget("left1");
-    auto bottom2 = new QtWidgets::DockWidget("bottom2");
-    auto right1 = new QtWidgets::DockWidget("right1");
+        auto bottom1 = new QtWidgets::DockWidget("bottom1");
+        auto left1 = new QtWidgets::DockWidget("left1");
+        auto bottom2 = new QtWidgets::DockWidget("bottom2");
+        auto right1 = new QtWidgets::DockWidget("right1");
 
-    m1->addDockWidgetToSide(bottom1->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
-    m1->addDockWidgetToSide(left1->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
-    m1->addDockWidgetToSide(bottom2->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(bottom1->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(left1->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+        m1->addDockWidgetToSide(bottom2->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
 
-    QVERIFY(m1->layout()->checkSanity());
-    bottom1->open();
-    bottom2->open();
-    QVERIFY(m1->layout()->checkSanity());
+        QVERIFY(m1->layout()->checkSanity());
+        bottom1->open();
+        bottom2->open();
+        QVERIFY(m1->layout()->checkSanity());
 
-    auto centralGroup = m1->dropArea()->centralGroup();
-    auto centralItem = centralGroup->layoutItem();
-    Core::Item *neighbor = centralItem->outermostNeighbor(KDDockWidgets::Location_OnRight, /*visibleOnly=*/false);
-    QVERIFY(!neighbor);
+        auto centralGroup = m1->dropArea()->centralGroup();
+        auto centralItem = centralGroup->layoutItem();
+        Core::Item *neighbor = centralItem->outermostNeighbor(KDDockWidgets::Location_OnRight, /*visibleOnly=*/false);
+        QVERIFY(!neighbor);
 
-    m1->addDockWidgetToSide(right1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+        m1->addDockWidgetToSide(right1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+        auto dummy1 = new QtWidgets::DockWidget("dummy1");
+        auto dummy2 = new QtWidgets::DockWidget("dummy2");
+
+        auto left1 = new QtWidgets::DockWidget("left1");
+        auto bottom1 = new QtWidgets::DockWidget("bottom1");
+        auto left2 = new QtWidgets::DockWidget("left2");
+
+        m1->addDockWidgetToSide(dummy1->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(dummy2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(left1->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(bottom1->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(left2->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartVisible);
+    }
 }
 
 void TestQtWidgets::userHiddenButton()

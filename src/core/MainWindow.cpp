@@ -164,7 +164,7 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
     if (neighbor) {
         if (neighbor->isContainer()) {
             auto container = object_cast<ItemBoxContainer *>(neighbor);
-            auto children = container->visibleChildren();
+            const auto children = container->childItems();
             if (children.isEmpty()) {
                 // Doesn't happen
                 KDDW_ERROR("MainWindow::addDockWidgetToSide: no children");
