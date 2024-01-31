@@ -2385,7 +2385,6 @@ void TestQtWidgets::tst_toggleVsShowHidden()
     QVERIFY(!d1->toggleAction()->isChecked());
     QVERIFY(!d1->isOpen());
 
-    QEXPECT_FAIL("", "To fix", Continue);
     QCOMPARE(count, 0);
 }
 

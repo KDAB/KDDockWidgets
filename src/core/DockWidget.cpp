@@ -760,6 +760,13 @@ void DockWidget::Private::updateToggleAction()
     ScopedValueRollback recursionGuard(m_updatingToggleAction,
                                        true); // Guard against recursiveness
 
+    if (m_willUpdateActions) {
+        // We're in the middle of a DropArea::addDockWidget() call. No point in triggering actions right now
+        // they will be triggered at the end already.
+        // Fixes Actions being triggered when using StartsHidden.
+        return;
+    }
+
     if ((q->isVisible() || group()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
     } else if ((!q->isVisible() && !group()) && toggleAction->isChecked()) {
