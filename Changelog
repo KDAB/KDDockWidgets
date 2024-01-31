@@ -7,6 +7,7 @@
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
   - Planned: #448 Implement docking indicator for MDI area
+  - Fix crash when doing sequential open() and close() calls (#326)
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.
