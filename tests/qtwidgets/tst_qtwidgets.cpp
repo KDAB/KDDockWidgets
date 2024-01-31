@@ -185,7 +185,6 @@ private Q_SLOTS:
     void tst_moveTab();
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
-    void tst_nestedMainWindowToggle_data();
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
@@ -968,9 +967,6 @@ void TestQtWidgets::tst_sidebarGrouping()
         QVERIFY(dw1->isOverlayed());
         QVERIFY(!dw2->isOverlayed());
 
-        /// Remove this expected warning after #326 is fixed
-        SetExpectedWarning expected("Trying to use a group that's being deleted");
-
         dw1->titleBar()->onAutoHideClicked();
         QVERIFY(!dw1->isInSideBar());
         QVERIFY(!dw2->isInSideBar());
@@ -995,8 +991,6 @@ void TestQtWidgets::tst_sidebarCrash()
 
     m1->overlayOnSideBar(dw1);
 
-    /// Remove this expected warning after #326 is fixed
-    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dw1->titleBar()->onAutoHideClicked();
     QVERIFY(!dw1->isInSideBar());
     QVERIFY(!dw1->isOverlayed());
@@ -1799,17 +1793,14 @@ void TestQtWidgets::tst_crash326()
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
     auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    ObjectGuard<Group> originalFrame = dock1->d->group();
+    ObjectGuard<Group> originalGroup = dock1->d->group();
     dock1->close();
     QVERIFY(dock1->parent() == nullptr);
-    QVERIFY(originalFrame != dock1->d->group());
-    QVERIFY(originalFrame->beingDeletedLater());
+    QVERIFY(originalGroup != dock1->d->group());
+    QVERIFY(originalGroup->beingDeletedLater());
 
-    // In bug #326, the dock widget is reparented to the frame that's being deleted
-    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dock1->show();
-    QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
-    QVERIFY(originalFrame != dock1->d->group());
+    QVERIFY(originalGroup != dock1->d->group());
 }
 
 void TestQtWidgets::tst_restoreWithIncompleteFactory()
@@ -2019,18 +2010,8 @@ void TestQtWidgets::tst_moveTab()
     QCOMPARE(tb->currentDockWidget(), dockA);
 }
 
-void TestQtWidgets::tst_nestedMainWindowToggle_data()
-{
-    QTest::addColumn<bool>("waitAfterClose");
-
-    // QTest::newRow("false") << false; // uncomment after #326 is fixed
-    QTest::newRow("true") << true;
-}
-
 void TestQtWidgets::tst_nestedMainWindowToggle()
 {
-    QFETCH(bool, waitAfterClose);
-
     EnsureTopLevelsDeleted e;
     auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
     auto nestedMainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW2");
@@ -2057,11 +2038,6 @@ void TestQtWidgets::tst_nestedMainWindowToggle()
     QVERIFY(!nestedDock->isOpen());
 
     // Reopen dock1, the nested dockwidgets should also reopen
-
-    if (waitAfterClose) {
-        // If false, tests #326, otherwise tests #360
-        Platform::instance()->tests_wait(1000);
-    }
 
     dock1->open();
 

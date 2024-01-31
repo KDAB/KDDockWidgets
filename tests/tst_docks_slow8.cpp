@@ -184,9 +184,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
     EnsureTopLevelsDeleted e;
 
-    // Remove once #326 is fixed
-    SetExpectedWarning warn("Trying to use a group that's being deleted");
-
     auto m = createMainWindow();
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
@@ -194,7 +191,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
     const Rect oldGeo = dock1->geometry();
-    auto oldParent = dock1->view()->parentView();
 
     // 1. Just toggle visibility and check that stuff remained sane
     QVERIFY(dock1->titleBar()->isVisible());
@@ -209,7 +205,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock1->isFloating());
     QCOMPARE(dock1->geometry(), oldGeo);
-    QVERIFY(dock1->view()->parentView()->equals(oldParent));
 
     // 2. Check that the parent group also is hidden now
     // auto fw1 = dock1->window();

@@ -843,7 +843,7 @@ KDDW_QCORO_TASK tst_closeReason()
         CHECK(!dock1->isOpen());
         CHECK_EQ(dock1->lastCloseReason(), CloseReason::TitleBarButton);
 
-        // Programattic close
+        // Programmatic close
         dock1->open();
         dock1->close();
         CHECK(!dock1->isOpen());
@@ -2362,7 +2362,7 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
     CHECK_EQ(layout->placeholderCount(), 0);
 
     delete dock2;
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock1->view()));
+    Platform::instance()->tests_waitForDeleted(group2);
     CHECK(!group2);
 
     CHECK_EQ(layout->count(), 2);
