@@ -731,7 +731,7 @@ void LayoutSaver::Private::deleteEmptyGroups() const
                 item->turnIntoPlaceholder();
             } else {
                 // This doesn't happen. But the warning will make the tests fail if there's a regression.
-                KDDW_ERROR("Expected item for frame");
+                KDDW_ERROR("Expected item for group");
             }
             delete group;
         }
