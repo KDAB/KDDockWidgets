@@ -137,14 +137,14 @@ View::View(Core::Controller *controller, Core::ViewType type, QQuickItem *parent
     }
 
     connect(this, &QQuickItem::widthChanged, this, [this] {
-        if (!Core::View::d->aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
+        if (!Core::View::d->aboutToBeDestroyed() && !m_inDtor) { // If Window is being destroyed we don't bother
             onResize(Core::View::size());
             updateGeometry();
         }
     });
 
     connect(this, &QQuickItem::heightChanged, this, [this] {
-        if (!Core::View::d->aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
+        if (!Core::View::d->aboutToBeDestroyed() && !m_inDtor) { // If Window is being destroyed we don't bother
             onResize(Core::View::size());
             updateGeometry();
         }
