@@ -194,6 +194,7 @@ private Q_SLOTS:
     void tst_tabAsCentralWidget();
     void tst_nonClosable();
     void tst_crashDuringRestore();
+    void tst_toggleVsShowHidden();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2366,6 +2367,28 @@ void TestQtWidgets::tst_crashDuringRestore()
 
     saver.restoreLayout(saved);
 }
+
+void TestQtWidgets::tst_toggleVsShowHidden()
+{
+    // Tests that the QAction doesn't fire when adding as hidden
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto d1 = new QtWidgets::DockWidget("d1");
+    QVERIFY(!d1->toggleAction()->isChecked());
+    QVERIFY(!d1->isOpen());
+    int count = 0;
+    connect(d1->toggleAction(), &QAction::toggled, this, [d1, &count](bool) {
+        count++;
+    });
+
+    m1->addDockWidget(d1->asDockWidgetController(), Location_OnRight, nullptr, KDDockWidgets::InitialVisibilityOption::StartHidden);
+    QVERIFY(!d1->toggleAction()->isChecked());
+    QVERIFY(!d1->isOpen());
+
+    QEXPECT_FAIL("", "To fix", Continue);
+    QCOMPARE(count, 0);
+}
+
 
 int main(int argc, char *argv[])
 {
