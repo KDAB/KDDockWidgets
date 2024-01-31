@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -70,6 +70,8 @@ public:
     virtual bool isActiveWindow_nocallback() const;
     virtual bool isExplicitlyHidden() const;
     virtual bool isExplicitlyHidden_nocallback() const;
+    bool isFixedHeight() const;
+    bool isFixedWidth() const;
     virtual bool isMaximized() const;
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
@@ -324,6 +326,10 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__View__init(void *thisObj);
 DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isActiveWindow(void *thisObj);
 // KDDockWidgets::Core::View::isExplicitlyHidden() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isExplicitlyHidden(void *thisObj);
+// KDDockWidgets::Core::View::isFixedHeight() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isFixedHeight(void *thisObj);
+// KDDockWidgets::Core::View::isFixedWidth() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isFixedWidth(void *thisObj);
 // KDDockWidgets::Core::View::isMaximized() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isMaximized(void *thisObj);
 // KDDockWidgets::Core::View::isMinimized() const

@@ -280,6 +280,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__raise')
         .asFunction();
     func(thisCpp);
+  } // removeFromSideBar()
+
+  removeFromSideBar() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__removeFromSideBar')
+        .asFunction();
+    func(thisCpp);
   } // resizeInLayout(int left, int top, int right, int bottom)
 
   resizeInLayout(int left, int top, int right, int bottom) {
@@ -488,7 +496,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "c_KDDockWidgets__Core__DockWidget__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -496,7 +504,7 @@ class DockWidget extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "setParentView_impl";
     }
     throw Error();
@@ -508,9 +516,9 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback')
         .asFunction();
-    final callback331 =
+    final callback334 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.DockWidget.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback331, 331);
+    registerCallback(thisCpp, callback334, 334);
   }
 }

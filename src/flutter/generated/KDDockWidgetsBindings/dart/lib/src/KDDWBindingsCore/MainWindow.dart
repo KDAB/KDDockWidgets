@@ -70,6 +70,18 @@ class MainWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget')
         .asFunction();
     func(thisCpp, dockwidget == null ? ffi.nullptr : dockwidget.thisCpp);
+  } // addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+
+  addDockWidgetToSide(KDDWBindingsCore.DockWidget? dockWidget, int location,
+      {required InitialOption initialOption}) {
+    final void_Func_voidstar_voidstar_int_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    void_Func_voidstar_voidstar_ffi_Int32_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption')
+        .asFunction();
+    func(thisCpp, dockWidget == null ? ffi.nullptr : dockWidget.thisCpp,
+        location, initialOption == null ? ffi.nullptr : initialOption.thisCpp);
   } // anySideBarIsVisible() const
 
   bool anySideBarIsVisible() {
@@ -300,7 +312,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -308,7 +320,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "setParentView_impl";
     }
     throw Error();
@@ -320,9 +332,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback331 =
+    final callback334 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback331, 331);
+    registerCallback(thisCpp, callback334, 334);
   }
 }

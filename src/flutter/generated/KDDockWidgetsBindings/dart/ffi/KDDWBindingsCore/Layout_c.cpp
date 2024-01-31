@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -186,7 +186,7 @@ void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj)
     fromPtr(thisObj)->clearLayout();
 }
 // containsGroup(const KDDockWidgets::Core::Group * arg__1) const
-bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_)
+bool c_KDDockWidgets__Core__Layout__containsGroup_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     const auto &result = fromPtr(thisObj)->containsGroup(arg__1);
@@ -223,7 +223,7 @@ bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool hono
     return result;
 }
 // itemForGroup(const KDDockWidgets::Core::Group * group) const
-void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_)
+void *c_KDDockWidgets__Core__Layout__itemForGroup_Group(void *thisObj, void *group_)
 {
     auto group = reinterpret_cast<KDDockWidgets::Core::Group *>(group_);
     const auto &result = fromPtr(thisObj)->itemForGroup(group);
@@ -328,7 +328,7 @@ void c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback(void *ptr, voi
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Layout_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

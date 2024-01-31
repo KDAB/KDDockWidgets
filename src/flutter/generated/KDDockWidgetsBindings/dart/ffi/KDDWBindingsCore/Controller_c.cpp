@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -53,6 +53,14 @@ int Controller_wrapper::height() const
 bool Controller_wrapper::inDtor() const
 {
     return ::KDDockWidgets::Core::Controller::inDtor();
+}
+bool Controller_wrapper::isFixedHeight() const
+{
+    return ::KDDockWidgets::Core::Controller::isFixedHeight();
+}
+bool Controller_wrapper::isFixedWidth() const
+{
+    return ::KDDockWidgets::Core::Controller::isFixedWidth();
 }
 bool Controller_wrapper::isVisible() const
 {
@@ -173,6 +181,18 @@ bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj)
     const auto &result = fromPtr(thisObj)->inDtor();
     return result;
 }
+// isFixedHeight() const
+bool c_KDDockWidgets__Core__Controller__isFixedHeight(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->isFixedHeight();
+    return result;
+}
+// isFixedWidth() const
+bool c_KDDockWidgets__Core__Controller__isFixedWidth(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->isFixedWidth();
+    return result;
+}
 // isVisible() const
 bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj)
 {
@@ -265,7 +285,7 @@ void c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Controller_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

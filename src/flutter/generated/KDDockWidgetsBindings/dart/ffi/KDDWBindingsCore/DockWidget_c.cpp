@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -141,6 +141,10 @@ QFlags<KDDockWidgets::DockWidgetOption> DockWidget_wrapper::options() const
 void DockWidget_wrapper::raise()
 {
     ::KDDockWidgets::Core::DockWidget::raise();
+}
+void DockWidget_wrapper::removeFromSideBar()
+{
+    ::KDDockWidgets::Core::DockWidget::removeFromSideBar();
 }
 void DockWidget_wrapper::resizeInLayout(int left, int top, int right, int bottom)
 {
@@ -436,6 +440,11 @@ void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj)
 {
     fromPtr(thisObj)->raise();
 }
+// removeFromSideBar()
+void c_KDDockWidgets__Core__DockWidget__removeFromSideBar(void *thisObj)
+{
+    fromPtr(thisObj)->removeFromSideBar();
+}
 // resizeInLayout(int left, int top, int right, int bottom)
 void c_KDDockWidgets__Core__DockWidget__resizeInLayout_int_int_int_int(void *thisObj, int left, int top, int right, int bottom)
 {
@@ -583,7 +592,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -67,7 +67,7 @@ DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__checkSanity(void *thisObj);
 // KDDockWidgets::Core::Layout::clearLayout()
 DOCKS_EXPORT void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj);
 // KDDockWidgets::Core::Layout::containsGroup(const KDDockWidgets::Core::Group * arg__1) const
-DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsGroup_Group(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::containsItem(const KDDockWidgets::Core::Item * arg__1) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__containsItem_Item(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Layout::count() const
@@ -79,7 +79,7 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__floatingWindow(void *thisObj);
 // KDDockWidgets::Core::Layout::isInMainWindow(bool honourNesting) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool honourNesting);
 // KDDockWidgets::Core::Layout::itemForGroup(const KDDockWidgets::Core::Group * group) const
-DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_);
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Layout__itemForGroup_Group(void *thisObj, void *group_);
 // KDDockWidgets::Core::Layout::layoutHeight() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Layout__layoutHeight(void *thisObj);
 // KDDockWidgets::Core::Layout::layoutMaximumSizeHint() const

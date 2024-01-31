@@ -71,7 +71,7 @@ class Layout extends KDDWBindingsCore.Controller {
   bool containsGroup(KDDWBindingsCore.Group? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__containsFrame_Group')
+            'c_KDDockWidgets__Core__Layout__containsGroup_Group')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // containsItem(const KDDockWidgets::Core::Item * arg__1) const
@@ -120,7 +120,7 @@ class Layout extends KDDWBindingsCore.Controller {
   Item itemForGroup(KDDWBindingsCore.Group? group) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__itemForFrame_Group')
+            'c_KDDockWidgets__Core__Layout__itemForGroup_Group')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, group == null ? ffi.nullptr : group.thisCpp);
@@ -279,7 +279,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "c_KDDockWidgets__Core__Layout__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -287,7 +287,7 @@ class Layout extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "setParentView_impl";
     }
     throw Error();
@@ -299,9 +299,9 @@ class Layout extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Layout__registerVirtualMethodCallback')
         .asFunction();
-    final callback331 =
+    final callback334 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback331, 331);
+    registerCallback(thisCpp, callback334, 334);
   }
 }

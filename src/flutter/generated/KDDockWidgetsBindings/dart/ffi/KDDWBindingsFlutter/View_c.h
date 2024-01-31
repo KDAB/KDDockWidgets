@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -14,15 +14,15 @@
 #include <core/View.h>
 #include <geometry_helpers_p.h>
 #include <string_p.h>
+#include <core/DockWidget.h>
+#include <core/Layout.h>
+#include "core/Stack.h"
+#include <QtCompat_p.h>
+#include <TabBar.h>
 #include "core/TitleBar.h"
 #include <core/Group.h>
-#include <core/DockWidget.h>
-#include "core/Stack.h"
-#include <core/Layout.h>
 #include "core/DropArea.h"
 #include <FloatingWindow.h>
-#include <TabBar.h>
-#include <QtCompat_p.h>
 #include "core/MainWindow.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {

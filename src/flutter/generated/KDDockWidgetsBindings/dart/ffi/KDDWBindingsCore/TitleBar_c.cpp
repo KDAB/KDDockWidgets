@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -155,6 +155,10 @@ void TitleBar_wrapper::onMinimizeClicked()
 void TitleBar_wrapper::setCloseButtonEnabled(bool arg__1)
 {
     ::KDDockWidgets::Core::TitleBar::setCloseButtonEnabled(arg__1);
+}
+void TitleBar_wrapper::setCloseButtonVisible(bool arg__1)
+{
+    ::KDDockWidgets::Core::TitleBar::setCloseButtonVisible(arg__1);
 }
 void TitleBar_wrapper::setFloatButtonVisible(bool arg__1)
 {
@@ -388,6 +392,11 @@ void c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool(void *thisObj, 
 {
     fromPtr(thisObj)->setCloseButtonEnabled(arg__1);
 }
+// setCloseButtonVisible(bool arg__1)
+void c_KDDockWidgets__Core__TitleBar__setCloseButtonVisible_bool(void *thisObj, bool arg__1)
+{
+    fromPtr(thisObj)->setCloseButtonVisible(arg__1);
+}
 // setFloatButtonVisible(bool arg__1)
 void c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1)
 {
@@ -472,16 +481,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 546:
+    case 555:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 550:
+    case 559:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 569:
+    case 579:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

@@ -244,7 +244,7 @@ class Group extends KDDWBindingsCore.Controller {
   Rect dragRect() {
     final voidstar_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            cFunctionSymbolName(891))
+            cFunctionSymbolName(915))
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Rect.fromCppPointer(result, true);
@@ -274,7 +274,7 @@ class Group extends KDDWBindingsCore.Controller {
   focusedWidgetChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(893))
+            cFunctionSymbolName(917))
         .asFunction();
     func(thisCpp);
   }
@@ -357,7 +357,7 @@ class Group extends KDDWBindingsCore.Controller {
   bool isCentralGroup() {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Group__isCentralFrame')
+            'c_KDDockWidgets__Core__Group__isCentralGroup')
         .asFunction();
     return func(thisCpp) != 0;
   } // isDockable() const
@@ -389,7 +389,7 @@ class Group extends KDDWBindingsCore.Controller {
   isFocusedChangedCallback() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(909))
+            cFunctionSymbolName(935))
         .asFunction();
     func(thisCpp);
   }
@@ -686,13 +686,13 @@ class Group extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 891:
+      case 915:
         return "c_KDDockWidgets__Core__Group__dragRect";
-      case 893:
+      case 917:
         return "c_KDDockWidgets__Core__Group__focusedWidgetChangedCallback";
-      case 909:
+      case 935:
         return "c_KDDockWidgets__Core__Group__isFocusedChangedCallback";
-      case 331:
+      case 334:
         return "c_KDDockWidgets__Core__Group__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -700,13 +700,13 @@ class Group extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 891:
+      case 915:
         return "dragRect";
-      case 893:
+      case 917:
         return "focusedWidgetChangedCallback";
-      case 909:
+      case 935:
         return "isFocusedChangedCallback";
-      case 331:
+      case 334:
         return "setParentView_impl";
     }
     throw Error();
@@ -718,18 +718,18 @@ class Group extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Group__registerVirtualMethodCallback')
         .asFunction();
-    final callback891 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
+    final callback915 = ffi.Pointer.fromFunction<voidstar_Func_voidstar_FFI>(
         KDDWBindingsCore.Group.dragRect_calledFromC);
-    registerCallback(thisCpp, callback891, 891);
-    final callback893 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback915, 915);
+    final callback917 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Group.focusedWidgetChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback893, 893);
-    final callback909 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    registerCallback(thisCpp, callback917, 917);
+    final callback935 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.Group.isFocusedChangedCallback_calledFromC);
-    registerCallback(thisCpp, callback909, 909);
-    final callback331 =
+    registerCallback(thisCpp, callback935, 935);
+    final callback334 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Group.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback331, 331);
+    registerCallback(thisCpp, callback334, 334);
   }
 }

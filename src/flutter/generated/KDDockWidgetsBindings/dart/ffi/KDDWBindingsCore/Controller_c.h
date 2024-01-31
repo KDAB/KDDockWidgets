@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -27,6 +27,8 @@ public:
     KDDockWidgets::Rect geometry() const;
     int height() const;
     bool inDtor() const;
+    bool isFixedHeight() const;
+    bool isFixedWidth() const;
     bool isVisible() const;
     KDDockWidgets::Point mapToGlobal(KDDockWidgets::Point arg__1) const;
     KDDockWidgets::Point pos() const;
@@ -60,6 +62,10 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Controller__geometry(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__Controller__height(void *thisObj);
 // KDDockWidgets::Core::Controller::inDtor() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj);
+// KDDockWidgets::Core::Controller::isFixedHeight() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__isFixedHeight(void *thisObj);
+// KDDockWidgets::Core::Controller::isFixedWidth() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__isFixedWidth(void *thisObj);
 // KDDockWidgets::Core::Controller::isVisible() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Controller__isVisible(void *thisObj);
 // KDDockWidgets::Core::Controller::mapToGlobal(KDDockWidgets::Point arg__1) const

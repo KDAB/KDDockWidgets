@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -62,6 +62,19 @@ KDDockWidgets::Rect Item_wrapper::geometry() const
 int Item_wrapper::height() const
 {
     return ::KDDockWidgets::Core::Item::height();
+}
+bool Item_wrapper::inSetSize() const
+{
+    if (m_inSetSizeCallback) {
+        const void *thisPtr = this;
+        return m_inSetSizeCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::Core::Item::inSetSize();
+    }
+}
+bool Item_wrapper::inSetSize_nocallback() const
+{
+    return ::KDDockWidgets::Core::Item::inSetSize();
 }
 bool Item_wrapper::isBeingInserted() const
 {
@@ -145,6 +158,10 @@ KDDockWidgets::Size Item_wrapper::minSize_nocallback() const
 KDDockWidgets::Size Item_wrapper::missingSize() const
 {
     return ::KDDockWidgets::Core::Item::missingSize();
+}
+KDDockWidgets::Core::Item *Item_wrapper::outermostNeighbor(KDDockWidgets::Location arg__1, bool visibleOnly) const
+{
+    return ::KDDockWidgets::Core::Item::outermostNeighbor(arg__1, visibleOnly);
 }
 KDDockWidgets::Point Item_wrapper::pos() const
 {
@@ -306,6 +323,12 @@ int c_KDDockWidgets__Core__Item__height(void *thisObj)
     const auto &result = fromPtr(thisObj)->height();
     return result;
 }
+// inSetSize() const
+bool c_KDDockWidgets__Core__Item__inSetSize(void *thisObj)
+{
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->inSetSize_nocallback();} else {    return targetPtr->inSetSize();} }();
+    return result;
+}
 // isBeingInserted() const
 bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj)
 {
@@ -398,6 +421,12 @@ void *c_KDDockWidgets__Core__Item__minSize(void *thisObj)
 void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj)
 {
     const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->missingSize() };
+    return result;
+}
+// outermostNeighbor(KDDockWidgets::Location arg__1, bool visibleOnly) const
+void *c_KDDockWidgets__Core__Item__outermostNeighbor_Location_bool(void *thisObj, int arg__1, bool visibleOnly)
+{
+    const auto &result = fromPtr(thisObj)->outermostNeighbor(static_cast<KDDockWidgets::Location>(arg__1), visibleOnly);
     return result;
 }
 // pos() const
@@ -575,25 +604,28 @@ void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void 
     case 259:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
-    case 267:
+    case 262:
+        wrapper->m_inSetSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_inSetSize>(callback);
+        break;
+    case 268:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 273:
+    case 274:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 274:
+    case 275:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 288:
+    case 290:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 289:
+    case 291:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 301:
+    case 302:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 302:
+    case 303:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

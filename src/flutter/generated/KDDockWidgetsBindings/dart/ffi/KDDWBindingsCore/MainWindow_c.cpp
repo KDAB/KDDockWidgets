@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -41,6 +41,10 @@ void MainWindow_wrapper::addDockWidget(KDDockWidgets::Core::DockWidget *dockWidg
 void MainWindow_wrapper::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget)
 {
     ::KDDockWidgets::Core::MainWindow::addDockWidgetAsTab(dockwidget);
+}
+void MainWindow_wrapper::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+{
+    ::KDDockWidgets::Core::MainWindow::addDockWidgetToSide(dockWidget, location, initialOption);
 }
 bool MainWindow_wrapper::anySideBarIsVisible() const
 {
@@ -192,6 +196,14 @@ void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *this
 {
     auto dockwidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockwidget_);
     fromPtr(thisObj)->addDockWidgetAsTab(dockwidget);
+}
+// addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption(void *thisObj, void *dockWidget_, int location, void *initialOption_)
+{
+    auto dockWidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockWidget_);
+    assert(initialOption_);
+    auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
+    fromPtr(thisObj)->addDockWidgetToSide(dockWidget, static_cast<KDDockWidgets::Location>(location), initialOption);
 }
 // anySideBarIsVisible() const
 bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj)
@@ -350,7 +362,7 @@ void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -52,6 +52,7 @@ public:
     void open();
     QFlags<KDDockWidgets::DockWidgetOption> options() const;
     void raise();
+    void removeFromSideBar();
     void resizeInLayout(int left, int top, int right, int bottom);
     void setAffinityName(const QString &name);
     void setAsCurrentTab();
@@ -138,6 +139,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__open(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__DockWidget__options(void *thisObj);
 // KDDockWidgets::Core::DockWidget::raise()
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj);
+// KDDockWidgets::Core::DockWidget::removeFromSideBar()
+DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__removeFromSideBar(void *thisObj);
 // KDDockWidgets::Core::DockWidget::resizeInLayout(int left, int top, int right, int bottom)
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__resizeInLayout_int_int_int_int(void *thisObj, int left, int top, int right, int bottom);
 // KDDockWidgets::Core::DockWidget::setAffinityName(const QString & name)

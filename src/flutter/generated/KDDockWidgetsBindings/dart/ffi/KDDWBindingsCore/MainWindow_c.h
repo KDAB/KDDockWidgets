@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -28,6 +28,7 @@ public:
     MainWindow_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options);
     void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo = nullptr, KDDockWidgets::InitialOption initialOption = {});
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget);
+    void addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption = {});
     bool anySideBarIsVisible() const;
     KDDockWidgets::Margins centerWidgetMargins() const;
     KDDockWidgets::Rect centralAreaGeometry() const;
@@ -66,6 +67,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__MainWindow__constructor_View_QString_M
 DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_);
 // KDDockWidgets::Core::MainWindow::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * dockwidget)
 DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *thisObj, void *dockwidget_);
+// KDDockWidgets::Core::MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption(void *thisObj, void *dockWidget_, int location, void *initialOption_);
 // KDDockWidgets::Core::MainWindow::anySideBarIsVisible() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj);
 // KDDockWidgets::Core::MainWindow::centerWidgetMargins() const

@@ -31,6 +31,8 @@ class KDDockWidgets_MainWindowOption {
   static const MainWindowOption_HasCentralFrame = 1;
   static const MainWindowOption_MDI = 2;
   static const MainWindowOption_HasCentralWidget = 5;
+  static const MainWindowOption_QDockWidgets = 8;
+  static const MainWindowOption_ManualInit = 16;
 }
 
 class KDDockWidgets_DockWidgetOption {
@@ -44,6 +46,7 @@ class KDDockWidgets_DockWidgetOption {
 class KDDockWidgets_LayoutSaverOption {
   static const None = 0;
   static const Skip = 1;
+  static const CheckForPreviousRestore = 2;
 }
 
 class KDDockWidgets_IconPlace {

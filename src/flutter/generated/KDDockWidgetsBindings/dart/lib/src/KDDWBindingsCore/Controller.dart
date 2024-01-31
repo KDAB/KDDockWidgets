@@ -82,6 +82,22 @@ class Controller extends KDDWBindingsCore.Object {
             'c_KDDockWidgets__Core__Controller__inDtor')
         .asFunction();
     return func(thisCpp) != 0;
+  } // isFixedHeight() const
+
+  bool isFixedHeight() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__Controller__isFixedHeight')
+        .asFunction();
+    return func(thisCpp) != 0;
+  } // isFixedWidth() const
+
+  bool isFixedWidth() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__Controller__isFixedWidth')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // isVisible() const
 
   bool isVisible() {
@@ -131,7 +147,7 @@ class Controller extends KDDWBindingsCore.Object {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(331))
+            cFunctionSymbolName(334))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -226,7 +242,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -234,7 +250,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "setParentView_impl";
     }
     throw Error();
@@ -246,9 +262,9 @@ class Controller extends KDDWBindingsCore.Object {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback331 =
+    final callback334 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback331, 331);
+    registerCallback(thisCpp, callback334, 334);
   }
 }

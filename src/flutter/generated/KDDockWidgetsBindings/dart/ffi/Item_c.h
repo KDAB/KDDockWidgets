@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -25,6 +25,8 @@ public:
     virtual void dumpLayout_nocallback(int level = 0, bool printSeparators = true);
     KDDockWidgets::Rect geometry() const;
     int height() const;
+    virtual bool inSetSize() const;
+    virtual bool inSetSize_nocallback() const;
     bool isBeingInserted() const;
     bool isContainer() const;
     bool isMDI() const;
@@ -42,6 +44,7 @@ public:
     virtual KDDockWidgets::Size minSize() const;
     virtual KDDockWidgets::Size minSize_nocallback() const;
     KDDockWidgets::Size missingSize() const;
+    KDDockWidgets::Core::Item *outermostNeighbor(KDDockWidgets::Location arg__1, bool visibleOnly = true) const;
     KDDockWidgets::Point pos() const;
     KDDockWidgets::Rect rect() const;
     void ref();
@@ -71,6 +74,8 @@ public:
     Callback_checkSanity m_checkSanityCallback = nullptr;
     typedef void (*Callback_dumpLayout)(void *, int level, bool printSeparators);
     Callback_dumpLayout m_dumpLayoutCallback = nullptr;
+    typedef bool (*Callback_inSetSize)(void *);
+    Callback_inSetSize m_inSetSizeCallback = nullptr;
     typedef bool (*Callback_isVisible)(void *, bool excludeBeingInserted);
     Callback_isVisible m_isVisibleCallback = nullptr;
     typedef KDDockWidgets::Size *(*Callback_maxSizeHint)(void *);
@@ -96,6 +101,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Item__dumpLayout_int_bool(void *thisObj
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__geometry(void *thisObj);
 // KDDockWidgets::Core::Item::height() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Item__height(void *thisObj);
+// KDDockWidgets::Core::Item::inSetSize() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Item__inSetSize(void *thisObj);
 // KDDockWidgets::Core::Item::isBeingInserted() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj);
 // KDDockWidgets::Core::Item::isContainer() const
@@ -124,6 +131,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__maxSizeHint(void *thisObj);
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__minSize(void *thisObj);
 // KDDockWidgets::Core::Item::missingSize() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj);
+// KDDockWidgets::Core::Item::outermostNeighbor(KDDockWidgets::Location arg__1, bool visibleOnly) const
+DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__outermostNeighbor_Location_bool(void *thisObj, int arg__1, bool visibleOnly);
 // KDDockWidgets::Core::Item::pos() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Item__pos(void *thisObj);
 // KDDockWidgets::Core::Item::rect() const
