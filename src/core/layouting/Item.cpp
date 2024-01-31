@@ -583,7 +583,7 @@ Item *Item::outermostNeighbor(Side side, Qt::Orientation o, bool visibleOnly) co
                 KDDW_ERROR("Item::outermostNeighbor: item not in ancestor's child list");
                 return nullptr;
             } else {
-                return ancestor->childItems()[index]->outermostNeighbor(side, o, visibleOnly);
+                return ancestor->childItems()[indexInAncestor]->outermostNeighbor(side, o, visibleOnly);
             }
         } else {
             return nullptr;
