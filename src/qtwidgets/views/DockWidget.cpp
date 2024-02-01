@@ -144,3 +144,10 @@ std::shared_ptr<Core::View> DockWidget::focusCandidate() const
     // widget.
     return m_dockWidget->guestView();
 }
+
+void DockWidget::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+    // The guest widget didn't want it, so block it now.
+    // Otherwise it goes to the QTabWidget and it will make the window float.
+    ev->accept();
+}

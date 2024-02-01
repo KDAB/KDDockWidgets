@@ -109,6 +109,7 @@ Q_SIGNALS:
 
 protected:
     bool event(QEvent *) override;
+    void mouseDoubleClickEvent(QMouseEvent *ev) override;
     void resizeEvent(QResizeEvent *) override;
     std::shared_ptr<Core::View> focusCandidate() const override;
 
