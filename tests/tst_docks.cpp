@@ -5032,6 +5032,37 @@ KDDW_QCORO_TASK tst_addMDIDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_mdiZorder()
+{
+    // Tests that clicking a mdi widget will raise its
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+
+    auto dock1 = createDockWidget(
+        "dock1", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
+    m->layout()->asMDILayout()->addDockWidget(dock1, Point(100, 100), {});
+
+    dock0->setMDISize({ 200, 200 });
+    dock1->setMDISize({ 200, 200 });
+
+    // Dock 1 is over 0
+    CHECK_EQ(dock0->mdiZ(), 0);
+    CHECK_EQ(dock1->mdiZ(), 1);
+
+    // Double click dock 0, it should raise
+    Tests::doubleClickOn(dock0->mapToGlobal(Point(70, 70)), dock0->view()->window());
+    CHECK_EQ(dock0->mdiZ(), 1);
+    CHECK_EQ(dock1->mdiZ(), 0);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_mixedMDIRestoreToArea()
 {
     EnsureTopLevelsDeleted e;
@@ -5826,6 +5857,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_toggleTabbed),
         TEST(tst_currentTabMatchesDockWidget),
         TEST(tst_addMDIDockWidget),
+        TEST(tst_mdiZorder),
         TEST(tst_mixedMDIRestoreToArea),
         TEST(tst_redockToMDIRestoresPosition),
         TEST(tst_maximizeButton),

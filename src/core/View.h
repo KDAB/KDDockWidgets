@@ -178,8 +178,12 @@ public:
     virtual bool is(ViewType) const;
 
     /// @brief Sets the z order
-    /// Not supported on all platforms
+    /// Not supported on all platforms and only relevant for MDI mode.
     virtual void setZOrder(int);
+
+    /// Returns the zOrder
+    /// Not supported on all platforms and only relevant for MDI mode.
+    virtual int zOrder() const;
 
     /// @Returns a list of child views
     virtual Vector<std::shared_ptr<View>> childViews() const = 0;

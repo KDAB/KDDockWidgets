@@ -699,6 +699,18 @@ bool View::isMaximized() const
     return false;
 }
 
+int View::zOrder() const
+{
+    // Returns the zOrder so we can unit test that raising works in MDI mode.
+    // This is unrelated to QQuickItem::z(), which is always 0 for us.
+    if (auto p = parentItem()) {
+        const auto siblings = p->childItems();
+        return siblings.indexOf(this);
+    }
+
+    return 0;
+}
+
 std::shared_ptr<Core::Window> View::window() const
 {
     if (QWindow *w = QQuickItem::window()) {

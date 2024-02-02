@@ -143,6 +143,7 @@ public:
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<Core::View>> childViews() const override;
+    int zOrder() const override;
     void setZOrder(int) override;
     virtual QQuickItem *visualItem() const;
 

@@ -118,6 +118,11 @@ void View::setZOrder(int)
 {
 }
 
+int View::zOrder() const
+{
+    return 0;
+}
+
 Size View::size() const
 {
     return geometry().size();

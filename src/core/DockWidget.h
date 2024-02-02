@@ -466,6 +466,12 @@ public:
     /// only implemented for QtQuick
     void setMDIZ(int z);
 
+    /// returns the z-order in the MDI layout
+    /// Note that this is different than calling View::zOrder() directly on the dock widget
+    /// as the dockwidget is parented into a tabwidget, inside a group (would return 0 always)
+    /// This one is more useful, as you can compare it against other dock widgets inside the same layout
+    int mdiZ() const;
+
     ///@brief Returns whether this dock widget is the main window persistent central widget
     /// This only applies when using MainWindowOption_HasCentralWidget
     bool isPersistentCentralDockWidget() const;

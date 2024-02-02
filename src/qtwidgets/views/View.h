@@ -176,6 +176,17 @@ public:
         Base::update();
     }
 
+    int zOrder() const override
+    {
+        if (auto p = QWidget::parentWidget()) {
+            // Some of them might be non-QtWidget QObject, but this is good enough
+            // to unit test raise() in MDI area
+            return p->children().indexOf(this);
+        }
+
+        return 0;
+    }
+
     static void setParentFor(QWidget *widget, Core::View *parent)
     {
         if (!parent) {

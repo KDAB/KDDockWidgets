@@ -985,6 +985,16 @@ void DockWidget::setMDIZ(int z)
     }
 }
 
+int DockWidget::mdiZ() const
+{
+    if (Group *group = d->group()) {
+        if (group->isMDI())
+            return group->view()->zOrder();
+    }
+
+    return 0;
+}
+
 bool DockWidget::isPersistentCentralDockWidget() const
 {
     return d->m_isPersistentCentralDockWidget;
