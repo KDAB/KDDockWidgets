@@ -372,12 +372,12 @@ void View::dumpDebug()
 
 bool View::isFixedWidth() const
 {
-    return minSize().width() == maxSizeHint().width();
+    return !m_inDtor && minSize().width() == maxSizeHint().width();
 }
 
 bool View::isFixedHeight() const
 {
-    return minSize().height() == maxSizeHint().height();
+    return !m_inDtor && minSize().height() == maxSizeHint().height();
 }
 
 /** static */
