@@ -2377,7 +2377,7 @@ void TestQtWidgets::tst_toggleVsShowHidden()
     QVERIFY(!d1->toggleAction()->isChecked());
     QVERIFY(!d1->isOpen());
     int count = 0;
-    connect(d1->toggleAction(), &QAction::toggled, this, [d1, &count](bool) {
+    connect(d1->toggleAction(), &QAction::toggled, this, [&count](bool) {
         count++;
     });
 
