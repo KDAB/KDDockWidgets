@@ -9,6 +9,8 @@
   - Planned: #448 Implement docking indicator for MDI area
   - Fix crash when doing sequential open() and close() calls (#326)
   - Fix double-clicking the guest widget would make window float
+  - 3rdparty: Update to nlohmann json v3.11.3, from v3.10.5. Only relevant if you're not using
+    system nlohmann.
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.
