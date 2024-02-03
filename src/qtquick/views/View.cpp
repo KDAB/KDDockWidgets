@@ -705,7 +705,7 @@ int View::zOrder() const
     // This is unrelated to QQuickItem::z(), which is always 0 for us.
     if (auto p = parentItem()) {
         const auto siblings = p->childItems();
-        return siblings.indexOf(this);
+        return siblings.indexOf(const_cast<QtQuick::View *>(this));
     }
 
     return 0;
