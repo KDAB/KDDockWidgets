@@ -181,7 +181,7 @@ public:
         if (auto p = QWidget::parentWidget()) {
             // Some of them might be non-QtWidget QObject, but this is good enough
             // to unit test raise() in MDI area
-            return p->children().indexOf(const_cast<QtWidgets::View<typename Base> *>(this));
+            return p->children().indexOf(const_cast<QtWidgets::View<Base> *>(this));
         }
 
         return 0;
