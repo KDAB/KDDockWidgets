@@ -3,6 +3,7 @@
   - Fixed DPI of icons in TitleBar.qml Looks better when using 150% and 200% scalling now.
   - QtQuick: Fixed redock not working when mixing MDI with docking
   - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
+  - QtQuick: Fixed MDI widgets not raising when clicked on
   - MDI: Don't show resize handles if widget is fixed size
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
