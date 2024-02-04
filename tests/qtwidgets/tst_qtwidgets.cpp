@@ -185,6 +185,7 @@ private Q_SLOTS:
     void tst_moveTab();
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
+    void tst_nestedMainWindowFloatButton();
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
@@ -2009,6 +2010,40 @@ void TestQtWidgets::tst_moveTab()
 
     QCOMPARE(tb->currentIndex(), 1);
     QCOMPARE(tb->currentDockWidget(), dockA);
+}
+
+void TestQtWidgets::tst_nestedMainWindowFloatButton()
+{
+    // Bug 1 reported in #464:
+    // Dockwidget, inside MainWindow inside MainWindow.
+    // Float inner main window
+    // DockWidget's float button stops working
+    EnsureTopLevelsDeleted e;
+    auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto nestedMainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW2");
+    mainWindow->setObjectName("root main window");
+
+    auto containerDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container"));
+    auto nestedMainWindowQWidget = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
+    containerDock->setWidget(nestedMainWindowQWidget);
+    mainWindow->addDockWidget(containerDock->asDockWidgetController(), Location_OnBottom);
+
+    auto nestedDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested Dock"));
+    nestedMainWindow->addDockWidget(nestedDock->asDockWidgetController(), Location_OnBottom);
+    nestedMainWindowQWidget->menuBar()->addMenu("Inner menu");
+    nestedMainWindowQWidget->setObjectName("nested main window");
+
+    QVERIFY(!containerDock->isFloating());
+    QVERIFY(!nestedDock->isFloating());
+    QVERIFY(containerDock->dockWidget()->isInMainWindow());
+    QVERIFY(nestedDock->dockWidget()->isInMainWindow());
+
+    containerDock->setFloating(true);
+
+    QVERIFY(containerDock->isFloating());
+    QVERIFY(!nestedDock->isFloating());
+    QVERIFY(!containerDock->dockWidget()->isInMainWindow());
+    QVERIFY(nestedDock->dockWidget()->isInMainWindow());
 }
 
 void TestQtWidgets::tst_nestedMainWindowToggle()

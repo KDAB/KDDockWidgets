@@ -206,6 +206,12 @@ bool DockWidget::isFloating() const
     if (view()->isRootView())
         return true;
 
+    // Deal with case of main window nesting:
+    // Dock widget inside main window 1 inside mainwindow 2 and detach mw1, would
+    // still be in a floating window, but dockwidget is still docked to the inner main window
+    if (isInMainWindow())
+        return false;
+
     auto fw = floatingWindow();
     return fw && fw->hasSingleDockWidget();
 }
