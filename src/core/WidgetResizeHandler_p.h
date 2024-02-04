@@ -123,7 +123,6 @@ public:
      */
     void setAllowedResizeSides(CursorPositions);
 
-
     /**
      * Sets the resize gap. By default 10.
      *
@@ -140,6 +139,15 @@ public:
     bool isMDI() const;
 
     bool isResizing() const;
+
+    /// Disable our global event filter and require a caller to explicitly ask for event filtering to start
+    /// Used only by QtQuick MDI, which uses a MDIResizeHandlerHelper to detect 1st press. When there's multiple
+    /// MDI windows, we only want the one being resized to filter for global mouse events
+    void setEventFilterStartsManually();
+
+    /// Default true. Sets whether WidgetResizeHandler will change mouse cursor depending on where it is.
+    /// This is false for QtQuick as there we use a MouseArea to change cursor.
+    void setHandlesMouseCursor(bool);
 
     static int widgetResizeHandlerMargin();
 
@@ -182,6 +190,9 @@ private:
     int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;
     bool m_overrideCursorSet = false;
+    bool m_handlesMouseCursor = true;
+
+    bool m_eventFilteringStartsManually = false;
 };
 
 #if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)

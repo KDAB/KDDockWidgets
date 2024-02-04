@@ -205,6 +205,9 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
         mTarget->releaseMouse();
         mTarget->releaseKeyboard();
+        if (m_eventFilteringStartsManually)
+            EventFilterInterface::setEnabled(false);
+
         return true;
 
         break;
@@ -518,6 +521,9 @@ void WidgetResizeHandler::setTarget(View *w)
 
 void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
+    if (!m_handlesMouseCursor)
+        return;
+
     if (!mTargetGuard) {
         // Our target was destroyed while we're processing mouse events, it's fine.
         restoreMouseCursor();
@@ -573,6 +579,9 @@ void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 
 void WidgetResizeHandler::restoreMouseCursor()
 {
+    if (!m_handlesMouseCursor)
+        return;
+
     if (m_usesGlobalEventFilter) {
         if (m_overrideCursorSet) {
             Platform::instance()->restoreMouseCursor();
@@ -727,3 +736,14 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
     return false;
 }
 #endif
+
+void WidgetResizeHandler::setEventFilterStartsManually()
+{
+    m_eventFilteringStartsManually = true;
+    EventFilterInterface::setEnabled(false);
+}
+
+void WidgetResizeHandler::setHandlesMouseCursor(bool handles)
+{
+    m_handlesMouseCursor = handles;
+}

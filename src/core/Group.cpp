@@ -803,6 +803,14 @@ void Group::createMDIResizeHandler()
     delete m_resizeHandler;
     m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
                                               WidgetResizeHandler::WindowMode::MDI, view());
+
+    if (Platform::instance()->isQtQuick()) {
+        // Our C++ WidgetResizeHandler is triggered manually by MDIResizeHandlerHelper.qml's MouseArea
+        m_resizeHandler->setEventFilterStartsManually();
+
+        // MouseCursor set by QML as well
+        m_resizeHandler->setHandlesMouseCursor(false);
+    }
 }
 
 Size Group::dockWidgetsMinSize() const

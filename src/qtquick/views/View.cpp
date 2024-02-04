@@ -150,7 +150,6 @@ View::View(Core::Controller *controller, Core::ViewType type, QQuickItem *parent
         }
     });
 
-    qGuiApp->installEventFilter(this);
     _setSize({ 800, 800 });
 }
 

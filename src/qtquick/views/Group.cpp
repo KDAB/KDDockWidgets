@@ -175,6 +175,20 @@ void Group::setStackLayout(QQuickItem *stackLayout)
     m_stackLayout = stackLayout;
 }
 
+void Group::startMDIResize()
+{
+    if (auto handler = m_group->resizeHandler()) {
+        if (handler->enabled()) {
+            /// Doesn't happen, but let's be vigilant
+            KDDW_ERROR("Group::startMDIResize: Handler is already enabled!");
+        } else {
+            handler->setEnabled(true);
+        }
+    } else {
+        KDDW_ERROR("Group::startMDIResize: No WidgetResizeHandler found. isMDI={}", isMDI());
+    }
+}
+
 QSize Group::minSize() const
 {
     const QSize contentsSize = m_group->dockWidgetsMinSize();

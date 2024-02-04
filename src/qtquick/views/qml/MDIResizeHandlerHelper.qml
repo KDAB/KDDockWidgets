@@ -8,7 +8,6 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-
 import QtQuick 2.9
 import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9
@@ -22,6 +21,7 @@ MouseArea {
     required property QtObject groupCpp
     required property int cursorPosition
 
+    enabled: resizeAllowed
     hoverEnabled: true
 
     cursorShape: {
@@ -50,12 +50,11 @@ MouseArea {
         }
     }
 
-    enabled: resizeAllowed
+    onPressed: {
+        // install event filter
+        groupCpp.startMDIResize()
 
-    onGroupCppChanged: {
-        if (groupCpp) {
-            // When Frame is in MDI mode, we need to detect when the mouse over the edges
-            groupCpp.redirectMouseEvents(this)
-        }
+        // ignore event, so event filter catches press as well
+        mouse.accepted = false
     }
 }

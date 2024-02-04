@@ -5056,9 +5056,15 @@ KDDW_QCORO_TASK tst_mdiZorder()
     CHECK_EQ(dock1->mdiZ(), 1);
 
     // Double click dock 0, it should raise
-    Tests::doubleClickOn(dock0->mapToGlobal(Point(70, 70)), dock0->view()->window());
+    auto window = dock0->view()->window();
+    Tests::doubleClickOn(dock0->mapToGlobal(Point(70, 70)), window);
     CHECK_EQ(dock0->mdiZ(), 1);
     CHECK_EQ(dock1->mdiZ(), 0);
+
+    // Double click dock 1, it should raise
+    Tests::doubleClickOn(dock1->mapToGlobal(Point(150, 150)), window);
+    CHECK_EQ(dock0->mdiZ(), 0);
+    CHECK_EQ(dock1->mdiZ(), 1);
 
     KDDW_TEST_RETURN(true);
 }
