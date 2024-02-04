@@ -222,7 +222,7 @@ Core::FloatingWindow *View::asFloatingWindowController() const
 
 Core::Group *View::asGroupController() const
 {
-    if (m_controller && m_controller->is(ViewType::Frame))
+    if (m_controller && m_controller->is(ViewType::Group))
         return object_cast<Core::Group *>(m_controller);
 
     return nullptr;

@@ -50,7 +50,7 @@ static Core::Controller *controllerForItem(QQuickItem *item)
         // Using a for+switch pattern so that compiler reminds us if new enumerators are added to
         // enum
         switch (Core::ViewType(i)) {
-        case Core::ViewType::Frame:
+        case Core::ViewType::Group:
             if (auto view = qobject_cast<Group *>(item))
                 return view->controller();
             break;
@@ -264,7 +264,7 @@ bool ViewWrapper::is(Core::ViewType t) const
 
     switch (t) {
 
-    case Core::ViewType::Frame:
+    case Core::ViewType::Group:
         return qobject_cast<Group *>(m_item);
     case Core::ViewType::TitleBar:
         return qobject_cast<TitleBar *>(m_item);

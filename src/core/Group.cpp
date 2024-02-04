@@ -80,7 +80,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 }
 
 Group::Group(View *parent, FrameOptions options, int userType)
-    : Controller(ViewType::Frame, Config::self().viewFactory()->createGroup(this, parent))
+    : Controller(ViewType::Group, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
     , d(new Private(this, userType, actualOptions(options)))
     , m_stack(new Core::Stack(this, tabWidgetOptions(options)))

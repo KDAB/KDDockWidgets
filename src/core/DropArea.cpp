@@ -536,7 +536,7 @@ bool DropArea::validateInputs(View *widget, Location location,
     const bool isStartHidden = option.startsHidden();
 
     const bool isLayout = widget->is(ViewType::DropArea) || widget->is(ViewType::MDILayout);
-    if (!widget->is(ViewType::Frame) && !isLayout && !isDockWidget) {
+    if (!widget->is(ViewType::Group) && !isLayout && !isDockWidget) {
         KDDW_ERROR("Unknown widget type {}", ( void * )widget);
         return false;
     }

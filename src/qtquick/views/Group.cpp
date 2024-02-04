@@ -56,7 +56,7 @@ public:
 }
 
 Group::Group(Core::Group *controller, QQuickItem *parent)
-    : QtQuick::View(controller, Core::ViewType::Frame, parent)
+    : QtQuick::View(controller, Core::ViewType::Group, parent)
     , Core::GroupViewInterface(controller)
     , d(new Private())
 {
