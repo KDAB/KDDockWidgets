@@ -40,6 +40,7 @@
 ---
 - [For Developers]()
   - [Architecture and Concepts](architecture_and_concepts.md)
+  - [Misc Implementation Details](misc_impl_details.md)
 ---
 - [Roadmap](roadmap.md)
 - [Get Involved](involved.md)
