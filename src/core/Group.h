@@ -340,6 +340,7 @@ private:
     friend class KDDockWidgets::Core::Stack;
 
     void scheduleDeleteLater();
+    void createMDIResizeHandler();
     void onCloseEvent(CloseEvent *);
 
     Layout *m_layout = nullptr;

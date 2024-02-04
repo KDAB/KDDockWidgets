@@ -146,8 +146,7 @@ void Group::setLayout(Layout *dt)
 
     if (m_layout) {
         if (isMDI())
-            m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
-                                                      WidgetResizeHandler::WindowMode::MDI, view());
+            createMDIResizeHandler();
 
         // We keep the connect result so we don't dereference m_layout at shutdown
         d->m_visibleWidgetCountChangedConnection =
@@ -799,6 +798,13 @@ void Group::scheduleDeleteLater()
     destroyLater();
 }
 
+void Group::createMDIResizeHandler()
+{
+    delete m_resizeHandler;
+    m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
+                                              WidgetResizeHandler::WindowMode::MDI, view());
+}
+
 Size Group::dockWidgetsMinSize() const
 {
     Size size = Item::hardcodedMinimumSize;
@@ -893,9 +899,7 @@ bool Group::anyDockWidgetsHas(LayoutSaverOption option) const
 void Group::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
-        delete m_resizeHandler;
-        m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
-                                                  WidgetResizeHandler::WindowMode::MDI, view());
+        createMDIResizeHandler();
         m_resizeHandler->setAllowedResizeSides(sides);
     } else {
         delete m_resizeHandler;
