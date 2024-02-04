@@ -32,6 +32,7 @@
 #include "core/Group_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/Logging_p.h"
+#include "core/MDILayout.h"
 
 #include "Stack.h"
 #include "Config.h"
@@ -246,4 +247,16 @@ KDDockWidgets::QtQuick::TitleBar *Group::actualTitleBar() const
 int Group::userType() const
 {
     return 0;
+}
+
+void Group::setMDISize(QSize sz)
+{
+    if (!isMDI() || m_inDtor)
+        return;
+
+    auto layout = m_group->mdiLayout();
+    if (!layout)
+        return;
+
+    layout->resizeDockWidget(m_group, sz);
 }

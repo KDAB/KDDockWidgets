@@ -66,6 +66,10 @@ public:
     int userType() const;
     QObject *tabBarObj() const;
 
+    /// Sets the size of this group in the MDI layout
+    Q_INVOKABLE void setMDISize(QSize);
+
+
 protected:
     void removeDockWidget(Core::DockWidget *dw) override;
     void insertDockWidget(Core::DockWidget *dw, int index) override;
