@@ -296,3 +296,13 @@ bool Platform::supportsAeroSnap() const
 {
     return false;
 }
+
+bool EventFilterInterface::enabled() const
+{
+    return m_enabled;
+}
+
+void EventFilterInterface::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
+}
