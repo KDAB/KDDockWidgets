@@ -47,6 +47,6 @@ repos:
   - id: cmake-format
     exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
 - repo: https://github.com/fsfe/reuse-tool
-  rev: v2.1.0
+  rev: v3.0.1
   hooks:
   - id: reuse
