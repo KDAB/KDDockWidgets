@@ -128,13 +128,13 @@ public:
         const auto filters = std::as_const(q->d->m_globalEventFilters);
 
         for (EventFilterInterface *filter : filters) {
-            if (!filter->enabled())
-                continue;
-
             // Filter might have been deleted meanwhile
             if (std::find(q->d->m_globalEventFilters.cbegin(), q->d->m_globalEventFilters.cend(),
                           filter)
                 == q->d->m_globalEventFilters.cend())
+                continue;
+
+            if (!filter->enabled())
                 continue;
 
             if (filter->onMouseEvent(view.get(), ev))
