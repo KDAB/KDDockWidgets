@@ -79,6 +79,7 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     m_dockWidget->init();
 
     m_dockWidget->d->isFloatingChanged.connect(&DockWidget::isFloatingChanged, this);
+    m_dockWidget->d->isOpenChanged.connect([this](bool is) { Q_EMIT isOpenChanged(is); });
     m_dockWidget->d->isFocusedChanged.connect(&DockWidget::isFocusedChanged, this);
     m_dockWidget->d->titleChanged.connect(&DockWidget::titleChanged, this);
     m_dockWidget->d->optionsChanged.connect(&DockWidget::optionsChanged, this);
