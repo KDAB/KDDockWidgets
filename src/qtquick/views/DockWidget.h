@@ -47,6 +47,7 @@ class DOCKS_EXPORT DockWidget : public QtQuick::View,
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
+    Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QObject *guestItem READ guestItem NOTIFY guestItemChanged)
@@ -123,7 +124,6 @@ public:
     // DockWidgetViewInterface is not a QObject, so trick moc
     Q_INVOKABLE void setAsCurrentTab();
     Q_INVOKABLE void forceClose();
-    Q_INVOKABLE bool isOpen() const;
     Q_INVOKABLE void open();
     Q_INVOKABLE void show();
     Q_INVOKABLE void raise();
@@ -135,6 +135,7 @@ Q_SIGNALS:
     void groupGeometryChanged(QRect);
     void actualTitleBarChanged();
     void isFocusedChanged();
+    void isOpenChanged(bool);
     void isFloatingChanged();
     void titleChanged();
     void guestItemChanged();
