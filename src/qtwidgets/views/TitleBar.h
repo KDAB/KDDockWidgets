@@ -24,6 +24,9 @@ class QHBoxLayout;
 class QLabel;
 QT_END_NAMESPACE
 
+
+class TestQtWidgets;
+
 namespace KDDockWidgets::QtWidgets {
 
 class DOCKS_EXPORT TitleBar : public View<QWidget>,
@@ -85,6 +88,7 @@ protected:
     QLabel *m_dockWidgetIcon = nullptr;
 
 private:
+    friend class ::TestQtWidgets;
     // Private class just to hide KDBindings usage
     class Private;
     Private *const d;

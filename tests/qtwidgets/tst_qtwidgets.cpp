@@ -171,6 +171,7 @@ private Q_SLOTS:
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_sidebarGrouping();
     void tst_sidebarCrash();
+    void tst_sidebarCrash2();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
@@ -1003,6 +1004,32 @@ void TestQtWidgets::tst_sidebarCrash()
     QTest::qWait(1000);
 
     m1->toggleOverlayOnSideBar(dw1);
+}
+
+void TestQtWidgets::tst_sidebarCrash2()
+{
+    // Tests a crash, only reproduceable with an ASAN build of Qt
+    // While unpinning, the QToolButton would be deleted while still on the stack
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = newDockWidget(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+    m1->moveToSideBar(dw1);
+    m1->overlayOnSideBar(dw1);
+
+    auto titleBarWidget = qobject_cast<QtWidgets::TitleBar *>(QtCommon::View_qt::asQWidget(dw1->titleBar()->view()));
+    QVERIFY(titleBarWidget && titleBarWidget->isVisible());
+
+    auto button = titleBarWidget->m_autoHideButton;
+    QVERIFY(button && button->isVisible());
+
+    auto globalPos = button->mapToGlobal(QPoint(5, 5));
+
+    auto b = QtWidgets::ViewWrapper::create(button);
+    Tests::clickOn(globalPos, b.get());
 }
 
 void TestQtWidgets::tst_floatRemovesFromSideBar()
