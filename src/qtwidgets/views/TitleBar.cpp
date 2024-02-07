@@ -137,6 +137,12 @@ TitleBar::TitleBar(QWidget *parent)
 TitleBar::~TitleBar()
 {
     delete d;
+
+    /// The window deletion might have been triggered by pressing a button, so use deleteLater()
+    for (auto button : { m_closeButton, m_floatButton, m_maximizeButton, m_minimizeButton, m_autoHideButton }) {
+        button->setParent(nullptr);
+        button->deleteLater();
+    }
 }
 
 void TitleBar::init()

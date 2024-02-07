@@ -7,6 +7,7 @@
   - MDI: Don't show resize handles if widget is fixed size
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
+  - QtWidgets: Fixed crash when unpinning a window
   - Planned: #448 Implement docking indicator for MDI area
   - Fix crash when doing sequential open() and close() calls (#326)
   - Fix double-clicking the guest widget would make window float
