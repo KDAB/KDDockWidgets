@@ -585,7 +585,7 @@ void MainWindow::toggleOverlayOnSideBar(Core::DockWidget *dw)
     }
 }
 
-void MainWindow::clearSideBarOverlay(bool deleteFrame)
+void MainWindow::clearSideBarOverlay(bool deleteGroup)
 {
     if (!d->m_overlayedDockWidget)
         return;
@@ -603,7 +603,7 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
 
     group->unoverlay();
 
-    if (deleteFrame) {
+    if (deleteGroup) {
         overlayedDockWidget->setParent(nullptr);
 
         {

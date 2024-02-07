@@ -192,7 +192,7 @@ public:
     void toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
-    void clearSideBarOverlay(bool deleteFrame = true);
+    void clearSideBarOverlay(bool deleteGroup = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
     KDDockWidgets::Core::SideBar *
