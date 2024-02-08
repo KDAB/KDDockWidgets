@@ -137,12 +137,12 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
     } else if (isMDI()) {
         // Case #2: Resizing an embedded MDI "Window"
 
-        // Each Frame has a WidgetResizeHandler instance.
-        // mTarget is the Frame we want to resize.
+        // Each Group has a WidgetResizeHandler instance.
+        // mTarget is the Group we want to resize.
         // but 'o' might not be mTarget, because we're using a global event filter.
         // The global event filter is required because we allow the cursor to be outside the group,
         // a few pixels so we have a nice resize margin. Here we deal with the case where our
-        // mTarget, let's say "Frame 1" is on top of "Frame 2" but cursor is near "Frame 2"'s
+        // mTarget, let's say "Group 1" is on top of "Group 2" but cursor is near "Group 2"'s
         // margins, and would show resize cursor. We only want to continue if the cursor is near the
         // margins of our own group (mTarget)
 
@@ -158,8 +158,11 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
                 group->view()->d->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
             auto targetParent = mTarget->d->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
             const bool areSiblings = groupParent && groupParent->equals(targetParent);
-            if (areSiblings)
+            if (areSiblings) {
+                if (cursorPosition(Qt5Qt6Compat::eventGlobalPos(e)) == CursorPosition_Undefined)
+                    restoreMouseCursor();
                 return false;
+            }
         }
     }
 

@@ -5,6 +5,7 @@
   - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
   - QtQuick: Fixed MDI widgets not raising when clicked on
   - MDI: Don't show resize handles if widget is fixed size
+  - MDI: Fixed mouse cursor not being restored when dock widgets were overlapping
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
   - QtWidgets: Fixed crash when unpinning a window
