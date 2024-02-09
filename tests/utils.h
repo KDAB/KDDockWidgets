@@ -79,6 +79,7 @@ struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
         : m_originalFlags(Config::self().flags())
+        , m_originalMDIFlags(Config::self().mdiFlags())
         , m_originalInternalFlags(Config::self().internalFlags())
         , m_originalSeparatorThickness(Config::self().separatorThickness())
     {
@@ -106,11 +107,13 @@ struct EnsureTopLevelsDeleted
         Config::self().setMainWindowFactoryFunc(nullptr);
         Config::self().setInternalFlags(m_originalInternalFlags);
         Config::self().setFlags(m_originalFlags);
+        Config::self().setMDIFlags(m_originalMDIFlags);
         Config::self().setSeparatorThickness(m_originalSeparatorThickness);
         Config::self().setLayoutSaverStrictMode(false);
     }
 
     const Config::Flags m_originalFlags;
+    const Config::MDIFlags m_originalMDIFlags;
     const Config::InternalFlags m_originalInternalFlags;
     const int m_originalSeparatorThickness;
 };

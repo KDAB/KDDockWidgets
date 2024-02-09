@@ -713,11 +713,13 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
     if (!view)
         return false;
 
-    // When clicking on a MDI Group we raise the window
-    if (Controller *c = view->d->firstParentOfType(ViewType::Group)) {
-        auto group = static_cast<Group *>(c);
-        if (group->isMDI())
-            group->view()->raise();
+    if (!Config::hasMDIFlag(Config::MDIFlag_NoClickToRaise)) {
+        // When clicking on a MDI Group we raise the window
+        if (Controller *c = view->d->firstParentOfType(ViewType::Group)) {
+            auto group = static_cast<Group *>(c);
+            if (group->isMDI())
+                group->view()->raise();
+        }
     }
 
     // The following code is for hididng the overlay

@@ -67,6 +67,7 @@ public:
     DragEndedFunc m_dragEndedFunc = nullptr;
     ViewFactory *m_viewFactory = nullptr;
     Flags m_flags = Flag_Default;
+    MDIFlags m_mdiFlags = MDIFlag_None;
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
     double m_draggedWindowOpacity = std::numeric_limits<double>::quiet_NaN();
@@ -100,6 +101,16 @@ Config::Flags Config::flags() const
     return d->m_flags;
 }
 
+Config::MDIFlags Config::mdiFlags() const
+{
+    return d->m_mdiFlags;
+}
+
+void Config::setMDIFlags(MDIFlags flags)
+{
+    d->m_mdiFlags = flags;
+}
+
 void Config::setFlags(Flags f)
 {
     // Most flags aren't allowed to be changed at runtime.
@@ -130,6 +141,12 @@ void Config::setFlags(Flags f)
 bool Config::hasFlag(Flag flag)
 {
     return (Config::self().flags() & flag) == flag;
+}
+
+/** static*/
+bool Config::hasMDIFlag(MDIFlag flag)
+{
+    return (Config::self().mdiFlags() & flag) == flag;
 }
 
 void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)

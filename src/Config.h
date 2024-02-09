@@ -174,8 +174,19 @@ public:
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 
+    /// Flags to be used in MDI mode
+    enum MDIFlag {
+        MDIFlag_None = 0,
+        MDIFlag_NoClickToRaise = 1 ///< Clicking on a MDI widget won't raise it
+    };
+    Q_DECLARE_FLAGS(MDIFlags, MDIFlag)
+
     ///@brief returns the chosen flags
     Flags flags() const;
+
+    ///@brief returns the chosen MDI flags
+    /// default is MDIFlag_None
+    MDIFlags mdiFlags() const;
 
     ///@brief setter for the flags
     ///@param flags the flags to set
@@ -183,8 +194,14 @@ public:
     /// Call @ref flags() after the setter if you need to know what was really set
     void setFlags(Flags flags);
 
+    /// Setter for the MDI flags
+    void setMDIFlags(MDIFlags);
+
     ///@brief Returns whether the specified flag is set or not
     static bool hasFlag(Flag);
+
+    ///@brief Returns whether the specified MDI flag is set or not
+    static bool hasMDIFlag(MDIFlag);
 
     /**
      * @brief Registers a DockWidgetFactoryFunc.
