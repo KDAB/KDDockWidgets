@@ -16,6 +16,7 @@
   - 3rdparty: Update to nlohmann json v3.11.3, from v3.10.5. Only relevant if you're not using
     system nlohmann.
   - Fixed dock widget float button when using main window nesting
+  - Fixed auto-hide overlay not updating its position when main window was resized
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.
