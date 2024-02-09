@@ -100,6 +100,7 @@ Q_SIGNALS:
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
     void guestViewChanged();
     void isFocusedChanged(bool);
+    void isFloatingChanged(bool);
     void isOpenChanged(bool);
     void windowActiveAboutToChange(bool);
 
