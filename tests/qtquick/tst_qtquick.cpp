@@ -12,6 +12,8 @@
 /// @file
 /// @brief Here lives the tests that only apply to QtQuick
 
+#define NOMINMAX
+
 #include "kddockwidgets/KDDockWidgets.h"
 #include "qtquick/Platform.h"
 #include "qtquick/views/TitleBar.h"

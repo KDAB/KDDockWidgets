@@ -15,6 +15,8 @@
 // A test that was extracted out from tst_docks.cpp as it was too slow
 // By using a separate executable it can be parallelized by ctest.
 
+#define NOMINMAX
+
 #include "utils.h"
 #include "Config.h"
 #include "core/Position_p.h"

@@ -14,6 +14,8 @@
 /// either because they haven't been ported to QtQuick yet or because they are really
 /// QtWidgets specific.
 
+#define NOMINMAX
+
 #include "kddockwidgets/KDDockWidgets.h"
 #include "../utils.h"
 #include "Config.h"
