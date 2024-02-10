@@ -41,6 +41,8 @@ public:
         {
             dw->d->m_willUpdateActions = false;
             dw->d->updateFloatAction();
+            if (dw->isOpen() != dw->toggleAction()->isChecked())
+                dw->d->updateToggleAction();
         }
 
     private:

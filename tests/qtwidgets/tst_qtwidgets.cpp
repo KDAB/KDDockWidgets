@@ -2226,7 +2226,11 @@ void TestQtWidgets::addDockWidgetToSide()
     auto d4 = new QtWidgets::DockWidget("d4");
     auto dTop = new QtWidgets::DockWidget("dTop");
     auto dTop2 = new QtWidgets::DockWidget("dTop2");
+    QVERIFY(!d1->isOpen());
+    QVERIFY(!d1->toggleAction()->isChecked());
     m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    QVERIFY(d1->isOpen());
+    QVERIFY(d1->toggleAction()->isChecked());
     m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
     m1->addDockWidgetToSide(d3->asDockWidgetController(), KDDockWidgets::Location_OnRight);
     m1->addDockWidgetToSide(dTop->asDockWidgetController(), KDDockWidgets::Location_OnTop);
@@ -2269,7 +2273,13 @@ void TestQtWidgets::addDockWidgetToSide2()
 
     auto d1 = new QtWidgets::DockWidget("d1");
     auto d2 = new QtWidgets::DockWidget("d2");
+
+    QVERIFY(!d1->isOpen());
+    QVERIFY(!d1->toggleAction()->isChecked());
     m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    QVERIFY(!d1->isOpen());
+    QVERIFY(!d1->toggleAction()->isChecked());
+
     m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
 
     d1->show();
