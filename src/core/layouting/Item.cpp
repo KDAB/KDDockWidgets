@@ -2316,7 +2316,7 @@ void ItemBoxContainer::dumpLayout(int level, bool printSeparators)
     const std::string typeStr = isRoot() ? "- Root " : "- Layout ";
 
     {
-        const std::string orientationStr = d->m_orientation == Qt::Vertical ? "↕" : "↔";
+        const std::string orientationStr = d->m_orientation == Qt::Vertical ? "V" : "H";
         std::cerr << indent << typeStr << orientationStr << ": "
                   << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" <<
                                               m_geometry.bottom()*/
