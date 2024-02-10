@@ -70,7 +70,7 @@ void MainWindow::init(const QString &name)
         d->m_layout->d_ptr()->visibleWidgetCountChanged.connect([this](int count) { d->groupCountChanged.emit(count); });
     view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 
-    d->m_resizeConnection = view()->d->resized.connect([this](QSize size) {
+    d->m_resizeConnection = view()->d->resized.connect([this](Size size) {
         d->onResized(size);
     });
 }
