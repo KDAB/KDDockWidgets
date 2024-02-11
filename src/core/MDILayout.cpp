@@ -39,6 +39,8 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         return;
     }
 
+    const Size dwSize = dw->size();
+
     auto group = object_cast<Core::Group *>(dw->d->group());
     if (itemForGroup(group) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
@@ -56,7 +58,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         newItem->setGuest(group->asLayoutingGuest());
     }
 
-    newItem->setSize(dw->size().expandedTo(newItem->minSize()));
+    newItem->setSize(dwSize.expandedTo(newItem->minSize()));
 
     assert(!newItem->geometry().isEmpty());
     m_rootItem->addDockWidget(newItem, localPt);

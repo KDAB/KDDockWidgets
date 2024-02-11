@@ -5040,21 +5040,20 @@ KDDW_QCORO_TASK tst_mdiSetSize()
     auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
 
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({}));
+        "dock0", Platform::instance()->tests_createView({}), {}, {}, false);
 
     const Size size = { 501, 502 };
     dock0->view()->setSize(size);
+    CHECK_EQ(dock0->view()->size(), size);
 
-    m->layout()->asMDILayout()->addDockWidget(dock0, Point(10, 10), {});
+    m->layout()
+        ->asMDILayout()
+        ->addDockWidget(dock0, Point(10, 10), {});
 
     auto group = dock0->dptr()->group();
     CHECK_EQ(group->pos(), QPoint(10, 10));
 
-    // still broken for QtQuick
-    if (!Platform::instance()->isQtQuick()) {
-        CHECK_EQ(group->size(), size);
-        qDebug() << group->size();
-    }
+    CHECK_EQ(group->size(), size);
 
     KDDW_TEST_RETURN(true);
 }
