@@ -61,6 +61,13 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
         return;
     s_original(t, context, msg);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // There's a ton of benign warnings in Qt5 QML when app exits, which add maintenance burden.
+    // Please, jump to Qt 6
+    if (Core::Platform::instance()->isQtQuick())
+        return;
+#endif
+
     if (t == QtWarningMsg) {
         const std::string expectedWarning = Core::Platform::instance()->m_expectedWarning;
         if (!expectedWarning.empty() && msg.contains(QString::fromStdString(expectedWarning)))
