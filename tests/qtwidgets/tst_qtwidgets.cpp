@@ -194,6 +194,7 @@ private Q_SLOTS:
     void addDockWidgetToSide2();
     void addDockWidgetToSide3();
     void addDockWidgetToSide4();
+    void addDockWidgetToSide5();
     void addDockWidgetToSideCrash();
     void userHiddenButton();
     void tst_tabAsCentralWidget();
@@ -2317,40 +2318,57 @@ void TestQtWidgets::addDockWidgetToSide3()
 
 void TestQtWidgets::addDockWidgetToSide4()
 {
-    // // Tests a case where generated layout would be off by a few pixels
-    // EnsureTopLevelsDeleted e;
-    // auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    // Tests a case where generated layout would be off by a few pixels
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
 
-    // auto dummy1 = new QtWidgets::DockWidget("dummy1");
-    // auto dummy2 = new QtWidgets::DockWidget("dummy2");
-    // m1->addDockWidget(dummy1->asDockWidgetController(), KDDockWidgets::Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
-    // m1->addDockWidget(dummy2->asDockWidgetController(), KDDockWidgets::Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
+    auto dummy1 = new QtWidgets::DockWidget("dummy1");
+    auto dummy2 = new QtWidgets::DockWidget("dummy2");
+    m1->addDockWidget(dummy1->asDockWidgetController(), KDDockWidgets::Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
+    m1->addDockWidget(dummy2->asDockWidgetController(), KDDockWidgets::Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
 
-    // auto leftVisible = new QtWidgets::DockWidget("leftVisible");
-    // auto leftHidden = new QtWidgets::DockWidget("leftHidden");
-    // auto bottomHidden = new QtWidgets::DockWidget("bottomHidden");
-    // auto rightVisible = new QtWidgets::DockWidget("rightVisible");
-    // auto some = new QtWidgets::DockWidget("some");
-    // auto leftVisible2 = new QtWidgets::DockWidget("leftVisible2");
-    // auto bottomHidden2 = new QtWidgets::DockWidget("bottomHidden2");
-    // auto rightHidden = new QtWidgets::DockWidget("rightHidden");
-    // auto rightHidden2 = new QtWidgets::DockWidget("rightHidden2");
+    auto leftVisible = new QtWidgets::DockWidget("leftVisible");
+    auto leftHidden = new QtWidgets::DockWidget("leftHidden");
+    auto bottomHidden = new QtWidgets::DockWidget("bottomHidden");
+    auto rightVisible = new QtWidgets::DockWidget("rightVisible");
+    auto leftVisible2 = new QtWidgets::DockWidget("leftVisible2");
+    auto bottomHidden2 = new QtWidgets::DockWidget("bottomHidden2");
+    auto rightHidden = new QtWidgets::DockWidget("rightHidden");
+    auto rightHidden2 = new QtWidgets::DockWidget("rightHidden2");
 
-    // m1->addDockWidgetToSide(leftVisible->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
-    // m1->addDockWidgetToSide(leftHidden->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
-    // m1->addDockWidgetToSide(bottomHidden->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(leftVisible->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    m1->addDockWidgetToSide(leftHidden->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(bottomHidden->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
 
-    // m1->addDockWidgetToSide(leftVisible2->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    m1->addDockWidgetToSide(leftVisible2->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
 
-    // m1->addDockWidgetToSide(bottomHidden2->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
-    // m1->addDockWidgetToSide(rightHidden->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
-    // m1->addDockWidgetToSide(rightHidden2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(bottomHidden2->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(rightHidden->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(rightHidden2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
 
-    // leftVisible->open();
+    leftVisible->open();
 
-    // QVERIFY(m1->layout()->checkSanity());
-    // m1->addDockWidgetToSide(rightVisible->asDockWidgetController(), KDDockWidgets::Location_OnRight);
-    // QVERIFY(m1->layout()->checkSanity());
+    QVERIFY(m1->layout()->checkSanity());
+    m1->addDockWidgetToSide(rightVisible->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    QVERIFY(m1->layout()->checkSanity());
+}
+
+void TestQtWidgets::addDockWidgetToSide5()
+{
+    // Tests a case where generated layout would be off by a few pixels
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1002, 1002), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto rightVisible = new QtWidgets::DockWidget("rightVisible");
+    auto rightHidden = new QtWidgets::DockWidget("rightHidden");
+    auto rightHidden2 = new QtWidgets::DockWidget("rightHidden2");
+
+    m1->addDockWidgetToSide(rightHidden->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(rightHidden2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+
+    QVERIFY(m1->layout()->checkSanity());
+    m1->addDockWidgetToSide(rightVisible->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    QVERIFY(m1->layout()->checkSanity());
 }
 
 void TestQtWidgets::addDockWidgetToSideCrash()

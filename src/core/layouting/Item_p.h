@@ -479,7 +479,7 @@ public:
 private:
     int indexOfVisibleChild(const Item *) const;
     void restore(Item *) override;
-    void restoreChild(Item *,
+    void restoreChild(Item *, bool forceRestoreContainer = false,
                       NeighbourSqueezeStrategy neighbourSqueezeStrategy =
                           NeighbourSqueezeStrategy::AllNeighbours);
 

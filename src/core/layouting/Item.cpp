@@ -1381,7 +1381,7 @@ int ItemBoxContainer::indexOfVisibleChild(const Item *item) const
 
 void ItemBoxContainer::restore(Item *child)
 {
-    restoreChild(child, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
+    restoreChild(child, false, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
 }
 
 void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
@@ -1515,20 +1515,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
         parent->insertItem(item, indexInParent, option);
     } else {
         ItemBoxContainer *container = parent->convertChildToContainer(relativeTo);
-
-        const bool relativeToHiddenCase = !container->isVisible() && !option.startsHidden();
-        if (relativeToHiddenCase) {
-            // We're inserting into an invisible container.
-            // Historically we never allowed to insert a visible item relative to an invisible one
-            // As a workaround, hide the new item first, then restore its visibility, which will
-            // trigger the parent layout propagating size and shrinking its neighbours.
-            option.visibility = InitialVisibilityOption::StartHidden;
-        }
-
         container->insertItem(item, loc, option);
-
-        if (relativeToHiddenCase)
-            container->restoreChild(item, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
     }
 }
 
@@ -1914,6 +1901,8 @@ void ItemBoxContainer::setLength_recursive(int length, Qt::Orientation o)
 
 void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
 {
+    const bool containerWasVisible = hasVisibleChildren(true);
+
     if (option.sizeMode != DefaultSizeMode::NoDefaultSizeMode) {
         /// Choose a nice size for the item we're adding
         const int suggestedLength = d->defaultLengthFor(item, option);
@@ -1925,8 +1914,12 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
 
     itemsChanged.emit();
 
-    if (!d->m_convertingItemToContainer && item->isVisible())
-        restoreChild(item);
+    if (!d->m_convertingItemToContainer && item->isVisible()) {
+        // Case of inserting with an hidden relativeTo. This container needs to be restored as well.
+        const bool restoreItself = !containerWasVisible && m_children.count() > 1;
+
+        restoreChild(item, restoreItself);
+    }
 
     const bool shouldEmitVisibleChanged = item->isVisible();
 
@@ -2382,23 +2375,23 @@ Vector<double> ItemBoxContainer::Private::childPercentages() const
     return percentages;
 }
 
-void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourSqueezeStrategy)
+void ItemBoxContainer::restoreChild(Item *item, bool forceRestoreContainer, NeighbourSqueezeStrategy neighbourSqueezeStrategy)
 {
     assert(contains(item));
 
-    const bool hadVisibleChildren = hasVisibleChildren(/*excludeBeingInserted=*/true);
+    const bool shouldRestoreContainer = forceRestoreContainer || !hasVisibleChildren(/*excludeBeingInserted=*/true);
 
-    item->setIsVisible(true);
     item->setBeingInserted(true);
+    item->setIsVisible(true);
 
     const int excessLength = d->excessLength();
 
-    if (!hadVisibleChildren) {
+    if (shouldRestoreContainer) {
         // This container was hidden and will now be restored too, since a child was restored
         if (auto c = parentBoxContainer()) {
             setSize(item->size()); // give it a decent size. Same size as the item being restored
                                    // makes sense
-            c->restoreChild(this, neighbourSqueezeStrategy);
+            c->restoreChild(this, false, neighbourSqueezeStrategy);
         }
     }
 
