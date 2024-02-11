@@ -10,7 +10,7 @@
 */
 
 #include "LayoutSaverInstantiator.h"
-
+#include "core/LayoutSaver_p.h"
 
 using namespace KDDockWidgets;
 
@@ -31,4 +31,14 @@ bool LayoutSaverInstantiator::saveToFile(const QString &jsonFilename)
 bool LayoutSaverInstantiator::restoreFromFile(const QString &jsonFilename)
 {
     return LayoutSaver::restoreFromFile(jsonFilename);
+}
+
+QVector<QString> LayoutSaverInstantiator::affinities() const
+{
+    return dptr()->m_affinityNames;
+}
+
+void LayoutSaverInstantiator::setAffinities(const QVector<QString> &affinities)
+{
+    setAffinityNames(affinities);
 }
