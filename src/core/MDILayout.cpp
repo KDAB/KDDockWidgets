@@ -56,6 +56,8 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         newItem->setGuest(group->asLayoutingGuest());
     }
 
+    newItem->setSize(dw->size().expandedTo(newItem->minSize()));
+
     assert(!newItem->geometry().isEmpty());
     m_rootItem->addDockWidget(newItem, localPt);
 

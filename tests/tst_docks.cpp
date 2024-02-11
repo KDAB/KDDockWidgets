@@ -5032,6 +5032,33 @@ KDDW_QCORO_TASK tst_addMDIDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_mdiSetSize()
+{
+    // Tests that adding a dockwidget to MDI preserves its size
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({}));
+
+    const Size size = { 501, 502 };
+    dock0->view()->setSize(size);
+
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(10, 10), {});
+
+    auto group = dock0->dptr()->group();
+    CHECK_EQ(group->pos(), QPoint(10, 10));
+
+    // still broken for QtQuick
+    if (!Platform::instance()->isQtQuick()) {
+        CHECK_EQ(group->size(), size);
+        qDebug() << group->size();
+    }
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_mdiZorder()
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -5906,6 +5933,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_addMDIDockWidget),
         TEST(tst_mdiZorder),
         TEST(tst_mdiZorder2),
+        TEST(tst_mdiSetSize),
         TEST(tst_mixedMDIRestoreToArea),
         TEST(tst_redockToMDIRestoresPosition),
         TEST(tst_maximizeButton),
