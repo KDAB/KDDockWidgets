@@ -63,6 +63,7 @@ private Q_SLOTS:
     void tst_setPersistentCentralView();
 
     void tst_mdiFixedSize();
+    void tst_affinities();
 };
 
 
@@ -445,6 +446,27 @@ void TestQtQuick::tst_mdiFixedSize()
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     Platform::instance()
         ->tests_wait(1);
+}
+
+void TestQtQuick::tst_affinities()
+{
+    // Tests that the QML API for affinites works
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main465.qml");
+
+    const auto dockingAreas = DockRegistry::self()->mainDockingAreas();
+    QCOMPARE(dockingAreas.size(), 1);
+
+    auto dockingArea = dockingAreas.first();
+    QCOMPARE(dockingArea->affinities(), QVector<QString>({ "affinity_one", "affinity_two" }));
+
+    auto dock1 = DockRegistry::self()->dockByName("dock1");
+    auto dock2 = DockRegistry::self()->dockByName("dock2");
+    QVERIFY(dock1);
+    QVERIFY(dock2);
+
+    QCOMPARE(dock1->affinities(), QVector<QString>({ "affinity_one", "affinity_two" }));
+    QVERIFY(dock2->affinities().isEmpty());
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()

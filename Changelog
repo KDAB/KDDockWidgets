@@ -4,6 +4,7 @@
   - QtQuick: Fixed redock not working when mixing MDI with docking
   - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
   - QtQuick: Fixed MDI widgets not raising when clicked on
+  - QtQuick: Added API to set affinities via QML (#465)
   - MDI: Don't show resize handles if widget is fixed size
   - MDI: Fixed mouse cursor not being restored when dock widgets were overlapping
   - MDI: Added Config::setMDIFlags() and MDIFlag_NoClickToRaise

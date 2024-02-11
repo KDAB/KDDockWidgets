@@ -177,6 +177,16 @@ void DockWidgetInstantiator::classBegin()
     // Nothing interesting to do here.
 }
 
+QVector<QString> DockWidgetInstantiator::affinities() const
+{
+    return m_dockWidget ? m_dockWidget->affinities() : QVector<QString>();
+}
+
+void DockWidgetInstantiator::setAffinities(const QVector<QString> &affinities)
+{
+    m_affinities = affinities;
+}
+
 void DockWidgetInstantiator::componentComplete()
 {
     if (m_uniqueName.isEmpty()) {
@@ -233,6 +243,8 @@ void DockWidgetInstantiator::componentComplete()
 
     if (m_isFloating.has_value())
         m_dockWidget->setFloating(m_isFloating.value());
+
+    m_dockWidget->setAffinities(m_affinities);
 
     Q_EMIT dockWidgetChanged();
 }

@@ -44,6 +44,7 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
     Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
+    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities)
 public:
     QString uniqueName() const;
     void setUniqueName(const QString &);
@@ -62,6 +63,8 @@ public:
     bool isFloating() const;
     bool isOpen() const;
     void setFloating(bool);
+    QVector<QString> affinities() const;
+    void setAffinities(const QVector<QString> &);
 
     Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
                                         KDDockWidgets::InitialVisibilityOption = {});
@@ -115,6 +118,7 @@ private:
     QString m_sourceFilename;
     QString m_title;
     Core::DockWidget *m_dockWidget = nullptr;
+    QVector<QString> m_affinities;
 };
 }
 
