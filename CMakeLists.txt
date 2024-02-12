@@ -376,6 +376,10 @@ macro(set_compiler_flags targetName)
             target_compile_options(${targetName} PRIVATE -Wweak-vtables -Wextra-semi)
         endif()
 
+        if(MSVC)
+            target_compile_options(${targetName} PRIVATE /W4)
+        endif()
+
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
             target_compile_options(${targetName} PRIVATE -fcoroutines -Wno-missing-field-initializers)
         endif()
