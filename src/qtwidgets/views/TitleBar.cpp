@@ -27,6 +27,7 @@
 #include <QStyleOptionDockWidget>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QTimer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -140,8 +141,10 @@ TitleBar::~TitleBar()
 
     /// The window deletion might have been triggered by pressing a button, so use deleteLater()
     for (auto button : { m_closeButton, m_floatButton, m_maximizeButton, m_minimizeButton, m_autoHideButton }) {
-        button->setParent(nullptr);
-        button->deleteLater();
+        QTimer::singleShot(0, button, [button] {
+            /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
+            delete button;
+        });
     }
 }
 
