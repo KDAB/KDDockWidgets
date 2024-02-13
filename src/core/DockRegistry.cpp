@@ -134,15 +134,6 @@ bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
     return excludeBeingDeleted ? !hasFloatingWindows() : m_floatingWindows.isEmpty();
 }
 
-void DockRegistry::checkSanityAll(bool dumpLayout)
-{
-    for (auto layout : std::as_const(m_layouts)) {
-        layout->checkSanity();
-        if (dumpLayout)
-            layout->dumpLayout();
-    }
-}
-
 bool DockRegistry::affinitiesMatch(const Vector<QString> &affinities1,
                                    const Vector<QString> &affinities2) const
 {
@@ -372,16 +363,6 @@ void DockRegistry::unregisterFloatingWindow(Core::FloatingWindow *fw)
     maybeDelete();
 }
 
-void DockRegistry::registerLayout(Core::Layout *layout)
-{
-    m_layouts.push_back(layout);
-}
-
-void DockRegistry::unregisterLayout(Core::Layout *layout)
-{
-    m_layouts.removeOne(layout);
-}
-
 void DockRegistry::registerGroup(Core::Group *group)
 {
     m_groups.push_back(group);
@@ -559,11 +540,6 @@ Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
     }
 
     return areas;
-}
-
-Vector<Core::Layout *> DockRegistry::layouts() const
-{
-    return m_layouts;
 }
 
 Core::Group::List DockRegistry::groups() const

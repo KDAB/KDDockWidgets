@@ -49,7 +49,7 @@ Layout::~Layout()
 
     if (d->m_rootItem && !d->m_viewDeleted)
         viewAboutToBeDeleted();
-    DockRegistry::self()->unregisterLayout(this);
+
     delete d;
 }
 

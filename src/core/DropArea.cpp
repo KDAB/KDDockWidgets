@@ -84,7 +84,6 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     , d(new Private(this, options, isMDIWrapper))
 {
     setRootItem(new Core::ItemBoxContainer(asLayoutingHost()));
-    DockRegistry::self()->registerLayout(this);
 
     if (parent)
         setLayoutSize(parent->size());

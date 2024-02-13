@@ -2731,8 +2731,6 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
         LayoutSaver restorer;
         CHECK(restorer.restoreFromFile(QStringLiteral("layout_tst_restoreSideBySide.json")));
 
-        DockRegistry::self()->checkSanityAll();
-
         CHECK(dock1->window()->equals(m->view()));
         CHECK(dock2->window()->equals(dock3->window()));
     }

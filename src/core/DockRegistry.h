@@ -69,9 +69,6 @@ public:
     void registerFloatingWindow(Core::FloatingWindow *);
     void unregisterFloatingWindow(Core::FloatingWindow *);
 
-    void registerLayout(Core::Layout *);
-    void unregisterLayout(Core::Layout *);
-
     void registerGroup(Core::Group *);
     void unregisterGroup(Core::Group *);
 
@@ -112,9 +109,6 @@ public:
 
     ///@brief overload returning only the ones with the specified names
     Vector<Core::MainWindow *> mainWindows(const Vector<QString> &names);
-
-    ///@brief returns the list of Layout instances
-    Vector<Core::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
     Vector<Core::Group *> groups() const;
@@ -183,16 +177,6 @@ public:
      * @param excludeBeingDeleted if true, any window currently being deleted won't count
      */
     bool isEmpty(bool excludeBeingDeleted = false) const;
-
-    /**
-     * @brief Calls Layout::checkSanity() on all layouts.
-     *
-     * @param dumpDebug If true then each layout is dumped too
-     *
-     * This is called by the unit-tests. If during this the framework throws an error
-     * then the app will qFatal()
-     */
-    void checkSanityAll(bool dumpDebug = false);
 
     /**
      * @brief Returns all main windows which match at least one of the @p affinities
@@ -267,7 +251,6 @@ private:
     Vector<Core::MainWindow *> m_mainWindows;
     Vector<Core::Group *> m_groups;
     Vector<Core::FloatingWindow *> m_floatingWindows;
-    Vector<Core::Layout *> m_layouts;
 
     ///@brief Dock widget id remapping, used by LayoutSaver
     ///
