@@ -82,7 +82,7 @@ void DockRegistry::maybeDelete()
     // We delete the singleton just to make LSAN happy.
     // We could also simply ask the user do call something like KDDockWidgets::deinit() in the future,
     // Also, please don't change this to be deleted at static dtor time with Q_GLOBAL_STATIC.
-    if (isEmpty() && d->m_numLayoutSavers == 0)
+    if (isEmpty() && d->m_numLayoutSavers == 0 && m_groups.isEmpty())
         delete this;
 }
 
@@ -371,6 +371,7 @@ void DockRegistry::registerGroup(Core::Group *group)
 void DockRegistry::unregisterGroup(Core::Group *group)
 {
     m_groups.removeOne(group);
+    maybeDelete();
 }
 
 void DockRegistry::registerLayoutSaver()
@@ -381,6 +382,7 @@ void DockRegistry::registerLayoutSaver()
 void DockRegistry::unregisterLayoutSaver()
 {
     d->m_numLayoutSavers--;
+    maybeDelete();
 }
 
 Core::DockWidget *DockRegistry::focusedDockWidget() const
