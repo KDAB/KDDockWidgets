@@ -193,6 +193,8 @@ public:
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
+    /// @brief Returns whether the Platform was already initialized
+    static bool isInitialized();
 
 #if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
     // Stuff required by the tests only and not used by dart bindings.
@@ -253,9 +255,6 @@ public:
         virtual ~WarningObserver();
         virtual void onFatal() = 0;
     };
-
-    /// @brief Returns whether the Platform was already initialized
-    static bool isInitialized();
 
     /// @brief Creates a view with the specified parent
     /// If the parent is null then a new window is created and the returned view will be the root

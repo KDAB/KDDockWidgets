@@ -169,6 +169,12 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
     return types;
 }
 
+/*static */
+bool Platform::isInitialized()
+{
+    return s_platform != nullptr;
+}
+
 #ifdef DOCKS_TESTING_METHODS
 
 void Platform::pauseForDebugger()
@@ -176,12 +182,6 @@ void Platform::pauseForDebugger()
 }
 
 Platform::WarningObserver::~WarningObserver() = default;
-
-/*static */
-bool Platform::isInitialized()
-{
-    return s_platform != nullptr;
-}
 
 #endif
 
