@@ -94,6 +94,9 @@ Config &Config::self()
 Config::~Config()
 {
     delete d;
+    if (Platform::isInitialized()) {
+        delete Platform::instance();
+    }
 }
 
 Config::Flags Config::flags() const
