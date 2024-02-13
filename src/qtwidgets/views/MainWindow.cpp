@@ -334,6 +334,7 @@ void MainWindow::splitDockWidget_split_legacy(QDockWidget *after, QDockWidget *d
 void MainWindow::manualInit()
 {
     if (d->needsManualInit()) {
+        delete centralWidget();
         d->setupCentralLayout();
     } else {
         qFatal("MainWindow::manualInit requires MainWindowOption_ManualInit");
