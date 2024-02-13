@@ -149,7 +149,7 @@ void Controller::setParentView_impl(View *parent)
 
 void Controller::destroyLater()
 {
-#if KDDW_FRONTEND_QT
+#ifdef KDDW_FRONTEND_QT
     if (Config::self().internalFlags() & Config::InternalFlag_NoDeleteLaterWorkaround) {
         QObject::deleteLater();
         return;
