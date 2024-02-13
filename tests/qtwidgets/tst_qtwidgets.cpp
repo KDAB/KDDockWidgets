@@ -510,6 +510,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     Platform::instance()->tests_waitForDeleted(dropArea2);
     QVERIFY(dropArea2.isNull());
+    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiFrame2));
     QVERIFY(!mdiFrame2);
 
     mdiWidget1->close();

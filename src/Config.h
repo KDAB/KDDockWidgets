@@ -169,8 +169,11 @@ public:
                 ///< windows, but the detection might fail
         /// with more exotic setups. This flag can be used to override.
         InternalFlag_TopLevelIndicatorRubberBand =
-            64 ///< Makes the rubber band of classic drop indicators to be top-level windows. Helps
-               ///< with working around MFC bugs
+            64, ///< Makes the rubber band of classic drop indicators to be top-level windows. Helps
+                ///< with working around MFC bugs,
+        InternalFlag_NoDeleteLaterWorkaround = 128, ///< Disables workaround for QTBUG-83030. Will be the default since Qt 6.7
+                                                    /// While the workaround works, it will cause memory leaks at shutdown,
+        /// This flag allows to disable the workaround if you think you don't have the complex setup reported in QTBUG-83030
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 

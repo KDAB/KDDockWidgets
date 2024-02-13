@@ -14,6 +14,7 @@
 #include "Platform.h"
 #include "DelayedCall_p.h"
 #include "View.h"
+#include "Config.h"
 #include "View_p.h"
 #include "Logging_p.h"
 #include "DragController_p.h"
@@ -148,6 +149,14 @@ void Controller::setParentView_impl(View *parent)
 
 void Controller::destroyLater()
 {
+#if KDDW_FRONTEND_QT
+    if (Config::self().internalFlags() & Config::InternalFlag_NoDeleteLaterWorkaround) {
+        QObject::deleteLater();
+        return;
+    }
+#endif
+
+    // Path for Flutter and QTBUG-83030:
     Platform::instance()->runDelayed(0, new DelayedDelete(this));
 }
 
