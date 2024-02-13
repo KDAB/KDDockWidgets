@@ -146,6 +146,10 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     if (options & MainWindowOption_QDockWidgets)
         return;
 
+    // Disable QWidgetAnimator. We don't use QDockWidget, but QWidgetAnimator will appear in stack traces
+    // which is unneeded.
+    QMainWindow::setDockOptions({});
+
     m_mainWindow->init(uniqueName);
 
     const bool requiresManualInit = options & MainWindowOption_ManualInit;
