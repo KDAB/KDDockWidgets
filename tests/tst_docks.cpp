@@ -5049,7 +5049,7 @@ KDDW_QCORO_TASK tst_mdiSetSize()
         ->addDockWidget(dock0, Point(10, 10), {});
 
     auto group = dock0->dptr()->group();
-    CHECK_EQ(group->pos(), QPoint(10, 10));
+    CHECK_EQ(group->pos(), Point(10, 10));
 
     CHECK_EQ(group->size(), size);
 
