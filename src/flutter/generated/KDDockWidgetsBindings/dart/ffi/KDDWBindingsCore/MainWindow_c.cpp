@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -58,9 +58,9 @@ KDDockWidgets::Rect MainWindow_wrapper::centralAreaGeometry() const
 {
     return ::KDDockWidgets::Core::MainWindow::centralAreaGeometry();
 }
-void MainWindow_wrapper::clearSideBarOverlay(bool deleteFrame)
+void MainWindow_wrapper::clearSideBarOverlay(bool deleteGroup)
 {
-    ::KDDockWidgets::Core::MainWindow::clearSideBarOverlay(deleteFrame);
+    ::KDDockWidgets::Core::MainWindow::clearSideBarOverlay(deleteGroup);
 }
 bool MainWindow_wrapper::closeDockWidgets(bool force)
 {
@@ -223,10 +223,10 @@ void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj)
     const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromWrapperPtr(thisObj)->centralAreaGeometry() };
     return result;
 }
-// clearSideBarOverlay(bool deleteFrame)
-void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteFrame)
+// clearSideBarOverlay(bool deleteGroup)
+void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteGroup)
 {
-    fromPtr(thisObj)->clearSideBarOverlay(deleteFrame);
+    fromPtr(thisObj)->clearSideBarOverlay(deleteGroup);
 }
 // closeDockWidgets(bool force)
 bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, bool force)
@@ -362,7 +362,7 @@ void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 334:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

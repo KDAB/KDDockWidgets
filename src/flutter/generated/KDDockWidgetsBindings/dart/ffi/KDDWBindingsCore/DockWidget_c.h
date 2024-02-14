@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -47,6 +47,7 @@ public:
     KDDockWidgets::Size lastOverlayedSize() const;
     QFlags<KDDockWidgets::LayoutSaverOption> layoutSaverOptions() const;
     KDDockWidgets::Core::MainWindow *mainWindow() const;
+    int mdiZ() const;
     void moveToSideBar();
     void onResize(KDDockWidgets::Size newSize);
     void open();
@@ -129,6 +130,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__DockWidget__lastOverlayedSize(void *th
 DOCKS_EXPORT int c_KDDockWidgets__Core__DockWidget__layoutSaverOptions(void *thisObj);
 // KDDockWidgets::Core::DockWidget::mainWindow() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__DockWidget__mainWindow(void *thisObj);
+// KDDockWidgets::Core::DockWidget::mdiZ() const
+DOCKS_EXPORT int c_KDDockWidgets__Core__DockWidget__mdiZ(void *thisObj);
 // KDDockWidgets::Core::DockWidget::moveToSideBar()
 DOCKS_EXPORT void c_KDDockWidgets__Core__DockWidget__moveToSideBar(void *thisObj);
 // KDDockWidgets::Core::DockWidget::onResize(KDDockWidgets::Size newSize)

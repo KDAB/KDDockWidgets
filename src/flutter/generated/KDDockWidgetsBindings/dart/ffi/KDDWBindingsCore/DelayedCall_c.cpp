@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -86,7 +86,7 @@ void c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback(void *ptr
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 308:
+    case 305:
         wrapper->m_callCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DelayedCall_wrapper::Callback_call>(callback);
         break;
     }

@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -32,14 +32,6 @@ class DockRegistry extends KDDWBindingsCore.Object {
   }
   String getFinalizerName() {
     return "c_KDDockWidgets__DockRegistry_Finalizer";
-  } // checkSanityAll(bool dumpDebug)
-
-  checkSanityAll({bool dumpDebug = false}) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__DockRegistry__checkSanityAll_bool')
-        .asFunction();
-    func(thisCpp, dumpDebug ? 1 : 0);
   } // clear()
 
   clear() {
@@ -184,14 +176,6 @@ class DockRegistry extends KDDWBindingsCore.Object {
             'c_KDDockWidgets__DockRegistry__registerGroup_Group')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // registerLayout(KDDockWidgets::Core::Layout * arg__1)
-
-  registerLayout(KDDWBindingsCore.Layout? arg__1) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__DockRegistry__registerLayout_Layout')
-        .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // registerLayoutSaver()
 
   registerLayoutSaver() {
@@ -259,14 +243,6 @@ class DockRegistry extends KDDWBindingsCore.Object {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__DockRegistry__unregisterGroup_Group')
-        .asFunction();
-    func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
-  } // unregisterLayout(KDDockWidgets::Core::Layout * arg__1)
-
-  unregisterLayout(KDDWBindingsCore.Layout? arg__1) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__DockRegistry__unregisterLayout_Layout')
         .asFunction();
     func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp);
   } // unregisterLayoutSaver()

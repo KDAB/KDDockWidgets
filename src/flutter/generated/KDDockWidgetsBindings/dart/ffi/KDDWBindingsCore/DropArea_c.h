@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -17,8 +17,8 @@
 #include <KDDockWidgets.h>
 #include <core/Group.h>
 #include <geometry_helpers_p.h>
-#include <FloatingWindow.h>
 #include "core/MainWindow.h"
+#include <FloatingWindow.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

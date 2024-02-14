@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -108,14 +108,14 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Rect.fromCppPointer(result, true);
-  } // clearSideBarOverlay(bool deleteFrame)
+  } // clearSideBarOverlay(bool deleteGroup)
 
-  clearSideBarOverlay({bool deleteFrame = true}) {
+  clearSideBarOverlay({bool deleteGroup = true}) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool')
         .asFunction();
-    func(thisCpp, deleteFrame ? 1 : 0);
+    func(thisCpp, deleteGroup ? 1 : 0);
   } // closeDockWidgets(bool force)
 
   bool closeDockWidgets({bool force = false}) {
@@ -312,7 +312,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 334:
+      case 331:
         return "c_KDDockWidgets__Core__MainWindow__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -320,7 +320,7 @@ class MainWindow extends KDDWBindingsCore.Controller {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 334:
+      case 331:
         return "setParentView_impl";
     }
     throw Error();
@@ -332,9 +332,9 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback')
         .asFunction();
-    final callback334 =
+    final callback331 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback334, 334);
+    registerCallback(thisCpp, callback331, 331);
   }
 }

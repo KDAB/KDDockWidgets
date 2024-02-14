@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -438,16 +438,16 @@ void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 1005:
+    case 1004:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 1008:
+    case 1007:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
-    case 334:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 1024:
+    case 1023:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

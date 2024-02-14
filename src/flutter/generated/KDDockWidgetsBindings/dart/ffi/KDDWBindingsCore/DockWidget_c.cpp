@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -121,6 +121,10 @@ QFlags<KDDockWidgets::LayoutSaverOption> DockWidget_wrapper::layoutSaverOptions(
 KDDockWidgets::Core::MainWindow *DockWidget_wrapper::mainWindow() const
 {
     return ::KDDockWidgets::Core::DockWidget::mainWindow();
+}
+int DockWidget_wrapper::mdiZ() const
+{
+    return ::KDDockWidgets::Core::DockWidget::mdiZ();
 }
 void DockWidget_wrapper::moveToSideBar()
 {
@@ -412,6 +416,12 @@ void *c_KDDockWidgets__Core__DockWidget__mainWindow(void *thisObj)
     const auto &result = fromPtr(thisObj)->mainWindow();
     return result;
 }
+// mdiZ() const
+int c_KDDockWidgets__Core__DockWidget__mdiZ(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->mdiZ();
+    return result;
+}
 // moveToSideBar()
 void c_KDDockWidgets__Core__DockWidget__moveToSideBar(void *thisObj)
 {
@@ -592,7 +602,7 @@ void c_KDDockWidgets__Core__DockWidget__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 334:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DockWidget_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

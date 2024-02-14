@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -147,7 +147,7 @@ class Controller extends KDDWBindingsCore.Object {
   setParentView_impl(KDDWBindingsCore.View? parent) {
     final void_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
-            cFunctionSymbolName(334))
+            cFunctionSymbolName(331))
         .asFunction();
     func(thisCpp, parent == null ? ffi.nullptr : parent.thisCpp);
   }
@@ -242,7 +242,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 334:
+      case 331:
         return "c_KDDockWidgets__Core__Controller__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -250,7 +250,7 @@ class Controller extends KDDWBindingsCore.Object {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 334:
+      case 331:
         return "setParentView_impl";
     }
     throw Error();
@@ -262,9 +262,9 @@ class Controller extends KDDWBindingsCore.Object {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__Controller__registerVirtualMethodCallback')
         .asFunction();
-    final callback334 =
+    final callback331 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback334, 334);
+    registerCallback(thisCpp, callback331, 331);
   }
 }

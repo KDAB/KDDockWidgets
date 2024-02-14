@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -182,7 +182,7 @@ void c_KDDockWidgets__Core__Separator__registerVirtualMethodCallback(void *ptr, 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 334:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Separator_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

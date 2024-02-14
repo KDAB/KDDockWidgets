@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -242,19 +242,19 @@ void c_KDDockWidgets__Core__Stack__registerVirtualMethodCallback(void *ptr, void
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 657:
+    case 655:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isMDI>(callback);
         break;
-    case 658:
+    case 656:
         wrapper->m_isPositionDraggableCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isPositionDraggable>(callback);
         break;
-    case 660:
+    case 658:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_isWindow>(callback);
         break;
-    case 334:
+    case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 671:
+    case 669:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Stack_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

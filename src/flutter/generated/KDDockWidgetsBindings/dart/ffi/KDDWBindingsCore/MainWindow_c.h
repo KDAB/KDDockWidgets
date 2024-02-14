@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -32,7 +32,7 @@ public:
     bool anySideBarIsVisible() const;
     KDDockWidgets::Margins centerWidgetMargins() const;
     KDDockWidgets::Rect centralAreaGeometry() const;
-    void clearSideBarOverlay(bool deleteFrame = true);
+    void clearSideBarOverlay(bool deleteGroup = true);
     bool closeDockWidgets(bool force = false);
     KDDockWidgets::Core::DropArea *dropArea() const;
     void init(const QString &name);
@@ -75,8 +75,8 @@ DOCKS_EXPORT bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *t
 DOCKS_EXPORT void *c_KDDockWidgets__Core__MainWindow__centerWidgetMargins(void *thisObj);
 // KDDockWidgets::Core::MainWindow::centralAreaGeometry() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj);
-// KDDockWidgets::Core::MainWindow::clearSideBarOverlay(bool deleteFrame)
-DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteFrame);
+// KDDockWidgets::Core::MainWindow::clearSideBarOverlay(bool deleteGroup)
+DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteGroup);
 // KDDockWidgets::Core::MainWindow::closeDockWidgets(bool force)
 DOCKS_EXPORT bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, bool force);
 // KDDockWidgets::Core::MainWindow::dropArea() const

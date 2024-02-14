@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -164,6 +164,8 @@ public:
     int width() const;
     int x() const;
     int y() const;
+    virtual int zOrder() const;
+    virtual int zOrder_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -264,6 +266,8 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef QString *(*Callback_viewName)(void *);
     Callback_viewName m_viewNameCallback = nullptr;
+    typedef int (*Callback_zOrder)(void *);
+    Callback_zOrder m_zOrderCallback = nullptr;
 };
 }
 }
@@ -436,6 +440,8 @@ DOCKS_EXPORT int c_KDDockWidgets__Core__View__width(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__View__x(void *thisObj);
 // KDDockWidgets::Core::View::y() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__View__y(void *thisObj);
+// KDDockWidgets::Core::View::zOrder() const
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__zOrder(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View_Finalizer(void *cppObj);

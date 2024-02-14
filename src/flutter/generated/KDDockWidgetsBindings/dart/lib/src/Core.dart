@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -22,6 +22,7 @@ class Core_ViewType {
   static const FIRST = 1;
   static const None = 0;
   static const Frame = 1;
+  static const Group = 1;
   static const TitleBar = 2;
   static const TabBar = 4;
   static const Stack = 8;
