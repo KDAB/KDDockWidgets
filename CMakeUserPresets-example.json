@@ -8,6 +8,9 @@
             "cacheVariables": {
                 "CMAKE_PREFIX_PATH": "/data/installation/qt/qt6-dev/"
             },
+            "environment": {
+                "PATH": "$penv{PATH}"
+            },
             "inherits": [
                 "dev6"
             ]
@@ -18,6 +21,9 @@
             "description": "Preset which hardcodes Qt location instead of relying on PATH",
             "cacheVariables": {
                 "CMAKE_PREFIX_PATH": "/data/installation/qt/qt6-dev/"
+            },
+            "environment": {
+                "PATH": "$penv{PATH}"
             },
             "inherits": [
                 "dev-asan6"
