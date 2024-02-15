@@ -331,9 +331,6 @@
                 "CMAKE_UNITY_BUILD": "OFF",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
-            },
-            "environment": {
-                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         },
         {
@@ -343,9 +340,6 @@
             "cacheVariables": {
                 "KDDockWidgets_QT6": "ON",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
-            },
-            "environment": {
-                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             },
             "inherits": [
                 "dev-base"
@@ -358,9 +352,6 @@
             "cacheVariables": {
                 "KDDockWidgets_QT6": "ON",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
-            },
-            "environment": {
-                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             },
             "inherits": [
                 "dev-base",
@@ -400,8 +391,7 @@
             ],
             "environment": {
                 "CC": "clang-cl",
-                "CXX": "clang-cl",
-                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
+                "CXX": "clang-cl"
             }
         },
         {
