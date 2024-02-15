@@ -169,6 +169,7 @@ private Q_SLOTS:
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
     void tst_openWhenOnSideBar();
+    void tst_isOpenSideBar();
     void tst_sidebarOverlayShowsAutohide();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_sidebarGrouping();
@@ -817,6 +818,36 @@ void TestQtWidgets::tst_openWhenOnSideBar()
 
     QVERIFY(!m1->overlayedDockWidget());
     QVERIFY(!m1->anySideBarIsVisible());
+}
+
+void TestQtWidgets::tst_isOpenSideBar()
+{
+    // Tests that DockWidget::isOpen() toggles when we toggle the overlay
+    EnsureTopLevelsDeleted e;
+
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = newDockWidget("1");
+    m1->addDockWidget(dw1, Location_OnBottom);
+    dw1->moveToSideBar();
+
+    QVERIFY(!m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+    QVERIFY(!dw1->isOpen());
+
+    // overlay it:
+    m1->toggleOverlayOnSideBar(dw1);
+    QVERIFY(m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+    QVERIFY(dw1->isOpen());
+
+    // close overlay:
+    m1->toggleOverlayOnSideBar(dw1);
+    QVERIFY(!m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QVERIFY(!dw1->isOpen());
 }
 
 void TestQtWidgets::tst_toggleActionOnSideBar()
