@@ -613,6 +613,7 @@ void MainWindow::clearSideBarOverlay(bool deleteGroup)
         {
             ScopedValueRollback guard(overlayedDockWidget->d->m_removingFromOverlay, true);
             overlayedDockWidget->setParentView(nullptr);
+            overlayedDockWidget->dptr()->setIsOpen(false);
         }
 
         overlayedDockWidget->d->isOverlayedChanged.emit(false);

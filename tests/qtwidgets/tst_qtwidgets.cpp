@@ -846,7 +846,6 @@ void TestQtWidgets::tst_isOpenSideBar()
     QVERIFY(!m1->overlayedDockWidget());
     QVERIFY(m1->anySideBarIsVisible());
 
-    QEXPECT_FAIL("", "To be fixed", Continue);
     QVERIFY(!dw1->isOpen());
 }
 
