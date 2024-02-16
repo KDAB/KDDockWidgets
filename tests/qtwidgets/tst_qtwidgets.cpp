@@ -802,22 +802,52 @@ void TestQtWidgets::tst_openWhenOnSideBar()
     // Calling DW::open() when on sidebar should open it in its previous docked position
     // and remove it from overlay
 
-    EnsureTopLevelsDeleted e;
+    {
+        EnsureTopLevelsDeleted e;
 
-    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
-    auto dw1 = newDockWidget("1");
-    m1->addDockWidget(dw1, Location_OnBottom);
-    dw1->moveToSideBar();
-    QTest::qWait(100);
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget("1");
+        m1->addDockWidget(dw1, Location_OnBottom);
+        dw1->moveToSideBar();
+        QTest::qWait(100);
 
-    QVERIFY(!m1->overlayedDockWidget());
-    QVERIFY(m1->anySideBarIsVisible());
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(m1->anySideBarIsVisible());
 
-    dw1->open();
+        dw1->open();
 
-    QVERIFY(!m1->overlayedDockWidget());
-    QVERIFY(!m1->anySideBarIsVisible());
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(!m1->anySideBarIsVisible());
+        QVERIFY(dw1->isInMainWindow());
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget("1");
+        m1->addDockWidget(dw1, Location_OnBottom);
+        dw1->moveToSideBar();
+        QTest::qWait(100);
+
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(m1->anySideBarIsVisible());
+
+        // overlay and deoverlay
+        m1->toggleOverlayOnSideBar(dw1);
+        m1->toggleOverlayOnSideBar(dw1);
+
+        // open should go to docked position, not floating
+        dw1->open();
+
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(!m1->anySideBarIsVisible());
+
+        QEXPECT_FAIL("", "to be fixed", Continue);
+        QVERIFY(dw1->isInMainWindow());
+    }
 }
 
 void TestQtWidgets::tst_isOpenSideBar()
