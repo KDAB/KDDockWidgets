@@ -831,7 +831,8 @@ void DockWidget::Private::close()
         m_lastPosition->setLastFloatingGeometry(q->view()->d->windowGeometry());
     }
 
-    saveTabIndex();
+    if (!m_removingFromOverlay)
+        saveTabIndex();
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
     if (Core::Group *group = this->group()) {

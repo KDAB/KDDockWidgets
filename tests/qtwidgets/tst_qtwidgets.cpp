@@ -815,6 +815,7 @@ void TestQtWidgets::tst_openWhenOnSideBar()
         QVERIFY(!m1->overlayedDockWidget());
         QVERIFY(m1->anySideBarIsVisible());
 
+        QVERIFY(!dw1->dptr()->m_lastPosition->wasFloating());
         dw1->open();
 
         QVERIFY(!m1->overlayedDockWidget());
@@ -845,7 +846,6 @@ void TestQtWidgets::tst_openWhenOnSideBar()
         QVERIFY(!m1->overlayedDockWidget());
         QVERIFY(!m1->anySideBarIsVisible());
 
-        QEXPECT_FAIL("", "to be fixed", Continue);
         QVERIFY(dw1->isInMainWindow());
     }
 }
