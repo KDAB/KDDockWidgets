@@ -217,6 +217,13 @@ void Group::onDockWidgetTitleChanged(DockWidget *dw)
 void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
+
+    // The dock widget might have changed title *while* being inserted
+    // For example, if the text depends on whether it's floating or not.
+    // In that case tabbar won't notice the title change, as the titleChanged signal
+    // is emitted with the old parent still. (#468)
+    // Simply refresh title now:
+    onDockWidgetTitleChanged(dockWidget);
 }
 
 void Group::addTab(Group *group, InitialOption addingOption)

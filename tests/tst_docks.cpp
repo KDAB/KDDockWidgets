@@ -2933,11 +2933,9 @@ KDDW_QCORO_TASK tst_tabTitleUpdatesWhenUnFloating()
     CHECK(dock2->isCurrentTab());
     CHECK_EQ(dock1->titleBar()->title(), "2-0");
     Core::TabBar *tb = dock1->dptr()->group()->tabBar();
+
     CHECK_EQ(tb->text(0), "1-0");
-
-
-    if (Platform::instance()->isQtQuick()) // TODO: Remove once fixed for QtWidgets
-        CHECK_EQ(tb->text(1), "2-0");
+    CHECK_EQ(tb->text(1), "2-0");
 
     KDDW_TEST_RETURN(true);
 }
