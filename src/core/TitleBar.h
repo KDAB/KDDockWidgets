@@ -159,6 +159,7 @@ private:
 
     void updateFloatButton();
     void updateCloseButton();
+    bool supportsFloatUnfloat() const;
     void setFloatButtonToolTip(const QString &);
     void init();
 

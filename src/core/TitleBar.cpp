@@ -190,22 +190,10 @@ bool TitleBar::maximizeButtonVisible() const
     return m_maximizeButtonVisible;
 }
 
-bool TitleBar::supportsFloatingButton() const
+bool TitleBar::supportsFloatUnfloat() const
 {
     if (m_isStandalone)
-        return {}; // not applicable
-
-    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {
-        // Apps having a maximize/restore button traditionally don't have a floating one,
-        // QDockWidget style only has floating and no maximize/restore.
-        // We can add an option later if we need them to co-exist
-        return false;
-    }
-
-    if (Config::self().flags() & Config::Flag_TitleBarNoFloatButton) {
-        // Was explicitly disabled
-        return false;
-    }
+        return false; // not applicable
 
     if (DockWidget *dw = singleDockWidget()) {
         // Don't show the dock/undock button if the window is not dockable
@@ -216,6 +204,24 @@ bool TitleBar::supportsFloatingButton() const
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
     return !m_floatingWindow || m_floatingWindow->hasSingleGroup();
+}
+
+bool TitleBar::supportsFloatingButton() const
+{
+    auto flags = Config::self().flags();
+    if (flags & Config::Flag_TitleBarHasMaximizeButton) {
+        // Apps having a maximize/restore button traditionally don't have a floating one,
+        // QDockWidget style only has floating and no maximize/restore.
+        // We can add an option later if we need them to co-exist
+        return false;
+    }
+
+    if (flags & Config::Flag_TitleBarNoFloatButton) {
+        // Was explicitly disabled
+        return false;
+    }
+
+    return supportsFloatUnfloat();
 }
 
 bool TitleBar::supportsMaximizeButton() const
