@@ -189,6 +189,11 @@ int Config::separatorThickness() const
     return Item::separatorThickness;
 }
 
+int Config::layoutSpacing() const
+{
+    return Item::layoutSpacing;
+}
+
 void Config::setSeparatorThickness(int value)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
@@ -203,6 +208,23 @@ void Config::setSeparatorThickness(int value)
     }
 
     Item::separatorThickness = value;
+    Item::layoutSpacing = value;
+}
+
+void Config::setLayoutSpacing(int value)
+{
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
+        std::cerr
+            << "Config::setLayoutSpacing: Only use this function at startup before creating any DockWidget or MainWindow\n";
+        return;
+    }
+
+    if (value < 0 || value >= 100) {
+        std::cerr << "Config::setLayoutSpacing: Invalid value" << value << "\n";
+        return;
+    }
+
+    Item::layoutSpacing = value;
 }
 
 void Config::setDraggedWindowOpacity(double opacity)

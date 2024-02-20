@@ -209,15 +209,15 @@ KDDW_QCORO_TASK tst_close()
     CHECK_EQ(leftDock->dptr()->group()->view()->x(), 0);
 
     CHECK_EQ(centralDock->dptr()->group()->view()->x(),
-             leftDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness + 1);
+             leftDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing + 1);
     CHECK_EQ(rightDock->dptr()->group()->view()->x(),
-             centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
+             centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
     leftDock->close();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
     CHECK_EQ(centralDock->dptr()->group()->view()->x(), 0);
     CHECK_EQ(rightDock->dptr()->group()->view()->x(),
-             centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
+             centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
 
     rightDock->close();

@@ -87,7 +87,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
     auto fw2 = dock2->floatingWindow();
     CHECK_EQ(layout->view()->minSize().width(),
-             2 * Item::separatorThickness + item1->minSize().width() + item3->minSize().width()
+             2 * Item::layoutSpacing + item1->minSize().width() + item3->minSize().width()
                  + item4->minSize().width());
 
     // Drop left of dock3

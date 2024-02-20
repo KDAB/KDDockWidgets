@@ -1549,7 +1549,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     QVERIFY(dock1->dptr()->group()->view()->height() <= item1MaxHeight);
     root->dumpLayout();
     QCOMPARE(dock2->dptr()->group()->view()->height(),
-             root->height() - item1MaxHeight - Item::separatorThickness);
+             root->height() - item1MaxHeight - Item::layoutSpacing);
 }
 
 void TestQtWidgets::tst_addToHiddenMainWindow()

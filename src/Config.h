@@ -256,7 +256,18 @@ public:
 
     ///@brief setter for @ref separatorThickness
     /// Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    /// Note: For backwards compatibility, setting separatorThickness will set layoutSpacing to the same value.
     void setSeparatorThickness(int value);
+
+    /// Returns the spacing between dock widgets
+    /// By default this is the thickness of the separators, as they are between dock widgets.
+    int layoutSpacing() const;
+
+    /// Setter for layoutSpacing().
+    /// Note: Only call this for the rare case of wanting the spacing to be different than the separator's thickness
+    ///       Use setSeparatorThickness() for the more common case.
+    /// Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    void setLayoutSpacing(int);
 
     ///@brief sets the dragged window opacity
     /// 1.0 is fully opaque while 0.0 is fully transparent

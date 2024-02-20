@@ -46,6 +46,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
 int Core::Item::separatorThickness = 5;
+int Core::Item::layoutSpacing = 5;
 bool Core::Item::s_silenceSanityChecks = false;
 
 DumpScreenInfoFunc Core::Item::s_dumpScreenInfoFunc = nullptr;
@@ -1224,7 +1225,7 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        expectedPos = pos + Core::length(item->size(), d->m_orientation) + separatorThickness;
+        expectedPos = pos + Core::length(item->size(), d->m_orientation) + layoutSpacing;
     }
 
     const int h1 = Core::length(size(), oppositeOrientation(d->m_orientation));
@@ -1262,7 +1263,7 @@ bool ItemBoxContainer::checkSanity()
     const Item::List visibleChildren = this->visibleChildren();
     const bool isEmptyRoot = isRoot() && visibleChildren.isEmpty();
     if (!isEmptyRoot) {
-        auto occupied = std::max(0, Item::separatorThickness * (int(visibleChildren.size()) - 1));
+        auto occupied = std::max(0, Item::layoutSpacing * (int(visibleChildren.size()) - 1));
         for (Item *item : visibleChildren) {
             occupied += item->length(d->m_orientation);
         }
@@ -1292,8 +1293,8 @@ bool ItemBoxContainer::checkSanity()
         return false;
     }
 
-    const Size expectedSeparatorSize = isVertical() ? Size(width(), Item::separatorThickness)
-                                                    : Size(Item::separatorThickness, height());
+    const Size expectedSeparatorSize = isVertical() ? Size(width(), Item::layoutSpacing)
+                                                    : Size(Item::layoutSpacing, height());
 
     const int pos2 = Core::pos(mapToRoot(Point(0, 0)), oppositeOrientation(d->m_orientation));
 
@@ -1654,8 +1655,8 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
     const Size availableSize = root()->availableSize();
     const Size minSize = item->minSize();
     const bool isEmpty = !root()->hasVisibleChildren();
-    const int extraWidth = (isEmpty || locationIsVertical(loc)) ? 0 : Item::separatorThickness;
-    const int extraHeight = (isEmpty || !locationIsVertical(loc)) ? 0 : Item::separatorThickness;
+    const int extraWidth = (isEmpty || locationIsVertical(loc)) ? 0 : Item::layoutSpacing;
+    const int extraHeight = (isEmpty || !locationIsVertical(loc)) ? 0 : Item::layoutSpacing;
     const bool windowNeedsGrowing = availableSize.width() < minSize.width() + extraWidth
         || availableSize.height() < minSize.height() + extraHeight;
 
@@ -1698,7 +1699,7 @@ Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *r
 {
     const Size minSize = item->minSize();
     const int itemMin = Core::length(minSize, d->m_orientation);
-    const int available = availableLength() - Item::separatorThickness;
+    const int available = availableLength() - Item::layoutSpacing;
     if (relativeTo) {
         int suggestedPos = 0;
         const Rect relativeToGeo = relativeTo->geometry();
@@ -1816,7 +1817,7 @@ void ItemBoxContainer::positionItems(SizingInfo::List &sizes)
     for (auto i = 0; i < count; ++i) {
         SizingInfo &sizing = sizes[i];
         if (sizing.isBeingInserted) {
-            nextPos += Item::separatorThickness;
+            nextPos += Item::layoutSpacing;
             continue;
         }
 
@@ -1827,7 +1828,7 @@ void ItemBoxContainer::positionItems(SizingInfo::List &sizes)
         sizing.setPos(0, oppositeOrientation);
 
         sizing.setPos(nextPos, d->m_orientation);
-        nextPos += sizing.length(d->m_orientation) + Item::separatorThickness;
+        nextPos += sizing.length(d->m_orientation) + Item::layoutSpacing;
     }
 }
 
@@ -1947,7 +1948,7 @@ int ItemBoxContainer::usableLength() const
     if (children.size() <= 1)
         return Core::length(size(), d->m_orientation);
 
-    const int separatorWaste = separatorThickness * (numVisibleChildren - 1);
+    const int separatorWaste = layoutSpacing * (numVisibleChildren - 1);
     return length() - separatorWaste;
 }
 
@@ -1987,7 +1988,7 @@ Size ItemBoxContainer::Private::minSize(const Item::List &items) const
             }
         }
 
-        const int separatorWaste = std::max(0, (numVisible - 1) * separatorThickness);
+        const int separatorWaste = std::max(0, (numVisible - 1) * layoutSpacing);
         if (q->isVertical())
             minH += separatorWaste;
         else
@@ -2024,7 +2025,7 @@ Size ItemBoxContainer::maxSizeHint() const
             }
         }
 
-        const auto separatorWaste = (int(visibleChildren.size()) - 1) * separatorThickness;
+        const auto separatorWaste = (int(visibleChildren.size()) - 1) * layoutSpacing;
         if (isVertical()) {
             maxH = std::min(maxH + separatorWaste, hardcodedMaximumSize.height());
         } else {
@@ -2408,7 +2409,7 @@ void ItemBoxContainer::restoreChild(Item *item, bool forceRestoreContainer, Neig
     }
 
     const int available = availableToSqueezeOnSide(item, Side1)
-        + availableToSqueezeOnSide(item, Side2) - Item::separatorThickness;
+        + availableToSqueezeOnSide(item, Side2) - Item::layoutSpacing;
 
     const int max = std::min(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
@@ -2422,7 +2423,7 @@ void ItemBoxContainer::restoreChild(Item *item, bool forceRestoreContainer, Neig
      * indefinitely, it eats all the current excess.
      */
     const int proposed = std::max(Core::length(item->size(), d->m_orientation),
-                                  excessLength - Item::separatorThickness);
+                                  excessLength - Item::layoutSpacing);
     const int newLength = bound(min, proposed, max);
 
     assert(item->isVisible());
@@ -2625,7 +2626,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
     Vector<int> satisfiedIndexes;
     satisfiedIndexes.reserve(numItems);
 
-    int lengthToGive = length() - (d->m_separators.size() * Item::separatorThickness);
+    int lengthToGive = length() - (d->m_separators.size() * Item::layoutSpacing);
 
     // clear the sizes before we start distributing
     for (SizingInfo &size : sizes) {
@@ -2946,13 +2947,13 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         Rect &geo2 = childSizes[index2].geometry;
 
         if (isVertical()) {
-            const int available = geo2.y() - geo1.bottom() - separatorThickness;
+            const int available = geo2.y() - geo1.bottom() - layoutSpacing;
             geo1.setHeight(geo1.height() + available / 2);
-            geo2.setTop(geo1.bottom() + separatorThickness + 1);
+            geo2.setTop(geo1.bottom() + layoutSpacing + 1);
         } else {
-            const int available = geo2.x() - geo1.right() - separatorThickness;
+            const int available = geo2.x() - geo1.right() - layoutSpacing;
             geo1.setWidth(geo1.width() + available / 2);
-            geo2.setLeft(geo1.right() + separatorThickness + 1);
+            geo2.setLeft(geo1.right() + layoutSpacing + 1);
         }
 
     } else if (side1Neighbour) {
@@ -2999,7 +3000,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 {
     int toSteal = missing; // The amount that neighbours of @p index will shrink
     if (accountForNewSeparator)
-        toSteal += Item::separatorThickness;
+        toSteal += Item::layoutSpacing;
 
     assert(index != -1);
     if (toSteal == 0)
@@ -3703,7 +3704,7 @@ bool ItemBoxContainer::isOverflowing() const
         }
     }
 
-    contentsLength += std::max(0, Item::separatorThickness * (numVisible - 1));
+    contentsLength += std::max(0, Item::layoutSpacing * (numVisible - 1));
     return contentsLength > length();
 }
 
@@ -3906,7 +3907,7 @@ int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option
             const int numVisibleChildren =
                 q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
             const int usableLength =
-                q->length() - (Item::separatorThickness * (numVisibleChildren - 1));
+                q->length() - (Item::layoutSpacing * (numVisibleChildren - 1));
             result = usableLength / numVisibleChildren;
             break;
         }
@@ -4150,11 +4151,11 @@ void LayoutingSeparator::setGeometry(int pos, int pos2, int length)
     Rect newGeo = geometry();
     if (isVertical()) {
         // The separator itself is horizontal
-        newGeo.setSize(Size(length, Core::Item::separatorThickness));
+        newGeo.setSize(Size(length, Core::Item::layoutSpacing));
         newGeo.moveTo(pos2, pos);
     } else {
         // The separator itself is vertical
-        newGeo.setSize(Size(Core::Item::separatorThickness, length));
+        newGeo.setSize(Size(Core::Item::layoutSpacing, length));
         newGeo.moveTo(pos, pos2);
     }
 

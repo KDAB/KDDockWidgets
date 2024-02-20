@@ -210,7 +210,16 @@ public:
      */
     static Size hardcodedMinimumSize;
     static Size hardcodedMaximumSize;
+
+    /// The width of a vertical separator, or height of horizontal one
+    /// Usually 5px
     static int separatorThickness;
+
+    /// The spacing between dock widgets
+    /// This is by default, the separatorThickness, as the separator is between dockwidgets.
+    /// If set to a value smaller than separatorThickness, then the separators will overlap on top
+    /// of the dockwidgets, which can be useful in certain styles.
+    static int layoutSpacing;
 
     int x() const;
     int y() const;

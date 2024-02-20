@@ -28,7 +28,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-static int st = Item::separatorThickness;
+static int st = Item::layoutSpacing;
 
 namespace {
 
@@ -1328,7 +1328,7 @@ KDDW_QCORO_TASK tst_availableOnSide()
     auto separator = root->separators_recursive()[0];
     CHECK_EQ(root->minPosForSeparator_global(separator), item1->minSize().width());
     CHECK_EQ(root->maxPosForSeparator_global(separator),
-             root->width() - item2->minSize().width() - Item::separatorThickness);
+             root->width() - item2->minSize().width() - Item::layoutSpacing);
 
     CHECK_EQ(root->availableToSqueezeOnSide(item1, Side1), 0);
     CHECK_EQ(root->availableToSqueezeOnSide(item1, Side2),
@@ -1347,9 +1347,9 @@ KDDW_QCORO_TASK tst_availableOnSide()
 
     auto separator2 = root->separators_recursive()[1];
     CHECK_EQ(root->minPosForSeparator_global(separator2),
-             item1->minSize().width() + item2->minSize().width() + Item::separatorThickness);
+             item1->minSize().width() + item2->minSize().width() + Item::layoutSpacing);
     CHECK_EQ(root->maxPosForSeparator_global(separator2),
-             root->width() - item3->minSize().width() - Item::separatorThickness);
+             root->width() - item3->minSize().width() - Item::layoutSpacing);
 
     Item *item4 = createItem(/*min=*/Size(200, 200));
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
@@ -1378,9 +1378,9 @@ KDDW_QCORO_TASK tst_availableOnSide()
 
     CHECK_EQ(container31->minPosForSeparator_global(separator31),
              item1->minSize().width() + item2->minSize().width() + item3->minSize().width()
-                 + 2 * Item::separatorThickness);
+                 + 2 * Item::layoutSpacing);
     CHECK_EQ(container31->maxPosForSeparator_global(separator31),
-             root->width() - item31->minSize().width() - Item::separatorThickness);
+             root->width() - item31->minSize().width() - Item::layoutSpacing);
 
     KDDW_TEST_RETURN(true);
 }
@@ -1491,7 +1491,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator2()
         for (auto item : std::as_const(children)) {
             item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
         }
-        root->setSize_recursive(Size(4000 + Item::separatorThickness * (numChildren - 1), 1000));
+        root->setSize_recursive(Size(4000 + Item::layoutSpacing * (numChildren - 1), 1000));
     };
 
     const int delta = 100;
@@ -1636,8 +1636,8 @@ KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
 
     // Test that both sides reclaimed the space equally
     CHECK_EQ(item1->width(), oldW1);
-    CHECK(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::separatorThickness);
-    CHECK(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::separatorThickness);
+    CHECK(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::layoutSpacing);
+    CHECK(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::layoutSpacing);
 
     item3->restore(guest3);
 

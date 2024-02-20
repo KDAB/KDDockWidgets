@@ -2313,7 +2313,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow4()
     const int item2MinHeight =
         layout->itemForGroup(dock2->dptr()->group())->minLength(Qt::Vertical);
     CHECK_EQ(dropArea->layoutHeight(),
-             dock1->dptr()->group()->height() + item2MinHeight + Item::separatorThickness);
+             dock1->dptr()->group()->height() + item2MinHeight + Item::layoutSpacing);
     KDDW_TEST_RETURN(true);
 }
 
@@ -2504,7 +2504,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         auto anchor1 = separators[0];
         int boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
-        int expectedBoundToTheRight = layout->layoutWidth() - 3 * Item::separatorThickness
+        int expectedBoundToTheRight = layout->layoutWidth() - 3 * Item::layoutSpacing
             - item2->minLength(Qt::Horizontal) - item3->minLength(Qt::Horizontal)
             - item4->minLength(Qt::Horizontal);
 
@@ -2519,7 +2519,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
         CHECK(!item4->isPlaceholder());
 
         boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
-        expectedBoundToTheRight = layout->layoutWidth() - 2 * Item::separatorThickness
+        expectedBoundToTheRight = layout->layoutWidth() - 2 * Item::layoutSpacing
             - item2->minLength(Qt::Horizontal) - item4->minLength(Qt::Horizontal);
 
         CHECK_EQ(boundToTheRight, expectedBoundToTheRight);
@@ -4798,7 +4798,7 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
 
     Margins margins = m->centerWidgetMargins();
     const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical)
-        + 1 * Item::separatorThickness + margins.top() + margins.bottom();
+        + 1 * Item::layoutSpacing + margins.top() + margins.bottom();
 
     CHECK_EQ(m->view()->minSize().height(), expectedMinHeight);
 
