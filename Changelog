@@ -18,6 +18,7 @@
     system nlohmann.
   - Fixed dock widget float button when using main window nesting
   - Fixed auto-hide overlay not updating its position when main window was resized
+  - Fixed double-click on titlebar not floating it if auto-hide flag was enabled
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.

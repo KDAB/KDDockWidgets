@@ -172,7 +172,7 @@ bool TitleBar::onDoubleClicked()
         // convention it's floating, but it's not the title bar of the top-level window.
         toggleMaximized();
         return true;
-    } else if (supportsFloatingButton()) {
+    } else if (supportsFloatUnfloat()) {
         onFloatClicked();
         return true;
     }
