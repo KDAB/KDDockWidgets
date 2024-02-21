@@ -1293,8 +1293,8 @@ bool ItemBoxContainer::checkSanity()
         return false;
     }
 
-    const Size expectedSeparatorSize = isVertical() ? Size(width(), Item::layoutSpacing)
-                                                    : Size(Item::layoutSpacing, height());
+    const Size expectedSeparatorSize = isVertical() ? Size(width(), Item::separatorThickness)
+                                                    : Size(Item::separatorThickness, height());
 
     const int pos2 = Core::pos(mapToRoot(Point(0, 0)), oppositeOrientation(d->m_orientation));
 
@@ -4132,7 +4132,7 @@ bool LayoutingSeparator::isVertical() const
 int LayoutingSeparator::position() const
 {
     const Point topLeft = geometry().topLeft();
-    return isVertical() ? topLeft.y() : topLeft.x();
+    return (isVertical() ? topLeft.y() : topLeft.x()) - offset();
 }
 
 ItemBoxContainer *LayoutingSeparator::parentContainer() const
@@ -4148,14 +4148,15 @@ Qt::Orientation LayoutingSeparator::orientation() const
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void LayoutingSeparator::setGeometry(int pos, int pos2, int length)
 {
+    pos += offset();
     Rect newGeo = geometry();
     if (isVertical()) {
         // The separator itself is horizontal
-        newGeo.setSize(Size(length, Core::Item::layoutSpacing));
+        newGeo.setSize(Size(length, Core::Item::separatorThickness));
         newGeo.moveTo(pos2, pos);
     } else {
         // The separator itself is vertical
-        newGeo.setSize(Size(Core::Item::layoutSpacing, length));
+        newGeo.setSize(Size(Core::Item::separatorThickness, length));
         newGeo.moveTo(pos, pos2);
     }
 
@@ -4207,6 +4208,15 @@ int LayoutingSeparator::onMouseMove(Point pos, bool moveSeparator)
         m_parentContainer->requestSeparatorMove(this, positionToGoTo - position());
 
     return positionToGoTo;
+}
+
+int LayoutingSeparator::offset() const
+{
+    // almost always 0, unless someone set a spacing different than separator size
+    const int diff = Item::layoutSpacing - Item::separatorThickness;
+
+    // The separator will be position this much from actual layout position:
+    return diff / 2;
 }
 
 class LayoutingGuest::Private

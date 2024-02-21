@@ -53,6 +53,7 @@ public:
     static LayoutingSeparator *s_separatorBeingDragged;
 
 private:
+    int offset() const;
     LayoutingSeparator(const LayoutingSeparator &) = delete;
     LayoutingSeparator &operator=(const LayoutingSeparator &) = delete;
 };
