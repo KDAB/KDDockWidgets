@@ -562,6 +562,10 @@ int c_static_KDDockWidgets__Core__Item___get_separatorThickness()
 {
     return KDDockWidgetsBindings_wrappersNS::Item_wrapper::separatorThickness;
 }
+int c_static_KDDockWidgets__Core__Item___get_layoutSpacing()
+{
+    return KDDockWidgetsBindings_wrappersNS::Item_wrapper::layoutSpacing;
+}
 bool c_static_KDDockWidgets__Core__Item___get_s_silenceSanityChecks()
 {
     return KDDockWidgetsBindings_wrappersNS::Item_wrapper::s_silenceSanityChecks;
@@ -581,6 +585,10 @@ bool c_KDDockWidgets__Core__Item___get_m_inDtor(void *thisObj)
 void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separatorThickness_)
 {
     KDDockWidgetsBindings_wrappersNS::Item_wrapper::separatorThickness = separatorThickness_;
+}
+void c_static_KDDockWidgets__Core__Item___set_layoutSpacing_int(int layoutSpacing_)
+{
+    KDDockWidgetsBindings_wrappersNS::Item_wrapper::layoutSpacing = layoutSpacing_;
 }
 void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_)
 {

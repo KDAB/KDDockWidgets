@@ -363,6 +363,14 @@ class TitleBar extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__TitleBar__supportsAutoHideButton')
         .asFunction();
     return func(thisCpp) != 0;
+  } // supportsFloatUnfloat() const
+
+  bool supportsFloatUnfloat() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__TitleBar__supportsFloatUnfloat')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // supportsFloatingButton() const
 
   bool supportsFloatingButton() {

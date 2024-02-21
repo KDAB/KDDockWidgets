@@ -50,6 +50,22 @@ class Item extends KDDWBindingsCore.Object {
     func(separatorThickness_);
   }
 
+  static int get layoutSpacing {
+    final int_Func_void func = _dylib
+        .lookup<ffi.NativeFunction<int_Func_void_FFI>>(
+            'c_static_KDDockWidgets__Core__Item___get_layoutSpacing')
+        .asFunction();
+    return func();
+  }
+
+  static set layoutSpacing(int layoutSpacing_) {
+    final void_Func_int func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_ffi_Int32_FFI>>(
+            'c_static_KDDockWidgets__Core__Item___set_layoutSpacing_int')
+        .asFunction();
+    func(layoutSpacing_);
+  }
+
   static bool get s_silenceSanityChecks {
     final bool_Func_void func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_void_FFI>>(

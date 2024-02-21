@@ -98,6 +98,14 @@ class Config implements ffi.Finalizable {
             'c_KDDockWidgets__Config__layoutSaverUsesStrictMode')
         .asFunction();
     return func(thisCpp) != 0;
+  } // layoutSpacing() const
+
+  int layoutSpacing() {
+    final int_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Config__layoutSpacing')
+        .asFunction();
+    return func(thisCpp);
   } // mdiPopupThreshold() const
 
   int mdiPopupThreshold() {
@@ -180,6 +188,14 @@ class Config implements ffi.Finalizable {
             'c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool')
         .asFunction();
     func(thisCpp, arg__1 ? 1 : 0);
+  } // setLayoutSpacing(int arg__1)
+
+  setLayoutSpacing(int arg__1) {
+    final void_Func_voidstar_int func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
+            'c_KDDockWidgets__Config__setLayoutSpacing_int')
+        .asFunction();
+    func(thisCpp, arg__1);
   } // setMDIPopupThreshold(int arg__1)
 
   setMDIPopupThreshold(int arg__1) {

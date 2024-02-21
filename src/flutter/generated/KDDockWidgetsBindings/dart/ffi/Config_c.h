@@ -23,6 +23,7 @@ public:
     double draggedWindowOpacity() const;
     bool dropIndicatorsInhibited() const;
     bool layoutSaverUsesStrictMode() const;
+    int layoutSpacing() const;
     int mdiPopupThreshold() const;
     bool onlyProgrammaticDrag() const;
     void printDebug();
@@ -33,6 +34,7 @@ public:
     void setDraggedWindowOpacity(double opacity);
     void setDropIndicatorsInhibited(bool inhibit) const;
     void setLayoutSaverStrictMode(bool arg__1);
+    void setLayoutSpacing(int arg__1);
     void setMDIPopupThreshold(int arg__1);
     void setOnlyProgrammaticDrag(bool arg__1);
     void setSeparatorThickness(int value);
@@ -55,6 +57,8 @@ DOCKS_EXPORT double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj)
 DOCKS_EXPORT bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
 // KDDockWidgets::Config::layoutSaverUsesStrictMode() const
 DOCKS_EXPORT bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj);
+// KDDockWidgets::Config::layoutSpacing() const
+DOCKS_EXPORT int c_KDDockWidgets__Config__layoutSpacing(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 DOCKS_EXPORT int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
 // KDDockWidgets::Config::onlyProgrammaticDrag() const
@@ -75,6 +79,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *
 DOCKS_EXPORT void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
 // KDDockWidgets::Config::setLayoutSaverStrictMode(bool arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Config::setLayoutSpacing(int arg__1)
+DOCKS_EXPORT void c_KDDockWidgets__Config__setLayoutSpacing_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setOnlyProgrammaticDrag(bool arg__1)

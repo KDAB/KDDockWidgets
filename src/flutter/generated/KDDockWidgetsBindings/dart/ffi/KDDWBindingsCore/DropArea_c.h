@@ -17,8 +17,8 @@
 #include <KDDockWidgets.h>
 #include <core/Group.h>
 #include <geometry_helpers_p.h>
-#include "core/MainWindow.h"
 #include <FloatingWindow.h>
+#include "core/MainWindow.h"
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

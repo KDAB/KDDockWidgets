@@ -633,11 +633,13 @@ int c_KDDockWidgets__Core__Item__x(void *thisObj);
 int c_KDDockWidgets__Core__Item__y(void *thisObj);
 void c_KDDockWidgets__Core__Item__destructor(void *thisObj);
 int c_static_KDDockWidgets__Core__Item___get_separatorThickness();
+int c_static_KDDockWidgets__Core__Item___get_layoutSpacing();
 bool c_static_KDDockWidgets__Core__Item___get_s_silenceSanityChecks();
 bool c_KDDockWidgets__Core__Item___get_m_isContainer(void *thisObj);
 bool c_KDDockWidgets__Core__Item___get_m_isSettingGuest(void *thisObj);
 bool c_KDDockWidgets__Core__Item___get_m_inDtor(void *thisObj);
 void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separatorThickness_);
+void c_static_KDDockWidgets__Core__Item___set_layoutSpacing_int(int layoutSpacing_);
 void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_);
 void c_KDDockWidgets__Core__Item___set_m_isSettingGuest_bool(void *thisObj, bool m_isSettingGuest_);
 void c_KDDockWidgets__Core__Item___set_m_inDtor_bool(void *thisObj, bool m_inDtor_);
@@ -2101,8 +2103,6 @@ void c_KDDockWidgets__Core__SideBar_Finalizer(void *cppObj); // KDDockWidgets::C
 bool c_static_KDDockWidgets__Core__Separator__isResizing();
 // KDDockWidgets::Core::Separator::isVertical() const
 bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj);
-// KDDockWidgets::Core::Separator::move(int p)
-void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p);
 // KDDockWidgets::Core::Separator::numSeparators()
 int c_static_KDDockWidgets__Core__Separator__numSeparators();
 // KDDockWidgets::Core::Separator::onMouseDoubleClick()
@@ -2117,8 +2117,6 @@ void c_KDDockWidgets__Core__Separator__onMouseReleased(void *thisObj);
 int c_KDDockWidgets__Core__Separator__position(void *thisObj);
 // KDDockWidgets::Core::Separator::setGeometry(KDDockWidgets::Rect r)
 void c_KDDockWidgets__Core__Separator__setGeometry_Rect(void *thisObj, void *r_);
-// KDDockWidgets::Core::Separator::setGeometry(int pos, int pos2, int length)
-void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length);
 // KDDockWidgets::Core::Separator::setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_);
 void c_KDDockWidgets__Core__Separator__destructor(void *thisObj);
@@ -2839,6 +2837,8 @@ double c_KDDockWidgets__Config__draggedWindowOpacity(void *thisObj);
 bool c_KDDockWidgets__Config__dropIndicatorsInhibited(void *thisObj);
 // KDDockWidgets::Config::layoutSaverUsesStrictMode() const
 bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj);
+// KDDockWidgets::Config::layoutSpacing() const
+int c_KDDockWidgets__Config__layoutSpacing(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
 // KDDockWidgets::Config::onlyProgrammaticDrag() const
@@ -2859,6 +2859,8 @@ void c_KDDockWidgets__Config__setDraggedWindowOpacity_double(void *thisObj, doub
 void c_KDDockWidgets__Config__setDropIndicatorsInhibited_bool(void *thisObj, bool inhibit);
 // KDDockWidgets::Config::setLayoutSaverStrictMode(bool arg__1)
 void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Config::setLayoutSpacing(int arg__1)
+void c_KDDockWidgets__Config__setLayoutSpacing_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setOnlyProgrammaticDrag(bool arg__1)

@@ -49,14 +49,6 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__isVertical')
         .asFunction();
     return func(thisCpp) != 0;
-  } // move(int p)
-
-  move(int p) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__Separator__move_int')
-        .asFunction();
-    func(thisCpp, p);
   }
 
   static // numSeparators()
@@ -114,16 +106,6 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__setGeometry_Rect')
         .asFunction();
     func(thisCpp, r == null ? ffi.nullptr : r.thisCpp);
-  } // setGeometry(int pos, int pos2, int length)
-
-  setGeometry_2(int pos, int pos2, int length) {
-    final void_Func_voidstar_int_int_int func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__Separator__setGeometry_int_int_int')
-        .asFunction();
-    func(thisCpp, pos, pos2, length);
   } // setLazyPosition(int arg__1)
 
   setLazyPosition(int arg__1) {
