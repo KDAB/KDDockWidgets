@@ -666,8 +666,6 @@ void DropArea::layoutEqually()
     if (!checkSanity())
         return;
 
-    dumpLayout();
-
     layoutEqually(d->m_rootItem);
 }
 
