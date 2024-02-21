@@ -2908,38 +2908,6 @@ KDDW_QCORO_TASK tst_mainWindowToggle()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabTitleUpdatesWhenUnFloating()
-{
-    // Tests #468
-    // setTitle() is changing title bar title but not tabbar
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
-    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
-    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
-
-    auto connectIt = [](auto dock) {
-        dock->dptr()->isFloatingChanged.connect([dock](bool floating) {
-            dock->setTitle(QString("%1-%2").arg(dock->uniqueName()).arg(floating));
-        });
-    };
-
-    connectIt(dock1);
-    connectIt(dock2);
-
-    m->addDockWidget(dock1, Location_OnLeft);
-    dock1->addDockWidgetAsTab(dock2);
-
-    CHECK(dock2->isCurrentTab());
-    CHECK_EQ(dock1->titleBar()->title(), "2-0");
-    Core::TabBar *tb = dock1->dptr()->group()->tabBar();
-
-    CHECK_EQ(tb->text(0), "1-0");
-    CHECK_EQ(tb->text(1), "2-0");
-
-    KDDW_TEST_RETURN(true);
-}
-
 KDDW_QCORO_TASK tst_startDragging()
 {
     auto dc = DragController::instance();
@@ -5923,7 +5891,6 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_resizeInLayout),
         TEST(tst_mainWindowToggle),
         TEST(tst_startDragging),
-        TEST(tst_tabTitleUpdatesWhenUnFloating),
 #if !defined(KDDW_FRONTEND_FLUTTER)
         TEST(tst_minMaxGuest),
         TEST(tst_doesntHaveNativeTitleBar),

@@ -57,6 +57,7 @@ public Q_SLOTS:
     void cleanupTestCase();
 
 private Q_SLOTS:
+    void tst_tabTitleUpdatesWhenUnFloating();
     void tst_resizeWindow_data();
     void tst_resizeWindow();
     void tst_0_data();
@@ -169,6 +170,36 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide_data()
     QTest::newRow("false") << false;
     // QTest::newRow("true") << true; // We don't support closing dock widgets via
     // setVisible(false). (Yet ? Maybe never).
+}
+
+void TestDocks::tst_tabTitleUpdatesWhenUnFloating()
+{
+    // Tests #468
+    // setTitle() is changing title bar title but not tabbar
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+
+    auto connectIt = [](auto dock) {
+        dock->dptr()->isFloatingChanged.connect([dock](bool floating) {
+            dock->setTitle(QString("%1-%2").arg(dock->uniqueName()).arg(floating));
+        });
+    };
+
+    connectIt(dock1);
+    connectIt(dock2);
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+
+    QVERIFY(dock2->isCurrentTab());
+    QCOMPARE(dock1->titleBar()->title(), "2-0");
+    Core::TabBar *tb = dock1->dptr()->group()->tabBar();
+
+    QCOMPARE(tb->text(0), "1-0");
+    QCOMPARE(tb->text(1), "2-0");
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
