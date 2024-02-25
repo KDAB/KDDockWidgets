@@ -165,6 +165,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_closeRemovesFromSideBar();
+    void tst_sideBarHidden();
     void tst_restoreSideBar();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
@@ -701,6 +702,24 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     Platform::instance()->tests_waitForResize(m);
     QVERIFY(m->dropArea()->checkSanity());
     delete m;
+}
+
+void TestQtWidgets::tst_sideBarHidden()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = newDockWidget(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    auto sb = m1->sideBar(SideBarLocation::South);
+    QVERIFY(sb);
+    QVERIFY(sb->isEmpty());
+    QVERIFY(!sb->isVisible());
+
+    m1->moveToSideBar(dw1);
+    QVERIFY(!sb->isEmpty());
+    QVERIFY(sb->isVisible());
 }
 
 void TestQtWidgets::tst_closeRemovesFromSideBar()

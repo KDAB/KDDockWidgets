@@ -71,7 +71,7 @@ public:
     void onButtonClicked(DockWidget *dw);
 
 private:
-    void updateSize();
+    void updateVisibility();
 
     class Private;
     Private *const d;
