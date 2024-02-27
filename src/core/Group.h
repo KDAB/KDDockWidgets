@@ -293,6 +293,8 @@ public:
     /// Returns the group that's in the specified item
     static Core::Group *fromItem(const Core::Item *);
 
+    static bool s_inFloatHack;
+
 protected:
     void isFocusedChangedCallback() override;
     void focusedWidgetChangedCallback() override;

@@ -464,10 +464,12 @@ void TitleBar::onFloatClicked()
                     return;
                 }
 
+                // suppress "isFloatingChanged" signals, as we're doing the float/unfloat hack
+                Group::s_inFloatHack = true;
+
                 int i = 0;
                 DockWidget *current = nullptr;
                 for (auto dock : std::as_const(dockWidgets)) {
-
                     if (!current && dock->isCurrentTab())
                         current = dock;
 
@@ -476,6 +478,7 @@ void TitleBar::onFloatClicked()
                     dock->setFloating(false);
                     ++i;
                 }
+                Group::s_inFloatHack = false;
 
                 // Restore the current tab
                 if (current)
