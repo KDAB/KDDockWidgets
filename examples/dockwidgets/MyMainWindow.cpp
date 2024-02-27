@@ -258,6 +258,14 @@ KDDockWidgets::QtWidgets::DockWidget *MyMainWindow::newDockWidget()
     m_toggleMenu->addAction(dock->toggleAction());
     dock->toggleAction()->setShortcut(QStringLiteral("ctrl+%1").arg(count));
 
+
+    connect(dock, &KDDockWidgets::QtWidgets::DockWidget::isFloatingChanged, this, [dock](bool is_floating) {
+        auto name = dock->uniqueName();
+        auto floating = QString(is_floating ? "FLOATING" : "NOT-FLOATING");
+        qDebug() << "isFloatingChanged: '" + name + "' -> " + floating;
+        dock->setTitle(name + QString(": ") + floating);
+    });
+
     count++;
     return dock;
 }
