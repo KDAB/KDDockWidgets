@@ -200,6 +200,34 @@ void TestDocks::tst_tabTitleUpdatesWhenUnFloating()
 
     QCOMPARE(tb->text(0), "1-0");
     QCOMPARE(tb->text(1), "2-0");
+
+    // Now unfloat:
+    dock1->titleBar()->onFloatClicked();
+
+    // Since they are tabbed, they're not considered floating, but the group is floating
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+    QCOMPARE(dock1->titleBar()->title(), "2-0");
+    QCOMPARE(tb->text(0), "1-0");
+    QCOMPARE(tb->text(1), "2-0");
+
+    // Put back in main window
+    dock1->titleBar()->onFloatClicked();
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+    QCOMPARE(dock1->titleBar()->title(), "2-0");
+
+    tb = dock1->dptr()->group()->tabBar();
+
+    if (Platform::instance()->isQtWidgets())
+        QEXPECT_FAIL("", "Bug #468, to be fixed", Continue);
+    QCOMPARE(tb->text(0), "1-0");
+
+    if (Platform::instance()->isQtWidgets())
+        QEXPECT_FAIL("", "Bug #368, to be fixed", Continue);
+    QCOMPARE(tb->text(1), "2-0");
+
+    // QTest::qWait(1000000);
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
