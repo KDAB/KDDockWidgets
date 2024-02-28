@@ -7,10 +7,12 @@ name: CI for building the examples against installed KDDW. Allows to find missin
 on:
   push:
     branches:
+      - 2.1
       - 2.0
       - main
   pull_request:
     branches:
+      - 2.1
       - 2.0
       - main
 
