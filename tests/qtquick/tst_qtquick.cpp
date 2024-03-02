@@ -481,7 +481,7 @@ void TestQtQuick::tst_deleteDockWidget()
         "dock0", Platform::instance()->tests_createView({}));
 
     dock0->show();
-    // delete dock0->view(); uncomment to crash
+    delete dock0->view();
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()

@@ -200,6 +200,9 @@ void View::sendVisibleChangeEvent()
 
 void View::itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data)
 {
+    if (m_inDtor)
+        return;
+
     QQuickItem::itemChange(change, data);
 
     // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
