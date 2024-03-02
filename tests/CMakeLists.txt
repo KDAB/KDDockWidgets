@@ -64,6 +64,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
     set_compiler_flags(tst_qtwidgets)
     _add_test(tst_qtwidgets)
     add_subdirectory(manual/qdockwidget)
+    add_subdirectory(manual/qmdiarea)
 endif()
 
 # tst_qtquick
