@@ -64,6 +64,8 @@ private Q_SLOTS:
 
     void tst_mdiFixedSize();
     void tst_affinities();
+
+    void tst_deleteDockWidget();
 };
 
 
@@ -467,6 +469,19 @@ void TestQtQuick::tst_affinities()
 
     QCOMPARE(dock1->affinities(), QVector<QString>({ "affinity_one", "affinity_two" }));
     QVERIFY(dock2->affinities().isEmpty());
+}
+
+void TestQtQuick::tst_deleteDockWidget()
+{
+    // Tests that we can delete a dock widget directly
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main465.qml"); // or any other main.qml
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({}));
+
+    dock0->show();
+    delete dock0->view();
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()
