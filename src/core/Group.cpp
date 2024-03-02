@@ -369,6 +369,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
 
     dynamic_cast<Core::GroupViewInterface *>(view())->insertDockWidget(dw, index);
     dw->d->onParentChanged();
+    onDockWidgetTitleChanged(dw);
 }
 
 Core::DockWidget *Group::dockWidgetAt(int index) const

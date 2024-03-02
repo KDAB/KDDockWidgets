@@ -220,6 +220,19 @@ void TestDocks::tst_tabTitleUpdatesWhenUnFloating()
     tb = dock1->dptr()->group()->tabBar();
     QCOMPARE(tb->text(0), "1-0");
     QCOMPARE(tb->text(1), "2-0");
+
+    // Place docks side by side
+    m->addDockWidget(dock2, Location_OnRight);
+    QCOMPARE(dock1->titleBar()->title(), "1-0");
+    QCOMPARE(dock2->titleBar()->title(), "2-0");
+
+    // Now float:
+    dock2->titleBar()->onFloatClicked();
+    QCOMPARE(dock2->titleBar()->title(), "2-1");
+
+    // Now dock again:
+    dock2->titleBar()->onFloatClicked();
+    QCOMPARE(dock2->titleBar()->title(), "2-0");
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
