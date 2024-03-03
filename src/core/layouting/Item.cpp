@@ -517,8 +517,8 @@ void Item::setMaxSizeHint(Size sz)
 
 Item *Item::outermostNeighbor(Location loc, bool visibleOnly) const
 {
-    Side side;
-    Qt::Orientation o;
+    Side side = Side1;
+    Qt::Orientation o = Qt::Vertical;
 
     switch (loc) {
     case Location_None:

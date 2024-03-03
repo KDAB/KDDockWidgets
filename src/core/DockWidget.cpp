@@ -820,7 +820,7 @@ void DockWidget::Private::close()
     if (Core::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
         auto mainWindow = sb->mainWindow();
         if (mainWindow->overlayedDockWidget() == q) {
-            mainWindow->clearSideBarOverlay(/* deleteFrame=*/false);
+            mainWindow->clearSideBarOverlay(/* deleteGroup=*/false);
         }
     }
 
@@ -1058,7 +1058,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidgetOptions options_
         // When floating, we remove from the sidebar
         if (checked && q->isOpen()) {
             if (Core::SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
-                sb->mainWindow()->clearSideBarOverlay(/* deleteFrame=*/false);
+                sb->mainWindow()->clearSideBarOverlay(/* deleteGroup=*/false);
                 sb->removeDockWidget(q);
             }
         }

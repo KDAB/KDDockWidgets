@@ -820,9 +820,9 @@ Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QByteArray &serial
     Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
-    for (auto mainWindow : std::as_const(layout.mainWindows)) {
-        for (auto it : mainWindow.dockWidgetsPerSideBar) {
-            for (auto name : it.second)
+    for (const auto &mainWindow : std::as_const(layout.mainWindows)) {
+        for (const auto &it : mainWindow.dockWidgetsPerSideBar) {
+            for (const auto &name : it.second)
                 names.push_back(name);
         }
     }
