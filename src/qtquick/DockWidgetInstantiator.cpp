@@ -184,7 +184,10 @@ QVector<QString> DockWidgetInstantiator::affinities() const
 
 void DockWidgetInstantiator::setAffinities(const QVector<QString> &affinities)
 {
-    m_affinities = affinities;
+    if (m_affinities != affinities) {
+        m_affinities = affinities;
+        Q_EMIT affinitiesChanged();
+    }
 }
 
 void DockWidgetInstantiator::componentComplete()

@@ -60,7 +60,10 @@ QVector<QString> MainWindowInstantiator::affinities() const
 
 void MainWindowInstantiator::setAffinities(const QVector<QString> &affinities)
 {
-    m_affinities = affinities;
+    if (m_affinities != affinities) {
+        m_affinities = affinities;
+        Q_EMIT affinitiesChanged();
+    }
 }
 
 bool MainWindowInstantiator::isMDI() const
