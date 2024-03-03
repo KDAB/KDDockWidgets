@@ -29,7 +29,7 @@
     },
     "mounts": [
         "source=${localEnv:HOME}/Qt/5.15.2/gcc_64/,target=/Qt5/,type=bind",
-        "source=${localEnv:HOME}/Qt/6.3.2/gcc_64/,target=/Qt6/,type=bind"
+        "source=${localEnv:HOME}/Qt/6.6.0/gcc_64/,target=/Qt6/,type=bind"
     ],
     "remoteUser": "user"
 }
