@@ -5,16 +5,6 @@
 name: Runs KDDW tests against an Qt6 ASAN build
 
 on:
-  push:
-    branches:
-      - 2.1
-      - 2.0
-      - main
-  pull_request:
-    branches:
-      - 2.1
-      - 2.0
-      - main
   workflow_dispatch:
 
 jobs:
