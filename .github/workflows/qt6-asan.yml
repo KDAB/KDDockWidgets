@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Runs KDDW tests against an Qt6 ASAN build
+
+on:
+  push:
+    branches:
+      - 2.1
+      - 2.0
+      - main
+  pull_request:
+    branches:
+      - 2.1
+      - 2.0
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+        preset:
+          - name: ci-dev-qt6
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/qt6-asan
