@@ -787,7 +787,7 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &seriali
     Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
-    for (auto dock : std::as_const(layout.allDockWidgets)) {
+    for (const auto &dock : std::as_const(layout.allDockWidgets)) {
         auto it = std::find_if(layout.closedDockWidgets.cbegin(), layout.closedDockWidgets.cend(), [&dock](auto closedDock) {
             return dock->uniqueName == closedDock->uniqueName;
         });
