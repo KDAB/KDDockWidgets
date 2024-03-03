@@ -482,6 +482,9 @@ void TestQtQuick::tst_deleteDockWidget()
 
     dock0->show();
     delete dock0->view();
+
+    // 1 event loop iteration so we don't have memory leaks
+    QTest::qWait(1);
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()
