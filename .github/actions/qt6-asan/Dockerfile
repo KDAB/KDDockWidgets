@@ -40,10 +40,24 @@ RUN mkdir /sources/
 
 RUN git clone https://code.qt.io/qt/qt5.git /sources/qt6
 RUN cd /sources/qt6 && git switch 6.6 && perl init-repository --module-subset=qtbase,qtshadertools,qtdeclarative
-RUN mkdir -p /build/qt6
-RUN cd /build/qt6 && /sources/qt6/configure -prefix /Qt6/ -debug -sanitize address -- -DQT_BUILD_EXAMPLES=OFF
-RUN cmake --build /build/qt6 --parallel
-RUN cmake --install /build/qt6
+
+# Build qtbase first, so we can delete its build dir to save space, as GitHub has storage limits
+RUN mkdir /build/ && cd /build/ && /sources/qt6/qtbase/configure -prefix /Qt6/ -debug -sanitize address -- -DQT_BUILD_EXAMPLES=OFF
+RUN cmake --build /build/ --parallel
+RUN cmake --install /build/
+RUN rm -rf /build/
+
+# qtshadertools
+RUN mkdir /build/ && cd /build/ && qt-cmake -G Ninja /sources/qt6/qtshadertools/
+RUN cmake --build /build/ --parallel
+RUN cmake --install /build/
+RUN rm -rf /build/
+
+# qtdeclarative
+RUN mkdir /build/ && cd /build/ && qt-cmake -G Ninja /sources/qt6/qtdeclarative/
+RUN cmake --build /build/ --parallel
+RUN cmake --install /build/
+RUN rm -rf /build/
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
