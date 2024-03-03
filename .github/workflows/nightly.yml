@@ -18,7 +18,6 @@ jobs:
       matrix:
         os:
           - ubuntu-22.04
-          - ubuntu-20.04
           - windows-2022
           - windows-2019
           - macos-13
@@ -84,6 +83,7 @@ jobs:
         run: |
           sudo apt update -qq
           echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
+          sudo apt install libspdlog-dev -y
 
       - uses: actions/checkout@v4
         #with:
