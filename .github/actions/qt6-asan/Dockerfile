@@ -10,54 +10,8 @@
 
 # Dockerfile for qt6-asan GitHub Action
 
-# Instructions for manual inspection:
-# docker build -t kddw-qt6-asan .
-# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ kddw-qt6-asan
-# cd /kddockwidgets/
-# cmake --preset=dev-asan6
-# cd build-dev-asan6 && ninja
-# ctest -j12
-
-FROM ubuntu:24.04
+FROM iamsergio/kddw-qt6-asan
 MAINTAINER Sergio Martins (sergio.martins@kdab.com)
-
-ENV TZ=Europe/Berlin
-ENV LC_CTYPE=C.UTF-8
-ENV PATH=$PATH:/Qt6/bin/
-ENV LD_LIBRARY_PATH=/Qt6/lib/
-ENV QT_QUICK_BACKEND=software
-ENV LSAN_OPTIONS=detect_leaks=0
-
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN apt update
-RUN apt install build-essential software-properties-common lld git cmake ninja-build \
-                mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
-                libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                libxslt-dev libspdlog-dev -y
-
-RUN mkdir /sources/
-
-RUN git clone https://code.qt.io/qt/qt5.git /sources/qt6
-RUN cd /sources/qt6 && git switch 6.6 && perl init-repository --module-subset=qtbase,qtshadertools,qtdeclarative
-
-# Build qtbase first, so we can delete its build dir to save space, as GitHub has storage limits
-RUN mkdir /build/ && cd /build/ && /sources/qt6/qtbase/configure -prefix /Qt6/ -debug -sanitize address -- -DQT_BUILD_EXAMPLES=OFF
-RUN cmake --build /build/ --parallel
-RUN cmake --install /build/
-RUN rm -rf /build/
-
-# qtshadertools
-RUN mkdir /build/ && cd /build/ && qt-cmake -G Ninja /sources/qt6/qtshadertools/
-RUN cmake --build /build/ --parallel
-RUN cmake --install /build/
-RUN rm -rf /build/
-
-# qtdeclarative
-RUN mkdir /build/ && cd /build/ && qt-cmake -G Ninja /sources/qt6/qtdeclarative/
-RUN cmake --build /build/ --parallel
-RUN cmake --install /build/
-RUN rm -rf /build/
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
