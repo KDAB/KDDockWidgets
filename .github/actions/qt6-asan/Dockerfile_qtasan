@@ -21,9 +21,8 @@
 # To prepare an image for GitHub actions we import and export to remove layers
 # so the image occupies less space:
 # docker build -t kddw-qt6-asan .
-# docker run -it --entrypoint /bin/bash kddw-qt6-asan # and exit
+# docker run -it kddw-qt6-asan # and exit
 # docker ps # to check sha
-# docker commit --change='ENTRYPOINT ["/entrypoint.sh"]'
 # docker export -o mycontainer.tar <container_sha>
 # docker import mycontainer.tar
 # docker images # to check sha
@@ -72,6 +71,3 @@ RUN cmake --install /build/
 RUN rm -rf /build/
 
 RUN rm -rf /sources/
-
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
