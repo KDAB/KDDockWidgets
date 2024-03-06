@@ -1700,7 +1700,6 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
         auto dw2 = newDockWidget("2");
-        // auto dw3 = newDockWidget("3");
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
