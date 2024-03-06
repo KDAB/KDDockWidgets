@@ -787,7 +787,7 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &seriali
     Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
-    for (auto dock : std::as_const(layout.allDockWidgets)) {
+    for (const auto &dock : std::as_const(layout.allDockWidgets)) {
         auto it = std::find_if(layout.closedDockWidgets.cbegin(), layout.closedDockWidgets.cend(), [&dock](auto closedDock) {
             return dock->uniqueName == closedDock->uniqueName;
         });
@@ -820,9 +820,9 @@ Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QByteArray &serial
     Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
-    for (auto mainWindow : std::as_const(layout.mainWindows)) {
-        for (auto it : mainWindow.dockWidgetsPerSideBar) {
-            for (auto name : it.second)
+    for (const auto &mainWindow : std::as_const(layout.mainWindows)) {
+        for (const auto &it : mainWindow.dockWidgetsPerSideBar) {
+            for (const auto &name : it.second)
                 names.push_back(name);
         }
     }

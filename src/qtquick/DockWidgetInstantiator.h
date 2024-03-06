@@ -44,7 +44,7 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
     Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
-    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities)
+    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
 public:
     QString uniqueName() const;
     void setUniqueName(const QString &);
@@ -111,6 +111,7 @@ Q_SIGNALS:
     void isOpenChanged(bool);
     void removedFromSideBar();
     void windowActiveAboutToChange(bool activated);
+    void affinitiesChanged();
 
 private:
     std::optional<bool> m_isFloating;

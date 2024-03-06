@@ -32,6 +32,7 @@ public:
     virtual ~LayoutingSeparator();
     virtual Rect geometry() const = 0;
     virtual void setGeometry(Rect r) = 0;
+    virtual void raise();
     virtual void free();
 
     int position() const;

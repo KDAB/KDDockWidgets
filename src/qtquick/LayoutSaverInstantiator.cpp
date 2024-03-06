@@ -41,4 +41,5 @@ QVector<QString> LayoutSaverInstantiator::affinities() const
 void LayoutSaverInstantiator::setAffinities(const QVector<QString> &affinities)
 {
     setAffinityNames(affinities);
+    Q_EMIT affinitiesChanged();
 }

@@ -33,7 +33,7 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT LayoutSaverInstantiator : public QObject, public LayoutSaver
 {
     Q_OBJECT
-    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities)
+    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
 public:
     explicit LayoutSaverInstantiator(QObject *parent = nullptr);
     ~LayoutSaverInstantiator() override;
@@ -43,6 +43,8 @@ public:
 
     Q_INVOKABLE bool saveToFile(const QString &jsonFilename);
     Q_INVOKABLE bool restoreFromFile(const QString &jsonFilename);
+Q_SIGNALS:
+    void affinitiesChanged();
 };
 
 }

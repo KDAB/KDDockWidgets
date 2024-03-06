@@ -266,7 +266,7 @@ void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dock
 bool MainWindow::restoreDockWidget_legacy(QDockWidget *dockwidget)
 {
     if (d->onlySupportsQDockWidgets()) {
-        return restoreDockWidget_legacy(dockwidget);
+        return QMainWindow::restoreDockWidget(dockwidget);
     } else {
         qFatal("MainWindow::restoreDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
         return {};
@@ -276,7 +276,7 @@ bool MainWindow::restoreDockWidget_legacy(QDockWidget *dockwidget)
 void MainWindow::removeDockWidget_legacy(QDockWidget *dockwidget)
 {
     if (d->onlySupportsQDockWidgets()) {
-        removeDockWidget_legacy(dockwidget);
+        QMainWindow::removeDockWidget(dockwidget);
     } else {
         qFatal("MainWindow::removeDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
     }
@@ -285,7 +285,7 @@ void MainWindow::removeDockWidget_legacy(QDockWidget *dockwidget)
 Qt::DockWidgetArea MainWindow::dockWidgetArea_legacy(QDockWidget *dockwidget) const
 {
     if (d->onlySupportsQDockWidgets()) {
-        return dockWidgetArea_legacy(dockwidget);
+        return QMainWindow::dockWidgetArea(dockwidget);
     } else {
         qFatal("MainWindow::dockWidgetArea_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
         return {};
@@ -296,7 +296,7 @@ void MainWindow::resizeDocks_legacy(const QList<QDockWidget *> &docks,
                                     const QList<int> &sizes, Qt::Orientation orientation)
 {
     if (d->onlySupportsQDockWidgets()) {
-        resizeDocks_legacy(docks, sizes, orientation);
+        QMainWindow::resizeDocks(docks, sizes, orientation);
     } else {
         qFatal("MainWindow::resizeDocks_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
     }
@@ -305,7 +305,7 @@ void MainWindow::resizeDocks_legacy(const QList<QDockWidget *> &docks,
 void MainWindow::tabifyDockWidget_legacy(QDockWidget *first, QDockWidget *second)
 {
     if (d->onlySupportsQDockWidgets()) {
-        tabifyDockWidget_legacy(first, second);
+        QMainWindow::tabifyDockWidget(first, second);
     } else {
         qFatal("MainWindow::tabifyDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
     }
@@ -314,7 +314,7 @@ void MainWindow::tabifyDockWidget_legacy(QDockWidget *first, QDockWidget *second
 QList<QDockWidget *> MainWindow::tabifiedDockWidgets_legacy(QDockWidget *dockwidget) const
 {
     if (d->onlySupportsQDockWidgets()) {
-        return tabifiedDockWidgets_legacy(dockwidget);
+        return QMainWindow::tabifiedDockWidgets(dockwidget);
     } else {
         qFatal("MainWindow::tabifiedDockWidgets_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
         return {};
@@ -325,7 +325,7 @@ void MainWindow::splitDockWidget_split_legacy(QDockWidget *after, QDockWidget *d
                                               Qt::Orientation orientation)
 {
     if (d->onlySupportsQDockWidgets()) {
-        splitDockWidget_split_legacy(after, dockwidget, orientation);
+        QMainWindow::splitDockWidget(after, dockwidget, orientation);
     } else {
         qFatal("MainWindow::splitDockWidget_split_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
     }

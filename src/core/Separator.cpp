@@ -70,6 +70,11 @@ struct Separator::Private : public LayoutingSeparator
         delete q;
     }
 
+    void raise() override
+    {
+        q->view()->raise();
+    }
+
     Core::Separator *const q;
     Rect m_geometry;
     int lazyPosition = 0;
