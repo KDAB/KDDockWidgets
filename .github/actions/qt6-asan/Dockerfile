@@ -13,5 +13,10 @@
 FROM iamsergio/kddw-qt6-asan
 MAINTAINER Sergio Martins (sergio.martins@kdab.com)
 
+ENV PATH=$PATH:/Qt6/bin/
+ENV LD_LIBRARY_PATH=/Qt6/lib/
+ENV QT_QUICK_BACKEND=software
+ENV LSAN_OPTIONS=detect_leaks=0
+
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
