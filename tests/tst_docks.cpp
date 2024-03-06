@@ -1714,6 +1714,25 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         CHECK_EQ(dw2->sizeInLayout().width(), 250);
     }
 
+    {
+        // Case where parent container is vertical and our preferred size only has width set
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = newDockWidget("2");
+        auto dw3 = newDockWidget("3");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+
+        m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
+
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartVisible;
+        opt.preferredSize = QSize(201, 200);
+        m->addDockWidgetToSide(dw3, Location_OnLeft, InitialVisibilityOption::StartVisible);
+        // TODO: Fix
+        // CHECK_EQ(dw3->sizeInLayout().width(), 201);
+    }
+
     KDDW_TEST_RETURN(true);
 }
 
@@ -5123,6 +5142,27 @@ KDDW_QCORO_TASK tst_mdiSetSize()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_mdiCrash()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+    auto dock2 = createDockWidget(
+        "dock", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
+    m->layout()->asMDILayout()->addDockWidget(dock2, Point(0, 0), {});
+
+    Platform::instance()->tests_wait(1000);
+    delete dock0;
+    delete dock2;
+
+
+    Platform::instance()->tests_wait(1); // for leaks
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_mdiZorder()
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -5996,6 +6036,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_currentTabMatchesDockWidget),
         TEST(tst_addMDIDockWidget),
         TEST(tst_mdiZorder),
+        TEST(tst_mdiCrash),
         TEST(tst_mdiZorder2),
         TEST(tst_mdiSetSize),
         TEST(tst_mixedMDIRestoreToArea),

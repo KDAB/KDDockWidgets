@@ -200,7 +200,13 @@ QSize Group::maxSizeHint() const
     if (isMDI()) {
         const auto dockwidgets = m_group->dockWidgets();
         if (dockwidgets.size() == 1) {
-            return (dockwidgets[0]->view()->maxSizeHint() + QSize(0, nonContentsHeight())).boundedTo(Core::Item::hardcodedMaximumSize);
+            auto dw = dockwidgets[0];
+            if (dw->inDtor()) {
+                // Destruction case, nothing to do
+                return View::maxSizeHint();
+            }
+
+            return (dw->view()->maxSizeHint() + QSize(0, nonContentsHeight())).boundedTo(Core::Item::hardcodedMaximumSize);
         } else {
             KDDW_WARN("Group::maxSizeHint: Max size not supported for mixed MDI case yet");
         }
