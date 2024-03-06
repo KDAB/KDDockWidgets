@@ -1651,12 +1651,48 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
     }
 
     {
+        // With addDockWidgetToSide
+
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
-        m->addDockWidgetToSide(dw1, Location_OnLeft, QSize(200, 200));
+        m->addDockWidgetToSide(dw1, Location_OnLeft, QSize(250, 250));
 
-        CHECK_EQ(dw1->sizeInLayout().width(), 200);
+        CHECK_EQ(dw1->sizeInLayout().width(), 250);
+    }
+
+    {
+        // With StartHidden
+
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(250, 200);
+        m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
+        dw1->open();
+        CHECK_EQ(dw1->sizeInLayout().width(), 250);
+    }
+
+    {
+        // With some nesting
+
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = newDockWidget("2");
+        // auto dw3 = newDockWidget("3");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(250, 200);
+        m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
+        m->addDockWidget(dw2, Location_OnBottom, dw1, opt);
+
+        dw1->open();
+        dw2->open();
+
+        CHECK_EQ(dw1->sizeInLayout().width(), 250);
     }
 
     KDDW_TEST_RETURN(true);
