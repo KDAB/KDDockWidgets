@@ -198,6 +198,7 @@ struct InitialOption
         return visibility == InitialVisibilityOption::PreserveCurrentTab;
     }
 
+    /// Returns preferred height if the container is vertical, otherwise preferred width
     int preferredLength(Qt::Orientation o) const
     {
         return o == Qt::Horizontal ? preferredSize.width() : preferredSize.height();
