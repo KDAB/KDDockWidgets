@@ -3314,6 +3314,10 @@ void ItemBoxContainer::Private::updateSeparators()
         i++;
     }
 
+    // raise separators as they might be overlapping with dockwidget (supported use case)
+    for (auto sep : std::as_const(m_separators))
+        sep->raise();
+
     q->updateChildPercentages();
 }
 
@@ -4217,6 +4221,12 @@ int LayoutingSeparator::offset() const
 
     // The separator will be position this much from actual layout position:
     return diff / 2;
+}
+
+void LayoutingSeparator::raise()
+{
+    // No raising needed usually, as separators don't overlap with the dockwidgets.
+    // For QtWidgets/QtQuick we do support it though.
 }
 
 class LayoutingGuest::Private
