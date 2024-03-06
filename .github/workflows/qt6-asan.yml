@@ -5,6 +5,8 @@
 name: Runs KDDW tests against an Qt6 ASAN build
 
 on:
+  schedule:
+  - cron: '0 3 * * *'
   workflow_dispatch:
 
 jobs:
@@ -15,8 +17,6 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-        preset:
-          - name: ci-dev-qt6
 
     steps:
       - name: Checkout sources
