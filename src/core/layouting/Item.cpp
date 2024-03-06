@@ -1912,7 +1912,7 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
         const int suggestedLength = d->defaultLengthFor(item, option);
         item->setLength_recursive(suggestedLength, d->m_orientation);
 
-        if (!containerWasVisible && item->isVisible()) {
+        if (!containerWasVisible) {
             // The container only had hidden items, since it will
             // be single visible child, we can honour the child's cross-axis length
             // example: If the container is vertically, we'll honour the new item's

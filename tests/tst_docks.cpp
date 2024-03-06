@@ -1732,6 +1732,26 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         CHECK_EQ(dw3->sizeInLayout().width(), 201);
     }
 
+    {
+        // Case where parent container is vertical and our preferred size only has width set
+        // (same as previous, but with all hidden at first)
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = newDockWidget("2");
+        auto dw3 = newDockWidget("3");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+
+        m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
+
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(201, 200);
+        m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
+        dw3->open();
+        CHECK_EQ(dw3->sizeInLayout().width(), 201);
+    }
+
     KDDW_TEST_RETURN(true);
 }
 
