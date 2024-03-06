@@ -1728,9 +1728,8 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartVisible;
         opt.preferredSize = QSize(201, 200);
-        m->addDockWidgetToSide(dw3, Location_OnLeft, InitialVisibilityOption::StartVisible);
-        // TODO: Fix
-        // CHECK_EQ(dw3->sizeInLayout().width(), 201);
+        m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
+        CHECK_EQ(dw3->sizeInLayout().width(), 201);
     }
 
     KDDW_TEST_RETURN(true);

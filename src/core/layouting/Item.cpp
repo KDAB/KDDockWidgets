@@ -1101,7 +1101,9 @@ struct ItemBoxContainer::Private
         m_separators.clear();
     }
 
+    // length means height if the container is vertical, otherwise width
     int defaultLengthFor(Item *item, InitialOption option) const;
+
     void relayoutIfNeeded();
     const Item *itemFromPath(const Vector<int> &path) const;
     void resizeChildren(Size oldSize, Size newSize, SizingInfo::List &sizes,
@@ -1905,9 +1907,27 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
     const bool containerWasVisible = hasVisibleChildren(true);
 
     if (option.sizeMode != DefaultSizeMode::NoDefaultSizeMode) {
-        /// Choose a nice size for the item we're adding
+        /// Choose a nice main-axis length for the item we're adding
+        /// aka nice height if container is vertical (and vice-versa)
         const int suggestedLength = d->defaultLengthFor(item, option);
         item->setLength_recursive(suggestedLength, d->m_orientation);
+
+        if (!containerWasVisible && item->isVisible()) {
+            // The container only had hidden items, since it will
+            // be single visible child, we can honour the child's cross-axis length
+            // example: If the container is vertically, we'll honour the new item's
+            // preferred height. But if the container wasn't visible, we can also
+            // honour the child's preferred width.
+
+            // horizontal if container is vertical, and vice-versa
+            const auto crossAxis = oppositeOrientation(d->m_orientation);
+
+            // For the scenario where "this" container is vertical, this reads as:
+            // If option has preferred width, set preferred width on item
+            if (option.hasPreferredLength(crossAxis)) {
+                item->setLength_recursive(option.preferredLength(crossAxis), crossAxis);
+            }
+        }
     }
 
     m_children.insert(index, item);
