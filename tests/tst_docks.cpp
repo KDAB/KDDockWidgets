@@ -1638,15 +1638,27 @@ KDDW_QCORO_TASK tst_floatMaintainsSize()
 
 KDDW_QCORO_TASK tst_preferredInitialSize()
 {
-    EnsureTopLevelsDeleted e;
-    auto dw1 = newDockWidget("1");
-    auto dw2 = newDockWidget("2");
-    auto m = createMainWindow(Size(1200, 1200), MainWindowOption_None);
+    {
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = newDockWidget("2");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_None);
 
-    m->addDockWidget(dw1, Location_OnTop);
-    m->addDockWidget(dw2, Location_OnBottom, nullptr, Size(0, 200));
+        m->addDockWidget(dw1, Location_OnTop);
+        m->addDockWidget(dw2, Location_OnBottom, nullptr, Size(0, 200));
 
-    CHECK_EQ(dw2->dptr()->group()->height(), 200);
+        CHECK_EQ(dw2->sizeInLayout().height(), 200);
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        m->addDockWidgetToSide(dw1, Location_OnLeft, QSize(200, 200));
+
+        CHECK_EQ(dw1->sizeInLayout().width(), 200);
+    }
+
     KDDW_TEST_RETURN(true);
 }
 
