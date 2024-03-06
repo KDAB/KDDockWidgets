@@ -5142,6 +5142,27 @@ KDDW_QCORO_TASK tst_mdiSetSize()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_mdiCrash()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+    auto dock2 = createDockWidget(
+        "dock", Platform::instance()->tests_createView({ true, {}, Size(200, 200) }));
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
+    m->layout()->asMDILayout()->addDockWidget(dock2, Point(0, 0), {});
+
+    Platform::instance()->tests_wait(1000);
+    delete dock0;
+    delete dock2;
+
+
+    Platform::instance()->tests_wait(1); // for leaks
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_mdiZorder()
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -6015,6 +6036,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_currentTabMatchesDockWidget),
         TEST(tst_addMDIDockWidget),
         TEST(tst_mdiZorder),
+        TEST(tst_mdiCrash),
         TEST(tst_mdiZorder2),
         TEST(tst_mdiSetSize),
         TEST(tst_mixedMDIRestoreToArea),
