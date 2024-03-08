@@ -110,6 +110,9 @@ public:
     /// use MainWindowOption_ManualInit
     void manualInit();
 
+Q_SIGNALS:
+    void groupCountChanged(int);
+
 protected:
     QRect centralAreaGeometry() const override;
 
