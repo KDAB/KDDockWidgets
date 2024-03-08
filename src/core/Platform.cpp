@@ -101,6 +101,11 @@ Platform *Platform::instance()
     return s_platform;
 }
 
+bool Platform::hasInstance()
+{
+    return s_platform != nullptr;
+}
+
 bool Platform::hasActivePopup() const
 {
     return false;

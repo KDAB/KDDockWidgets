@@ -52,6 +52,10 @@ public:
     /// @brief Returns the platform singleton
     static Platform *instance();
 
+    /// Returns whether a Platform instance exists
+    // Will be false at start up right before using KDDW and at shutdown after dtor runs
+    static bool hasInstance();
+
     /// @brief Returns whether a popup is open
     /// Usually not needed to override. Investigate further in case side bars aren't auto hiding
     virtual bool hasActivePopup() const;
