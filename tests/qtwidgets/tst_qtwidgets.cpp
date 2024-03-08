@@ -2629,7 +2629,10 @@ void TestQtWidgets::tst_indicatorsNotShowing()
     auto tlw = dc->qtTopLevelUnderCursor();
     QVERIFY(tlw);
 
-    QEXPECT_FAIL("", "Bug #474, to be fixed", Continue);
+    /// Fixed on windows only. Other platforms to be fixed.
+    if (!KDDockWidgets::isWindows())
+        QEXPECT_FAIL("", "Bug #474, to be fixed", Continue);
+
     QCOMPARE(tlw->controller(), m1.get());
 
     dc->programmaticStopDrag();
