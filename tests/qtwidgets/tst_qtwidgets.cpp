@@ -21,6 +21,7 @@
 #include "Config.h"
 #include "LayoutSaver.h"
 #include "core/Logging_p.h"
+#include "core/DragController_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingSeparator_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -203,6 +204,7 @@ private Q_SLOTS:
     void tst_nonClosable();
     void tst_crashDuringRestore();
     void tst_toggleVsShowHidden();
+    void tst_indicatorsNotShowing();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2599,6 +2601,37 @@ void TestQtWidgets::tst_toggleVsShowHidden()
     QCOMPARE(count, 0);
 }
 
+void TestQtWidgets::tst_indicatorsNotShowing()
+{
+    // Tests bug #474
+    EnsureTopLevelsDeleted e;
+    const Point globalPos = { 600, 300 };
+    QCursor::setPos(globalPos);
+
+    auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+    auto m2 = createMainWindow(QSize(1000, 500), {}, "mw2");
+    // m2->setAffinities({ "m2" });
+    auto d2 = new QtWidgets::DockWidget("d2");
+    // d2->setAffinities({ "m2" });
+    d2->show();
+
+    m2->view()->move(0, 0);
+    m1->view()->move(500, 250);
+    m1->view()->raiseAndActivate();
+
+    auto mainWindow1 = dynamic_cast<QtWidgets::MainWindow *>(m1->view());
+    QVERIFY(QTest::qWaitForWindowActive(mainWindow1));
+
+    auto dc = DragController::instance();
+
+    dc->programmaticStartDrag(d2->dockWidget()->titleBar(), globalPos, { 10, 5 });
+
+    auto tlw = dc->qtTopLevelUnderCursor();
+    QVERIFY(tlw);
+
+    QEXPECT_FAIL("", "Bug #474, to be fixed", Continue);
+    QCOMPARE(tlw->controller(), m1.get());
+}
 
 int main(int argc, char *argv[])
 {
