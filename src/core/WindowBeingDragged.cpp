@@ -112,7 +112,7 @@ void WindowBeingDragged::init()
 void WindowBeingDragged::updateTransparency(bool enable)
 {
     // Wayland doesn't support setting opacity
-    if (isWayland() || !m_floatingWindow)
+    if (!Core::Platform::hasInstance() || isWayland() || !m_floatingWindow)
         return;
 
     double opacity = Config::self().draggedWindowOpacity();

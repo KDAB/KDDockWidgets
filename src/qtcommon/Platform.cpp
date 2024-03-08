@@ -292,6 +292,9 @@ Core::Platform::DisplayType Platform_qt::displayType() const
     if (qGuiApp->platformName() == QLatin1String("eglfs"))
         return DisplayType::QtEGLFS;
 
+    if (qGuiApp->platformName() == QLatin1String("windows"))
+        return DisplayType::Windows;
+
     return DisplayType::Other;
 }
 
