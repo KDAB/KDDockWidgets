@@ -2614,10 +2614,11 @@ void TestQtWidgets::tst_indicatorsNotShowing()
     auto d2 = new QtWidgets::DockWidget("d2");
     // d2->setAffinities({ "m2" });
     d2->show();
-
+    QTest::qWait(200);
     m2->view()->move(0, 0);
     m1->view()->move(500, 250);
     m1->view()->raiseAndActivate();
+    m1->view()->setWindowTitle("m1");
 
     auto mainWindow1 = dynamic_cast<QtWidgets::MainWindow *>(m1->view());
     QVERIFY(QTest::qWaitForWindowActive(mainWindow1));
@@ -2629,9 +2630,11 @@ void TestQtWidgets::tst_indicatorsNotShowing()
     auto tlw = dc->qtTopLevelUnderCursor();
     QVERIFY(tlw);
 
-    /// Fixed on windows only. Other platforms to be fixed.
-    if (!KDDockWidgets::isWindows())
-        QEXPECT_FAIL("", "Bug #474, to be fixed", Continue);
+    /// Fixed on windows and Linux. Other platforms don't have the required API
+    /// to get correct z-order of windows under cursor
+    const bool supportsZOrderedWindowSearch = KDDockWidgets::isWindows() || (KDDockWidgets::isXCB() && KDDockWidgets::linksToXLib());
+    if (!supportsZOrderedWindowSearch)
+        QEXPECT_FAIL("", "Not supported on this platform", Continue);
 
     QCOMPARE(tlw->controller(), m1.get());
 
