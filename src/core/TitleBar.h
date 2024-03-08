@@ -143,6 +143,15 @@ public:
     void setUserHiddenButtons(TitleBarButtonTypes);
     bool buttonIsUserHidden(TitleBarButtonType) const;
 
+    /// Overload which also consults buttonHidesIfDisabled
+    bool buttonIsUserHidden(TitleBarButtonType, bool enabled) const;
+
+    /// The specified buttons, if disabled, will be hidden as well
+    /// for example, with non-closable dock widgets we disable the close button
+    /// this allows to hide it as well.
+    void setHideDisabledButtons(TitleBarButtonTypes);
+    bool buttonHidesIfDisabled(TitleBarButtonType) const;
+
     class Private;
     Private *dptr() const;
 

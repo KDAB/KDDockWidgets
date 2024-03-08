@@ -290,8 +290,9 @@ void TitleBar::updateButtons()
     updateFloatButton();
     updateMaximizeButton();
 
-    const bool minimizeVisible = supportsMinimizeButton() && !buttonIsUserHidden(TitleBarButtonType::Minimize);
-    d->minimizeButtonChanged.emit(minimizeVisible, true);
+    const bool isEnabled = true;
+    const bool minimizeVisible = supportsMinimizeButton() && !buttonIsUserHidden(TitleBarButtonType::Minimize, isEnabled);
+    d->minimizeButtonChanged.emit(minimizeVisible, isEnabled);
 
     updateAutoHideButton();
 }
@@ -305,8 +306,9 @@ void TitleBar::updateAutoHideButton()
             type = TitleBarButtonType::UnautoHide;
     }
 
-    const bool visible = m_supportsAutoHide && !buttonIsUserHidden(type) && !m_floatingWindow;
-    d->autoHideButtonChanged.emit(visible, /*enabled=*/true, type);
+    const bool isEnabled = true;
+    const bool visible = m_supportsAutoHide && !buttonIsUserHidden(type, isEnabled) && !m_floatingWindow;
+    d->autoHideButtonChanged.emit(visible, isEnabled, type);
 }
 
 void TitleBar::updateMaximizeButton()
@@ -319,8 +321,9 @@ void TitleBar::updateMaximizeButton()
             fw->view()->isMaximized() ? TitleBarButtonType::Normal : TitleBarButtonType::Maximize;
         m_maximizeButtonVisible = supportsMaximizeButton();
     }
-    m_maximizeButtonVisible = m_maximizeButtonVisible && !buttonIsUserHidden(m_maximizeButtonType);
-    d->maximizeButtonChanged.emit(m_maximizeButtonVisible, /*enabled=*/true, m_maximizeButtonType);
+    const bool isEnabled = true;
+    m_maximizeButtonVisible = m_maximizeButtonVisible && !buttonIsUserHidden(m_maximizeButtonType, isEnabled);
+    d->maximizeButtonChanged.emit(m_maximizeButtonVisible, isEnabled, m_maximizeButtonType);
 }
 
 void TitleBar::updateCloseButton()
@@ -329,8 +332,9 @@ void TitleBar::updateCloseButton()
         ? group()->anyNonClosable()
         : (floatingWindow() ? floatingWindow()->anyNonClosable() : false);
 
-    setCloseButtonEnabled(!anyNonClosable);
-    setCloseButtonVisible(!buttonIsUserHidden(TitleBarButtonType::Close));
+    const bool isEnabled = !anyNonClosable;
+    setCloseButtonEnabled(isEnabled);
+    setCloseButtonVisible(!buttonIsUserHidden(TitleBarButtonType::Close, isEnabled));
 }
 
 void TitleBar::toggleMaximized()
@@ -675,7 +679,7 @@ bool TitleBar::isFocused() const
 void TitleBar::updateFloatButton()
 {
     setFloatButtonToolTip(floatingWindow() ? tr("Dock window") : tr("Undock window"));
-    setFloatButtonVisible(supportsFloatingButton() && !buttonIsUserHidden(TitleBarButtonType::Float));
+    setFloatButtonVisible(supportsFloatingButton() && !buttonIsUserHidden(TitleBarButtonType::Float, /*enabled=*/true));
 }
 
 QString TitleBar::floatButtonToolTip() const
@@ -715,6 +719,17 @@ bool TitleBar::buttonIsUserHidden(TitleBarButtonType type) const
     return d->m_userHiddenButtonTypes & type;
 }
 
+bool TitleBar::buttonIsUserHidden(TitleBarButtonType type, bool enabled) const
+{
+    if (buttonIsUserHidden(type))
+        return true;
+
+    if (!enabled)
+        return buttonHidesIfDisabled(type);
+
+    return false;
+}
+
 void TitleBar::setUserHiddenButtons(TitleBarButtonTypes types)
 {
     if (d->m_userHiddenButtonTypes != types) {
@@ -726,4 +741,17 @@ void TitleBar::setUserHiddenButtons(TitleBarButtonTypes types)
 TitleBar::Private *TitleBar::dptr() const
 {
     return d;
+}
+
+void TitleBar::setHideDisabledButtons(TitleBarButtonTypes types)
+{
+    if (d->m_buttonsToHideIfDisabled != types) {
+        d->m_buttonsToHideIfDisabled = types;
+        updateButtons();
+    }
+}
+
+bool TitleBar::buttonHidesIfDisabled(TitleBarButtonType type) const
+{
+    return d->m_buttonsToHideIfDisabled & type;
 }
