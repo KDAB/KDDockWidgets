@@ -105,7 +105,7 @@ Q_SIGNALS:
     void numDockWidgetsChanged();
 
 protected:
-    void init() override final;
+    void init() override;
     bool event(QEvent *) override;
 
 private:

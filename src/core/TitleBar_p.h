@@ -49,6 +49,7 @@ public:
 
     /// Buttons which are forcibly hidden by the user's requirements (overriding kddw's default business logic)
     TitleBarButtonTypes m_userHiddenButtonTypes = {};
+    TitleBarButtonTypes m_buttonsToHideIfDisabled = {};
 };
 
 }
