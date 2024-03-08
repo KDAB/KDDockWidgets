@@ -26,6 +26,8 @@
 #include <QTimer>
 #endif
 
+class TestQtWidgets;
+
 namespace KDDockWidgets {
 
 namespace Core {
@@ -151,6 +153,7 @@ private:
     friend class StateInternalMDIDragging;
     friend class StateDropped;
     friend class StateDraggingWayland;
+    friend class ::TestQtWidgets;
 
     explicit DragController(Core::Object * = nullptr);
     std::shared_ptr<Core::View> qtTopLevelUnderCursor() const;
