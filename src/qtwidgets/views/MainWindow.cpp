@@ -23,6 +23,7 @@
 #include "core/DockRegistry_p.h"
 #include "core/DropArea.h"
 #include "core/MainWindow.h"
+#include "core/MainWindow_p.h"
 #include "core/Group.h"
 #include "core/SideBar.h"
 #include "core/Window_p.h"
@@ -132,6 +133,8 @@ public:
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
+
+    KDBindings::ScopedConnection groupCountChangedConnection;
 };
 
 MyCentralWidget::~MyCentralWidget() = default;
@@ -177,6 +180,10 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 
     QTimer::singleShot(0, this, [this] {
         d->sanityCheckCentralWidget();
+    });
+
+    d->groupCountChangedConnection = m_mainWindow->d->groupCountChanged.connect([this](int count) {
+        Q_EMIT groupCountChanged(count);
     });
 }
 
