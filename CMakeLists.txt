@@ -413,7 +413,7 @@ macro(set_compiler_flags targetName)
 endmacro()
 
 if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT APPLE)
-   OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND NOT APPLE)
+   OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND NOT APPLE AND NOT MSVC)
    OR (CMAKE_CXX_COMPILER_ID STREQUAL "Intel" AND NOT WIN32)
 )
     # Linker warnings should be treated as errors
