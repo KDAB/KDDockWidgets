@@ -47,17 +47,17 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         auto dropArea = m->dropArea();
         Core::DropArea *layout = dropArea;
 
-        int i = 0;
+        int j = 0;
         for (DockDescriptor &desc : docksToCreate) {
             desc.createdDock = createDockWidget(
-                QString::number(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
+                QString::number(j), Platform::instance()->tests_createView({ true }), {}, {}, false);
 
             Core::DockWidget *relativeTo = nullptr;
             if (desc.relativeToIndex != -1)
                 relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
             m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
             CHECK(layout->checkSanity());
-            ++i;
+            ++j;
         }
 
         layout->checkSanity();
@@ -86,14 +86,14 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         layout->checkSanity();
 
         // And hide the remaining ones
-        i = 0;
+        j = 0;
         for (auto dock : docksToCreate) {
             if (dock.createdDock && dock.createdDock->isVisible()) {
                 dock.createdDock->close();
                 KDDW_CO_AWAIT Platform::instance()->tests_wait(200); // Wait for the docks to be closed. TODO Replace with a global event
                                                                      // filter and wait for any resize ?
             }
-            ++i;
+            ++j;
         }
 
         layout->checkSanity();

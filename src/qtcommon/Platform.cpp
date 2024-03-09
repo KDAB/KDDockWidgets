@@ -347,6 +347,8 @@ bool Platform_qt::supportsAeroSnap() const
 #if defined(Q_OS_WIN)
     // Aero-snap requires Windows 10
     return QOperatingSystemVersion::current().majorVersion() >= 10;
-#endif
+#else
     return false;
+#endif
+
 }
