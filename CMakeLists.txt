@@ -382,6 +382,10 @@ macro(set_compiler_flags targetName)
                 # Silence deprecation warnings in Qt5 headers
                 target_compile_definitions(${targetName} PUBLIC _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
             endif()
+            if (ECM_ENABLE_SANITIZERS)
+                # Supresses linker warnings about ASAN being incompatible with incremental linking
+                target_link_options(${targetName} PUBLIC /INCREMENTAL:NO)
+            endif()
         endif()
 
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
