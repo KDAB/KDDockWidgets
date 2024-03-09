@@ -377,7 +377,7 @@ macro(set_compiler_flags targetName)
         endif()
 
         if(MSVC)
-            target_compile_options(${targetName} PRIVATE /W4)
+            target_compile_options(${targetName} PRIVATE /W4 /WX)
         endif()
 
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
