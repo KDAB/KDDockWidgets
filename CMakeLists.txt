@@ -378,6 +378,10 @@ macro(set_compiler_flags targetName)
 
         if(MSVC)
             target_compile_options(${targetName} PRIVATE /W4 /WX)
+            if (KDDW_FRONTEND_QT AND NOT KDDockWidgets_QT6)
+                # Silence deprecation warnings in Qt5 headers
+                target_compile_definitions(${targetName} PUBLIC _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
+            endif()
         endif()
 
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
