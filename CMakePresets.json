@@ -459,8 +459,8 @@
             }
         },
         {
-            "name": "ci-clang-tidy-qt5",
-            "binaryDir": "${sourceDir}/build-clang-tidy-qt5",
+            "name": "ci-clang-tidy-qt6",
+            "binaryDir": "${sourceDir}/build-clang-tidy-qt6",
             "inherits": [
                 "release"
             ],
