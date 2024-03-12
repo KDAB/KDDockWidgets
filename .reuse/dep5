@@ -19,7 +19,7 @@ Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: BSD-3-Clause
 
 #artwork
-Files: screencap.gif images/* src/img/* docs/api/*.png examples/dockwidgets/assets/*.png src/img/classic_indicators/*.png examples/flutter/assets/*.png src/flutter/dart/assets/classic_indicators/*.png
+Files: screencap.gif images/* src/img/* docs/api/*.png examples/dockwidgets/assets/*.png src/img/classic_indicators/*.png examples/flutter/assets/*.png src/flutter/dart/assets/classic_indicators/*.png tests/manual/stylesheet/close.png
 Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: GPL-2.0-only OR GPL-3.0-only
 
