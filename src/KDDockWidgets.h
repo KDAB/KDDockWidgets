@@ -235,6 +235,8 @@ struct InitialOption
      */
     Size preferredSize;
 
+    NeighbourSqueezeStrategy neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
+
     /// @internal
     InitialOption(DefaultSizeMode mode)
         : sizeMode(mode)

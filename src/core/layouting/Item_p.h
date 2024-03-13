@@ -487,7 +487,7 @@ private:
 
     void setGeometry_recursive(Rect rect) override;
 
-    ItemBoxContainer *convertChildToContainer(Item *leaf);
+    ItemBoxContainer *convertChildToContainer(Item *leaf, InitialOption);
     bool hasOrientationFor(KDDockWidgets::Location) const;
     int usableLength() const;
     void setChildren(const Item::List &children, Qt::Orientation o);
@@ -523,7 +523,7 @@ private:
     /// items at right/bottom will be shrunk by @p side2Amount. Squeezes all the neighbours (not
     /// just the immediate ones).
     void shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount,
-                          NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
+                          NeighbourSqueezeStrategy);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
 

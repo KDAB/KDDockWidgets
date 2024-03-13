@@ -1456,7 +1456,7 @@ void ItemBoxContainer::setGeometry_recursive(Rect rect)
     setSize_recursive(rect.size());
 }
 
-ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
+ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf, InitialOption option)
 {
     ScopedValueRollback converting(d->m_convertingItemToContainer, true);
 
@@ -1466,14 +1466,15 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
-    insertItem(container, index, DefaultSizeMode::NoDefaultSizeMode);
+    option.sizeMode = DefaultSizeMode::NoDefaultSizeMode;
+    insertItem(container, index, option);
+
     m_children.removeOne(leaf);
     container->setGeometry(leaf->isVisible() ? leaf->geometry() : Rect());
-    KDDockWidgets::InitialOption opt(DefaultSizeMode::NoDefaultSizeMode);
     if (!leaf->isVisible())
-        opt.visibility = InitialVisibilityOption::StartHidden;
+        option.visibility = InitialVisibilityOption::StartHidden;
 
-    container->insertItem(leaf, Location_OnTop, opt);
+    container->insertItem(leaf, Location_OnTop, option);
     itemsChanged.emit();
     d->updateSeparators_recursive();
 
@@ -1517,7 +1518,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
 
         parent->insertItem(item, indexInParent, option);
     } else {
-        ItemBoxContainer *container = parent->convertChildToContainer(relativeTo);
+        ItemBoxContainer *container = parent->convertChildToContainer(relativeTo, option);
         container->insertItem(item, loc, option);
     }
 }
@@ -1552,7 +1553,8 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         container->setChildren(m_children, d->m_orientation);
         m_children.clear();
         setOrientation(oppositeOrientation(d->m_orientation));
-        insertItem(container, 0, DefaultSizeMode::NoDefaultSizeMode);
+
+        insertItem(container, 0, initialOption);
 
         // Now we have the correct orientation, we can insert
         insertItem(item, loc, initialOption);
@@ -1679,11 +1681,14 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
     auto itemCopy = new Item(nullptr);
     itemCopy->fillFromJson(itemSerialized, {});
 
+    InitialOption opt = DefaultSizeMode::FairButFloor;
+    opt.neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
+
     if (relativeTo) {
         auto r = const_cast<Item *>(relativeTo);
-        ItemBoxContainer::insertItemRelativeTo(itemCopy, r, loc, DefaultSizeMode::FairButFloor);
+        ItemBoxContainer::insertItemRelativeTo(itemCopy, r, loc, opt);
     } else {
-        rootCopy.insertItem(itemCopy, loc, DefaultSizeMode::FairButFloor);
+        rootCopy.insertItem(itemCopy, loc, opt);
     }
 
     if (rootCopy.size() != root()->size()) {
@@ -1939,7 +1944,7 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
         // Case of inserting with an hidden relativeTo. This container needs to be restored as well.
         const bool restoreItself = !containerWasVisible && m_children.count() > 1;
 
-        restoreChild(item, restoreItself, NeighbourSqueezeStrategy::AllNeighbours);
+        restoreChild(item, restoreItself, option.neighbourSqueezeStrategy);
     }
 
     const bool shouldEmitVisibleChanged = item->isVisible();
