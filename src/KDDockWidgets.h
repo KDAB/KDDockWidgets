@@ -173,27 +173,14 @@ Q_ENUM_NS(NeighbourSqueezeStrategy)
  *
  * @sa MainWindowBase::addDockWidget()
  */
-struct InitialOption
+struct DOCKS_EXPORT InitialOption
 {
     // Implicit ctors for convenience:
 
-    InitialOption() = default;
-
-    InitialOption(InitialVisibilityOption v)
-        : visibility(v)
-    {
-    }
-
-    InitialOption(Size size)
-        : preferredSize(size)
-    {
-    }
-
-    InitialOption(InitialVisibilityOption v, Size size)
-        : visibility(v)
-        , preferredSize(size)
-    {
-    }
+    InitialOption();
+    InitialOption(InitialVisibilityOption v);
+    InitialOption(Size size);
+    InitialOption(InitialVisibilityOption v, Size size);
 
     bool startsHidden() const
     {
@@ -238,10 +225,7 @@ struct InitialOption
     NeighbourSqueezeStrategy neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
 
     /// @internal
-    InitialOption(DefaultSizeMode mode)
-        : sizeMode(mode)
-    {
-    }
+    InitialOption(DefaultSizeMode mode);
 
 private:
     friend class Core::Item;
