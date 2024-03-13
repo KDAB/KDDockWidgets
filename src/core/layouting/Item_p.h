@@ -488,9 +488,8 @@ public:
 private:
     int indexOfVisibleChild(const Item *) const;
     void restore(Item *) override;
-    void restoreChild(Item *, bool forceRestoreContainer = false,
-                      NeighbourSqueezeStrategy neighbourSqueezeStrategy =
-                          NeighbourSqueezeStrategy::AllNeighbours);
+    void restoreChild(Item *, bool forceRestoreContainer,
+                      NeighbourSqueezeStrategy neighbourSqueezeStrategy);
 
     void setGeometry_recursive(Rect rect) override;
 

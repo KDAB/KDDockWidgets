@@ -1939,7 +1939,7 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
         // Case of inserting with an hidden relativeTo. This container needs to be restored as well.
         const bool restoreItself = !containerWasVisible && m_children.count() > 1;
 
-        restoreChild(item, restoreItself);
+        restoreChild(item, restoreItself, NeighbourSqueezeStrategy::AllNeighbours);
     }
 
     const bool shouldEmitVisibleChanged = item->isVisible();
