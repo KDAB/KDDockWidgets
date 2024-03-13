@@ -61,12 +61,6 @@ enum class ChildrenResizeStrategy {
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
 
-enum class NeighbourSqueezeStrategy {
-    AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
-    ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the
-                             ///< next neighbour is squezed, and so forth
-};
-
 enum LayoutBorderLocation {
     LayoutBorderLocation_None = 0,
     LayoutBorderLocation_North = 1,
