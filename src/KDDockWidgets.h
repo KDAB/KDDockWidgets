@@ -222,7 +222,8 @@ struct DOCKS_EXPORT InitialOption
      */
     Size preferredSize;
 
-    NeighbourSqueezeStrategy neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
+    static NeighbourSqueezeStrategy s_defaultNeighbourSqueezeStrategy;
+    NeighbourSqueezeStrategy neighbourSqueezeStrategy = s_defaultNeighbourSqueezeStrategy;
 
     /// @internal
     InitialOption(DefaultSizeMode mode);

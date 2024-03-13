@@ -55,6 +55,8 @@ const char *KDDockWidgets::spdlogLoggerName()
     return "com.kdab.kddockwidgets";
 }
 
+NeighbourSqueezeStrategy InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
+
 InitialOption::InitialOption()
 {
 }
