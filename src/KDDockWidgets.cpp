@@ -26,6 +26,8 @@
 #include "flutter/Platform.h"
 #endif
 
+using namespace KDDockWidgets;
+
 void KDDockWidgets::initFrontend(FrontendType type)
 {
     if (Core::Platform::instance())
@@ -51,4 +53,31 @@ void KDDockWidgets::initFrontend(FrontendType type)
 const char *KDDockWidgets::spdlogLoggerName()
 {
     return "com.kdab.kddockwidgets";
+}
+
+NeighbourSqueezeStrategy InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
+
+InitialOption::InitialOption()
+{
+}
+
+InitialOption::InitialOption(InitialVisibilityOption v)
+    : visibility(v)
+{
+}
+
+InitialOption::InitialOption(Size size)
+    : preferredSize(size)
+{
+}
+
+InitialOption::InitialOption(InitialVisibilityOption v, Size size)
+    : visibility(v)
+    , preferredSize(size)
+{
+}
+
+InitialOption::InitialOption(DefaultSizeMode mode)
+    : sizeMode(mode)
+{
 }

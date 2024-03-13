@@ -374,14 +374,15 @@ static SideBarLocation sideBarLocationForBorder(Core::LayoutBorderLocations loc)
 
 SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) const
 {
-    Core::Item *item = q->layout()->itemForGroup(dw->d->group());
+    Group *group = dw->d->group();
+    Core::Item *item = q->layout()->itemForGroup(group);
     if (!item) {
         KDDW_ERROR("No item for dock widget");
         return SideBarLocation::None;
     }
 
     const Core::LayoutBorderLocations borders = item->adjacentLayoutBorders();
-    const double aspectRatio = dw->width() / (std::max(1, dw->height()) * 1.0);
+    const double aspectRatio = group->width() / (std::max(1, group->height()) * 1.0);
 
     /// 1. It's touching all borders
     if (borders == Core::LayoutBorderLocation_All) {
@@ -399,15 +400,19 @@ SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) cons
     /// 3. It's touching left and right borders
     if ((borders & Core::LayoutBorderLocation_Verticals)
         == Core::LayoutBorderLocation_Verticals) {
-        // We could measure the distance to the top though.
-        return SideBarLocation::South;
+
+        const int distanceToTop = group->geometry().y();
+        const int distanceToBottom = q->layout()->layoutHeight() - group->geometry().bottom();
+        return distanceToTop > distanceToBottom ? SideBarLocation::South : SideBarLocation::North;
     }
 
     /// 4. It's touching top and bottom borders
     if ((borders & Core::LayoutBorderLocation_Horizontals)
         == Core::LayoutBorderLocation_Horizontals) {
-        // We could measure the distance to the left though.
-        return SideBarLocation::East;
+
+        const int distanceToLeft = group->geometry().x();
+        const int distanceToRight = q->layout()->layoutWidth() - group->geometry().right();
+        return distanceToLeft > distanceToRight ? SideBarLocation::East : SideBarLocation::West;
     }
 
     // 5. It's in a corner

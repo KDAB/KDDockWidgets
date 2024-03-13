@@ -177,6 +177,7 @@ private Q_SLOTS:
     void tst_sidebarGrouping();
     void tst_sidebarCrash();
     void tst_sidebarCrash2();
+    void tst_sidebarSide();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
@@ -1116,6 +1117,35 @@ void TestQtWidgets::tst_sidebarCrash2()
 
     auto b = QtWidgets::ViewWrapper::create(button);
     Tests::clickOn(globalPos, b.get());
+}
+
+void TestQtWidgets::tst_sidebarSide()
+{
+    // Tests which sidebar is chosen
+
+    {
+        // Tests that if a dock widget is touching top and bottom border, it will go to
+        // left sidebar if it's closer to it.
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget(QStringLiteral("1"));
+        auto dw2 = newDockWidget(QStringLiteral("2"));
+        auto dw3 = newDockWidget(QStringLiteral("3"));
+        auto dw4 = newDockWidget(QStringLiteral("4"));
+        m1->addDockWidget(dw1, Location_OnRight);
+        m1->addDockWidget(dw2, Location_OnRight);
+        m1->addDockWidget(dw3, Location_OnRight);
+        m1->addDockWidget(dw4, Location_OnRight);
+        m1->layoutEqually();
+
+        dw2->titleBar()->onAutoHideClicked();
+
+        auto sb = m1->sideBarForDockWidget(dw2);
+        QVERIFY(sb);
+        QCOMPARE(sb->location(), SideBarLocation::West);
+    }
 }
 
 void TestQtWidgets::tst_floatRemovesFromSideBar()

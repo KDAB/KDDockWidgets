@@ -61,12 +61,6 @@ enum class ChildrenResizeStrategy {
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
 
-enum class NeighbourSqueezeStrategy {
-    AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
-    ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the
-                             ///< next neighbour is squezed, and so forth
-};
-
 enum LayoutBorderLocation {
     LayoutBorderLocation_None = 0,
     LayoutBorderLocation_North = 1,
@@ -488,13 +482,12 @@ public:
 private:
     int indexOfVisibleChild(const Item *) const;
     void restore(Item *) override;
-    void restoreChild(Item *, bool forceRestoreContainer = false,
-                      NeighbourSqueezeStrategy neighbourSqueezeStrategy =
-                          NeighbourSqueezeStrategy::AllNeighbours);
+    void restoreChild(Item *, bool forceRestoreContainer,
+                      NeighbourSqueezeStrategy neighbourSqueezeStrategy);
 
     void setGeometry_recursive(Rect rect) override;
 
-    ItemBoxContainer *convertChildToContainer(Item *leaf);
+    ItemBoxContainer *convertChildToContainer(Item *leaf, InitialOption);
     bool hasOrientationFor(KDDockWidgets::Location) const;
     int usableLength() const;
     void setChildren(const Item::List &children, Qt::Orientation o);
@@ -530,7 +523,7 @@ private:
     /// items at right/bottom will be shrunk by @p side2Amount. Squeezes all the neighbours (not
     /// just the immediate ones).
     void shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount,
-                          NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
+                          NeighbourSqueezeStrategy);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
 

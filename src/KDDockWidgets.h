@@ -156,6 +156,13 @@ enum class InitialVisibilityOption {
 };
 Q_ENUM_NS(InitialVisibilityOption)
 
+enum class NeighbourSqueezeStrategy {
+    AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
+    ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the
+                             ///< next neighbour is squezed, and so forth
+};
+Q_ENUM_NS(NeighbourSqueezeStrategy)
+
 /**
  * @brief Struct describing the preferred dock widget size and visibility when adding it to a layout
  *
@@ -166,27 +173,14 @@ Q_ENUM_NS(InitialVisibilityOption)
  *
  * @sa MainWindowBase::addDockWidget()
  */
-struct InitialOption
+struct DOCKS_EXPORT InitialOption
 {
     // Implicit ctors for convenience:
 
-    InitialOption() = default;
-
-    InitialOption(InitialVisibilityOption v)
-        : visibility(v)
-    {
-    }
-
-    InitialOption(Size size)
-        : preferredSize(size)
-    {
-    }
-
-    InitialOption(InitialVisibilityOption v, Size size)
-        : visibility(v)
-        , preferredSize(size)
-    {
-    }
+    InitialOption();
+    InitialOption(InitialVisibilityOption v);
+    InitialOption(Size size);
+    InitialOption(InitialVisibilityOption v, Size size);
 
     bool startsHidden() const
     {
@@ -228,11 +222,11 @@ struct InitialOption
      */
     Size preferredSize;
 
+    static NeighbourSqueezeStrategy s_defaultNeighbourSqueezeStrategy;
+    NeighbourSqueezeStrategy neighbourSqueezeStrategy = s_defaultNeighbourSqueezeStrategy;
+
     /// @internal
-    InitialOption(DefaultSizeMode mode)
-        : sizeMode(mode)
-    {
-    }
+    InitialOption(DefaultSizeMode mode);
 
 private:
     friend class Core::Item;
