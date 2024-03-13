@@ -423,12 +423,12 @@ public:
     explicit ItemBoxContainer(LayoutingHost *hostWidget);
     ~ItemBoxContainer();
     void insertItem(Item *item, int index,
-                    KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    void insertItem(Item *item, KDDockWidgets::Location, KDDockWidgets::InitialOption = {});
+                    const KDDockWidgets::InitialOption &option = KDDockWidgets::DefaultSizeMode::Fair);
+    void insertItem(Item *item, KDDockWidgets::Location, const KDDockWidgets::InitialOption & = {});
 
     static void
     insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,
-                         KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
+                         const KDDockWidgets::InitialOption & = KDDockWidgets::DefaultSizeMode::Fair);
 
     void requestSeparatorMove(LayoutingSeparator *separator, int delta);
     int minPosForSeparator(LayoutingSeparator *, bool honourMax = true) const;
@@ -487,7 +487,7 @@ private:
 
     void setGeometry_recursive(Rect rect) override;
 
-    ItemBoxContainer *convertChildToContainer(Item *leaf, InitialOption);
+    ItemBoxContainer *convertChildToContainer(Item *leaf, const InitialOption &);
     bool hasOrientationFor(KDDockWidgets::Location) const;
     int usableLength() const;
     void setChildren(const Item::List &children, Qt::Orientation o);

@@ -90,7 +90,7 @@ public:
     void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget,
                        KDDockWidgets::Location location,
                        KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
-                       KDDockWidgets::InitialOption initialOption = {});
+                       const KDDockWidgets::InitialOption &initialOption = {});
 
     // dev mode only for now, as it still has bugs.
     // We need to be able to dock to relativeTo=hidden dock
@@ -113,7 +113,7 @@ public:
      *   which is actually equivalent to addDockWidget(D2, Location_onBottom, /relativeTo=/D1);
      */
     void addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
-                             KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption = {});
+                             KDDockWidgets::Location location, const KDDockWidgets::InitialOption &initialOption = {});
     /**
      * @brief Sets a persistent central widget. It can't be detached.
      *

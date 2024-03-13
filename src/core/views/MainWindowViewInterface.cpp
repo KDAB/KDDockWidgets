@@ -83,7 +83,7 @@ void MainWindowViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *dockVi
 void MainWindowViewInterface::addDockWidget(DockWidgetViewInterface *dockView,
                                             KDDockWidgets::Location location,
                                             DockWidgetViewInterface *relativeToDockView,
-                                            KDDockWidgets::InitialOption initialOption)
+                                            const KDDockWidgets::InitialOption &initialOption)
 {
     auto dw = dockView ? dockView->dockWidget() : nullptr;
     auto relativeTo = relativeToDockView ? relativeToDockView->dockWidget() : nullptr;
@@ -199,7 +199,7 @@ void MainWindowViewInterface::addDockWidgetAsTab(const QString &dockId)
 
 void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets::Location location,
                                             const QString &relativeToDockId,
-                                            KDDockWidgets::InitialOption initialOption)
+                                            const KDDockWidgets::InitialOption &initialOption)
 {
     if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         auto relativeTo = relativeToDockId.isEmpty()

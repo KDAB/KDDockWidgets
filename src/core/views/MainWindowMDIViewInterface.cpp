@@ -22,7 +22,7 @@ MainWindowMDIViewInterface::MainWindowMDIViewInterface(MDILayout *layout)
 }
 
 void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget, Point localPos,
-                                               InitialOption addingOption)
+                                               const InitialOption &addingOption)
 {
     DockWidget *dw = dockWidget ? dockWidget->dockWidget() : nullptr;
     m_mdiLayout->addDockWidget(dw, localPos, addingOption);
@@ -30,7 +30,7 @@ void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidg
 
 #ifdef KDDW_FRONTEND_QT
 void MainWindowMDIViewInterface::addDockWidget(DockWidgetViewInterface *dockWidget,
-                                               QPointF localPos, InitialOption addingOption)
+                                               QPointF localPos, const InitialOption &addingOption)
 {
     addDockWidget(dockWidget, localPos.toPoint(), addingOption);
 }

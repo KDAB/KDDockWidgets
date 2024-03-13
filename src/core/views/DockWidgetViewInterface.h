@@ -53,12 +53,12 @@ public:
     Vector<QString> affinities() const;
 
     void addDockWidgetAsTab(DockWidgetViewInterface *other,
-                            KDDockWidgets::InitialOption initialOption = {});
+                            const KDDockWidgets::InitialOption &initialOption = {});
 
     void addDockWidgetToContainingWindow(DockWidgetViewInterface *other,
                                          KDDockWidgets::Location location,
                                          DockWidgetViewInterface *relativeTo = nullptr,
-                                         KDDockWidgets::InitialOption initialOption = {});
+                                         const KDDockWidgets::InitialOption &initialOption = {});
 
     DockWidgetOptions options() const;
     void setOptions(DockWidgetOptions);

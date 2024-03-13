@@ -209,7 +209,7 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
     }
 
     template<typename FormatContext>
-    auto format(KDDockWidgets::InitialOption opt, FormatContext &ctx)
+    auto format(const KDDockWidgets::InitialOption &opt, FormatContext &ctx)
     {
         return fmt::format_to(ctx.out(), "[InitialOption: preferredSize={}, visibility={}]", opt.preferredSize, ( int )opt.visibility);
     }

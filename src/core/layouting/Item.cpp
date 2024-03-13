@@ -1102,7 +1102,7 @@ struct ItemBoxContainer::Private
     }
 
     // length means height if the container is vertical, otherwise width
-    int defaultLengthFor(Item *item, InitialOption option) const;
+    int defaultLengthFor(Item *item, const InitialOption &option) const;
 
     void relayoutIfNeeded();
     const Item *itemFromPath(const Vector<int> &path) const;
@@ -1456,7 +1456,7 @@ void ItemBoxContainer::setGeometry_recursive(Rect rect)
     setSize_recursive(rect.size());
 }
 
-ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf, InitialOption option)
+ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf, const InitialOption &opt)
 {
     ScopedValueRollback converting(d->m_convertingItemToContainer, true);
 
@@ -1466,6 +1466,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf, InitialO
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
+    auto option = opt;
     option.sizeMode = DefaultSizeMode::NoDefaultSizeMode;
     insertItem(container, index, option);
 
@@ -1484,7 +1485,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf, InitialO
 /** static */
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Location loc,
-                                            KDDockWidgets::InitialOption option)
+                                            const KDDockWidgets::InitialOption &option)
 {
     assert(item != relativeTo);
 
@@ -1524,7 +1525,7 @@ void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo, Locati
 }
 
 void ItemBoxContainer::insertItem(Item *item, Location loc,
-                                  KDDockWidgets::InitialOption initialOption)
+                                  const KDDockWidgets::InitialOption &initialOption)
 {
     assert(item != this);
     if (contains(item)) {
@@ -1907,7 +1908,7 @@ void ItemBoxContainer::setLength_recursive(int length, Qt::Orientation o)
     setSize_recursive(sz);
 }
 
-void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
+void ItemBoxContainer::insertItem(Item *item, int index, const InitialOption &option)
 {
     const bool containerWasVisible = hasVisibleChildren(true);
 
@@ -3921,7 +3922,7 @@ void Core::to_json(nlohmann::json &j, Item *item)
     item->to_json(j);
 }
 
-int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option) const
+int ItemBoxContainer::Private::defaultLengthFor(Item *item, const InitialOption &option) const
 {
     int result = 0;
 
@@ -4295,7 +4296,7 @@ LayoutingGuest::~LayoutingGuest()
 /// the location is relative to the window, meaning Location_OnBottom will make the widget fill
 /// the entire bottom
 void LayoutingHost::insertItem(Core::LayoutingGuest *guest, Location loc,
-                               InitialOption initialOption)
+                               const InitialOption &initialOption)
 {
     if (!guest || !guest->layoutItem()) {
         // qWarning() << "insertItem: Something is null!";
@@ -4310,7 +4311,7 @@ void LayoutingHost::insertItem(Core::LayoutingGuest *guest, Location loc,
 /// Similar to insertItem() but it's not relative to the window.
 /// See example in src/core/layouting/examples/qtwidgets/main.cpp
 void LayoutingHost::insertItemRelativeTo(Core::LayoutingGuest *guest, Core::LayoutingGuest *relativeTo, Location loc,
-                                         InitialOption initialOption)
+                                         const InitialOption &initialOption)
 {
     if (!guest || !relativeTo || !guest->layoutItem() || !relativeTo->layoutItem()) {
         // qWarning() << "insertItemRelativeTo: Something is null!";
