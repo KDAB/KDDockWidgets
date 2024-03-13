@@ -367,6 +367,8 @@ static SideBarLocation sideBarLocationForBorder(Core::LayoutBorderLocations loc)
     case Core::LayoutBorderLocation_Horizontals:
     case Core::LayoutBorderLocation_None:
         break;
+    default:
+        break;
     }
 
     return SideBarLocation::None;
