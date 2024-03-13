@@ -400,15 +400,19 @@ SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) cons
     /// 3. It's touching left and right borders
     if ((borders & Core::LayoutBorderLocation_Verticals)
         == Core::LayoutBorderLocation_Verticals) {
-        // We could measure the distance to the top though.
-        return SideBarLocation::South;
+
+        const int distanceToTop = group->geometry().y();
+        const int distanceToBottom = q->layout()->layoutHeight() - group->geometry().bottom();
+        return distanceToTop > distanceToBottom ? SideBarLocation::South : SideBarLocation::North;
     }
 
     /// 4. It's touching top and bottom borders
     if ((borders & Core::LayoutBorderLocation_Horizontals)
         == Core::LayoutBorderLocation_Horizontals) {
-        // We could measure the distance to the left though.
-        return SideBarLocation::East;
+
+        const int distanceToLeft = group->geometry().x();
+        const int distanceToRight = q->layout()->layoutWidth() - group->geometry().right();
+        return distanceToLeft > distanceToRight ? SideBarLocation::East : SideBarLocation::West;
     }
 
     // 5. It's in a corner
