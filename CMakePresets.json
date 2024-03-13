@@ -466,7 +466,8 @@
             ],
             "cacheVariables": {
                 "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--warnings-as-errors=*",
-                "KDDockWidgets_EXAMPLES": "OFF"
+                "KDDockWidgets_EXAMPLES": "OFF",
+                "KDDockWidgets_QT6": "ON"
             }
         },
         {
