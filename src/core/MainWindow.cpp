@@ -374,14 +374,15 @@ static SideBarLocation sideBarLocationForBorder(Core::LayoutBorderLocations loc)
 
 SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) const
 {
-    Core::Item *item = q->layout()->itemForGroup(dw->d->group());
+    Group *group = dw->d->group();
+    Core::Item *item = q->layout()->itemForGroup(group);
     if (!item) {
         KDDW_ERROR("No item for dock widget");
         return SideBarLocation::None;
     }
 
     const Core::LayoutBorderLocations borders = item->adjacentLayoutBorders();
-    const double aspectRatio = dw->width() / (std::max(1, dw->height()) * 1.0);
+    const double aspectRatio = group->width() / (std::max(1, group->height()) * 1.0);
 
     /// 1. It's touching all borders
     if (borders == Core::LayoutBorderLocation_All) {
