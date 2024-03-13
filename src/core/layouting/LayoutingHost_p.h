@@ -40,10 +40,10 @@ public:
     virtual bool supportsHonouringLayoutMinSize() const = 0;
 
     void insertItem(Core::LayoutingGuest *guest, KDDockWidgets::Location loc,
-                    InitialOption initialOption = {});
+                    const InitialOption &initialOption = {});
 
     void insertItemRelativeTo(Core::LayoutingGuest *guest, Core::LayoutingGuest *relativeTo, Location loc,
-                              InitialOption initialOption = {});
+                              const InitialOption &initialOption = {});
 
     Core::ItemContainer *m_rootItem = nullptr;
 

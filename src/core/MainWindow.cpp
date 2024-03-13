@@ -114,7 +114,7 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 }
 
 void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
-                               Core::DockWidget *relativeTo, InitialOption option)
+                               Core::DockWidget *relativeTo, const InitialOption &option)
 {
     if (dw->options() & DockWidgetOption_NotDockable) {
         KDDW_ERROR("Refusing to dock non-dockable widget dw={}", ( void * )dw);
@@ -130,7 +130,7 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
 }
 
 void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
-                                     KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+                                     KDDockWidgets::Location location, const KDDockWidgets::InitialOption &initialOption)
 {
     if (!dockWidget || location == Location_None || isMDI())
         return;

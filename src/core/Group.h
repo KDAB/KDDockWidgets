@@ -51,14 +51,14 @@ public:
     LayoutSaver::Group serialize() const;
 
     ///@brief Adds a widget into the Group's Stack
-    void addTab(DockWidget *, InitialOption = {});
+    void addTab(DockWidget *, const InitialOption & = {});
     ///@overload
-    void addTab(Group *, InitialOption = {});
+    void addTab(Group *, const InitialOption & = {});
     ///@overload
-    void addTab(FloatingWindow *floatingWindow, InitialOption = {});
+    void addTab(FloatingWindow *floatingWindow, const InitialOption & = {});
 
     ///@brief Inserts a widget into the Group's TabWidget at @p index
-    void insertWidget(DockWidget *, int index, InitialOption = {});
+    void insertWidget(DockWidget *, int index, const InitialOption & = {});
 
     ///@brief removes a dockwidget from the group
     void removeWidget(DockWidget *);

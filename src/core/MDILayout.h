@@ -38,7 +38,7 @@ public:
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
     void addDockWidget(Core::DockWidget *dw, Point localPt,
-                       InitialOption addingOption = {});
+                       const InitialOption &addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
     void moveDockWidget(Core::DockWidget *dw, Point pos);

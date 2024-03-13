@@ -673,7 +673,7 @@ bool FloatingWindow::anyDockWidgetsHas(LayoutSaverOption option) const
 }
 
 void FloatingWindow::addDockWidget(Core::DockWidget *dw, Location location,
-                                   Core::DockWidget *relativeTo, InitialOption option)
+                                   Core::DockWidget *relativeTo, const InitialOption &option)
 {
     d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }

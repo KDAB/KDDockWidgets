@@ -32,7 +32,7 @@ MDILayout::~MDILayout()
 }
 
 void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
-                              InitialOption addingOption)
+                              const InitialOption &addingOption)
 {
     if (!dw) {
         KDDW_ERROR("Refusing to add null dock widget");

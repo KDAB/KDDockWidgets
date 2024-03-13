@@ -90,7 +90,7 @@ void DockWidget::init()
     view()->enableAttribute(Qt::WA_PendingMoveEvent, false);
 }
 
-void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
+void DockWidget::addDockWidgetAsTab(DockWidget *other, const InitialOption &option)
 {
     if (other == this) {
         KDDW_ERROR("Refusing to add dock widget into itself {}", ( void * )other);
@@ -147,7 +147,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
 
 void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location location,
                                                  DockWidget *relativeTo,
-                                                 InitialOption initialOption)
+                                                 const InitialOption &initialOption)
 {
     if (!other)
         return;

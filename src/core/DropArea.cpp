@@ -182,7 +182,7 @@ DropIndicatorOverlay *DropArea::dropIndicatorOverlay() const
 }
 
 void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
-                             Core::DockWidget *relativeTo, InitialOption option)
+                             Core::DockWidget *relativeTo, const InitialOption &option)
 {
     if (!dw || dw == relativeTo || location == Location_None) {
         KDDW_ERROR("Invalid parameters {}, {} {}", ( void * )dw, ( void * )relativeTo, location);
@@ -195,7 +195,7 @@ void DropArea::addDockWidget(Core::DockWidget *dw, Location location,
 }
 
 void DropArea::_addDockWidget(Core::DockWidget *dw, Location location,
-                              Core::Item *relativeToItem, InitialOption option)
+                              Core::Item *relativeToItem, const InitialOption &option)
 {
     if (!dw || location == Location_None) {
         KDDW_ERROR("Invalid parameters {}, {}", ( void * )dw, location);
@@ -524,7 +524,7 @@ Core::Group *DropArea::createCentralGroup(MainWindowOptions options)
 }
 
 bool DropArea::validateInputs(View *widget, Location location,
-                              const Core::Item *relativeToItem, InitialOption option) const
+                              const Core::Item *relativeToItem, const InitialOption &option) const
 {
     if (!widget) {
         KDDW_ERROR("Widget is null");
@@ -575,7 +575,7 @@ bool DropArea::validateInputs(View *widget, Location location,
 }
 
 void DropArea::addWidget(View *w, Location location, Core::Item *relativeToItem,
-                         InitialOption option)
+                         const InitialOption &option)
 {
 
     auto group = w->asGroupController();
@@ -632,7 +632,7 @@ void DropArea::addWidget(View *w, Location location, Core::Item *relativeToItem,
 }
 
 void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location location,
-                                Core::Group *relativeToGroup, InitialOption option)
+                                Core::Group *relativeToGroup, const InitialOption &option)
 {
     KDDW_DEBUG("DropArea::addMultiSplitter: {} {} {}", ( void * )sourceMultiSplitter, ( int )location, ( void * )relativeToGroup);
     Item *relativeToItem = relativeToGroup ? relativeToGroup->layoutItem() : nullptr;

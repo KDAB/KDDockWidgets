@@ -67,9 +67,9 @@ public:
     Core::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const;
     void addDockWidget(DockWidget *dw, KDDockWidgets::Location location, DockWidget *relativeTo,
-                       InitialOption initialOption = {});
+                       const InitialOption &initialOption = {});
     void _addDockWidget(DockWidget *dw, KDDockWidgets::Location location, Item *relativeTo,
-                        InitialOption initialOption);
+                        const InitialOption &initialOption);
 
     bool containsDockWidget(DockWidget *) const;
 
@@ -99,7 +99,7 @@ public:
      */
     void addWidget(View *widget, KDDockWidgets::Location location,
                    Core::Item *relativeToItem = nullptr,
-                   InitialOption option = DefaultSizeMode::Fair);
+                   const InitialOption &option = DefaultSizeMode::Fair);
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
@@ -109,7 +109,7 @@ public:
      */
     void addMultiSplitter(Core::DropArea *splitter, KDDockWidgets::Location location,
                           Core::Group *relativeToGroup = nullptr,
-                          InitialOption option = DefaultSizeMode::Fair);
+                          const InitialOption &option = DefaultSizeMode::Fair);
 
     /**
      * Called by the indicators, so they draw the drop rubber band at the correct place.
@@ -154,7 +154,7 @@ private:
 
     // For debug/hardening
     bool validateInputs(View *widget, KDDockWidgets::Location location,
-                        const Core::Item *relativeToItem, InitialOption option) const;
+                        const Core::Item *relativeToItem, const InitialOption &option) const;
 
 
     void setRootItem(Core::ItemBoxContainer *);

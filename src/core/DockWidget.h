@@ -89,7 +89,7 @@ public:
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *other,
-                            KDDockWidgets::InitialOption initialOption = {});
+                            const KDDockWidgets::InitialOption &initialOption = {});
 
     /**
      * @brief docks @p other widget into the window that contains this one.
@@ -108,7 +108,7 @@ public:
     addDockWidgetToContainingWindow(KDDockWidgets::Core::DockWidget *other,
                                     KDDockWidgets::Location location,
                                     KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
-                                    KDDockWidgets::InitialOption initialOption = {});
+                                    const KDDockWidgets::InitialOption &initialOption = {});
 
     /**
      * @brief sets the widget which this dock widget hosts.

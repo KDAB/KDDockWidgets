@@ -168,7 +168,7 @@ public:
 
     /// @brief Adds the dock widget to the specified location
     void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo,
-                       InitialOption = {});
+                       const InitialOption & = {});
 
     /// @brief Returns the MainWindow which is the transient parent of this FloatingWindow
     /// Can be nullptr if you create dock widgets before the main window. Can also be some

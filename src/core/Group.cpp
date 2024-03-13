@@ -216,7 +216,7 @@ void Group::onDockWidgetTitleChanged(DockWidget *dw)
     }
 }
 
-void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
+void Group::addTab(DockWidget *dockWidget, const InitialOption &addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 
@@ -228,7 +228,7 @@ void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
     onDockWidgetTitleChanged(dockWidget);
 }
 
-void Group::addTab(Group *group, InitialOption addingOption)
+void Group::addTab(Group *group, const InitialOption &addingOption)
 {
     if (group->isEmpty()) {
         KDDW_ERROR("Group::addTab: group is empty. group={}", ( void * )group);
@@ -240,7 +240,7 @@ void Group::addTab(Group *group, InitialOption addingOption)
         addTab(dockWidget, addingOption);
 }
 
-void Group::addTab(FloatingWindow *floatingWindow, InitialOption addingOption)
+void Group::addTab(FloatingWindow *floatingWindow, const InitialOption &addingOption)
 {
     assert(floatingWindow);
     const auto groups = floatingWindow->groups();
@@ -248,7 +248,7 @@ void Group::addTab(FloatingWindow *floatingWindow, InitialOption addingOption)
         addTab(f, addingOption);
 }
 
-void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption addingOption)
+void Group::insertWidget(DockWidget *dockWidget, int index, const InitialOption &addingOption)
 {
     assert(dockWidget);
     if (containsDockWidget(dockWidget)) {
