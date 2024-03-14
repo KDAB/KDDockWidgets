@@ -110,6 +110,7 @@ struct EnsureTopLevelsDeleted
         Config::self().setMDIFlags(m_originalMDIFlags);
         Config::self().setSeparatorThickness(m_originalSeparatorThickness);
         Config::self().setLayoutSaverStrictMode(false);
+        InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
     }
 
     const Config::Flags m_originalFlags;

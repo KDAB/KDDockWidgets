@@ -206,6 +206,7 @@ private Q_SLOTS:
     void tst_crashDuringRestore();
     void tst_toggleVsShowHidden();
     void tst_indicatorsNotShowing();
+    void tst_neighbourSqueezeStrategy();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2629,6 +2630,34 @@ void TestQtWidgets::tst_toggleVsShowHidden()
     QVERIFY(!d1->isOpen());
 
     QCOMPARE(count, 0);
+}
+
+void TestQtWidgets::tst_neighbourSqueezeStrategy()
+{
+    // Tests NeighbourSqueezeStrategy::ImmediateNeighboursFirst
+    {
+        EnsureTopLevelsDeleted e;
+        InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::ImmediateNeighboursFirst;
+        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+
+        auto d1 = new QtWidgets::DockWidget("d1");
+        auto d2 = new QtWidgets::DockWidget("d2");
+        auto d3 = new QtWidgets::DockWidget("d3");
+        auto d4 = new QtWidgets::DockWidget("d4");
+
+        m1->addDockWidget(d1->dockWidget(), KDDockWidgets::Location_OnRight);
+        m1->addDockWidget(d2->dockWidget(), KDDockWidgets::Location_OnRight);
+        m1->addDockWidget(d3->dockWidget(), KDDockWidgets::Location_OnBottom);
+        InitialOption opt = QSize(100, 0);
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        m1->addDockWidget(d4->dockWidget(), KDDockWidgets::Location_OnRight, d2->dockWidget(), opt);
+        m1->layoutEqually();
+
+        auto group1 = d1->dockWidget()->dptr()->group();
+        const auto sz1 = group1->size();
+        d4->open();
+        QCOMPARE(sz1, group1->size());
+    }
 }
 
 void TestQtWidgets::tst_indicatorsNotShowing()
