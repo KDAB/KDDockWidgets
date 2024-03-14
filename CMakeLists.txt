@@ -380,12 +380,12 @@ macro(set_compiler_flags targetName)
             target_compile_options(${targetName} PRIVATE /W4 /WX)
             target_link_options(${targetName} PRIVATE /WX)
 
-            if (KDDW_FRONTEND_QT AND NOT KDDockWidgets_QT6)
+            if(KDDW_FRONTEND_QT AND NOT KDDockWidgets_QT6)
                 # Silence deprecation warnings in Qt5 headers
                 target_compile_definitions(${targetName} PUBLIC _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
             endif()
-            if (ECM_ENABLE_SANITIZERS)
-                # Supresses linker warnings about ASAN being incompatible with incremental linking
+            if(ECM_ENABLE_SANITIZERS)
+                # Suppresses linker warnings about ASAN being incompatible with incremental linking
                 target_link_options(${targetName} PUBLIC /INCREMENTAL:NO)
             endif()
         endif()
@@ -413,7 +413,9 @@ macro(set_compiler_flags targetName)
 endmacro()
 
 if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT APPLE)
-   OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND NOT APPLE AND NOT MSVC)
+   OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"
+       AND NOT APPLE
+       AND NOT MSVC)
    OR (CMAKE_CXX_COMPILER_ID STREQUAL "Intel" AND NOT WIN32)
 )
     # Linker warnings should be treated as errors

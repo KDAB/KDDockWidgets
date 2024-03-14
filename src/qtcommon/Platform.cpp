@@ -350,5 +350,4 @@ bool Platform_qt::supportsAeroSnap() const
 #else
     return false;
 #endif
-
 }
