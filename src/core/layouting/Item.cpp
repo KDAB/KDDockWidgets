@@ -1561,7 +1561,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         m_children.clear();
         setOrientation(oppositeOrientation(d->m_orientation));
 
-        insertItem(container, 0, initialOption);
+        insertItem(container, 0, {});
 
         // Now we have the correct orientation, we can insert
         insertItem(item, loc, initialOption);
