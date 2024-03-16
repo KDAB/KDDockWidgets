@@ -718,8 +718,6 @@ void Item::requestResize(int left, int top, int right, int bottom)
         auto separator1 = parent->adjacentSeparatorForChild(this, Side1);
         auto separator2 = parent->adjacentSeparatorForChild(this, Side2);
 
-        if (separator2)
-            KDDW_WARN("SEP {} {}", separator2->position(), separator2->orientation());
         moveSeparators(side1Delta, side2Delta, separator1, separator2);
     }
 }
