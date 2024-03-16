@@ -65,14 +65,14 @@ jobs:
           - os: ubuntu-latest
             preset:
               name: ci-dev-asan-qtwidgets-qt6
-              qt_version: "6.5.*"
+              qt_version: "6.7.*"
               detect_leaks: 1
               apt_pgks:
                 - lld
           - os: ubuntu-latest
             preset:
               name: ci-dev-asan-qtquick-qt6
-              qt_version: "6.5.*"
+              qt_version: "6.7.*"
               detect_leaks: 1
               apt_pgks:
                 - lld
