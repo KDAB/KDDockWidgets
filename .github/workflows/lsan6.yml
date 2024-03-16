@@ -27,6 +27,12 @@ jobs:
             qt_version: "6.7.0"
 
     steps:
+
+      - name: Workaround installer bug when using 6.7
+        run: |
+          mkdir -p /home/runner/work/KDDockWidgets/Qt/${{ matrix.preset.qt_version }}/gcc_64
+          ln -sf /home/runner/work/KDDockWidgets/Qt/${{ matrix.preset.qt_version }}/gcc_64 /home/runner/work/KDDockWidgets/Qt/${{ matrix.preset.qt_version }}/linux_gcc_64
+
       - name: Install Qt ${{ matrix.preset.qt_version }}
         uses: jurplel/install-qt-action@v3
         with:
