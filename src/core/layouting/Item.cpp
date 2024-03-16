@@ -117,6 +117,12 @@ struct LengthOnSide
     }
 };
 
+
+NeighbourSqueezeStrategy defaultNeighbourSqueezeStrategy()
+{
+    return InitialOption::s_defaultNeighbourSqueezeStrategy;
+}
+
 }
 
 ItemBoxContainer *Item::root() const
@@ -712,8 +718,6 @@ void Item::requestResize(int left, int top, int right, int bottom)
         auto separator1 = parent->adjacentSeparatorForChild(this, Side1);
         auto separator2 = parent->adjacentSeparatorForChild(this, Side2);
 
-        if (separator2)
-            KDDW_WARN("SEP {} {}", separator2->position(), separator2->orientation());
         moveSeparators(side1Delta, side2Delta, separator1, separator2);
     }
 }
@@ -1555,7 +1559,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         m_children.clear();
         setOrientation(oppositeOrientation(d->m_orientation));
 
-        insertItem(container, 0, initialOption);
+        insertItem(container, 0, {});
 
         // Now we have the correct orientation, we can insert
         insertItem(item, loc, initialOption);
@@ -1592,7 +1596,7 @@ void ItemBoxContainer::onChildMinSizeChanged(Item *child)
         // Child has some growing to do. It will grow left and right equally, (and top-bottom), as
         // needed.
         growItem(child, Core::length(missingForChild, d->m_orientation),
-                 GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
+                 GrowthStrategy::BothSidesEqually, defaultNeighbourSqueezeStrategy());
     }
 
     updateChildPercentages();
@@ -1682,9 +1686,7 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
     auto itemCopy = new Item(nullptr);
     itemCopy->fillFromJson(itemSerialized, {});
 
-    InitialOption opt = DefaultSizeMode::FairButFloor;
-    opt.neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
-
+    const InitialOption opt = DefaultSizeMode::FairButFloor;
     if (relativeTo) {
         auto r = const_cast<Item *>(relativeTo);
         ItemBoxContainer::insertItemRelativeTo(itemCopy, r, loc, opt);
@@ -3757,7 +3759,7 @@ void ItemBoxContainer::Private::relayoutIfNeeded()
         if (!child->isVisible() || missingLength == 0)
             continue;
 
-        q->growItem(child, missingLength, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
+        q->growItem(child, missingLength, GrowthStrategy::BothSidesEqually, defaultNeighbourSqueezeStrategy());
     }
 
     // #3. Contents is currently bigger. Not sure if this can still happen.

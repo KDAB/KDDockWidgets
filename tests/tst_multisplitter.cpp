@@ -73,7 +73,10 @@ public:
 
     void setGeometry(Rect r) override
     {
-        m_view->setGeometry(r);
+        if (r != geometry()) {
+            m_numSetGeometry++;
+            m_view->setGeometry(r);
+        }
     }
 
     void setVisible(bool is) override
@@ -93,6 +96,7 @@ public:
 
     LayoutingHost *m_host = nullptr;
     View *const m_view;
+    int m_numSetGeometry = 0;
 };
 
 }
@@ -2246,6 +2250,31 @@ KDDW_QCORO_TASK tst_relativeToHidden()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_spuriousResize()
+{
+    DeleteViews deleteViews;
+
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+
+    root->insertItem(item1, Location_OnTop);
+    root->insertItem(item2, Location_OnTop);
+
+    // root was vertical, now it will be horizontal.
+    // This used to generate a spurious resize
+    auto guest1 = static_cast<Guest *>(item1->guest());
+    guest1->m_numSetGeometry = 0;
+    root->insertItem(item3, Location_OnRight, QSize(200, 200));
+    CHECK_EQ(guest1->m_numSetGeometry, 1);
+
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_relayoutIfNeeded()
 {
     DeleteViews deleteViews;
@@ -2343,6 +2372,7 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_outermostVisibleNeighbor),
     TEST(tst_outermostNeighbor),
     TEST(tst_relativeToHidden),
+    TEST(tst_spuriousResize),
 };
 
 #include "tests_main.h"

@@ -150,7 +150,17 @@ void Controller::setParentView_impl(View *parent)
 void Controller::destroyLater()
 {
 #ifdef KDDW_FRONTEND_QT
-    if (Config::self().internalFlags() & Config::InternalFlag_NoDeleteLaterWorkaround) {
+    const bool useQTBUG83030Workaround =
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+        // Bug is fixed in 6.7
+        false;
+#else
+        // Workaround by default, unless explicitly told not to
+        !(Config::self().internalFlags() & Config::InternalFlag_NoDeleteLaterWorkaround);
+#endif
+
+    if (!useQTBUG83030Workaround) {
         QObject::deleteLater();
         return;
     }
