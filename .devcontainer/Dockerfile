@@ -32,11 +32,10 @@ ENV LSAN_OPTIONS=detect_leaks=0
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update -qq
-RUN apt install build-essential software-properties-common lld git cmake ninja-build \
+RUN apt update -qq && apt install build-essential software-properties-common lld git cmake ninja-build \
                 mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
                 libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                vim clang-tidy-14 valgrind pip libxslt-dev llvm libspdlog-dev clazy -y
+                vim clang-tidy-14 valgrind pip libxslt-dev llvm libspdlog-dev clazy clang -y
 
 RUN pip install shiboken6-generator==6.6.0 shiboken6==6.6.0 pyside6==6.6.0
 
