@@ -28,6 +28,7 @@ ENV LC_CTYPE=C.UTF-8
 ENV PATH=$PATH:/Qt5/bin/:/Qt6/bin/
 ENV LD_LIBRARY_PATH=/Qt5/lib/:/Qt6/lib/
 ENV QT_QUICK_BACKEND=software
+ENV LSAN_OPTIONS=detect_leaks=0
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
