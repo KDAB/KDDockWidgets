@@ -14,7 +14,7 @@
 
 # Instructions:
 # docker build -t kddw-tests .
-# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ -v ~/Qt/5.15.2/gcc_64/:/Qt5/ -v ~/Qt/6.6.0/gcc_64/:/Qt6/ --ulimit nofile=1024:4096 -u 1000:1000 kddw-tests
+# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ -v ~/Qt/5.15.2/gcc_64/:/Qt5/ -v ~/Qt/6.6.0/gcc_64/:/Qt6/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ulimit nofile=1024:4096 -u 1000:1000 kddw-tests
 # cd /kddockwidgets/
 # cmake --preset=dev
 # cd build-dev && ninja
