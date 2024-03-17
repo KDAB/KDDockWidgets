@@ -2,17 +2,12 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: LSAN Qt6
+name: ASAN Qt5 Nightly
 
 on:
-  push:
-    branches:
-      - 2.1
-      - main
-  pull_request:
-    branches:
-      - 2.1
-      - main
+  schedule:
+  - cron: '0 3 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,24 +16,15 @@ jobs:
       fail-fast: true
       matrix:
         preset:
-          - name: ci-dev-asan-qtwidgets-qt6
-            qt_version: "6.7.0"
-          - name: ci-dev-asan-qtquick-qt6
-            qt_version: "6.7.0"
+          - name: ci-dev-asan-qt5
+            qt_version: "5.15"
 
     steps:
-
-      - name: Workaround installer bug when using 6.7
-        run: |
-          mkdir -p /home/runner/work/KDDockWidgets/Qt/${{ matrix.preset.qt_version }}/gcc_64
-          ln -sf /home/runner/work/KDDockWidgets/Qt/${{ matrix.preset.qt_version }}/gcc_64 /home/runner/work/KDDockWidgets/Qt/${{ matrix.preset.qt_version }}/linux_gcc_64
-
       - name: Install Qt ${{ matrix.preset.qt_version }}
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.preset.qt_version }}
           cache: true
-          arch: linux_gcc_64
 
       - name: Install dependencies on Ubuntu
         run: |
@@ -59,7 +45,6 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
-          LSAN_OPTIONS: detect_leaks=1
 
       - name: Read tests log when it fails
         uses: andstor/file-reader-action@v1
