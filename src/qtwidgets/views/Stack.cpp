@@ -40,6 +40,8 @@ class Stack::Private
 public:
     KDBindings::ScopedConnection tabBarAutoHideChanged;
     KDBindings::ScopedConnection screenChangedConnection;
+    KDBindings::ScopedConnection buttonsToHideIfDisabledConnection;
+
     QHBoxLayout *cornerWidgetLayout = nullptr;
     QAbstractButton *floatButton = nullptr;
     QAbstractButton *closeButton = nullptr;
@@ -152,14 +154,23 @@ void Stack::setupTabBarButtons()
             updateMargins();
     });
 
+    d->buttonsToHideIfDisabledConnection = m_stack->d->buttonsToHideIfDisabledChanged.connect([this] {
+        updateTabBarButtons();
+    });
+
     if (auto tb = qobject_cast<QtWidgets::TabBar *>(tabBar()))
         connect(tb, &QtWidgets::TabBar::countChanged, this, &Stack::updateTabBarButtons);
+
+    updateTabBarButtons();
 }
 
 void Stack::updateTabBarButtons()
 {
     if (d->closeButton) {
-        d->closeButton->setEnabled(!m_stack->group()->anyNonClosable());
+        const bool enabled = !m_stack->group()->anyNonClosable();
+        const bool visible = enabled || !m_stack->buttonHidesIfDisabled(TitleBarButtonType::Close);
+        d->closeButton->setEnabled(enabled);
+        d->closeButton->setVisible(visible);
     }
 }
 

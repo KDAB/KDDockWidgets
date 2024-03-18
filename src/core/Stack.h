@@ -85,6 +85,13 @@ public:
     /// @brief Enables document mode. Default is false.
     void setDocumentMode(bool);
 
+    /// The specified buttons, if disabled, will be hidden as well
+    /// for example, with non-closable dock widgets we disable the close button
+    /// this allows to hide it as well.
+    /// Only relevant with Flag_ShowButtonsOnTabBarIfTitleBarHidden
+    void setHideDisabledButtons(TitleBarButtonTypes);
+    bool buttonHidesIfDisabled(TitleBarButtonType) const;
+
 public:
     bool onMouseDoubleClick(Point localPos);
 

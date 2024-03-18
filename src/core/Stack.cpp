@@ -216,3 +216,16 @@ void Stack::setDocumentMode(bool is)
 {
     dynamic_cast<Core::StackViewInterface *>(view())->setDocumentMode(is);
 }
+
+void Stack::setHideDisabledButtons(TitleBarButtonTypes types)
+{
+    if (d->m_buttonsToHideIfDisabled != types) {
+        d->m_buttonsToHideIfDisabled = types;
+        d->buttonsToHideIfDisabledChanged.emit();
+    }
+}
+
+bool Stack::buttonHidesIfDisabled(TitleBarButtonType type) const
+{
+    return d->m_buttonsToHideIfDisabled & type;
+}

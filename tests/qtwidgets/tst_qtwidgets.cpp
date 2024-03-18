@@ -2662,29 +2662,77 @@ void TestQtWidgets::tst_neighbourSqueezeStrategy()
     }
 }
 
+class Stack464 : public QtWidgets::Stack
+{
+public:
+    using QtWidgets::Stack::Stack;
+    void init() override
+    {
+        m_stack->setHideDisabledButtons(TitleBarButtonType::Close);
+
+        QtWidgets::Stack::init(); // important
+    }
+};
+
+class ViewFactory464 : public QtWidgets::ViewFactory
+{
+public:
+    Core::View *createStack(Core::Stack *controller, Core::View *parent) const override
+    {
+        return new Stack464(controller, QtCommon::View_qt::asQWidget(parent));
+    }
+};
+
 void TestQtWidgets::tst_tabBarIcons()
 {
-    EnsureTopLevelsDeleted e;
-    auto &config = Config::self();
-    config.setFlags(config.flags()
-                    | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
-                    | KDDockWidgets::Config::Flag_TabsHaveCloseButton
-                    | KDDockWidgets::Config::Flag_CloseOnlyCurrentTab
-                    | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+    {
+        EnsureTopLevelsDeleted e;
+        auto &config = Config::self();
+        config.setFlags(config.flags()
+                        | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+                        | KDDockWidgets::Config::Flag_TabsHaveCloseButton
+                        | KDDockWidgets::Config::Flag_CloseOnlyCurrentTab
+                        | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
 
-    auto d1 = new QtWidgets::DockWidget("d1", KDDockWidgets::DockWidgetOption_NotClosable);
-    auto d2 = new QtWidgets::DockWidget("d2", KDDockWidgets::DockWidgetOption_NotClosable);
+        auto d1 = new QtWidgets::DockWidget("d1", KDDockWidgets::DockWidgetOption_NotClosable);
+        auto d2 = new QtWidgets::DockWidget("d2", KDDockWidgets::DockWidgetOption_NotClosable);
 
-    d1->addDockWidgetAsTab(d2);
+        d1->addDockWidgetAsTab(d2);
 
-    auto stack = d1->dockWidget()->dptr()->group()->stack();
-    auto tabWidget = qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(stack->view()));
-    QVERIFY(tabWidget);
+        auto stack = d1->dockWidget()->dptr()->group()->stack();
+        auto tabWidget = qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(stack->view()));
+        QVERIFY(tabWidget);
 
-    auto closeButton = tabWidget->button(TitleBarButtonType::Close);
-    QVERIFY(closeButton);
-    QVERIFY(closeButton->isVisible());
-    QVERIFY(!closeButton->isEnabled());
+        auto closeButton = tabWidget->button(TitleBarButtonType::Close);
+        QVERIFY(closeButton);
+        QVERIFY(closeButton->isVisible());
+        QVERIFY(!closeButton->isEnabled());
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto &config = Config::self();
+        config.setFlags(config.flags()
+                        | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+                        | KDDockWidgets::Config::Flag_TabsHaveCloseButton
+                        | KDDockWidgets::Config::Flag_CloseOnlyCurrentTab
+                        | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+        config.setViewFactory(new ViewFactory464());
+
+        auto d1 = new QtWidgets::DockWidget("d1", KDDockWidgets::DockWidgetOption_NotClosable);
+        auto d2 = new QtWidgets::DockWidget("d2", KDDockWidgets::DockWidgetOption_NotClosable);
+
+        d1->addDockWidgetAsTab(d2);
+
+        auto stack = d1->dockWidget()->dptr()->group()->stack();
+        auto tabWidget = qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(stack->view()));
+        QVERIFY(tabWidget);
+
+        auto closeButton = tabWidget->button(TitleBarButtonType::Close);
+        QVERIFY(closeButton);
+        QVERIFY(!closeButton->isVisible());
+        QVERIFY(!closeButton->isEnabled());
+    }
 }
 
 void TestQtWidgets::tst_indicatorsNotShowing()
