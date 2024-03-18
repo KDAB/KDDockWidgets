@@ -201,6 +201,9 @@ public:
     static bool isInitialized();
 
 #if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+    /// Big timeout since lsan on github actions is very slow
+#define DEFAULT_TIMEOUT 20000
+
     // Stuff required by the tests only and not used by dart bindings.
 
     /// @brief halts the test during the specified number of milliseconds
@@ -210,22 +213,22 @@ public:
 
     /// @brief Waits for the specified view to receive a resize event
     /// Returns true if the view was resized until timeout was reached
-    virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted(Controller *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(Controller *, int timeout = DEFAULT_TIMEOUT) const = 0;
 
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true
     /// @sa Window::isActive()
-    virtual KDDW_QCORO_TASK tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = DEFAULT_TIMEOUT) const = 0;
 
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
-    virtual KDDW_QCORO_TASK tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = 5000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
-                                               int timeout = 5000) const = 0;
+                                               int timeout = DEFAULT_TIMEOUT) const = 0;
 
     virtual void tests_doubleClickOn(Point globalPos, View *receiver) = 0;
     virtual void tests_doubleClickOn(Point globalPos, std::shared_ptr<Core::Window> receiver) = 0;
