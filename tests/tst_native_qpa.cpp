@@ -110,6 +110,8 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
         // Broken on Windows/Qt5
         skip = true;
 #endif
+    } else {
+        skip = true;
     }
 
     if (skip)
