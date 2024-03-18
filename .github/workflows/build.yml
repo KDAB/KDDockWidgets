@@ -103,11 +103,10 @@ jobs:
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
 
-      - name: Run tests on Linux (offscreen)
+      - name: Run tests on Linux
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
         env:
-          QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
