@@ -47,7 +47,7 @@ public:
     void ungrabMouse() override;
 
 #ifdef DOCKS_TESTING_METHODS
-    explicit Platform(int &argc, char **argv);
+    explicit Platform(int &argc, char **argv, bool defaultToOffscreenQPA);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;

@@ -51,16 +51,18 @@ private:
 
 TestView::~TestView() = default;
 
-inline QCoreApplication *createCoreApplication(int &argc, char **argv)
+inline QCoreApplication *createCoreApplication(int &argc, char **argv, bool defaultToOffscreenQPA)
 {
-    QtCommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
+    if (defaultToOffscreenQPA)
+        QtCommon::Platform_qt::maybeSetOffscreenQPA(argc, argv);
+
     return new QGuiApplication(argc, argv);
 }
 
 }
 
-Platform::Platform(int &argc, char **argv)
-    : Platform_qt(createCoreApplication(argc, argv))
+Platform::Platform(int &argc, char **argv, bool defaultToOffscreenQPA)
+    : Platform_qt(createCoreApplication(argc, argv, defaultToOffscreenQPA))
     , m_qquickHelpers(new QtQuickHelpers())
 {
     init();

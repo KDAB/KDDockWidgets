@@ -192,7 +192,7 @@ Platform::WarningObserver::~WarningObserver() = default;
 
 #ifdef DOCKS_DEVELOPER_MODE
 /*static*/
-void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type)
+void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type, bool defaultToOffscreenQPA)
 {
     if (Platform::isInitialized())
         return;
@@ -202,12 +202,12 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     switch (type) {
     case FrontendType::QtWidgets:
 #ifdef KDDW_FRONTEND_QTWIDGETS
-        platform = new QtWidgets::Platform(argc, argv);
+        platform = new QtWidgets::Platform(argc, argv, defaultToOffscreenQPA);
 #endif
         break;
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
-        platform = new QtQuick::Platform(argc, argv);
+        platform = new QtQuick::Platform(argc, argv, defaultToOffscreenQPA);
 #endif
         break;
     case FrontendType::Flutter:
