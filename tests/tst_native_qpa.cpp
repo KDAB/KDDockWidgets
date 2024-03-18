@@ -131,6 +131,13 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+    if (!qEnvironmentVariableIsSet("DISPLAY")) {
+        // Don't fail if we don't have X11. GitHub CI will use xvfb
+        return 0;
+    }
+#endif
+
 #ifdef KDDW_HAS_SPDLOG
     FatalLogger::create();
 #endif
