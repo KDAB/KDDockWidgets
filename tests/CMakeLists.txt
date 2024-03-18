@@ -136,9 +136,9 @@ add_kddw_test(tst_separator core/tst_separator.cpp)
 add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp)
 add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp)
 
-# This one doesn't even build yet
 if(NOT KDDW_FRONTEND_FLUTTER)
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp)
+    add_kddw_test(tst_native_qpa tst_native_qpa.cpp)
 
     # Check if includes are installed
     add_subdirectory(includes_test)

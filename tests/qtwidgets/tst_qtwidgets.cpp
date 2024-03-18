@@ -2662,6 +2662,8 @@ void TestQtWidgets::tst_neighbourSqueezeStrategy()
     }
 }
 
+namespace {
+
 class Stack464 : public QtWidgets::Stack
 {
 public:
@@ -2682,6 +2684,8 @@ public:
         return new Stack464(controller, QtCommon::View_qt::asQWidget(parent));
     }
 };
+
+}
 
 void TestQtWidgets::tst_tabBarIcons()
 {
