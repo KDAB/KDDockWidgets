@@ -501,6 +501,11 @@ void DockWidget::setAffinities(const Vector<QString> &affinityNames)
         return;
 
     if (!d->affinities.isEmpty()) {
+        /// There's too many use cases to consider if we allowed this
+        /// - What if dock widget is docked already, it would possibly get incompatible affinity
+        /// - If it's floating, but has some main window as transient parent, then the transient parent
+        /// could have incompatible affinity.
+        /// - Etc.
         KDDW_ERROR("Affinity is already set, refusing to change."
                    "Submit a feature request with a good justification.");
         return;
