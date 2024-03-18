@@ -529,12 +529,12 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
             Window::Ptr window = mainWindow->view()->window();
-            d->deserializeWindowGeometry(mw, window);
-            if (mw.windowState != WindowState::None) {
+            if (mw.windowState != window->windowState()) {
                 if (auto w = mainWindow->view()->window()) {
                     w->setWindowState(mw.windowState);
                 }
             }
+            d->deserializeWindowGeometry(mw, window);
         }
 
         if (!mainWindow->deserialize(mw))

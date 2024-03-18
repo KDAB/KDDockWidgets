@@ -98,11 +98,8 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
         // Broken on macOS
         skip = true;
     } else if (qApp->platformName() == "xcb") {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        // Broken on Linux/Qt5
-        skip = true;
-#else
-        // Broken on non-KDE Qt6
+#if QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
+        // Broken on non-KDE Qt6, maybe ?
         skip = qEnvironmentVariable("XDG_SESSION_DESKTOP") != QLatin1String("KDE");
 #endif
     } else if (qApp->platformName() == "windows") {
@@ -110,8 +107,6 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
         // Broken on Windows/Qt5
         skip = true;
 #endif
-    } else {
-        skip = true;
     }
 
     if (skip)
