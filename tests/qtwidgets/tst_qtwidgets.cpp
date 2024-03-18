@@ -37,6 +37,7 @@
 #include "core/SideBar.h"
 
 #include "qtwidgets/views/MDIArea.h"
+#include "qtwidgets/views/Stack.h"
 #include "qtwidgets/views/MainWindow.h"
 #include "qtwidgets/views/ViewWrapper_p.h"
 #include "qtwidgets/views/DockWidget.h"
@@ -207,6 +208,7 @@ private Q_SLOTS:
     void tst_toggleVsShowHidden();
     void tst_indicatorsNotShowing();
     void tst_neighbourSqueezeStrategy();
+    void tst_tabBarIcons();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2658,6 +2660,31 @@ void TestQtWidgets::tst_neighbourSqueezeStrategy()
         d4->open();
         QCOMPARE(sz1, group1->size());
     }
+}
+
+void TestQtWidgets::tst_tabBarIcons()
+{
+    EnsureTopLevelsDeleted e;
+    auto &config = Config::self();
+    config.setFlags(config.flags()
+                    | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+                    | KDDockWidgets::Config::Flag_TabsHaveCloseButton
+                    | KDDockWidgets::Config::Flag_CloseOnlyCurrentTab
+                    | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+
+    auto d1 = new QtWidgets::DockWidget("d1", KDDockWidgets::DockWidgetOption_NotClosable);
+    auto d2 = new QtWidgets::DockWidget("d2", KDDockWidgets::DockWidgetOption_NotClosable);
+
+    d1->addDockWidgetAsTab(d2);
+
+    auto stack = d1->dockWidget()->dptr()->group()->stack();
+    auto tabWidget = qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(stack->view()));
+    QVERIFY(tabWidget);
+
+    auto closeButton = tabWidget->button(TitleBarButtonType::Close);
+    QVERIFY(closeButton);
+    QVERIFY(closeButton->isVisible());
+    QVERIFY(!closeButton->isEnabled());
 }
 
 void TestQtWidgets::tst_indicatorsNotShowing()

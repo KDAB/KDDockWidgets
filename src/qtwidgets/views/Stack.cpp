@@ -11,6 +11,7 @@
 
 #include "Stack.h"
 #include "qtwidgets/views/DockWidget.h"
+#include "qtwidgets/views/TabBar.h"
 #include "core/Controller.h"
 #include "core/Stack.h"
 #include "core/TitleBar.h"
@@ -150,6 +151,16 @@ void Stack::setupTabBarButtons()
         if (View::d->isInWindow(w))
             updateMargins();
     });
+
+    if (auto tb = qobject_cast<QtWidgets::TabBar *>(tabBar()))
+        connect(tb, &QtWidgets::TabBar::countChanged, this, &Stack::updateTabBarButtons);
+}
+
+void Stack::updateTabBarButtons()
+{
+    if (d->closeButton) {
+        d->closeButton->setEnabled(!m_stack->group()->anyNonClosable());
+    }
 }
 
 void Stack::updateMargins()
@@ -211,4 +222,22 @@ bool Stack::isPositionDraggable(QPoint p) const
     }
 
     return p.y() >= 0 && p.y() <= tabBar()->height();
+}
+
+QAbstractButton *Stack::button(TitleBarButtonType type) const
+{
+    switch (type) {
+
+    case TitleBarButtonType::Close:
+        return d->closeButton;
+    case TitleBarButtonType::Float:
+        return d->floatButton;
+    case TitleBarButtonType::Minimize:
+    case TitleBarButtonType::Maximize:
+    case TitleBarButtonType::Normal:
+    case TitleBarButtonType::AutoHide:
+    case TitleBarButtonType::UnautoHide:
+    case TitleBarButtonType::AllTitleBarButtonTypes:
+        return nullptr;
+    }
 }
