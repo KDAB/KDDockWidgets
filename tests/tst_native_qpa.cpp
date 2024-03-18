@@ -137,8 +137,8 @@ int main(int argc, char *argv[])
 
     int exitCode = 0;
     for (FrontendType type : Platform::frontendTypes()) {
-        KDDW_INFO("\nTesting platform {}\n", int(type));
         KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, type, /*defaultToOffscreenQPA=*/false);
+        qDebug() << "\nTesting platform" << type << "on" << qApp->platformName() << "\n";
 
         TestNativeQPA test;
 
