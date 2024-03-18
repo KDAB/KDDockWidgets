@@ -172,12 +172,14 @@ void TabBar::tabInserted(int index)
 {
     QTabBar::tabInserted(index);
     Q_EMIT dockWidgetInserted(index);
+    Q_EMIT countChanged();
 }
 
 void TabBar::tabRemoved(int index)
 {
     QTabBar::tabRemoved(index);
     Q_EMIT dockWidgetRemoved(index);
+    Q_EMIT countChanged();
 }
 
 void TabBar::setCurrentIndex(int index)

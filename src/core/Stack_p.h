@@ -38,12 +38,16 @@ public:
     /// Emitted when the tabBarAutoHide boolean member changes
     KDBindings::Signal<bool> tabBarAutoHideChanged;
 
+    /// Emitted when m_buttonsToHideIfDisabled changes
+    KDBindings::Signal<> buttonsToHideIfDisabledChanged;
+
     Stack *const q;
 
     ObjectGuard<TabBar> m_tabBar;
     Group *const m_group;
     bool m_tabBarAutoHide = true;
     const StackOptions m_options;
+    TitleBarButtonTypes m_buttonsToHideIfDisabled = {};
 };
 
 }

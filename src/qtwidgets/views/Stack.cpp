@@ -11,6 +11,7 @@
 
 #include "Stack.h"
 #include "qtwidgets/views/DockWidget.h"
+#include "qtwidgets/views/TabBar.h"
 #include "core/Controller.h"
 #include "core/Stack.h"
 #include "core/TitleBar.h"
@@ -39,6 +40,8 @@ class Stack::Private
 public:
     KDBindings::ScopedConnection tabBarAutoHideChanged;
     KDBindings::ScopedConnection screenChangedConnection;
+    KDBindings::ScopedConnection buttonsToHideIfDisabledConnection;
+
     QHBoxLayout *cornerWidgetLayout = nullptr;
     QAbstractButton *floatButton = nullptr;
     QAbstractButton *closeButton = nullptr;
@@ -150,6 +153,25 @@ void Stack::setupTabBarButtons()
         if (View::d->isInWindow(w))
             updateMargins();
     });
+
+    d->buttonsToHideIfDisabledConnection = m_stack->d->buttonsToHideIfDisabledChanged.connect([this] {
+        updateTabBarButtons();
+    });
+
+    if (auto tb = qobject_cast<QtWidgets::TabBar *>(tabBar()))
+        connect(tb, &QtWidgets::TabBar::countChanged, this, &Stack::updateTabBarButtons);
+
+    updateTabBarButtons();
+}
+
+void Stack::updateTabBarButtons()
+{
+    if (d->closeButton) {
+        const bool enabled = !m_stack->group()->anyNonClosable();
+        const bool visible = enabled || !m_stack->buttonHidesIfDisabled(TitleBarButtonType::Close);
+        d->closeButton->setEnabled(enabled);
+        d->closeButton->setVisible(visible);
+    }
 }
 
 void Stack::updateMargins()
@@ -211,4 +233,22 @@ bool Stack::isPositionDraggable(QPoint p) const
     }
 
     return p.y() >= 0 && p.y() <= tabBar()->height();
+}
+
+QAbstractButton *Stack::button(TitleBarButtonType type) const
+{
+    switch (type) {
+
+    case TitleBarButtonType::Close:
+        return d->closeButton;
+    case TitleBarButtonType::Float:
+        return d->floatButton;
+    case TitleBarButtonType::Minimize:
+    case TitleBarButtonType::Maximize:
+    case TitleBarButtonType::Normal:
+    case TitleBarButtonType::AutoHide:
+    case TitleBarButtonType::UnautoHide:
+    case TitleBarButtonType::AllTitleBarButtonTypes:
+        return nullptr;
+    }
 }

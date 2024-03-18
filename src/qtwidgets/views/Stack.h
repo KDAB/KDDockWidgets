@@ -19,6 +19,8 @@
 
 #include <QTabWidget>
 
+class QAbstractButton;
+
 namespace KDDockWidgets {
 namespace QtWidgets {
 
@@ -39,6 +41,9 @@ public:
     /// @brief Returns the controller
     Core::Stack *stack() const;
 
+    /// Returns the requested button. Only relevant with Flag_ShowButtonsOnTabBarIfTitleBarHidden
+    QAbstractButton *button(TitleBarButtonType) const;
+
 protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
@@ -50,6 +55,7 @@ protected:
 private:
     void updateMargins();
     void setupTabBarButtons();
+    void updateTabBarButtons();
 
     class Private;
     Private *const d;
