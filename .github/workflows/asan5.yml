@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: true
       matrix:
@@ -39,6 +39,11 @@ jobs:
 
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
+
+      - name: Fix ASAN on ubuntu 22.04
+        run: |
+             sudo sysctl vm.mmap_rnd_bits=28
+             sudo sysctl vm.mmap_rnd_compat_bits=8
 
       - name: Run tests on Linux (offscreen)
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
