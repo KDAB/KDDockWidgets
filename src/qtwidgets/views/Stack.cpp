@@ -251,4 +251,6 @@ QAbstractButton *Stack::button(TitleBarButtonType type) const
     case TitleBarButtonType::AllTitleBarButtonTypes:
         return nullptr;
     }
+
+    return nullptr;
 }
