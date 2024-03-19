@@ -450,9 +450,7 @@ QByteArray LayoutSaver::serializeLayout() const
     const Core::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (Core::DockWidget *dockWidget : dockWidgets) {
-        const bool skipsRestore = dockWidget->layoutSaverOptions() & LayoutSaverOption::Skip;
-
-        if (!skipsRestore && d->matchesAffinity(dockWidget->affinities())) {
+        if (!dockWidget->skipsRestore() && d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
             dw->lastPosition = dockWidget->d->lastPosition()->serialize();
             layout.allDockWidgets.push_back(dw);
