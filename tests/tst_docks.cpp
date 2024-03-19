@@ -4386,6 +4386,26 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore4()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_skipRestoreInsideMainWindow()
+{
+    // Tests that a docked widget doesn't get redocked when restoring if it has LayoutSaverOption::Skip
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow({ 1000, 1000 }, {});
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
+                                  LayoutSaverOption::Skip);
+    m->addDockWidget(dock1, Location_OnBottom);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    dock1->close();
+    CHECK(!dock1->isOpen());
+    saver.restoreLayout(saved);
+    CHECK(!dock1->isOpen());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_closeOnlyCurrentTab()
 {
     {
@@ -5940,6 +5960,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_dontCloseDockWidgetBeforeRestore),
         TEST(tst_dontCloseDockWidgetBeforeRestore3),
         TEST(tst_dontCloseDockWidgetBeforeRestore4),
+        TEST(tst_skipRestoreInsideMainWindow),
         TEST(tst_restoreWithNativeTitleBar),
         TEST(tst_closeOnlyCurrentTab),
         TEST(tst_tabWidgetCurrentIndex),

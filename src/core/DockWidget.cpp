@@ -936,6 +936,9 @@ void DockWidget::onResize(Size)
 
 Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
+    if (saved->skipsRestore())
+        return nullptr;
+
     auto dr = DockRegistry::self();
     DockWidget *dw =
         dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlags(DockRegistry::DockByNameFlag::CreateIfNotFound) | DockRegistry::DockByNameFlag::SilentIfNotFound);
