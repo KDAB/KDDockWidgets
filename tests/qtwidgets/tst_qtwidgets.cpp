@@ -50,6 +50,8 @@
 #include "../fatal_logger.h"
 #endif
 
+#include "../src/qtwidgets/DebugWidgetViewer_p.h"
+
 #include <QObject>
 #include <QPushButton>
 #include <QMenuBar>
@@ -209,6 +211,7 @@ private Q_SLOTS:
     void tst_indicatorsNotShowing();
     void tst_neighbourSqueezeStrategy();
     void tst_tabBarIcons();
+    void tst_debugWidgetViewer();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2685,6 +2688,13 @@ public:
     }
 };
 
+}
+
+void TestQtWidgets::tst_debugWidgetViewer()
+{
+    // Tests that DebugWidgetViewer builds and can be created destroyed
+    // not worth doing fancy tests as it's a debugging aid
+    DebugWidgetViewer viewer;
 }
 
 void TestQtWidgets::tst_tabBarIcons()
