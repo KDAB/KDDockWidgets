@@ -28,6 +28,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QTimer>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -102,6 +103,25 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
+bool Button::event(QEvent *ev)
+{
+    switch (ev->type()) {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::KeyPress:
+    case QEvent::KeyRelease: {
+        // A Button can trigger the deletion of its parent, in which case we use deleteLater
+        QScopedValueRollback<bool> guard(m_inEventHandler, true);
+        return QToolButton::event(ev);
+    }
+    default:
+        break;
+    }
+
+    return QToolButton::event(ev);
+}
+
 class KDDockWidgets::QtWidgets::TitleBar::Private
 {
 public:
@@ -144,11 +164,22 @@ TitleBar::~TitleBar()
         if (!button)
             continue;
 
+        if (auto kddwButton = qobject_cast<Button *>(button); !kddwButton->m_inEventHandler) {
+            // Minor optimization. If the button is not in an event handler it's safe to delete immediately.
+            // This saves us from memory leaks at shutdown when using the below QTimer::singleShot() hack.
+            delete kddwButton;
+            continue;
+        }
+
         button->setParent(nullptr);
-        QTimer::singleShot(0, button, [button] {
-            /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
-            delete button;
-        });
+        if (usesQTBUG83030Workaround()) {
+            QTimer::singleShot(0, button, [button] {
+                /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
+                delete button;
+            });
+        } else {
+            button->deleteLater();
+        }
     }
 }
 
