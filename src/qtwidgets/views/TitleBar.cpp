@@ -105,8 +105,19 @@ QSize Button::sizeHint() const
 
 bool Button::event(QEvent *ev)
 {
-    // A Button can trigger the deletion of its parent, in which case we use deleteLater.
-    QScopedValueRollback<bool> guard(m_inEventHandler, true);
+    switch (ev->type()) {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::KeyPress:
+    case QEvent::KeyRelease: {
+        // A Button can trigger the deletion of its parent, in which case we use deleteLater
+        QScopedValueRollback<bool> guard(m_inEventHandler, true);
+        return QToolButton::event(ev);
+    }
+    default:
+        break;
+    }
 
     return QToolButton::event(ev);
 }
