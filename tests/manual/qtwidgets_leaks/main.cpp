@@ -59,8 +59,7 @@ int main(int argc, char **argv)
             delete dock1;
             delete dock2;
             delete dock3;
-
-            qApp->quit();
+            QTimer::singleShot(0, &app, &QCoreApplication::quit);
         });
 
         result = app.exec();
