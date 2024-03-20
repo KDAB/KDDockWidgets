@@ -185,6 +185,11 @@ public:
                  << "\n  Window=" << widget->palette().color(QPalette::Window)
                  << "\n  Base=" << widget->palette().color(QPalette::Base)
                  << "\n  Button=" << widget->palette().color(QPalette::Button);
+
+        if (auto mw = qobject_cast<QMainWindow *>(widget)) {
+            qDebug() << "  centralWidget=" << mw->centralWidget();
+        }
+
         qDebug() << "END PRINT-------------------";
     }
 
