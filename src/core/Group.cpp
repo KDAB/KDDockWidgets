@@ -62,9 +62,18 @@ namespace KDDockWidgets {
 
 static FrameOptions actualOptions(FrameOptions options)
 {
+    // Center group has custom logic for showing tabs or not
     const bool isCentralGroup = options & FrameOption_IsCentralFrame;
-    if (!isCentralGroup && (Config::self().flags() & Config::Flag_AlwaysShowTabs))
-        options |= FrameOption_AlwaysShowsTabs;
+
+    if (!isCentralGroup) {
+        if (Config::self().flags() & Config::Flag_AlwaysShowTabs) {
+            options |= FrameOption_AlwaysShowsTabs;
+        } else {
+            // options could have came from a JSON layout which was saved from a Config with Flag_AlwaysShowTabs
+            // If current Config doesn't have this flag then remove it here as well
+            options &= ~FrameOption_AlwaysShowsTabs;
+        }
+    }
 
     return options;
 }
@@ -722,7 +731,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
     if (!f.isValid())
         return nullptr;
 
-    const FrameOptions options = FrameOptions(f.options);
+    const FrameOptions options = actualOptions(FrameOptions(f.options));
     Group *group = nullptr;
     const bool isPersistentCentralFrame = options & FrameOption::FrameOption_IsCentralFrame;
 

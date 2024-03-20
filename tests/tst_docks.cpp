@@ -2842,6 +2842,40 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_restoreGroupOptions()
+{
+    // tests that saving with some Config flags and restoring with other Config flags
+    // doesn't get us into trouble. Namely we shouldn't restore "alwaysShowFlags" and
+    // just follow current config flags
+    QByteArray saved;
+
+    {
+        EnsureTopLevelsDeleted e;
+
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+                                               | KDDockWidgets::Config::Flag_AlwaysShowTabs);
+
+        auto m = createMainWindow({ 500, 500 }, {}, "mw1");
+
+        auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+        m->addDockWidget(d1, Location_OnTop);
+
+        LayoutSaver saver;
+        saved = saver.serializeLayout();
+    } // flags are reset at end of scope
+
+    auto m = createMainWindow({ 500, 500 }, {}, "mw1");
+    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+
+    LayoutSaver saver;
+    CHECK(saver.restoreLayout(saved));
+
+    Group *group = d1->dptr()->group();
+    CHECK(!group->options()); // Shouldn't have FrameOption_AlwaysShowsTabs anymore
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     auto m =
@@ -5953,6 +5987,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_restoreCrash),
         TEST(tst_restoreSideBySide),
         TEST(tst_restoreWithCentralFrameWithTabs),
+        TEST(tst_restoreGroupOptions),
         TEST(tst_restoreWithAffinity),
         TEST(tst_marginsAfterRestore),
         TEST(tst_restoreWithNewDockWidgets),
