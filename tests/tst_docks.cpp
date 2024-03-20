@@ -2842,7 +2842,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreOptions()
+KDDW_QCORO_TASK tst_restoreGroupOptions()
 {
     // tests that saving with some Config flags and restoring with other Config flags
     // doesn't get us into trouble. Namely we shouldn't restore "alwaysShowFlags" and
@@ -5986,7 +5986,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_restoreCrash),
         TEST(tst_restoreSideBySide),
         TEST(tst_restoreWithCentralFrameWithTabs),
-        TEST(tst_restoreOptions),
+        TEST(tst_restoreGroupOptions),
         TEST(tst_restoreWithAffinity),
         TEST(tst_marginsAfterRestore),
         TEST(tst_restoreWithNewDockWidgets),
