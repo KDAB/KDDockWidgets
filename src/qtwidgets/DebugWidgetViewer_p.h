@@ -26,11 +26,14 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QMainWindow>
 
 enum MyRole {
     WidgetRole = Qt::UserRole + 1,
     PixmapRole
 };
+
+namespace {
 
 class DebugWidgetViewer : public QWidget
 {
@@ -55,6 +58,8 @@ public:
         connect(m_tree.selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &DebugWidgetViewer::onSelectionChanged);
     }
+
+    ~DebugWidgetViewer();
 
     void pickWidget()
     {
@@ -189,3 +194,9 @@ private:
     QStandardItemModel m_model;
     QTreeView m_tree;
 };
+
+DebugWidgetViewer::~DebugWidgetViewer()
+{
+}
+
+}
