@@ -54,26 +54,28 @@ int main(int argc, char **argv)
         dock2->open();
         dr = DockRegistry::self();
 
-        QTimer::singleShot(2000, &app, &QApplication::quit);
+        QTimer::singleShot(1000, &app, [&] {
+            // On Windows this is not needed, since they are parented it seems
+            delete dock1;
+            delete dock2;
+            delete dock3;
+
+            qApp->quit();
+        });
 
         result = app.exec();
     }
 
     if (dr) {
-        const auto docks = dr->dockwidgets();
-        if (!docks.isEmpty()) {
-            qDebug() << "Deleting unparented dock widgets docks:" << docks.size();
-            for (auto dw : docks) {
-                delete dw;
-            }
-        }
-
-        if (dr) {
-            qDebug() << "Dock registry not empty yet docks= " << dr->dockwidgets().size() << "; mainWindows=" << dr->mainwindows().size();
-        } else {
-            qDebug() << "Dock registry is empty.";
-        }
+        qDebug() << "Dock registry not empty yet docks= " << dr->dockwidgets().size() << "; mainWindows=" << dr->mainwindows().size();
+    } else {
+        qDebug() << "Dock registry is empty.";
     }
+
+    if (!QApplication::allWidgets().isEmpty() || !QApplication::allWindows().isEmpty()) {
+        qDebug() << "There's still widgets/windows:" << QApplication::allWidgets() << QApplication::allWindows();
+    }
+
 
     qDebug() << "exiting main";
     return result;
