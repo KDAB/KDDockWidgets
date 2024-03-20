@@ -20,6 +20,7 @@
 #include <QTimer>
 
 // Simple app to test leaks under valgrind
+// $ valgrind --leak-check=full --show-leak-kinds=all --suppressions=../valgrind.sup ./bin/qtwidgets_leak_test
 
 using namespace KDDockWidgets;
 
