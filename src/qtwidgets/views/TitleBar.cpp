@@ -28,6 +28,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QTimer>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -102,6 +103,14 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
+bool Button::event(QEvent *ev)
+{
+    // A Button can trigger the deletion of its parent, in which case we use deleteLater.
+    QScopedValueRollback<bool> guard(m_inEventHandler, true);
+
+    return QToolButton::event(ev);
+}
+
 class KDDockWidgets::QtWidgets::TitleBar::Private
 {
 public:
@@ -143,6 +152,13 @@ TitleBar::~TitleBar()
     for (auto button : { m_closeButton, m_floatButton, m_maximizeButton, m_minimizeButton, m_autoHideButton }) {
         if (!button)
             continue;
+
+        if (auto kddwButton = qobject_cast<Button *>(button); !kddwButton->m_inEventHandler) {
+            // Minor optimization. If the button is not in an event handler it's safe to delete immediately.
+            // This saves us from memory leaks at shutdown when using the below QTimer::singleShot() hack.
+            delete kddwButton;
+            continue;
+        }
 
         button->setParent(nullptr);
         if (usesQTBUG83030Workaround()) {

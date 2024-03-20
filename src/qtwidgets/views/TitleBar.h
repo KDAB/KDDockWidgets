@@ -110,8 +110,13 @@ public:
     ~Button() override;
 
 protected:
+    friend class QtWidgets::TitleBar;
+
+    bool event(QEvent *ev) override;
     QSize sizeHint() const override;
     void paintEvent(QPaintEvent *) override;
+
+    bool m_inEventHandler = false;
 };
 
 }
