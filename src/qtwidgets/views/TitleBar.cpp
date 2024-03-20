@@ -145,10 +145,14 @@ TitleBar::~TitleBar()
             continue;
 
         button->setParent(nullptr);
-        QTimer::singleShot(0, button, [button] {
-            /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
-            delete button;
-        });
+        if (usesQTBUG83030Workaround()) {
+            QTimer::singleShot(0, button, [button] {
+                /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
+                delete button;
+            });
+        } else {
+            button->deleteLater();
+        }
     }
 }
 
