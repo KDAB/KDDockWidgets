@@ -18,6 +18,7 @@
 #include "View_p.h"
 #include "Logging_p.h"
 #include "DragController_p.h"
+#include "core/Utils_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -150,17 +151,7 @@ void Controller::setParentView_impl(View *parent)
 void Controller::destroyLater()
 {
 #ifdef KDDW_FRONTEND_QT
-    const bool useQTBUG83030Workaround =
-
-#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-        // Bug is fixed in 6.7
-        false;
-#else
-        // Workaround by default, unless explicitly told not to
-        !(Config::self().internalFlags() & Config::InternalFlag_NoDeleteLaterWorkaround);
-#endif
-
-    if (!useQTBUG83030Workaround) {
+    if (!usesQTBUG83030Workaround()) {
         QObject::deleteLater();
         return;
     }

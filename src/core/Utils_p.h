@@ -86,6 +86,21 @@ inline bool linksToXLib()
 #endif
 }
 
+inline bool usesQTBUG83030Workaround()
+{
+    const bool useWorkaround =
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+        // Bug is fixed in 6.7
+        false;
+#else
+        // Workaround by default, unless explicitly told not to
+        !(Config::self().internalFlags() & Config::InternalFlag_NoDeleteLaterWorkaround);
+#endif
+
+    return useWorkaround;
+}
+
 inline bool isNormalWindowState(WindowStates states)
 {
     return !(states & WindowState::Maximized) && !(states & WindowState::FullScreen);
