@@ -857,7 +857,6 @@ void TestQtWidgets::tst_restoreSideBar2()
     QVERIFY(dw3->dockWidget()->isInSideBar());
     QVERIFY(layout->checkSanity());
 
-    QEXPECT_FAIL("", "Fixing", Continue);
     QCOMPARE(layout->size(), layout->layoutSize());
 }
 

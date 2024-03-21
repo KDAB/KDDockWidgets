@@ -733,8 +733,6 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         d->affinities = mw.affinities;
     }
 
-    const bool success = layout()->deserialize(mw.multiSplitterLayout);
-
     // Restore the SideBars
     d->clearSideBars();
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
@@ -756,6 +754,8 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
             sb->addDockWidget(dw);
         }
     }
+
+    const bool success = layout()->deserialize(mw.multiSplitterLayout);
 
     // Commented-out for now, we don't want to restore the popup/overlay. popups are perishable
     // if (!mw.overlayedDockWidget.isEmpty())
