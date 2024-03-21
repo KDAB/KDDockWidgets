@@ -171,6 +171,7 @@ private Q_SLOTS:
     void tst_closeRemovesFromSideBar();
     void tst_sideBarHidden();
     void tst_restoreSideBar();
+    void tst_restoreSideBar2();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
     void tst_openWhenOnSideBar();
@@ -823,6 +824,41 @@ void TestQtWidgets::tst_restoreSideBar()
     QVERIFY(!m1->anySideBarIsVisible());
 
     QCOMPARE(LayoutSaver::sideBarDockWidgetsInLayout(serialized), { "1" });
+}
+
+void TestQtWidgets::tst_restoreSideBar2()
+{
+    // Tests a case where the layout size would be bigger than the parent DropArea
+    EnsureTopLevelsDeleted e;
+
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    KDDockWidgets::QtWidgets::MainWindow m1("MyMainWindow");
+    m1.resize(QSize(1197, 1197));
+
+    auto dw1 = new KDDockWidgets::QtWidgets::DockWidget(
+        QStringLiteral("DockWidget #0"));
+    auto dw2 = new KDDockWidgets::QtWidgets::DockWidget(
+        QStringLiteral("DockWidget #1"));
+    auto dw3 = new KDDockWidgets::QtWidgets::DockWidget(
+        QStringLiteral("DockWidget #2"));
+    m1.addDockWidget(dw1, KDDockWidgets::Location_OnTop);
+    m1.addDockWidget(dw2, KDDockWidgets::Location_OnRight, dw1);
+    m1.addDockWidget(dw3, KDDockWidgets::Location_OnLeft);
+    m1.show();
+    auto layout = m1.mainWindow()->layout();
+    QCOMPARE(layout->size().width(), layout->layoutSize().width());
+    QCOMPARE(layout->size().height(), layout->layoutSize().height());
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/sidebar_restore.json");
+
+    QVERIFY(dw1->isOpen());
+    QVERIFY(!dw2->isOpen());
+    QVERIFY(dw3->dockWidget()->isInSideBar());
+    QVERIFY(layout->checkSanity());
+
+    QEXPECT_FAIL("", "Fixing", Continue);
+    QCOMPARE(layout->size(), layout->layoutSize());
 }
 
 void TestQtWidgets::tst_openWhenOnSideBar()
