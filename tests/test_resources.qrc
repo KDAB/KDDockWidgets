@@ -9,6 +9,7 @@
         <file>layouts/1.6layoutWithoutFloatingWindowFlags.json</file>
         <file>layouts/nlohman_exception.json</file>
         <file>layouts/invalidCurrentTab.json</file>
+        <file>layouts/sidebar_restore.json</file>
         <file>main.qml</file>
         <file>main2.qml</file>
         <file>main465.qml</file>
@@ -19,5 +20,5 @@
         <file>MyRectangle.qml</file>
 	    <file>main_tst_focusBetweenTabs.qml</file>
         <file>MyRectangle2.qml</file>
-    </qresource>
+</qresource>
 </RCC>
