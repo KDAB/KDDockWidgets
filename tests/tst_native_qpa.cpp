@@ -99,18 +99,10 @@ Q_SIGNALS:
 
 void TestNativeQPA::tst_restoreNormalFromMaximized()
 {
-    bool skip = false;
-
     if (qApp->platformName() == "cocoa") {
         // Broken on macOS
-        skip = true;
-    } else if (qApp->platformName() == "xcb") {
-        // Broken on non-KDE maybe ?
-        skip = qEnvironmentVariable("XDG_SESSION_DESKTOP") != QLatin1String("KDE");
-    }
-
-    if (skip)
         return;
+    }
 
     // Saves the window state while in normal state, then restores after the window is maximized
     // the window should become unmaximized.
@@ -147,11 +139,6 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     if (qApp->platformName() == "cocoa") {
         // works on macOS but the test needs to be stabilized
         // order of events to wait is different maybe
-        return;
-    }
-
-    if (qApp->platformName() == "xcb" && qEnvironmentVariable("XDG_SESSION_DESKTOP") != QLatin1String("KDE")) {
-        // Same reason as macOS. A real app works, but test needs to be improved
         return;
     }
 
@@ -192,6 +179,9 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     QVERIFY(saver.restoreLayout(saved));
     QVERIFY(filter.waitForState(Qt::WindowMaximized));
     QVERIFY(m->isVisible());
+
+    /// Catch more resizes:
+    QTest::qWait(1000);
 
     QCOMPARE(m->geometry(), expectedMaximizedGeometry);
 }
