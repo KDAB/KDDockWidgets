@@ -527,12 +527,21 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
             Window::Ptr window = mainWindow->view()->window();
-            if (mw.windowState != window->windowState()) {
-                if (auto w = mainWindow->view()->window()) {
-                    w->setWindowState(mw.windowState);
-                }
+
+            if (window->windowState() == WindowState::Maximized && mw.windowState != WindowState::Maximized) {
+                // Never call deserializeWindowGeometry() on a maximized window.
+                // If window is maximized and we're restoring it to "normal", then 1st change state, then set geometry
+                window->setWindowState(mw.windowState);
+                d->deserializeWindowGeometry(mw, window);
+            } else if (mw.windowState != window->windowState()) {
+                // If window is normal and we're restoring it to maximized, then set geometry 1st
+                // so its normal geometry gets remembered, only then maximize
+
+                d->deserializeWindowGeometry(mw, window);
+                window->setWindowState(mw.windowState);
+            } else {
+                d->deserializeWindowGeometry(mw, window);
             }
-            d->deserializeWindowGeometry(mw, window);
         }
 
         if (!mainWindow->deserialize(mw))
