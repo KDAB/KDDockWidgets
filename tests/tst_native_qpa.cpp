@@ -134,7 +134,8 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
 
-    auto m = createMainWindow(Size(500, 500), MainWindowOption_None, "m1", false);
+    const QSize initialSize(500, 500);
+    auto m = createMainWindow(initialSize, MainWindowOption_None, "m1", false);
 
     auto windowptr = m->view()->window();
     auto window = static_cast<QtCommon::Window *>(windowptr.get());
@@ -144,7 +145,19 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
 
     m->view()->showMaximized();
     QVERIFY(filter.waitForState(Qt::WindowMaximized));
+
+    int count = 0;
+    // Qt annoyingly sends us 2 or 3 resize events before the fully maximized one, even when
+    // already having state==Qt::WindowMaximized. Probably depends on platform.
+    // Consume all resize events until window gets big.
+    while (m->geometry().size().width() < 1000) {
+        QVERIFY(Platform::instance()->tests_waitForResize(m->view()));
+        count++;
+        QVERIFY(count < 5);
+    }
+
     const auto expectedMaximizedGeometry = m->geometry();
+    QVERIFY(initialSize != expectedMaximizedGeometry.size());
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
