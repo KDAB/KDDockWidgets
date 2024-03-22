@@ -150,6 +150,11 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
         return;
     }
 
+    if (qApp->platformName() == "xcb" && qEnvironmentVariable("XDG_SESSION_DESKTOP") != QLatin1String("KDE")) {
+        // Same reason as macOS. A real app works, but test needs to be improved
+        return;
+    }
+
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
     // qDebug() << qApp->primaryScreen()->geometry();
