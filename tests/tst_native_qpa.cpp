@@ -65,6 +65,12 @@ public:
         if (event->type() == QEvent::WindowStateChange) {
             if (event->spontaneous())
                 Q_EMIT stateChanged(static_cast<QWindow *>(obj)->windowState());
+        } else if (event->type() == QEvent::Resize) {
+            auto rev = static_cast<QResizeEvent *>(event);
+            qDebug() << "Resize event. old=" << rev->oldSize() << "; new=" << rev->size();
+        } else if (event->type() == QEvent::Move) {
+            auto mev = static_cast<QMoveEvent *>(event);
+            qDebug() << "Move event. old=" << mev->oldPos() << "; new=" << mev->pos();
         }
 
         return false;
@@ -131,9 +137,16 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
 
 void TestNativeQPA::tst_restoreMaximizedFromNormal()
 {
+    if (qApp->platformName() == QLatin1String("offscreen")) {
+        // offscreen: calling showMaximized() on an hidden widget, puts it at pos=2,2 instead of 0,0
+        // Ignore this QPA. This file is for testing native QPAs only. offscreen is nice to have
+        // if it beahaves well only.
+        return;
+    }
+
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
-
+    // qDebug() << qApp->primaryScreen()->geometry();
     const QSize initialSize(500, 500);
     auto m = createMainWindow(initialSize, MainWindowOption_None, "m1", false);
 
@@ -150,7 +163,7 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     // Qt annoyingly sends us 2 or 3 resize events before the fully maximized one, even when
     // already having state==Qt::WindowMaximized. Probably depends on platform.
     // Consume all resize events until window gets big.
-    while (m->geometry().size().width() < 1000) {
+    while (m->geometry().size().width() < 700) {
         QVERIFY(Platform::instance()->tests_waitForResize(m->view()));
         count++;
         QVERIFY(count < 5);
@@ -168,10 +181,6 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     QVERIFY(saver.restoreLayout(saved));
     QVERIFY(filter.waitForState(Qt::WindowMaximized));
     QVERIFY(m->isVisible());
-
-    const bool isOffscreen = qApp->platformName() == QLatin1String("offscreen");
-    if (Platform::instance()->isQtQuick() && !isOffscreen)
-        QEXPECT_FAIL("", "Being fixed", Continue);
 
     QCOMPARE(m->geometry(), expectedMaximizedGeometry);
 }
