@@ -156,7 +156,8 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     QVERIFY(filter.waitForState(Qt::WindowMaximized));
     QVERIFY(m->isVisible());
 
-    if (Platform::instance()->isQtQuick())
+    const bool isOffscreen = qApp->platformName() == QLatin1String("offscreen");
+    if (Platform::instance()->isQtQuick() && !isOffscreen)
         QEXPECT_FAIL("", "Being fixed", Continue);
 
     QCOMPARE(m->geometry(), expectedMaximizedGeometry);
