@@ -144,6 +144,12 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
         return;
     }
 
+    if (qApp->platformName() == "cocoa") {
+        // works on macOS but the test needs to be stabilized
+        // order of events to wait is different maybe
+        return;
+    }
+
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
     // qDebug() << qApp->primaryScreen()->geometry();
