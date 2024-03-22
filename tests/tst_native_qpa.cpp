@@ -40,6 +40,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_restoreNormalFromMaximized();
+    void tst_restoreMaximizedFromNormal();
 };
 
 void TestNativeQPA::initTestCase()
@@ -117,7 +118,6 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
     qtwindow->installEventFilter(&filter);
 
     m->show();
-
     QVERIFY(m->isVisible());
 
     LayoutSaver saver;
@@ -127,6 +127,39 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
     QVERIFY(filter.waitForState(Qt::WindowMaximized));
     QVERIFY(saver.restoreLayout(saved));
     QVERIFY(filter.waitForState(Qt::WindowNoState));
+}
+
+void TestNativeQPA::tst_restoreMaximizedFromNormal()
+{
+    // Saves the window state while in maximized state, then restores after the window is shown normal
+    // the window should become maximized again.
+
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_None, "m1", false);
+
+    auto windowptr = m->view()->window();
+    auto window = static_cast<QtCommon::Window *>(windowptr.get());
+    QWindow *qtwindow = window->qtWindow();
+    MyEventFilter filter;
+    qtwindow->installEventFilter(&filter);
+
+    m->view()->showMaximized();
+    QVERIFY(filter.waitForState(Qt::WindowMaximized));
+    const auto expectedMaximizedGeometry = m->geometry();
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    m->view()->showNormal();
+    QVERIFY(filter.waitForState(Qt::WindowNoState));
+
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(filter.waitForState(Qt::WindowMaximized));
+    QVERIFY(m->isVisible());
+
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "Being fixed", Continue);
+
+    QCOMPARE(m->geometry(), expectedMaximizedGeometry);
 }
 
 int main(int argc, char *argv[])
