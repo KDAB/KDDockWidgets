@@ -209,11 +209,7 @@ void ViewWrapper::setSize(int x, int y)
 
 bool ViewWrapper::is(Core::ViewType t) const
 {
-    if (t == Core::ViewType::ViewWrapper)
-        return true;
-
     switch (t) {
-
     case Core::ViewType::Group:
         return qobject_cast<QtWidgets::Group *>(m_widget);
     case Core::ViewType::TitleBar:
