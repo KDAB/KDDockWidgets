@@ -63,8 +63,12 @@ public:
     bool eventFilter(QObject *obj, QEvent *event) override
     {
         if (event->type() == QEvent::WindowStateChange) {
-            if (event->spontaneous())
-                Q_EMIT stateChanged(static_cast<QWindow *>(obj)->windowState());
+            if (event->spontaneous()) {
+                QWindow *window = static_cast<QWindow *>(obj);
+                qDebug() << "WindowStateChange:" << int(window->windowState());
+                m_lastState = window->windowState();
+                Q_EMIT stateChanged(window->windowState());
+            }
         } else if (event->type() == QEvent::Resize) {
             auto rev = static_cast<QResizeEvent *>(event);
             qDebug() << "Resize event. old=" << rev->oldSize() << "; new=" << rev->size();
@@ -78,6 +82,9 @@ public:
 
     bool waitForState(Qt::WindowState state)
     {
+        if (m_lastState == state)
+            return true;
+
         bool result = false;
         QEventLoop loop;
         QTimer::singleShot(5000, &loop, [&loop] { loop.quit(); });
@@ -94,23 +101,18 @@ public:
 
 Q_SIGNALS:
     void stateChanged(Qt::WindowState);
+
+public:
+    int m_lastState = -1;
 };
 }
 
 void TestNativeQPA::tst_restoreNormalFromMaximized()
 {
-    bool skip = false;
-
-    if (qApp->platformName() == "cocoa") {
-        // Broken on macOS
-        skip = true;
-    } else if (qApp->platformName() == "xcb") {
-        // Broken on non-KDE maybe ?
-        skip = qEnvironmentVariable("XDG_SESSION_DESKTOP") != QLatin1String("KDE");
-    }
-
-    if (skip)
+#ifdef Q_OS_MACOS
+    if (Platform::instance()->isQtQuick())
         return;
+#endif
 
     // Saves the window state while in normal state, then restores after the window is maximized
     // the window should become unmaximized.
@@ -144,16 +146,13 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
         return;
     }
 
-    if (qApp->platformName() == "cocoa") {
-        // works on macOS but the test needs to be stabilized
-        // order of events to wait is different maybe
+#ifdef Q_OS_MACOS
+    if (Platform::instance()->isQtQuick())
         return;
-    }
+#endif
 
-    if (qApp->platformName() == "xcb" && qEnvironmentVariable("XDG_SESSION_DESKTOP") != QLatin1String("KDE")) {
-        // Same reason as macOS. A real app works, but test needs to be improved
-        return;
-    }
+    // whitelist some macOS warning
+    SetExpectedWarning warn("invalid window content view size");
 
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
@@ -192,6 +191,9 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     QVERIFY(saver.restoreLayout(saved));
     QVERIFY(filter.waitForState(Qt::WindowMaximized));
     QVERIFY(m->isVisible());
+
+    /// Catch more resizes:
+    QTest::qWait(1000);
 
     QCOMPARE(m->geometry(), expectedMaximizedGeometry);
 }

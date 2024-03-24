@@ -541,6 +541,11 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
 
 void MainWindow::restoreFromSideBar(Core::DockWidget *dw)
 {
+    if (!dw)
+        return;
+
+    DockWidget::Private::UpdateActions updateActions(dw);
+
     // First un-overlay it, if it's overlayed
     if (dw == d->m_overlayedDockWidget)
         clearSideBarOverlay();

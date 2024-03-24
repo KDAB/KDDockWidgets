@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Runs KDDW tests against an Qt6 LSAN build
+name: Nightly Qt6 LSAN build
 
 on:
   schedule:

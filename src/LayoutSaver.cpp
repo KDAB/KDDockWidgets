@@ -1158,7 +1158,7 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
     if (!hasSingleDockWidget())
         return {};
 
-    auto group = groups.begin()->second;
+    const auto &group = groups.begin()->second;
     return group.singleDockWidget();
 }
 

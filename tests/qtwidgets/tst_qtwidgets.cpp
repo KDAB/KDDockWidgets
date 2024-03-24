@@ -29,6 +29,7 @@
 #include "qtwidgets/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Platform.h"
+#include "core/Action_p.h"
 #include "core/DropArea.h"
 #include "core/Separator.h"
 #include "core/Group.h"
@@ -974,6 +975,37 @@ void TestQtWidgets::tst_toggleActionOnSideBar()
 
     QVERIFY(dw1->isInSideBar());
     QVERIFY(!dw1->isInMainWindow());
+
+
+    // Count how many times toggleActions triggers:
+    int openCount = 0;
+    int closeCount = 0;
+    KDBindings::ScopedConnection conn = action->d->toggled.connect([&](bool t) {
+        if (t)
+            openCount++;
+        else
+            closeCount++;
+    });
+
+    // Make it visible on sidebar:
+    m1->toggleOverlayOnSideBar(dw1);
+    QCOMPARE(openCount, 1);
+    QCOMPARE(closeCount, 0);
+
+    // close it on sidebar
+    m1->toggleOverlayOnSideBar(dw1);
+    QCOMPARE(openCount, 1);
+    QCOMPARE(closeCount, 1);
+
+    // Make visible on sidebar again
+    m1->toggleOverlayOnSideBar(dw1);
+    QCOMPARE(openCount, 2);
+    QCOMPARE(closeCount, 1);
+
+    // Click the unpin button, docks in main window, no toggling should happen
+    dw1->titleBar()->onAutoHideClicked();
+    QCOMPARE(openCount, 2);
+    QCOMPARE(closeCount, 1);
 }
 
 void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
