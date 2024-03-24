@@ -1004,9 +1004,7 @@ void TestQtWidgets::tst_toggleActionOnSideBar()
 
     // Click the unpin button, docks in main window, no toggling should happen
     dw1->titleBar()->onAutoHideClicked();
-    QEXPECT_FAIL("", "Fixing", Continue);
     QCOMPARE(openCount, 2);
-    QEXPECT_FAIL("", "Fixing", Continue);
     QCOMPARE(closeCount, 1);
 }
 
