@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update -qq
-          sudo apt install lld ninja-build -y
+          sudo apt install lld ninja-build libspdlog-dev -y
 
       - name: Checkout sources
         uses: actions/checkout@v4
