@@ -53,3 +53,11 @@
    ...
    fun:q_dbus_bus_get_private
 }
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:platformAccessibility
+}

@@ -41,4 +41,4 @@ jobs:
         run: cmake --build build-dev6 --parallel
 
       - name: Run valgrind
-        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 --exit-on-first-error=yes --suppressions=./valgrind.sup  ./build-dev6/bin/qtwidgets_leak_test
+        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 --exit-on-first-error=yes --suppressions=./valgrind.sup  ./build-dev6/bin/qtwidgets_leak_test -platform offscreen
