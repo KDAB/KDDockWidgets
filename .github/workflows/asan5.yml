@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: ASAN Qt5 Nightly
+name: Nightly ASAN Qt5
 
 on:
   schedule:
