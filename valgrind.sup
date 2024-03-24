@@ -61,3 +61,11 @@
    ...
    fun:platformAccessibility
 }
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:FcGetDefaultLangs
+}
