@@ -69,14 +69,16 @@ protected:
     /// By default it's used to honour Config::Flag_AllowSwitchingTabsViaMenu
     virtual void showContextMenu(QPoint pos);
 
-private:
-    void updateMargins();
-    void setupTabBarButtons();
-    Q_DISABLE_COPY(TabWidgetWidget)
+    virtual void updateMargins();
+    virtual void setupTabBarButtons();
+
     TabBar *const m_tabBar;
     QHBoxLayout *m_cornerWidgetLayout = nullptr;
     QAbstractButton *m_floatButton = nullptr;
     QAbstractButton *m_closeButton = nullptr;
+
+private:
+    Q_DISABLE_COPY(TabWidgetWidget)
 };
 }
 
