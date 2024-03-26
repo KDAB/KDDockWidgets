@@ -1095,6 +1095,21 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_doubleScheduleDelete()
+{
+    EnsureTopLevelsDeleted e;
+    auto dock1 =
+        createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {}, {}, false);
+    dock1->show();
+
+    dock1->dptr()->group()->scheduleDeleteLater();
+    dock1->dptr()->group()->scheduleDeleteLater();
+
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_repeatedShowHide()
 {
     EnsureTopLevelsDeleted e;
@@ -6137,6 +6152,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_redockToMDIRestoresPosition),
         TEST(tst_maximizeButton),
         TEST(tst_restoreAfterUnminimized),
+        TEST(tst_doubleScheduleDelete),
 #endif
         TEST(tst_keepLast)
 };

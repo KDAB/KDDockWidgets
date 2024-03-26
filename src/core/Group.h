@@ -336,7 +336,11 @@ protected:
     Core::TabBar *const m_tabBar;
     Core::TitleBar *const m_titleBar;
 
+#ifdef DOCKS_DEVELOPER_MODE
+public:
+#else
 private:
+#endif
     KDDW_DELETE_COPY_CTOR(Group)
     friend class ::TestDocks;
     friend class KDDockWidgets::Core::Stack;
