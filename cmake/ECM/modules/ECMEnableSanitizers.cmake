@@ -97,7 +97,7 @@ macro (check_compiler_version gcc_required_version clang_required_version msvc_r
         )
     )
         # error !
-        message(FATAL_ERROR "You ask to enable the sanitizer ${CUR_SANITIZER},
+        message(STATUS "You ask to enable the sanitizer ${CUR_SANITIZER},
         but your compiler ${CMAKE_CXX_COMPILER_ID} version ${CMAKE_CXX_COMPILER_VERSION}
         does not support it !
         You should use at least GCC ${gcc_required_version}, Clang ${clang_required_version}
