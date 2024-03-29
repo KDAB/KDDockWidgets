@@ -176,7 +176,8 @@ function(ECM_GENERATE_HEADERS camelcase_forwarding_headers_var)
         endif()
 
         set(_actualheader "${CMAKE_CURRENT_SOURCE_DIR}/${EGH_RELATIVE}${originalbasename}.${EGH_HEADER_EXTENSION}")
-        if (NOT EXISTS ${_actualheader})
+        get_source_file_property(_generated "${_actualheader}" GENERATED)
+        if (NOT _generated AND NOT EXISTS ${_actualheader})
             message(FATAL_ERROR "Could not find \"${_actualheader}\"")
         endif()
 
