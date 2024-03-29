@@ -14,7 +14,7 @@ Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: GPL-2.0-only OR GPL-3.0-only
 
 #misc config files
-Files: .pre-commit-config.yaml .codespellrc .krazy .cmake-format .clang-format .clangd .clazy .clang-tidy .gitignore .mdlrc .mdlrc.rb .pep8 .pylintrc appveyor.yml mkdocs.yml .github/workflows/mdbook.yml code.dev-*.code-workspace code.dev*.code-workspace vscode.code-workspace docs/api/Doxyfile.cmake distro/* *.yaml  .github/workflows/pip-requirements.txt valgrind.sup
+Files: .pre-commit-config.yaml .codespellrc .krazy .cmake-format .clang-format .clangd .clazy .clang-tidy .gitignore .mdlrc .mdlrc.rb .pep8 .pylintrc .editorconfig .shellcheckrc appveyor.yml mkdocs.yml .github/workflows/mdbook.yml code.dev-*.code-workspace code.dev*.code-workspace vscode.code-workspace docs/api/Doxyfile.cmake distro/* *.yaml  .github/workflows/pip-requirements.txt valgrind.sup
 Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: BSD-3-Clause
 
