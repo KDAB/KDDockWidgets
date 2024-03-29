@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2020-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Renato Araujo Oliveira Filho <renato.araujo@kdab.com>
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -72,10 +72,11 @@ message(STATUS "Shiboken base dir:          ${SHIBOKEN_BASEDIR}")
 message(STATUS "Shiboken custom path:       ${SHIBOKEN_CUSTOM_PREFIX}")
 
 if(SHIBOKEN_BASEDIR)
+    # Alternatively we could do find_package(Shiboken6Tools)?
     find_path(
         SHIBOKEN_INCLUDE_DIR shiboken.h
+        PATH_SUFFIXES shiboken6
         PATHS ${SHIBOKEN_CUSTOM_PREFIX} ${SHIBOKEN_GENERATOR_BASEDIR}/include
-        NO_DEFAULT_PATH
     )
     if(MSVC)
         set(SHIBOKEN_LIBRARY_BASENAMES "shiboken6.abi3.lib")
@@ -98,21 +99,21 @@ if(SHIBOKEN_BASEDIR)
     endif()
 
     if(NOT SHIBOKEN_INCLUDE_DIR)
+        message(STATUS "No include dir found for Shiboken")
         return()
     endif()
     set(SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_CUSTOM_PREFIX})
     list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_BASEDIR})
     list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_GENERATOR_BASEDIR})
-    find_file(
-        SHIBOKEN_LIBRARY ${SHIBOKEN_LIBRARY_BASENAMES}
+    find_library(
+        SHIBOKEN_LIBRARY
+        NAMES ${SHIBOKEN_LIBRARY_BASENAMES}
         PATHS ${SHIBOKEN_SEARCH_PATHS}
-        NO_DEFAULT_PATH
     )
 
     find_program(
         SHIBOKEN_BINARY shiboken6
         PATHS ${SHIBOKEN_SEARCH_PATHS}
-        NO_DEFAULT_PATH
     )
 endif()
 if(SHIBOKEN_INCLUDE_DIR
