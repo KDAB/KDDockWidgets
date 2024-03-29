@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2020-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Renato Araujo Oliveira Filho <renato.araujo@kdab.com>
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -86,9 +86,10 @@ if(PYSIDE6_FOUND)
     #PySide
     #===============================================================================
     find_path(
-        PYSIDE_INCLUDE_DIR pyside.h
-        PATHS ${PYSIDE6_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide6
-        NO_DEFAULT_PATH
+        PYSIDE_INCLUDE_DIR
+        pyside.h
+        PATH_SUFFIXES PySide6
+        PATHS ${PYSIDE6_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include
     )
 
     # Platform specific library names
@@ -102,15 +103,16 @@ if(PYSIDE6_FOUND)
         set(PYSIDE_LIBRARY_BASENAMES "libpyside6.${PYSIDE6_SUFFIX}")
     endif()
 
-    find_file(
-        PYSIDE_LIBRARY ${PYSIDE_LIBRARY_BASENAMES}
+    find_library(
+        PYSIDE_LIBRARY
+        NAMES ${PYSIDE_LIBRARY_BASENAMES}
         PATHS ${PYSIDE6_BASEDIR} ${PYSIDE_CUSTOM_PREFIX}/lib
-        NO_DEFAULT_PATH
     )
 
     find_path(
-        PYSIDE_TYPESYSTEMS typesystem_core.xml
-        PATHS ${PYSIDE6_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide6/typesystems
+        PYSIDE_TYPESYSTEMS
+        typesystem_core.xml
+        PATHS ${PYSIDE6_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide6/typesystems /usr/share/PySide6/typesystems
         NO_DEFAULT_PATH
     )
 endif()
