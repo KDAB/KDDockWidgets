@@ -135,7 +135,12 @@
         },
         "options": {
           "cwd": "${command:cmake.buildDirectory}"
-        },
+        }
+      },
+      {
+        "label": "Run Qt Assistant",
+        "type": "shell",
+        "command": "assistant",
         "problemMatcher": []
       }
     ]
