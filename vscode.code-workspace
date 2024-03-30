@@ -142,6 +142,12 @@
         "type": "shell",
         "command": "assistant",
         "problemMatcher": []
+      },
+      {
+        "label": "Run Qt Designer",
+        "type": "shell",
+        "command": "designer",
+        "problemMatcher": []
       }
     ]
   }
