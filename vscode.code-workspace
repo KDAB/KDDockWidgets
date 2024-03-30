@@ -15,7 +15,7 @@
       "Gruntfuggly.todo-tree",
       "bbenoist.QML",
       "ms-vscode.cmake-tools"
-    ],
+    ]
   },
   "settings": {
     "files.trimTrailingWhitespace": true,
@@ -63,7 +63,7 @@
           "1600",
           "--height",
           "1600",
-          "${command:cmake.launchTargetPath} -platform wayland",
+          "${command:cmake.launchTargetPath} -platform wayland"
         ],
         "cwd": "${command:cmake.buildDirectory}"
       },
@@ -109,7 +109,6 @@
         "cwd": "${workspaceFolder:kddockwidgets}"
       },
       {
-        // Launches C++ but waits for Dart debugger. User has to launch the "Flutter attach"
         "name": "Flutter example (native,wait)",
         "request": "launch",
         "type": "lldb",
@@ -117,7 +116,7 @@
         "cwd": "${workspaceFolder:kddockwidgets}",
         "args": [
           "--wait"
-        ],
+        ]
       }
     ]
   },
