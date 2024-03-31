@@ -73,7 +73,13 @@
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
         "args": [],
-        "cwd": "${command:cmake.buildDirectory}"
+        "cwd": "${command:cmake.buildDirectory}",
+        "sourceFileMap": {
+          "C:/work/build/qt5_workdir/w/s": "${QTDIR}/../Src",
+          "Q:/qt5_workdir/w/s": "${QTDIR}/../Src",
+          "C:/Users/qt/work/install": "${QTDIR}/../Src",
+          "C:/Users/qt/work/qt": "${QTDIR}/../Src"
+        }
       },
       {
         "name": "Flutter attach",
