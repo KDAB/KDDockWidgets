@@ -65,7 +65,8 @@
           "1600",
           "${command:cmake.launchTargetPath} -platform wayland"
         ],
-        "cwd": "${command:cmake.buildDirectory}"
+        "cwd": "${command:cmake.buildDirectory}",
+        "gen.os": "linux"
       },
       {
         "name": "Current Target (VS)",
@@ -74,6 +75,7 @@
         "program": "${command:cmake.launchTargetPath}",
         "args": [],
         "cwd": "${command:cmake.buildDirectory}",
+        "gen.os": "windows",
         "sourceFileMap": {
           "C:/work/build/qt5_workdir/w/s": "${QTDIR}/../Src",
           "Q:/qt5_workdir/w/s": "${QTDIR}/../Src",
@@ -86,7 +88,8 @@
         "request": "attach",
         "type": "dart",
         "packages": "tests/flutter_tests_embedder/.dart_tool/package_config.json",
-        "vmServiceUri": "${command:dart.promptForVmService}"
+        "vmServiceUri": "${command:dart.promptForVmService}",
+        "gen.os": "linux"
       },
       {
         "name": "Flutter test (dart)",
@@ -97,7 +100,8 @@
         "deviceId": "kddw_test_gltf_embedder",
         "args": [
           "-v"
-        ]
+        ],
+        "gen.os": "linux"
       },
       {
         "name": "Flutter example (dart)",
@@ -105,14 +109,16 @@
         "type": "dart",
         "flutterMode": "debug",
         "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter",
-        "deviceId": "linux"
+        "deviceId": "linux",
+        "gen.os": "linux"
       },
       {
         "name": "Flutter example (native)",
         "request": "launch",
         "type": "lldb",
         "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
-        "cwd": "${workspaceFolder:kddockwidgets}"
+        "cwd": "${workspaceFolder:kddockwidgets}",
+        "gen.os": "linux"
       },
       {
         "name": "Flutter example (native,wait)",
@@ -122,7 +128,8 @@
         "cwd": "${workspaceFolder:kddockwidgets}",
         "args": [
           "--wait"
-        ]
+        ],
+        "gen.os": "linux"
       }
     ]
   },
@@ -130,6 +137,7 @@
     "version": "2.0.0",
     "tasks": [
       {
+        "gen.os": "linux",
         "label": "Run current target under valgrind",
         "command": "/usr/bin/valgrind",
         "type": "shell",
@@ -141,7 +149,8 @@
         },
         "options": {
           "cwd": "${command:cmake.buildDirectory}"
-        }
+        },
+        "problemMatcher": []
       },
       {
         "label": "Run Qt Assistant",
