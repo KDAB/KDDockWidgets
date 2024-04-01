@@ -2805,8 +2805,6 @@ void TestQtWidgets::tst_addDockWidgetToContainingWindowNested()
 
         QCOMPARE(d1->dockWidget()->mainWindow(), m1.get());
         QCOMPARE(d2->dockWidget()->mainWindow(), nestedMainWindow.get());
-
-        QEXPECT_FAIL("", "Bug #386, to be fixed", Continue);
         QCOMPARE(d3->dockWidget()->mainWindow(), nestedMainWindow.get());
     }
 }
