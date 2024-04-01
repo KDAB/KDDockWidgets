@@ -56,12 +56,7 @@
           "KDDW_TEST_FRONTEND": "1"
         },
         "gen.os": "linux",
-        "sourceMap": {
-          "/home/qt/work/qt": "${QT_INSTALL}/../Src"
-        },
-        "initCommands": [
-          "command script import ${QT_SDK_INSTALL}/Tools/QtCreator/share/qtcreator/debugger/lldbbridge.py"
-        ]
+        "@@{linux_lldb_printers}": ""
       },
       {
         "name": "Current Target (LLDB macOS)",
@@ -94,7 +89,8 @@
           "${command:cmake.launchTargetPath} -platform wayland"
         ],
         "cwd": "${command:cmake.buildDirectory}",
-        "gen.os": "linux"
+        "gen.os": "linux",
+        "@@{linux_lldb_printers}": ""
       },
       {
         "name": "Current Target (VS)",
@@ -194,5 +190,15 @@
         "problemMatcher": []
       }
     ]
+  },
+  "gen.globals": {
+    "linux_lldb_printers": {
+      "sourceMap": {
+        "/home/qt/work/qt": "${QT_INSTALL}/../Src"
+      },
+      "initCommands": [
+        "command script import ${QT_SDK_INSTALL}/Tools/QtCreator/share/qtcreator/debugger/lldbbridge.py"
+      ]
+    }
   }
 }
