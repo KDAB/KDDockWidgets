@@ -54,7 +54,7 @@ KDDW_QCORO_TASK tst_addWidgetHidden()
 
     auto group = dw->dptr()->group();
     delete dw;
-    KDDW_CO_AWAIT Core::Platform::instance()->tests_waitForDeleted(group);
+    KDDW_CO_AWAIT Core::Platform::instance() -> tests_waitForDeleted(group);
 
     KDDW_TEST_RETURN(true);
 }

@@ -115,7 +115,7 @@ void TestDocks::tst_resizeWindow()
     }
 
     m->view()->showMaximized();
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
 
     const int maximizedWidth1 = dock1->width();
     const int maximizedWidth2 = dock2->width();
@@ -126,7 +126,7 @@ void TestDocks::tst_resizeWindow()
     QVERIFY(relativeDifference <= 0.01);
 
     m->view()->showNormal();
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
 
     const int newWidth1 = dock1->width();
     const int newWidth2 = dock2->width();
@@ -343,7 +343,7 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
 }
 
 int main(int argc, char *argv[])
