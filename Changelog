@@ -21,6 +21,7 @@
   - Fixed double-click on titlebar not floating it if auto-hide flag was enabled
   - Added Config::setLayoutSpacing(int)
   - LayoutSaverOption::Skip now honours docked dock widgets
+  - Fixed DockWidget::addDockWidgetToContainingWindow() when using nested main windows (#386)
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.

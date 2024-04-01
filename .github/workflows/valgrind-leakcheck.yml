@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Nightly Valgrind qtwidgets_leak_test
+name: Valgrind qtwidgets_leak_test
 
 on:
   push:
@@ -41,4 +41,4 @@ jobs:
         run: cmake --build build-dev6 --parallel
 
       - name: Run valgrind
-        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 --exit-on-first-error=yes --suppressions=./valgrind.sup ./build-dev6/bin/qtwidgets_leak_test -platform offscreen
+        run: valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=yes --error-exitcode=1 --exit-on-first-error=yes --suppressions=./valgrind.sup ./build-dev6/bin/qtwidgets_leak_test -platform offscreen
