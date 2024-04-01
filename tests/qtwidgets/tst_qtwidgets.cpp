@@ -214,6 +214,7 @@ private Q_SLOTS:
     void tst_neighbourSqueezeStrategy();
     void tst_tabBarIcons();
     void tst_debugWidgetViewer();
+    void tst_addDockWidgetToContainingWindowNested();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2762,6 +2763,52 @@ void TestQtWidgets::tst_debugWidgetViewer()
     // Tests that DebugWidgetViewer builds and can be created destroyed
     // not worth doing fancy tests as it's a debugging aid
     DebugWidgetViewer viewer;
+}
+
+void TestQtWidgets::tst_addDockWidgetToContainingWindowNested()
+{
+    {
+        EnsureTopLevelsDeleted e;
+
+        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+        auto d1 = new QtWidgets::DockWidget("d1");
+        auto d2 = new QtWidgets::DockWidget("d2");
+
+        m1->addDockWidget(d1->dockWidget(), Location_OnRight);
+        d1->dockWidget()->addDockWidgetToContainingWindow(d2->dockWidget(), KDDockWidgets::Location_OnLeft);
+
+        QVERIFY(d1->dockWidget()->isInMainWindow());
+        QVERIFY(d2->dockWidget()->isInMainWindow());
+    }
+
+    {
+        // Tests using addDockWidgetToContainingWindow when dock is nested
+        EnsureTopLevelsDeleted e;
+
+        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+        auto nestedMainWindow = createMainWindow(QSize(1000, 500), {}, "mw2");
+
+        auto d1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container"));
+        auto nestedMainWindowQWidget = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
+        d1->setWidget(nestedMainWindowQWidget);
+        m1->addDockWidget(d1->asDockWidgetController(), Location_OnBottom);
+
+        auto d2 = new QtWidgets::DockWidget("d2");
+        nestedMainWindow->addDockWidget(d2->dockWidget(), Location_OnRight);
+
+        auto d3 = new QtWidgets::DockWidget("d3");
+        d2->dockWidget()->addDockWidgetToContainingWindow(d3->dockWidget(), Location_OnRight);
+
+        QVERIFY(d1->dockWidget()->isInMainWindow());
+        QVERIFY(d2->dockWidget()->isInMainWindow());
+        QVERIFY(d3->dockWidget()->isInMainWindow());
+
+        QCOMPARE(d1->dockWidget()->mainWindow(), m1.get());
+        QCOMPARE(d2->dockWidget()->mainWindow(), nestedMainWindow.get());
+
+        QEXPECT_FAIL("", "Bug #386, to be fixed", Continue);
+        QCOMPARE(d3->dockWidget()->mainWindow(), nestedMainWindow.get());
+    }
 }
 
 void TestQtWidgets::tst_tabBarIcons()
