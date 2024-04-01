@@ -46,7 +46,7 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Current Target (LLDB)",
+        "name": "Current Target (LLDB Linux)",
         "type": "lldb",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
@@ -54,7 +54,32 @@
         "cwd": "${command:cmake.buildDirectory}",
         "env": {
           "KDDW_TEST_FRONTEND": "1"
-        }
+        },
+        "gen.os": "linux",
+        "sourceMap": {
+          "/home/qt/work/qt": "${QT_INSTALL}/../Src"
+        },
+        "initCommands": [
+          "command script import ${QT_SDK_INSTALL}/Tools/QtCreator/share/qtcreator/debugger/lldbbridge.py"
+        ]
+      },
+      {
+        "name": "Current Target (LLDB macOS)",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${command:cmake.launchTargetPath}",
+        "args": [],
+        "cwd": "${command:cmake.buildDirectory}",
+        "env": {
+          "KDDW_TEST_FRONTEND": "1"
+        },
+        "gen.os": "macos",
+        "sourceMap": {
+          "/Users/qt/work/qt": "${QT_INSTALL}/../Src"
+        },
+        "initCommands": [
+          "command script import \"${QT_SDK_INSTALL}/Qt Creator.app/Contents/Resources/debugger/lldbbridge.py\""
+        ]
       },
       {
         "name": "Example via Wayland",
@@ -79,11 +104,12 @@
         "args": [],
         "cwd": "${command:cmake.buildDirectory}",
         "gen.os": "windows",
+        "visualizerFile": "${workspaceFolder}/qt6.natvis",
         "sourceFileMap": {
-          "C:/work/build/qt5_workdir/w/s": "${QTDIR}/../Src",
-          "Q:/qt5_workdir/w/s": "${QTDIR}/../Src",
-          "C:/Users/qt/work/install": "${QTDIR}/../Src",
-          "C:/Users/qt/work/qt": "${QTDIR}/../Src"
+          "C:/work/build/qt5_workdir/w/s": "${QT_INSTALL}/../Src",
+          "Q:/qt5_workdir/w/s": "${QT_INSTALL}/../Src",
+          "C:/Users/qt/work/install": "${QT_INSTALL}/../Src",
+          "C:/Users/qt/work/qt": "${QT_INSTALL}/../Src"
         }
       },
       {
