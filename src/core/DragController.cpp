@@ -738,8 +738,6 @@ bool DragController::onDnDEvent(View *view, Event *e)
                 if (activeState()->handleDrop(static_cast<DropEvent *>(e), dropArea))
                     return true;
                 break;
-            default:
-                break;
             }
         }
     } else if (e->type() == Event::DragEnter && isDragging()) {

@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>stylesheet.qss</file>
-        <file>close.png</file>
-    </qresource>
-</RCC>

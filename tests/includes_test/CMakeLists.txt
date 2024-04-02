@@ -20,4 +20,3 @@ endif()
 
 add_executable(includes_test main.cpp)
 target_link_libraries(includes_test PRIVATE KDAB::kddockwidgets)
-set_compiler_flags(includes_test)
