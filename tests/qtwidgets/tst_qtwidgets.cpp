@@ -1233,6 +1233,11 @@ void TestQtWidgets::tst_sidebarCloseReason()
         expectedLastReason = CloseReason::TitleBarCloseButton;
         dw1->titleBar()->onCloseClicked();
         QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+
+        expectedLastReason = CloseReason::PinButton;
+        dw1->open();
+        m1->moveToSideBar(dw1);
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
     }
 }
 

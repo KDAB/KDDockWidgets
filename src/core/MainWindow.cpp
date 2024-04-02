@@ -529,6 +529,7 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
 
     if (Core::SideBar *sb = sideBar(location)) {
         ScopedValueRollback rollback(dw->d->m_isMovingToSideBar, true);
+        CloseReasonSetter reason(CloseReason::PinButton);
         dw->forceClose();
         sb->addDockWidget(dw);
     } else {
