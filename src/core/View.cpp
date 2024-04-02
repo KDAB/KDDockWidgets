@@ -53,10 +53,16 @@ View::View(Controller *controller, ViewType type)
     : d(new Private(this, QString::number(KDDockWidgets::s_nextId++), type))
     , m_controller(maybeCreateController(controller, type, this))
 {
+    if (type != ViewType::ViewWrapper)
+        qDebug() << "CTOR Core::View" << this;
 }
 
 View::~View()
 {
+    const bool isWrapper = d->m_type == ViewType::ViewWrapper;
+    if (!isWrapper)
+        qDebug() << "DTOR START ~Core::View" << this;
+
     m_inDtor = true;
     d->beingDestroyed.emit();
 
@@ -77,6 +83,9 @@ View::~View()
 #endif
 
     delete d;
+
+    if (!isWrapper)
+        qDebug() << "DTOR END ~Core::View" << this;
 }
 
 QString View::Private::id() const

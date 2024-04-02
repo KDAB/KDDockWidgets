@@ -71,10 +71,13 @@ DockWidget::DockWidget(View *view, const QString &name, DockWidgetOptions option
     // keep the previous known dock widget position
     if (layoutSaverOptions & LayoutSaverOption::CheckForPreviousRestore)
         LayoutSaver::Private::restorePendingPositions(this);
+
+    qDebug() << "CTOR Core::Dockwidget" << uniqueName();
 }
 
 DockWidget::~DockWidget()
 {
+    qDebug() << "DTOR ~Core::Dockwidget" << uniqueName();
     m_inDtor = true;
     d->m_windowActivatedConnection->disconnect();
     d->m_windowDeactivatedConnection->disconnect();
@@ -808,15 +811,20 @@ void DockWidget::Private::close()
 {
     if (m_inClose)
         return;
+
     ScopedValueRollback guard(m_inClose, true);
 
     if (!m_processingToggleAction && !q->isOpen()) {
+        qDebug() << "START1 DockWidget::close" << m_uniqueName;
         q->setParentView(nullptr);
+        qDebug() << "END1 DockWidget::close" << m_uniqueName;
         return;
     }
 
     if (m_isPersistentCentralDockWidget)
         return;
+
+    qDebug() << "START DockWidget::close" << m_uniqueName;
 
     m_lastCloseReason = DockRegistry::self()->currentCloseReason();
     setIsOpen(false);
@@ -854,6 +862,8 @@ void DockWidget::Private::close()
         aboutToDeleteOnClose.emit();
         q->destroyLater();
     }
+
+    qDebug() << "END DockWidget::close" << m_uniqueName;
 }
 
 bool DockWidget::Private::restoreToPreviousPosition()
@@ -1142,6 +1152,8 @@ void DockWidget::Private::setIsOpen(bool is)
     if (is == m_isOpen || m_inOpenSetter)
         return;
 
+    qDebug() << "START DockWidget::setIsOpen" << is << m_uniqueName;
+
     ScopedValueRollback guard(m_inOpenSetter, true);
 
     if (!is)
@@ -1172,6 +1184,8 @@ void DockWidget::Private::setIsOpen(bool is)
     }
 
     isOpenChanged.emit(is);
+
+    qDebug() << "END DockWidget::setIsOpen" << is << m_uniqueName;
 }
 
 QString DockWidget::Private::uniqueName() const

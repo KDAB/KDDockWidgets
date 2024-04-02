@@ -26,10 +26,16 @@ using namespace KDDockWidgets::Core;
 Controller::Controller(ViewType type, View *view)
     : d(new Private(type, view))
 {
+    if (type != ViewType::ViewWrapper)
+        qDebug() << "CTOR Core::Controller" << this << int(type);
 }
 
 Controller::~Controller()
 {
+    const bool isWrapper = type() == ViewType::ViewWrapper;
+    if (!isWrapper)
+        qDebug() << "DTOR START ~Core::Controller" << this;
+
     d->aboutToBeDeleted.emit();
 
     m_inDtor = true;
@@ -37,6 +43,8 @@ Controller::~Controller()
         d->m_view->d->free();
 
     delete d;
+    if (!isWrapper)
+        qDebug() << "DTOR END ~Core::Controller" << this;
 }
 
 ViewType Controller::type() const

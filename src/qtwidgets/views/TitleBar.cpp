@@ -144,6 +144,7 @@ TitleBar::TitleBar(Core::TitleBar *controller, Core::View *parent)
     , m_layout(new QHBoxLayout(this))
     , d(new Private())
 {
+    qDebug() << "CTOR QtWidgets::TitleBar" << this;
 }
 
 TitleBar::TitleBar(QWidget *parent)
@@ -153,10 +154,12 @@ TitleBar::TitleBar(QWidget *parent)
     , d(new Private())
 {
     m_titleBar->init();
+    qDebug() << "CTOR QtWidgets::TitleBar2" << this;
 }
 
 TitleBar::~TitleBar()
 {
+    qDebug() << "DTOR QtWidgets::TitleBar" << this;
     delete d;
 
     /// The window deletion might have been triggered by pressing a button, so use deleteLater()
@@ -167,17 +170,21 @@ TitleBar::~TitleBar()
         if (auto kddwButton = qobject_cast<Button *>(button); !kddwButton->m_inEventHandler) {
             // Minor optimization. If the button is not in an event handler it's safe to delete immediately.
             // This saves us from memory leaks at shutdown when using the below QTimer::singleShot() hack.
+            qDebug() << "DTOR QtWidgets::TitleBar button deleted directly" << this;
             delete kddwButton;
             continue;
         }
 
         button->setParent(nullptr);
         if (usesQTBUG83030Workaround()) {
+            qDebug() << "DTOR QtWidgets::TitleBar button scheduled with QTimer" << this;
             QTimer::singleShot(0, button, [button] {
+                qDebug() << "DTOR QtWidgets::TitleBar button deleted with QTimer";
                 /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
                 delete button;
             });
         } else {
+            qDebug() << "DTOR QtWidgets::TitleBar button deleted later" << this;
             button->deleteLater();
         }
     }

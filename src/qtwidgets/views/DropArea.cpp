@@ -25,10 +25,14 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
     if (isWayland()) {
         setAcceptDrops(true);
     }
+
+    qDebug() << "QtWidgets::DropArea" << this;
 }
 
 DropArea::~DropArea()
 {
+    qDebug() << "START QtWidgets::~DropArea" << this;
     if (!d->freed())
         m_dropArea->viewAboutToBeDeleted();
+    qDebug() << "END QtWidgets::~DropArea" << this;
 }

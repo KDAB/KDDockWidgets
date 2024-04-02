@@ -83,6 +83,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 {
+    qDebug() << "MainWindow::addDockWidgetAsTab";
+
     assert(widget);
     KDDW_DEBUG("dock={}", ( void * )widget);
 
@@ -116,6 +118,8 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
                                Core::DockWidget *relativeTo, const InitialOption &option)
 {
+    qDebug() << "MainWindow::addDockWidget" << dw->uniqueName();
+
     if (dw->options() & DockWidgetOption_NotDockable) {
         KDDW_ERROR("Refusing to dock non-dockable widget dw={}", ( void * )dw);
         return;
@@ -132,6 +136,7 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
 void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
                                      KDDockWidgets::Location location, const KDDockWidgets::InitialOption &initialOption)
 {
+    qDebug() << "MainWindow::addDockWidgetToSide" << dockWidget->uniqueName();
     if (!dockWidget || location == Location_None || isMDI())
         return;
 
@@ -524,6 +529,8 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw)
 
 void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
 {
+    qDebug() << "MainWindow::moveToSideBar";
+
     if (dw->isPersistentCentralDockWidget())
         return;
 
@@ -542,6 +549,8 @@ void MainWindow::restoreFromSideBar(Core::DockWidget *dw)
 {
     if (!dw)
         return;
+
+    qDebug() << "MainWindow::restoreFromSideBar";
 
     DockWidget::Private::UpdateActions updateActions(dw);
 
@@ -565,6 +574,7 @@ void MainWindow::overlayOnSideBar(Core::DockWidget *dw)
     if (!dw || dw->isPersistentCentralDockWidget())
         return;
 
+    qDebug() << "MainWindow::overlayOnSideBar";
     const Core::SideBar *sb = sideBarForDockWidget(dw);
     if (!sb) {
         KDDW_ERROR("You need to add the dock widget to the sidebar before you can overlay it");
@@ -593,6 +603,8 @@ void MainWindow::overlayOnSideBar(Core::DockWidget *dw)
 
 void MainWindow::toggleOverlayOnSideBar(Core::DockWidget *dw)
 {
+    qDebug() << "MainWindow::toggleOverlayOnSideBar";
+
     const bool wasOverlayed = d->m_overlayedDockWidget == dw;
     clearSideBarOverlay(); // Because only 1 dock widget can be overlayed each time
     if (!wasOverlayed) {
@@ -605,6 +617,7 @@ void MainWindow::clearSideBarOverlay(bool deleteGroup)
     if (!d->m_overlayedDockWidget)
         return;
 
+    qDebug() << "MainWindow::clearSideBarOverlay";
     auto overlayedDockWidget = d->m_overlayedDockWidget;
     d->m_overlayedDockWidget = nullptr;
 

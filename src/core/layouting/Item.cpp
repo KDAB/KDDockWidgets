@@ -940,6 +940,7 @@ Item::Item(LayoutingHost *hostWidget, ItemContainer *parent)
     , m_host(hostWidget)
 {
     connectParent(parent);
+    qDebug() << "CTOR Item" << this;
 }
 
 Item::Item(bool isContainer, LayoutingHost *hostWidget, ItemContainer *parent)
@@ -949,10 +950,12 @@ Item::Item(bool isContainer, LayoutingHost *hostWidget, ItemContainer *parent)
     , m_host(hostWidget)
 {
     connectParent(parent);
+    qDebug() << "CTOR Item2" << this;
 }
 
 Item::~Item()
 {
+    qDebug() << "DTOR Item" << this;
     m_inDtor = true;
     aboutToBeDeleted.emit();
 

@@ -28,6 +28,7 @@ class DOCKS_EXPORT Group : public View<QWidget>, public Core::GroupViewInterface
     Q_OBJECT
 public:
     explicit Group(Core::Group *controller, QWidget *parent = nullptr);
+    ~Group() override;
     void init() override;
 
     int nonContentsHeight() const override;

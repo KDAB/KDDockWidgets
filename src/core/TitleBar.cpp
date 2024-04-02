@@ -82,6 +82,8 @@ TitleBar::TitleBar(FloatingWindow *parent)
     fwPrivate->numDockWidgetsChanged.connect([this] { d->numDockWidgetsChanged.emit(); });
     fwPrivate->windowStateChanged.connect([this] { updateMaximizeButton(); });
     fwPrivate->activatedChanged.connect([this] { d->isFocusedChanged.emit(); });
+
+    qDebug() << "Core::TitleBar" << this;
 }
 
 TitleBar::TitleBar(Core::View *view)
@@ -93,6 +95,7 @@ TitleBar::TitleBar(Core::View *view)
     , m_supportsAutoHide(false)
     , m_isStandalone(true)
 {
+    qDebug() << "CTOR Core::TitleBar2" << this;
 }
 
 void TitleBar::init()
@@ -115,6 +118,7 @@ void TitleBar::init()
 
 TitleBar::~TitleBar()
 {
+    qDebug() << "DTOR ~Core::TitleBar" << this;
     delete d;
 }
 

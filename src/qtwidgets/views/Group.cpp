@@ -74,6 +74,12 @@ Group::Group(Core::Group *controller, QWidget *parent)
     : View<QWidget>(controller, Core::ViewType::Group, parent)
     , GroupViewInterface(controller)
 {
+    qDebug() << "CTOR QWidgets::Group" << this;
+}
+
+Group::~Group()
+{
+    qDebug() << "DTOR QWidgets::Group" << this;
 }
 
 void Group::init()

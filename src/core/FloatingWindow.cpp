@@ -202,6 +202,8 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
     d->numGroupsChanged.connect([this] {
         d->numDockWidgetsChanged.emit();
     });
+
+    qDebug() << "CTOR Core::FloatingWindow" << this;
 }
 
 FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
@@ -266,6 +268,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
 
 FloatingWindow::~FloatingWindow()
 {
+    qDebug() << "DTOR Core::FloatingWindow" << this;
     m_inDtor = true;
     view()->d->setAboutToBeDestroyed();
 

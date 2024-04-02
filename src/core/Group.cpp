@@ -112,10 +112,12 @@ Group::Group(View *parent, FrameOptions options, int userType)
 
     // NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
     m_inCtor = false;
+    qDebug() << "CTOR Core::Group" << this;
 }
 
 Group::~Group()
 {
+    qDebug() << "DTOR ~Core::Group" << this;
     m_inDtor = true;
     s_dbg_numFrames--;
     if (d->m_layoutItem)
@@ -805,6 +807,7 @@ LayoutSaver::Group Group::serialize() const
 void Group::scheduleDeleteLater()
 {
     KDDW_TRACE("Group::scheduleDeleteLater: {}", ( void * )this);
+    qDebug() << "Core::Group::scheduleDeleteLater" << this << "; being=" << m_beingDeleted;
     m_beingDeleted = true;
 
     if (auto item = layoutItem()) {

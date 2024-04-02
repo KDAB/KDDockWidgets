@@ -95,10 +95,13 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
     });
 
     m_dockWidget->init();
+
+    qDebug() << "CTOR QtWidgets::Dockwidget" << m_dockWidget->uniqueName() << this;
 }
 
 DockWidget::~DockWidget()
 {
+    qDebug() << "DTOR ~QtWidgets::Dockwidget" << this;
     delete d;
 }
 

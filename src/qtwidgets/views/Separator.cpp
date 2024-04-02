@@ -29,6 +29,12 @@ Separator::Separator(Core::Separator *controller, Core::View *parent)
     , m_controller(controller)
 {
     setMouseTracking(true);
+    qDebug() << "CTOR QtWidgets::Separator" << this;
+}
+
+Separator::~Separator()
+{
+    qDebug() << "DTOR ~QtWidgets::Separator" << this;
 }
 
 void Separator::paintEvent(QPaintEvent *ev)

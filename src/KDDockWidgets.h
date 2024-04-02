@@ -23,6 +23,8 @@
 
 #include "QtCompat_p.h"
 
+#include <QtCore/QDebug>
+
 #ifdef KDDW_FRONTEND_QT
 #include "Qt5Qt6Compat_p.h"
 
