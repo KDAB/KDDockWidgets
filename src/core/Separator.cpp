@@ -67,11 +67,13 @@ struct Separator::Private : public LayoutingSeparator
 
     void free() override
     {
+#ifdef KDDW_FRONTEND_QT
         if (Config::self().internalFlags() & Config::InternalFlag_DeleteSeparatorsLater) {
             q->deleteLater();
-        } else {
-            delete q;
+            return;
         }
+#endif
+        delete q;
     }
 
     void raise() override
