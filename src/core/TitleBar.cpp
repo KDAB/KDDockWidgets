@@ -402,7 +402,7 @@ void TitleBar::setIcon(const Icon &icon)
 
 void TitleBar::onCloseClicked()
 {
-    CloseReasonSetter reason(CloseReason::TitleBarButton);
+    CloseReasonSetter reason(CloseReason::TitleBarCloseButton);
 
     const bool closeOnlyCurrentTab = Config::self().flags() & Config::Flag_CloseOnlyCurrentTab;
 
