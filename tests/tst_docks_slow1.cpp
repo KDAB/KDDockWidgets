@@ -72,14 +72,14 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         CHECK(!dock1->isOpen());
         CHECK(!dock1->view()->isVisible());
 
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(group2->view());
+        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(group2->view());
 
         // Check that group2 moved up to y=0
         CHECK_EQ(group2->view()->y(), 0);
 
         // Close 2
         dock2->close();
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock3->view());
+        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock3->view());
 
         CHECK(layout->checkSanity());
         CHECK_EQ(layout->count(), 3);
@@ -99,7 +99,7 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
 
         toRestore2->open();
 
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(group3->view());
+        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(group3->view());
         CHECK(layout->checkSanity());
         CHECK_EQ(layout->count(), 3);
         CHECK_EQ(layout->placeholderCount(), 0);
@@ -167,7 +167,7 @@ KDDW_QCORO_TASK tst_startHidden2()
         CHECK_EQ(layout->count(), 2);
         CHECK_EQ(layout->placeholderCount(), 0);
 
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock2->view());
     }
 
     {
@@ -193,7 +193,7 @@ KDDW_QCORO_TASK tst_startHidden2()
 
         dock2->open();
         dock3->open();
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock2->view());
         layout->checkSanity();
     }
 
@@ -238,7 +238,7 @@ KDDW_QCORO_TASK tst_invalidJSON()
 KDDW_QCORO_TASK tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
     KDDW_TEST_RETURN(true);
 }
 
