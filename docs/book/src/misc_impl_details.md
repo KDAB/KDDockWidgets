@@ -10,7 +10,7 @@ We have the following global event filters:
 - DockRegistry singleton
   Catches expose events to maintain floating window z-order.
   Catches clicking on a MDI dock widget, to raise it.
-  For hidding the auto-hide sidebar overlay when clicking elsewhere.
+  For hiding the auto-hide sidebar overlay when clicking elsewhere.
 
 - FallbackMouseGrabber
   For platforms that don't support grabbing the mouse. Mostly for QtQuick to workaround bugs.

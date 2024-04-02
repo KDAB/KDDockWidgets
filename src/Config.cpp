@@ -42,7 +42,6 @@ static ViewFactory *createDefaultViewFactory()
 
     KDDW_ERROR("No Platform found. Forgot to call KDDockWidgets::initFrontend(<platform>) ?");
     std::terminate();
-    return nullptr;
 }
 
 class Config::Private

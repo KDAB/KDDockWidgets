@@ -2081,10 +2081,10 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
 
     const Vector<double> childPercentages = this->childPercentages();
     const auto count = childSizes.count();
-    const bool widthChanged = oldSize.width() != newSize.width();
-    const bool heightChanged = oldSize.height() != newSize.height();
-    const bool lengthChanged =
-        (q->isVertical() && heightChanged) || (q->isHorizontal() && widthChanged);
+    const bool widthDidChange = oldSize.width() != newSize.width();
+    const bool heightDidChange = oldSize.height() != newSize.height();
+    const bool lengthDidChange =
+        (q->isVertical() && heightDidChange) || (q->isHorizontal() && widthDidChange);
     const int totalNewLength = q->usableLength();
 
     if (strategy == ChildrenResizeStrategy::Percentage) {
@@ -2099,7 +2099,7 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
             SizingInfo &itemSize = childSizes[i];
 
             const double childPercentage = childPercentages.at(i);
-            const int newItemLength = lengthChanged
+            const int newItemLength = lengthDidChange
                 ? (isLast ? remaining : int(childPercentage * totalNewLength))
                 : itemSize.length(m_orientation);
 

@@ -459,14 +459,15 @@
             }
         },
         {
-            "name": "ci-clang-tidy-qt5",
-            "binaryDir": "${sourceDir}/build-clang-tidy-qt5",
+            "name": "ci-clang-tidy-qt6",
+            "binaryDir": "${sourceDir}/build-clang-tidy-qt6",
             "inherits": [
                 "release"
             ],
             "cacheVariables": {
                 "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--warnings-as-errors=*",
-                "KDDockWidgets_EXAMPLES": "OFF"
+                "KDDockWidgets_EXAMPLES": "OFF",
+                "KDDockWidgets_QT6": "ON"
             }
         },
         {

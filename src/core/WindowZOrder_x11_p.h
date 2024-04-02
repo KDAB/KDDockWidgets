@@ -90,7 +90,6 @@ static Core::Window::List orderedWindows(bool &ok)
 {
     KDDW_UNUSED(ok);
     Q_UNREACHABLE();
-    return {};
 }
 }
 

@@ -4562,9 +4562,7 @@ KDDW_QCORO_TASK tst_doubleClickTabToDetach()
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     // Platform::instance()->tests_doubleClickOn(QWindow) doesn't work anymore on Qt6
     // which refactored mouse delivery.
-    KDDW_TEST_RETURN(true);
-#endif
-
+#else
     EnsureTopLevelsDeleted e;
 
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -4583,6 +4581,8 @@ KDDW_QCORO_TASK tst_doubleClickTabToDetach()
     CHECK(dock1->isFloating());
     CHECK(dock2->isFloating());
     CHECK(dock1->floatingWindow() != dock2->floatingWindow());
+#endif
+
     KDDW_TEST_RETURN(true);
 }
 
@@ -5275,8 +5275,9 @@ KDDW_QCORO_TASK tst_mdiZorder()
     // The test is failing on Qt5+QtQuick.
     // Since it actually runs fine on Qt5+QtQuick when running the examples, will
     // just skip the test instead of spending time on Qt5
-    if (Platform::instance()->isQtQuick())
+    if (Platform::instance()->isQtQuick()) {
         KDDW_TEST_RETURN(true);
+    }
 #endif
 
     // Tests that clicking a mdi widget will raise its

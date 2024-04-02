@@ -65,6 +65,8 @@ if(KDDW_FRONTEND_QTWIDGETS)
     _add_test(tst_qtwidgets)
     add_subdirectory(manual/qtwidgets_leaks)
     add_subdirectory(manual/qdockwidget)
+    add_subdirectory(manual/qmdiarea)
+    add_subdirectory(manual/stylesheet)
 endif()
 
 # tst_qtquick
