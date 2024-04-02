@@ -67,7 +67,11 @@ struct Separator::Private : public LayoutingSeparator
 
     void free() override
     {
-        delete q;
+        if (Config::self().internalFlags() & Config::InternalFlag_DeleteSeparatorsLater) {
+            q->deleteLater();
+        } else {
+            delete q;
+        }
     }
 
     void raise() override

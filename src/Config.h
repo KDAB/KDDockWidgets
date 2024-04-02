@@ -174,6 +174,7 @@ public:
         InternalFlag_NoDeleteLaterWorkaround = 128, ///< Disables workaround for QTBUG-83030. Will be the default since Qt 6.7
                                                     /// While the workaround works, it will cause memory leaks at shutdown,
         /// This flag allows to disable the workaround if you think you don't have the complex setup reported in QTBUG-83030
+        InternalFlag_DeleteSeparatorsLater = 256 ///< Uses deleteLater() when disposing of separators
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 

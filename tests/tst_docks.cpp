@@ -346,6 +346,10 @@ KDDW_QCORO_TASK tst_ghostSeparator()
 
     m->multiSplitter()->addMultiSplitter(fw1->multiSplitter(), Location_OnRight);
     CHECK_EQ(m->multiSplitter()->separators().size(), 2);
+
+    if (Config::self().internalFlags() & Config::InternalFlag_DeleteSeparatorsLater)
+        Platform::instance()->tests_wait(100);
+
     CHECK_EQ(Core::Separator::numSeparators(), 2);
 
     delete fw1;
