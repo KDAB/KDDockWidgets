@@ -1,7 +1,7 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 ci:
-    skip: [pylint]
+    skip: [pylint,clang-format]
     autoupdate_schedule: monthly
 
 exclude: ^(cmake/ECM|cmake/KDAB/|src/3rdparty/|code.dev.code-workspace)
@@ -32,7 +32,7 @@ repos:
     exclude: ^(.cmake-format.py|conan/conanfile.py)
     additional_dependencies: ["PySide2", "PySide6"]
 - repo: https://github.com/hhatto/autopep8
-  rev: v2.0.4
+  rev: v2.1.0
   hooks:
   - id: autopep8
 - repo: https://github.com/codespell-project/codespell
@@ -46,15 +46,23 @@ repos:
     exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
   - id: cmake-format
     exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
+- repo: https://github.com/markdownlint/markdownlint
+  rev: v0.12.0
+  hooks:
+  - id: markdownlint
+    entry: mdl
+    language: ruby
+    files: \.(md|mdown|markdown)$
+    exclude: (docs/book/)
 - repo: https://github.com/fsfe/reuse-tool
   rev: v3.0.1
   hooks:
   - id: reuse
 - repo: https://github.com/scop/pre-commit-shfmt
-  rev: v3.7.0-4
+  rev: v3.8.0-1
   hooks:
   - id: shfmt
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.9.0.6
+  rev: v0.10.0.1
   hooks:
   - id: shellcheck

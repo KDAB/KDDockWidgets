@@ -841,7 +841,7 @@ KDDW_QCORO_TASK tst_closeReason()
         // TitleBar close
         dock1->titleBar()->onCloseClicked();
         CHECK(!dock1->isOpen());
-        CHECK_EQ(dock1->lastCloseReason(), CloseReason::TitleBarButton);
+        CHECK_EQ(dock1->lastCloseReason(), CloseReason::TitleBarCloseButton);
 
         // Programmatic close
         dock1->open();
