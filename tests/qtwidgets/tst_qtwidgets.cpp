@@ -182,6 +182,7 @@ private Q_SLOTS:
     void tst_sidebarGrouping();
     void tst_sidebarCrash();
     void tst_sidebarCrash2();
+    void tst_sidebarCloseReason();
     void tst_sidebarSide();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
@@ -1191,6 +1192,48 @@ void TestQtWidgets::tst_sidebarCrash2()
 
     auto b = QtWidgets::ViewWrapper::create(button);
     Tests::clickOn(globalPos, b.get());
+}
+
+void TestQtWidgets::tst_sidebarCloseReason()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget(QStringLiteral("1"));
+        m1->addDockWidget(dw1, Location_OnBottom);
+
+        CloseReason expectedLastReason = CloseReason::Unspecified;
+        KDBindings::ScopedConnection conn = dw1->toggleAction()->d->toggled.connect([&expectedLastReason, dw1](bool open) {
+            // We also check that the value is actually set *before* the QAction firing
+            // as users connect to the action
+            if (!open)
+                Q_ASSERT(dw1->lastCloseReason() == expectedLastReason);
+        });
+
+        expectedLastReason = CloseReason::PinButton;
+        dw1->titleBar()->onAutoHideClicked();
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(!dw1->isOpen());
+
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+
+        m1->overlayOnSideBar(dw1);
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(dw1->isOpen());
+
+        expectedLastReason = CloseReason::OverlayCollapse;
+        m1->clearSideBarOverlay();
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+
+        m1->overlayOnSideBar(dw1);
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(dw1->isOpen());
+        expectedLastReason = CloseReason::TitleBarCloseButton;
+        dw1->titleBar()->onCloseClicked();
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+    }
 }
 
 void TestQtWidgets::tst_sidebarSide()

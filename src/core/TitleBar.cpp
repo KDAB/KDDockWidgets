@@ -558,6 +558,8 @@ void TitleBar::onAutoHideClicked()
         if (groupedAutoHide)
             registry->addSideBarGrouping(dockwidgets);
 
+
+        CloseReasonSetter reason(CloseReason::PinButton);
         for (DockWidget *dw : dockwidgets) {
             if (groupedAutoHide || dw == currentDw)
                 dw->moveToSideBar();

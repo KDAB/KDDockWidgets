@@ -615,9 +615,13 @@ void MainWindow::clearSideBarOverlay(bool deleteGroup)
     const SideBarLocation loc = overlayedDockWidget->sideBarLocation();
     overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(loc, group->geometry());
 
+    CloseReasonSetter reason(CloseReason::OverlayCollapse);
     group->unoverlay();
 
     if (deleteGroup) {
+        // only update actions at the end
+        DockWidget::Private::UpdateActions updateActions(overlayedDockWidget);
+
         overlayedDockWidget->setParent(nullptr);
 
         {
