@@ -1212,7 +1212,7 @@ void TestQtWidgets::tst_sidebarCloseReason()
                 Q_ASSERT(dw1->lastCloseReason() == expectedLastReason);
         });
 
-        expectedLastReason = CloseReason::PinButton;
+        expectedLastReason = CloseReason::MovedToSideBar;
         dw1->titleBar()->onAutoHideClicked();
         QVERIFY(dw1->isInSideBar());
         QVERIFY(!dw1->isOpen());
@@ -1234,7 +1234,7 @@ void TestQtWidgets::tst_sidebarCloseReason()
         dw1->titleBar()->onCloseClicked();
         QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
 
-        expectedLastReason = CloseReason::PinButton;
+        expectedLastReason = CloseReason::MovedToSideBar;
         dw1->open();
         m1->moveToSideBar(dw1);
         QCOMPARE(dw1->lastCloseReason(), expectedLastReason);

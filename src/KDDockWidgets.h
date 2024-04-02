@@ -378,7 +378,7 @@ enum class CloseReason {
     Unspecified = 0, /// probably programmatically
     TitleBarCloseButton = 1, /// User clicked titlebar close button
     Action = 2, /// User clicked menu with QAction
-    PinButton = 4, /// User clicked the pin-button (auto-hide/sidebar/pin-unpin functionallity)
+    MovedToSideBar = 4, /// User clicked the pin-button (or programatically) (auto-hide/sidebar/pin-unpin functionallity)
     OverlayCollapse = 8 /// Dock widget went from overlay to sidebar (auto-hide/sidebar/pin-unpin functionallity)
 };
 
