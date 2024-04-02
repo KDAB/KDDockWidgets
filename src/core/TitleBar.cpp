@@ -41,8 +41,8 @@ using namespace KDDockWidgets::Core;
 
 TitleBar::TitleBar(Group *parent)
     : Controller(
-          ViewType::TitleBar,
-          Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
+        ViewType::TitleBar,
+        Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , d(new Private())
     , m_group(parent)
@@ -67,8 +67,8 @@ TitleBar::TitleBar(Group *parent)
 
 TitleBar::TitleBar(FloatingWindow *parent)
     : Controller(
-          ViewType::TitleBar,
-          Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
+        ViewType::TitleBar,
+        Config::self().viewFactory()->createTitleBar(this, parent ? parent->view() : nullptr))
     , Draggable(view())
     , d(new Private())
     , m_group(nullptr)

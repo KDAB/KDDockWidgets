@@ -280,7 +280,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
     }
 
     // To process 1 event loop and do some delete later. Makes asan happy.
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 
     KDDW_TEST_RETURN(true);
 }
@@ -398,7 +398,7 @@ KDDW_QCORO_TASK tst_detachPos()
 
     const int previousWidth = dock1->width();
     dock1->setFloating(true);
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(400); // Needed for QtQuick
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(400); // Needed for QtQuick
 
     CHECK(std::abs(previousWidth - dock1->width()) < 15); // 15px of difference when floating is fine,
                                                           // due to margins and what not.
@@ -413,7 +413,7 @@ KDDW_QCORO_TASK tst_floatingWindowSize()
     auto dock1 = createDockWidget("1");
     auto fw1 = dock1->window();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     CHECK(!fw1->geometry().isNull());
     CHECK_EQ(fw1->size(), fw1->window()->size());
@@ -475,7 +475,7 @@ KDDW_QCORO_TASK tst_sizeAfterRedock()
     const int height2 = dw2->dptr()->group()->height();
 
     dw2->setFloating(true);
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     CHECK_EQ(height2, dw2->window()->height());
     auto oldFw2 = dw2->floatingWindow();
@@ -987,11 +987,11 @@ KDDW_QCORO_TASK tst_maximizeAndRestore()
     CHECK(dropArea->checkSanity());
 
     m->view()->showMaximized();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
     CHECK(dropArea->checkSanity());
     m->view()->showNormal();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
     CHECK(dropArea->checkSanity());
 
@@ -1063,14 +1063,14 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
         nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
 
         dock1->close();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
         auto layout = fw->dropArea();
         layout->checkSanity();
 
         dock2->close();
         dock1->destroyLater();
         dock2->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock1);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock1);
     }
 
     {
@@ -1090,7 +1090,7 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
 
         dock1->destroyLater();
         dock2->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock1);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock1);
     }
     KDDW_TEST_RETURN(true);
 }
@@ -1105,7 +1105,7 @@ KDDW_QCORO_TASK tst_doubleScheduleDelete()
     dock1->dptr()->group()->scheduleDeleteLater();
     dock1->dptr()->group()->scheduleDeleteLater();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     KDDW_TEST_RETURN(true);
 }
@@ -1158,7 +1158,7 @@ KDDW_QCORO_TASK tst_addAsPlaceholder()
 
     // Cleanup
     dock2->destroyLater();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock2);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2);
     KDDW_TEST_RETURN(true);
 }
 
@@ -1244,11 +1244,11 @@ KDDW_QCORO_TASK tst_removeItem()
 
     auto group2 = dock2->dptr()->group();
     dock2->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group2);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group2);
 
     auto group3 = dock3->dptr()->group();
     dock3->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group3);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group3);
 
     // The second anchor is now following the 3rd, while the 3rd is following 'bottom'
     layout->removeItem(dock3->dptr()->lastPosition()->lastItem()); // will trigger the 3rd anchor to
@@ -1260,7 +1260,7 @@ KDDW_QCORO_TASK tst_removeItem()
     dock1->destroyLater();
     dock2->destroyLater();
     dock3->destroyLater();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock3);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock3);
     KDDW_TEST_RETURN(true);
 }
 
@@ -1332,7 +1332,7 @@ KDDW_QCORO_TASK tst_startClosed()
     m->addDockWidget(dock1, Location_OnTop);
     Core::Group *group1 = dock1->dptr()->group();
     dock1->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group1);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1);
 
     CHECK_EQ(layout->count(), 1);
     CHECK_EQ(layout->placeholderCount(), 1);
@@ -1406,7 +1406,7 @@ KDDW_QCORO_TASK tst_refUnrefItem()
 
     // 1. Delete a dock widget directly. It should delete its group and also the Item
     delete dock1;
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group1);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1);
     CHECK(!group1.data());
     CHECK(!item1.data());
 
@@ -1423,7 +1423,7 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     // 3. Close dock2. group2 should be deleted, but item2 preserved.
     CHECK_EQ(item2->refCount(), 2);
     dock2->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group2);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group2);
     CHECK(dock2);
     CHECK(item2.data());
     CHECK_EQ(item2->refCount(), 1);
@@ -1441,7 +1441,7 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     ObjectGuard<Core::Group> group4 = dock4->dptr()->group();
     ObjectGuard<Item> item4 = layout->itemForGroup(group4);
     dock4->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group4);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group4);
     CHECK_EQ(item4->refCount(), 1);
     CHECK(item4->isPlaceholder());
     layout->checkSanity();
@@ -1506,7 +1506,7 @@ KDDW_QCORO_TASK tst_placeholderCount()
     CHECK_EQ(layout->placeholderCount(), 0);
     layout->checkSanity();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     KDDW_TEST_RETURN(true);
 }
 
@@ -1570,7 +1570,7 @@ KDDW_QCORO_TASK tst_setAsCurrentTab()
 
     delete dock1;
     delete dock2;
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     KDDW_TEST_RETURN(true);
 }
 
@@ -1663,7 +1663,7 @@ KDDW_QCORO_TASK tst_floatMaintainsSize()
     dw1->open();
 
     dw2->setFloating(true);
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     CHECK(std::abs(dw2->width() - oldWidth2) < 16); // 15px for margins
     KDDW_TEST_RETURN(true);
@@ -1821,7 +1821,7 @@ KDDW_QCORO_TASK tst_closeAllDockWidgets()
     DockRegistry::self()->clear();
     layout->checkSanity();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     CHECK(!fw);
 
     CHECK(dock1->window()->equals(dock1->view()));
@@ -2092,7 +2092,7 @@ KDDW_QCORO_TASK tst_setFloatingWhenWasTabbed()
     m->addDockWidgetAsTab(dock3);
     m->destroyLater();
     auto window = m.release();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(window);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(window);
     KDDW_TEST_RETURN(true);
 }
 
@@ -2177,9 +2177,9 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         EnsureTopLevelsDeleted e;
         auto fw = createFloatingWindow();
         auto dock2 = createDockWidget("doc2");
-        KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
         nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
-        KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
         CHECK(fw->dropArea()->checkSanity());
         // When dragging the right one there was a bug where it jumped
         const Point globalSrc = dock2->mapToGlobal(Point(0, 0));
@@ -2188,7 +2188,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         CHECK(dock2->isVisible());
 
         // Flutter is a bit slower showing stuff, needs 1 event loop
-        KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
         KDDW_CO_AWAIT drag(dock2->view(), globalDest);
         CHECK(fw->dropArea()->checkSanity());
@@ -2200,7 +2200,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
 
         delete dock2;
         fw->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     }
 
     {
@@ -2218,7 +2218,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
 
         delete dock2;
         fw->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     }
     KDDW_TEST_RETURN(true);
 }
@@ -2322,7 +2322,7 @@ KDDW_QCORO_TASK tst_addAndReadd()
 
     // Cleanup
     delete dock1;
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     KDDW_TEST_RETURN(true);
 }
 
@@ -2338,7 +2338,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow1()
     const int mainWindowLength = 400;
 
     m->view()->window()->resize(mainWindowLength, mainWindowLength);
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
     dock1->view()->resize(Size(800, 800));
     dock2->view()->resize(Size(800, 800));
@@ -2349,7 +2349,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow1()
 
     CHECK_EQ(m->height(), mainWindowLength);
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(300);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(300);
     if (dock1->height() > mainWindowLength) {
         KDDW_INFO("dock1->height={} ; mainWindowLength={}", dock1->height(), mainWindowLength);
         CHECK(false);
@@ -2383,7 +2383,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
     m->addDockWidgetAsTab(dock1);
     m->view()->window()->resize(osWindowMinWidth(), 200);
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
     CHECK(std::abs(m->width() - osWindowMinWidth()) < 30); // Not very important verification. Anyway,
                                                            // using 15 to account for margins and what
@@ -2392,7 +2392,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
     if (Platform::instance()->isQtWidgets())
         CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m.get()));
     else
-        KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
 
 
     CHECK(dropArea->layoutWidth() > osWindowMinWidth());
@@ -2413,7 +2413,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow3()
         createDockWidget("dock2", Platform::instance()->tests_createView({ true, {}, { 0, 0 } }));
     m->addDockWidgetAsTab(dock1);
     m->view()->window()->resize(osWindowMinWidth(), 200);
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(200);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
     CHECK(std::abs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway,
                                                            // using 15 to account for margins and what
                                                            // not.
@@ -2432,7 +2432,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow4()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(100, 100), MainWindowOption_None);
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
     CHECK_EQ(m->height(), 100);
 
     auto dropArea = m->dropArea();
@@ -2442,10 +2442,10 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow4()
         "dock2", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
     Core::DropArea *layout = dropArea;
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
     m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
     CHECK(m->dropArea()->checkSanity());
 
     const int item2MinHeight =
@@ -2610,13 +2610,13 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
         m->addDockWidget(dock1, Location_OnTop);
         CHECK_EQ(layout->separators().size(), 2);
         dock2->close();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock3->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock3->view());
         CHECK_EQ(layout->separators().size(), 1);
         layout->checkSanity();
 
         // Cleanup:
         dock2->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2);
     }
 
     {
@@ -2649,7 +2649,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
         CHECK_EQ(boundToTheRight, expectedBoundToTheRight);
 
         dock3->close();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
 
         CHECK(!item1->isPlaceholder());
         CHECK(!item2->isPlaceholder());
@@ -2662,7 +2662,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         CHECK_EQ(boundToTheRight, expectedBoundToTheRight);
         dock3->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock3);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock3);
     }
     KDDW_TEST_RETURN(true);
 }
@@ -2713,7 +2713,7 @@ KDDW_QCORO_TASK tst_restoreAfterResize()
     if (oldContentsSize != layout->layoutSize()) {
         // Hard to reproduce but sometimes happens. Added a wait to see if it's timing related
         KDDW_INFO("tst_restoreAfterResize: Unexpected layout size={}, expected={}", layout->layoutSize(), oldContentsSize);
-        KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+        KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
         CHECK_EQ(oldContentsSize, layout->layoutSize());
     }
 
@@ -3142,7 +3142,7 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory()
     CHECK(!saved.isEmpty());
     ObjectGuard<Core::Group> f1 = dock1->dptr()->group();
     delete dock1;
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(f1);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f1);
     CHECK(!f1);
 
     // Directly deleted don't leave placeolders. We could though.
@@ -3420,7 +3420,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         CHECK(!dock2->isFloating());
         CHECK(layout->checkSanity());
 
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw2);
     }
     KDDW_TEST_RETURN(true);
 }
@@ -3454,7 +3454,7 @@ KDDW_QCORO_TASK tst_setFloatingAFrameWithTabs()
     CHECK_EQ(layout->placeholderCount(), 0);
     CHECK(dock1->window()->equals(m->view()));
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     KDDW_TEST_RETURN(true);
 }
 
@@ -3472,7 +3472,7 @@ KDDW_QCORO_TASK tst_toggleDockWidgetWithHiddenTitleBar()
 
     d1->toggleAction()->setChecked(false);
     auto f1 = d1->dptr()->group();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(f1);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f1);
     SetExpectedWarning expected("Trying to use a group that's being deleted");
     d1->toggleAction()->setChecked(true);
     CHECK(d1->dptr()->group());
@@ -3581,7 +3581,7 @@ KDDW_QCORO_TASK tst_anchorFollowingItselfAssert()
 
     docks.at(0).createdDock->destroyLater();
     docks.at(4).createdDock->destroyLater();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(docks.at(4).createdDock);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(docks.at(4).createdDock);
     KDDW_TEST_RETURN(true);
 }
 
@@ -3837,7 +3837,7 @@ KDDW_QCORO_TASK tst_sizeConstraintWarning()
     for (auto dock : docks)
         dock->destroyLater();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(lastDock);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(lastDock);
     KDDW_TEST_RETURN(true);
 }
 
@@ -3915,7 +3915,7 @@ KDDW_QCORO_TASK tst_dockNotFillingSpace()
     Core::Group *group2 = d2->dptr()->group();
     d1->close();
     d2->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group2);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group2);
 
     auto layout = m->multiSplitter();
     CHECK(layout->checkSanity());
@@ -3936,7 +3936,7 @@ KDDW_QCORO_TASK tst_lastFloatingPositionIsRestored()
     dock1->window()->window()->setFramePosition(targetPos);
     CHECK_EQ(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForEvent(dock1->window().get(), Event::Move);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->window().get(), Event::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
@@ -4066,7 +4066,7 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(!dock1->isTabbed());
         CHECK_EQ(action->toolTip(), Object::tr("Detach"));
 
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     }
 
     {
@@ -4109,7 +4109,7 @@ KDDW_QCORO_TASK tst_floatingAction()
         CHECK(!dock1->isTabbed());
         CHECK_EQ(action->toolTip(), Object::tr("Detach"));
 
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(fw);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw);
     }
     {
         EnsureTopLevelsDeleted e;
@@ -4431,20 +4431,20 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore4()
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnBottom);
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
     dock1->close();
     dock2->close();
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
     dock2->open();
 
     CHECK(saver.restoreLayout(saved));
     CHECK(dock2->isOpen());
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
     Core::FloatingWindow *fw = dock2->floatingWindow();
     DropArea *da = fw->dropArea();
     CHECK(da->checkSanity());
@@ -4673,7 +4673,7 @@ KDDW_QCORO_TASK tst_maxSizedHonouredAfterRemoved()
     auto root = m1->multiSplitter()->rootItem();
 
     // Wait 1 event loop so we get layout invalidated and get max-size constraints
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(10);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(10);
 
     auto sep = root->separators().constFirst();
     root->requestEqualSize(sep); // Since we're not calling honourMaxSizes() after a widget changes
@@ -4694,7 +4694,7 @@ KDDW_QCORO_TASK tst_maxSizedHonouredAfterRemoved()
 
     // Close dock2 and check if dock1's max-size is still honoured
     dock2->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(100); // wait for the resize, so dock1 gets taller"
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(100); // wait for the resize, so dock1 gets taller"
 
     CHECK(dock1->dptr()->group()->view()->height()
           <= dock1->dptr()->group()->view()->maxSizeHint().height());
@@ -4719,7 +4719,7 @@ KDDW_QCORO_TASK tst_addDockWidgetAsTabToDockWidget()
         CHECK_EQ(dock1->dptr()->group()->dockWidgetCount(), 2);
         dock1->destroyLater();
         dock2->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2);
     }
     {
         // Dock into a morphed dock widget
@@ -4736,7 +4736,7 @@ KDDW_QCORO_TASK tst_addDockWidgetAsTabToDockWidget()
         CHECK_EQ(dock1->dptr()->group()->dockWidgetCount(), 2);
         dock1->destroyLater();
         dock2->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2);
     }
     {
         // Dock a morphed dock widget into a morphed dock widget
@@ -4753,11 +4753,11 @@ KDDW_QCORO_TASK tst_addDockWidgetAsTabToDockWidget()
         CHECK_EQ(window1->window(), window2->window());
         CHECK_EQ(dock1->dptr()->group(), dock2->dptr()->group());
         CHECK_EQ(dock1->dptr()->group()->dockWidgetCount(), 2);
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(originalWindow2.get());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(originalWindow2.get());
 
         dock1->destroyLater();
         dock2->destroyLater();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2);
     }
     {
         // Dock to an already docked widget
@@ -4951,7 +4951,7 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
 
     // Now close dock1 and check again
     dock1->close();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock2->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
 
     Item *item2 = layout->itemForGroup(dock2->dptr()->group());
     Item *item3 = layout->itemForGroup(dock3->dptr()->group());
@@ -4963,7 +4963,7 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
     CHECK_EQ(m->view()->minSize().height(), expectedMinHeight);
 
     dock1->destroyLater();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(dock1);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock1);
     KDDW_TEST_RETURN(true);
 }
 
@@ -4986,7 +4986,7 @@ KDDW_QCORO_TASK tst_dragBySingleTab()
     KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, Point(0, 0));
 
     delete dock1;
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(group1);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(group1);
     KDDW_TEST_RETURN(true);
 }
 
@@ -5665,7 +5665,7 @@ KDDW_QCORO_TASK tst_maximizeButton()
 
     tb->onMaximizeClicked();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock0->floatingWindow()->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock0->floatingWindow()->view());
 
     CHECK(tb->maximizeButtonVisible());
     CHECK_EQ(tb->maximizeButtonType(), TitleBarButtonType::Normal);
@@ -5739,7 +5739,7 @@ KDDW_QCORO_TASK tst_map()
     m->addDockWidget(dockA, KDDockWidgets::Location_OnTop);
     m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
     const Point localPt = { 10, 10 };
     Point global = dockA->view()->mapToGlobal(localPt);
     CHECK_EQ(dockA->view()->mapFromGlobal(global), localPt);
@@ -5761,7 +5761,7 @@ KDDW_QCORO_TASK tst_childViewAt()
     m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
     m->show();
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
     const Point localPt = { 100, 200 };
     auto child = m->view()->childViewAt(localPt);
     CHECK(child);
@@ -5783,7 +5783,7 @@ KDDW_QCORO_TASK tst_resizeInLayout()
     m->addDockWidget(dockC, KDDockWidgets::Location_OnBottom);
 
     m->window()->resize(400, 1000);
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(m->view());
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(m->view());
 
     // Nothing happens, since the widget's top is the window's top too:
     const Size dockAOriginalSize = dockA->sizeInLayout();
@@ -5827,7 +5827,7 @@ KDDW_QCORO_TASK tst_resizeInLayout()
 KDDW_QCORO_TASK tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
     KDDW_TEST_RETURN(true);
 }
 
@@ -5990,170 +5990,171 @@ KDDW_QCORO_TASK tst_rect()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
+static const auto s_tests = std::vector<KDDWTest>
+{
     TEST(tst_simple1),
-    TEST(tst_simple2),
-    TEST(tst_resizeWindow2),
-    TEST(tst_hasPreviousDockedLocation),
-    TEST(tst_hasPreviousDockedLocation2),
-    TEST(tst_LayoutSaverOpenedDocks),
-    TEST(tst_ghostSeparator),
-    TEST(tst_detachFromMainWindow),
-    TEST(tst_floatingWindowSize),
-    TEST(tst_tabbingWithAffinities),
-    TEST(tst_floatingWindowTitleBug),
-    TEST(tst_setFloatingSimple),
-    TEST(tst_dragOverTitleBar),
-    TEST(tst_setFloatingGeometry),
-    TEST(tst_restoreEmpty),
-    TEST(tst_restoreCentralFrame),
-    TEST(tst_restoreNonExistingDockWidget),
-    TEST(tst_shutdown),
-    TEST(tst_closeDockWidgets),
-    TEST(tst_closeReason),
-    TEST(tst_layoutEqually),
-    TEST(tst_doubleClose),
-    TEST(tst_maximizeAndRestore),
-    TEST(tst_restoreWithNonClosableWidget),
-    TEST(tst_restoreCrash),
-    TEST(tst_restoreSideBySide),
-    TEST(tst_restoreWithCentralFrameWithTabs),
-    TEST(tst_restoreGroupOptions),
-    TEST(tst_restoreWithAffinity),
-    TEST(tst_marginsAfterRestore),
-    TEST(tst_restoreWithNewDockWidgets),
-    TEST(tst_restoreWithDockFactory),
-    TEST(tst_restoreWithDockFactory2),
-    TEST(tst_dontCloseDockWidgetBeforeRestore),
-    TEST(tst_dontCloseDockWidgetBeforeRestore3),
-    TEST(tst_dontCloseDockWidgetBeforeRestore4),
-    TEST(tst_skipRestoreInsideMainWindow),
-    TEST(tst_restoreWithNativeTitleBar),
-    TEST(tst_closeOnlyCurrentTab),
-    TEST(tst_tabWidgetCurrentIndex),
-    TEST(tst_propagateResize2),
-    TEST(tst_startClosed),
-    TEST(tst_closeReparentsToNull),
-    TEST(tst_invalidAnchorGroup),
-    TEST(tst_addAsPlaceholder),
-    TEST(tst_repeatedShowHide),
-    TEST(tst_removeItem),
-    TEST(tst_clear),
-    TEST(tst_crash),
-    TEST(tst_refUnrefItem),
-    TEST(tst_placeholderCount),
-    TEST(tst_availableLengthForOrientation),
-    TEST(tst_closeTabOfCentralFrame),
-    TEST(tst_centralGroupAffinity),
-    TEST(tst_setAsCurrentTab),
-    TEST(tst_placeholderDisappearsOnReadd),
-    TEST(tst_placeholdersAreRemovedProperly),
-    TEST(tst_preferredInitialSize),
-    TEST(tst_closeAllDockWidgets),
-    TEST(tst_toggleMiddleDockCrash),
-    TEST(tst_stealFrame),
-    TEST(tst_setFloatingWhenWasTabbed),
-    TEST(tst_setWidget),
-    TEST(tst_floatingLastPosAfterDoubleClose),
-    TEST(tst_registry),
-    TEST(tst_honourGeometryOfHiddenWindow),
-    TEST(tst_posAfterLeftDetach),
-    TEST(tst_propagateMinSize),
-    TEST(tst_createFloatingWindow),
-    TEST(tst_fairResizeAfterRemoveWidget),
-    TEST(tst_unfloatTabbedFloatingWidgets),
-    TEST(tst_unfloatTabbedFloatingWidgets2),
-    TEST(tst_resizeViaAnchorsAfterPlaceholderCreation),
-    TEST(tst_rectForDropCrash),
-    TEST(tst_addDockWidgetToMainWindow),
-    TEST(tst_addDockWidgetToContainingWindow),
-    TEST(tst_setFloatingAfterDraggedFromTabToSideBySide),
-    TEST(tst_setFloatingAFrameWithTabs),
-    TEST(tst_toggleDockWidgetWithHiddenTitleBar),
-    TEST(tst_anchorFollowingItselfAssert),
-    TEST(tst_isInMainWindow),
-    TEST(tst_sizeConstraintWarning),
-    TEST(tst_stuckSeparator),
-    TEST(tst_dockNotFillingSpace),
-    TEST(tst_titlebar_getter),
-    TEST(tst_addingOptionHiddenTabbed),
-    TEST(tst_maxSizedHonouredAfterRemoved),
-    TEST(tst_addDockWidgetAsTabToDockWidget),
-    TEST(tst_closeTabHidesDockWidget),
-    TEST(tst_propagateSizeHonoursMinSize),
-    TEST(tst_floatingAction),
-    TEST(tst_constraintsPropagateUp),
-    TEST(tst_addToSmallMainWindow4),
-    TEST(tst_addToSmallMainWindow5),
-    TEST(tst_dragBySingleTab),
-    TEST(tst_deleteOnClose),
-    TEST(tst_toggleAction),
-    TEST(tst_redocksToPreviousTabIndex),
-    TEST(tst_toggleTabbed2),
-    TEST(tst_resizePropagatesEvenly),
-    TEST(tst_persistentCentralWidget),
-    TEST(tst_titlebarNumDockWidgetsChanged),
-    TEST(tst_closed),
-    TEST(tst_restoreFlagsFromVersion16),
-    TEST(tst_map),
-    TEST(tst_childViewAt),
-    TEST(tst_detachPos),
-    TEST(tst_floatMaintainsSize),
-    TEST(tst_scopedValueRollback),
-    TEST(tst_size),
-    TEST(tst_point),
-    TEST(tst_rect),
-    TEST(tst_resizeInLayout),
-    TEST(tst_mainWindowToggle),
-    TEST(tst_startDragging),
+        TEST(tst_simple2),
+        TEST(tst_resizeWindow2),
+        TEST(tst_hasPreviousDockedLocation),
+        TEST(tst_hasPreviousDockedLocation2),
+        TEST(tst_LayoutSaverOpenedDocks),
+        TEST(tst_ghostSeparator),
+        TEST(tst_detachFromMainWindow),
+        TEST(tst_floatingWindowSize),
+        TEST(tst_tabbingWithAffinities),
+        TEST(tst_floatingWindowTitleBug),
+        TEST(tst_setFloatingSimple),
+        TEST(tst_dragOverTitleBar),
+        TEST(tst_setFloatingGeometry),
+        TEST(tst_restoreEmpty),
+        TEST(tst_restoreCentralFrame),
+        TEST(tst_restoreNonExistingDockWidget),
+        TEST(tst_shutdown),
+        TEST(tst_closeDockWidgets),
+        TEST(tst_closeReason),
+        TEST(tst_layoutEqually),
+        TEST(tst_doubleClose),
+        TEST(tst_maximizeAndRestore),
+        TEST(tst_restoreWithNonClosableWidget),
+        TEST(tst_restoreCrash),
+        TEST(tst_restoreSideBySide),
+        TEST(tst_restoreWithCentralFrameWithTabs),
+        TEST(tst_restoreGroupOptions),
+        TEST(tst_restoreWithAffinity),
+        TEST(tst_marginsAfterRestore),
+        TEST(tst_restoreWithNewDockWidgets),
+        TEST(tst_restoreWithDockFactory),
+        TEST(tst_restoreWithDockFactory2),
+        TEST(tst_dontCloseDockWidgetBeforeRestore),
+        TEST(tst_dontCloseDockWidgetBeforeRestore3),
+        TEST(tst_dontCloseDockWidgetBeforeRestore4),
+        TEST(tst_skipRestoreInsideMainWindow),
+        TEST(tst_restoreWithNativeTitleBar),
+        TEST(tst_closeOnlyCurrentTab),
+        TEST(tst_tabWidgetCurrentIndex),
+        TEST(tst_propagateResize2),
+        TEST(tst_startClosed),
+        TEST(tst_closeReparentsToNull),
+        TEST(tst_invalidAnchorGroup),
+        TEST(tst_addAsPlaceholder),
+        TEST(tst_repeatedShowHide),
+        TEST(tst_removeItem),
+        TEST(tst_clear),
+        TEST(tst_crash),
+        TEST(tst_refUnrefItem),
+        TEST(tst_placeholderCount),
+        TEST(tst_availableLengthForOrientation),
+        TEST(tst_closeTabOfCentralFrame),
+        TEST(tst_centralGroupAffinity),
+        TEST(tst_setAsCurrentTab),
+        TEST(tst_placeholderDisappearsOnReadd),
+        TEST(tst_placeholdersAreRemovedProperly),
+        TEST(tst_preferredInitialSize),
+        TEST(tst_closeAllDockWidgets),
+        TEST(tst_toggleMiddleDockCrash),
+        TEST(tst_stealFrame),
+        TEST(tst_setFloatingWhenWasTabbed),
+        TEST(tst_setWidget),
+        TEST(tst_floatingLastPosAfterDoubleClose),
+        TEST(tst_registry),
+        TEST(tst_honourGeometryOfHiddenWindow),
+        TEST(tst_posAfterLeftDetach),
+        TEST(tst_propagateMinSize),
+        TEST(tst_createFloatingWindow),
+        TEST(tst_fairResizeAfterRemoveWidget),
+        TEST(tst_unfloatTabbedFloatingWidgets),
+        TEST(tst_unfloatTabbedFloatingWidgets2),
+        TEST(tst_resizeViaAnchorsAfterPlaceholderCreation),
+        TEST(tst_rectForDropCrash),
+        TEST(tst_addDockWidgetToMainWindow),
+        TEST(tst_addDockWidgetToContainingWindow),
+        TEST(tst_setFloatingAfterDraggedFromTabToSideBySide),
+        TEST(tst_setFloatingAFrameWithTabs),
+        TEST(tst_toggleDockWidgetWithHiddenTitleBar),
+        TEST(tst_anchorFollowingItselfAssert),
+        TEST(tst_isInMainWindow),
+        TEST(tst_sizeConstraintWarning),
+        TEST(tst_stuckSeparator),
+        TEST(tst_dockNotFillingSpace),
+        TEST(tst_titlebar_getter),
+        TEST(tst_addingOptionHiddenTabbed),
+        TEST(tst_maxSizedHonouredAfterRemoved),
+        TEST(tst_addDockWidgetAsTabToDockWidget),
+        TEST(tst_closeTabHidesDockWidget),
+        TEST(tst_propagateSizeHonoursMinSize),
+        TEST(tst_floatingAction),
+        TEST(tst_constraintsPropagateUp),
+        TEST(tst_addToSmallMainWindow4),
+        TEST(tst_addToSmallMainWindow5),
+        TEST(tst_dragBySingleTab),
+        TEST(tst_deleteOnClose),
+        TEST(tst_toggleAction),
+        TEST(tst_redocksToPreviousTabIndex),
+        TEST(tst_toggleTabbed2),
+        TEST(tst_resizePropagatesEvenly),
+        TEST(tst_persistentCentralWidget),
+        TEST(tst_titlebarNumDockWidgetsChanged),
+        TEST(tst_closed),
+        TEST(tst_restoreFlagsFromVersion16),
+        TEST(tst_map),
+        TEST(tst_childViewAt),
+        TEST(tst_detachPos),
+        TEST(tst_floatMaintainsSize),
+        TEST(tst_scopedValueRollback),
+        TEST(tst_size),
+        TEST(tst_point),
+        TEST(tst_rect),
+        TEST(tst_resizeInLayout),
+        TEST(tst_mainWindowToggle),
+        TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
-    TEST(tst_minMaxGuest),
-    TEST(tst_doesntHaveNativeTitleBar),
-    TEST(tst_sizeAfterRedock),
-    TEST(tst_honourUserGeometry),
-    TEST(tst_restoreMaximizedState),
-    TEST(tst_restoreFloatingMinimizedState),
-    TEST(tst_dockInternal),
-    TEST(tst_samePositionAfterHideRestore),
-    TEST(tst_restoreTwice),
-    TEST(tst_restoreAfterResize),
-    TEST(tst_restoreNestedAndTabbed),
-    TEST(tst_restoreWithPlaceholder),
-    TEST(tst_lastFloatingPositionIsRestored),
-    TEST(tst_restoreNonClosable),
-    TEST(tst_restoreNlohmanException),
-    TEST(tst_restoreWithInvalidCurrentTab),
-    TEST(tst_restoreRestoresMainWindowPosition),
-    TEST(tst_dontCloseDockWidgetBeforeRestore2),
-    TEST(tst_doubleClickTabToDetach),
-    TEST(tst_tabTitleChanges),
-    TEST(tst_preventClose),
-    TEST(tst_addAndReadd),
-    TEST(tst_notClosable),
-    TEST(tst_availableSizeWithPlaceholders),
-    TEST(tst_moreTitleBarCornerCases),
-    TEST(tst_raise),
-    TEST(tst_nonDockable),
-    TEST(tst_flagDoubleClick),
-    TEST(tst_constraintsAfterPlaceholder),
-    TEST(tst_addToSmallMainWindow1),
-    TEST(tst_addToSmallMainWindow2),
-    TEST(tst_addToSmallMainWindow3),
-    TEST(tst_titleBarFocusedWhenTabsChange),
-    TEST(tst_toggleTabbed),
-    TEST(tst_currentTabMatchesDockWidget),
-    TEST(tst_addMDIDockWidget),
-    TEST(tst_mdiZorder),
-    TEST(tst_mdiCrash),
-    TEST(tst_mdiZorder2),
-    TEST(tst_mdiSetSize),
-    TEST(tst_mixedMDIRestoreToArea),
-    TEST(tst_redockToMDIRestoresPosition),
-    TEST(tst_maximizeButton),
-    TEST(tst_restoreAfterUnminimized),
-    TEST(tst_doubleScheduleDelete),
+        TEST(tst_minMaxGuest),
+        TEST(tst_doesntHaveNativeTitleBar),
+        TEST(tst_sizeAfterRedock),
+        TEST(tst_honourUserGeometry),
+        TEST(tst_restoreMaximizedState),
+        TEST(tst_restoreFloatingMinimizedState),
+        TEST(tst_dockInternal),
+        TEST(tst_samePositionAfterHideRestore),
+        TEST(tst_restoreTwice),
+        TEST(tst_restoreAfterResize),
+        TEST(tst_restoreNestedAndTabbed),
+        TEST(tst_restoreWithPlaceholder),
+        TEST(tst_lastFloatingPositionIsRestored),
+        TEST(tst_restoreNonClosable),
+        TEST(tst_restoreNlohmanException),
+        TEST(tst_restoreWithInvalidCurrentTab),
+        TEST(tst_restoreRestoresMainWindowPosition),
+        TEST(tst_dontCloseDockWidgetBeforeRestore2),
+        TEST(tst_doubleClickTabToDetach),
+        TEST(tst_tabTitleChanges),
+        TEST(tst_preventClose),
+        TEST(tst_addAndReadd),
+        TEST(tst_notClosable),
+        TEST(tst_availableSizeWithPlaceholders),
+        TEST(tst_moreTitleBarCornerCases),
+        TEST(tst_raise),
+        TEST(tst_nonDockable),
+        TEST(tst_flagDoubleClick),
+        TEST(tst_constraintsAfterPlaceholder),
+        TEST(tst_addToSmallMainWindow1),
+        TEST(tst_addToSmallMainWindow2),
+        TEST(tst_addToSmallMainWindow3),
+        TEST(tst_titleBarFocusedWhenTabsChange),
+        TEST(tst_toggleTabbed),
+        TEST(tst_currentTabMatchesDockWidget),
+        TEST(tst_addMDIDockWidget),
+        TEST(tst_mdiZorder),
+        TEST(tst_mdiCrash),
+        TEST(tst_mdiZorder2),
+        TEST(tst_mdiSetSize),
+        TEST(tst_mixedMDIRestoreToArea),
+        TEST(tst_redockToMDIRestoresPosition),
+        TEST(tst_maximizeButton),
+        TEST(tst_restoreAfterUnminimized),
+        TEST(tst_doubleScheduleDelete),
 #endif
-    TEST(tst_keepLast)
+        TEST(tst_keepLast)
 };
 
 #include "tests_main.h"

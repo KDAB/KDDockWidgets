@@ -53,7 +53,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(layout);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(layout);
     const int oldContentsWidth = layout->layoutWidth();
     auto f1 = dock1->dptr()->group();
     dock3->close();
@@ -66,8 +66,8 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     CHECK(dock3->titleBar()->isVisible());
     dock2->open();
     dock1->open();
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForEvent(m.get(), Event::LayoutRequest); // So MainWindow min
-                                                                                             // size is updated
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(m.get(), Event::LayoutRequest); // So MainWindow min
+                                                                                           // size is updated
 
     Item *item1 = layout->itemForGroup(dock1->dptr()->group());
     Item *item3 = layout->itemForGroup(dock3->dptr()->group());
@@ -84,7 +84,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     f2->detachTab(dock2);
     CHECK(!f2.data());
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(200);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
     auto fw2 = dock2->floatingWindow();
     CHECK_EQ(layout->view()->minSize().width(),
              2 * Item::layoutSpacing + item1->minSize().width() + item3->minSize().width()
@@ -143,9 +143,9 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
         CHECK(item2);
         dock2->close();
         dock3->close();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForDeleted(f2);
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f2);
         dock2->open();
-        KDDW_CO_AWAIT Platform::instance() -> tests_waitForResize(dock2->view());
+        KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(dock2->view());
 
         CHECK_EQ(item2->geometry(), dock2->dptr()->group()->view()->geometry());
         layout->checkSanity();
@@ -171,7 +171,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     // QtQuick is a bit more async than QWidgets. Wait for the move.
-    KDDW_CO_AWAIT Platform::instance() -> tests_waitForEvent(fw2->view()->window(), Event::Move);
+    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(fw2->view()->window(), Event::Move);
 
     auto da2 = fw2->dropArea();
     const Point dragDestPos = da2->mapToGlobal(da2->rect().center());
@@ -181,7 +181,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto f2 = fw2->groups().constFirst();
 
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 
     CHECK_EQ(f2->dockWidgetCount(), 3);
 
@@ -203,13 +203,13 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
 
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
 
 
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
@@ -222,7 +222,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     EnsureTopLevelsDeleted e;
 
     auto fw = createFloatingWindow();
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
     fw->view()->move(200, 200);
     fw->setObjectName("fw1");
 
@@ -235,12 +235,12 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     CHECK(fw2->dropArea()->checkSanity());
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
 
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1000);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
 
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
@@ -251,7 +251,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 KDDW_QCORO_TASK tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
     KDDW_TEST_RETURN(true);
 }
 

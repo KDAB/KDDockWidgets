@@ -205,7 +205,7 @@ KDDW_QCORO_TASK tst_tabBarDWClosed()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance() -> tests_wait(1);
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
 
     KDDW_TEST_RETURN(true);
 }

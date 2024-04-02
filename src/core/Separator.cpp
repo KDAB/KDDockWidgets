@@ -100,7 +100,7 @@ Separator::Separator(LayoutingHost *host, Qt::Orientation orientation, Core::Ite
     view()->show();
     view()->init();
     d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
-                                                      rubberBandIsTopLevel() ? nullptr : view())
+                                  rubberBandIsTopLevel() ? nullptr : view())
                                                 : nullptr;
     setVisible(true);
 }
