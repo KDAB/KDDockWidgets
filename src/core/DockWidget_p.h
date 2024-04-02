@@ -34,15 +34,19 @@ public:
         explicit UpdateActions(Core::DockWidget *dock)
             : dw(dock)
         {
-            dw->d->m_willUpdateActions = true;
+            dw->d->m_willUpdateActions++;
         }
 
         ~UpdateActions()
         {
-            dw->d->m_willUpdateActions = false;
-            dw->d->updateFloatAction();
-            if (dw->isOpen() != dw->toggleAction()->isChecked())
-                dw->d->updateToggleAction();
+            dw->d->m_willUpdateActions--;
+
+            // only the last one (the outter one, updates actions, in case of nesting)
+            if (dw->d->m_willUpdateActions == 0) {
+                dw->d->updateFloatAction();
+                if (dw->isOpen() != dw->toggleAction()->isChecked())
+                    dw->d->updateToggleAction();
+            }
         }
 
     private:
@@ -286,7 +290,7 @@ public:
     bool m_wasRestored = false;
     Size m_lastOverlayedSize = Size(0, 0);
     int m_userType = 0;
-    bool m_willUpdateActions = false;
+    int m_willUpdateActions = 0;
     KDBindings::ScopedConnection m_windowActivatedConnection;
     KDBindings::ScopedConnection m_windowDeactivatedConnection;
     KDBindings::ScopedConnection m_toggleActionConnection;
