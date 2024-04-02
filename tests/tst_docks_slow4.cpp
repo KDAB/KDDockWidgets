@@ -125,7 +125,7 @@ KDDW_QCORO_TASK tst_dock2FloatingWidgetsTabbed()
         m->show();
         m->view()->setGeometry(Rect(500, 300, 300, 300));
         CHECK(!dock3->isFloating());
-        fw3 = dock3->floatingWindow();
+        auto fw3 = dock3->floatingWindow();
         KDDW_CO_AWAIT drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(Point(10, 10)),
                            m->geometry().center());
         CHECK(!dock3->isFloating());
