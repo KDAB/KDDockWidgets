@@ -41,7 +41,7 @@ public:
         {
             dw->d->m_willUpdateActions--;
 
-            // only the last one (the outter one, updates actions, in case of nesting)
+            // only the last one (the outer one, updates actions, in case of nesting)
             if (dw->d->m_willUpdateActions == 0) {
                 dw->d->updateFloatAction();
                 if (dw->isOpen() != dw->toggleAction()->isChecked())
