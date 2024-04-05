@@ -8,6 +8,7 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+#define NOMINMAX
 
 #include "Config.h"
 #include "utils.h"
