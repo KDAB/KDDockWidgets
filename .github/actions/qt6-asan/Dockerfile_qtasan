@@ -27,7 +27,7 @@
 # docker import mycontainer.tar
 # docker images # to check sha
 # docker tag <image_sha> iamsergio/kddw-qt6-asan
-# docker push
+# docker push iamsergio/kddw-qt6-asan
 
 FROM ubuntu:24.04
 MAINTAINER Sergio Martins (sergio.martins@kdab.com)
