@@ -256,14 +256,15 @@ if(KDDockWidgets_WAYLAND_TESTS)
     endif()
 endif()
 
-set(KDDockWidgets_LIBRARY_QTID "")
+set(${PROJECT_NAME}_LIBRARY_QTID "")
 
 if(KDDW_FRONTEND_QT)
     include(KDQtInstallPaths) # to set QT_INSTALL_FOO variables
     if(KDDockWidgets_QT6)
-        set(KDDockWidgets_LIBRARY_QTID "-qt6")
+        set(${PROJECT_NAME}_LIBRARY_QTID "-qt6")
     endif()
 endif()
+set(KDDockWidgets_LIBRARY_QTID "${${PROJECT_NAME}_LIBRARY_QTID}")
 
 add_definitions(-DQT_NO_KEYWORDS)
 
