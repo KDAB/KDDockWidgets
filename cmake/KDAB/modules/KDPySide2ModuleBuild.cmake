@@ -5,6 +5,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
+# Save path to this cmake file (so it can be used later in the macros)
+set(THIS_CMAKE_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
+
 if(NOT ${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX)
     # cmake-lint: disable=C0103
     set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX
@@ -14,6 +17,7 @@ if(NOT ${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX)
 endif()
 
 message(STATUS "PYTHON INSTALL PREFIX ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}")
+
 
 if(WIN32)
     set(PATH_SEP "\;")
@@ -129,7 +133,7 @@ macro(
             $<TARGET_PROPERTY:Shiboken2::shiboken,LOCATION> ${GENERATOR_EXTRA_FLAGS} ${globalInclude}
             --include-paths=${shiboken_include_dirs} --typesystem-paths=${shiboken_typesystem_dirs}
             ${shiboken_framework_include_dirs_option} --output-directory=${CMAKE_CURRENT_BINARY_DIR} ${typesystemXML}
-        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/KDFixupShiboken2.py ${outputSource}
+        COMMAND ${Python3_EXECUTABLE} ${THIS_CMAKE_LIST_DIR}/KDFixupShiboken2.py ${outputSource}
         DEPENDS ${typesystemXML} ${dependsArg}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Running generator for ${libraryName} binding..."
