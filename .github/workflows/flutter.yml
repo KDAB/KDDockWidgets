@@ -53,3 +53,8 @@ jobs:
         run: |
           cd tests/flutter_tests_embedder/
           flutter build bundle --suppress-analytics
+
+      - name: Build the example
+        run: |
+          cd examples/flutter
+          flutter build linux
