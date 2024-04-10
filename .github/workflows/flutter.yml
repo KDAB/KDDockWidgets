@@ -48,3 +48,8 @@ jobs:
 
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }}
+
+      - name: Build test embedder .dart
+        run: |
+          cd tests/flutter_tests_embedder/
+          flutter build bundle --suppress-analytics
