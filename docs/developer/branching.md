@@ -17,9 +17,9 @@ If the current stable branch is X.Y then the new branch will be called X.Y+1.
 For example, if the current stable branch is 2.1 then the new stable branch will be 2.2, like so:
 
 ```shell
-% git checkout main
-% git branch 2.2
-% git checkout 2.2
+git checkout main
+git branch 2.2
+git checkout 2.2
 ```
 
 ## New major version
@@ -30,9 +30,9 @@ If the current stable branch is X.Y then the new branch will be called X+1.0.
 For example, if the current stable branch is 2.1 then the new stable branch will be 3.0, like so:
 
 ```shell
-% git checkout main
-% git branch 3.0
-% git checkout 3.0
+git checkout main
+git branch 3.0
+git checkout 3.0
 ```
 
 ## After branching
@@ -43,16 +43,16 @@ Once the new branch is created we need to modify a few things.
 
 For a new major version:
 
-1. In the top-level `CMakeLists.txt` set `KDDockWidgets_VERSION_MINOR` to 95
-2. In the top-level `CMakeLists.txt` set `KDDockWidgets_VERSION_PATCH` to 95
-3. In the top-level `CMakeLists.txt set` `KDDockWidgets_SOVERSION` to the new X.0
-4. In the `Changelog` add a empty section a the top for the new "vX.0 (unreleased)"
+* In the top-level `CMakeLists.txt` set `KDDockWidgets_VERSION_MINOR` to 95
+* In the top-level `CMakeLists.txt` set `KDDockWidgets_VERSION_PATCH` to 95
+* In the top-level `CMakeLists.txt set` `KDDockWidgets_SOVERSION` to the new X.0
+* In the `Changelog` add a empty section a the top for the new "vX.0 (unreleased)"
 
 For a new minor version:
 
-1. In the top-level `CMakeLists.txt` set `KDDockWidgets_VERSION_PATCH` to 95
-2. In the top-level `CMakeLists.txt` set `KDDockWidgets_SOVERSION` to the new X.Y
-3. In the `Changelog` add a empty section a the top for the new "vX.Y (unreleased)"
+* In the top-level `CMakeLists.txt` set `KDDockWidgets_VERSION_PATCH` to 95
+* In the top-level `CMakeLists.txt` set `KDDockWidgets_SOVERSION` to the new X.Y
+* In the `Changelog` add a empty section a the top for the new "vX.Y (unreleased)"
 
 For any new branch, make sure to add entries for new branch name into the
 `.github/workflows/build.yml` file,  inside the 'push' and 'pull_request" branch lists.
@@ -61,6 +61,6 @@ Make all the above changes and then git commit and push the new branch.
 
 ### And finally
 
-1. Update the KDABCI to the new stable branch (contact the KDAB CI team)
-2. Update the Github Default Branch (see Default Branch setting at <https://github.com/KDAB/KDDockWidgets/settings>)
-3. Initiate CI builds (both github and KDAB) of the new branch and make sure all is green before continuing.
+* Update the KDABCI to the new stable branch (contact the KDAB CI team)
+* Update the Github Default Branch (see Default Branch setting at <https://github.com/KDAB/KDDockWidgets/settings>)
+* Initiate CI builds (both github and KDAB) of the new branch and make sure all is green before continuing.
