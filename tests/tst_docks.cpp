@@ -1797,7 +1797,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
     // Tests what happens if we ask for a preferredInitial size smaller than min-size
     // Should use the min size instead
 
-    auto createDw = [](const QString &name, QSize min) -> Core::DockWidget * {
+    auto createDw = [](const QString &name, Size min) -> Core::DockWidget * {
         auto dw = newDockWidget(name);
         dw->setGuestView(Platform::instance()->tests_createView({ true, {}, min })->asWrapper());
         return dw;
@@ -1824,7 +1824,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         const int minWidth = 300;
         auto dw1 = createDw("1", { minWidth, 300 });
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
-        m->addDockWidgetToSide(dw1, Location_OnLeft, QSize(250, 250));
+        m->addDockWidgetToSide(dw1, Location_OnLeft, Size(250, 250));
 
         CHECK(dw1->sizeInLayout().width() >= minWidth);
     }
@@ -1838,7 +1838,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(minWidth - 50, 200);
+        opt.preferredSize = Size(minWidth - 50, 200);
         m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
         dw1->open();
         CHECK(dw1->sizeInLayout().width() >= minWidth);
@@ -1854,7 +1854,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(minWidth - 50, 200);
+        opt.preferredSize = Size(minWidth - 50, 200);
         m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
         m->addDockWidget(dw2, Location_OnBottom, dw1, opt);
 
@@ -1874,7 +1874,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(minWidth - 50, 200);
+        opt.preferredSize = Size(minWidth - 50, 200);
         m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
         m->addDockWidget(dw2, Location_OnRight, nullptr, opt);
 
@@ -1899,7 +1899,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
 
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartVisible;
-        opt.preferredSize = QSize(minWidth - 50, 200);
+        opt.preferredSize = Size(minWidth - 50, 200);
         m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
         CHECK(dw3->sizeInLayout().width() >= minWidth);
     }
@@ -1919,7 +1919,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
 
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(minWidth - 50, 200);
+        opt.preferredSize = Size(minWidth - 50, 200);
         m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
         dw3->open();
         CHECK(dw3->sizeInLayout().width() >= minWidth);
