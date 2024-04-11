@@ -1933,7 +1933,9 @@ void ItemBoxContainer::insertItem(Item *item, int index, const InitialOption &op
             // For the scenario where "this" container is vertical, this reads as:
             // If option has preferred width, set preferred width on item
             if (option.hasPreferredLength(crossAxis)) {
-                item->setLength_recursive(option.preferredLength(crossAxis), crossAxis);
+                // preferred should not be bigger than minimum
+                const auto l = std::max(item->minLength(crossAxis), option.preferredLength(crossAxis));
+                item->setLength_recursive(l, crossAxis);
             }
         }
     }
