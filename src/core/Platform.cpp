@@ -215,6 +215,7 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         platform = nullptr;
         KDDW_UNUSED(argc);
         KDDW_UNUSED(argv);
+        KDDW_UNUSED(defaultToOffscreenQPA);
 #endif
         break;
     }

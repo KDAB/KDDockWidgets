@@ -1693,7 +1693,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
-        m->addDockWidgetToSide(dw1, Location_OnLeft, QSize(250, 250));
+        m->addDockWidgetToSide(dw1, Location_OnLeft, Size(250, 250));
 
         CHECK_EQ(dw1->sizeInLayout().width(), 250);
     }
@@ -1706,7 +1706,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(250, 200);
+        opt.preferredSize = Size(250, 200);
         m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
         dw1->open();
         CHECK_EQ(dw1->sizeInLayout().width(), 250);
@@ -1721,7 +1721,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(250, 200);
+        opt.preferredSize = Size(250, 200);
         m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
         m->addDockWidget(dw2, Location_OnBottom, dw1, opt);
 
@@ -1740,7 +1740,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(250, 200);
+        opt.preferredSize = Size(250, 200);
         m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
         m->addDockWidget(dw2, Location_OnRight, nullptr, opt);
 
@@ -1764,7 +1764,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
 
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartVisible;
-        opt.preferredSize = QSize(201, 200);
+        opt.preferredSize = Size(201, 200);
         m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
         CHECK_EQ(dw3->sizeInLayout().width(), 201);
     }
@@ -1783,7 +1783,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
 
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
-        opt.preferredSize = QSize(201, 200);
+        opt.preferredSize = Size(201, 200);
         m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
         dw3->open();
         CHECK_EQ(dw3->sizeInLayout().width(), 201);

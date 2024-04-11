@@ -2268,7 +2268,7 @@ KDDW_QCORO_TASK tst_spuriousResize()
     // This used to generate a spurious resize
     auto guest1 = static_cast<Guest *>(item1->guest());
     guest1->m_numSetGeometry = 0;
-    root->insertItem(item3, Location_OnRight, QSize(200, 200));
+    root->insertItem(item3, Location_OnRight, Size(200, 200));
     CHECK_EQ(guest1->m_numSetGeometry, 1);
 
 
