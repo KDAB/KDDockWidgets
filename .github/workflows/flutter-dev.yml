@@ -51,8 +51,11 @@ jobs:
       - name: Download flutter engine
         run: |
           wget https://github.com/ardera/flutter-ci/releases/download/engine%2Fa794cf2681c6c9fe7b260e0e84de96298dc9c18b/x64-generic.tar.xz
-          tar xcf x64-generic.tar.xz -C flutter_engine |
-          ls ${{ github.workspace }}
+          tar xcf x64-generic.tar.xz -C flutter_engine
+          cd flutter_engine
+          mkdir dbg rel
+          cp libflutter_engine.so.debug dbg/libflutter_engine.so
+          cp libflutter_engine.so.release rel/libflutter_engine.so
 
       - name: Configure project ${{ matrix.preset.name }}
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
