@@ -55,8 +55,15 @@ jobs:
 
       - name: Build test embedder .dart
         run: |
+          if: ${{ matrix.preset.isAOT == false }}
           cd tests/flutter_tests_embedder/
           flutter build bundle --suppress-analytics
+
+      - name: Build test embedder .dart (AOT)
+        run: |
+          if: ${{ matrix.preset.isAOT }}
+          cd tests/flutter_tests_embedder/
+          flutter build linux --release --suppress-analytics
 
       - name: Build the example
         run: |
