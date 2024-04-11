@@ -47,10 +47,7 @@ jobs:
 
       - name: Build Dartagnan
         run: |
-          pwd
-          ls ..
-          echo "foo"
-          ls ${{ github.workspace }}
+          sudo apt list --installed
           cd dartagnan
           cmake --preset=dev -DCMAKE_INSTALL_PREFIX=installed
           cd build_dev
