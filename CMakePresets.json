@@ -518,18 +518,6 @@
             }
         },
         {
-            "name": "ci-flutter",
-            "displayName": "ci-flutter",
-            "description": "Builds only the flutter frontend. Tests that build passes without Qt.",
-            "binaryDir": "${sourceDir}/build-ci-flutter",
-            "generator": "Ninja",
-            "cacheVariables": {
-                "KDDockWidgets_DEVELOPER_MODE": "OFF",
-                "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_FRONTENDS": "flutter"
-            }
-        },
-        {
             "name": "ci-dev-qt6",
             "displayName": "ci-dev-qt6",
             "description": "Qt6 dev-mode",
@@ -580,15 +568,6 @@
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_FRONTENDS": "qtquick"
             }
-        },
-        {
-            "name": "ci-release-flutter",
-            "description": "Release flutter",
-            "displayName": "ci-release-flutter",
-            "binaryDir": "${sourceDir}/build-ci-release-flutter",
-            "inherits": [
-                "release-flutter"
-            ]
         },
         {
             "name": "ci-dev-valgrind-qt5",
