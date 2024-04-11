@@ -37,6 +37,9 @@ jobs:
           libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev nlohmann-json3-dev clang-format-15 qt6-base-dev wget curl \
           file unzip zip xz-utils -y
 
+      - name: Install Dart SDK
+        uses: dart-lang/setup-dart@v1
+
       - name: Clone Dartagnan
         uses: actions/checkout@v4
         with:
