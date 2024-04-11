@@ -40,11 +40,14 @@ jobs:
           repository: "KDABLabs/dartagnan.git"
           submodules: true
           ref: "main"
+          path: "${{ github.workspace }}/dartagnan"
 
       - name: Build Dartagnan
         run: |
           pwd
           ls ..
+          echo "foo"
+          ls ${{ github.workspace }}
           cd ../dartagnan
           cmake --preset=dev -DCMAKE_INSTALL_PREFIX=installed
           cd build_dev
