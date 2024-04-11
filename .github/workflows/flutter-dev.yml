@@ -24,7 +24,14 @@ jobs:
       fail-fast: true
       matrix:
         preset:
-          - name: release-flutter
+          - name: dev-flutter
+            isAOT: false
+          - name: dev-flutter-asan
+            isAOT: false
+          - name: dev-flutter-aot
+            isAOT: true
+          - name: dev-flutter-aot-asan
+            isAOT: true
 
     steps:
       - name: Checkout sources
@@ -40,10 +47,10 @@ jobs:
           flutter-version: '3.13.7'
           channel: 'stable'
 
-      - name: Configure project
+      - name: Configure project ${{ matrix.preset.name }}
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
-      - name: Build Project ${{ matrix.preset.build_preset_arg }}
+      - name: Build Project ${{ matrix.preset.name }}
         run: cmake --build ./build-${{ matrix.preset.name }}
 
       - name: Build test embedder .dart
