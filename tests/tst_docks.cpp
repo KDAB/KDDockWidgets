@@ -1792,6 +1792,142 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
+{
+    // Tests what happens if we ask for a preferredInitial size smaller than min-size
+    // Should use the min size instead
+
+    auto createDw = [](const QString &name, QSize min) -> Core::DockWidget * {
+        auto dw = newDockWidget(name);
+        dw->setGuestView(Platform::instance()->tests_createView({ true, {}, min })->asWrapper());
+        return dw;
+    };
+
+    {
+        EnsureTopLevelsDeleted e;
+        const int minHeight = 201;
+        const int preferredHeight = 200;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = createDw("2", { 201, minHeight });
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_None);
+
+        m->addDockWidget(dw1, Location_OnTop);
+        m->addDockWidget(dw2, Location_OnBottom, nullptr, Size(0, preferredHeight));
+
+        CHECK(dw2->sizeInLayout().height() >= minHeight);
+    }
+
+    {
+        // With addDockWidgetToSide
+
+        EnsureTopLevelsDeleted e;
+        const int minWidth = 300;
+        auto dw1 = createDw("1", { minWidth, 300 });
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        m->addDockWidgetToSide(dw1, Location_OnLeft, QSize(250, 250));
+
+        CHECK(dw1->sizeInLayout().width() >= minWidth);
+    }
+
+    {
+        // With StartHidden
+
+        EnsureTopLevelsDeleted e;
+        const int minWidth = 300;
+        auto dw1 = createDw("1", { minWidth, 300 });
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(minWidth - 50, 200);
+        m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
+        dw1->open();
+        CHECK(dw1->sizeInLayout().width() >= minWidth);
+    }
+
+    {
+        // With some nesting
+
+        EnsureTopLevelsDeleted e;
+        const int minWidth = 300;
+        auto dw1 = createDw("1", { minWidth, 300 });
+        auto dw2 = newDockWidget("2");
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(minWidth - 50, 200);
+        m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
+        m->addDockWidget(dw2, Location_OnBottom, dw1, opt);
+
+        dw1->open();
+        dw2->open();
+
+        CHECK(dw1->sizeInLayout().width() >= minWidth);
+    }
+
+    {
+        // One dock on each side of central
+
+        EnsureTopLevelsDeleted e;
+        const int minWidth = 300;
+        auto dw1 = createDw("1", { minWidth, 300 });
+        auto dw2 = createDw("2", { minWidth, 300 });
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(minWidth - 50, 200);
+        m->addDockWidget(dw1, Location_OnLeft, nullptr, opt);
+        m->addDockWidget(dw2, Location_OnRight, nullptr, opt);
+
+        dw1->open();
+        dw2->open();
+
+        CHECK(dw1->sizeInLayout().width() >= minWidth);
+        CHECK(dw2->sizeInLayout().width() >= minWidth);
+    }
+
+    {
+        // Case where parent container is vertical and our preferred size only has width set
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = newDockWidget("2");
+        const int minWidth = 300;
+        auto dw3 = createDw("3", { minWidth, 300 });
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+
+        m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
+
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartVisible;
+        opt.preferredSize = QSize(minWidth - 50, 200);
+        m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
+        CHECK(dw3->sizeInLayout().width() >= minWidth);
+    }
+
+    {
+        // Case where parent container is vertical and our preferred size only has width set
+        // (same as previous, but with all hidden at first)
+        EnsureTopLevelsDeleted e;
+        auto dw1 = newDockWidget("1");
+        auto dw2 = newDockWidget("2");
+        const int minWidth = 300;
+        auto dw3 = createDw("3", { minWidth, 300 });
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+
+        m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
+
+        InitialOption opt;
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        opt.preferredSize = QSize(minWidth - 50, 200);
+        m->addDockWidgetToSide(dw3, Location_OnLeft, opt);
+        dw3->open();
+        CHECK(dw3->sizeInLayout().width() >= minWidth);
+    }
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_closeAllDockWidgets()
 {
     EnsureTopLevelsDeleted e;
@@ -6054,6 +6190,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_placeholderDisappearsOnReadd),
         TEST(tst_placeholdersAreRemovedProperly),
         TEST(tst_preferredInitialSize),
+        TEST(tst_preferredInitialSizeVsMinSize),
         TEST(tst_closeAllDockWidgets),
         TEST(tst_toggleMiddleDockCrash),
         TEST(tst_stealFrame),
