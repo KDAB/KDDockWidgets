@@ -39,6 +39,7 @@ jobs:
         with:
           repository: "KDABLabs/dartagnan.git"
           submodules: true
+          ref: "main"
 
       - name: Build Dartagnan
         run: |
