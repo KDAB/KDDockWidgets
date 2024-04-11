@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Remove clang 13
-        run: apt remove clang -y
+        run: sudo apt remove clang -y
 
       - name: Install dependencies on Ubuntu
         run: |
