@@ -44,11 +44,20 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.7'
+          flutter-version: '3.13.6'
           channel: 'stable'
+
+      # Chose engine from https://github.com/ardera/flutter-ci/releases
+      - name: Download flutter engine
+        run: |
+          wget https://github.com/ardera/flutter-ci/releases/download/engine%2Fa794cf2681c6c9fe7b260e0e84de96298dc9c18b/x64-generic.tar.xz
+          tar xcf x64-generic.tar.xz -C flutter_engine |
+          ls ${{ github.workspace }}
 
       - name: Configure project ${{ matrix.preset.name }}
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
+        env:
+          FLUTTER_ENGINE_FOLDER: "${{ github.workspace }}/flutter_engine/"
 
       - name: Build Project ${{ matrix.preset.name }}
         run: cmake --build ./build-${{ matrix.preset.name }}
