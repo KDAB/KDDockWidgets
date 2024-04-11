@@ -5,7 +5,7 @@
 # Builds the flutter frontend
 # Doesn't run tests yet though
 
-name: Flutter
+name: Flutter-rel
 
 on:
   push:
