@@ -37,7 +37,7 @@ jobs:
       - name: Clone Dartagnan
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/KDABLabs/dartagnan.git
+          repository: "KDABLabs/dartagnan.git"
           submodules: true
 
       - name: Build Dartagnan
