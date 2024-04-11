@@ -59,7 +59,6 @@ void TabBar::moveTabTo(int from, int to)
 
 void TabBar::changeTabIcon(int, const Icon &)
 {
-    KDDW_WARN("TabBar::changeTabIcon: Not implemented");
 }
 
 void TabBar::removeDockWidget(Core::DockWidget *)
@@ -84,7 +83,6 @@ void TabBar::insertDockWidget(int, Core::DockWidget *dw, const Icon &,
 
 void TabBar::renameTab(int, const QString &)
 {
-    KDDW_WARN("TabBar::renameTab: Not implemented");
 }
 
 void TabBar::setCurrentIndex(int)
