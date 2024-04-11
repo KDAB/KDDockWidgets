@@ -25,6 +25,8 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - windows-latest
+          - macos-latest
 
         preset:
           - name: release-flutter
@@ -34,25 +36,28 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt update -qq
-          sudo apt install libgtk-3-dev libglib2.0-dev ninja-build -y
+          sudo apt install libgtk-3-dev libglib2.0-dev -y
+
+      - name: Install ninja
+        uses: turtlesec-no/get-ninja@main
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.7'
           channel: 'stable'
 
+      - name: MSVC into PATH
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }}
-
-      - name: Build test embedder .dart
-        run: |
-          cd tests/flutter_tests_embedder/
-          flutter build bundle --suppress-analytics
 
       - name: Build the example
         run: |
