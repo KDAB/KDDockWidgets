@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+# On demand flutter action to trigger binding regeneration
+
+name: Flutter-dev
+
+on:
+  push:
+    branches:
+      - 2.1
+      - main
+  pull_request:
+    branches:
+      - 2.1
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Install dependencies on Ubuntu
+        run: |
+          sudo apt update -qq
+          sudo apt install libgtk-3-dev libglib2.0-dev ninja-build libspdlog-dev lld \
+          python3 python3-dev clang llvm libclang-15-dev libxslt-dev mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
+          libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev nlohmann-json3-dev clang-format-15 qt6-base-dev wget curl \
+          file unzip zip which xz-utils -y
+
+      - name: Clone Dartagnan
+        uses: actions/checkout@v4
+        with:
+          repository: https://github.com/KDABLabs/dartagnan.git
+          submodules: true
+
+      - name: Build Dartagnan
+        run: |
+          cd dartagnan
+          cmake --preset=dev -DCMAKE_INSTALL_PREFIX=installed
+          cd build_dev
+          ninja && ninja install
