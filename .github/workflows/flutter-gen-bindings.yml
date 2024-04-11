@@ -30,7 +30,7 @@ jobs:
         run: |
           sudo apt update -qq
           sudo apt install libgtk-3-dev libglib2.0-dev ninja-build libspdlog-dev lld \
-          python3 python3-dev clang llvm libclang-15-dev libxslt-dev mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
+          python3 python3-dev clang-15 llvm-15 libclang-15-dev libxslt-dev mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
           libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev nlohmann-json3-dev clang-format-15 qt6-base-dev wget curl \
           file unzip zip xz-utils -y
 
