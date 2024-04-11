@@ -31,6 +31,14 @@ jobs:
         preset:
           - name: release-flutter
 
+        include:
+          - os: ubuntu-latest
+            flutter_os: "linux"
+          - os: windows-latest
+            flutter_os: "windows"
+          - os: macos-latest
+            flutter_os: "macos"
+
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -62,4 +70,4 @@ jobs:
       - name: Build the example
         run: |
           cd examples/flutter
-          flutter build linux
+          flutter build ${{ matrix.os.flutter_os }}
