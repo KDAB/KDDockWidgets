@@ -43,7 +43,9 @@ jobs:
 
       - name: Build Dartagnan
         run: |
-          cd dartagnan
+          pwd
+          ls ..
+          cd ../dartagnan
           cmake --preset=dev -DCMAKE_INSTALL_PREFIX=installed
           cd build_dev
           ninja && ninja install
