@@ -26,6 +26,9 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
 
+      - name: Remove clang 13
+        run: apt remove clang -y
+
       - name: Install dependencies on Ubuntu
         run: |
           sudo apt update -qq
