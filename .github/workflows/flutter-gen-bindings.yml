@@ -58,5 +58,6 @@ jobs:
       - name: Refresh bindings
         run: |
           cd src/flutter
+          dart pub get
           dart refresh_bindings.dart
           git status
