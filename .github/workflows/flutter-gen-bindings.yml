@@ -61,3 +61,6 @@ jobs:
           dart pub get
           dart refresh_bindings.dart
           git status
+          git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
+        env:
+          DARTAGNAN_CLANG_FORMAT=clang-format-15
