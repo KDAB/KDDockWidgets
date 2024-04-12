@@ -51,6 +51,12 @@ jobs:
       - name: Build Dartagnan
         run: |
           cd dartagnan
-          cmake --preset=dev -DCMAKE_INSTALL_PREFIX=installed
-          cd build-dev
+          cmake --preset=release -DCMAKE_INSTALL_PREFIX=installed
+          cd build-release
           ninja && ninja install
+
+      - name: Refresh bindings
+        run: |
+          cd src/flutter
+          dart refresh_bindings.dart
+          git status
