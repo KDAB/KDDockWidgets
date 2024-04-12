@@ -42,6 +42,7 @@ public:
     virtual void dumpManagedBacktrace_nocallback();
     virtual bool hasActivePopup() const;
     virtual bool hasActivePopup_nocallback() const;
+    static bool hasInstance();
     virtual bool inDisallowedDragView(KDDockWidgets::Point globalPos) const;
     virtual bool inDisallowedDragView_nocallback(KDDockWidgets::Point globalPos) const;
     virtual void installMessageHandler();
@@ -190,6 +191,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__Platform__cursorPos(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__dumpManagedBacktrace(void *thisObj);
 // KDDockWidgets::Core::Platform::hasActivePopup() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__hasActivePopup(void *thisObj);
+// KDDockWidgets::Core::Platform::hasInstance()
+DOCKS_EXPORT bool c_static_KDDockWidgets__Core__Platform__hasInstance();
 // KDDockWidgets::Core::Platform::inDisallowedDragView(KDDockWidgets::Point globalPos) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Platform__inDisallowedDragView_Point(void *thisObj, void *globalPos_);
 // KDDockWidgets::Core::Platform::installMessageHandler()
