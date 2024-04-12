@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 
     auto &config = KDDockWidgets::Config::self();
     auto flags = config.flags() | KDDockWidgets::Config::Flag_TitleBarIsFocusable;
+    flags |= KDDockWidgets::Config::Flag_TitleBarHasMinimizeButton;
 
     config.setFlags(flags);
     config.setViewFactory(new CustomViewFactory());

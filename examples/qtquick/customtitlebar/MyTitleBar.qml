@@ -44,17 +44,17 @@ KDDW.TitleBarBase {
         }
 
         Rectangle {
-            id: floatButton
-            visible: root.floatButtonVisible
+            id: minimizeButton
+            visible: root.minimizeButtonVisible
             radius: 5
-            color: isFocused ? "red" : "white"
+            color: "red"
             height: parent.height
             width: height
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    root.floatButtonClicked();
+                    root.minimizeButtonClicked();
                 }
             }
         }

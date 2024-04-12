@@ -11,37 +11,37 @@
 
 import QtQuick 2.9
 import QtQuick.Controls 2.15
+import com.kdab.dockwidgets 2.0 as KDDW
 
 Item {
     anchors.fill: parent
 
-    property alias background: background.source
-    property alias logo: logo.source
+    property var background
+    property var logo
 
-
-    Image {
-        id: background
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
-
-        Image {
-            id: logo
-
-            fillMode: Image.PreserveAspectFit
-            anchors {
-                fill: parent
-                margins: 50
-            }
-        }
+    KDDW.LayoutSaver {
+        id: layoutSaver
     }
 
-    TextField {
-        placeholderText: "TextField just to test focus"
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-            margins: 5
-        }
+    Row {
+    Button {
+        text: "Save1"
+        onClicked: layoutSaver.saveToFile("mySavedLayout1.json");
+    }
+
+    Button {
+        text: "Restore1"
+        onClicked: layoutSaver.restoreFromFile("mySavedLayout1.json");
+    }
+
+    Button {
+        text: "Save2"
+        onClicked: layoutSaver.saveToFile("mySavedLayout2.json");
+    }
+
+    Button {
+        text: "Restore2"
+        onClicked: layoutSaver.restoreFromFile("mySavedLayout2.json");
+    }
     }
 }
