@@ -38,15 +38,15 @@ KDDockWidgets::Core::TitleBar *Group_wrapper::actualTitleBar() const
 {
     return ::KDDockWidgets::Core::Group::actualTitleBar();
 }
-void Group_wrapper::addTab(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::InitialOption arg__2)
+void Group_wrapper::addTab(KDDockWidgets::Core::DockWidget *arg__1, const KDDockWidgets::InitialOption &arg__2)
 {
     ::KDDockWidgets::Core::Group::addTab(arg__1, arg__2);
 }
-void Group_wrapper::addTab(KDDockWidgets::Core::FloatingWindow *floatingWindow, KDDockWidgets::InitialOption arg__2)
+void Group_wrapper::addTab(KDDockWidgets::Core::FloatingWindow *floatingWindow, const KDDockWidgets::InitialOption &arg__2)
 {
     ::KDDockWidgets::Core::Group::addTab(floatingWindow, arg__2);
 }
-void Group_wrapper::addTab(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::InitialOption arg__2)
+void Group_wrapper::addTab(KDDockWidgets::Core::Group *arg__1, const KDDockWidgets::InitialOption &arg__2)
 {
     ::KDDockWidgets::Core::Group::addTab(arg__1, arg__2);
 }
@@ -180,7 +180,7 @@ void Group_wrapper::insertDockWidget(KDDockWidgets::Core::DockWidget *arg__1, in
 {
     ::KDDockWidgets::Core::Group::insertDockWidget(arg__1, index);
 }
-void Group_wrapper::insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int index, KDDockWidgets::InitialOption arg__3)
+void Group_wrapper::insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int index, const KDDockWidgets::InitialOption &arg__3)
 {
     ::KDDockWidgets::Core::Group::insertWidget(arg__1, index, arg__3);
 }
@@ -377,7 +377,7 @@ void *c_KDDockWidgets__Core__Group__actualTitleBar(void *thisObj)
     const auto &result = fromPtr(thisObj)->actualTitleBar();
     return result;
 }
-// addTab(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::InitialOption arg__2)
+// addTab(KDDockWidgets::Core::DockWidget * arg__1, const KDDockWidgets::InitialOption & arg__2)
 void c_KDDockWidgets__Core__Group__addTab_DockWidget_InitialOption(void *thisObj, void *arg__1_, void *arg__2_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
@@ -385,7 +385,7 @@ void c_KDDockWidgets__Core__Group__addTab_DockWidget_InitialOption(void *thisObj
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
     fromPtr(thisObj)->addTab(arg__1, arg__2);
 }
-// addTab(KDDockWidgets::Core::FloatingWindow * floatingWindow, KDDockWidgets::InitialOption arg__2)
+// addTab(KDDockWidgets::Core::FloatingWindow * floatingWindow, const KDDockWidgets::InitialOption & arg__2)
 void c_KDDockWidgets__Core__Group__addTab_FloatingWindow_InitialOption(void *thisObj, void *floatingWindow_, void *arg__2_)
 {
     auto floatingWindow = reinterpret_cast<KDDockWidgets::Core::FloatingWindow *>(floatingWindow_);
@@ -393,7 +393,7 @@ void c_KDDockWidgets__Core__Group__addTab_FloatingWindow_InitialOption(void *thi
     auto &arg__2 = *reinterpret_cast<KDDockWidgets::InitialOption *>(arg__2_);
     fromPtr(thisObj)->addTab(floatingWindow, arg__2);
 }
-// addTab(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::InitialOption arg__2)
+// addTab(KDDockWidgets::Core::Group * arg__1, const KDDockWidgets::InitialOption & arg__2)
 void c_KDDockWidgets__Core__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_, void *arg__2_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
@@ -574,7 +574,7 @@ void c_KDDockWidgets__Core__Group__insertDockWidget_DockWidget_int(void *thisObj
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
     fromPtr(thisObj)->insertDockWidget(arg__1, index);
 }
-// insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
+// insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, const KDDockWidgets::InitialOption & arg__3)
 void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(arg__1_);
@@ -795,20 +795,28 @@ void c_KDDockWidgets__Core__Group__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
 }
+bool c_static_KDDockWidgets__Core__Group___get_s_inFloatHack()
+{
+    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::s_inFloatHack;
+}
+void c_static_KDDockWidgets__Core__Group___set_s_inFloatHack_bool(bool s_inFloatHack_)
+{
+    KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::s_inFloatHack = s_inFloatHack_;
+}
 void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 913:
+    case 916:
         wrapper->m_dragRectCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_dragRect>(callback);
         break;
-    case 915:
+    case 918:
         wrapper->m_focusedWidgetChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_focusedWidgetChangedCallback>(callback);
         break;
-    case 933:
+    case 936:
         wrapper->m_isFocusedChangedCallbackCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_isFocusedChangedCallback>(callback);
         break;
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -70,7 +70,7 @@ class DelayedCall implements ffi.Finalizable {
   call() {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
-            cFunctionSymbolName(305))
+            cFunctionSymbolName(308))
         .asFunction();
     func(thisCpp);
   }
@@ -96,7 +96,7 @@ class DelayedCall implements ffi.Finalizable {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 305:
+      case 308:
         return "c_KDDockWidgets__Core__DelayedCall__call";
     }
     return "";
@@ -104,7 +104,7 @@ class DelayedCall implements ffi.Finalizable {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 305:
+      case 308:
         return "call";
     }
     throw Error();
@@ -116,8 +116,8 @@ class DelayedCall implements ffi.Finalizable {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DelayedCall__registerVirtualMethodCallback')
         .asFunction();
-    final callback305 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
+    final callback308 = ffi.Pointer.fromFunction<void_Func_voidstar_FFI>(
         KDDWBindingsCore.DelayedCall.call_calledFromC);
-    registerCallback(thisCpp, callback305, 305);
+    registerCallback(thisCpp, callback308, 308);
   }
 }

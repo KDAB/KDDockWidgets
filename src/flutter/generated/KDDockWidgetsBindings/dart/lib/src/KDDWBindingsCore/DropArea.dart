@@ -47,7 +47,7 @@ class DropArea extends KDDWBindingsCore.Layout {
         isMDIWrapper ? 1 : 0);
     KDDWBindingsCore.Object.s_dartInstanceByCppPtr[thisCpp.address] = this;
     registerCallbacks();
-  } // _addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::Item * relativeTo, KDDockWidgets::InitialOption initialOption)
+  } // _addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::Item * relativeTo, const KDDockWidgets::InitialOption & initialOption)
   _addDockWidget(KDDWBindingsCore.DockWidget? dw, int location,
       Item? relativeTo, InitialOption initialOption) {
     final void_Func_voidstar_voidstar_int_voidstar_voidstar func = _dylib
@@ -62,7 +62,7 @@ class DropArea extends KDDWBindingsCore.Layout {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         initialOption == null ? ffi.nullptr : initialOption.thisCpp);
-  } // addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+  } // addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, const KDDockWidgets::InitialOption & initialOption)
 
   addDockWidget(KDDWBindingsCore.DockWidget? dw, int location,
       KDDWBindingsCore.DockWidget? relativeTo,
@@ -79,7 +79,7 @@ class DropArea extends KDDWBindingsCore.Layout {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         initialOption == null ? ffi.nullptr : initialOption.thisCpp);
-  } // addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, KDDockWidgets::InitialOption option)
+  } // addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
 
   addMultiSplitter(KDDWBindingsCore.DropArea? splitter, int location,
       {required KDDWBindingsCore.Group? relativeToGroup,
@@ -96,7 +96,7 @@ class DropArea extends KDDWBindingsCore.Layout {
         location,
         relativeToGroup == null ? ffi.nullptr : relativeToGroup.thisCpp,
         option == null ? ffi.nullptr : option.thisCpp);
-  } // addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Item * relativeToItem, KDDockWidgets::InitialOption option)
+  } // addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Item * relativeToItem, const KDDockWidgets::InitialOption & option)
 
   addWidget(KDDWBindingsCore.View? widget, int location,
       {required Item? relativeToItem, required InitialOption option}) {
@@ -279,7 +279,7 @@ class DropArea extends KDDWBindingsCore.Layout {
             'c_KDDockWidgets__Core__DropArea__updateFloatingActions')
         .asFunction();
     func(thisCpp);
-  } // validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Item * relativeToItem, KDDockWidgets::InitialOption option) const
+  } // validateInputs(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, const KDDockWidgets::Core::Item * relativeToItem, const KDDockWidgets::InitialOption & option) const
 
   bool validateInputs(KDDWBindingsCore.View? widget, int location,
       Item? relativeToItem, InitialOption option) {
@@ -308,7 +308,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "c_KDDockWidgets__Core__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -316,7 +316,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 331:
+      case 334:
         return "setParentView_impl";
     }
     throw Error();
@@ -328,9 +328,9 @@ class DropArea extends KDDWBindingsCore.Layout {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback331 =
+    final callback334 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback331, 331);
+    registerCallback(thisCpp, callback334, 334);
   }
 }

@@ -32,9 +32,9 @@ public:
     ~Group_wrapper();
     Group_wrapper(KDDockWidgets::Core::View *parent = nullptr);
     KDDockWidgets::Core::TitleBar *actualTitleBar() const;
-    void addTab(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::InitialOption arg__2 = {});
-    void addTab(KDDockWidgets::Core::FloatingWindow *floatingWindow, KDDockWidgets::InitialOption arg__2 = {});
-    void addTab(KDDockWidgets::Core::Group *arg__1, KDDockWidgets::InitialOption arg__2 = {});
+    void addTab(KDDockWidgets::Core::DockWidget *arg__1, const KDDockWidgets::InitialOption &arg__2 = {});
+    void addTab(KDDockWidgets::Core::FloatingWindow *floatingWindow, const KDDockWidgets::InitialOption &arg__2 = {});
+    void addTab(KDDockWidgets::Core::Group *arg__1, const KDDockWidgets::InitialOption &arg__2 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
     bool allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const;
     bool alwaysShowsTabs() const;
@@ -65,7 +65,7 @@ public:
     bool hasTabsVisible() const;
     int indexOfDockWidget(const KDDockWidgets::Core::DockWidget *arg__1);
     void insertDockWidget(KDDockWidgets::Core::DockWidget *arg__1, int index);
-    void insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int index, KDDockWidgets::InitialOption arg__3 = {});
+    void insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int index, const KDDockWidgets::InitialOption &arg__3 = {});
     bool isCentralGroup() const;
     bool isDockable() const;
     bool isEmpty() const;
@@ -120,11 +120,11 @@ extern "C" {
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Group__constructor_View(void *parent_);
 // KDDockWidgets::Core::Group::actualTitleBar() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Group__actualTitleBar(void *thisObj);
-// KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::InitialOption arg__2)
+// KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::DockWidget * arg__1, const KDDockWidgets::InitialOption & arg__2)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__addTab_DockWidget_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
-// KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::FloatingWindow * floatingWindow, KDDockWidgets::InitialOption arg__2)
+// KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::FloatingWindow * floatingWindow, const KDDockWidgets::InitialOption & arg__2)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__addTab_FloatingWindow_InitialOption(void *thisObj, void *floatingWindow_, void *arg__2_);
-// KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::Group * arg__1, KDDockWidgets::InitialOption arg__2)
+// KDDockWidgets::Core::Group::addTab(KDDockWidgets::Core::Group * arg__1, const KDDockWidgets::InitialOption & arg__2)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__addTab_Group_InitialOption(void *thisObj, void *arg__1_, void *arg__2_);
 // KDDockWidgets::Core::Group::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);
@@ -182,7 +182,7 @@ DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__hasTabsVisible(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__Group__indexOfDockWidget_DockWidget(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Group::insertDockWidget(KDDockWidgets::Core::DockWidget * arg__1, int index)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index);
-// KDDockWidgets::Core::Group::insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
+// KDDockWidgets::Core::Group::insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, const KDDockWidgets::InitialOption & arg__3)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_);
 // KDDockWidgets::Core::Group::isCentralGroup() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__isCentralGroup(void *thisObj);
@@ -257,6 +257,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *t
 // KDDockWidgets::Core::Group::userType() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Group__userType(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
+DOCKS_EXPORT bool c_static_KDDockWidgets__Core__Group___get_s_inFloatHack();
+DOCKS_EXPORT void c_static_KDDockWidgets__Core__Group___set_s_inFloatHack_bool(bool s_inFloatHack_);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group_Finalizer(void *cppObj);
 }
