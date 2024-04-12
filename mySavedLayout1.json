@@ -1,0 +1,370 @@
+{
+    "allDockWidgets": [
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 1,
+                        "mainWindowUniqueName": "MyMainLayout"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dock4"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "indexOfFloatingWindow": 0,
+                        "isFloatingWindow": true,
+                        "itemIndex": 0
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "Dock #1"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 800,
+                    "width": 800,
+                    "x": 100,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 0,
+                        "mainWindowUniqueName": "MyMainLayout"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "Dock #2"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "indexOfFloatingWindow": 0,
+                        "isFloatingWindow": true,
+                        "itemIndex": 1
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "Dock #3"
+        }
+    ],
+    "closedDockWidgets": null,
+    "floatingWindows": [
+        {
+            "flags": 1410,
+            "geometry": {
+                "height": 800,
+                "width": 800,
+                "x": 337,
+                "y": 242
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "1163": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "Dock #3"
+                        ],
+                        "geometry": {
+                            "height": 742,
+                            "width": 394,
+                            "x": 398,
+                            "y": 0
+                        },
+                        "id": "1163",
+                        "isNull": false,
+                        "mainWindowUniqueName": "",
+                        "objectName": "Dock #3",
+                        "options": 0
+                    },
+                    "1198": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "Dock #1"
+                        ],
+                        "geometry": {
+                            "height": 742,
+                            "width": 393,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "1198",
+                        "isNull": false,
+                        "mainWindowUniqueName": "",
+                        "objectName": "Dock #1",
+                        "options": 0
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "guestId": "1198",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 742,
+                                    "width": 393,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 16777215,
+                                    "width": 16777215
+                                },
+                                "minSize": {
+                                    "height": 143,
+                                    "width": 80
+                                },
+                                "percentageWithinParent": 0.4993646759847522
+                            }
+                        },
+                        {
+                            "guestId": "1163",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 742,
+                                    "width": 394,
+                                    "x": 398,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 16777215,
+                                    "width": 16777215
+                                },
+                                "minSize": {
+                                    "height": 143,
+                                    "width": 80
+                                },
+                                "percentageWithinParent": 0.5006353240152478
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "orientation": 1,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 742,
+                            "width": 792,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSizeHint": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 800,
+                "width": 800,
+                "x": 337,
+                "y": 242
+            },
+            "parentIndex": -1,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 1600,
+                "width": 2560
+            },
+            "windowState": 0
+        }
+    ],
+    "mainWindows": [
+        {
+            "affinities": null,
+            "geometry": {
+                "height": 800,
+                "width": 1000,
+                "x": 1244,
+                "y": 271
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "1025": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "Dock #2"
+                        ],
+                        "geometry": {
+                            "height": 397,
+                            "width": 1000,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "1025",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MyMainLayout",
+                        "objectName": "Dock #2",
+                        "options": 0
+                    },
+                    "1049": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dock4"
+                        ],
+                        "geometry": {
+                            "height": 398,
+                            "width": 1000,
+                            "x": 0,
+                            "y": 402
+                        },
+                        "id": "1049",
+                        "isNull": false,
+                        "mainWindowUniqueName": "MyMainLayout",
+                        "objectName": "dock4",
+                        "options": 0
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "guestId": "1025",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 397,
+                                    "width": 1000,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 16777215,
+                                    "width": 16777215
+                                },
+                                "minSize": {
+                                    "height": 143,
+                                    "width": 80
+                                },
+                                "percentageWithinParent": 0.49937106918238994
+                            }
+                        },
+                        {
+                            "guestId": "1049",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 398,
+                                    "width": 1000,
+                                    "x": 0,
+                                    "y": 402
+                                },
+                                "maxSizeHint": {
+                                    "height": 16777215,
+                                    "width": 16777215
+                                },
+                                "minSize": {
+                                    "height": 143,
+                                    "width": 80
+                                },
+                                "percentageWithinParent": 0.5006289308176101
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 800,
+                            "width": 1000,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSizeHint": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 0,
+                "width": 0,
+                "x": 0,
+                "y": 0
+            },
+            "options": 0,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 1600,
+                "width": 2560
+            },
+            "uniqueName": "MyMainLayout",
+            "windowState": 0
+        }
+    ],
+    "screenInfo": [
+        {
+            "devicePixelRatio": 1.0,
+            "geometry": {
+                "height": 1600,
+                "width": 2560,
+                "x": 0,
+                "y": 0
+            },
+            "index": 0,
+            "name": "\\\\.\\DISPLAY1"
+        }
+    ],
+    "serializationVersion": 3
+}
