@@ -7,14 +7,7 @@
 name: Generate Flutter Bindings
 
 on:
-  push:
-    branches:
-      - 2.1
-      - main
-  pull_request:
-    branches:
-      - 2.1
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
