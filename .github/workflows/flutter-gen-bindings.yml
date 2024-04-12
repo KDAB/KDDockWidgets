@@ -63,4 +63,4 @@ jobs:
           git status
           git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
         env:
-          DARTAGNAN_CLANG_FORMAT=clang-format-15
+          DARTAGNAN_CLANG_FORMAT: clang-format-15
