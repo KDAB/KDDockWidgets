@@ -57,7 +57,7 @@ jobs:
 
       - name: debugging
         run: |
-          find /usr -iname clang-format*
+          ls -lh /usr/bin/clang-format-15
 
       - name: Refresh bindings
         run: |
@@ -68,4 +68,4 @@ jobs:
           git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
         env:
           PATH: ${{ github.workspace }}/dartagnan/installed/bin/:$PATH
-          DARTAGNAN_CLANG_FORMAT: clang-format
+          DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format-15
