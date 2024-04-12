@@ -55,6 +55,10 @@ jobs:
           cd build-release
           ninja && ninja install
 
+      - name: debugging
+        run: |
+          find /user -iname clang-format*
+
       - name: Refresh bindings
         run: |
           cd src/flutter
