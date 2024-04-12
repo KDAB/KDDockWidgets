@@ -62,8 +62,12 @@ jobs:
         env:
           DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format
 
+      - name: Setup git author name
+        uses: fregante/setup-git-user@v2
+
       - name: Create PR
         run: |
+          rm -rf dartagnan/
           git add .
           git commit -m "flutter: regenerate bindings"
           git checkout -B flutter/bindings-`git log -1 --pretty=format:"%H"`
