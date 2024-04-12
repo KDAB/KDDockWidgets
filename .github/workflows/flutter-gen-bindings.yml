@@ -55,15 +55,12 @@ jobs:
           cd build-release
           ninja && ninja install
 
-      - name: fix path
+      - name: Add Dartagnan to PATH
         run: |
           echo ${{ github.workspace }}/dartagnan/installed/bin/ >> $GITHUB_PATH
-          cat $GITHUB_PATH
-          echo $PATH
 
       - name: Refresh bindings
         run: |
-          echo $PATH
           cd src/flutter
           dart pub get
           dart refresh_bindings.dart
