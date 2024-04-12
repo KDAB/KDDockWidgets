@@ -28,7 +28,7 @@ public:
     ~FloatingWindow_wrapper();
     FloatingWindow_wrapper(KDDockWidgets::Core::Group *group, KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
     FloatingWindow_wrapper(KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow *parent = nullptr);
-    void addDockWidget(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption arg__4 = {});
+    void addDockWidget(KDDockWidgets::Core::DockWidget *arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, const KDDockWidgets::InitialOption &arg__4 = {});
     bool allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const;
     bool allDockWidgetsHave(KDDockWidgets::LayoutSaverOption arg__1) const;
     bool anyDockWidgetsHas(KDDockWidgets::DockWidgetOption arg__1) const;
@@ -79,7 +79,7 @@ extern "C" {
 DOCKS_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_Rect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);
 // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 DOCKS_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__constructor_Rect_MainWindow(void *suggestedGeometry_, void *parent_);
-// KDDockWidgets::Core::FloatingWindow::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption arg__4)
+// KDDockWidgets::Core::FloatingWindow::addDockWidget(KDDockWidgets::Core::DockWidget * arg__1, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, const KDDockWidgets::InitialOption & arg__4)
 DOCKS_EXPORT void c_KDDockWidgets__Core__FloatingWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *arg__1_, int location, void *relativeTo_, void *arg__4_);
 // KDDockWidgets::Core::FloatingWindow::allDockWidgetsHave(KDDockWidgets::DockWidgetOption arg__1) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__allDockWidgetsHave_DockWidgetOption(void *thisObj, int arg__1);

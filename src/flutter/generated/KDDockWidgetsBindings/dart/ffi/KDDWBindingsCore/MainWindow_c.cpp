@@ -34,7 +34,7 @@ MainWindow_wrapper::MainWindow_wrapper(KDDockWidgets::Core::View *view, const QS
     : ::KDDockWidgets::Core::MainWindow(view, uniqueName, options)
 {
 }
-void MainWindow_wrapper::addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, KDDockWidgets::InitialOption initialOption)
+void MainWindow_wrapper::addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo, const KDDockWidgets::InitialOption &initialOption)
 {
     ::KDDockWidgets::Core::MainWindow::addDockWidget(dockWidget, location, relativeTo, initialOption);
 }
@@ -42,7 +42,7 @@ void MainWindow_wrapper::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *doc
 {
     ::KDDockWidgets::Core::MainWindow::addDockWidgetAsTab(dockwidget);
 }
-void MainWindow_wrapper::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+void MainWindow_wrapper::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, const KDDockWidgets::InitialOption &initialOption)
 {
     ::KDDockWidgets::Core::MainWindow::addDockWidgetToSide(dockWidget, location, initialOption);
 }
@@ -182,7 +182,7 @@ void *c_KDDockWidgets__Core__MainWindow__constructor_View_QString_MainWindowOpti
     auto ptr = new KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper(view, uniqueName, options);
     return reinterpret_cast<void *>(ptr);
 }
-// addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, KDDockWidgets::InitialOption initialOption)
+// addDockWidget(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, const KDDockWidgets::InitialOption & initialOption)
 void c_KDDockWidgets__Core__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_)
 {
     auto dockWidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockWidget_);
@@ -197,7 +197,7 @@ void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *this
     auto dockwidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockwidget_);
     fromPtr(thisObj)->addDockWidgetAsTab(dockwidget);
 }
-// addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+// addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, const KDDockWidgets::InitialOption & initialOption)
 void c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption(void *thisObj, void *dockWidget_, int location, void *initialOption_)
 {
     auto dockWidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockWidget_);
@@ -362,7 +362,7 @@ void c_KDDockWidgets__Core__MainWindow__registerVirtualMethodCallback(void *ptr,
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 331:
+    case 334:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::MainWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

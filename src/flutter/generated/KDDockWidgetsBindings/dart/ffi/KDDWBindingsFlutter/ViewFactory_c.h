@@ -32,6 +32,8 @@ class ViewFactory_wrapper : public ::KDDockWidgets::flutter::ViewFactory
 public:
     ~ViewFactory_wrapper();
     ViewFactory_wrapper();
+    virtual QString classicIndicatorsPath() const;
+    virtual QString classicIndicatorsPath_nocallback() const;
     virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent = 0) const;
     virtual KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *createClassicIndicatorWindow_nocallback(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent = 0) const;
     virtual KDDockWidgets::flutter::IndicatorWindow *createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent = 0) const;
@@ -56,6 +58,8 @@ public:
     virtual KDDockWidgets::Core::View *createTabBar_nocallback(KDDockWidgets::Core::TabBar *tabBar, KDDockWidgets::Core::View *parent = nullptr) const;
     virtual KDDockWidgets::Core::View *createTitleBar(KDDockWidgets::Core::TitleBar *arg__1, KDDockWidgets::Core::View *parent) const;
     virtual KDDockWidgets::Core::View *createTitleBar_nocallback(KDDockWidgets::Core::TitleBar *arg__1, KDDockWidgets::Core::View *parent) const;
+    typedef QString *(*Callback_classicIndicatorsPath)(void *);
+    Callback_classicIndicatorsPath m_classicIndicatorsPathCallback = nullptr;
     typedef KDDockWidgets::Core::ClassicIndicatorWindowViewInterface *(*Callback_createClassicIndicatorWindow)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent);
     Callback_createClassicIndicatorWindow m_createClassicIndicatorWindowCallback = nullptr;
     typedef KDDockWidgets::flutter::IndicatorWindow *(*Callback_createClassicIndicatorWindow_flutter)(void *, KDDockWidgets::Core::ClassicDropIndicatorOverlay *arg__1, KDDockWidgets::Core::View *parent);
@@ -86,6 +90,8 @@ public:
 extern "C" {
 // KDDockWidgets::flutter::ViewFactory::ViewFactory()
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__constructor();
+// KDDockWidgets::flutter::ViewFactory::classicIndicatorsPath() const
+DOCKS_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__classicIndicatorsPath(void *thisObj);
 // KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__ViewFactory__createClassicIndicatorWindow_ClassicDropIndicatorOverlay_View(void *thisObj, void *arg__1_, void *parent_);
 // KDDockWidgets::flutter::ViewFactory::createClassicIndicatorWindow_flutter(KDDockWidgets::Core::ClassicDropIndicatorOverlay * arg__1, KDDockWidgets::Core::View * parent) const
