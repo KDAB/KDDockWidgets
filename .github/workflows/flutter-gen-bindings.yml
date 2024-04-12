@@ -55,17 +55,19 @@ jobs:
           cd build-release
           ninja && ninja install
 
-      - name: debugging
+      - name: fix path
         run: |
-          ls -lh /usr/bin/clang-format-15
+          echo ${{ github.workspace }}/dartagnan/installed/bin/ >> $GITHUB_PATH
+          cat $GITHUB_PATH
+          echo $PATH
 
       - name: Refresh bindings
         run: |
+          echo $PATH
           cd src/flutter
           dart pub get
           dart refresh_bindings.dart
           git status
           git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
         env:
-          PATH: ${{ github.workspace }}/dartagnan/installed/bin/:${{ env.PATH }}
-          DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format-15
+          DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format
