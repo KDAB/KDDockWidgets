@@ -60,7 +60,7 @@ jobs:
           git status
           git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
         env:
-          DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format
+          DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format-15
 
       - name: Setup git author name
         uses: fregante/setup-git-user@v2
@@ -68,6 +68,7 @@ jobs:
       - name: Create PR
         run: |
           rm -rf dartagnan/
+          find src/flutter/generated/ -name '*.cpp' -o -name '*.h' -exec clang-format-15 -i {} \;
           git add .
           git commit -m "flutter: regenerate bindings"
           git checkout -B flutter/bindings-`git log -1 --pretty=format:"%H"`
