@@ -24,9 +24,6 @@ final String s_libraryPathEnvVariable = Platform.isWindows
             ? "DYLD_LIBRARY_PATH"
             : "";
 
-final String s_qtIncludePath = qtIncludePath();
-final String s_qtLibraryPath = qtLibPath();
-
 /**
  * Returns the library filename according to the operating system.
  */
@@ -111,45 +108,14 @@ Future<int> getPackages(
       workingDirectory: workingDirectory, printOnly: printOnly);
 }
 
-/**
- * Runs qmake -query
- */
-String qmakeQuery(String key) {
-  ProcessResult result = Process.runSync('qmake', ['-query']);
-
-  for (String line in result.stdout.toString().split("\n")) {
-    if (line.startsWith('${key}:')) {
-      line = line.replaceAll('${key}:', '');
-      line = line.trim();
-      return line;
-    }
-  }
-
-  return "";
-}
-
-String qtIncludePath() {
-  return qmakeQuery('QT_INSTALL_HEADERS');
-}
-
-String qtLibPath() {
-  return qmakeQuery('QT_INSTALL_LIBS');
-}
-
 List<String> includeArguments() {
   if (Platform.isMacOS) {
     return [
-      "-I${s_qtLibraryPath}/QtCore.framework/Headers",
-      "-I${s_qtLibraryPath}/QtGui.framework/Headers",
-      "-F${s_qtLibraryPath}",
       "-I..",
       "-Iviews/"
     ];
   } else {
     return [
-      "-I${s_qtIncludePath}",
-      "-I${s_qtIncludePath}/QtCore",
-      "-I${s_qtIncludePath}/QtGui",
       "-I..",
       "-I../3rdparty",
       "-I../fwd_headers",
