@@ -67,5 +67,5 @@ jobs:
           git status
           git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
         env:
-          PATH: ${{ github.workspace }}/dartagnan/installed/bin/:$PATH
+          PATH: ${{ github.workspace }}/dartagnan/installed/bin/:${{ env.PATH }}
           DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format-15
