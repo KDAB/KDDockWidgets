@@ -57,7 +57,7 @@ jobs:
 
       - name: debugging
         run: |
-          find /user -iname clang-format*
+          find /usr -iname clang-format*
 
       - name: Refresh bindings
         run: |
