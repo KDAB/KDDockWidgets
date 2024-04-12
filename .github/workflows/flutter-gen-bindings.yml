@@ -55,15 +55,12 @@ jobs:
           cd build-release
           ninja && ninja install
 
-      - name: fix path
+      - name: Add Dartagnan to PATH
         run: |
           echo ${{ github.workspace }}/dartagnan/installed/bin/ >> $GITHUB_PATH
-          cat $GITHUB_PATH
-          echo $PATH
 
       - name: Refresh bindings
         run: |
-          echo $PATH
           cd src/flutter
           dart pub get
           dart refresh_bindings.dart
@@ -71,3 +68,13 @@ jobs:
           git checkout generated/KDDockWidgetsBindings/dart/lib/LibraryLoader.dart
         env:
           DARTAGNAN_CLANG_FORMAT: /usr/bin/clang-format
+
+      - name: Create PR
+        run: |
+          git add .
+          git commit -m "flutter: regenerate bindings"
+          git checkout -B flutter/bindings-`git log -1 --pretty=format:"%H"`
+          git push --set-upstream origin `git branch --show-current`
+          gh pr create --base main --title "flutter: Regenerate bindings" --body "Automatically created via GH action."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
