@@ -68,7 +68,7 @@ jobs:
       - name: Create PR
         run: |
           rm -rf dartagnan/
-          find src/flutter/generated/ -name '*.cpp' -o -name '*.h' -exec clang-format-15 -i {} \;
+          find src/flutter/generated/ -name '*.cpp' -o -name '*.h' | xargs clang-format-15 -i
           git add .
           git commit -m "flutter: regenerate bindings"
           git checkout -B flutter/bindings-`git log -1 --pretty=format:"%H"`
