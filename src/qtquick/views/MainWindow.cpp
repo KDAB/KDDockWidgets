@@ -13,9 +13,14 @@
 #include "core/Layout.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
+#include "core/Logging_p.h"
 #include "core/DockRegistry.h"
 #include "core/layouting/Item_p.h"
 
+#include "kddockwidgets/qtquick/Platform.h"
+#include "kddockwidgets/qtquick/views/View.h"
+
+#include <QQuickItem>
 #include <QDebug>
 #include <QTimer>
 
@@ -129,4 +134,16 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     Q_UNUSED(top);
     Q_UNUSED(bottom);
     qDebug() << Q_FUNC_INFO << "not implemented";
+}
+
+void MainWindow::setPersistentCentralView(const QString &qmlFilename)
+{
+    QQuickItem *guest = QtQuick::View::createItem(plat()->qmlEngine(), qmlFilename);
+    if (guest) {
+        // kddw deals in Core::View, so put it inside one
+        auto wrapper = QtQuick::View::asQQuickWrapper(guest);
+        m_mainWindow->setPersistentCentralView(wrapper);
+    } else {
+        KDDW_ERROR("setPersistentCentralView: Failed to create item for {}", qmlFilename);
+    }
 }

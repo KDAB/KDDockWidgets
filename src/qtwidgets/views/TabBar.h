@@ -58,6 +58,7 @@ public:
 Q_SIGNALS:
     void dockWidgetInserted(int index);
     void dockWidgetRemoved(int index);
+    void countChanged();
     void currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *);
 
 protected:

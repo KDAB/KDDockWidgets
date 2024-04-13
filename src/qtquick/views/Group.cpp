@@ -30,6 +30,9 @@
 #include "kddockwidgets/core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/Group_p.h"
+#include "core/layouting/Item_p.h"
+#include "core/Logging_p.h"
+#include "core/MDILayout.h"
 
 #include "Stack.h"
 #include "Config.h"
@@ -54,7 +57,7 @@ public:
 }
 
 Group::Group(Core::Group *controller, QQuickItem *parent)
-    : QtQuick::View(controller, Core::ViewType::Frame, parent)
+    : QtQuick::View(controller, Core::ViewType::Group, parent)
     , Core::GroupViewInterface(controller)
     , d(new Private())
 {
@@ -172,10 +175,44 @@ void Group::setStackLayout(QQuickItem *stackLayout)
     m_stackLayout = stackLayout;
 }
 
+void Group::startMDIResize()
+{
+    if (auto handler = m_group->resizeHandler()) {
+        if (handler->enabled()) {
+            /// Doesn't happen, but let's be vigilant
+            KDDW_ERROR("Group::startMDIResize: Handler is already enabled!");
+        } else {
+            handler->setEnabled(true);
+        }
+    } else {
+        KDDW_ERROR("Group::startMDIResize: No WidgetResizeHandler found. isMDI={}", isMDI());
+    }
+}
+
 QSize Group::minSize() const
 {
     const QSize contentsSize = m_group->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
+}
+
+QSize Group::maxSizeHint() const
+{
+    if (isMDI()) {
+        const auto dockwidgets = m_group->dockWidgets();
+        if (dockwidgets.size() == 1) {
+            auto dw = dockwidgets[0];
+            if (dw->inDtor()) {
+                // Destruction case, nothing to do
+                return View::maxSizeHint();
+            }
+
+            return (dw->view()->maxSizeHint() + QSize(0, nonContentsHeight())).boundedTo(Core::Item::hardcodedMaximumSize);
+        } else {
+            KDDW_WARN("Group::maxSizeHint: Max size not supported for mixed MDI case yet");
+        }
+    }
+
+    return View::maxSizeHint();
 }
 
 QObject *Group::tabBarObj() const
@@ -230,4 +267,16 @@ KDDockWidgets::QtQuick::TitleBar *Group::actualTitleBar() const
 int Group::userType() const
 {
     return 0;
+}
+
+void Group::setMDISize(QSize sz)
+{
+    if (!isMDI() || m_inDtor)
+        return;
+
+    auto layout = m_group->mdiLayout();
+    if (!layout)
+        return;
+
+    layout->resizeDockWidget(m_group, sz);
 }

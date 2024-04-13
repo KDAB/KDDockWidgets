@@ -156,6 +156,10 @@ void TitleBar_wrapper::setCloseButtonEnabled(bool arg__1)
 {
     ::KDDockWidgets::Core::TitleBar::setCloseButtonEnabled(arg__1);
 }
+void TitleBar_wrapper::setCloseButtonVisible(bool arg__1)
+{
+    ::KDDockWidgets::Core::TitleBar::setCloseButtonVisible(arg__1);
+}
 void TitleBar_wrapper::setFloatButtonVisible(bool arg__1)
 {
     ::KDDockWidgets::Core::TitleBar::setFloatButtonVisible(arg__1);
@@ -388,6 +392,11 @@ void c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool(void *thisObj, 
 {
     fromPtr(thisObj)->setCloseButtonEnabled(arg__1);
 }
+// setCloseButtonVisible(bool arg__1)
+void c_KDDockWidgets__Core__TitleBar__setCloseButtonVisible_bool(void *thisObj, bool arg__1)
+{
+    fromPtr(thisObj)->setCloseButtonVisible(arg__1);
+}
 // setFloatButtonVisible(bool arg__1)
 void c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1)
 {
@@ -472,16 +481,16 @@ void c_KDDockWidgets__Core__TitleBar__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 544:
+    case 553:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isMDI>(callback);
         break;
-    case 548:
+    case 557:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_isWindow>(callback);
         break;
     case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 567:
+    case 577:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::TitleBar_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

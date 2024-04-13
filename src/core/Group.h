@@ -51,14 +51,14 @@ public:
     LayoutSaver::Group serialize() const;
 
     ///@brief Adds a widget into the Group's Stack
-    void addTab(DockWidget *, InitialOption = {});
+    void addTab(DockWidget *, const InitialOption & = {});
     ///@overload
-    void addTab(Group *, InitialOption = {});
+    void addTab(Group *, const InitialOption & = {});
     ///@overload
-    void addTab(FloatingWindow *floatingWindow, InitialOption = {});
+    void addTab(FloatingWindow *floatingWindow, const InitialOption & = {});
 
     ///@brief Inserts a widget into the Group's TabWidget at @p index
-    void insertWidget(DockWidget *, int index, InitialOption = {});
+    void insertWidget(DockWidget *, int index, const InitialOption & = {});
 
     ///@brief removes a dockwidget from the group
     void removeWidget(DockWidget *);
@@ -142,7 +142,7 @@ public:
      *
      * @return whether this widget is the central group in a main window
      */
-    bool isCentralFrame() const;
+    bool isCentralGroup() const;
 
     /// @brief Returns whether you can DND dock widgets over this group and tab into it
     bool isDockable() const;
@@ -241,8 +241,7 @@ public:
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
     bool anyDockWidgetsHas(LayoutSaverOption) const;
 
-    /// @brief Usually we do resize via the native window manager, but if a widget is docked like
-    /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse
+    /// @brief To allow resizing the overlayed dock widget (auto-hide feature)
     void setAllowedResizeSides(CursorPositions sides);
 
     /// @brief Returns whether this group is in a MDI layout
@@ -250,7 +249,7 @@ public:
     bool isMDI() const;
 
     /// @brief Returns whether this group was created automatically just for the purpose of
-    /// supporting DockWidget::Option_MDINestable
+    /// supporting DockWidgetOption_MDINestable
     bool isMDIWrapper() const;
 
     /// @brief If this is an MDI wrapper group, return the DockWidget MDI wrapper
@@ -269,7 +268,7 @@ public:
     MDILayout *mdiLayout() const;
 
     /// @brief If this group is a MDI group (isMDI() == true), returns whether it contains nested
-    /// dock widgets (DockWidget::Option_MDINestable)
+    /// dock widgets (DockWidgetOption_MDINestable)
     /// @sa isMDI()
     bool hasNestedMDIDockWidgets() const;
 
@@ -293,6 +292,8 @@ public:
 
     /// Returns the group that's in the specified item
     static Core::Group *fromItem(const Core::Item *);
+
+    static bool s_inFloatHack;
 
 protected:
     void isFocusedChangedCallback() override;
@@ -335,12 +336,17 @@ protected:
     Core::TabBar *const m_tabBar;
     Core::TitleBar *const m_titleBar;
 
+#ifdef DOCKS_DEVELOPER_MODE
+public:
+#else
 private:
+#endif
     KDDW_DELETE_COPY_CTOR(Group)
     friend class ::TestDocks;
     friend class KDDockWidgets::Core::Stack;
 
     void scheduleDeleteLater();
+    void createMDIResizeHandler();
     void onCloseEvent(CloseEvent *);
 
     Layout *m_layout = nullptr;

@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -52,7 +52,7 @@ class Group extends KDDWBindingsFlutter.Group with View_mixin {
       return KDDWBindingsFlutter.View.fromCache(dw.view().thisCpp)
           as DockWidget;
 
-    if (!m_controller.isCentralFrame())
+    if (!m_controller.isCentralGroup())
       print("Group: No dock widget in the Group!");
     return null;
   }

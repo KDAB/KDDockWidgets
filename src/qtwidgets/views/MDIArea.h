@@ -45,7 +45,7 @@ public:
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
     void addDockWidget(Core::DockWidget *dw, QPoint localPt,
-                       InitialOption addingOption = {});
+                       const InitialOption &addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
     void moveDockWidget(Core::DockWidget *dw, QPoint pos);
@@ -55,7 +55,7 @@ public:
 
     /// @brief overloads
     void addDockWidget(Core::DockWidgetViewInterface *, QPoint localPt,
-                       InitialOption addingOption = {});
+                       const InitialOption &addingOption = {});
     void moveDockWidget(Core::DockWidgetViewInterface *, QPoint pos);
     void resizeDockWidget(Core::DockWidgetViewInterface *, QSize size);
 

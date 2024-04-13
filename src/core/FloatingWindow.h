@@ -100,11 +100,11 @@ public:
      * as they can be tabbed into the single group.
      * @return true if this FloatingWindow has a single group.
      */
-    bool hasSingleFrame() const;
+    bool hasSingleGroup() const;
 
     /**
      * @brief checks if this FloatingWindow only has one dockwidget.
-     * This is a more specific case than hasSingleFrame(), it implies not only a single group,
+     * This is a more specific case than hasSingleGroup(), it implies not only a single group,
      * but that group must only have 1 dock widget.
      * @return true if this FloatingWindow only has one dockwidget.
      */
@@ -168,7 +168,7 @@ public:
 
     /// @brief Adds the dock widget to the specified location
     void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo,
-                       InitialOption = {});
+                       const InitialOption & = {});
 
     /// @brief Returns the MainWindow which is the transient parent of this FloatingWindow
     /// Can be nullptr if you create dock widgets before the main window. Can also be some

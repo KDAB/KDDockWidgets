@@ -61,7 +61,7 @@ MDIArea::~MDIArea()
 }
 
 void MDIArea::addDockWidget(Core::DockWidget *dw, QPoint localPt,
-                            InitialOption addingOption)
+                            const InitialOption &addingOption)
 {
     if (!dw)
         return;
@@ -95,7 +95,7 @@ void MDIArea::resizeDockWidget(Core::DockWidget *dw, QSize size)
 }
 
 void MDIArea::addDockWidget(Core::DockWidgetViewInterface *dwView, QPoint localPt,
-                            InitialOption addingOption)
+                            const InitialOption &addingOption)
 {
     auto dw = dwView ? dwView->dockWidget() : nullptr;
     addDockWidget(dw, localPt, addingOption);

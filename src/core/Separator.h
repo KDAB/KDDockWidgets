@@ -36,12 +36,9 @@ public:
     virtual ~Separator() override;
 
     bool isVertical() const;
-    void move(int p);
     int position() const;
-    Qt::Orientation orientation() const;
     void setGeometry(Rect r);
-    void setGeometry(int pos, int pos2, int length);
-    Core::ItemBoxContainer *parentContainer() const;
+
     LayoutingSeparator *asLayoutingSeparator() const;
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other

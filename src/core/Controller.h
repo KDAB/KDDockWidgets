@@ -26,7 +26,8 @@ class View;
 enum class ViewType {
     FIRST = 1, // Keep first
     None = 0,
-    Frame = 1,
+    Frame = 1, // deprecated name
+    Group = 1,
     TitleBar = 2,
     TabBar = 4,
     Stack = 8,
@@ -90,6 +91,9 @@ public:
     /// Equivalent to QObject::deleteLater() when Qt used
     /// but works with Flutter as well
     void destroyLater();
+
+    bool isFixedHeight() const;
+    bool isFixedWidth() const;
 
     class Private;
     Controller::Private *dptr() const;

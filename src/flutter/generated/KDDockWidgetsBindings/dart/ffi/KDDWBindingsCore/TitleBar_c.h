@@ -54,6 +54,7 @@ public:
     void onMaximizeClicked();
     void onMinimizeClicked();
     void setCloseButtonEnabled(bool arg__1);
+    void setCloseButtonVisible(bool arg__1);
     void setFloatButtonVisible(bool arg__1);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
@@ -133,6 +134,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onMaximizeClicked(void *thisO
 DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__onMinimizeClicked(void *thisObj);
 // KDDockWidgets::Core::TitleBar::setCloseButtonEnabled(bool arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setCloseButtonEnabled_bool(void *thisObj, bool arg__1);
+// KDDockWidgets::Core::TitleBar::setCloseButtonVisible(bool arg__1)
+DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setCloseButtonVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::TitleBar::setFloatButtonVisible(bool arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__TitleBar__setFloatButtonVisible_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Core::TitleBar::setParentView_impl(KDDockWidgets::Core::View * parent)

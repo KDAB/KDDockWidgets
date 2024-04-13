@@ -19,8 +19,8 @@ using namespace KDDockWidgets;
 KDDW_QCORO_TASK tst_groupCtor()
 {
     auto group = new Core::Group(nullptr, {});
-    CHECK(group->view()->is(Core::ViewType::Frame));
-    CHECK(group->view()->asWrapper()->is(Core::ViewType::Frame));
+    CHECK(group->view()->is(Core::ViewType::Group));
+    CHECK(group->view()->asWrapper()->is(Core::ViewType::Group));
     delete group;
 
     KDDW_TEST_RETURN(true);

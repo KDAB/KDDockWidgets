@@ -2,15 +2,19 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: CI for building the examples against installed KDDW. Allows to find missing installead headers.
+name: Examples and installed headers
 
 on:
   push:
     branches:
+      - 2.1
       - 2.0
+      - main
   pull_request:
     branches:
+      - 2.1
       - 2.0
+      - main
 
 jobs:
   build:

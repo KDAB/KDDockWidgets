@@ -54,6 +54,14 @@ bool Controller_wrapper::inDtor() const
 {
     return ::KDDockWidgets::Core::Controller::inDtor();
 }
+bool Controller_wrapper::isFixedHeight() const
+{
+    return ::KDDockWidgets::Core::Controller::isFixedHeight();
+}
+bool Controller_wrapper::isFixedWidth() const
+{
+    return ::KDDockWidgets::Core::Controller::isFixedWidth();
+}
 bool Controller_wrapper::isVisible() const
 {
     return ::KDDockWidgets::Core::Controller::isVisible();
@@ -171,6 +179,18 @@ int c_KDDockWidgets__Core__Controller__height(void *thisObj)
 bool c_KDDockWidgets__Core__Controller__inDtor(void *thisObj)
 {
     const auto &result = fromPtr(thisObj)->inDtor();
+    return result;
+}
+// isFixedHeight() const
+bool c_KDDockWidgets__Core__Controller__isFixedHeight(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->isFixedHeight();
+    return result;
+}
+// isFixedWidth() const
+bool c_KDDockWidgets__Core__Controller__isFixedWidth(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->isFixedWidth();
     return result;
 }
 // isVisible() const

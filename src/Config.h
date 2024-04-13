@@ -169,13 +169,28 @@ public:
                 ///< windows, but the detection might fail
         /// with more exotic setups. This flag can be used to override.
         InternalFlag_TopLevelIndicatorRubberBand =
-            64 ///< Makes the rubber band of classic drop indicators to be top-level windows. Helps
-               ///< with working around MFC bugs
+            64, ///< Makes the rubber band of classic drop indicators to be top-level windows. Helps
+                ///< with working around MFC bugs,
+        InternalFlag_NoDeleteLaterWorkaround = 128, ///< Disables workaround for QTBUG-83030. Will be the default since Qt 6.7
+                                                    /// While the workaround works, it will cause memory leaks at shutdown,
+        /// This flag allows to disable the workaround if you think you don't have the complex setup reported in QTBUG-83030
+        InternalFlag_DeleteSeparatorsLater = 256 ///< Uses deleteLater() when disposing of separators
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 
+    /// Flags to be used in MDI mode
+    enum MDIFlag {
+        MDIFlag_None = 0,
+        MDIFlag_NoClickToRaise = 1 ///< Clicking on a MDI widget won't raise it
+    };
+    Q_DECLARE_FLAGS(MDIFlags, MDIFlag)
+
     ///@brief returns the chosen flags
     Flags flags() const;
+
+    ///@brief returns the chosen MDI flags
+    /// default is MDIFlag_None
+    MDIFlags mdiFlags() const;
 
     ///@brief setter for the flags
     ///@param flags the flags to set
@@ -183,8 +198,14 @@ public:
     /// Call @ref flags() after the setter if you need to know what was really set
     void setFlags(Flags flags);
 
+    /// Setter for the MDI flags
+    void setMDIFlags(MDIFlags);
+
     ///@brief Returns whether the specified flag is set or not
     static bool hasFlag(Flag);
+
+    ///@brief Returns whether the specified MDI flag is set or not
+    static bool hasMDIFlag(MDIFlag);
 
     /**
      * @brief Registers a DockWidgetFactoryFunc.
@@ -236,7 +257,18 @@ public:
 
     ///@brief setter for @ref separatorThickness
     /// Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    /// Note: For backwards compatibility, setting separatorThickness will set layoutSpacing to the same value.
     void setSeparatorThickness(int value);
+
+    /// Returns the spacing between dock widgets
+    /// By default this is the thickness of the separators, as they are between dock widgets.
+    int layoutSpacing() const;
+
+    /// Setter for layoutSpacing().
+    /// Note: Only call this for the rare case of wanting the spacing to be different than the separator's thickness
+    ///       Use setSeparatorThickness() for the more common case.
+    /// Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    void setLayoutSpacing(int);
 
     ///@brief sets the dragged window opacity
     /// 1.0 is fully opaque while 0.0 is fully transparent

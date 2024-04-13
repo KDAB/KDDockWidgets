@@ -112,7 +112,7 @@ void WindowBeingDragged::init()
 void WindowBeingDragged::updateTransparency(bool enable)
 {
     // Wayland doesn't support setting opacity
-    if (isWayland() || !m_floatingWindow)
+    if (!Core::Platform::hasInstance() || isWayland() || !m_floatingWindow)
         return;
 
     double opacity = Config::self().draggedWindowOpacity();
@@ -185,7 +185,7 @@ bool WindowBeingDragged::contains(Layout *layout) const
     if (auto fw = m_draggableView->rootView()->asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might
         // represent floating window though.
-        return fw->layout() == layout && fw->hasSingleFrame();
+        return fw->layout() == layout && fw->hasSingleGroup();
     }
 
     return false;

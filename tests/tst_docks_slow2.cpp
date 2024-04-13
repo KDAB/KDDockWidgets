@@ -69,8 +69,8 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(m.get(), Event::LayoutRequest); // So MainWindow min
                                                                                            // size is updated
 
-    Item *item1 = layout->itemForFrame(dock1->dptr()->group());
-    Item *item3 = layout->itemForFrame(dock3->dptr()->group());
+    Item *item1 = layout->itemForGroup(dock1->dptr()->group());
+    Item *item3 = layout->itemForGroup(dock3->dptr()->group());
     Item *item4 = dropArea->centralFrame();
 
     CHECK(item1);
@@ -87,11 +87,11 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
     auto fw2 = dock2->floatingWindow();
     CHECK_EQ(layout->view()->minSize().width(),
-             2 * Item::separatorThickness + item1->minSize().width() + item3->minSize().width()
+             2 * Item::layoutSpacing + item1->minSize().width() + item3->minSize().width()
                  + item4->minSize().width());
 
     // Drop left of dock3
-    layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group());
+    layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group()->layoutItem());
 
     CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw2));
     CHECK_EQ(layout->layoutWidth(), oldContentsWidth);
@@ -139,7 +139,7 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
         m->addDockWidget(dock3, KDDockWidgets::Location_OnRight);
         auto f2 = dock2->dptr()->group();
-        Item *item2 = layout->itemForFrame(f2);
+        Item *item2 = layout->itemForGroup(f2);
         CHECK(item2);
         dock2->close();
         dock3->close();

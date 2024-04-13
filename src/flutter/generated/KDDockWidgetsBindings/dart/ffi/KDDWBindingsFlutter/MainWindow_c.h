@@ -144,6 +144,8 @@ public:
     virtual void update_nocallback();
     virtual QString viewName() const;
     virtual QString viewName_nocallback() const;
+    virtual int zOrder() const;
+    virtual int zOrder_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef KDDockWidgets::Margins *(*Callback_centerWidgetMargins)(void *);
@@ -266,6 +268,8 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef QString *(*Callback_viewName)(void *);
     Callback_viewName m_viewNameCallback = nullptr;
+    typedef int (*Callback_zOrder)(void *);
+    Callback_zOrder m_zOrderCallback = nullptr;
 };
 }
 }
@@ -394,6 +398,8 @@ DOCKS_EXPORT void c_KDDockWidgets__flutter__MainWindow__showNormal(void *thisObj
 DOCKS_EXPORT void c_KDDockWidgets__flutter__MainWindow__update(void *thisObj);
 // KDDockWidgets::flutter::MainWindow::viewName() const
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__MainWindow__viewName(void *thisObj);
+// KDDockWidgets::flutter::MainWindow::zOrder() const
+DOCKS_EXPORT int c_KDDockWidgets__flutter__MainWindow__zOrder(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__MainWindow__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__MainWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__MainWindow_Finalizer(void *cppObj);

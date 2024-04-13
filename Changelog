@@ -1,5 +1,27 @@
-* v2.0.1 (unreleased)
- -
+* v2.1.0 (unreleased)
+  - Added standalone layouting example using Slint
+  - Fixed DPI of icons in TitleBar.qml Looks better when using 150% and 200% scalling now.
+  - QtQuick: Fixed redock not working when mixing MDI with docking
+  - QtQuick: Allow to mix MDI with docking, as already done with QtWidgets
+  - QtQuick: Fixed MDI widgets not raising when clicked on
+  - QtQuick: Added API to set affinities via QML (#465)
+  - MDI: Don't show resize handles if widget is fixed size
+  - MDI: Fixed mouse cursor not being restored when dock widgets were overlapping
+  - MDI: Added Config::setMDIFlags() and MDIFlag_NoClickToRaise
+  - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
+  - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
+  - QtWidgets: Fixed crash when unpinning a window
+  - Planned: #448 Implement docking indicator for MDI area
+  - Fix crash when doing sequential open() and close() calls (#326)
+  - Fix double-clicking the guest widget would make window float
+  - 3rdparty: Update to nlohmann json v3.11.3, from v3.10.5. Only relevant if you're not using
+    system nlohmann.
+  - Fixed dock widget float button when using main window nesting
+  - Fixed auto-hide overlay not updating its position when main window was resized
+  - Fixed double-click on titlebar not floating it if auto-hide flag was enabled
+  - Added Config::setLayoutSpacing(int)
+  - LayoutSaverOption::Skip now honours docked dock widgets
+  - Fixed DockWidget::addDockWidgetToContainingWindow() when using nested main windows (#386)
 
 * v2.0.0 (05 December 2023)
   - Architecture rewrite to support more frontends besides QtWidgets and QtQuick.

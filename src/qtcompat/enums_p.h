@@ -106,6 +106,13 @@ public:
         return *this;
     }
 
+    QFlags operator|(T rhs) const
+    {
+        QFlags<T> result = *this;
+        result |= rhs;
+        return result;
+    }
+
     QFlags &operator&=(int rhs)
     {
         m_value &= rhs;

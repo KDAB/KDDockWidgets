@@ -21,7 +21,6 @@ public:
     ~Separator_wrapper();
     static bool isResizing();
     bool isVertical() const;
-    void move(int p);
     static int numSeparators();
     void onMouseDoubleClick();
     void onMouseMove(KDDockWidgets::Point pos);
@@ -29,7 +28,6 @@ public:
     void onMouseReleased();
     int position() const;
     void setGeometry(KDDockWidgets::Rect r);
-    void setGeometry(int pos, int pos2, int length);
     virtual void setParentView_impl(KDDockWidgets::Core::View *parent);
     virtual void setParentView_impl_nocallback(KDDockWidgets::Core::View *parent);
     typedef void (*Callback_setParentView_impl)(void *, KDDockWidgets::Core::View *parent);
@@ -42,8 +40,6 @@ extern "C" {
 DOCKS_EXPORT bool c_static_KDDockWidgets__Core__Separator__isResizing();
 // KDDockWidgets::Core::Separator::isVertical() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj);
-// KDDockWidgets::Core::Separator::move(int p)
-DOCKS_EXPORT void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p);
 // KDDockWidgets::Core::Separator::numSeparators()
 DOCKS_EXPORT int c_static_KDDockWidgets__Core__Separator__numSeparators();
 // KDDockWidgets::Core::Separator::onMouseDoubleClick()
@@ -58,8 +54,6 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Separator__onMouseReleased(void *thisOb
 DOCKS_EXPORT int c_KDDockWidgets__Core__Separator__position(void *thisObj);
 // KDDockWidgets::Core::Separator::setGeometry(KDDockWidgets::Rect r)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_Rect(void *thisObj, void *r_);
-// KDDockWidgets::Core::Separator::setGeometry(int pos, int pos2, int length)
-DOCKS_EXPORT void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length);
 // KDDockWidgets::Core::Separator::setParentView_impl(KDDockWidgets::Core::View * parent)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Separator__destructor(void *thisObj);

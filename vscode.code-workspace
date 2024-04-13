@@ -15,7 +15,7 @@
       "Gruntfuggly.todo-tree",
       "bbenoist.QML",
       "ms-vscode.cmake-tools"
-    ],
+    ]
   },
   "settings": {
     "files.trimTrailingWhitespace": true,
@@ -37,7 +37,10 @@
       "**/3rdparty"
     ],
     "cmake.copyCompileCommands": "${workspaceFolder:kddockwidgets}/compile_commands.json",
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "files.associations": {
+      "*.code-workspace.template": "json"
+    }
   },
   "launch": {
     "version": "0.2.0",
@@ -48,7 +51,10 @@
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
         "args": [],
-        "cwd": "${command:cmake.buildDirectory}"
+        "cwd": "${command:cmake.buildDirectory}",
+        "env": {
+          "KDDW_TEST_FRONTEND": "1"
+        }
       },
       {
         "name": "Example via Wayland",
@@ -60,7 +66,7 @@
           "1600",
           "--height",
           "1600",
-          "${command:cmake.launchTargetPath} -platform wayland",
+          "${command:cmake.launchTargetPath} -platform wayland"
         ],
         "cwd": "${command:cmake.buildDirectory}"
       },
@@ -70,7 +76,13 @@
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
         "args": [],
-        "cwd": "${command:cmake.buildDirectory}"
+        "cwd": "${command:cmake.buildDirectory}",
+        "sourceFileMap": {
+          "C:/work/build/qt5_workdir/w/s": "${QTDIR}/../Src",
+          "Q:/qt5_workdir/w/s": "${QTDIR}/../Src",
+          "C:/Users/qt/work/install": "${QTDIR}/../Src",
+          "C:/Users/qt/work/qt": "${QTDIR}/../Src"
+        }
       },
       {
         "name": "Flutter attach",
@@ -106,7 +118,6 @@
         "cwd": "${workspaceFolder:kddockwidgets}"
       },
       {
-        // Launches C++ but waits for Dart debugger. User has to launch the "Flutter attach"
         "name": "Flutter example (native,wait)",
         "request": "launch",
         "type": "lldb",
@@ -114,7 +125,39 @@
         "cwd": "${workspaceFolder:kddockwidgets}",
         "args": [
           "--wait"
+        ]
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "problemMatcher": [],
+        "label": "Run current target under valgrind",
+        "command": "/usr/bin/valgrind",
+        "type": "shell",
+        "args": [
+          "${command:cmake.launchTargetPath}"
         ],
+        "presentation": {
+          "reveal": "always"
+        },
+        "options": {
+          "cwd": "${command:cmake.buildDirectory}"
+        }
+      },
+      {
+        "label": "Run Qt Assistant",
+        "type": "shell",
+        "command": "assistant",
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Qt Designer",
+        "type": "shell",
+        "command": "designer",
+        "problemMatcher": []
       }
     ]
   }

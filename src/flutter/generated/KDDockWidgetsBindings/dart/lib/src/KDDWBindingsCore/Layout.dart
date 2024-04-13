@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -66,12 +66,12 @@ class Layout extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Layout__clearLayout')
         .asFunction();
     func(thisCpp);
-  } // containsFrame(const KDDockWidgets::Core::Group * arg__1) const
+  } // containsGroup(const KDDockWidgets::Core::Group * arg__1) const
 
-  bool containsFrame(KDDWBindingsCore.Group? arg__1) {
+  bool containsGroup(KDDWBindingsCore.Group? arg__1) {
     final bool_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__containsFrame_Group')
+            'c_KDDockWidgets__Core__Layout__containsGroup_Group')
         .asFunction();
     return func(thisCpp, arg__1 == null ? ffi.nullptr : arg__1.thisCpp) != 0;
   } // containsItem(const KDDockWidgets::Core::Item * arg__1) const
@@ -115,12 +115,12 @@ class Layout extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Layout__isInMainWindow_bool')
         .asFunction();
     return func(thisCpp, honourNesting ? 1 : 0) != 0;
-  } // itemForFrame(const KDDockWidgets::Core::Group * group) const
+  } // itemForGroup(const KDDockWidgets::Core::Group * group) const
 
-  Item itemForFrame(KDDWBindingsCore.Group? group) {
+  Item itemForGroup(KDDWBindingsCore.Group? group) {
     final voidstar_Func_voidstar_voidstar func = _dylib
         .lookup<ffi.NativeFunction<voidstar_Func_voidstar_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Layout__itemForFrame_Group')
+            'c_KDDockWidgets__Core__Layout__itemForGroup_Group')
         .asFunction();
     ffi.Pointer<void> result =
         func(thisCpp, group == null ? ffi.nullptr : group.thisCpp);

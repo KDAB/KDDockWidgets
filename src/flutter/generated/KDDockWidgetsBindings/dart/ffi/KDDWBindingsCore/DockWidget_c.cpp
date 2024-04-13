@@ -122,6 +122,10 @@ KDDockWidgets::Core::MainWindow *DockWidget_wrapper::mainWindow() const
 {
     return ::KDDockWidgets::Core::DockWidget::mainWindow();
 }
+int DockWidget_wrapper::mdiZ() const
+{
+    return ::KDDockWidgets::Core::DockWidget::mdiZ();
+}
 void DockWidget_wrapper::moveToSideBar()
 {
     ::KDDockWidgets::Core::DockWidget::moveToSideBar();
@@ -141,6 +145,10 @@ QFlags<KDDockWidgets::DockWidgetOption> DockWidget_wrapper::options() const
 void DockWidget_wrapper::raise()
 {
     ::KDDockWidgets::Core::DockWidget::raise();
+}
+void DockWidget_wrapper::removeFromSideBar()
+{
+    ::KDDockWidgets::Core::DockWidget::removeFromSideBar();
 }
 void DockWidget_wrapper::resizeInLayout(int left, int top, int right, int bottom)
 {
@@ -195,6 +203,10 @@ void DockWidget_wrapper::setTitle(const QString &title)
 {
     ::KDDockWidgets::Core::DockWidget::setTitle(title);
 }
+void DockWidget_wrapper::setUniqueName(const QString &arg__1)
+{
+    ::KDDockWidgets::Core::DockWidget::setUniqueName(arg__1);
+}
 void DockWidget_wrapper::setUserType(int userType)
 {
     ::KDDockWidgets::Core::DockWidget::setUserType(userType);
@@ -234,6 +246,10 @@ QString DockWidget_wrapper::uniqueName() const
 int DockWidget_wrapper::userType() const
 {
     return ::KDDockWidgets::Core::DockWidget::userType();
+}
+bool DockWidget_wrapper::wasRestored() const
+{
+    return ::KDDockWidgets::Core::DockWidget::wasRestored();
 }
 DockWidget_wrapper::~DockWidget_wrapper()
 {
@@ -400,6 +416,12 @@ void *c_KDDockWidgets__Core__DockWidget__mainWindow(void *thisObj)
     const auto &result = fromPtr(thisObj)->mainWindow();
     return result;
 }
+// mdiZ() const
+int c_KDDockWidgets__Core__DockWidget__mdiZ(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->mdiZ();
+    return result;
+}
 // moveToSideBar()
 void c_KDDockWidgets__Core__DockWidget__moveToSideBar(void *thisObj)
 {
@@ -427,6 +449,11 @@ int c_KDDockWidgets__Core__DockWidget__options(void *thisObj)
 void c_KDDockWidgets__Core__DockWidget__raise(void *thisObj)
 {
     fromPtr(thisObj)->raise();
+}
+// removeFromSideBar()
+void c_KDDockWidgets__Core__DockWidget__removeFromSideBar(void *thisObj)
+{
+    fromPtr(thisObj)->removeFromSideBar();
 }
 // resizeInLayout(int left, int top, int right, int bottom)
 void c_KDDockWidgets__Core__DockWidget__resizeInLayout_int_int_int_int(void *thisObj, int left, int top, int right, int bottom)
@@ -496,6 +523,13 @@ void c_KDDockWidgets__Core__DockWidget__setTitle_QString(void *thisObj, const ch
     fromPtr(thisObj)->setTitle(title);
     free(( char * )title_);
 }
+// setUniqueName(const QString & arg__1)
+void c_KDDockWidgets__Core__DockWidget__setUniqueName_QString(void *thisObj, const char *arg__1_)
+{
+    const auto arg__1 = QString::fromUtf8(arg__1_);
+    fromPtr(thisObj)->setUniqueName(arg__1);
+    free(( char * )arg__1_);
+}
 // setUserType(int userType)
 void c_KDDockWidgets__Core__DockWidget__setUserType_int(void *thisObj, int userType)
 {
@@ -552,6 +586,12 @@ void *c_KDDockWidgets__Core__DockWidget__uniqueName(void *thisObj)
 int c_KDDockWidgets__Core__DockWidget__userType(void *thisObj)
 {
     const auto &result = fromPtr(thisObj)->userType();
+    return result;
+}
+// wasRestored() const
+bool c_KDDockWidgets__Core__DockWidget__wasRestored(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->wasRestored();
     return result;
 }
 void c_KDDockWidgets__Core__DockWidget__destructor(void *thisObj)

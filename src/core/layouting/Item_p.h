@@ -61,12 +61,6 @@ enum class ChildrenResizeStrategy {
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
 
-enum class NeighbourSqueezeStrategy {
-    AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
-    ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the
-                             ///< next neighbour is squezed, and so forth
-};
-
 enum LayoutBorderLocation {
     LayoutBorderLocation_None = 0,
     LayoutBorderLocation_North = 1,
@@ -210,7 +204,16 @@ public:
      */
     static Size hardcodedMinimumSize;
     static Size hardcodedMaximumSize;
+
+    /// The width of a vertical separator, or height of horizontal one
+    /// Usually 5px
     static int separatorThickness;
+
+    /// The spacing between dock widgets
+    /// This is by default, the separatorThickness, as the separator is between dockwidgets.
+    /// If set to a value smaller than separatorThickness, then the separators will overlap on top
+    /// of the dockwidgets, which can be useful in certain styles.
+    static int layoutSpacing;
 
     int x() const;
     int y() const;
@@ -235,7 +238,7 @@ public:
     /// Returns the parent container, but casted to ItemBoxContainer
     ItemBoxContainer *parentBoxContainer() const;
 
-    int indexInAncestor(ItemContainer *) const;
+    int indexInAncestor(ItemContainer *, bool visibleOnly = true) const;
 
     /// Returns the 1st ancestor container that has the desired orientation
     /// Example:
@@ -277,8 +280,12 @@ public:
 
     Q_REQUIRED_RESULT virtual bool checkSanity();
     bool isMDI() const;
+    virtual bool inSetSize() const;
 
     static bool s_silenceSanityChecks;
+
+    Item *outermostNeighbor(Location, bool visibleOnly = true) const;
+    Item *outermostNeighbor(Side, Qt::Orientation, bool visibleOnly) const;
 
     virtual Size minSize() const;
     virtual Size maxSizeHint() const;
@@ -345,9 +352,9 @@ private:
     friend class ItemBoxContainer;
     friend class ItemFreeContainer;
     int m_refCount = 0;
-    void updateObjectName();
     void onGuestDestroyed();
     bool m_isVisible = false;
+    bool m_inSetSize = false;
     LayoutingHost *m_host = nullptr;
     LayoutingGuest *m_guest = nullptr;
     static DumpScreenInfoFunc s_dumpScreenInfoFunc;
@@ -389,6 +396,7 @@ public:
     int visibleCount_recursive() const override;
     int count_recursive() const;
     virtual void clear() = 0;
+    bool inSetSize() const override;
 
 public:
     KDBindings::Signal<> itemsChanged;
@@ -415,12 +423,12 @@ public:
     explicit ItemBoxContainer(LayoutingHost *hostWidget);
     ~ItemBoxContainer();
     void insertItem(Item *item, int index,
-                    KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    void insertItem(Item *item, KDDockWidgets::Location, KDDockWidgets::InitialOption = {});
+                    const KDDockWidgets::InitialOption &option = KDDockWidgets::DefaultSizeMode::Fair);
+    void insertItem(Item *item, KDDockWidgets::Location, const KDDockWidgets::InitialOption & = {});
 
     static void
     insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,
-                         KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
+                         const KDDockWidgets::InitialOption & = KDDockWidgets::DefaultSizeMode::Fair);
 
     void requestSeparatorMove(LayoutingSeparator *separator, int delta);
     int minPosForSeparator(LayoutingSeparator *, bool honourMax = true) const;
@@ -474,13 +482,12 @@ public:
 private:
     int indexOfVisibleChild(const Item *) const;
     void restore(Item *) override;
-    void restoreChild(Item *,
-                      NeighbourSqueezeStrategy neighbourSqueezeStrategy =
-                          NeighbourSqueezeStrategy::AllNeighbours);
+    void restoreChild(Item *, bool forceRestoreContainer,
+                      NeighbourSqueezeStrategy neighbourSqueezeStrategy);
 
     void setGeometry_recursive(Rect rect) override;
 
-    ItemBoxContainer *convertChildToContainer(Item *leaf);
+    ItemBoxContainer *convertChildToContainer(Item *leaf, const InitialOption &);
     bool hasOrientationFor(KDDockWidgets::Location) const;
     int usableLength() const;
     void setChildren(const Item::List &children, Qt::Orientation o);
@@ -516,7 +523,7 @@ private:
     /// items at right/bottom will be shrunk by @p side2Amount. Squeezes all the neighbours (not
     /// just the immediate ones).
     void shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount,
-                          NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
+                          NeighbourSqueezeStrategy);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
 

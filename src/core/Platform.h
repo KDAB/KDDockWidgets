@@ -52,6 +52,10 @@ public:
     /// @brief Returns the platform singleton
     static Platform *instance();
 
+    /// Returns whether a Platform instance exists
+    // Will be false at start up right before using KDDW and at shutdown after dtor runs
+    static bool hasInstance();
+
     /// @brief Returns whether a popup is open
     /// Usually not needed to override. Investigate further in case side bars aren't auto hiding
     virtual bool hasActivePopup() const;
@@ -73,8 +77,8 @@ public:
 
     /// @brief Returns the screen index for the specified view or window.
     /// It's up to the platform to decide how screens are ordered, kddw won't care.
-    virtual int screenNumberFor(View *) const = 0;
-    virtual int screenNumberFor(std::shared_ptr<Core::Window>) const = 0;
+    virtual int screenNumberForView(View *) const = 0;
+    virtual int screenNumberForWindow(std::shared_ptr<Core::Window>) const = 0;
 
     /// @brief Returns the size of the screen where this view is in
     virtual Size screenSizeFor(View *) const = 0;
@@ -193,8 +197,13 @@ public:
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
+    /// @brief Returns whether the Platform was already initialized
+    static bool isInitialized();
 
 #if defined(DOCKS_DEVELOPER_MODE) && !defined(DARTAGNAN_BINDINGS_RUN)
+    /// Big timeout since lsan on github actions is very slow
+#define DEFAULT_TIMEOUT 20000
+
     // Stuff required by the tests only and not used by dart bindings.
 
     /// @brief halts the test during the specified number of milliseconds
@@ -204,22 +213,22 @@ public:
 
     /// @brief Waits for the specified view to receive a resize event
     /// Returns true if the view was resized until timeout was reached
-    virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = 2000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForDeleted(Controller *, int timeout = 2000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize(View *, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForResize(Controller *, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(View *, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForDeleted(Controller *, int timeout = DEFAULT_TIMEOUT) const = 0;
 
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true
     /// @sa Window::isActive()
-    virtual KDDW_QCORO_TASK tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = DEFAULT_TIMEOUT) const = 0;
 
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
-    virtual KDDW_QCORO_TASK tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = 5000) const = 0;
-    virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = 5000) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual KDDW_QCORO_TASK tests_waitForEvent(View *, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
     virtual KDDW_QCORO_TASK tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
-                                               int timeout = 5000) const = 0;
+                                               int timeout = DEFAULT_TIMEOUT) const = 0;
 
     virtual void tests_doubleClickOn(Point globalPos, View *receiver) = 0;
     virtual void tests_doubleClickOn(Point globalPos, std::shared_ptr<Core::Window> receiver) = 0;
@@ -234,7 +243,7 @@ public:
 
     /// @brief Creates the platform. Called by the tests at startup.
     /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
-    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType);
+    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType, bool defaultToOffscreenQPA = true);
 
     /// @brief Deletes the platform. Called at end of tests.
     /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
@@ -253,9 +262,6 @@ public:
         virtual ~WarningObserver();
         virtual void onFatal() = 0;
     };
-
-    /// @brief Returns whether the Platform was already initialized
-    static bool isInitialized();
 
     /// @brief Creates a view with the specified parent
     /// If the parent is null then a new window is created and the returned view will be the root

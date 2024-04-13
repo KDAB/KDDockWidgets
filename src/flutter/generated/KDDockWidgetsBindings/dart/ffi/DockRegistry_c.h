@@ -13,9 +13,9 @@
 #include <core/DockWidget.h>
 #include "core/MainWindow.h"
 #include <FloatingWindow.h>
-#include <core/Layout.h>
 #include <core/Group.h>
 #include <string_p.h>
+#include <core/Layout.h>
 #include <Item_p.h>
 #include <SideBar.h>
 #include <Object_p.h>
@@ -25,7 +25,6 @@ class DockRegistry_wrapper : public ::KDDockWidgets::DockRegistry
 {
 public:
     ~DockRegistry_wrapper();
-    void checkSanityAll(bool dumpDebug = false);
     void clear();
     bool containsDockWidget(const QString &uniqueName) const;
     bool containsMainWindow(const QString &uniqueName) const;
@@ -42,7 +41,6 @@ public:
     void registerDockWidget(KDDockWidgets::Core::DockWidget *arg__1);
     void registerFloatingWindow(KDDockWidgets::Core::FloatingWindow *arg__1);
     void registerGroup(KDDockWidgets::Core::Group *arg__1);
-    void registerLayout(KDDockWidgets::Core::Layout *arg__1);
     void registerLayoutSaver();
     void registerMainWindow(KDDockWidgets::Core::MainWindow *arg__1);
     static KDDockWidgets::DockRegistry *self();
@@ -50,14 +48,11 @@ public:
     void unregisterDockWidget(KDDockWidgets::Core::DockWidget *arg__1);
     void unregisterFloatingWindow(KDDockWidgets::Core::FloatingWindow *arg__1);
     void unregisterGroup(KDDockWidgets::Core::Group *arg__1);
-    void unregisterLayout(KDDockWidgets::Core::Layout *arg__1);
     void unregisterLayoutSaver();
     void unregisterMainWindow(KDDockWidgets::Core::MainWindow *arg__1);
 };
 }
 extern "C" {
-// KDDockWidgets::DockRegistry::checkSanityAll(bool dumpDebug)
-DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__checkSanityAll_bool(void *thisObj, bool dumpDebug);
 // KDDockWidgets::DockRegistry::clear()
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__clear(void *thisObj);
 // KDDockWidgets::DockRegistry::containsDockWidget(const QString & uniqueName) const
@@ -90,8 +85,6 @@ DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__registerDockWidget_DockWidget(v
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__registerFloatingWindow_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::registerGroup(KDDockWidgets::Core::Group * arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__registerGroup_Group(void *thisObj, void *arg__1_);
-// KDDockWidgets::DockRegistry::registerLayout(KDDockWidgets::Core::Layout * arg__1)
-DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__registerLayout_Layout(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::registerLayoutSaver()
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__registerLayoutSaver(void *thisObj);
 // KDDockWidgets::DockRegistry::registerMainWindow(KDDockWidgets::Core::MainWindow * arg__1)
@@ -106,8 +99,6 @@ DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__unregisterDockWidget_DockWidget
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__unregisterFloatingWindow_FloatingWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::unregisterGroup(KDDockWidgets::Core::Group * arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__unregisterGroup_Group(void *thisObj, void *arg__1_);
-// KDDockWidgets::DockRegistry::unregisterLayout(KDDockWidgets::Core::Layout * arg__1)
-DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__unregisterLayout_Layout(void *thisObj, void *arg__1_);
 // KDDockWidgets::DockRegistry::unregisterLayoutSaver()
 DOCKS_EXPORT void c_KDDockWidgets__DockRegistry__unregisterLayoutSaver(void *thisObj);
 // KDDockWidgets::DockRegistry::unregisterMainWindow(KDDockWidgets::Core::MainWindow * arg__1)

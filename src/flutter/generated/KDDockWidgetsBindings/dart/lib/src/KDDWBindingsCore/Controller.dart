@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -80,6 +80,22 @@ class Controller extends KDDWBindingsCore.Object {
     final bool_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__Controller__inDtor')
+        .asFunction();
+    return func(thisCpp) != 0;
+  } // isFixedHeight() const
+
+  bool isFixedHeight() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__Controller__isFixedHeight')
+        .asFunction();
+    return func(thisCpp) != 0;
+  } // isFixedWidth() const
+
+  bool isFixedWidth() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__Controller__isFixedWidth')
         .asFunction();
     return func(thisCpp) != 0;
   } // isVisible() const

@@ -28,10 +28,11 @@ public:
     MainWindow_wrapper(KDDockWidgets::Core::View *view, const QString &uniqueName, QFlags<KDDockWidgets::MainWindowOption> options);
     void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget *relativeTo = nullptr, KDDockWidgets::InitialOption initialOption = {});
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *dockwidget);
+    void addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption = {});
     bool anySideBarIsVisible() const;
     KDDockWidgets::Margins centerWidgetMargins() const;
     KDDockWidgets::Rect centralAreaGeometry() const;
-    void clearSideBarOverlay(bool deleteFrame = true);
+    void clearSideBarOverlay(bool deleteGroup = true);
     bool closeDockWidgets(bool force = false);
     KDDockWidgets::Core::DropArea *dropArea() const;
     void init(const QString &name);
@@ -66,14 +67,16 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__MainWindow__constructor_View_QString_M
 DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dockWidget_, int location, void *relativeTo_, void *initialOption_);
 // KDDockWidgets::Core::MainWindow::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget * dockwidget)
 DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *thisObj, void *dockwidget_);
+// KDDockWidgets::Core::MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption(void *thisObj, void *dockWidget_, int location, void *initialOption_);
 // KDDockWidgets::Core::MainWindow::anySideBarIsVisible() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj);
 // KDDockWidgets::Core::MainWindow::centerWidgetMargins() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__MainWindow__centerWidgetMargins(void *thisObj);
 // KDDockWidgets::Core::MainWindow::centralAreaGeometry() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj);
-// KDDockWidgets::Core::MainWindow::clearSideBarOverlay(bool deleteFrame)
-DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteFrame);
+// KDDockWidgets::Core::MainWindow::clearSideBarOverlay(bool deleteGroup)
+DOCKS_EXPORT void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteGroup);
 // KDDockWidgets::Core::MainWindow::closeDockWidgets(bool force)
 DOCKS_EXPORT bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, bool force);
 // KDDockWidgets::Core::MainWindow::dropArea() const

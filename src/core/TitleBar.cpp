@@ -172,7 +172,7 @@ bool TitleBar::onDoubleClicked()
         // convention it's floating, but it's not the title bar of the top-level window.
         toggleMaximized();
         return true;
-    } else if (supportsFloatingButton()) {
+    } else if (supportsFloatUnfloat()) {
         onFloatClicked();
         return true;
     }
@@ -190,22 +190,10 @@ bool TitleBar::maximizeButtonVisible() const
     return m_maximizeButtonVisible;
 }
 
-bool TitleBar::supportsFloatingButton() const
+bool TitleBar::supportsFloatUnfloat() const
 {
     if (m_isStandalone)
-        return {}; // not applicable
-
-    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {
-        // Apps having a maximize/restore button traditionally don't have a floating one,
-        // QDockWidget style only has floating and no maximize/restore.
-        // We can add an option later if we need them to co-exist
-        return false;
-    }
-
-    if (Config::self().flags() & Config::Flag_TitleBarNoFloatButton) {
-        // Was explicitly disabled
-        return false;
-    }
+        return false; // not applicable
 
     if (DockWidget *dw = singleDockWidget()) {
         // Don't show the dock/undock button if the window is not dockable
@@ -215,7 +203,25 @@ bool TitleBar::supportsFloatingButton() const
 
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
-    return !m_floatingWindow || m_floatingWindow->hasSingleFrame();
+    return !m_floatingWindow || m_floatingWindow->hasSingleGroup();
+}
+
+bool TitleBar::supportsFloatingButton() const
+{
+    auto flags = Config::self().flags();
+    if (flags & Config::Flag_TitleBarHasMaximizeButton) {
+        // Apps having a maximize/restore button traditionally don't have a floating one,
+        // QDockWidget style only has floating and no maximize/restore.
+        // We can add an option later if we need them to co-exist
+        return false;
+    }
+
+    if (flags & Config::Flag_TitleBarNoFloatButton) {
+        // Was explicitly disabled
+        return false;
+    }
+
+    return supportsFloatUnfloat();
 }
 
 bool TitleBar::supportsMaximizeButton() const
@@ -284,14 +290,15 @@ void TitleBar::updateButtons()
     updateFloatButton();
     updateMaximizeButton();
 
-    d->minimizeButtonChanged.emit(supportsMinimizeButton(), true);
+    const bool isEnabled = true;
+    const bool minimizeVisible = supportsMinimizeButton() && !buttonIsUserHidden(TitleBarButtonType::Minimize, isEnabled);
+    d->minimizeButtonChanged.emit(minimizeVisible, isEnabled);
 
     updateAutoHideButton();
 }
 
 void TitleBar::updateAutoHideButton()
 {
-    const bool visible = m_supportsAutoHide;
     TitleBarButtonType type = TitleBarButtonType::AutoHide;
 
     if (const Core::Group *group = this->group()) {
@@ -299,7 +306,9 @@ void TitleBar::updateAutoHideButton()
             type = TitleBarButtonType::UnautoHide;
     }
 
-    d->autoHideButtonChanged.emit(visible, /*enabled=*/true, type);
+    const bool isEnabled = true;
+    const bool visible = m_supportsAutoHide && !buttonIsUserHidden(type, isEnabled) && !m_floatingWindow;
+    d->autoHideButtonChanged.emit(visible, isEnabled, type);
 }
 
 void TitleBar::updateMaximizeButton()
@@ -312,8 +321,9 @@ void TitleBar::updateMaximizeButton()
             fw->view()->isMaximized() ? TitleBarButtonType::Normal : TitleBarButtonType::Maximize;
         m_maximizeButtonVisible = supportsMaximizeButton();
     }
-
-    d->maximizeButtonChanged.emit(m_maximizeButtonVisible, /*enabled=*/true, m_maximizeButtonType);
+    const bool isEnabled = true;
+    m_maximizeButtonVisible = m_maximizeButtonVisible && !buttonIsUserHidden(m_maximizeButtonType, isEnabled);
+    d->maximizeButtonChanged.emit(m_maximizeButtonVisible, isEnabled, m_maximizeButtonType);
 }
 
 void TitleBar::updateCloseButton()
@@ -322,7 +332,9 @@ void TitleBar::updateCloseButton()
         ? group()->anyNonClosable()
         : (floatingWindow() ? floatingWindow()->anyNonClosable() : false);
 
-    setCloseButtonEnabled(!anyNonClosable);
+    const bool isEnabled = !anyNonClosable;
+    setCloseButtonEnabled(isEnabled);
+    setCloseButtonVisible(!buttonIsUserHidden(TitleBarButtonType::Close, isEnabled));
 }
 
 void TitleBar::toggleMaximized()
@@ -345,7 +357,15 @@ void TitleBar::setCloseButtonEnabled(bool enabled)
 {
     if (enabled != m_closeButtonEnabled) {
         m_closeButtonEnabled = enabled;
-        d->closeButtonEnabledChanged.emit(enabled);
+        d->closeButtonChanged.emit(m_closeButtonVisible, enabled);
+    }
+}
+
+void TitleBar::setCloseButtonVisible(bool visible)
+{
+    if (visible != m_closeButtonVisible) {
+        m_closeButtonVisible = visible;
+        d->closeButtonChanged.emit(m_closeButtonVisible, m_closeButtonEnabled);
     }
 }
 
@@ -382,6 +402,8 @@ void TitleBar::setIcon(const Icon &icon)
 
 void TitleBar::onCloseClicked()
 {
+    CloseReasonSetter reason(CloseReason::TitleBarCloseButton);
+
     const bool closeOnlyCurrentTab = Config::self().flags() & Config::Flag_CloseOnlyCurrentTab;
 
     if (m_group) {
@@ -390,7 +412,7 @@ void TitleBar::onCloseClicked()
                 dw->view()->close();
             } else {
                 // Doesn't happen
-                KDDW_ERROR("Frame with no dock widgets");
+                KDDW_ERROR("Group with no dock widgets");
             }
         } else {
             if (m_group->isTheOnlyGroup() && m_group->isInFloatingWindow()) {
@@ -407,7 +429,7 @@ void TitleBar::onCloseClicked()
                     dw->view()->close();
                 } else {
                     // Doesn't happen
-                    KDDW_ERROR("Frame with no dock widgets");
+                    KDDW_ERROR("Group with no dock widgets");
                 }
             } else {
                 m_floatingWindow->view()->close();
@@ -446,10 +468,12 @@ void TitleBar::onFloatClicked()
                     return;
                 }
 
+                // suppress "isFloatingChanged" signals, as we're doing the float/unfloat hack
+                Group::s_inFloatHack = true;
+
                 int i = 0;
                 DockWidget *current = nullptr;
                 for (auto dock : std::as_const(dockWidgets)) {
-
                     if (!current && dock->isCurrentTab())
                         current = dock;
 
@@ -458,6 +482,7 @@ void TitleBar::onFloatClicked()
                     dock->setFloating(false);
                     ++i;
                 }
+                Group::s_inFloatHack = false;
 
                 // Restore the current tab
                 if (current)
@@ -533,6 +558,8 @@ void TitleBar::onAutoHideClicked()
         if (groupedAutoHide)
             registry->addSideBarGrouping(dockwidgets);
 
+
+        CloseReasonSetter reason(CloseReason::MovedToSideBar);
         for (DockWidget *dw : dockwidgets) {
             if (groupedAutoHide || dw == currentDw)
                 dw->moveToSideBar();
@@ -654,7 +681,7 @@ bool TitleBar::isFocused() const
 void TitleBar::updateFloatButton()
 {
     setFloatButtonToolTip(floatingWindow() ? tr("Dock window") : tr("Undock window"));
-    setFloatButtonVisible(supportsFloatingButton());
+    setFloatButtonVisible(supportsFloatingButton() && !buttonIsUserHidden(TitleBarButtonType::Float, /*enabled=*/true));
 }
 
 QString TitleBar::floatButtonToolTip() const
@@ -664,7 +691,7 @@ QString TitleBar::floatButtonToolTip() const
 
 TabBar *TitleBar::tabBar() const
 {
-    if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
+    if (m_floatingWindow && m_floatingWindow->hasSingleGroup()) {
         if (Group *group = m_floatingWindow->singleFrame()) {
             return group->stack()->tabBar();
         } else {
@@ -689,7 +716,44 @@ bool TitleBar::isStandalone() const
     return m_isStandalone;
 }
 
+bool TitleBar::buttonIsUserHidden(TitleBarButtonType type) const
+{
+    return d->m_userHiddenButtonTypes & type;
+}
+
+bool TitleBar::buttonIsUserHidden(TitleBarButtonType type, bool enabled) const
+{
+    if (buttonIsUserHidden(type))
+        return true;
+
+    if (!enabled)
+        return buttonHidesIfDisabled(type);
+
+    return false;
+}
+
+void TitleBar::setUserHiddenButtons(TitleBarButtonTypes types)
+{
+    if (d->m_userHiddenButtonTypes != types) {
+        d->m_userHiddenButtonTypes = types;
+        updateButtons();
+    }
+}
+
 TitleBar::Private *TitleBar::dptr() const
 {
     return d;
+}
+
+void TitleBar::setHideDisabledButtons(TitleBarButtonTypes types)
+{
+    if (d->m_buttonsToHideIfDisabled != types) {
+        d->m_buttonsToHideIfDisabled = types;
+        updateButtons();
+    }
+}
+
+bool TitleBar::buttonHidesIfDisabled(TitleBarButtonType type) const
+{
+    return d->m_buttonsToHideIfDisabled & type;
 }

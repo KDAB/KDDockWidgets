@@ -58,6 +58,14 @@ QVector<QString> MainWindowInstantiator::affinities() const
     return m_mainWindow ? m_mainWindow->affinities() : QVector<QString>();
 }
 
+void MainWindowInstantiator::setAffinities(const QVector<QString> &affinities)
+{
+    if (m_affinities != affinities) {
+        m_affinities = affinities;
+        Q_EMIT affinitiesChanged();
+    }
+}
+
 bool MainWindowInstantiator::isMDI() const
 {
     return m_mainWindow && m_mainWindow->isMDI();
@@ -210,4 +218,7 @@ void MainWindowInstantiator::componentComplete()
         view = new QtQuick::MainWindow(m_uniqueName, mainWindowOptions, this);
 
     m_mainWindow = view->asMainWindowController();
+    Q_ASSERT(m_mainWindow);
+
+    m_mainWindow->setAffinities(m_affinities);
 }

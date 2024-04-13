@@ -192,6 +192,22 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_setSize()
+{
+    {
+        Tests::EnsureTopLevelsDeleted e;
+        auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+        const Size size = Size(501, 502);
+        dw->view()->setSize(size);
+        CHECK_EQ(dw->view()->size(), size);
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+
+    KDDW_TEST_RETURN(true);
+}
+
 static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_dockWidgetCtor),
     TEST(tst_toggleAction),
@@ -199,6 +215,7 @@ static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_isOpen),
     TEST(tst_setAsCurrentTab),
     TEST(tst_dwCloseAndReopen),
+    TEST(tst_setSize),
 };
 
 #include "../tests_main.h"

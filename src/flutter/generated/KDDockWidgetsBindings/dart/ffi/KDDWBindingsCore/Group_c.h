@@ -66,7 +66,7 @@ public:
     int indexOfDockWidget(const KDDockWidgets::Core::DockWidget *arg__1);
     void insertDockWidget(KDDockWidgets::Core::DockWidget *arg__1, int index);
     void insertWidget(KDDockWidgets::Core::DockWidget *arg__1, int index, KDDockWidgets::InitialOption arg__3 = {});
-    bool isCentralFrame() const;
+    bool isCentralGroup() const;
     bool isDockable() const;
     bool isEmpty() const;
     bool isFloating() const;
@@ -184,8 +184,8 @@ DOCKS_EXPORT int c_KDDockWidgets__Core__Group__indexOfDockWidget_DockWidget(void
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__insertDockWidget_DockWidget_int(void *thisObj, void *arg__1_, int index);
 // KDDockWidgets::Core::Group::insertWidget(KDDockWidgets::Core::DockWidget * arg__1, int index, KDDockWidgets::InitialOption arg__3)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__insertWidget_DockWidget_int_InitialOption(void *thisObj, void *arg__1_, int index, void *arg__3_);
-// KDDockWidgets::Core::Group::isCentralFrame() const
-DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__isCentralFrame(void *thisObj);
+// KDDockWidgets::Core::Group::isCentralGroup() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__isCentralGroup(void *thisObj);
 // KDDockWidgets::Core::Group::isDockable() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__isDockable(void *thisObj);
 // KDDockWidgets::Core::Group::isEmpty() const

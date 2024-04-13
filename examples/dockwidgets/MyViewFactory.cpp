@@ -50,6 +50,17 @@ public:
         p.drawText(QPoint(10, 40), m_controller->title());
     }
 
+    // Not needed to override. Just here to illustrate setHideDisabledButtons()
+    void init() override
+    {
+        // For demo purposes, we're hiding the close button if it's disabled (non-closable dock widget)
+        // Affects dock #0 when running: ./bin/qtwidgets_dockwidgets -n -p
+        m_controller->setHideDisabledButtons(KDDockWidgets::TitleBarButtonType::Close);
+
+        // But if you do override init(), never forget to call the base method:
+        KDDockWidgets::QtWidgets::TitleBar::init();
+    }
+
 private:
     KDDockWidgets::Core::TitleBar *const m_controller;
 };

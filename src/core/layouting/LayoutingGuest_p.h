@@ -47,15 +47,15 @@ public:
         return false;
     }
 
-    virtual QString debugName() const
-    {
-        return {};
-    }
-
     Core::Item *layoutItem() const;
     void setLayoutItem(Item *);
     virtual void setLayoutItem_impl(Core::Item *)
     {
+    }
+
+    virtual std::string toDebugString() const
+    {
+        return {};
     }
 
     KDBindings::Signal<LayoutingHost *> hostChanged;

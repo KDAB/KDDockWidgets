@@ -32,15 +32,17 @@ MDILayout::~MDILayout()
 }
 
 void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
-                              InitialOption addingOption)
+                              const InitialOption &addingOption)
 {
     if (!dw) {
         KDDW_ERROR("Refusing to add null dock widget");
         return;
     }
 
+    const Size dwSize = dw->size();
+
     auto group = object_cast<Core::Group *>(dw->d->group());
-    if (itemForFrame(group) != nullptr) {
+    if (itemForGroup(group) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
         group->setParentView(nullptr);
         group->setLayoutItem(nullptr);
@@ -56,6 +58,8 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         newItem->setGuest(group->asLayoutingGuest());
     }
 
+    newItem->setSize(dwSize.expandedTo(newItem->minSize()));
+
     assert(!newItem->geometry().isEmpty());
     m_rootItem->addDockWidget(newItem, localPt);
 
@@ -69,7 +73,7 @@ void MDILayout::setDockWidgetGeometry(Core::Group *group, Rect geometry)
     if (!group)
         return;
 
-    Core::Item *item = itemForFrame(group);
+    Core::Item *item = itemForGroup(group);
     if (!item) {
         KDDW_ERROR("Group not found in the layout {}", ( void * )group);
         return;
@@ -88,7 +92,7 @@ void MDILayout::moveDockWidget(Core::Group *group, Point pos)
     if (!group)
         return;
 
-    Core::Item *item = itemForFrame(group);
+    Core::Item *item = itemForGroup(group);
     if (!item) {
         KDDW_ERROR("Group not found in the layout {}.", ( void * )group);
         return;
@@ -109,7 +113,7 @@ void MDILayout::resizeDockWidget(Core::Group *group, Size size)
     if (!group)
         return;
 
-    Core::Item *item = itemForFrame(group);
+    Core::Item *item = itemForGroup(group);
     if (!item) {
         KDDW_ERROR("Group not found in the layout {} isMDI={}, isMDIWrapper={}", ( void * )group, group->isMDI(), group->isMDIWrapper());
         return;

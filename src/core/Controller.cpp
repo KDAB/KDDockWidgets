@@ -14,9 +14,11 @@
 #include "Platform.h"
 #include "DelayedCall_p.h"
 #include "View.h"
+#include "Config.h"
 #include "View_p.h"
 #include "Logging_p.h"
 #include "DragController_p.h"
+#include "core/Utils_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
@@ -148,10 +150,34 @@ void Controller::setParentView_impl(View *parent)
 
 void Controller::destroyLater()
 {
+#ifdef KDDW_FRONTEND_QT
+    if (!usesQTBUG83030Workaround()) {
+        QObject::deleteLater();
+        return;
+    }
+#endif
+
+    // Path for Flutter and QTBUG-83030:
     Platform::instance()->runDelayed(0, new DelayedDelete(this));
 }
 
 Controller::Private *Controller::dptr() const
 {
     return d;
+}
+
+bool Controller::isFixedHeight() const
+{
+    if (auto v = view())
+        return v->isFixedHeight();
+
+    return false;
+}
+
+bool Controller::isFixedWidth() const
+{
+    if (auto v = view())
+        return v->isFixedWidth();
+
+    return false;
 }

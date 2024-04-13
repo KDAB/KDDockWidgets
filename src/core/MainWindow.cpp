@@ -69,6 +69,10 @@ void MainWindow::init(const QString &name)
     d->m_visibleWidgetCountConnection =
         d->m_layout->d_ptr()->visibleWidgetCountChanged.connect([this](int count) { d->groupCountChanged.emit(count); });
     view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
+
+    d->m_resizeConnection = view()->d->resized.connect([this](Size size) {
+        d->onResized(size);
+    });
 }
 
 MainWindow::~MainWindow()
@@ -110,7 +114,7 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
 }
 
 void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
-                               Core::DockWidget *relativeTo, InitialOption option)
+                               Core::DockWidget *relativeTo, const InitialOption &option)
 {
     if (dw->options() & DockWidgetOption_NotDockable) {
         KDDW_ERROR("Refusing to dock non-dockable widget dw={}", ( void * )dw);
@@ -123,6 +127,61 @@ void MainWindow::addDockWidget(Core::DockWidget *dw, Location location,
     }
 
     dropArea()->addDockWidget(dw, location, relativeTo, option);
+}
+
+void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
+                                     KDDockWidgets::Location location, const KDDockWidgets::InitialOption &initialOption)
+{
+    if (!dockWidget || location == Location_None || isMDI())
+        return;
+
+    if (!(d->m_options & MainWindowOption_HasCentralFrame)) {
+        KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralFrame or MainWindowOption_HasCentralWidget");
+        return;
+    }
+
+    Group *group = dropArea()->centralGroup();
+    if (!group || !group->layoutItem()) {
+        // Doesn't happen
+        KDDW_ERROR("MainWindow::addDockWidgetToSide: no group");
+        return;
+    }
+
+    auto locToUse = [](Location loc) {
+        switch (loc) {
+        case Location_None:
+            return Location_None;
+        case Location_OnLeft:
+            return Location_OnBottom;
+        case Location_OnTop:
+            return Location_OnRight;
+        case Location_OnRight:
+            return Location_OnBottom;
+        case Location_OnBottom:
+            return Location_OnRight;
+        }
+
+        return Location_None;
+    };
+
+    Core::Item *neighbor = group->layoutItem()->outermostNeighbor(location, /*visibleOnly=*/false);
+    if (neighbor) {
+        if (neighbor->isContainer()) {
+            auto container = object_cast<ItemBoxContainer *>(neighbor);
+            const auto children = container->childItems();
+            if (children.isEmpty()) {
+                // Doesn't happen
+                KDDW_ERROR("MainWindow::addDockWidgetToSide: no children");
+            } else {
+                // There's an existing container with opposite orientation, add there but to end
+                dropArea()->_addDockWidget(dockWidget, locToUse(location), children.last(), initialOption);
+            }
+        } else {
+            dropArea()->_addDockWidget(dockWidget, locToUse(location), neighbor, initialOption);
+        }
+    } else {
+        addDockWidget(dockWidget, location, nullptr, initialOption);
+    }
 }
 
 QString MainWindow::uniqueName() const
@@ -315,14 +374,15 @@ static SideBarLocation sideBarLocationForBorder(Core::LayoutBorderLocations loc)
 
 SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) const
 {
-    Core::Item *item = q->layout()->itemForFrame(dw->d->group());
+    Group *group = dw->d->group();
+    Core::Item *item = q->layout()->itemForGroup(group);
     if (!item) {
         KDDW_ERROR("No item for dock widget");
         return SideBarLocation::None;
     }
 
     const Core::LayoutBorderLocations borders = item->adjacentLayoutBorders();
-    const double aspectRatio = dw->width() / (std::max(1, dw->height()) * 1.0);
+    const double aspectRatio = group->width() / (std::max(1, group->height()) * 1.0);
 
     /// 1. It's touching all borders
     if (borders == Core::LayoutBorderLocation_All) {
@@ -340,15 +400,19 @@ SideBarLocation MainWindow::Private::preferredSideBar(Core::DockWidget *dw) cons
     /// 3. It's touching left and right borders
     if ((borders & Core::LayoutBorderLocation_Verticals)
         == Core::LayoutBorderLocation_Verticals) {
-        // We could measure the distance to the top though.
-        return SideBarLocation::South;
+
+        const int distanceToTop = group->geometry().y();
+        const int distanceToBottom = q->layout()->layoutHeight() - group->geometry().bottom();
+        return distanceToTop > distanceToBottom ? SideBarLocation::South : SideBarLocation::North;
     }
 
     /// 4. It's touching top and bottom borders
     if ((borders & Core::LayoutBorderLocation_Horizontals)
         == Core::LayoutBorderLocation_Horizontals) {
-        // We could measure the distance to the left though.
-        return SideBarLocation::East;
+
+        const int distanceToLeft = group->geometry().x();
+        const int distanceToRight = q->layout()->layoutWidth() - group->geometry().right();
+        return distanceToLeft > distanceToRight ? SideBarLocation::East : SideBarLocation::West;
     }
 
     // 5. It's in a corner
@@ -465,6 +529,7 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
 
     if (Core::SideBar *sb = sideBar(location)) {
         ScopedValueRollback rollback(dw->d->m_isMovingToSideBar, true);
+        CloseReasonSetter reason(CloseReason::MovedToSideBar);
         dw->forceClose();
         sb->addDockWidget(dw);
     } else {
@@ -475,6 +540,11 @@ void MainWindow::moveToSideBar(Core::DockWidget *dw, SideBarLocation location)
 
 void MainWindow::restoreFromSideBar(Core::DockWidget *dw)
 {
+    if (!dw)
+        return;
+
+    DockWidget::Private::UpdateActions updateActions(dw);
+
     // First un-overlay it, if it's overlayed
     if (dw == d->m_overlayedDockWidget)
         clearSideBarOverlay();
@@ -530,7 +600,7 @@ void MainWindow::toggleOverlayOnSideBar(Core::DockWidget *dw)
     }
 }
 
-void MainWindow::clearSideBarOverlay(bool deleteFrame)
+void MainWindow::clearSideBarOverlay(bool deleteGroup)
 {
     if (!d->m_overlayedDockWidget)
         return;
@@ -546,14 +616,19 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     const SideBarLocation loc = overlayedDockWidget->sideBarLocation();
     overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(loc, group->geometry());
 
+    CloseReasonSetter reason(CloseReason::OverlayCollapse);
     group->unoverlay();
 
-    if (deleteFrame) {
+    if (deleteGroup) {
+        // only update actions at the end
+        DockWidget::Private::UpdateActions updateActions(overlayedDockWidget);
+
         overlayedDockWidget->setParent(nullptr);
 
         {
             ScopedValueRollback guard(overlayedDockWidget->d->m_removingFromOverlay, true);
             overlayedDockWidget->setParentView(nullptr);
+            overlayedDockWidget->dptr()->setIsOpen(false);
         }
 
         overlayedDockWidget->d->isOverlayedChanged.emit(false);
@@ -668,8 +743,6 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         d->affinities = mw.affinities;
     }
 
-    const bool success = layout()->deserialize(mw.multiSplitterLayout);
-
     // Restore the SideBars
     d->clearSideBars();
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
@@ -692,6 +765,8 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         }
     }
 
+    const bool success = layout()->deserialize(mw.multiSplitterLayout);
+
     // Commented-out for now, we don't want to restore the popup/overlay. popups are perishable
     // if (!mw.overlayedDockWidget.isEmpty())
     //    overlayOnSideBar(DockRegistry::self()->dockByName(mw.overlayedDockWidget));
@@ -710,7 +785,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.normalGeometry = view()->normalGeometry();
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
-    m.screenIndex = Platform::instance()->screenNumberFor(view());
+    m.screenIndex = Platform::instance()->screenNumberForView(view());
     m.screenSize = Platform::instance()->screenSizeFor(view());
     m.multiSplitterLayout = layout()->serialize();
     m.affinities = d->affinities;

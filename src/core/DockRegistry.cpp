@@ -82,7 +82,7 @@ void DockRegistry::maybeDelete()
     // We delete the singleton just to make LSAN happy.
     // We could also simply ask the user do call something like KDDockWidgets::deinit() in the future,
     // Also, please don't change this to be deleted at static dtor time with Q_GLOBAL_STATIC.
-    if (isEmpty() && d->m_numLayoutSavers == 0)
+    if (isEmpty() && d->m_numLayoutSavers == 0 && m_groups.isEmpty())
         delete this;
 }
 
@@ -116,21 +116,14 @@ void DockRegistry::setFocusedDockWidget(Core::DockWidget *dw)
     if (d->m_focusedDockWidget.data() == dw)
         return;
 
-    if (d->m_focusedDockWidget) {
-        // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
-        // as the FocusScope hasn't been updated yet.
-        // It's just for styling purposes, so can be delayed
-        Platform::instance()->runDelayed(0, new DelayedEmitFocusChanged(d->m_focusedDockWidget, false));
-    }
-
+    auto old = d->m_focusedDockWidget;
     d->m_focusedDockWidget = dw;
 
-    if (dw) {
-        // Emit DockWidget::isFocusedChanged(). Needs to be delayed,
-        // as the FocusScope hasn't been updated yet.
-        // It's just for styling purposes, so can be delayed
-        Platform::instance()->runDelayed(0, new DelayedEmitFocusChanged(d->m_focusedDockWidget, true));
-    }
+    if (old)
+        old->d->isFocusedChanged.emit(false);
+
+    if (dw)
+        dw->d->isFocusedChanged.emit(true);
 }
 
 bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
@@ -139,15 +132,6 @@ bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
         return false;
 
     return excludeBeingDeleted ? !hasFloatingWindows() : m_floatingWindows.isEmpty();
-}
-
-void DockRegistry::checkSanityAll(bool dumpLayout)
-{
-    for (auto layout : std::as_const(m_layouts)) {
-        layout->checkSanity();
-        if (dumpLayout)
-            layout->dumpLayout();
-    }
 }
 
 bool DockRegistry::affinitiesMatch(const Vector<QString> &affinities1,
@@ -270,6 +254,16 @@ Core::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
+void DockRegistry::setCurrentCloseReason(CloseReason reason)
+{
+    d->m_currentCloseReason = reason;
+}
+
+CloseReason DockRegistry::currentCloseReason()
+{
+    return d->m_currentCloseReason;
+}
+
 DockRegistry::Private *DockRegistry::dptr() const
 {
     return d;
@@ -369,16 +363,6 @@ void DockRegistry::unregisterFloatingWindow(Core::FloatingWindow *fw)
     maybeDelete();
 }
 
-void DockRegistry::registerLayout(Core::Layout *layout)
-{
-    m_layouts.push_back(layout);
-}
-
-void DockRegistry::unregisterLayout(Core::Layout *layout)
-{
-    m_layouts.removeOne(layout);
-}
-
 void DockRegistry::registerGroup(Core::Group *group)
 {
     m_groups.push_back(group);
@@ -387,6 +371,7 @@ void DockRegistry::registerGroup(Core::Group *group)
 void DockRegistry::unregisterGroup(Core::Group *group)
 {
     m_groups.removeOne(group);
+    maybeDelete();
 }
 
 void DockRegistry::registerLayoutSaver()
@@ -397,6 +382,7 @@ void DockRegistry::registerLayoutSaver()
 void DockRegistry::unregisterLayoutSaver()
 {
     d->m_numLayoutSavers--;
+    maybeDelete();
 }
 
 Core::DockWidget *DockRegistry::focusedDockWidget() const
@@ -440,8 +426,8 @@ Core::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags 
                 m_dockWidgetIdRemapping[name] = dw->uniqueName();
             }
             return dw;
-        } else {
-            KDDW_ERROR("Couldn't find dock widget name={}", name);
+        } else if (!flags.testFlag(DockByNameFlag::SilentIfNotFound)) {
+            KDDW_ERROR("Couldn't find dock widget named={}", name);
         }
     }
 
@@ -556,11 +542,6 @@ Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
     }
 
     return areas;
-}
-
-Vector<Core::Layout *> DockRegistry::layouts() const
-{
-    return m_layouts;
 }
 
 Core::Group::List DockRegistry::groups() const
@@ -710,18 +691,20 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
     if (!view)
         return false;
 
-    // When clicking on a MDI Frame we raise the window
-    if (Controller *c = view->d->firstParentOfType(ViewType::Frame)) {
-        auto group = static_cast<Group *>(c);
-        if (group->isMDI())
-            group->view()->raise();
+    if (!Config::hasMDIFlag(Config::MDIFlag_NoClickToRaise)) {
+        // When clicking on a MDI Group we raise the window
+        if (Controller *c = view->d->firstParentOfType(ViewType::Group)) {
+            auto group = static_cast<Group *>(c);
+            if (group->isMDI())
+                group->view()->raise();
+        }
     }
 
     // The following code is for hididng the overlay
     if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
         return false;
 
-    if (view->is(ViewType::Frame)) {
+    if (view->is(ViewType::Group)) {
         // break recursion
         return false;
     }
@@ -845,4 +828,14 @@ DockWidget::List &SideBarGroupings::groupingByRef(DockWidget *dw)
     }
 
     return empty;
+}
+
+CloseReasonSetter::CloseReasonSetter(CloseReason reason)
+{
+    DockRegistry::self()->setCurrentCloseReason(reason);
+}
+
+CloseReasonSetter::~CloseReasonSetter()
+{
+    DockRegistry::self()->setCurrentCloseReason(CloseReason::Unspecified);
 }

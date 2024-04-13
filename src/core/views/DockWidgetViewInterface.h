@@ -53,18 +53,29 @@ public:
     Vector<QString> affinities() const;
 
     void addDockWidgetAsTab(DockWidgetViewInterface *other,
-                            KDDockWidgets::InitialOption initialOption = {});
+                            const KDDockWidgets::InitialOption &initialOption = {});
 
     void addDockWidgetToContainingWindow(DockWidgetViewInterface *other,
                                          KDDockWidgets::Location location,
                                          DockWidgetViewInterface *relativeTo = nullptr,
-                                         KDDockWidgets::InitialOption initialOption = {});
+                                         const KDDockWidgets::InitialOption &initialOption = {});
 
     DockWidgetOptions options() const;
     void setOptions(DockWidgetOptions);
 
     /// @deprecated. Use open() instead.
     void show();
+
+    /// @brief Sets this dock widgets position to pos within the MDI layout
+    /// This only applies if the main window is in MDI mode, which it is not by default
+    void setMDIPosition(Point pos);
+
+    /// @brief like setMDIPosition(), but for the size.
+    void setMDISize(Size size);
+
+    /// @brief like setMDIPosition(), but for the Z
+    /// only implemented for QtQuick
+    void setMDIZ(int z);
 
     virtual std::shared_ptr<Core::View> focusCandidate() const = 0;
 

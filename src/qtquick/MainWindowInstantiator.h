@@ -34,7 +34,7 @@ class DOCKS_EXPORT MainWindowInstantiator : public QQuickItem
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
-    Q_PROPERTY(QVector<QString> affinities READ affinities CONSTANT)
+    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
 public:
     ///@brief ctor, called by QML engine
     MainWindowInstantiator();
@@ -46,6 +46,8 @@ public:
     void setOptions(KDDockWidgets::MainWindowOptions);
 
     QVector<QString> affinities() const;
+    void setAffinities(const QVector<QString> &);
+
     bool isMDI() const;
 
     /// @brief See KDDockWidgets::Core::MainWindow::addDockWidget()
@@ -74,10 +76,12 @@ protected:
 Q_SIGNALS:
     void uniqueNameChanged();
     void optionsChanged();
+    void affinitiesChanged();
 
 private:
     QString m_uniqueName;
     Core::MainWindow *m_mainWindow = nullptr;
+    QVector<QString> m_affinities;
     KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;
 };
 

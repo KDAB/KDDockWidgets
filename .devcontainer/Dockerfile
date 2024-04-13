@@ -14,13 +14,13 @@
 
 # Instructions:
 # docker build -t kddw-tests .
-# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ -v ~/Qt/5.15.2/gcc_64/:/Qt5/ -v ~/Qt/6.6.0/gcc_64/:/Qt6/ --ulimit nofile=1024:4096 -u 1000:1000 kddw-tests
+# docker run -it -v /data/sources/kddockwidgets/:/kddockwidgets/ -v ~/Qt/5.15.2/gcc_64/:/Qt5/ -v ~/Qt/6.6.0/gcc_64/:/Qt6/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ulimit nofile=1024:4096 -u 1000:1000 kddw-tests
 # cd /kddockwidgets/
 # cmake --preset=dev
 # cd build-dev && ninja
 # QT_QUICK_BACKEND=software ctest -j12
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 MAINTAINER Sergio Martins (sergio.martins@kdab.com)
 
 ENV TZ=Europe/Berlin
@@ -28,20 +28,11 @@ ENV LC_CTYPE=C.UTF-8
 ENV PATH=$PATH:/Qt5/bin/:/Qt6/bin/
 ENV LD_LIBRARY_PATH=/Qt5/lib/:/Qt6/lib/
 ENV QT_QUICK_BACKEND=software
+ENV LSAN_OPTIONS=detect_leaks=0
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update
-RUN apt install build-essential software-properties-common lld git cmake ninja-build \
+RUN apt update -qq && apt install build-essential software-properties-common lld git cmake ninja-build \
                 mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
                 libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-                vim clang-tidy-14 valgrind pip libxslt-dev llvm -y
-
-RUN pip install shiboken6-generator==6.6.0 shiboken6==6.6.0 pyside6==6.6.0
-
-RUN pip install --index-url=https://download.qt.io/official_releases/QtForPython \
-              --trusted-host download.qt.io shiboken2-generator==5.15.2.1 shiboken2==5.15.2.1 pyside2==5.15.2.1
-
-RUN mkdir /home/user && \
-    groupadd -g 1000 defaultgroup && \
-    useradd -u 1000 -g defaultgroup user -m && chown -R user /home/user
+                vim clang-tidy-14 valgrind pip libxslt-dev llvm libspdlog-dev clazy clang -y

@@ -84,6 +84,7 @@ protected:
     Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void onAutoHideClicked();
     Q_INVOKABLE bool isFloating() const;
+    Q_INVOKABLE bool isMaximized() const override;
 
     /// These 2 are the same, both just toggle window maximization
     Q_INVOKABLE void toggleMaximized();
@@ -104,7 +105,7 @@ Q_SIGNALS:
     void numDockWidgetsChanged();
 
 protected:
-    void init() override final;
+    void init() override;
     bool event(QEvent *) override;
 
 private:

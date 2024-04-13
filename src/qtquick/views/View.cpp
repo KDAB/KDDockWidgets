@@ -137,20 +137,19 @@ View::View(Core::Controller *controller, Core::ViewType type, QQuickItem *parent
     }
 
     connect(this, &QQuickItem::widthChanged, this, [this] {
-        if (!Core::View::d->aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
+        if (!Core::View::d->aboutToBeDestroyed() && !m_inDtor) { // If Window is being destroyed we don't bother
             onResize(Core::View::size());
             updateGeometry();
         }
     });
 
     connect(this, &QQuickItem::heightChanged, this, [this] {
-        if (!Core::View::d->aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
+        if (!Core::View::d->aboutToBeDestroyed() && !m_inDtor) { // If Window is being destroyed we don't bother
             onResize(Core::View::size());
             updateGeometry();
         }
     });
 
-    qGuiApp->installEventFilter(this);
     _setSize({ 800, 800 });
 }
 
@@ -201,6 +200,9 @@ void View::sendVisibleChangeEvent()
 
 void View::itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data)
 {
+    if (m_inDtor)
+        return;
+
     QQuickItem::itemChange(change, data);
 
     // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
@@ -502,11 +504,21 @@ void View::setHeight(int h)
 void View::setFixedWidth(int w)
 {
     setWidth(w);
+    setMinimumSize({ w, minSize().height() });
+    setMaximumSize({ w, maxSizeHint().height() });
 }
 
 void View::setFixedHeight(int h)
 {
     setHeight(h);
+    setMinimumSize({ minSize().width(), h });
+    setMaximumSize({ maxSizeHint().width(), h });
+}
+
+void View::setFixedSize(Size sz)
+{
+    setFixedWidth(sz.width());
+    setFixedHeight(sz.height());
 }
 
 void View::show()
@@ -538,7 +550,7 @@ void View::setParent(QQuickItem *parentItem)
     }
 
     // Mimic QWidget::setParent(), hide widget when setting parent
-    // Only of no parent item though, as that causes binding loops. Since it's benign we won't
+    // Only if no parent item though, as that causes binding loops. Since it's benign we won't
     // bother making it strictly like qtwidgets.
     if (!parentItem && !m_inDtor)
         setVisible(false);
@@ -689,6 +701,18 @@ bool View::isMaximized() const
     return false;
 }
 
+int View::zOrder() const
+{
+    // Returns the zOrder so we can unit test that raising works in MDI mode.
+    // This is unrelated to QQuickItem::z(), which is always 0 for us.
+    if (auto p = parentItem()) {
+        const auto siblings = p->childItems();
+        return siblings.indexOf(const_cast<QtQuick::View *>(this));
+    }
+
+    return 0;
+}
+
 std::shared_ptr<Core::Window> View::window() const
 {
     if (QWindow *w = QQuickItem::window()) {
@@ -823,6 +847,16 @@ void View::onWindowStateChangeEvent(QWindowStateChangeEvent *)
     if (QWindow *window = QQuickItem::window()) {
         m_oldWindowState = window->windowState();
     }
+}
+
+bool View::isFixedWidth() const
+{
+    return m_controller && m_controller->isFixedWidth();
+}
+
+bool View::isFixedHeight() const
+{
+    return m_controller && m_controller->isFixedHeight();
 }
 
 namespace KDDockWidgets {

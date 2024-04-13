@@ -149,13 +149,11 @@ int main(int argc, char **argv)
         "savedlayout",
         QCoreApplication::translate("main", "loads the specified json file at startup"));
 
-#ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
     QCommandLineOption dockableMainWindows(
         "j",
         QCoreApplication::translate("main",
                                     "Allow main windows to be docked inside other main windows"));
     parser.addOption(dockableMainWindows);
-#endif
 
     QCommandLineOption maxSizeOption(
         "g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200."));
@@ -444,12 +442,7 @@ int main(int argc, char **argv)
     }
 
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
-
-#ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
     const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
-#else
-    const bool usesDockableMainWindows = false;
-#endif
 
     MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, exampleOptions);
     mainWindow.setWindowTitle("Main Window 1");

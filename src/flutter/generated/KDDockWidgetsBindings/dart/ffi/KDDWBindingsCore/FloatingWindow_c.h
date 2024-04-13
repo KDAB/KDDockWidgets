@@ -41,7 +41,7 @@ public:
     KDDockWidgets::Core::DropArea *dropArea() const;
     static void ensureRectIsOnScreen(KDDockWidgets::Rect &geometry);
     bool hasSingleDockWidget() const;
-    bool hasSingleFrame() const;
+    bool hasSingleGroup() const;
     bool isInDragArea(KDDockWidgets::Point globalPoint) const;
     virtual bool isMDI() const;
     virtual bool isMDI_nocallback() const;
@@ -105,8 +105,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__Core__FloatingWindow__dropArea(void *thisObj
 DOCKS_EXPORT void c_static_KDDockWidgets__Core__FloatingWindow__ensureRectIsOnScreen_Rect(void *geometry_);
 // KDDockWidgets::Core::FloatingWindow::hasSingleDockWidget() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj);
-// KDDockWidgets::Core::FloatingWindow::hasSingleFrame() const
-DOCKS_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj);
+// KDDockWidgets::Core::FloatingWindow::hasSingleGroup() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__hasSingleGroup(void *thisObj);
 // KDDockWidgets::Core::FloatingWindow::isInDragArea(KDDockWidgets::Point globalPoint) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__FloatingWindow__isInDragArea_Point(void *thisObj, void *globalPoint_);
 // KDDockWidgets::Core::FloatingWindow::isMDI() const

@@ -68,11 +68,14 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     // Focus dock widget 1 first
     CHECK(!dw1->isFocused());
     dw1->window()->activateWindow();
-    dw1->d->isFocusedChanged.connect([dw1](bool focused) {
+    dw2->window()->move(100, 100);
+
+    KDBindings::ScopedConnection con = dw1->d->isFocusedChanged.connect([dw1](bool focused) {
         CHECK(focused == dw1->isFocused());
     });
 
     le1->setFocus(Qt::MouseFocusReason);
+
     KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
     CHECK(dw1->isFocused());
 
@@ -206,15 +209,15 @@ KDDW_QCORO_TASK tst_close()
     CHECK_EQ(leftDock->dptr()->group()->view()->x(), 0);
 
     CHECK_EQ(centralDock->dptr()->group()->view()->x(),
-             leftDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness + 1);
+             leftDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing + 1);
     CHECK_EQ(rightDock->dptr()->group()->view()->x(),
-             centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
+             centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
     leftDock->close();
     KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
     CHECK_EQ(centralDock->dptr()->group()->view()->x(), 0);
     CHECK_EQ(rightDock->dptr()->group()->view()->x(),
-             centralDock->dptr()->group()->view()->geometry().right() + Item::separatorThickness
+             centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
 
     rightDock->close();

@@ -67,7 +67,18 @@ struct Separator::Private : public LayoutingSeparator
 
     void free() override
     {
+#ifdef KDDW_FRONTEND_QT
+        if (Config::self().internalFlags() & Config::InternalFlag_DeleteSeparatorsLater) {
+            q->deleteLater();
+            return;
+        }
+#endif
         delete q;
+    }
+
+    void raise() override
+    {
+        q->view()->raise();
     }
 
     Core::Separator *const q;
@@ -115,28 +126,6 @@ int Separator::position() const
     return d->position();
 }
 
-void Separator::move(int p)
-{
-    if (p == position())
-        return;
-
-    Rect geo = d->m_geometry;
-    if (isVertical()) {
-        geo.moveTop(p);
-    } else {
-        geo.moveLeft(p);
-    }
-    setGeometry(geo);
-
-    if (View *v = view()) {
-        if (isVertical()) {
-            v->move(v->x(), p);
-        } else {
-            v->move(p, v->y());
-        }
-    }
-}
-
 void Separator::setGeometry(Rect r)
 {
     if (r == d->m_geometry)
@@ -149,17 +138,6 @@ void Separator::setGeometry(Rect r)
     }
 
     setVisible(true);
-}
-
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-void Separator::setGeometry(int pos, int pos2, int length)
-{
-    d->LayoutingSeparator::setGeometry(pos, pos2, length);
-}
-
-Qt::Orientation Separator::orientation() const
-{
-    return d->m_orientation;
 }
 
 void Separator::setLazyPosition(int pos)
@@ -254,11 +232,6 @@ void Separator::onMouseMove(Point pos)
     } else {
         d->onMouseMove(pos, /*moveSeparator=*/true);
     }
-}
-
-Core::ItemBoxContainer *Separator::parentContainer() const
-{
-    return d->m_parentContainer;
 }
 
 LayoutingSeparator *Separator::asLayoutingSeparator() const

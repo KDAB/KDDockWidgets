@@ -106,7 +106,7 @@ void DockWidgetViewInterface::moveToSideBar()
 }
 
 void DockWidgetViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *other,
-                                                 KDDockWidgets::InitialOption initialOption)
+                                                 const KDDockWidgets::InitialOption &initialOption)
 {
     DockWidget *dw = other ? other->dockWidget() : nullptr;
     m_dockWidget->addDockWidgetAsTab(dw, initialOption);
@@ -114,7 +114,7 @@ void DockWidgetViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *other,
 
 void DockWidgetViewInterface::addDockWidgetToContainingWindow(
     DockWidgetViewInterface *other, KDDockWidgets::Location location,
-    DockWidgetViewInterface *relativeTo, KDDockWidgets::InitialOption initialOption)
+    DockWidgetViewInterface *relativeTo, const KDDockWidgets::InitialOption &initialOption)
 {
     DockWidget *dw = other ? other->dockWidget() : nullptr;
     DockWidget *relativeToDw = relativeTo ? relativeTo->dockWidget() : nullptr;
@@ -154,6 +154,21 @@ void DockWidgetViewInterface::setAffinityName(const QString &name)
 Vector<QString> DockWidgetViewInterface::affinities() const
 {
     return m_dockWidget->affinities();
+}
+
+void DockWidgetViewInterface::setMDIPosition(Point pos)
+{
+    m_dockWidget->setMDIPosition(pos);
+}
+
+void DockWidgetViewInterface::setMDISize(Size size)
+{
+    m_dockWidget->setMDISize(size);
+}
+
+void DockWidgetViewInterface::setMDIZ(int z)
+{
+    m_dockWidget->setMDIZ(z);
 }
 
 } // namespace

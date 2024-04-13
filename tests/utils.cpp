@@ -70,7 +70,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     if (show) {
         dock->open();
         dock->dptr()->morphIntoFloatingWindow();
-        assert(dock->floatingWindow());
+        assert(dock->floatingWindow() || dock->isInMainWindow());
         dock->view()->activateWindow();
         assert(dock->view()->window());
 #if defined(KDDW_FRONTEND_FLUTTER)
@@ -90,10 +90,10 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
     }
 }
 
-Core::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
+Core::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, LayoutSaverOptions layoutSaverOptions)
 {
     return createDockWidget(name,
-                            Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
+                            Platform::instance()->tests_createView({ true, {}, { 100, 100 } }), {}, layoutSaverOptions);
 }
 
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<DockDescriptor> &docks)
@@ -201,6 +201,6 @@ void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *drop
     group->addTab(dock);
     dock->d->group()->setObjectName(dock->objectName());
 
-    dropArea->addWidget(group->view(), location, relativeTo);
+    dropArea->addWidget(group->view(), location, relativeTo ? relativeTo->layoutItem() : nullptr);
     assert(dropArea->checkSanity());
 }

@@ -70,6 +70,8 @@ public:
     virtual bool isActiveWindow_nocallback() const;
     virtual bool isExplicitlyHidden() const;
     virtual bool isExplicitlyHidden_nocallback() const;
+    bool isFixedHeight() const;
+    bool isFixedWidth() const;
     virtual bool isMaximized() const;
     virtual bool isMaximized_nocallback() const;
     virtual bool isMinimized() const;
@@ -112,6 +114,7 @@ public:
     virtual void releaseMouse_nocallback();
     void resize(KDDockWidgets::Size arg__1);
     void resize(int w, int h);
+    KDDockWidgets::Size screenSize() const;
     virtual void setCursor(Qt::CursorShape arg__1);
     virtual void setCursor_nocallback(Qt::CursorShape arg__1);
     virtual void setFixedHeight(int arg__1);
@@ -161,6 +164,8 @@ public:
     int width() const;
     int x() const;
     int y() const;
+    virtual int zOrder() const;
+    virtual int zOrder_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -261,6 +266,8 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef QString *(*Callback_viewName)(void *);
     Callback_viewName m_viewNameCallback = nullptr;
+    typedef int (*Callback_zOrder)(void *);
+    Callback_zOrder m_zOrderCallback = nullptr;
 };
 }
 }
@@ -323,6 +330,10 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__View__init(void *thisObj);
 DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isActiveWindow(void *thisObj);
 // KDDockWidgets::Core::View::isExplicitlyHidden() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isExplicitlyHidden(void *thisObj);
+// KDDockWidgets::Core::View::isFixedHeight() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isFixedHeight(void *thisObj);
+// KDDockWidgets::Core::View::isFixedWidth() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isFixedWidth(void *thisObj);
 // KDDockWidgets::Core::View::isMaximized() const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__View__isMaximized(void *thisObj);
 // KDDockWidgets::Core::View::isMinimized() const
@@ -373,6 +384,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__View__releaseMouse(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__resize_Size(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::View::resize(int w, int h)
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__resize_int_int(void *thisObj, int w, int h);
+// KDDockWidgets::Core::View::screenSize() const
+DOCKS_EXPORT void *c_KDDockWidgets__Core__View__screenSize(void *thisObj);
 // KDDockWidgets::Core::View::setCursor(Qt::CursorShape arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__setCursor_CursorShape(void *thisObj, int arg__1);
 // KDDockWidgets::Core::View::setFixedHeight(int arg__1)
@@ -427,6 +440,8 @@ DOCKS_EXPORT int c_KDDockWidgets__Core__View__width(void *thisObj);
 DOCKS_EXPORT int c_KDDockWidgets__Core__View__x(void *thisObj);
 // KDDockWidgets::Core::View::y() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__View__y(void *thisObj);
+// KDDockWidgets::Core::View::zOrder() const
+DOCKS_EXPORT int c_KDDockWidgets__Core__View__zOrder(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__Core__View_Finalizer(void *cppObj);

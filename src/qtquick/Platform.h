@@ -46,8 +46,7 @@ public:
     Core::ViewFactory *createDefaultViewFactory() override;
     QtQuick::ViewFactory *viewFactory() const;
     std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const override;
-    using Platform_qt::screenNumberFor;
-    int screenNumberFor(Core::View *) const override;
+    int screenNumberForView(Core::View *) const override;
     QSize screenSizeFor(Core::View *) const override;
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
@@ -60,7 +59,7 @@ public:
     static Core::DockWidget *dockWidgetForItem(QQuickItem *);
 
 #ifdef DOCKS_TESTING_METHODS
-    explicit Platform(int &argc, char **argv);
+    explicit Platform(int &argc, char **argv, bool defaultToOffscreenQPA);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     Core::View *tests_createView(Core::CreateViewOptions, Core::View *parent = nullptr) override;

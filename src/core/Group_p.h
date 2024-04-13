@@ -23,6 +23,9 @@
 
 #include <unordered_map>
 #include <vector>
+#include <sstream>
+#include <string>
+#include <iostream>
 
 namespace KDDockWidgets {
 
@@ -83,9 +86,23 @@ public:
         return q->view()->geometry();
     }
 
-    QString debugName() const override
+    std::string toDebugString() const override
     {
-        return q->view()->viewName();
+        const auto docks = q->dockWidgets();
+        std::ostringstream s;
+        std::string result;
+
+        s << "[ ";
+
+        for (auto dock : docks) {
+            s << dock->uniqueName().toStdString();
+            if (!dock->isVisible())
+                s << ", hidden";
+            s << "; ";
+        }
+        s << " ]";
+
+        return s.str();
     }
 
     QString id() const override
@@ -101,6 +118,7 @@ public:
     Group *const q;
     int m_userType = 0;
     FrameOptions m_options = FrameOption_None;
+    bool m_invalidatingLayout = false;
 };
 
 }

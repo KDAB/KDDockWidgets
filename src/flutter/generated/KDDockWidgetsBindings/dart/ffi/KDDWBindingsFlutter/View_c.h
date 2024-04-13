@@ -14,16 +14,16 @@
 #include <core/View.h>
 #include <geometry_helpers_p.h>
 #include <string_p.h>
-#include "core/TitleBar.h"
 #include "core/Stack.h"
-#include <core/DockWidget.h>
-#include <core/Group.h>
 #include "core/MainWindow.h"
-#include <core/Layout.h>
+#include <core/DockWidget.h>
 #include <FloatingWindow.h>
+#include "core/TitleBar.h"
+#include <core/Layout.h>
 #include <QtCompat_p.h>
-#include "core/DropArea.h"
 #include <TabBar.h>
+#include "core/DropArea.h"
+#include <core/Group.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {
@@ -152,6 +152,8 @@ public:
     void updateGeometry();
     virtual QString viewName() const;
     virtual QString viewName_nocallback() const;
+    virtual int zOrder() const;
+    virtual int zOrder_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -268,6 +270,8 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef QString *(*Callback_viewName)(void *);
     Callback_viewName m_viewNameCallback = nullptr;
+    typedef int (*Callback_zOrder)(void *);
+    Callback_zOrder m_zOrderCallback = nullptr;
 };
 }
 }
@@ -398,6 +402,8 @@ DOCKS_EXPORT void c_KDDockWidgets__flutter__View__update(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__View__updateGeometry(void *thisObj);
 // KDDockWidgets::flutter::View::viewName() const
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__View__viewName(void *thisObj);
+// KDDockWidgets::flutter::View::zOrder() const
+DOCKS_EXPORT int c_KDDockWidgets__flutter__View__zOrder(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__View__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__View__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__View_Finalizer(void *cppObj);

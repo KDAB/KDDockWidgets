@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -32,14 +32,6 @@ class Separator extends KDDWBindingsCore.Controller {
   }
   String getFinalizerName() {
     return "c_KDDockWidgets__Core__Separator_Finalizer";
-  } // isBeingDragged() const
-
-  bool isBeingDragged() {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Core__Separator__isBeingDragged')
-        .asFunction();
-    return func(thisCpp) != 0;
   }
 
   static // isResizing()
@@ -57,14 +49,6 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__isVertical')
         .asFunction();
     return func(thisCpp) != 0;
-  } // move(int p)
-
-  move(int p) {
-    final void_Func_voidstar_int func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__Separator__move_int')
-        .asFunction();
-    func(thisCpp, p);
   }
 
   static // numSeparators()
@@ -122,16 +106,6 @@ class Separator extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__Separator__setGeometry_Rect')
         .asFunction();
     func(thisCpp, r == null ? ffi.nullptr : r.thisCpp);
-  } // setGeometry(int pos, int pos2, int length)
-
-  setGeometry_2(int pos, int pos2, int length) {
-    final void_Func_voidstar_int_int_int func = _dylib
-        .lookup<
-                ffi.NativeFunction<
-                    void_Func_voidstar_ffi_Int32_ffi_Int32_ffi_Int32_FFI>>(
-            'c_KDDockWidgets__Core__Separator__setGeometry_int_int_int')
-        .asFunction();
-    func(thisCpp, pos, pos2, length);
   } // setLazyPosition(int arg__1)
 
   setLazyPosition(int arg__1) {

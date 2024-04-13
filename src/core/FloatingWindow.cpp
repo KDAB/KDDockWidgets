@@ -224,7 +224,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
         DockWidget *dwMDIWrapper = group->dockWidgetAt(0);
         DropArea *dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
 
-        if (dropAreaMDIWrapper->hasSingleFrame()) {
+        if (dropAreaMDIWrapper->hasSingleGroup()) {
             Core::Group *innerFrame = dropAreaMDIWrapper->groups().constFirst();
             if (innerFrame->hasSingleDockWidget()) {
                 // When pressing the unfloat button, the dock widgets gets docked to the previous
@@ -437,9 +437,9 @@ bool FloatingWindow::anyNonDockable() const
     return false;
 }
 
-bool FloatingWindow::hasSingleFrame() const
+bool FloatingWindow::hasSingleGroup() const
 {
-    return d->m_dropArea->hasSingleFrame();
+    return d->m_dropArea->hasSingleGroup();
 }
 
 bool FloatingWindow::hasSingleDockWidget() const
@@ -522,7 +522,7 @@ void FloatingWindow::updateTitleBarVisibility()
     if (KDDockWidgets::usesClientTitleBar()) {
         if ((d->m_flags & FloatingWindowFlag::HideTitleBarWhenTabsVisible)
             && !(d->m_flags & FloatingWindowFlag::AlwaysTitleBarWhenFloating)) {
-            if (hasSingleFrame()) {
+            if (hasSingleGroup()) {
                 visible = !groups.first()->hasTabsVisible();
             }
         }
@@ -545,7 +545,7 @@ void FloatingWindow::updateTitleAndIcon()
 {
     QString title;
     Icon icon;
-    if (hasSingleFrame()) {
+    if (hasSingleGroup()) {
         const Core::Group *group = groups().constFirst();
         title = group->title();
         icon = group->icon();
@@ -580,7 +580,18 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
         if (int(fw.windowState) & int(WindowState::Maximized)) {
             view()->showMaximized();
         } else if (int(fw.windowState) & int(WindowState::Minimized)) {
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+            if (Platform::instance()->isQtQuick()) {
+                // We'll minimized it after the 1st frameSwap(), so it appears in alt-tab and taskbar thumbnails.
+                // Also fixes non-client area size, due to Qt not honouring WM_NCCALCSIZE correctly when showing minimized without a show normal before
+                d->m_minimizationPending = true;
+            } else {
+                // Workaround not implemented for QtWidgets, needs to be tested there.
+                view()->showMinimized();
+            }
+#else
             view()->showMinimized();
+#endif
         } else {
             view()->showNormal();
         }
@@ -600,7 +611,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.normalGeometry = view()->normalGeometry();
     fw.isVisible = isVisible();
     fw.multiSplitterLayout = dropArea()->serialize();
-    fw.screenIndex = Platform::instance()->screenNumberFor(view());
+    fw.screenIndex = Platform::instance()->screenNumberForView(view());
     fw.screenSize = Platform::instance()->screenSizeFor(view());
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();
@@ -620,7 +631,7 @@ Rect FloatingWindow::dragRect() const
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));
-    } else if (hasSingleFrame()) {
+    } else if (hasSingleGroup()) {
         rect = groups().constFirst()->dragRect();
     } else {
         KDDW_ERROR("Expected a title bar");
@@ -662,7 +673,7 @@ bool FloatingWindow::anyDockWidgetsHas(LayoutSaverOption option) const
 }
 
 void FloatingWindow::addDockWidget(Core::DockWidget *dw, Location location,
-                                   Core::DockWidget *relativeTo, InitialOption option)
+                                   Core::DockWidget *relativeTo, const InitialOption &option)
 {
     d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }

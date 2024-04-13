@@ -88,6 +88,31 @@ public:
     /// @brief for internal use only
     void updateMargins();
 
+    /// These *_legacy overloads provide QDockWidget compatibility, during porting. See MainWindowOption_QDockWidgets
+    void setCentralWidget_legacy(QWidget *);
+    void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget);
+    void addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
+                              Qt::Orientation orientation);
+    bool restoreDockWidget_legacy(QDockWidget *dockwidget);
+    void removeDockWidget_legacy(QDockWidget *dockwidget);
+    Qt::DockWidgetArea dockWidgetArea_legacy(QDockWidget *dockwidget) const;
+    void resizeDocks_legacy(const QList<QDockWidget *> &docks,
+                            const QList<int> &sizes, Qt::Orientation orientation);
+    void tabifyDockWidget_legacy(QDockWidget *first, QDockWidget *second);
+    QList<QDockWidget *> tabifiedDockWidgets_legacy(QDockWidget *dockwidget) const;
+    void splitDockWidget_split_legacy(QDockWidget *after, QDockWidget *dockwidget,
+                                      Qt::Orientation orientation);
+
+
+    /// Setups the QMainWindow central widget needed by KDDW
+    /// This should almost never be used. The rare use case is if your main window is backed by a .ui file
+    /// and you need to call setupUi() on it. In that case, call manualInit() after setupUi(), and don't forget to
+    /// use MainWindowOption_ManualInit
+    void manualInit();
+
+Q_SIGNALS:
+    void groupCountChanged(int);
+
 protected:
     QRect centralAreaGeometry() const override;
 

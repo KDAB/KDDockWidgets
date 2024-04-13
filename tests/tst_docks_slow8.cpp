@@ -15,6 +15,8 @@
 // A test that was extracted out from tst_docks.cpp as it was too slow
 // By using a separate executable it can be parallelized by ctest.
 
+#define NOMINMAX
+
 #include "utils.h"
 #include "Config.h"
 #include "core/Position_p.h"
@@ -55,6 +57,7 @@ public Q_SLOTS:
     void cleanupTestCase();
 
 private Q_SLOTS:
+    void tst_tabTitleUpdatesWhenUnFloating();
     void tst_resizeWindow_data();
     void tst_resizeWindow();
     void tst_0_data();
@@ -169,6 +172,69 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide_data()
     // setVisible(false). (Yet ? Maybe never).
 }
 
+void TestDocks::tst_tabTitleUpdatesWhenUnFloating()
+{
+    // Tests #468
+    // setTitle() is changing title bar title but not tabbar
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+
+    auto connectIt = [](auto dock) {
+        dock->dptr()->isFloatingChanged.connect([dock](bool floating) {
+            dock->setTitle(QString("%1-%2").arg(dock->uniqueName()).arg(floating));
+        });
+    };
+
+    connectIt(dock1);
+    connectIt(dock2);
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+
+    QVERIFY(dock2->isCurrentTab());
+    QCOMPARE(dock1->titleBar()->title(), "2-0");
+    Core::TabBar *tb = dock1->dptr()->group()->tabBar();
+
+    QCOMPARE(tb->text(0), "1-0");
+    QCOMPARE(tb->text(1), "2-0");
+
+    // Now unfloat:
+    dock1->titleBar()->onFloatClicked();
+
+    // Since they are tabbed, they're not considered floating, but the group is floating
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+    QCOMPARE(dock1->titleBar()->title(), "2-0");
+    QCOMPARE(tb->text(0), "1-0");
+    QCOMPARE(tb->text(1), "2-0");
+
+    // Put back in main window
+    dock1->titleBar()->onFloatClicked();
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+
+    QCOMPARE(dock1->titleBar()->title(), "2-0");
+    tb = dock1->dptr()->group()->tabBar();
+    QCOMPARE(tb->text(0), "1-0");
+    QCOMPARE(tb->text(1), "2-0");
+
+    // Place docks side by side
+    m->addDockWidget(dock2, Location_OnRight);
+    QCOMPARE(dock1->titleBar()->title(), "1-0");
+    QCOMPARE(dock2->titleBar()->title(), "2-0");
+
+    // Now float:
+    dock2->titleBar()->onFloatClicked();
+    QCOMPARE(dock2->titleBar()->title(), "2-1");
+
+    // Now dock again:
+    dock2->titleBar()->onFloatClicked();
+    QCOMPARE(dock2->titleBar()->title(), "2-0");
+}
+
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
 {
     QFETCH(bool, useSetVisible);
@@ -184,9 +250,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
     EnsureTopLevelsDeleted e;
 
-    // Remove once #326 is fixed
-    SetExpectedWarning warn("Trying to use a group that's being deleted");
-
     auto m = createMainWindow();
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
@@ -194,7 +257,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
     const Rect oldGeo = dock1->geometry();
-    auto oldParent = dock1->view()->parentView();
 
     // 1. Just toggle visibility and check that stuff remained sane
     QVERIFY(dock1->titleBar()->isVisible());
@@ -209,7 +271,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock1->isFloating());
     QCOMPARE(dock1->geometry(), oldGeo);
-    QVERIFY(dock1->view()->parentView()->equals(oldParent));
 
     // 2. Check that the parent group also is hidden now
     // auto fw1 = dock1->window();

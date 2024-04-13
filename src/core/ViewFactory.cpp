@@ -19,3 +19,8 @@ DropIndicatorType ViewFactory::s_dropIndicatorType = DropIndicatorType::Classic;
 ViewFactory::~ViewFactory()
 {
 }
+
+QString ViewFactory::classicIndicatorsPath() const
+{
+    return QStringLiteral(":/img/classic_indicators");
+}

@@ -23,6 +23,7 @@
 #include "core/DockRegistry_p.h"
 #include "core/DropArea.h"
 #include "core/MainWindow.h"
+#include "core/MainWindow_p.h"
 #include "core/Group.h"
 #include "core/SideBar.h"
 #include "core/Window_p.h"
@@ -34,6 +35,7 @@
 #include <QScreen>
 #include <QVBoxLayout>
 #include <QWindow>
+#include <QTimer>
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
 
@@ -41,13 +43,16 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
 
 namespace KDDockWidgets {
+
+char const *const s_centralWidgetObjectName = "MyCentralWidget";
+
 class MyCentralWidget : public QWidget
 {
 public:
     explicit MyCentralWidget(QWidget *parent = nullptr)
         : QWidget(parent)
     {
-        setObjectName(QStringLiteral("MyCentralWidget"));
+        setObjectName(QLatin1String(s_centralWidgetObjectName));
     }
 
     ~MyCentralWidget() override;
@@ -77,12 +82,59 @@ public:
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
+    void setupCentralLayout()
+    {
+        m_layout->setSpacing(0);
+        updateMargins();
+
+        if (m_supportsAutoHide) {
+            m_layout->addWidget(
+                View_qt::asQWidget(m_controller->sideBar(SideBarLocation::West)->view()));
+            auto innerVLayout = new QVBoxLayout();
+            innerVLayout->setSpacing(0);
+            innerVLayout->setContentsMargins(0, 0, 0, 0);
+            innerVLayout->addWidget(
+                View_qt::asQWidget(m_controller->sideBar(SideBarLocation::North)));
+            innerVLayout->addWidget(View_qt::asQWidget(m_controller->layout()));
+            innerVLayout->addWidget(
+                View_qt::asQWidget(m_controller->sideBar(SideBarLocation::South)));
+            m_layout->addLayout(innerVLayout);
+            m_layout->addWidget(View_qt::asQWidget(m_controller->sideBar(SideBarLocation::East)));
+        } else {
+            m_layout->addWidget(View_qt::asQWidget(m_controller->layout()->view()));
+        }
+
+        q->QMainWindow::setCentralWidget(m_centralWidget);
+    }
+
+    bool onlySupportsQDockWidgets() const
+    {
+        return m_controller && (m_controller->options() & MainWindowOption_QDockWidgets);
+    }
+
+    bool needsManualInit() const
+    {
+        return m_controller && (m_controller->options() & MainWindowOption_ManualInit);
+    }
+
+    /// Sanity-check to see if someone called QMainWindow::setCentralWidget() directly
+    void sanityCheckCentralWidget() const
+    {
+        if (auto cw = q->centralWidget()) {
+            if (cw->objectName() != QLatin1String(s_centralWidgetObjectName)) {
+                qWarning() << "MainWindow: Expected our own central widget, not " << cw->objectName();
+            }
+        }
+    }
+
     MainWindow *const q;
     Core::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
+
+    KDBindings::ScopedConnection groupCountChangedConnection;
 };
 
 MyCentralWidget::~MyCentralWidget() = default;
@@ -94,29 +146,18 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
     , MainWindowViewInterface(static_cast<Core::MainWindow *>(controller()))
     , d(new Private(this))
 {
+    if (options & MainWindowOption_QDockWidgets)
+        return;
+
+    // Disable QWidgetAnimator. We don't use QDockWidget, but QWidgetAnimator will appear in stack traces
+    // which is unneeded.
+    QMainWindow::setDockOptions({});
+
     m_mainWindow->init(uniqueName);
 
-    d->m_layout->setSpacing(0);
-    d->updateMargins();
-
-    if (d->m_supportsAutoHide) {
-        d->m_layout->addWidget(
-            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::West)->view()));
-        auto innerVLayout = new QVBoxLayout();
-        innerVLayout->setSpacing(0);
-        innerVLayout->setContentsMargins(0, 0, 0, 0);
-        innerVLayout->addWidget(
-            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::North)));
-        innerVLayout->addWidget(View_qt::asQWidget(d->m_controller->layout()));
-        innerVLayout->addWidget(
-            View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::South)));
-        d->m_layout->addLayout(innerVLayout);
-        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->sideBar(SideBarLocation::East)));
-    } else {
-        d->m_layout->addWidget(View_qt::asQWidget(d->m_controller->layout()->view()));
-    }
-
-    setCentralWidget(d->m_centralWidget);
+    const bool requiresManualInit = options & MainWindowOption_ManualInit;
+    if (!requiresManualInit)
+        d->setupCentralLayout();
 
     const bool isWindow = !parentWidget() || (flags & Qt::Window);
     if (isWindow) {
@@ -136,10 +177,19 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
             DockRegistry::self()->dptr()->windowChangedScreen.emit(window);
         });
     }
+
+    QTimer::singleShot(0, this, [this] {
+        d->sanityCheckCentralWidget();
+    });
+
+    d->groupCountChangedConnection = m_mainWindow->d->groupCountChanged.connect([this](int count) {
+        Q_EMIT groupCountChanged(count);
+    });
 }
 
 MainWindow::~MainWindow()
 {
+    d->sanityCheckCentralWidget();
     delete d;
 }
 
@@ -190,4 +240,110 @@ QHBoxLayout *MainWindow::internalLayout() const
 void MainWindow::updateMargins()
 {
     d->updateMargins();
+}
+
+void MainWindow::setCentralWidget_legacy(QWidget *widget)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::setCentralWidget(widget);
+    } else {
+        qFatal("MainWindow::setCentralWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::addDockWidget(area, dockwidget);
+    } else {
+        qFatal("MainWindow::addDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::addDockWidget_legacy(Qt::DockWidgetArea area, QDockWidget *dockwidget,
+                                      Qt::Orientation orientation)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::addDockWidget(area, dockwidget, orientation);
+    } else {
+        qFatal("MainWindow::addDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+bool MainWindow::restoreDockWidget_legacy(QDockWidget *dockwidget)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        return QMainWindow::restoreDockWidget(dockwidget);
+    } else {
+        qFatal("MainWindow::restoreDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        return {};
+    }
+}
+
+void MainWindow::removeDockWidget_legacy(QDockWidget *dockwidget)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::removeDockWidget(dockwidget);
+    } else {
+        qFatal("MainWindow::removeDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+Qt::DockWidgetArea MainWindow::dockWidgetArea_legacy(QDockWidget *dockwidget) const
+{
+    if (d->onlySupportsQDockWidgets()) {
+        return QMainWindow::dockWidgetArea(dockwidget);
+    } else {
+        qFatal("MainWindow::dockWidgetArea_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        return {};
+    }
+}
+
+void MainWindow::resizeDocks_legacy(const QList<QDockWidget *> &docks,
+                                    const QList<int> &sizes, Qt::Orientation orientation)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::resizeDocks(docks, sizes, orientation);
+    } else {
+        qFatal("MainWindow::resizeDocks_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::tabifyDockWidget_legacy(QDockWidget *first, QDockWidget *second)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::tabifyDockWidget(first, second);
+    } else {
+        qFatal("MainWindow::tabifyDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+QList<QDockWidget *> MainWindow::tabifiedDockWidgets_legacy(QDockWidget *dockwidget) const
+{
+    if (d->onlySupportsQDockWidgets()) {
+        return QMainWindow::tabifiedDockWidgets(dockwidget);
+    } else {
+        qFatal("MainWindow::tabifiedDockWidgets_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+        return {};
+    }
+}
+
+void MainWindow::splitDockWidget_split_legacy(QDockWidget *after, QDockWidget *dockwidget,
+                                              Qt::Orientation orientation)
+{
+    if (d->onlySupportsQDockWidgets()) {
+        QMainWindow::splitDockWidget(after, dockwidget, orientation);
+    } else {
+        qFatal("MainWindow::splitDockWidget_split_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
+    }
+}
+
+void MainWindow::manualInit()
+{
+    if (d->needsManualInit()) {
+        delete centralWidget();
+        d->setupCentralLayout();
+    } else {
+        qFatal("MainWindow::manualInit requires MainWindowOption_ManualInit");
+    }
 }

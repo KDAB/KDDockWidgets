@@ -79,6 +79,7 @@ struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
         : m_originalFlags(Config::self().flags())
+        , m_originalMDIFlags(Config::self().mdiFlags())
         , m_originalInternalFlags(Config::self().internalFlags())
         , m_originalSeparatorThickness(Config::self().separatorThickness())
     {
@@ -106,11 +107,14 @@ struct EnsureTopLevelsDeleted
         Config::self().setMainWindowFactoryFunc(nullptr);
         Config::self().setInternalFlags(m_originalInternalFlags);
         Config::self().setFlags(m_originalFlags);
+        Config::self().setMDIFlags(m_originalMDIFlags);
         Config::self().setSeparatorThickness(m_originalSeparatorThickness);
         Config::self().setLayoutSaverStrictMode(false);
+        InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;
     }
 
     const Config::Flags m_originalFlags;
+    const Config::MDIFlags m_originalMDIFlags;
     const Config::InternalFlags m_originalInternalFlags;
     const int m_originalSeparatorThickness;
 };
@@ -131,7 +135,7 @@ Core::DockWidget *createDockWidget(const QString &name, Core::View *guest,
                                    LayoutSaverOptions layoutSaverOptions = {},
                                    bool show = true, const QString &affinityName = {});
 
-Core::DockWidget *createDockWidget(const QString &name);
+Core::DockWidget *createDockWidget(const QString &name, LayoutSaverOptions layoutSaverOptions = {});
 
 void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
                     Core::Group *relativeTo, KDDockWidgets::Location location);
@@ -159,7 +163,7 @@ inline Core::View *draggableFor(Core::View *view)
         if (auto group = dw->d->group())
             draggable = group->titleBar()->view();
     } else if (auto fw = view->asFloatingWindowController()) {
-        Core::Group *group = fw->hasSingleFrame()
+        Core::Group *group = fw->hasSingleGroup()
             ? static_cast<Core::Group *>(fw->groups().first())
             : nullptr;
 

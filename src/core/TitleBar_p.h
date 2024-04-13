@@ -28,7 +28,6 @@ public:
     KDBindings::Signal<> iconChanged;
     KDBindings::Signal<> isFocusedChanged;
     KDBindings::Signal<> numDockWidgetsChanged;
-    KDBindings::Signal<bool> closeButtonEnabledChanged;
     KDBindings::Signal<bool> floatButtonVisibleChanged;
     KDBindings::Signal<QString> floatButtonToolTipChanged;
 
@@ -38,12 +37,19 @@ public:
     /// @brief Emitted to tell the views to update their minimize button
     KDBindings::Signal<bool, bool> minimizeButtonChanged;
 
+    /// @brief Emitted to tell the views to update their close button
+    KDBindings::Signal<bool, bool> closeButtonChanged;
+
     /// @brief Emitted to tell the views to update their maximize button
     KDBindings::Signal<bool, bool, KDDockWidgets::TitleBarButtonType> maximizeButtonChanged;
 
     KDBindings::ScopedConnection isFocusedChangedConnection;
     KDBindings::ScopedConnection isInMainWindowChangedConnection;
     KDBindings::ScopedConnection numDockWidgetsChangedConnection;
+
+    /// Buttons which are forcibly hidden by the user's requirements (overriding kddw's default business logic)
+    TitleBarButtonTypes m_userHiddenButtonTypes = {};
+    TitleBarButtonTypes m_buttonsToHideIfDisabled = {};
 };
 
 }

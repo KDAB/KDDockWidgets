@@ -219,6 +219,23 @@ void FloatingWindow::init()
 
     m_controller->updateTitleAndIcon();
 
+#ifdef KDDW_FRONTEND_QT_WINDOWS
+    // Workaround for QTBUG-120269 , no alt-tab thumbail if starting minimized.
+    // Do a nice workaround of rendering transparently then minimizing that
+    if (m_controller->floatingWindowFlags() & FloatingWindowFlag::StartsMinimized) {
+        m_quickWindow->setOpacity(0.0);
+        auto guard = new QObject(this);
+        connect(m_quickWindow, &QQuickView::frameSwapped, guard, [this, guard] {
+            if (m_controller->dptr()->m_minimizationPending) {
+                delete guard;
+                m_controller->dptr()->m_minimizationPending = false;
+                showMinimized();
+                m_quickWindow->setOpacity(1);
+            }
+        });
+    }
+#endif
+
     m_quickWindow->show();
 
     connect(this, &QQuickItem::visibleChanged, this, [this] {
@@ -252,8 +269,16 @@ Core::Item *FloatingWindow::rootItem() const
 
 void FloatingWindow::onWindowStateChanged(Qt::WindowState state)
 {
-    m_controller->setLastWindowManagerState(WindowState(state));
+    const auto newState = WindowState(state);
+    m_controller->setLastWindowManagerState(newState);
     m_controller->dptr()->windowStateChanged.emit();
+#if defined(Q_OS_WIN)
+    if (window()->hasBeenMinimizedDirectlyFromRestore() && newState != WindowState::Minimized) {
+        window()->setHasBeenMinimizedDirectlyFromRestore(false);
+        // restore our nice frames
+        WidgetResizeHandler::requestNCCALCSIZE(HWND(window()->handle()));
+    }
+#endif
 }
 
 #include "FloatingWindow.moc"

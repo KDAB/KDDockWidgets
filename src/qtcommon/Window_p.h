@@ -40,6 +40,8 @@ public:
     void setProperty(const char *name, const QVariant &value);
     QVariant property(const char *name) const;
 
+    void setHasBeenMinimizedDirectlyFromRestore(bool) override;
+    bool hasBeenMinimizedDirectlyFromRestore() const override;
     bool equals(std::shared_ptr<Core::Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     void resize(int width, int height) override;

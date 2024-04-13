@@ -34,13 +34,19 @@ public:
         explicit UpdateActions(Core::DockWidget *dock)
             : dw(dock)
         {
-            dw->d->m_willUpdateActions = true;
+            dw->d->m_willUpdateActions++;
         }
 
         ~UpdateActions()
         {
-            dw->d->m_willUpdateActions = false;
-            dw->d->updateFloatAction();
+            dw->d->m_willUpdateActions--;
+
+            // only the last one (the outer one, updates actions, in case of nesting)
+            if (dw->d->m_willUpdateActions == 0) {
+                dw->d->updateFloatAction();
+                if (dw->isOpen() != dw->toggleAction()->isChecked())
+                    dw->d->updateToggleAction();
+            }
         }
 
     private:
@@ -166,7 +172,7 @@ public:
     MDILayout *mdiLayout() const;
 
     /// @brief Returns if this is an helper DockWidget created automatically to host a drop area
-    /// inside MDI This is only used by the DockWidget::Option_MDINestable feature
+    /// inside MDI This is only used by the DockWidgetOption_MDINestable feature
     bool isMDIWrapper() const;
 
     /// @brief If this dock widget is an MDI wrapper (isMDIWrapper()), then returns the wrapper drop
@@ -244,7 +250,19 @@ public:
     /// @param isCurrent true if it became current
     KDBindings::Signal<bool> isCurrentTabChanged;
 
-    const QString name;
+    /// Each dock widget has a unique name which is used for layout save/restore
+    QString uniqueName() const;
+
+    /// Sets the dock widget unique name.
+    /// DockWidgets have their name set once (passed in ctor), therefore this method doesn't need
+    /// to be called, unless you know what you're doing (like reusing dock widgets during restore)
+    void setUniqueName(const QString &);
+
+private:
+    // Go through the setter
+    QString m_uniqueName;
+
+public:
     Vector<QString> affinities;
     QString title;
     Icon titleBarIcon;
@@ -267,15 +285,17 @@ public:
     bool m_isOpen = false;
     bool m_inOpenSetter = false;
     bool m_inClose = false;
+    bool m_inCloseEvent = false;
     bool m_removingFromOverlay = false;
     bool m_wasRestored = false;
     Size m_lastOverlayedSize = Size(0, 0);
     int m_userType = 0;
-    bool m_willUpdateActions = false;
+    int m_willUpdateActions = 0;
     KDBindings::ScopedConnection m_windowActivatedConnection;
     KDBindings::ScopedConnection m_windowDeactivatedConnection;
     KDBindings::ScopedConnection m_toggleActionConnection;
     KDBindings::ScopedConnection m_floatActionConnection;
+    CloseReason m_lastCloseReason = CloseReason::Unspecified;
 };
 
 }

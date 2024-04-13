@@ -14,11 +14,14 @@
 /// either because they haven't been ported to QtQuick yet or because they are really
 /// QtWidgets specific.
 
+#define NOMINMAX
+
 #include "kddockwidgets/KDDockWidgets.h"
 #include "../utils.h"
 #include "Config.h"
 #include "LayoutSaver.h"
 #include "core/Logging_p.h"
+#include "core/DragController_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingSeparator_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -26,6 +29,7 @@
 #include "qtwidgets/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Platform.h"
+#include "core/Action_p.h"
 #include "core/DropArea.h"
 #include "core/Separator.h"
 #include "core/Group.h"
@@ -34,15 +38,20 @@
 #include "core/SideBar.h"
 
 #include "qtwidgets/views/MDIArea.h"
+#include "qtwidgets/views/Stack.h"
 #include "qtwidgets/views/MainWindow.h"
 #include "qtwidgets/views/ViewWrapper_p.h"
 #include "qtwidgets/views/DockWidget.h"
 #include "qtwidgets/views/TitleBar.h"
 #include "qtcommon/View.h"
 
+#include "ui_mainwindow.h"
+
 #ifdef KDDW_HAS_SPDLOG
 #include "../fatal_logger.h"
 #endif
+
+#include "../src/qtwidgets/DebugWidgetViewer_p.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -60,6 +69,21 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
+namespace {
+
+// For testing overriding DockWidget::closeEvent()
+// You can override the guest's closeEvent() instead. That's already tested elsewhere.
+class NonClosableDockWidget : public QtWidgets::DockWidget
+{
+public:
+    using QtWidgets::DockWidget::DockWidget;
+    void closeEvent(QCloseEvent *ev) override
+    {
+        ev->ignore();
+    }
+};
+
+}
 
 inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
                                           DockWidgetOptions options = {},
@@ -139,19 +163,27 @@ private Q_SLOTS:
     void tstQGraphicsProxyWidget();
 
     // But these are fine to be widget only:
+    void tst_designerMainWindow();
     void tst_tabsNotClickable();
     void tst_embeddedMainWindow();
     void tst_restoreEmbeddedMainWindow();
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_closeRemovesFromSideBar();
+    void tst_sideBarHidden();
     void tst_restoreSideBar();
+    void tst_restoreSideBar2();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
+    void tst_openWhenOnSideBar();
+    void tst_isOpenSideBar();
     void tst_sidebarOverlayShowsAutohide();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_sidebarGrouping();
     void tst_sidebarCrash();
+    void tst_sidebarCrash2();
+    void tst_sidebarCloseReason();
+    void tst_sidebarSide();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
     void tst_overlayCrash();
@@ -160,13 +192,30 @@ private Q_SLOTS:
     void tst_restoreWithIncompleteFactory();
     void tst_deleteDockWidget();
     void tst_standaloneTitleBar();
+    void tst_titleBarTitle();
     void tst_widgetAddQAction();
     void tst_currentTabChanged();
     void tst_moveTab();
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
-    void tst_nestedMainWindowToggle_data();
+    void tst_nestedMainWindowFloatButton();
     void tst_focusBetweenTabs();
+    void addDockWidgetToSide();
+    void addDockWidgetToSide2();
+    void addDockWidgetToSide3();
+    void addDockWidgetToSide4();
+    void addDockWidgetToSide5();
+    void addDockWidgetToSideCrash();
+    void userHiddenButton();
+    void tst_tabAsCentralWidget();
+    void tst_nonClosable();
+    void tst_crashDuringRestore();
+    void tst_toggleVsShowHidden();
+    void tst_indicatorsNotShowing();
+    void tst_neighbourSqueezeStrategy();
+    void tst_tabBarIcons();
+    void tst_debugWidgetViewer();
+    void tst_addDockWidgetToContainingWindowNested();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -175,6 +224,7 @@ private Q_SLOTS:
     void tst_maxSizePropagates();
     void tst_maxSizePropagates2();
     void tst_maxSizedFloatingWindow();
+    void tst_restoreWithRemapping();
     void tst_restoreResizesLayout();
     void tst_restoreNonRelativeFloatingWindowGeometry();
     void tst_maxSizeHonouredWhenDropped();
@@ -186,6 +236,31 @@ private Q_SLOTS:
     void tst_restoreFloatingMaximizedState();
     void tst_findAncestor();
 };
+
+void TestQtWidgets::tst_designerMainWindow()
+{
+    // Tests that a KDDW main window doesn't crash if the user used setupUI() on it.
+    // setupUI() triggers a QMainWindow::setCentralWidget() call which overrides KDDW's own central widget
+    // solution is for KDDW users to call manualInit() later
+
+    EnsureTopLevelsDeleted e;
+    QtWidgets::MainWindow mw("mw1", MainWindowOptions(MainWindowOption_HasCentralWidget) | MainWindowOption_ManualInit);
+    auto dock1 = createDockWidget("dock1", new QWidget());
+    mw.show();
+
+    QVERIFY(!mw.centralWidget());
+
+    Ui_MainWindow ui; // autogenerated by mainwindow.ui
+    ui.setupUi(&mw);
+
+    QVERIFY(mw.centralWidget()->objectName() != "MyCentralWidget");
+    mw.manualInit();
+    QCOMPARE(mw.centralWidget()->objectName(), "MyCentralWidget");
+
+    mw.mainWindow()->addDockWidget(dock1, KDDockWidgets::Location_OnRight);
+    QTest::qWait(1);
+    QVERIFY(dock1->isVisible());
+}
 
 void TestQtWidgets::tst_tabsNotClickable()
 {
@@ -275,7 +350,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     auto fw = m2Container->floatingWindow();
     Core::TitleBar *fwTitleBar = fw->titleBar();
 
-    QVERIFY(fw->hasSingleFrame());
+    QVERIFY(fw->hasSingleGroup());
     QVERIFY(fw->hasSingleDockWidget());
 
     // Check that the inner-inner dock widgets have a visible title-bar
@@ -450,6 +525,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     Platform::instance()->tests_waitForDeleted(dropArea2);
     QVERIFY(dropArea2.isNull());
+    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiFrame2));
     QVERIFY(!mdiFrame2);
 
     mdiWidget1->close();
@@ -641,6 +717,24 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     delete m;
 }
 
+void TestQtWidgets::tst_sideBarHidden()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = newDockWidget(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    auto sb = m1->sideBar(SideBarLocation::South);
+    QVERIFY(sb);
+    QVERIFY(sb->isEmpty());
+    QVERIFY(!sb->isVisible());
+
+    m1->moveToSideBar(dw1);
+    QVERIFY(!sb->isEmpty());
+    QVERIFY(sb->isVisible());
+}
+
 void TestQtWidgets::tst_closeRemovesFromSideBar()
 {
     EnsureTopLevelsDeleted e;
@@ -731,6 +825,124 @@ void TestQtWidgets::tst_restoreSideBar()
     QVERIFY(!dw1->isFloating());
     QVERIFY(dw1->isInMainWindow());
     QVERIFY(!m1->anySideBarIsVisible());
+
+    QCOMPARE(LayoutSaver::sideBarDockWidgetsInLayout(serialized), { "1" });
+}
+
+void TestQtWidgets::tst_restoreSideBar2()
+{
+    // Tests a case where the layout size would be bigger than the parent DropArea
+    EnsureTopLevelsDeleted e;
+
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    KDDockWidgets::QtWidgets::MainWindow m1("MyMainWindow");
+    m1.resize(QSize(1197, 1197));
+
+    auto dw1 = new KDDockWidgets::QtWidgets::DockWidget(
+        QStringLiteral("DockWidget #0"));
+    auto dw2 = new KDDockWidgets::QtWidgets::DockWidget(
+        QStringLiteral("DockWidget #1"));
+    auto dw3 = new KDDockWidgets::QtWidgets::DockWidget(
+        QStringLiteral("DockWidget #2"));
+    m1.addDockWidget(dw1, KDDockWidgets::Location_OnTop);
+    m1.addDockWidget(dw2, KDDockWidgets::Location_OnRight, dw1);
+    m1.addDockWidget(dw3, KDDockWidgets::Location_OnLeft);
+    m1.show();
+    auto layout = m1.mainWindow()->layout();
+    QCOMPARE(layout->size().width(), layout->layoutSize().width());
+    QCOMPARE(layout->size().height(), layout->layoutSize().height());
+
+    LayoutSaver saver;
+    saver.restoreFromFile(":/layouts/sidebar_restore.json");
+
+    QVERIFY(dw1->isOpen());
+    QVERIFY(!dw2->isOpen());
+    QVERIFY(dw3->dockWidget()->isInSideBar());
+    QVERIFY(layout->checkSanity());
+
+    QCOMPARE(layout->size(), layout->layoutSize());
+}
+
+void TestQtWidgets::tst_openWhenOnSideBar()
+{
+    // Calling DW::open() when on sidebar should open it in its previous docked position
+    // and remove it from overlay
+
+    {
+        EnsureTopLevelsDeleted e;
+
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget("1");
+        m1->addDockWidget(dw1, Location_OnBottom);
+        dw1->moveToSideBar();
+        QTest::qWait(100);
+
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(m1->anySideBarIsVisible());
+
+        QVERIFY(!dw1->dptr()->m_lastPosition->wasFloating());
+        dw1->open();
+
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(!m1->anySideBarIsVisible());
+        QVERIFY(dw1->isInMainWindow());
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget("1");
+        m1->addDockWidget(dw1, Location_OnBottom);
+        dw1->moveToSideBar();
+        QTest::qWait(100);
+
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(m1->anySideBarIsVisible());
+
+        // overlay and deoverlay
+        m1->toggleOverlayOnSideBar(dw1);
+        m1->toggleOverlayOnSideBar(dw1);
+
+        // open should go to docked position, not floating
+        dw1->open();
+
+        QVERIFY(!m1->overlayedDockWidget());
+        QVERIFY(!m1->anySideBarIsVisible());
+
+        QVERIFY(dw1->isInMainWindow());
+    }
+}
+
+void TestQtWidgets::tst_isOpenSideBar()
+{
+    // Tests that DockWidget::isOpen() toggles when we toggle the overlay
+    EnsureTopLevelsDeleted e;
+
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = newDockWidget("1");
+    m1->addDockWidget(dw1, Location_OnBottom);
+    dw1->moveToSideBar();
+
+    QVERIFY(!m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+    QVERIFY(!dw1->isOpen());
+
+    // overlay it:
+    m1->toggleOverlayOnSideBar(dw1);
+    QVERIFY(m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+    QVERIFY(dw1->isOpen());
+
+    // close overlay:
+    m1->toggleOverlayOnSideBar(dw1);
+    QVERIFY(!m1->overlayedDockWidget());
+    QVERIFY(m1->anySideBarIsVisible());
+
+    QVERIFY(!dw1->isOpen());
 }
 
 void TestQtWidgets::tst_toggleActionOnSideBar()
@@ -765,6 +977,37 @@ void TestQtWidgets::tst_toggleActionOnSideBar()
 
     QVERIFY(dw1->isInSideBar());
     QVERIFY(!dw1->isInMainWindow());
+
+
+    // Count how many times toggleActions triggers:
+    int openCount = 0;
+    int closeCount = 0;
+    KDBindings::ScopedConnection conn = action->d->toggled.connect([&](bool t) {
+        if (t)
+            openCount++;
+        else
+            closeCount++;
+    });
+
+    // Make it visible on sidebar:
+    m1->toggleOverlayOnSideBar(dw1);
+    QCOMPARE(openCount, 1);
+    QCOMPARE(closeCount, 0);
+
+    // close it on sidebar
+    m1->toggleOverlayOnSideBar(dw1);
+    QCOMPARE(openCount, 1);
+    QCOMPARE(closeCount, 1);
+
+    // Make visible on sidebar again
+    m1->toggleOverlayOnSideBar(dw1);
+    QCOMPARE(openCount, 2);
+    QCOMPARE(closeCount, 1);
+
+    // Click the unpin button, docks in main window, no toggling should happen
+    dw1->titleBar()->onAutoHideClicked();
+    QCOMPARE(openCount, 2);
+    QCOMPARE(closeCount, 1);
 }
 
 void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
@@ -889,9 +1132,6 @@ void TestQtWidgets::tst_sidebarGrouping()
         QVERIFY(dw1->isOverlayed());
         QVERIFY(!dw2->isOverlayed());
 
-        /// Remove this expected warning after #326 is fixed
-        SetExpectedWarning expected("Trying to use a group that's being deleted");
-
         dw1->titleBar()->onAutoHideClicked();
         QVERIFY(!dw1->isInSideBar());
         QVERIFY(!dw2->isInSideBar());
@@ -916,8 +1156,6 @@ void TestQtWidgets::tst_sidebarCrash()
 
     m1->overlayOnSideBar(dw1);
 
-    /// Remove this expected warning after #326 is fixed
-    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dw1->titleBar()->onAutoHideClicked();
     QVERIFY(!dw1->isInSideBar());
     QVERIFY(!dw1->isOverlayed());
@@ -928,6 +1166,108 @@ void TestQtWidgets::tst_sidebarCrash()
     QTest::qWait(1000);
 
     m1->toggleOverlayOnSideBar(dw1);
+}
+
+void TestQtWidgets::tst_sidebarCrash2()
+{
+    // Tests a crash, only reproduceable with an ASAN build of Qt
+    // While unpinning, the QToolButton would be deleted while still on the stack
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = newDockWidget(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+    m1->moveToSideBar(dw1);
+    m1->overlayOnSideBar(dw1);
+
+    auto titleBarWidget = qobject_cast<QtWidgets::TitleBar *>(QtCommon::View_qt::asQWidget(dw1->titleBar()->view()));
+    QVERIFY(titleBarWidget && titleBarWidget->isVisible());
+
+    auto button = titleBarWidget->m_autoHideButton;
+    QVERIFY(button && button->isVisible());
+
+    auto globalPos = button->mapToGlobal(QPoint(5, 5));
+
+    auto b = QtWidgets::ViewWrapper::create(button);
+    Tests::clickOn(globalPos, b.get());
+}
+
+void TestQtWidgets::tst_sidebarCloseReason()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget(QStringLiteral("1"));
+        m1->addDockWidget(dw1, Location_OnBottom);
+
+        CloseReason expectedLastReason = CloseReason::Unspecified;
+        KDBindings::ScopedConnection conn = dw1->toggleAction()->d->toggled.connect([&expectedLastReason, dw1](bool open) {
+            // We also check that the value is actually set *before* the QAction firing
+            // as users connect to the action
+            if (!open)
+                Q_ASSERT(dw1->lastCloseReason() == expectedLastReason);
+        });
+
+        expectedLastReason = CloseReason::MovedToSideBar;
+        dw1->titleBar()->onAutoHideClicked();
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(!dw1->isOpen());
+
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+
+        m1->overlayOnSideBar(dw1);
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(dw1->isOpen());
+
+        expectedLastReason = CloseReason::OverlayCollapse;
+        m1->clearSideBarOverlay();
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+
+        m1->overlayOnSideBar(dw1);
+        QVERIFY(dw1->isInSideBar());
+        QVERIFY(dw1->isOpen());
+        expectedLastReason = CloseReason::TitleBarCloseButton;
+        dw1->titleBar()->onCloseClicked();
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+
+        expectedLastReason = CloseReason::MovedToSideBar;
+        dw1->open();
+        m1->moveToSideBar(dw1);
+        QCOMPARE(dw1->lastCloseReason(), expectedLastReason);
+    }
+}
+
+void TestQtWidgets::tst_sidebarSide()
+{
+    // Tests which sidebar is chosen
+
+    {
+        // Tests that if a dock widget is touching top and bottom border, it will go to
+        // left sidebar if it's closer to it.
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = newDockWidget(QStringLiteral("1"));
+        auto dw2 = newDockWidget(QStringLiteral("2"));
+        auto dw3 = newDockWidget(QStringLiteral("3"));
+        auto dw4 = newDockWidget(QStringLiteral("4"));
+        m1->addDockWidget(dw1, Location_OnRight);
+        m1->addDockWidget(dw2, Location_OnRight);
+        m1->addDockWidget(dw3, Location_OnRight);
+        m1->addDockWidget(dw4, Location_OnRight);
+        m1->layoutEqually();
+
+        dw2->titleBar()->onAutoHideClicked();
+
+        auto sb = m1->sideBarForDockWidget(dw2);
+        QVERIFY(sb);
+        QCOMPARE(sb->location(), SideBarLocation::West);
+    }
 }
 
 void TestQtWidgets::tst_floatRemovesFromSideBar()
@@ -1104,6 +1444,33 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
     delete static_cast<QtWidgets::ViewWrapper *>(m->window().get())->widget();
 }
 
+// For #443
+void TestQtWidgets::tst_restoreWithRemapping()
+{
+    EnsureTopLevelsDeleted e;
+    QByteArray savedState;
+
+    // 1. Create a saved state and immediately delete the main window and dock widgets
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None, "mainWindow1");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    m->addDockWidget(dock2, Location_OnRight);
+
+    LayoutSaver saver;
+    savedState = saver.serializeLayout();
+
+    dock1->setUniqueName("2");
+    dock2->setUniqueName("1");
+
+    // 2. Restore the dock widgets via factory
+    LayoutSaver restorer;
+    restorer.restoreLayout(savedState);
+
+    // dock 1 is now on the right of dock 2
+    QVERIFY(dock1->dptr()->group()->view()->x() > dock2->dptr()->group()->view()->x());
+}
+
 void TestQtWidgets::tst_restoreResizesLayout()
 {
     EnsureTopLevelsDeleted e;
@@ -1222,7 +1589,7 @@ void TestQtWidgets::tst_minSizeChanges()
     w2->setMinimumSize(QSize(800, 800));
     d2->open();
 
-    Item *item2 = layout->itemForFrame(d2->dptr()->group());
+    Item *item2 = layout->itemForGroup(d2->dptr()->group());
 
     QVERIFY(layout->checkSanity());
 
@@ -1355,7 +1722,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     QVERIFY(dock1->dptr()->group()->view()->height() <= item1MaxHeight);
     root->dumpLayout();
     QCOMPARE(dock2->dptr()->group()->view()->height(),
-             root->height() - item1MaxHeight - Item::separatorThickness);
+             root->height() - item1MaxHeight - Item::layoutSpacing);
 }
 
 void TestQtWidgets::tst_addToHiddenMainWindow()
@@ -1693,17 +2060,14 @@ void TestQtWidgets::tst_crash326()
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
     auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    ObjectGuard<Group> originalFrame = dock1->d->group();
+    ObjectGuard<Group> originalGroup = dock1->d->group();
     dock1->close();
     QVERIFY(dock1->parent() == nullptr);
-    QVERIFY(originalFrame != dock1->d->group());
-    QVERIFY(originalFrame->beingDeletedLater());
+    QVERIFY(originalGroup != dock1->d->group());
+    QVERIFY(originalGroup->beingDeletedLater());
 
-    // In bug #326, the dock widget is reparented to the frame that's being deleted
-    SetExpectedWarning expected("Trying to use a group that's being deleted");
     dock1->show();
-    QEXPECT_FAIL("", "Bug #326, to be fixed", Continue);
-    QVERIFY(originalFrame != dock1->d->group());
+    QVERIFY(originalGroup != dock1->d->group());
 }
 
 void TestQtWidgets::tst_restoreWithIncompleteFactory()
@@ -1789,6 +2153,21 @@ void TestQtWidgets::tst_standaloneTitleBar()
     QVERIFY(window.isVisible());
     titleBar.asTitleBarController()->onCloseClicked();
     QVERIFY(!window.isVisible());
+}
+
+void TestQtWidgets::tst_titleBarTitle()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
+    m1->addDockWidget(dock1->asDockWidgetController(), Location_OnBottom);
+
+    auto tb = dock1->actualTitleBar();
+    QCOMPARE(dock1->asDockWidgetController()->title(), "MyDock1");
+    QCOMPARE(tb->title(), "MyDock1");
+
+    dock1->setTitle("Other");
+    QCOMPARE(tb->title(), "Other");
 }
 
 void TestQtWidgets::tst_widgetAddQAction()
@@ -1898,18 +2277,42 @@ void TestQtWidgets::tst_moveTab()
     QCOMPARE(tb->currentDockWidget(), dockA);
 }
 
-void TestQtWidgets::tst_nestedMainWindowToggle_data()
+void TestQtWidgets::tst_nestedMainWindowFloatButton()
 {
-    QTest::addColumn<bool>("waitAfterClose");
+    // Bug 1 reported in #464:
+    // Dockwidget, inside MainWindow inside MainWindow.
+    // Float inner main window
+    // DockWidget's float button stops working
+    EnsureTopLevelsDeleted e;
+    auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto nestedMainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW2");
+    mainWindow->setObjectName("root main window");
 
-    // QTest::newRow("false") << false; // uncomment after #326 is fixed
-    QTest::newRow("true") << true;
+    auto containerDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container"));
+    auto nestedMainWindowQWidget = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
+    containerDock->setWidget(nestedMainWindowQWidget);
+    mainWindow->addDockWidget(containerDock->asDockWidgetController(), Location_OnBottom);
+
+    auto nestedDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested Dock"));
+    nestedMainWindow->addDockWidget(nestedDock->asDockWidgetController(), Location_OnBottom);
+    nestedMainWindowQWidget->menuBar()->addMenu("Inner menu");
+    nestedMainWindowQWidget->setObjectName("nested main window");
+
+    QVERIFY(!containerDock->isFloating());
+    QVERIFY(!nestedDock->isFloating());
+    QVERIFY(containerDock->dockWidget()->isInMainWindow());
+    QVERIFY(nestedDock->dockWidget()->isInMainWindow());
+
+    containerDock->setFloating(true);
+
+    QVERIFY(containerDock->isFloating());
+    QVERIFY(!nestedDock->isFloating());
+    QVERIFY(!containerDock->dockWidget()->isInMainWindow());
+    QVERIFY(nestedDock->dockWidget()->isInMainWindow());
 }
 
 void TestQtWidgets::tst_nestedMainWindowToggle()
 {
-    QFETCH(bool, waitAfterClose);
-
     EnsureTopLevelsDeleted e;
     auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
     auto nestedMainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW2");
@@ -1936,11 +2339,6 @@ void TestQtWidgets::tst_nestedMainWindowToggle()
     QVERIFY(!nestedDock->isOpen());
 
     // Reopen dock1, the nested dockwidgets should also reopen
-
-    if (waitAfterClose) {
-        // If false, tests #326, otherwise tests #360
-        Platform::instance()->tests_wait(1000);
-    }
 
     dock1->open();
 
@@ -2050,6 +2448,505 @@ void TestQtWidgets::tst_focusBetweenTabs()
     QVERIFY(!le1->hasFocus());
     QVERIFY(!le2->hasFocus());
     QVERIFY(!le3->hasFocus());
+}
+
+void TestQtWidgets::addDockWidgetToSide()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    auto d3 = new QtWidgets::DockWidget("d3");
+    auto d4 = new QtWidgets::DockWidget("d4");
+    auto dTop = new QtWidgets::DockWidget("dTop");
+    auto dTop2 = new QtWidgets::DockWidget("dTop2");
+    QVERIFY(!d1->isOpen());
+    QVERIFY(!d1->toggleAction()->isChecked());
+    m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    QVERIFY(d1->isOpen());
+    QVERIFY(d1->toggleAction()->isChecked());
+    m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    m1->addDockWidgetToSide(d3->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    m1->addDockWidgetToSide(dTop->asDockWidgetController(), KDDockWidgets::Location_OnTop);
+    m1->addDockWidgetToSide(dTop2->asDockWidgetController(), KDDockWidgets::Location_OnTop);
+    m1->addDockWidgetToSide(d4->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+
+    auto root = m1->layout()->rootItem()->asBoxContainer();
+    QVERIFY(root->isVertical());
+
+    auto topContainer = root->childItems()[0]->asBoxContainer();
+    QVERIFY(!topContainer->isVertical());
+    QCOMPARE(topContainer->numChildren(), 2);
+
+    QCOMPARE(Group::fromItem(topContainer->childItems()[0])->objectName(), "dTop");
+    QCOMPARE(Group::fromItem(topContainer->childItems()[1])->objectName(), "dTop2");
+
+    auto bottomContainer = root->childItems()[1]->asBoxContainer();
+    QVERIFY(!bottomContainer->isVertical());
+    QCOMPARE(bottomContainer->numChildren(), 3);
+
+    auto leftContainer = bottomContainer->childItems()[0]->asBoxContainer();
+    auto rightContainer = bottomContainer->childItems()[2]->asBoxContainer();
+    QVERIFY(leftContainer->isVertical());
+    QVERIFY(rightContainer->isVertical());
+    QCOMPARE(leftContainer->numChildren(), 2);
+    QCOMPARE(rightContainer->numChildren(), 2);
+
+    QCOMPARE(Group::fromItem(leftContainer->childItems()[0])->objectName(), "d1");
+    QCOMPARE(Group::fromItem(leftContainer->childItems()[1])->objectName(), "d2");
+    QCOMPARE(Group::fromItem(rightContainer->childItems()[0])->objectName(), "d3");
+    QCOMPARE(Group::fromItem(rightContainer->childItems()[1])->objectName(), "d4");
+}
+
+void TestQtWidgets::addDockWidgetToSide2()
+{
+    // Tests adding relative to a StartHidden
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+
+    QVERIFY(!d1->isOpen());
+    QVERIFY(!d1->toggleAction()->isChecked());
+    m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    QVERIFY(!d1->isOpen());
+    QVERIFY(!d1->toggleAction()->isChecked());
+
+    m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+
+    d1->show();
+
+    auto root = m1->layout()->rootItem()->asBoxContainer();
+    QVERIFY(root->isHorizontal());
+    QCOMPARE(root->numChildren(), 2);
+}
+
+void TestQtWidgets::addDockWidgetToSide3()
+{
+    // Tests adding relative to a StartHidden but the new one is also hidden
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    m1->addDockWidgetToSide(d1->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(d2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+
+    auto root = m1->layout()->rootItem()->asBoxContainer();
+    QVERIFY(root->isHorizontal());
+    QCOMPARE(root->numChildren(), 2);
+
+    d1->show();
+    d2->show();
+
+    auto inner = root->childItems()[1]->asBoxContainer();
+    QVERIFY(inner);
+    QVERIFY(inner->isVertical());
+    QCOMPARE(inner->numChildren(), 2);
+    QCOMPARE(inner->numVisibleChildren(), 2);
+}
+
+void TestQtWidgets::addDockWidgetToSide4()
+{
+    // Tests a case where generated layout would be off by a few pixels
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto dummy1 = new QtWidgets::DockWidget("dummy1");
+    auto dummy2 = new QtWidgets::DockWidget("dummy2");
+    m1->addDockWidget(dummy1->asDockWidgetController(), KDDockWidgets::Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
+    m1->addDockWidget(dummy2->asDockWidgetController(), KDDockWidgets::Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
+
+    auto leftVisible = new QtWidgets::DockWidget("leftVisible");
+    auto leftHidden = new QtWidgets::DockWidget("leftHidden");
+    auto bottomHidden = new QtWidgets::DockWidget("bottomHidden");
+    auto rightVisible = new QtWidgets::DockWidget("rightVisible");
+    auto leftVisible2 = new QtWidgets::DockWidget("leftVisible2");
+    auto bottomHidden2 = new QtWidgets::DockWidget("bottomHidden2");
+    auto rightHidden = new QtWidgets::DockWidget("rightHidden");
+    auto rightHidden2 = new QtWidgets::DockWidget("rightHidden2");
+
+    m1->addDockWidgetToSide(leftVisible->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+    m1->addDockWidgetToSide(leftHidden->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(bottomHidden->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+
+    m1->addDockWidgetToSide(leftVisible2->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+
+    m1->addDockWidgetToSide(bottomHidden2->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(rightHidden->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(rightHidden2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+
+    leftVisible->open();
+
+    QVERIFY(m1->layout()->checkSanity());
+    m1->addDockWidgetToSide(rightVisible->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    QVERIFY(m1->layout()->checkSanity());
+}
+
+void TestQtWidgets::addDockWidgetToSide5()
+{
+    // Tests a case where generated layout would be off by a few pixels
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1002, 1002), MainWindowOption_HasCentralFrame, "mw1");
+
+    auto rightVisible = new QtWidgets::DockWidget("rightVisible");
+    auto rightHidden = new QtWidgets::DockWidget("rightHidden");
+    auto rightHidden2 = new QtWidgets::DockWidget("rightHidden2");
+
+    m1->addDockWidgetToSide(rightHidden->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+    m1->addDockWidgetToSide(rightHidden2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+
+    QVERIFY(m1->layout()->checkSanity());
+    m1->addDockWidgetToSide(rightVisible->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    QVERIFY(m1->layout()->checkSanity());
+}
+
+void TestQtWidgets::addDockWidgetToSideCrash()
+{
+    // There used to be a crash when adding this layout setup.
+    // This test just ensures it doesn't regress
+    {
+        EnsureTopLevelsDeleted e;
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+        auto bottom1 = new QtWidgets::DockWidget("bottom1");
+        auto left1 = new QtWidgets::DockWidget("left1");
+        auto bottom2 = new QtWidgets::DockWidget("bottom2");
+        auto right1 = new QtWidgets::DockWidget("right1");
+
+        m1->addDockWidgetToSide(bottom1->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(left1->asDockWidgetController(), KDDockWidgets::Location_OnLeft);
+        m1->addDockWidgetToSide(bottom2->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+
+        QVERIFY(m1->layout()->checkSanity());
+        bottom1->open();
+        bottom2->open();
+        QVERIFY(m1->layout()->checkSanity());
+
+        auto centralGroup = m1->dropArea()->centralGroup();
+        auto centralItem = centralGroup->layoutItem();
+        Core::Item *neighbor = centralItem->outermostNeighbor(KDDockWidgets::Location_OnRight, /*visibleOnly=*/false);
+        QVERIFY(!neighbor);
+
+        m1->addDockWidgetToSide(right1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+
+        auto dummy1 = new QtWidgets::DockWidget("dummy1");
+        auto dummy2 = new QtWidgets::DockWidget("dummy2");
+
+        auto left1 = new QtWidgets::DockWidget("left1");
+        auto bottom1 = new QtWidgets::DockWidget("bottom1");
+        auto left2 = new QtWidgets::DockWidget("left2");
+
+        m1->addDockWidgetToSide(dummy1->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(dummy2->asDockWidgetController(), KDDockWidgets::Location_OnRight, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(left1->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(bottom1->asDockWidgetController(), KDDockWidgets::Location_OnBottom, InitialVisibilityOption::StartHidden);
+        m1->addDockWidgetToSide(left2->asDockWidgetController(), KDDockWidgets::Location_OnLeft, InitialVisibilityOption::StartVisible);
+    }
+}
+
+void TestQtWidgets::userHiddenButton()
+{
+    EnsureTopLevelsDeleted e;
+    auto d1 = new QtWidgets::DockWidget("d1");
+    d1->show();
+    auto tb = d1->actualTitleBar();
+    auto tbWidget = QtCommon::View_qt::asQWidget(tb->view());
+    auto buttons = tbWidget->findChildren<QAbstractButton *>();
+    QCOMPARE(buttons.size(), 5);
+
+    const auto numVisible = std::count_if(buttons.cbegin(), buttons.cend(), [](auto button) {
+        return button->isVisible();
+    });
+
+    QCOMPARE(numVisible, 2);
+
+    // Hide float and close:
+    tb->setUserHiddenButtons(TitleBarButtonTypes(TitleBarButtonType::Close) | TitleBarButtonType::Float);
+
+    // 0 visible buttons now:
+    QCOMPARE(std::count_if(buttons.cbegin(), buttons.cend(), [](auto button) {
+                 return button->isVisible();
+             }),
+             0);
+}
+
+void TestQtWidgets::tst_tabAsCentralWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralWidget);
+    auto tabWidget = new QTabWidget();
+    auto tab1 = new QWidget();
+    auto tab2 = new QWidget();
+    tabWidget->addTab(tab1, "tab1");
+    tabWidget->addTab(tab2, "tab2");
+
+    m->setPersistentCentralView(QtWidgets::ViewWrapper::create(tabWidget));
+
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d2 = new QtWidgets::DockWidget("d2");
+    auto d3 = new QtWidgets::DockWidget("d3");
+    m->addDockWidget(d1->dockWidget(), KDDockWidgets::Location_OnRight);
+    m->addDockWidget(d2->dockWidget(), KDDockWidgets::Location_OnRight);
+    m->addDockWidget(d3->dockWidget(), KDDockWidgets::Location_OnRight);
+}
+
+void TestQtWidgets::tst_nonClosable()
+{
+    EnsureTopLevelsDeleted e;
+    auto d1 = NonClosableDockWidget("d1");
+    d1.open();
+    QVERIFY(d1.isOpen());
+    d1.close();
+    QVERIFY(d1.isOpen());
+    d1.forceClose();
+    QVERIFY(!d1.isOpen());
+}
+
+void TestQtWidgets::tst_crashDuringRestore()
+{
+    // Contrived case where if dockWidget->open() was called during restore it would crash
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto d1 = new QtWidgets::DockWidget("d1");
+    auto d3 = new QtWidgets::DockWidget("d3");
+    m1->addDockWidget(d1->asDockWidgetController(), Location_OnRight);
+    d1->addDockWidgetAsTab(d3);
+
+    connect(d3->toggleAction(), &QAction::toggled, this, [d3](bool) {
+        d3->open();
+    });
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    saver.restoreLayout(saved);
+}
+
+void TestQtWidgets::tst_toggleVsShowHidden()
+{
+    // Tests that the QAction doesn't fire when adding as hidden
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto d1 = new QtWidgets::DockWidget("d1");
+    QVERIFY(!d1->toggleAction()->isChecked());
+    QVERIFY(!d1->isOpen());
+    int count = 0;
+    connect(d1->toggleAction(), &QAction::toggled, this, [&count](bool) {
+        count++;
+    });
+
+    m1->addDockWidget(d1->asDockWidgetController(), Location_OnRight, nullptr, KDDockWidgets::InitialVisibilityOption::StartHidden);
+    QVERIFY(!d1->toggleAction()->isChecked());
+    QVERIFY(!d1->isOpen());
+
+    QCOMPARE(count, 0);
+}
+
+void TestQtWidgets::tst_neighbourSqueezeStrategy()
+{
+    // Tests NeighbourSqueezeStrategy::ImmediateNeighboursFirst
+    {
+        EnsureTopLevelsDeleted e;
+        InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::ImmediateNeighboursFirst;
+        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+
+        auto d1 = new QtWidgets::DockWidget("d1");
+        auto d2 = new QtWidgets::DockWidget("d2");
+        auto d3 = new QtWidgets::DockWidget("d3");
+        auto d4 = new QtWidgets::DockWidget("d4");
+
+        m1->addDockWidget(d1->dockWidget(), KDDockWidgets::Location_OnRight);
+        m1->addDockWidget(d2->dockWidget(), KDDockWidgets::Location_OnRight);
+        m1->addDockWidget(d3->dockWidget(), KDDockWidgets::Location_OnBottom);
+        InitialOption opt = QSize(100, 0);
+        opt.visibility = InitialVisibilityOption::StartHidden;
+        m1->addDockWidget(d4->dockWidget(), KDDockWidgets::Location_OnRight, d2->dockWidget(), opt);
+        m1->layoutEqually();
+
+        auto group1 = d1->dockWidget()->dptr()->group();
+        const auto sz1 = group1->size();
+        d4->open();
+        QCOMPARE(sz1, group1->size());
+    }
+}
+
+namespace {
+
+class Stack464 : public QtWidgets::Stack
+{
+public:
+    using QtWidgets::Stack::Stack;
+    void init() override
+    {
+        m_stack->setHideDisabledButtons(TitleBarButtonType::Close);
+
+        QtWidgets::Stack::init(); // important
+    }
+};
+
+class ViewFactory464 : public QtWidgets::ViewFactory
+{
+public:
+    Core::View *createStack(Core::Stack *controller, Core::View *parent) const override
+    {
+        return new Stack464(controller, QtCommon::View_qt::asQWidget(parent));
+    }
+};
+
+}
+
+void TestQtWidgets::tst_debugWidgetViewer()
+{
+    // Tests that DebugWidgetViewer builds and can be created destroyed
+    // not worth doing fancy tests as it's a debugging aid
+    DebugWidgetViewer viewer;
+}
+
+void TestQtWidgets::tst_addDockWidgetToContainingWindowNested()
+{
+    {
+        EnsureTopLevelsDeleted e;
+
+        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+        auto d1 = new QtWidgets::DockWidget("d1");
+        auto d2 = new QtWidgets::DockWidget("d2");
+
+        m1->addDockWidget(d1->dockWidget(), Location_OnRight);
+        d1->dockWidget()->addDockWidgetToContainingWindow(d2->dockWidget(), KDDockWidgets::Location_OnLeft);
+
+        QVERIFY(d1->dockWidget()->isInMainWindow());
+        QVERIFY(d2->dockWidget()->isInMainWindow());
+    }
+
+    {
+        // Tests using addDockWidgetToContainingWindow when dock is nested
+        EnsureTopLevelsDeleted e;
+
+        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+        auto nestedMainWindow = createMainWindow(QSize(1000, 500), {}, "mw2");
+
+        auto d1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container"));
+        auto nestedMainWindowQWidget = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
+        d1->setWidget(nestedMainWindowQWidget);
+        m1->addDockWidget(d1->asDockWidgetController(), Location_OnBottom);
+
+        auto d2 = new QtWidgets::DockWidget("d2");
+        nestedMainWindow->addDockWidget(d2->dockWidget(), Location_OnRight);
+
+        auto d3 = new QtWidgets::DockWidget("d3");
+        d2->dockWidget()->addDockWidgetToContainingWindow(d3->dockWidget(), Location_OnRight);
+
+        QVERIFY(d1->dockWidget()->isInMainWindow());
+        QVERIFY(d2->dockWidget()->isInMainWindow());
+        QVERIFY(d3->dockWidget()->isInMainWindow());
+
+        QCOMPARE(d1->dockWidget()->mainWindow(), m1.get());
+        QCOMPARE(d2->dockWidget()->mainWindow(), nestedMainWindow.get());
+        QCOMPARE(d3->dockWidget()->mainWindow(), nestedMainWindow.get());
+    }
+}
+
+void TestQtWidgets::tst_tabBarIcons()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        auto &config = Config::self();
+        config.setFlags(config.flags()
+                        | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+                        | KDDockWidgets::Config::Flag_TabsHaveCloseButton
+                        | KDDockWidgets::Config::Flag_CloseOnlyCurrentTab
+                        | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+
+        auto d1 = new QtWidgets::DockWidget("d1", KDDockWidgets::DockWidgetOption_NotClosable);
+        auto d2 = new QtWidgets::DockWidget("d2", KDDockWidgets::DockWidgetOption_NotClosable);
+
+        d1->addDockWidgetAsTab(d2);
+
+        auto stack = d1->dockWidget()->dptr()->group()->stack();
+        auto tabWidget = qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(stack->view()));
+        QVERIFY(tabWidget);
+
+        auto closeButton = tabWidget->button(TitleBarButtonType::Close);
+        QVERIFY(closeButton);
+        QVERIFY(closeButton->isVisible());
+        QVERIFY(!closeButton->isEnabled());
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto &config = Config::self();
+        config.setFlags(config.flags()
+                        | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+                        | KDDockWidgets::Config::Flag_TabsHaveCloseButton
+                        | KDDockWidgets::Config::Flag_CloseOnlyCurrentTab
+                        | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+        config.setViewFactory(new ViewFactory464());
+
+        auto d1 = new QtWidgets::DockWidget("d1", KDDockWidgets::DockWidgetOption_NotClosable);
+        auto d2 = new QtWidgets::DockWidget("d2", KDDockWidgets::DockWidgetOption_NotClosable);
+
+        d1->addDockWidgetAsTab(d2);
+
+        auto stack = d1->dockWidget()->dptr()->group()->stack();
+        auto tabWidget = qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(stack->view()));
+        QVERIFY(tabWidget);
+
+        auto closeButton = tabWidget->button(TitleBarButtonType::Close);
+        QVERIFY(closeButton);
+        QVERIFY(!closeButton->isVisible());
+        QVERIFY(!closeButton->isEnabled());
+    }
+}
+
+void TestQtWidgets::tst_indicatorsNotShowing()
+{
+    // Tests bug #474, where wrong top level window is detected under cursor
+    EnsureTopLevelsDeleted e;
+    const Point globalPos = { 600, 300 };
+    QCursor::setPos(globalPos);
+
+    auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+    auto m2 = createMainWindow(QSize(1000, 500), {}, "mw2");
+    // m2->setAffinities({ "m2" });
+    auto d2 = new QtWidgets::DockWidget("d2");
+    // d2->setAffinities({ "m2" });
+    d2->show();
+    QTest::qWait(200);
+    m2->view()->move(0, 0);
+    m1->view()->move(500, 250);
+    m1->view()->raiseAndActivate();
+    m1->view()->setWindowTitle("m1");
+
+    auto mainWindow1 = dynamic_cast<QtWidgets::MainWindow *>(m1->view());
+    QVERIFY(QTest::qWaitForWindowActive(mainWindow1));
+
+    auto dc = DragController::instance();
+
+    dc->programmaticStartDrag(d2->dockWidget()->titleBar(), globalPos, { 10, 5 });
+
+    auto tlw = dc->qtTopLevelUnderCursor();
+    QVERIFY(tlw);
+
+    /// Fixed on windows and Linux. Other platforms don't have the required API
+    /// to get correct z-order of windows under cursor
+    const bool supportsZOrderedWindowSearch = KDDockWidgets::isWindows() || (KDDockWidgets::isXCB() && KDDockWidgets::linksToXLib());
+    if (!supportsZOrderedWindowSearch)
+        QEXPECT_FAIL("", "Not supported on this platform", Continue);
+
+    QCOMPARE(tlw->controller(), m1.get());
+
+    dc->programmaticStopDrag();
 }
 
 int main(int argc, char *argv[])

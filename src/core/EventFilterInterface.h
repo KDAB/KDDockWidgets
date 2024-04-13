@@ -79,6 +79,12 @@ public:
         return false;
     }
 
+    /// Returns whether mouse filtering is enabled. Default true
+    bool enabled() const;
+    void setEnabled(bool);
+
+private:
+    bool m_enabled = true;
     EventFilterInterface(const EventFilterInterface &) = delete;
     EventFilterInterface &operator=(const EventFilterInterface &) = delete;
 };

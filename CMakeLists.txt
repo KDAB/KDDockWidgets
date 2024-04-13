@@ -79,16 +79,21 @@ project(
 
 set(KDDockWidgets_VERSION_MAJOR 2)
 set(KDDockWidgets_VERSION_MINOR 0)
-set(KDDockWidgets_VERSION_PATCH 1)
+set(KDDockWidgets_VERSION_PATCH 95)
 set(KDDockWidgets_VERSION ${KDDockWidgets_VERSION_MAJOR}.${KDDockWidgets_VERSION_MINOR}.${KDDockWidgets_VERSION_PATCH})
 set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by some ECM modules
-set(KDDockWidgets_SOVERSION "2.0")
+set(KDDockWidgets_SOVERSION "2.1")
 
 include(FeatureSummary)
 
 set(KDDockWidgets_FRONTENDS
     ""
     CACHE STRING "Semicolon separated list of frontends to enable (blank for autodetect)"
+)
+
+set(KDDockWidgets_LIBRARY_POSTFIX
+    ""
+    CACHE STRING "Appends the specified string to the library name. Not applicable to VS generator."
 )
 
 option(KDDockWidgets_QT6 "Build against Qt 6" OFF)
@@ -251,14 +256,15 @@ if(KDDockWidgets_WAYLAND_TESTS)
     endif()
 endif()
 
-set(KDDockWidgets_LIBRARY_QTID "")
+set(${PROJECT_NAME}_LIBRARY_QTID "")
 
 if(KDDW_FRONTEND_QT)
     include(KDQtInstallPaths) # to set QT_INSTALL_FOO variables
     if(KDDockWidgets_QT6)
-        set(KDDockWidgets_LIBRARY_QTID "-qt6")
+        set(${PROJECT_NAME}_LIBRARY_QTID "-qt6")
     endif()
 endif()
+set(KDDockWidgets_LIBRARY_QTID "${${PROJECT_NAME}_LIBRARY_QTID}")
 
 add_definitions(-DQT_NO_KEYWORDS)
 
@@ -285,8 +291,17 @@ if(NOT WIN32
 endif()
 
 if(NOT KDDockWidgets_NO_SPDLOG)
-    find_package(spdlog 1.8.0 QUIET)
-    find_package(fmt QUIET)
+    if(KDDockWidgets_DEVELOPER_MODE AND LINUX)
+        # Make sure we have at least one CI configuration running tests with spdlog enabled.
+        # Our tests are log error free. Any error printed should result in a fatal failure.
+        # For that we want spdlog enabled.
+        find_package(spdlog 1.8.0 REQUIRED)
+        find_package(fmt REQUIRED)
+    else()
+        # For regular user builds we don't care if people use it or not.
+        find_package(spdlog 1.8.0 QUIET)
+        find_package(fmt QUIET)
+    endif()
 endif()
 
 if(spdlog_FOUND AND fmt_FOUND)
@@ -352,7 +367,7 @@ macro(set_compiler_flags targetName)
         )
 
         if(NOT MSVC AND NOT APPLE)
-            target_compile_options(${targetName} PRIVATE -Wall -Wextra)
+            target_compile_options(${targetName} PRIVATE -Wall -Wextra -Woverloaded-virtual)
             if(KDDockWidgets_USE_LLD)
                 target_link_options(${targetName} PRIVATE -fuse-ld=lld)
             endif()
@@ -360,6 +375,10 @@ macro(set_compiler_flags targetName)
 
         if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
             target_compile_options(${targetName} PRIVATE -Wweak-vtables -Wextra-semi)
+        endif()
+
+        if(MSVC)
+            target_compile_options(${targetName} PRIVATE /W4)
         endif()
 
         if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
@@ -538,6 +557,10 @@ if(KDDockWidgets_EXAMPLES)
                     ${CMAKE_SOURCE_DIR}/examples/flutter/lib/MyMenuBar.dart
             COMMENT "Building flutter example"
         )
+    endif()
+
+    if(KDDockWidgets_SLINT_LAYOUTING_EXAMPLE)
+        add_subdirectory(src/core/layouting/examples/slint/)
     endif()
 endif()
 

@@ -17,6 +17,8 @@
 #include <kddockwidgets/LayoutSaver.h>
 
 #include <kddockwidgets/core/DockWidget.h>
+#include <kddockwidgets/core/MainWindow.h>
+#include <kddockwidgets/core/Layout.h>
 
 #include <QMenu>
 #include <QMenuBar>
@@ -113,6 +115,13 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     toggleDropIndicatorSupport->setChecked(true);
     connect(toggleDropIndicatorSupport, &QAction::toggled, this, [](bool checked) {
         KDDockWidgets::Config::self().setDropIndicatorsInhibited(!checked);
+    });
+
+    // for debug purposes only:
+    QAction *dumpLayout =
+        miscMenu->addAction(QStringLiteral("Dump layout to terminal"));
+    connect(dumpLayout, &QAction::triggered, this, [this] {
+        mainWindow()->layout()->dumpLayout();
     });
 
     setAffinities({ affinityName });

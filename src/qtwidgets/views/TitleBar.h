@@ -24,6 +24,9 @@ class QHBoxLayout;
 class QLabel;
 QT_END_NAMESPACE
 
+
+class TestQtWidgets;
+
 namespace KDDockWidgets::QtWidgets {
 
 class DOCKS_EXPORT TitleBar : public View<QWidget>,
@@ -56,7 +59,7 @@ Q_SIGNALS:
     void isFocusedChanged();
 
 protected:
-    void init() override final;
+    void init() override;
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
     QSize sizeHint() const override;
@@ -85,6 +88,7 @@ protected:
     QLabel *m_dockWidgetIcon = nullptr;
 
 private:
+    friend class ::TestQtWidgets;
     // Private class just to hide KDBindings usage
     class Private;
     Private *const d;
@@ -106,8 +110,13 @@ public:
     ~Button() override;
 
 protected:
+    friend class QtWidgets::TitleBar;
+
+    bool event(QEvent *ev) override;
     QSize sizeHint() const override;
     void paintEvent(QPaintEvent *) override;
+
+    bool m_inEventHandler = false;
 };
 
 }

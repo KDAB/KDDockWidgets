@@ -12,7 +12,6 @@
 #include "MainWindowViewInterface.h"
 #include "DockWidgetViewInterface.h"
 #include "core/Logging_p.h"
-
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockRegistry.h"
 
@@ -84,7 +83,7 @@ void MainWindowViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *dockVi
 void MainWindowViewInterface::addDockWidget(DockWidgetViewInterface *dockView,
                                             KDDockWidgets::Location location,
                                             DockWidgetViewInterface *relativeToDockView,
-                                            KDDockWidgets::InitialOption initialOption)
+                                            const KDDockWidgets::InitialOption &initialOption)
 {
     auto dw = dockView ? dockView->dockWidget() : nullptr;
     auto relativeTo = relativeToDockView ? relativeToDockView->dockWidget() : nullptr;
@@ -200,7 +199,7 @@ void MainWindowViewInterface::addDockWidgetAsTab(const QString &dockId)
 
 void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets::Location location,
                                             const QString &relativeToDockId,
-                                            KDDockWidgets::InitialOption initialOption)
+                                            const KDDockWidgets::InitialOption &initialOption)
 {
     if (Core::DockWidget *dw = DockRegistry::self()->dockByName(dockId)) {
         auto relativeTo = relativeToDockId.isEmpty()
@@ -210,6 +209,12 @@ void MainWindowViewInterface::addDockWidget(const QString &dockId, KDDockWidgets
     } else {
         KDDW_ERROR("Could not find dock widget {}", dockId);
     }
+}
+
+void MainWindowViewInterface::setPersistentCentralView(std::shared_ptr<Core::View> view)
+{
+    assert(m_mainWindow);
+    m_mainWindow->setPersistentCentralView(view);
 }
 
 }

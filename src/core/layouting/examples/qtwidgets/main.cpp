@@ -144,11 +144,6 @@ public:
         return QWidget::geometry();
     }
 
-    QString debugName() const override
-    {
-        return objectName();
-    }
-
     void setHost(Core::LayoutingHost *parent) override
     {
         if (auto p = dynamic_cast<QWidget *>(parent)) {

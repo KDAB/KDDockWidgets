@@ -10,6 +10,7 @@
 */
 
 import QtQuick 2.9
+import QtQuick.Window 2.15
 
 /**
   * @brief Implements a Title Bar which looks like its QWidgets counterpart.
@@ -26,6 +27,23 @@ TitleBarBase {
 
     color: "#eff0f1"
     heightWhenVisible: 30
+
+    function dpiSuffix() {
+        // Since Qt's built-in @Nx doesn't support fractionals, we load the correct image manually
+        if (Screen.devicePixelRatio === 1) {
+            return "";
+        } else if (Screen.devicePixelRatio === 1.5) {
+            return "-1.5x";
+        } else if (Screen.devicePixelRatio === 2) {
+            return "-2x";
+        } else {
+            return "";
+        }
+    }
+
+    function imagePath(id) {
+        return "qrc:/img/" + id + dpiSuffix() + ".png";
+    }
 
     Text {
         id: title
@@ -49,7 +67,7 @@ TitleBarBase {
         TitleBarButton {
             id: minimizeButton
             visible: root.minimizeButtonVisible
-            imageSource: "qrc:/img/min.png";
+            imageSource: imagePath("min")
             onClicked: {
                 root.minimizeButtonClicked();
             }
@@ -58,16 +76,17 @@ TitleBarBase {
         TitleBarButton {
             id: floatButton
             visible: root.floatButtonVisible
-            imageSource: "qrc:/img/dock-float.png"
+            imageSource: imagePath("dock-float")
             onClicked: {
                 root.floatButtonClicked();
+                console.log(dpiSuffix())
             }
         }
 
         TitleBarButton {
             id: maximizeButton
             visible: root.maximizeButtonVisible
-            imageSource: root.maximizeUsesRestoreIcon ? "qrc:/img/dock-float.png" : "qrc:/img/max.png";
+            imageSource: root.maximizeUsesRestoreIcon ? imagePath("dock-float") : imagePath("max");
             onClicked: {
                 root.maximizeButtonClicked();
             }
@@ -76,7 +95,7 @@ TitleBarBase {
         TitleBarButton {
             id: closeButton
             enabled: root.closeButtonEnabled
-            imageSource: "qrc:/img/close.png"
+            imageSource: imagePath("close")
             onClicked: {
                 root.closeButtonClicked();
             }

@@ -52,6 +52,8 @@ DOCKS_EXPORT QQmlContext *qmlContextFor(QQuickItem *);
 class DOCKS_EXPORT View : public QQuickItem, public QtCommon::View_qt
 {
     Q_OBJECT
+    Q_PROPERTY(bool isFixedHeight READ isFixedHeight NOTIFY geometryUpdated)
+    Q_PROPERTY(bool isFixedWidth READ isFixedWidth NOTIFY geometryUpdated)
 public:
     using Core::View::close;
     using Core::View::height;
@@ -83,6 +85,7 @@ public:
     void setHeight(int h) override;
     void setFixedWidth(int w) override;
     void setFixedHeight(int h) override;
+    void setFixedSize(Size);
     void show() override;
     void hide() override;
     void updateGeometry();
@@ -140,10 +143,14 @@ public:
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<Core::View>> childViews() const override;
+    int zOrder() const override;
     void setZOrder(int) override;
     virtual QQuickItem *visualItem() const;
 
     void onWindowStateChangeEvent(QWindowStateChangeEvent *);
+
+    bool isFixedWidth() const;
+    bool isFixedHeight() const;
 
     /// @brief This is equivalent to "anchors.fill: parent but in C++
     static void makeItemFillParent(QQuickItem *item);

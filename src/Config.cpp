@@ -67,6 +67,7 @@ public:
     DragEndedFunc m_dragEndedFunc = nullptr;
     ViewFactory *m_viewFactory = nullptr;
     Flags m_flags = Flag_Default;
+    MDIFlags m_mdiFlags = MDIFlag_None;
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
     double m_draggedWindowOpacity = std::numeric_limits<double>::quiet_NaN();
@@ -93,11 +94,24 @@ Config &Config::self()
 Config::~Config()
 {
     delete d;
+    if (Platform::isInitialized()) {
+        delete Platform::instance();
+    }
 }
 
 Config::Flags Config::flags() const
 {
     return d->m_flags;
+}
+
+Config::MDIFlags Config::mdiFlags() const
+{
+    return d->m_mdiFlags;
+}
+
+void Config::setMDIFlags(MDIFlags flags)
+{
+    d->m_mdiFlags = flags;
 }
 
 void Config::setFlags(Flags f)
@@ -130,6 +144,12 @@ void Config::setFlags(Flags f)
 bool Config::hasFlag(Flag flag)
 {
     return (Config::self().flags() & flag) == flag;
+}
+
+/** static*/
+bool Config::hasMDIFlag(MDIFlag flag)
+{
+    return (Config::self().mdiFlags() & flag) == flag;
 }
 
 void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
@@ -169,6 +189,11 @@ int Config::separatorThickness() const
     return Item::separatorThickness;
 }
 
+int Config::layoutSpacing() const
+{
+    return Item::layoutSpacing;
+}
+
 void Config::setSeparatorThickness(int value)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
@@ -183,6 +208,23 @@ void Config::setSeparatorThickness(int value)
     }
 
     Item::separatorThickness = value;
+    Item::layoutSpacing = value;
+}
+
+void Config::setLayoutSpacing(int value)
+{
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
+        std::cerr
+            << "Config::setLayoutSpacing: Only use this function at startup before creating any DockWidget or MainWindow\n";
+        return;
+    }
+
+    if (value < 0 || value >= 100) {
+        std::cerr << "Config::setLayoutSpacing: Invalid value" << value << "\n";
+        return;
+    }
+
+    Item::layoutSpacing = value;
 }
 
 void Config::setDraggedWindowOpacity(double opacity)

@@ -28,7 +28,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-static int st = Item::separatorThickness;
+static int st = Item::layoutSpacing;
 
 namespace {
 
@@ -73,7 +73,10 @@ public:
 
     void setGeometry(Rect r) override
     {
-        m_view->setGeometry(r);
+        if (r != geometry()) {
+            m_numSetGeometry++;
+            m_view->setGeometry(r);
+        }
     }
 
     void setVisible(bool is) override
@@ -86,11 +89,6 @@ public:
         return m_view->geometry();
     }
 
-    QString debugName() const override
-    {
-        return m_view->viewName();
-    }
-
     QString id() const override
     {
         return m_view->d->id();
@@ -98,6 +96,7 @@ public:
 
     LayoutingHost *m_host = nullptr;
     View *const m_view;
+    int m_numSetGeometry = 0;
 };
 
 }
@@ -1333,7 +1332,7 @@ KDDW_QCORO_TASK tst_availableOnSide()
     auto separator = root->separators_recursive()[0];
     CHECK_EQ(root->minPosForSeparator_global(separator), item1->minSize().width());
     CHECK_EQ(root->maxPosForSeparator_global(separator),
-             root->width() - item2->minSize().width() - Item::separatorThickness);
+             root->width() - item2->minSize().width() - Item::layoutSpacing);
 
     CHECK_EQ(root->availableToSqueezeOnSide(item1, Side1), 0);
     CHECK_EQ(root->availableToSqueezeOnSide(item1, Side2),
@@ -1352,9 +1351,9 @@ KDDW_QCORO_TASK tst_availableOnSide()
 
     auto separator2 = root->separators_recursive()[1];
     CHECK_EQ(root->minPosForSeparator_global(separator2),
-             item1->minSize().width() + item2->minSize().width() + Item::separatorThickness);
+             item1->minSize().width() + item2->minSize().width() + Item::layoutSpacing);
     CHECK_EQ(root->maxPosForSeparator_global(separator2),
-             root->width() - item3->minSize().width() - Item::separatorThickness);
+             root->width() - item3->minSize().width() - Item::layoutSpacing);
 
     Item *item4 = createItem(/*min=*/Size(200, 200));
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
@@ -1383,9 +1382,9 @@ KDDW_QCORO_TASK tst_availableOnSide()
 
     CHECK_EQ(container31->minPosForSeparator_global(separator31),
              item1->minSize().width() + item2->minSize().width() + item3->minSize().width()
-                 + 2 * Item::separatorThickness);
+                 + 2 * Item::layoutSpacing);
     CHECK_EQ(container31->maxPosForSeparator_global(separator31),
-             root->width() - item31->minSize().width() - Item::separatorThickness);
+             root->width() - item31->minSize().width() - Item::layoutSpacing);
 
     KDDW_TEST_RETURN(true);
 }
@@ -1496,7 +1495,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator2()
         for (auto item : std::as_const(children)) {
             item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
         }
-        root->setSize_recursive(Size(4000 + Item::separatorThickness * (numChildren - 1), 1000));
+        root->setSize_recursive(Size(4000 + Item::layoutSpacing * (numChildren - 1), 1000));
     };
 
     const int delta = 100;
@@ -1641,8 +1640,8 @@ KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
 
     // Test that both sides reclaimed the space equally
     CHECK_EQ(item1->width(), oldW1);
-    CHECK(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::separatorThickness);
-    CHECK(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::separatorThickness);
+    CHECK(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::layoutSpacing);
+    CHECK(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::layoutSpacing);
 
     item3->restore(guest3);
 
@@ -2129,6 +2128,153 @@ KDDW_QCORO_TASK tst_itemSerialization()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_outermostVisibleNeighbor()
+{
+    DeleteViews deleteViews;
+
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    CHECK(!root->outermostNeighbor(KDDockWidgets::Location_OnRight));
+
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item0 = createItem();
+    auto itemTop = createItem();
+
+
+    root->insertItem(item1, Location_OnRight);
+    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft));
+    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight));
+
+    root->insertItem(item2, Location_OnRight);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item2);
+
+    root->insertItem(item3, Location_OnRight);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+
+    root->insertItem(item0, Location_OnLeft);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+
+    root->insertItem(itemTop, Location_OnTop);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), itemTop);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_outermostNeighbor()
+{
+    DeleteViews deleteViews;
+
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    CHECK(!root->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
+
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item0 = createItem();
+    auto itemTop = createItem();
+
+    root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK(item1->parentBoxContainer() == root.get());
+    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false));
+    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
+
+    root->insertItem(item2, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item2);
+
+    root->insertItem(item3, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+
+    root->insertItem(item0, Location_OnLeft, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+
+    root->insertItem(itemTop, Location_OnTop, InitialVisibilityOption::StartHidden);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom, false), nullptr);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), itemTop);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
+    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_relativeToHidden()
+{
+    // Tests that we can insert relative to an hidden item
+
+    DeleteViews deleteViews;
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    auto item0 = createItem();
+    auto item1 = createItem();
+    auto item2 = createItem();
+
+    root->insertItem(item0, Location_OnRight);
+    root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
+    CHECK(!item1->isVisible());
+
+    CHECK(root->checkSanity());
+    ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
+    CHECK(root->checkSanity());
+    CHECK(!item1->isVisible());
+    CHECK(item2->isVisible());
+
+    CHECK_EQ(root->childItems().size(), 2);
+    auto innerContainer = root->childItems().constLast()->asBoxContainer();
+    CHECK(innerContainer);
+
+    CHECK_EQ(innerContainer->childItems().size(), 2);
+    CHECK(innerContainer->isVertical());
+    CHECK_EQ(innerContainer->childItems()[0], item1);
+    CHECK_EQ(innerContainer->childItems()[1], item2);
+
+    KDDW_TEST_RETURN(true);
+}
+
+KDDW_QCORO_TASK tst_spuriousResize()
+{
+    DeleteViews deleteViews;
+
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+
+    root->insertItem(item1, Location_OnTop);
+    root->insertItem(item2, Location_OnTop);
+
+    // root was vertical, now it will be horizontal.
+    // This used to generate a spurious resize
+    auto guest1 = static_cast<Guest *>(item1->guest());
+    guest1->m_numSetGeometry = 0;
+    root->insertItem(item3, Location_OnRight, QSize(200, 200));
+    CHECK_EQ(guest1->m_numSetGeometry, 1);
+
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_relayoutIfNeeded()
 {
     DeleteViews deleteViews;
@@ -2223,6 +2369,10 @@ static const std::vector<KDDWTest> s_tests = {
     TEST(tst_sizingInfoSerialization),
     TEST(tst_itemSerialization),
     TEST(tst_relayoutIfNeeded),
+    TEST(tst_outermostVisibleNeighbor),
+    TEST(tst_outermostNeighbor),
+    TEST(tst_relativeToHidden),
+    TEST(tst_spuriousResize),
 };
 
 #include "tests_main.h"

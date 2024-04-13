@@ -53,6 +53,8 @@
 
 static int s_dbg_numFrames = 0;
 
+bool KDDockWidgets::Core::Group::s_inFloatHack = false;
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
@@ -60,9 +62,18 @@ namespace KDDockWidgets {
 
 static FrameOptions actualOptions(FrameOptions options)
 {
+    // Center group has custom logic for showing tabs or not
     const bool isCentralGroup = options & FrameOption_IsCentralFrame;
-    if (!isCentralGroup && (Config::self().flags() & Config::Flag_AlwaysShowTabs))
-        options |= FrameOption_AlwaysShowsTabs;
+
+    if (!isCentralGroup) {
+        if (Config::self().flags() & Config::Flag_AlwaysShowTabs) {
+            options |= FrameOption_AlwaysShowsTabs;
+        } else {
+            // options could have came from a JSON layout which was saved from a Config with Flag_AlwaysShowTabs
+            // If current Config doesn't have this flag then remove it here as well
+            options &= ~FrameOption_AlwaysShowsTabs;
+        }
+    }
 
     return options;
 }
@@ -80,7 +91,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 }
 
 Group::Group(View *parent, FrameOptions options, int userType)
-    : Controller(ViewType::Frame, Config::self().viewFactory()->createGroup(this, parent))
+    : Controller(ViewType::Group, Config::self().viewFactory()->createGroup(this, parent))
     , FocusScope(view())
     , d(new Private(this, userType, actualOptions(options)))
     , m_stack(new Core::Stack(this, tabWidgetOptions(options)))
@@ -146,8 +157,7 @@ void Group::setLayout(Layout *dt)
 
     if (m_layout) {
         if (isMDI())
-            m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
-                                                      WidgetResizeHandler::WindowMode::MDI, view());
+            createMDIResizeHandler();
 
         // We keep the connect result so we don't dereference m_layout at shutdown
         d->m_visibleWidgetCountChangedConnection =
@@ -192,7 +202,7 @@ void Group::updateTitleAndIcon()
         m_titleBar->setIcon(dw->icon());
 
         if (auto fw = floatingWindow()) {
-            if (fw->hasSingleFrame()) {
+            if (fw->hasSingleGroup()) {
                 fw->updateTitleAndIcon();
             }
         }
@@ -215,12 +225,19 @@ void Group::onDockWidgetTitleChanged(DockWidget *dw)
     }
 }
 
-void Group::addTab(DockWidget *dockWidget, InitialOption addingOption)
+void Group::addTab(DockWidget *dockWidget, const InitialOption &addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
+
+    // The dock widget might have changed title *while* being inserted
+    // For example, if the text depends on whether it's floating or not.
+    // In that case tabbar won't notice the title change, as the titleChanged signal
+    // is emitted with the old parent still. (#468)
+    // Simply refresh title now:
+    onDockWidgetTitleChanged(dockWidget);
 }
 
-void Group::addTab(Group *group, InitialOption addingOption)
+void Group::addTab(Group *group, const InitialOption &addingOption)
 {
     if (group->isEmpty()) {
         KDDW_ERROR("Group::addTab: group is empty. group={}", ( void * )group);
@@ -232,7 +249,7 @@ void Group::addTab(Group *group, InitialOption addingOption)
         addTab(dockWidget, addingOption);
 }
 
-void Group::addTab(FloatingWindow *floatingWindow, InitialOption addingOption)
+void Group::addTab(FloatingWindow *floatingWindow, const InitialOption &addingOption)
 {
     assert(floatingWindow);
     const auto groups = floatingWindow->groups();
@@ -240,7 +257,7 @@ void Group::addTab(FloatingWindow *floatingWindow, InitialOption addingOption)
         addTab(f, addingOption);
 }
 
-void Group::insertWidget(DockWidget *dockWidget, int index, InitialOption addingOption)
+void Group::insertWidget(DockWidget *dockWidget, int index, const InitialOption &addingOption)
 {
     assert(dockWidget);
     if (containsDockWidget(dockWidget)) {
@@ -361,6 +378,7 @@ void Group::insertDockWidget(DockWidget *dw, int index)
 
     dynamic_cast<Core::GroupViewInterface *>(view())->insertDockWidget(dw, index);
     dw->d->onParentChanged();
+    onDockWidgetTitleChanged(dw);
 }
 
 Core::DockWidget *Group::dockWidgetAt(int index) const
@@ -389,7 +407,7 @@ int Group::dockWidgetCount() const
 
 void Group::onDockWidgetCountChanged()
 {
-    if (isEmpty() && !isCentralFrame()) {
+    if (isEmpty() && !isCentralGroup()) {
         scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
@@ -433,17 +451,17 @@ void Group::updateTitleBarVisibility()
     ScopedValueRollback guard(m_updatingTitleBar, true);
 
     bool visible = false;
-    if (isCentralFrame()) {
+    if (isCentralGroup()) {
         visible = false;
     } else if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
                && hasTabsVisible()) {
         visible = false;
     } else if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested groups then show each Frame's title bar
-        visible = !fw->hasSingleFrame();
+        visible = !fw->hasSingleGroup();
     } else if (isMDIWrapper()) {
         auto dropArea = this->mdiDropAreaWrapper();
-        visible = !dropArea->hasSingleFrame();
+        visible = !dropArea->hasSingleGroup();
     } else {
         visible = true;
     }
@@ -487,10 +505,10 @@ Core::TitleBar *Group::actualTitleBar() const
 {
     if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested groups then show each Group's title bar
-        if (fw->hasSingleFrame())
+        if (fw->hasSingleGroup())
             return fw->titleBar();
     } else if (auto mdiDropArea = mdiDropAreaWrapper()) {
-        if (mdiDropArea->hasSingleFrame()) {
+        if (mdiDropArea->hasSingleGroup()) {
             return mdiFrame()->titleBar();
         }
     }
@@ -713,7 +731,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
     if (!f.isValid())
         return nullptr;
 
-    const FrameOptions options = FrameOptions(f.options);
+    const FrameOptions options = actualOptions(FrameOptions(f.options));
     Group *group = nullptr;
     const bool isPersistentCentralFrame = options & FrameOption::FrameOption_IsCentralFrame;
 
@@ -789,9 +807,29 @@ void Group::scheduleDeleteLater()
     KDDW_TRACE("Group::scheduleDeleteLater: {}", ( void * )this);
     m_beingDeleted = true;
 
+    if (auto item = layoutItem()) {
+        if (item->parentContainer())
+            item->turnIntoPlaceholder();
+    }
+
     // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if
     // triggered by a sendEvent() before event loop starts)
     destroyLater();
+}
+
+void Group::createMDIResizeHandler()
+{
+    delete m_resizeHandler;
+    m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
+                                              WidgetResizeHandler::WindowMode::MDI, view());
+
+    if (Platform::instance()->isQtQuick()) {
+        // Our C++ WidgetResizeHandler is triggered manually by MDIResizeHandlerHelper.qml's MouseArea
+        m_resizeHandler->setEventFilterStartsManually();
+
+        // MouseCursor set by QML as well
+        m_resizeHandler->setHandlesMouseCursor(false);
+    }
 }
 
 Size Group::dockWidgetsMinSize() const
@@ -802,7 +840,6 @@ Size Group::dockWidgetsMinSize() const
         if (!dw->inDtor())
             size = size.expandedTo(dw->view()->minSize());
     }
-
 
     return size;
 }
@@ -889,9 +926,7 @@ bool Group::anyDockWidgetsHas(LayoutSaverOption option) const
 void Group::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
-        delete m_resizeHandler;
-        m_resizeHandler = new WidgetResizeHandler(WidgetResizeHandler::EventFilterMode::Global,
-                                                  WidgetResizeHandler::WindowMode::MDI, view());
+        createMDIResizeHandler();
         m_resizeHandler->setAllowedResizeSides(sides);
     } else {
         delete m_resizeHandler;
@@ -990,7 +1025,7 @@ bool Core::Group::isDockable() const
 {
     return !(d->m_options & FrameOption_NonDockable);
 }
-bool Core::Group::isCentralFrame() const
+bool Core::Group::isCentralGroup() const
 {
     return d->m_options & FrameOption_IsCentralFrame;
 }
@@ -1014,7 +1049,30 @@ Group::Private::Private(Group *qq, int userType, FrameOptions options)
         hostChanged.emit(host());
     });
 
-    q->view()->d->layoutInvalidated.connect([this] { layoutInvalidated.emit(); });
+    q->view()->d->layoutInvalidated.connect([this] {
+        if (auto item = q->layoutItem()) {
+
+            if (item->m_sizingInfo.minSize == minSize() && item->m_sizingInfo.maxSizeHint == maxSizeHint()) {
+                // No point in disturbing the layout if constraints didn't change.
+                // QTabWidget::resizeEvent for example will issue layout invalidation even if constraints haven't changed
+                return;
+            }
+
+            if (m_invalidatingLayout) {
+                // Fixes case where we're in the middle of adding a widget to layout and that triggers
+                // another unrelated widget to emit layoutInvalidated due to resize. It would trigger a relayout while
+                // we were in a middle of adding a dock widget.
+                // An example is QTabWidget::resizeEvent(), it calls updateGeometry() unconditionally.
+                return;
+            }
+
+            ScopedValueRollback guard(m_invalidatingLayout, true);
+
+            // Here we tell the KDDW layout that a widget change min/max sizes.
+            // KDDW will do some resizing to honour the new min/max constraint
+            layoutInvalidated.emit();
+        }
+    });
 }
 
 Group::Private::~Private()

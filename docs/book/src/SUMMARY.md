@@ -35,10 +35,12 @@
 - [Advanced Usage]()
   - [Custom Behaviour](custom_behaviour.md)
   - [Custom Styling](custom_styling.md)
+  - [Min/Max sizing](min_max_sizing.md)
   - [Public and Private API](private_api.md)
 ---
 - [For Developers]()
   - [Architecture and Concepts](architecture_and_concepts.md)
+  - [Misc Implementation Details](misc_impl_details.md)
 ---
 - [Roadmap](roadmap.md)
 - [Get Involved](involved.md)

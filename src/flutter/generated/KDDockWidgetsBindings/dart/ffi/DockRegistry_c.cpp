@@ -29,10 +29,6 @@ struct ValueWrapper
 
 }
 namespace KDDockWidgetsBindings_wrappersNS {
-void DockRegistry_wrapper::checkSanityAll(bool dumpDebug)
-{
-    ::KDDockWidgets::DockRegistry::checkSanityAll(dumpDebug);
-}
 void DockRegistry_wrapper::clear()
 {
     ::KDDockWidgets::DockRegistry::clear();
@@ -97,10 +93,6 @@ void DockRegistry_wrapper::registerGroup(KDDockWidgets::Core::Group *arg__1)
 {
     ::KDDockWidgets::DockRegistry::registerGroup(arg__1);
 }
-void DockRegistry_wrapper::registerLayout(KDDockWidgets::Core::Layout *arg__1)
-{
-    ::KDDockWidgets::DockRegistry::registerLayout(arg__1);
-}
 void DockRegistry_wrapper::registerLayoutSaver()
 {
     ::KDDockWidgets::DockRegistry::registerLayoutSaver();
@@ -129,10 +121,6 @@ void DockRegistry_wrapper::unregisterGroup(KDDockWidgets::Core::Group *arg__1)
 {
     ::KDDockWidgets::DockRegistry::unregisterGroup(arg__1);
 }
-void DockRegistry_wrapper::unregisterLayout(KDDockWidgets::Core::Layout *arg__1)
-{
-    ::KDDockWidgets::DockRegistry::unregisterLayout(arg__1);
-}
 void DockRegistry_wrapper::unregisterLayoutSaver()
 {
     ::KDDockWidgets::DockRegistry::unregisterLayoutSaver();
@@ -158,12 +146,7 @@ extern "C" {
 void c_KDDockWidgets__DockRegistry_Finalizer(void *cppObj)
 {
     delete reinterpret_cast<KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper *>(cppObj);
-} // checkSanityAll(bool dumpDebug)
-void c_KDDockWidgets__DockRegistry__checkSanityAll_bool(void *thisObj, bool dumpDebug)
-{
-    fromPtr(thisObj)->checkSanityAll(dumpDebug);
-}
-// clear()
+} // clear()
 void c_KDDockWidgets__DockRegistry__clear(void *thisObj)
 {
     fromPtr(thisObj)->clear();
@@ -267,12 +250,6 @@ void c_KDDockWidgets__DockRegistry__registerGroup_Group(void *thisObj, void *arg
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     fromPtr(thisObj)->registerGroup(arg__1);
 }
-// registerLayout(KDDockWidgets::Core::Layout * arg__1)
-void c_KDDockWidgets__DockRegistry__registerLayout_Layout(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Layout *>(arg__1_);
-    fromPtr(thisObj)->registerLayout(arg__1);
-}
 // registerLayoutSaver()
 void c_KDDockWidgets__DockRegistry__registerLayoutSaver(void *thisObj)
 {
@@ -314,12 +291,6 @@ void c_KDDockWidgets__DockRegistry__unregisterGroup_Group(void *thisObj, void *a
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
     fromPtr(thisObj)->unregisterGroup(arg__1);
-}
-// unregisterLayout(KDDockWidgets::Core::Layout * arg__1)
-void c_KDDockWidgets__DockRegistry__unregisterLayout_Layout(void *thisObj, void *arg__1_)
-{
-    auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Layout *>(arg__1_);
-    fromPtr(thisObj)->unregisterLayout(arg__1);
 }
 // unregisterLayoutSaver()
 void c_KDDockWidgets__DockRegistry__unregisterLayoutSaver(void *thisObj)

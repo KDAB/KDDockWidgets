@@ -42,6 +42,10 @@ void MainWindow_wrapper::addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *doc
 {
     ::KDDockWidgets::Core::MainWindow::addDockWidgetAsTab(dockwidget);
 }
+void MainWindow_wrapper::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+{
+    ::KDDockWidgets::Core::MainWindow::addDockWidgetToSide(dockWidget, location, initialOption);
+}
 bool MainWindow_wrapper::anySideBarIsVisible() const
 {
     return ::KDDockWidgets::Core::MainWindow::anySideBarIsVisible();
@@ -54,9 +58,9 @@ KDDockWidgets::Rect MainWindow_wrapper::centralAreaGeometry() const
 {
     return ::KDDockWidgets::Core::MainWindow::centralAreaGeometry();
 }
-void MainWindow_wrapper::clearSideBarOverlay(bool deleteFrame)
+void MainWindow_wrapper::clearSideBarOverlay(bool deleteGroup)
 {
-    ::KDDockWidgets::Core::MainWindow::clearSideBarOverlay(deleteFrame);
+    ::KDDockWidgets::Core::MainWindow::clearSideBarOverlay(deleteGroup);
 }
 bool MainWindow_wrapper::closeDockWidgets(bool force)
 {
@@ -193,6 +197,14 @@ void c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget(void *this
     auto dockwidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockwidget_);
     fromPtr(thisObj)->addDockWidgetAsTab(dockwidget);
 }
+// addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+void c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption(void *thisObj, void *dockWidget_, int location, void *initialOption_)
+{
+    auto dockWidget = reinterpret_cast<KDDockWidgets::Core::DockWidget *>(dockWidget_);
+    assert(initialOption_);
+    auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
+    fromPtr(thisObj)->addDockWidgetToSide(dockWidget, static_cast<KDDockWidgets::Location>(location), initialOption);
+}
 // anySideBarIsVisible() const
 bool c_KDDockWidgets__Core__MainWindow__anySideBarIsVisible(void *thisObj)
 {
@@ -211,10 +223,10 @@ void *c_KDDockWidgets__Core__MainWindow__centralAreaGeometry(void *thisObj)
     const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Rect> { fromWrapperPtr(thisObj)->centralAreaGeometry() };
     return result;
 }
-// clearSideBarOverlay(bool deleteFrame)
-void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteFrame)
+// clearSideBarOverlay(bool deleteGroup)
+void c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool(void *thisObj, bool deleteGroup)
 {
-    fromPtr(thisObj)->clearSideBarOverlay(deleteFrame);
+    fromPtr(thisObj)->clearSideBarOverlay(deleteGroup);
 }
 // closeDockWidgets(bool force)
 bool c_KDDockWidgets__Core__MainWindow__closeDockWidgets_bool(void *thisObj, bool force)

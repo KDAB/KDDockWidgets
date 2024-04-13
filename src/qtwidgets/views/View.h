@@ -176,6 +176,18 @@ public:
         Base::update();
     }
 
+    int zOrder() const override
+    {
+        if (auto p = QWidget::parentWidget()) {
+            // Some of them might be non-QtWidget QObject, but this is good enough
+            // to unit test raise() in MDI area
+            // TODO: Remove cast to int, and make method return qsizetype after we add /WX
+            return int(p->children().indexOf(const_cast<QtWidgets::View<Base> *>(this)));
+        }
+
+        return 0;
+    }
+
     static void setParentFor(QWidget *widget, Core::View *parent)
     {
         if (!parent) {

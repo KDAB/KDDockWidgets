@@ -549,7 +549,8 @@ set_target_properties(kddockwidgets PROPERTIES SOVERSION ${KDDockWidgets_SOVERSI
 # version libraries on Windows
 if(WIN32)
     if(CMAKE_BUILD_TYPE)
-        set(postfix ${KDDockWidgets_VERSION_MAJOR})
+        set(postfix "${KDDockWidgets_VERSION_MAJOR}${KDDockWidgets_LIBRARY_POSTFIX}")
+
         string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
         if(${UPPER_BUILD_TYPE} MATCHES "^DEBUG")
             string(CONCAT postfix ${postfix} "d")

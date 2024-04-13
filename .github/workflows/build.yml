@@ -7,10 +7,14 @@ name: CI
 on:
   push:
     branches:
+      - 2.1
       - 2.0
+      - main
   pull_request:
     branches:
+      - 2.1
       - 2.0
+      - main
 
 jobs:
   build:
@@ -44,13 +48,6 @@ jobs:
         include:
           - os: ubuntu-latest
             preset:
-              name: ci-dev-asan-qt5
-              qt_version: "5.15"
-              detect_leaks: 0
-              apt_pgks:
-                - lld
-          - os: ubuntu-latest
-            preset:
               name: ci-python-qt6
               qt_version: "6.6.0"
               detect_leaks: 0
@@ -58,20 +55,6 @@ jobs:
                 - llvm
               pip_pgks:
                 - shiboken6-generator==6.6.0 pyside6==6.6.0
-          - os: ubuntu-latest
-            preset:
-              name: ci-dev-asan-qtwidgets-qt6
-              qt_version: "6.5.*"
-              detect_leaks: 1
-              apt_pgks:
-                - lld
-          - os: ubuntu-latest
-            preset:
-              name: ci-dev-asan-qtquick-qt6
-              qt_version: "6.5.*"
-              detect_leaks: 1
-              apt_pgks:
-                - lld
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
@@ -85,6 +68,12 @@ jobs:
         run: |
           sudo apt update -qq
           echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
+
+      # Not using apt_pgks, since spdlog is needed for all configurations:
+      - name: Install spdlog on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          sudo apt install libspdlog-dev -y
 
       - name: Install Python dependencies (${{ join(matrix.preset.pip_pgks, ' ') }})
         if: ${{ matrix.preset.pip_pgks }}
@@ -114,17 +103,16 @@ jobs:
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
 
-      - name: Run tests on Linux (offscreen)
+      - name: Run tests on Linux
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
         env:
-          QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
 
       - name: Read tests log when it fails
         uses: andstor/file-reader-action@v1

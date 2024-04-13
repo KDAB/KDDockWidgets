@@ -38,10 +38,6 @@ bool Separator_wrapper::isVertical() const
 {
     return ::KDDockWidgets::Core::Separator::isVertical();
 }
-void Separator_wrapper::move(int p)
-{
-    ::KDDockWidgets::Core::Separator::move(p);
-}
 int Separator_wrapper::numSeparators()
 {
     return ::KDDockWidgets::Core::Separator::numSeparators();
@@ -69,10 +65,6 @@ int Separator_wrapper::position() const
 void Separator_wrapper::setGeometry(KDDockWidgets::Rect r)
 {
     ::KDDockWidgets::Core::Separator::setGeometry(r);
-}
-void Separator_wrapper::setGeometry(int pos, int pos2, int length)
-{
-    ::KDDockWidgets::Core::Separator::setGeometry(pos, pos2, length);
 }
 void Separator_wrapper::setParentView_impl(KDDockWidgets::Core::View *parent)
 {
@@ -117,11 +109,6 @@ bool c_KDDockWidgets__Core__Separator__isVertical(void *thisObj)
     const auto &result = fromPtr(thisObj)->isVertical();
     return result;
 }
-// move(int p)
-void c_KDDockWidgets__Core__Separator__move_int(void *thisObj, int p)
-{
-    fromPtr(thisObj)->move(p);
-}
 // numSeparators()
 int c_static_KDDockWidgets__Core__Separator__numSeparators()
 {
@@ -162,11 +149,6 @@ void c_KDDockWidgets__Core__Separator__setGeometry_Rect(void *thisObj, void *r_)
     assert(r_);
     auto &r = *reinterpret_cast<KDDockWidgets::Rect *>(r_);
     fromPtr(thisObj)->setGeometry(r);
-}
-// setGeometry(int pos, int pos2, int length)
-void c_KDDockWidgets__Core__Separator__setGeometry_int_int_int(void *thisObj, int pos, int pos2, int length)
-{
-    fromPtr(thisObj)->setGeometry(pos, pos2, length);
 }
 // setParentView_impl(KDDockWidgets::Core::View * parent)
 void c_KDDockWidgets__Core__Separator__setParentView_impl_View(void *thisObj, void *parent_)

@@ -242,17 +242,6 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
-    button->setText(QStringLiteral("resize by 1x1"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [] {
-        const auto layouts = DockRegistry::self()->layouts();
-        for (auto l : layouts) {
-            auto tlw = l->view()->rootView();
-            tlw->resize(tlw->size() + QSize(1, 1));
-        }
-    });
-
-    button = new QPushButton(this);
     button->setText(QStringLiteral("Raise #0 (after 3s timeout)"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [this] {

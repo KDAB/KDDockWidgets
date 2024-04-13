@@ -27,9 +27,6 @@
 #include "Qt5Qt6Compat_p.h"
 
 #ifdef Q_OS_WIN
-// Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting.
-// Untested on macOS.
-#define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #define KDDW_FRONTEND_QT_WINDOWS
 #endif
 
@@ -80,6 +77,9 @@ enum MainWindowOption {
         4 | MainWindowOption_HasCentralFrame, ///> Similar to MainWindowOption_HasCentralFrame but
     ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa
     /// MainWindowBase::setPersistentCentralWidget()
+    MainWindowOption_QDockWidgets = 8, ///> Allows the user to use QDockWidget instead of KDDW DockWidget, while using the KDDW MainWindow
+                                       ///> Useful as a porting aid, where you want to migrate your main windows 1 by 1
+    MainWindowOption_ManualInit = 16 ///> For compatibility with setupUi() from UIC. See manualInit() for more details
 };
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
@@ -104,8 +104,9 @@ Q_ENUM_NS(DockWidgetOptions)
 /// @brief Options which will affect LayoutSaver save/restore
 enum class LayoutSaverOption {
     None = 0, ///< Just use the defaults
-    Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for
-              ///< floating windows.
+    Skip = 1, ///< The dock widget won't participate in save/restore
+    CheckForPreviousRestore = 2, ///< When the DockWidget is created it will check if there was a layout restore
+    ///< before, and try to recover its previous main window position
 };
 Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
@@ -154,6 +155,13 @@ enum class InitialVisibilityOption {
 };
 Q_ENUM_NS(InitialVisibilityOption)
 
+enum class NeighbourSqueezeStrategy {
+    AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
+    ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the
+                             ///< next neighbour is squezed, and so forth
+};
+Q_ENUM_NS(NeighbourSqueezeStrategy)
+
 /**
  * @brief Struct describing the preferred dock widget size and visibility when adding it to a layout
  *
@@ -164,27 +172,14 @@ Q_ENUM_NS(InitialVisibilityOption)
  *
  * @sa MainWindowBase::addDockWidget()
  */
-struct InitialOption
+struct DOCKS_EXPORT InitialOption
 {
     // Implicit ctors for convenience:
 
-    InitialOption() = default;
-
-    InitialOption(InitialVisibilityOption v)
-        : visibility(v)
-    {
-    }
-
-    InitialOption(Size size)
-        : preferredSize(size)
-    {
-    }
-
-    InitialOption(InitialVisibilityOption v, Size size)
-        : visibility(v)
-        , preferredSize(size)
-    {
-    }
+    InitialOption();
+    InitialOption(InitialVisibilityOption v);
+    InitialOption(Size size);
+    InitialOption(InitialVisibilityOption v, Size size);
 
     bool startsHidden() const
     {
@@ -196,6 +191,7 @@ struct InitialOption
         return visibility == InitialVisibilityOption::PreserveCurrentTab;
     }
 
+    /// Returns preferred height if the container is vertical, otherwise preferred width
     int preferredLength(Qt::Orientation o) const
     {
         return o == Qt::Horizontal ? preferredSize.width() : preferredSize.height();
@@ -225,11 +221,11 @@ struct InitialOption
      */
     Size preferredSize;
 
+    static NeighbourSqueezeStrategy s_defaultNeighbourSqueezeStrategy;
+    NeighbourSqueezeStrategy neighbourSqueezeStrategy = s_defaultNeighbourSqueezeStrategy;
+
     /// @internal
-    InitialOption(DefaultSizeMode mode)
-        : sizeMode(mode)
-    {
-    }
+    InitialOption(DefaultSizeMode mode);
 
 private:
     friend class Core::Item;
@@ -277,15 +273,17 @@ enum class SideBarLocation {
 
 ///@brief describes a type of button you can have in the title bar
 enum class TitleBarButtonType {
-    Close,
-    Float,
-    Minimize,
-    Maximize,
-    Normal, // Restore from maximized state
-    AutoHide,
-    UnautoHide
+    Close = 1,
+    Float = 2,
+    Minimize = 4,
+    Maximize = 8,
+    Normal = 16, // Restore from maximized state
+    AutoHide = 32,
+    UnautoHide = 64,
+    AllTitleBarButtonTypes = Close | Float | Minimize | Maximize | Normal | AutoHide | UnautoHide
 };
 Q_ENUM_NS(TitleBarButtonType)
+Q_DECLARE_FLAGS(TitleBarButtonTypes, TitleBarButtonType)
 
 ///@brief Enum describing the different drop indicator types
 enum DropLocation {
@@ -361,7 +359,8 @@ enum class FloatingWindowFlag {
     AlwaysTitleBarWhenFloating = 64,
     DontUseParentForFloatingWindows = 128,
     UseQtWindow = 256,
-    UseQtTool = 512
+    UseQtTool = 512,
+    StartsMinimized = 1024
 };
 Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag)
 
@@ -374,6 +373,14 @@ enum class WindowState {
 };
 Q_DECLARE_FLAGS(WindowStates, WindowState)
 
+/// @internal
+enum class CloseReason {
+    Unspecified = 0, /// probably programmatically
+    TitleBarCloseButton = 1, /// User clicked titlebar close button
+    Action = 2, /// User clicked menu with QAction
+    MovedToSideBar = 4, /// User clicked the pin-button (or programmatically) (auto-hide/sidebar/pin-unpin functionality)
+    OverlayCollapse = 8 /// Dock widget went from overlay to sidebar (auto-hide/sidebar/pin-unpin functionality)
+};
 
 /// @brief Initializes the desired frontend
 /// This function should be called before using any docking.

@@ -8,7 +8,6 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
-
 import QtQuick 2.9
 import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9
@@ -22,6 +21,7 @@ MouseArea {
     required property QtObject groupCpp
     required property int cursorPosition
 
+    enabled: resizeAllowed
     hoverEnabled: true
 
     cursorShape: {
@@ -30,25 +30,31 @@ MouseArea {
             return Qt.ArrowCursor;
         }
 
-        if ((cursorPosition === KDDockWidgets.CursorPosition_TopLeft || cursorPosition === KDDockWidgets.CursorPosition_BottomRight)) {
+        var isFixedHeight = groupCpp && groupCpp.isFixedHeight
+        var isFixedWidth = groupCpp && groupCpp.isFixedWidth
+        if (isFixedHeight && isFixedWidth)
+            return Qt.ArrowCursor;
+
+        var noFixed = !isFixedHeight && !isFixedWidth;
+
+        if (noFixed && (cursorPosition === KDDockWidgets.CursorPosition_TopLeft || cursorPosition === KDDockWidgets.CursorPosition_BottomRight)) {
             return Qt.SizeFDiagCursor;
-        } else if ((cursorPosition === KDDockWidgets.CursorPosition_TopRight || cursorPosition === KDDockWidgets.CursorPosition_BottomLeft)) {
+        } else if (noFixed && (cursorPosition === KDDockWidgets.CursorPosition_TopRight || cursorPosition === KDDockWidgets.CursorPosition_BottomLeft)) {
             return Qt.SizeBDiagCursor;
-        } else if (cursorPosition & KDDockWidgets.CursorPosition_Horizontal) {
+        } else if (!isFixedWidth && (cursorPosition & KDDockWidgets.CursorPosition_Horizontal)) {
             return Qt.SizeHorCursor;
-        } else if (cursorPosition & KDDockWidgets.CursorPosition_Vertical) {
+        } else if (!isFixedHeight && (cursorPosition & KDDockWidgets.CursorPosition_Vertical)) {
             return Qt.SizeVerCursor;
         } else {
             return Qt.ArrowCursor;
         }
     }
 
-    enabled: resizeAllowed
+    onPressed: {
+        // install event filter
+        groupCpp.startMDIResize()
 
-    onGroupCppChanged: {
-        if (groupCpp) {
-            // When Frame is in MDI mode, we need to detect when the mouse over the edges
-            groupCpp.redirectMouseEvents(this)
-        }
+        // ignore event, so event filter catches press as well
+        mouse.accepted = false
     }
 }

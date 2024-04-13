@@ -129,13 +129,28 @@ public:
     void onAutoHideClicked();
     void toggleMaximized();
 
+    // TODO: Refactor into a QHash<Button,State> ?
     bool closeButtonEnabled() const;
+    void setCloseButtonVisible(bool);
     bool floatButtonVisible() const;
     bool maximizeButtonVisible() const;
     void setCloseButtonEnabled(bool);
     void setFloatButtonVisible(bool);
 
     TitleBarButtonType maximizeButtonType() const;
+
+    /// Allows to override's KDDW's default visibility logic and force hide a button
+    void setUserHiddenButtons(TitleBarButtonTypes);
+    bool buttonIsUserHidden(TitleBarButtonType) const;
+
+    /// Overload which also consults buttonHidesIfDisabled
+    bool buttonIsUserHidden(TitleBarButtonType, bool enabled) const;
+
+    /// The specified buttons, if disabled, will be hidden as well
+    /// for example, with non-closable dock widgets we disable the close button
+    /// this allows to hide it as well.
+    void setHideDisabledButtons(TitleBarButtonTypes);
+    bool buttonHidesIfDisabled(TitleBarButtonType) const;
 
     class Private;
     Private *dptr() const;
@@ -153,6 +168,7 @@ private:
 
     void updateFloatButton();
     void updateCloseButton();
+    bool supportsFloatUnfloat() const;
     void setFloatButtonToolTip(const QString &);
     void init();
 
@@ -167,6 +183,7 @@ private:
     const bool m_supportsAutoHide;
     const bool m_isStandalone;
     bool m_closeButtonEnabled = true;
+    bool m_closeButtonVisible = true;
     bool m_floatButtonVisible = true;
     bool m_maximizeButtonVisible = false;
     TitleBarButtonType m_maximizeButtonType = TitleBarButtonType::Maximize;

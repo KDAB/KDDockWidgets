@@ -152,6 +152,8 @@ public:
     virtual void update_nocallback();
     virtual QString viewName() const;
     virtual QString viewName_nocallback() const;
+    virtual int zOrder() const;
+    virtual int zOrder_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -282,6 +284,8 @@ public:
     Callback_update m_updateCallback = nullptr;
     typedef QString *(*Callback_viewName)(void *);
     Callback_viewName m_viewNameCallback = nullptr;
+    typedef int (*Callback_zOrder)(void *);
+    Callback_zOrder m_zOrderCallback = nullptr;
 };
 }
 }
@@ -418,6 +422,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__flutter__TabBar__text_int(void *thisObj, int
 DOCKS_EXPORT void c_KDDockWidgets__flutter__TabBar__update(void *thisObj);
 // KDDockWidgets::flutter::TabBar::viewName() const
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__TabBar__viewName(void *thisObj);
+// KDDockWidgets::flutter::TabBar::zOrder() const
+DOCKS_EXPORT int c_KDDockWidgets__flutter__TabBar__zOrder(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__TabBar__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__TabBar__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__TabBar_Finalizer(void *cppObj);

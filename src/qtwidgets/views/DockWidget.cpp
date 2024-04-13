@@ -44,6 +44,7 @@ public:
     KDBindings::ScopedConnection optionsChangedConnection;
     KDBindings::ScopedConnection guestViewChangedConnection;
     KDBindings::ScopedConnection isFocusedChangedConnection;
+    KDBindings::ScopedConnection isFloatingChangedConnection;
     KDBindings::ScopedConnection isOpenChangedConnection;
     KDBindings::ScopedConnection windowActiveAboutToChangeConnection;
     KDBindings::ScopedConnection guestChangeConnection;
@@ -75,6 +76,10 @@ DockWidget::DockWidget(const QString &uniqueName, DockWidgetOptions options,
 
     d->isFocusedChangedConnection = m_dockWidget->d->isFocusedChanged.connect([this](bool focused) {
         Q_EMIT isFocusedChanged(focused);
+    });
+
+    d->isFloatingChangedConnection = m_dockWidget->d->isFloatingChanged.connect([this](bool floating) {
+        Q_EMIT isFloatingChanged(floating);
     });
 
     d->isOpenChangedConnection = m_dockWidget->d->isOpenChanged.connect([this](bool open) {
@@ -143,4 +148,11 @@ std::shared_ptr<Core::View> DockWidget::focusCandidate() const
     // For QtQuick, the dock widget itself is a QtQuick FocusScope, so focus that instead. QtQuick will then focus the right inner
     // widget.
     return m_dockWidget->guestView();
+}
+
+void DockWidget::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+    // The guest widget didn't want it, so block it now.
+    // Otherwise it goes to the QTabWidget and it will make the window float.
+    ev->accept();
 }

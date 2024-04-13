@@ -85,16 +85,6 @@ class MyMenuBar extends StatelessWidget {
                   SubmenuButton(
                     menuChildren: dockWidgetsToToggle(),
                     child: const MenuAcceleratorLabel('&Toggle'),
-                  ),
-                  SubmenuButton(
-                    menuChildren: [
-                      MenuItemButton(
-                          onPressed: () {
-                            DockRegistry.self().checkSanityAll(dumpDebug: true);
-                          },
-                          child: const MenuAcceleratorLabel('&Dump Layout')),
-                    ],
-                    child: const MenuAcceleratorLabel('&Debug'),
                   )
                 ],
               ),

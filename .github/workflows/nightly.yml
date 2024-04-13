@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Nightly CI
+name: Nightly Misc
 
 on:
   schedule:
@@ -18,7 +18,6 @@ jobs:
       matrix:
         os:
           - ubuntu-22.04
-          - ubuntu-20.04
           - windows-2022
           - windows-2019
           - macos-13
@@ -32,8 +31,6 @@ jobs:
             qt_version: "5.15"
           - name: ci-python-qt6
             qt_version: "6.6.0"
-            apt_pgks:
-              - llvm
           - name: ci-release-static-qt6
             qt_version: "6.3.*"
           - name: ci-dev-static-qt6
@@ -50,24 +47,16 @@ jobs:
               name: clazy
               build_preset_arg: '--preset=clazy'
               qt_version: "5.15"
-              apt_pgks:
-                - clazy
 
           - os: ubuntu-22.04
             preset:
               name: ci-dev-valgrind-qt5
               qt_version: "5.15"
-              apt_pgks:
-                - lld
-                - valgrind
 
           - os: ubuntu-22.04
             preset:
               name: ci-dev-valgrind-qt6
               qt_version: "6.5.*"
-              apt_pgks:
-                - lld
-                - valgrind
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
@@ -79,11 +68,11 @@ jobs:
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main
 
-      - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
-        if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
+      - name: Install dependencies on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt update -qq
-          echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
+          sudo apt install libspdlog-dev lld valgrind clazy llvm -y
 
       - uses: actions/checkout@v4
         #with:

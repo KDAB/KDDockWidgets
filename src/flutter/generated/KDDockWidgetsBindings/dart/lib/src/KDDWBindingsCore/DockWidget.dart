@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -240,6 +240,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return KDDWBindingsCore.MainWindow.fromCppPointer(result, false);
+  } // mdiZ() const
+
+  int mdiZ() {
+    final int_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<int_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__mdiZ')
+        .asFunction();
+    return func(thisCpp);
   } // moveToSideBar()
 
   moveToSideBar() {
@@ -278,6 +286,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
     final void_Func_voidstar func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
             'c_KDDockWidgets__Core__DockWidget__raise')
+        .asFunction();
+    func(thisCpp);
+  } // removeFromSideBar()
+
+  removeFromSideBar() {
+    final void_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__removeFromSideBar')
         .asFunction();
     func(thisCpp);
   } // resizeInLayout(int left, int top, int right, int bottom)
@@ -376,6 +392,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__setTitle_QString')
         .asFunction();
     func(thisCpp, title?.toNativeUtf8() ?? ffi.nullptr);
+  } // setUniqueName(const QString & arg__1)
+
+  setUniqueName(String? arg__1) {
+    final void_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__setUniqueName_QString')
+        .asFunction();
+    func(thisCpp, arg__1?.toNativeUtf8() ?? ffi.nullptr);
   } // setUserType(int userType)
 
   setUserType(int userType) {
@@ -460,6 +484,14 @@ class DockWidget extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__DockWidget__userType')
         .asFunction();
     return func(thisCpp);
+  } // wasRestored() const
+
+  bool wasRestored() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__DockWidget__wasRestored')
+        .asFunction();
+    return func(thisCpp) != 0;
   }
 
   void release() {

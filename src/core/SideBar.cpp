@@ -47,7 +47,14 @@ SideBar::SideBar(SideBarLocation location, MainWindow *parent)
                         ? Qt::Horizontal
                         : Qt::Vertical)
 {
-    updateSize();
+    updateVisibility();
+
+    if (isVertical()) {
+        view()->setFixedWidth(30);
+    } else {
+        view()->setFixedHeight(30);
+    }
+
     view()->init();
 }
 
@@ -71,7 +78,7 @@ void SideBar::addDockWidget(DockWidget *dw)
 
     m_dockWidgets.push_back(dw);
     dynamic_cast<Core::SideBarViewInterface *>(view())->addDockWidget_Impl(dw);
-    updateSize();
+    updateVisibility();
 }
 
 void SideBar::removeDockWidget(DockWidget *dw)
@@ -85,7 +92,7 @@ void SideBar::removeDockWidget(DockWidget *dw)
     m_dockWidgets.removeOne(dw);
     dynamic_cast<Core::SideBarViewInterface *>(view())->removeDockWidget_Impl(dw);
     dw->d->removedFromSideBar.emit();
-    updateSize();
+    updateVisibility();
 }
 
 bool SideBar::containsDockWidget(DockWidget *dw) const
@@ -98,14 +105,9 @@ void SideBar::onButtonClicked(DockWidget *dw)
     toggleOverlay(dw);
 }
 
-void SideBar::updateSize()
+void SideBar::updateVisibility()
 {
-    const int thickness = isEmpty() ? 0 : 30;
-    if (isVertical()) {
-        view()->setFixedWidth(thickness);
-    } else {
-        view()->setFixedHeight(thickness);
-    }
+    setVisible(!isEmpty());
 }
 
 Qt::Orientation SideBar::orientation() const

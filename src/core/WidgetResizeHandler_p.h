@@ -123,7 +123,6 @@ public:
      */
     void setAllowedResizeSides(CursorPositions);
 
-
     /**
      * Sets the resize gap. By default 10.
      *
@@ -141,6 +140,15 @@ public:
 
     bool isResizing() const;
 
+    /// Disable our global event filter and require a caller to explicitly ask for event filtering to start
+    /// Used only by QtQuick MDI, which uses a MDIResizeHandlerHelper to detect 1st press. When there's multiple
+    /// MDI windows, we only want the one being resized to filter for global mouse events
+    void setEventFilterStartsManually();
+
+    /// Default true. Sets whether WidgetResizeHandler will change mouse cursor depending on where it is.
+    /// This is false for QtQuick as there we use a MouseArea to change cursor.
+    void setHandlesMouseCursor(bool);
+
     static int widgetResizeHandlerMargin();
 
     static void setupWindow(Core::Window::Ptr);
@@ -150,6 +158,9 @@ public:
                                          const NativeFeatures &);
     static bool handleWindowsNativeEvent(Core::FloatingWindow *, const QByteArray &eventType,
                                          void *message, Qt5Qt6Compat::qintptr *result);
+
+    /// Tells Qt to query window margins
+    static void requestNCCALCSIZE(HWND);
 #endif
     static bool s_disableAllHandlers;
 
@@ -161,7 +172,14 @@ private:
     void updateCursor(CursorPosition);
     void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();
+
+    /// Returns which widget side the cursor is at for resize purposes
+    /// Honours fixed size widgets. If fixed size, no position will be reported.
     CursorPosition cursorPosition(Point) const;
+
+    /// Lower level overload of cursorPosition, which does not honour fixed size
+    CursorPosition cursorPosition_(Point) const;
+
     Core::View *mTarget = nullptr;
     Core::ViewGuard mTargetGuard = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
@@ -172,6 +190,9 @@ private:
     int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;
     bool m_overrideCursorSet = false;
+    bool m_handlesMouseCursor = true;
+
+    bool m_eventFilteringStartsManually = false;
 };
 
 #if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)

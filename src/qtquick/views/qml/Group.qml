@@ -27,6 +27,8 @@ Rectangle {
     readonly property bool resizeAllowed: root.isMDI && !_kddwHelpers.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
     readonly property bool hasCustomMouseEventRedirector: false
+    readonly property bool isFixedHeight: groupCpp && groupCpp.isFixedHeight
+    readonly property bool isFixedWidth: groupCpp && groupCpp.isFixedWidth
 
     anchors.fill: parent
 
@@ -48,124 +50,129 @@ Rectangle {
             groupCpp.geometryUpdated();
     }
 
-    ResizeHandlerHelper {
-        anchors {
-            left: parent ? parent.left : undefined
-            top: parent ? parent.top : undefined
-            bottom: parent ? parent.bottom : undefined
+    MouseArea {
+        anchors.fill: parent
+
+
+        MDIResizeHandlerHelper {
+            anchors {
+                left: parent ? parent.left : undefined
+                top: parent ? parent.top : undefined
+                bottom: parent ? parent.bottom : undefined
+            }
+
+            width: resizeMargin
+            z: 100
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed && !root.isFixedWidth
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Left
         }
 
-        width: resizeMargin
-        z: 100
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Left
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                right: parent ? parent.right : undefined
+                top: parent ? parent.top : undefined
+                bottom: parent ? parent.bottom : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            right: parent ? parent.right : undefined
-            top: parent ? parent.top : undefined
-            bottom: parent ? parent.bottom : undefined
+            width: resizeMargin
+            z: 100
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed && !root.isFixedWidth
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Right
         }
 
-        width: resizeMargin
-        z: 100
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Right
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                right: parent ? parent.right : undefined
+                top: parent ? parent.top : undefined
+                left: parent ? parent.left : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            right: parent ? parent.right : undefined
-            top: parent ? parent.top : undefined
-            left: parent ? parent.left : undefined
+            height: resizeMargin
+            z: 100
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed && !root.isFixedHeight
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Top
         }
 
-        height: resizeMargin
-        z: 100
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Top
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                right: parent ? parent.right : undefined
+                left: parent ? parent.left : undefined
+                bottom: parent ?  parent.bottom : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            right: parent ? parent.right : undefined
-            left: parent ? parent.left : undefined
-            bottom: parent ?  parent.bottom : undefined
+            height: resizeMargin
+            z: 100
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed && !root.isFixedHeight
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Bottom
         }
 
-        height: resizeMargin
-        z: 100
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Bottom
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                right: parent ? parent.right : undefined
+                bottom: parent ? parent.bottom : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            right: parent ? parent.right : undefined
-            bottom: parent ? parent.bottom : undefined
+            height: width
+            width: resizeMargin
+            z: 101
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Bottom | KDDockWidgets.CursorPosition_Right
         }
 
-        height: width
-        width: resizeMargin
-        z: 101
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Bottom | KDDockWidgets.CursorPosition_Right
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                left:  parent ? parent.left : undefined
+                top:  parent ? parent.top : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            left:  parent ? parent.left : undefined
-            top:  parent ? parent.top : undefined
+            height: width
+            width: resizeMargin
+            z: 101
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Left
         }
 
-        height: width
-        width: resizeMargin
-        z: 101
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Left
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                right: parent ? parent.right : undefined
+                top: parent ? parent.top : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            right: parent ? parent.right : undefined
-            top: parent ? parent.top : undefined
+            height: width
+            width: resizeMargin
+            z: 101
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Right
         }
 
-        height: width
-        width: resizeMargin
-        z: 101
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Right
-    }
+        MDIResizeHandlerHelper {
+            anchors {
+                left: parent ? parent.left : undefined
+                bottom: parent ? parent.bottom : undefined
+            }
 
-    ResizeHandlerHelper {
-        anchors {
-            left: parent ? parent.left : undefined
-            bottom: parent ? parent.bottom : undefined
+            height: width
+            width: resizeMargin
+            z: 101
+            groupCpp: root.groupCpp
+            resizeAllowed: root.resizeAllowed
+            resizeMargin: root.mouseResizeMargin
+            cursorPosition: KDDockWidgets.CursorPosition_Left | KDDockWidgets.CursorPosition_Bottom
         }
-
-        height: width
-        width: resizeMargin
-        z: 101
-        groupCpp: root.groupCpp
-        resizeAllowed: root.resizeAllowed
-        resizeMargin: root.mouseResizeMargin
-        cursorPosition: KDDockWidgets.CursorPosition_Left | KDDockWidgets.CursorPosition_Bottom
     }
 
     Loader {

@@ -33,12 +33,12 @@ public:
     ///@brief Docks @p dockWidget
     /// The widget will be placed at the specified position
     void addDockWidget(DockWidgetViewInterface *dockWidget, Point localPos,
-                       InitialOption addingOption = {});
+                       const InitialOption &addingOption = {});
 
 #ifdef KDDW_FRONTEND_QT
     ///@brief Convenience overload
     void addDockWidget(DockWidgetViewInterface *dockWidget, QPointF localPos,
-                       InitialOption addingOption = {});
+                       const InitialOption &addingOption = {});
 #endif
 
 private:

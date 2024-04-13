@@ -12,8 +12,11 @@
 #include "ClassicIndicatorsWindow.h"
 #include "kddockwidgets/core/indicators/ClassicDropIndicatorOverlay.h"
 #include "kddockwidgets/core/Group.h"
+#include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/Config.h"
 #include "View.h"
 #include "core/Utils_p.h"
+
 
 #include <QPainter>
 
@@ -135,9 +138,11 @@ QString Indicator::iconName(bool active) const
 QString Indicator::iconFileName(bool active) const
 {
     const QString name = iconName(active);
+    const QString path = Config::self().viewFactory()->classicIndicatorsPath();
+
     return KDDockWidgets::windowManagerHasTranslucency()
-        ? QStringLiteral(":/img/classic_indicators/%1.png").arg(name)
-        : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
+        ? QStringLiteral("%1/%2.png").arg(path, name)
+        : QStringLiteral("%1/opaque/%2.png").arg(path, name);
 }
 
 static QWidget *parentForIndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)

@@ -52,6 +52,9 @@ public:
     /// @reimp
     QSize minSize() const override;
 
+    /// @reimp
+    QSize maxSizeHint() const override;
+
     /// @brief Returns the QQuickItem which represents this group on the screen
     QQuickItem *visualItem() const override;
 
@@ -63,11 +66,19 @@ public:
     int userType() const;
     QObject *tabBarObj() const;
 
+    /// Sets the size of this group in the MDI layout
+    Q_INVOKABLE void setMDISize(QSize);
+
+
 protected:
     void removeDockWidget(Core::DockWidget *dw) override;
     void insertDockWidget(Core::DockWidget *dw, int index) override;
 
     Q_INVOKABLE void setStackLayout(QQuickItem *);
+
+    /// Called by QML when user stars resizing a MDI Group
+    /// So WidgetResizeHandler can start receiving events and resize the item
+    Q_INVOKABLE void startMDIResize();
 
     int nonContentsHeight() const override;
 

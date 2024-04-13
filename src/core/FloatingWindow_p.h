@@ -38,6 +38,7 @@ public:
 
     const FloatingWindowFlags m_flags;
     ObjectGuard<DropArea> m_dropArea;
+    bool m_minimizationPending = false;
 };
 
 }

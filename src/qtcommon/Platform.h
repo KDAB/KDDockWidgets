@@ -38,7 +38,7 @@ public:
     std::shared_ptr<Core::View> focusedView() const override;
     QVector<std::shared_ptr<Core::Window>> windows() const override;
     virtual std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const = 0;
-    int screenNumberFor(std::shared_ptr<Core::Window>) const override;
+    int screenNumberForWindow(std::shared_ptr<Core::Window>) const override;
 
     void sendEvent(Core::View *, QEvent *) const override;
 

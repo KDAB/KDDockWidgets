@@ -46,9 +46,9 @@ void Layout_wrapper::clearLayout()
 {
     ::KDDockWidgets::Core::Layout::clearLayout();
 }
-bool Layout_wrapper::containsFrame(const KDDockWidgets::Core::Group *arg__1) const
+bool Layout_wrapper::containsGroup(const KDDockWidgets::Core::Group *arg__1) const
 {
-    return ::KDDockWidgets::Core::Layout::containsFrame(arg__1);
+    return ::KDDockWidgets::Core::Layout::containsGroup(arg__1);
 }
 bool Layout_wrapper::containsItem(const KDDockWidgets::Core::Item *arg__1) const
 {
@@ -70,9 +70,9 @@ bool Layout_wrapper::isInMainWindow(bool honourNesting) const
 {
     return ::KDDockWidgets::Core::Layout::isInMainWindow(honourNesting);
 }
-KDDockWidgets::Core::Item *Layout_wrapper::itemForFrame(const KDDockWidgets::Core::Group *group) const
+KDDockWidgets::Core::Item *Layout_wrapper::itemForGroup(const KDDockWidgets::Core::Group *group) const
 {
-    return ::KDDockWidgets::Core::Layout::itemForFrame(group);
+    return ::KDDockWidgets::Core::Layout::itemForGroup(group);
 }
 int Layout_wrapper::layoutHeight() const
 {
@@ -185,11 +185,11 @@ void c_KDDockWidgets__Core__Layout__clearLayout(void *thisObj)
 {
     fromPtr(thisObj)->clearLayout();
 }
-// containsFrame(const KDDockWidgets::Core::Group * arg__1) const
-bool c_KDDockWidgets__Core__Layout__containsFrame_Group(void *thisObj, void *arg__1_)
+// containsGroup(const KDDockWidgets::Core::Group * arg__1) const
+bool c_KDDockWidgets__Core__Layout__containsGroup_Group(void *thisObj, void *arg__1_)
 {
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::Group *>(arg__1_);
-    const auto &result = fromPtr(thisObj)->containsFrame(arg__1);
+    const auto &result = fromPtr(thisObj)->containsGroup(arg__1);
     return result;
 }
 // containsItem(const KDDockWidgets::Core::Item * arg__1) const
@@ -222,11 +222,11 @@ bool c_KDDockWidgets__Core__Layout__isInMainWindow_bool(void *thisObj, bool hono
     const auto &result = fromPtr(thisObj)->isInMainWindow(honourNesting);
     return result;
 }
-// itemForFrame(const KDDockWidgets::Core::Group * group) const
-void *c_KDDockWidgets__Core__Layout__itemForFrame_Group(void *thisObj, void *group_)
+// itemForGroup(const KDDockWidgets::Core::Group * group) const
+void *c_KDDockWidgets__Core__Layout__itemForGroup_Group(void *thisObj, void *group_)
 {
     auto group = reinterpret_cast<KDDockWidgets::Core::Group *>(group_);
-    const auto &result = fromPtr(thisObj)->itemForFrame(group);
+    const auto &result = fromPtr(thisObj)->itemForGroup(group);
     return result;
 }
 // layoutHeight() const

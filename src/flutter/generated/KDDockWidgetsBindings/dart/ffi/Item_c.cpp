@@ -63,6 +63,19 @@ int Item_wrapper::height() const
 {
     return ::KDDockWidgets::Core::Item::height();
 }
+bool Item_wrapper::inSetSize() const
+{
+    if (m_inSetSizeCallback) {
+        const void *thisPtr = this;
+        return m_inSetSizeCallback(const_cast<void *>(thisPtr));
+    } else {
+        return ::KDDockWidgets::Core::Item::inSetSize();
+    }
+}
+bool Item_wrapper::inSetSize_nocallback() const
+{
+    return ::KDDockWidgets::Core::Item::inSetSize();
+}
 bool Item_wrapper::isBeingInserted() const
 {
     return ::KDDockWidgets::Core::Item::isBeingInserted();
@@ -145,6 +158,10 @@ KDDockWidgets::Size Item_wrapper::minSize_nocallback() const
 KDDockWidgets::Size Item_wrapper::missingSize() const
 {
     return ::KDDockWidgets::Core::Item::missingSize();
+}
+KDDockWidgets::Core::Item *Item_wrapper::outermostNeighbor(KDDockWidgets::Location arg__1, bool visibleOnly) const
+{
+    return ::KDDockWidgets::Core::Item::outermostNeighbor(arg__1, visibleOnly);
 }
 KDDockWidgets::Point Item_wrapper::pos() const
 {
@@ -306,6 +323,12 @@ int c_KDDockWidgets__Core__Item__height(void *thisObj)
     const auto &result = fromPtr(thisObj)->height();
     return result;
 }
+// inSetSize() const
+bool c_KDDockWidgets__Core__Item__inSetSize(void *thisObj)
+{
+    const auto &result = [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->inSetSize_nocallback();} else {    return targetPtr->inSetSize();} }();
+    return result;
+}
 // isBeingInserted() const
 bool c_KDDockWidgets__Core__Item__isBeingInserted(void *thisObj)
 {
@@ -398,6 +421,12 @@ void *c_KDDockWidgets__Core__Item__minSize(void *thisObj)
 void *c_KDDockWidgets__Core__Item__missingSize(void *thisObj)
 {
     const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->missingSize() };
+    return result;
+}
+// outermostNeighbor(KDDockWidgets::Location arg__1, bool visibleOnly) const
+void *c_KDDockWidgets__Core__Item__outermostNeighbor_Location_bool(void *thisObj, int arg__1, bool visibleOnly)
+{
+    const auto &result = fromPtr(thisObj)->outermostNeighbor(static_cast<KDDockWidgets::Location>(arg__1), visibleOnly);
     return result;
 }
 // pos() const
@@ -533,6 +562,10 @@ int c_static_KDDockWidgets__Core__Item___get_separatorThickness()
 {
     return KDDockWidgetsBindings_wrappersNS::Item_wrapper::separatorThickness;
 }
+int c_static_KDDockWidgets__Core__Item___get_layoutSpacing()
+{
+    return KDDockWidgetsBindings_wrappersNS::Item_wrapper::layoutSpacing;
+}
 bool c_static_KDDockWidgets__Core__Item___get_s_silenceSanityChecks()
 {
     return KDDockWidgetsBindings_wrappersNS::Item_wrapper::s_silenceSanityChecks;
@@ -553,6 +586,10 @@ void c_static_KDDockWidgets__Core__Item___set_separatorThickness_int(int separat
 {
     KDDockWidgetsBindings_wrappersNS::Item_wrapper::separatorThickness = separatorThickness_;
 }
+void c_static_KDDockWidgets__Core__Item___set_layoutSpacing_int(int layoutSpacing_)
+{
+    KDDockWidgetsBindings_wrappersNS::Item_wrapper::layoutSpacing = layoutSpacing_;
+}
 void c_static_KDDockWidgets__Core__Item___set_s_silenceSanityChecks_bool(bool s_silenceSanityChecks_)
 {
     KDDockWidgetsBindings_wrappersNS::Item_wrapper::s_silenceSanityChecks = s_silenceSanityChecks_;
@@ -569,31 +606,34 @@ void c_KDDockWidgets__Core__Item__registerVirtualMethodCallback(void *ptr, void 
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 258:
+    case 255:
         wrapper->m_checkSanityCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_checkSanity>(callback);
         break;
-    case 259:
+    case 256:
         wrapper->m_dumpLayoutCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_dumpLayout>(callback);
         break;
-    case 267:
+    case 259:
+        wrapper->m_inSetSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_inSetSize>(callback);
+        break;
+    case 265:
         wrapper->m_isVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_isVisible>(callback);
         break;
-    case 273:
+    case 271:
         wrapper->m_maxSizeHintCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_maxSizeHint>(callback);
         break;
-    case 274:
+    case 272:
         wrapper->m_minSizeCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_minSize>(callback);
         break;
-    case 288:
+    case 287:
         wrapper->m_setGeometry_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setGeometry_recursive>(callback);
         break;
-    case 289:
+    case 288:
         wrapper->m_setIsVisibleCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_setIsVisible>(callback);
         break;
-    case 301:
+    case 299:
         wrapper->m_updateWidgetGeometriesCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_updateWidgetGeometries>(callback);
         break;
-    case 302:
+    case 300:
         wrapper->m_visibleCount_recursiveCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::Item_wrapper::Callback_visibleCount_recursive>(callback);
         break;
     }

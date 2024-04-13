@@ -17,6 +17,7 @@
 #include "core/EventFilterInterface.h"
 #include "core/Separator.h"
 #include "core/layouting/LayoutingSeparator_p.h"
+#include <core/DockRegistry.h>
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
@@ -100,6 +101,11 @@ Platform *Platform::instance()
     return s_platform;
 }
 
+bool Platform::hasInstance()
+{
+    return s_platform != nullptr;
+}
+
 bool Platform::hasActivePopup() const
 {
     return false;
@@ -168,6 +174,12 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
     return types;
 }
 
+/*static */
+bool Platform::isInitialized()
+{
+    return s_platform != nullptr;
+}
+
 #ifdef DOCKS_TESTING_METHODS
 
 void Platform::pauseForDebugger()
@@ -176,17 +188,11 @@ void Platform::pauseForDebugger()
 
 Platform::WarningObserver::~WarningObserver() = default;
 
-/*static */
-bool Platform::isInitialized()
-{
-    return s_platform != nullptr;
-}
-
 #endif
 
 #ifdef DOCKS_DEVELOPER_MODE
 /*static*/
-void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type)
+void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type, bool defaultToOffscreenQPA)
 {
     if (Platform::isInitialized())
         return;
@@ -196,12 +202,12 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     switch (type) {
     case FrontendType::QtWidgets:
 #ifdef KDDW_FRONTEND_QTWIDGETS
-        platform = new QtWidgets::Platform(argc, argv);
+        platform = new QtWidgets::Platform(argc, argv, defaultToOffscreenQPA);
 #endif
         break;
     case FrontendType::QtQuick:
 #ifdef KDDW_FRONTEND_QTQUICK
-        platform = new QtQuick::Platform(argc, argv);
+        platform = new QtQuick::Platform(argc, argv, defaultToOffscreenQPA);
 #endif
         break;
     case FrontendType::Flutter:
@@ -233,6 +239,7 @@ void Platform::tests_deinitPlatform()
     plat->d->m_inDestruction = true;
 
     plat->tests_deinitPlatform_impl();
+    delete DockRegistry::self();
     delete plat;
 }
 #endif
@@ -293,4 +300,14 @@ QByteArray Platform::readFile(const QString &fileName, bool &ok) const
 bool Platform::supportsAeroSnap() const
 {
     return false;
+}
+
+bool EventFilterInterface::enabled() const
+{
+    return m_enabled;
+}
+
+void EventFilterInterface::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
 }

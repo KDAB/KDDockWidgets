@@ -109,7 +109,7 @@ public:
             return false;
 
         for (EventFilterInterface *filter : std::as_const(q->d->m_globalEventFilters)) {
-            if (filter->onExposeEvent(window))
+            if (filter->enabled() && filter->onExposeEvent(window))
                 return true;
         }
 
@@ -125,14 +125,16 @@ public:
 
         // Make a copy, as there could be reentrancy and filters getting removed while event being
         // processed
-        const auto filters = std::as_const(q->d->m_globalEventFilters);
+        const auto &filters = std::as_const(q->d->m_globalEventFilters);
 
         for (EventFilterInterface *filter : filters) {
-
             // Filter might have been deleted meanwhile
             if (std::find(q->d->m_globalEventFilters.cbegin(), q->d->m_globalEventFilters.cend(),
                           filter)
                 == q->d->m_globalEventFilters.cend())
+                continue;
+
+            if (!filter->enabled())
                 continue;
 
             if (filter->onMouseEvent(view.get(), ev))
@@ -220,7 +222,7 @@ std::shared_ptr<Core::Window> Platform_qt::qobjectAsWindow(QObject *obj) const
     return nullptr;
 }
 
-int Platform_qt::screenNumberFor(std::shared_ptr<Core::Window> window) const
+int Platform_qt::screenNumberForWindow(std::shared_ptr<Core::Window> window) const
 {
     if (!window)
         return -1;
@@ -289,6 +291,9 @@ Core::Platform::DisplayType Platform_qt::displayType() const
 
     if (qGuiApp->platformName() == QLatin1String("eglfs"))
         return DisplayType::QtEGLFS;
+
+    if (qGuiApp->platformName() == QLatin1String("windows"))
+        return DisplayType::Windows;
 
     return DisplayType::Other;
 }

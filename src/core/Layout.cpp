@@ -49,7 +49,7 @@ Layout::~Layout()
 
     if (d->m_rootItem && !d->m_viewDeleted)
         viewAboutToBeDeleted();
-    DockRegistry::self()->unregisterLayout(this);
+
     delete d;
 }
 
@@ -72,9 +72,6 @@ bool Layout::isInMainWindow(bool honourNesting) const
 
 Core::MainWindow *Layout::mainWindow(bool honourNesting) const
 {
-    // QtQuick doesn't support nesting yet
-    honourNesting = honourNesting && Platform::instance()->isQtWidgets();
-
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
         if (Controller *c = view()->d->firstParentOfType(ViewType::MainWindow))
@@ -204,9 +201,9 @@ bool Layout::containsItem(const Core::Item *item) const
     return d->m_rootItem->contains_recursive(item);
 }
 
-bool Layout::containsFrame(const Core::Group *group) const
+bool Layout::containsGroup(const Core::Group *group) const
 {
-    return itemForFrame(group) != nullptr;
+    return itemForGroup(group) != nullptr;
 }
 
 int Layout::count() const
@@ -224,7 +221,7 @@ int Layout::placeholderCount() const
     return count() - visibleCount();
 }
 
-Core::Item *Layout::itemForFrame(const Core::Group *group) const
+Core::Item *Layout::itemForGroup(const Core::Group *group) const
 {
     if (!group)
         return nullptr;

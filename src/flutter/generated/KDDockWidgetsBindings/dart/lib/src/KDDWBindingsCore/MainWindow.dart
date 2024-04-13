@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -70,6 +70,18 @@ class MainWindow extends KDDWBindingsCore.Controller {
             'c_KDDockWidgets__Core__MainWindow__addDockWidgetAsTab_DockWidget')
         .asFunction();
     func(thisCpp, dockwidget == null ? ffi.nullptr : dockwidget.thisCpp);
+  } // addDockWidgetToSide(KDDockWidgets::Core::DockWidget * dockWidget, KDDockWidgets::Location location, KDDockWidgets::InitialOption initialOption)
+
+  addDockWidgetToSide(KDDWBindingsCore.DockWidget? dockWidget, int location,
+      {required InitialOption initialOption}) {
+    final void_Func_voidstar_voidstar_int_voidstar func = _dylib
+        .lookup<
+                ffi.NativeFunction<
+                    void_Func_voidstar_voidstar_ffi_Int32_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__MainWindow__addDockWidgetToSide_DockWidget_Location_InitialOption')
+        .asFunction();
+    func(thisCpp, dockWidget == null ? ffi.nullptr : dockWidget.thisCpp,
+        location, initialOption == null ? ffi.nullptr : initialOption.thisCpp);
   } // anySideBarIsVisible() const
 
   bool anySideBarIsVisible() {
@@ -96,14 +108,14 @@ class MainWindow extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Rect.fromCppPointer(result, true);
-  } // clearSideBarOverlay(bool deleteFrame)
+  } // clearSideBarOverlay(bool deleteGroup)
 
-  clearSideBarOverlay({bool deleteFrame = true}) {
+  clearSideBarOverlay({bool deleteGroup = true}) {
     final void_Func_voidstar_bool func = _dylib
         .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
             'c_KDDockWidgets__Core__MainWindow__clearSideBarOverlay_bool')
         .asFunction();
-    func(thisCpp, deleteFrame ? 1 : 0);
+    func(thisCpp, deleteGroup ? 1 : 0);
   } // closeDockWidgets(bool force)
 
   bool closeDockWidgets({bool force = false}) {

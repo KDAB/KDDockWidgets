@@ -27,6 +27,8 @@
 #include <QStyleOptionDockWidget>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QTimer>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -101,6 +103,25 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
+bool Button::event(QEvent *ev)
+{
+    switch (ev->type()) {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::KeyPress:
+    case QEvent::KeyRelease: {
+        // A Button can trigger the deletion of its parent, in which case we use deleteLater
+        QScopedValueRollback<bool> guard(m_inEventHandler, true);
+        return QToolButton::event(ev);
+    }
+    default:
+        break;
+    }
+
+    return QToolButton::event(ev);
+}
+
 class KDDockWidgets::QtWidgets::TitleBar::Private
 {
 public:
@@ -137,6 +158,29 @@ TitleBar::TitleBar(QWidget *parent)
 TitleBar::~TitleBar()
 {
     delete d;
+
+    /// The window deletion might have been triggered by pressing a button, so use deleteLater()
+    for (auto button : { m_closeButton, m_floatButton, m_maximizeButton, m_minimizeButton, m_autoHideButton }) {
+        if (!button)
+            continue;
+
+        if (auto kddwButton = qobject_cast<Button *>(button); !kddwButton->m_inEventHandler) {
+            // Minor optimization. If the button is not in an event handler it's safe to delete immediately.
+            // This saves us from memory leaks at shutdown when using the below QTimer::singleShot() hack.
+            delete kddwButton;
+            continue;
+        }
+
+        button->setParent(nullptr);
+        if (usesQTBUG83030Workaround()) {
+            QTimer::singleShot(0, button, [button] {
+                /// Workaround for QTBUG-83030. QObject::deleteLater() is buggy with nested event loop
+                delete button;
+            });
+        } else {
+            button->deleteLater();
+        }
+    }
 }
 
 void TitleBar::init()
@@ -183,7 +227,8 @@ void TitleBar::init()
         m_floatButton->setVisible(m_titleBar->floatButtonVisible());
         m_floatButton->setToolTip(m_titleBar->floatButtonToolTip());
 
-        d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonEnabledChanged.connect([this](bool enabled) { m_closeButton->setEnabled(enabled); });
+        d->closeButtonEnabledConnection = m_titleBar->dptr()->closeButtonChanged.connect([this](bool visible, bool enabled) { m_closeButton->setVisible(visible);
+        m_closeButton->setEnabled(enabled); });
         d->floatButtonToolTipConnection = m_titleBar->dptr()->floatButtonToolTipChanged.connect([this](const QString &text) { m_floatButton->setToolTip(text); });
         d->floatButtonVisibleConnection = m_titleBar->dptr()->floatButtonVisibleChanged.connect([this](bool visible) { m_floatButton->setVisible(visible); });
         d->autoHideButtonConnection = m_titleBar->dptr()->autoHideButtonChanged.connect([this](bool visible, bool enabled, TitleBarButtonType type) { updateAutoHideButton(visible, enabled, type); });

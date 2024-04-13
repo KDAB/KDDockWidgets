@@ -118,6 +118,11 @@ void View::setZOrder(int)
 {
 }
 
+int View::zOrder() const
+{
+    return 0;
+}
+
 Size View::size() const
 {
     return geometry().size();
@@ -217,7 +222,7 @@ Core::FloatingWindow *View::asFloatingWindowController() const
 
 Core::Group *View::asGroupController() const
 {
-    if (m_controller && m_controller->is(ViewType::Frame))
+    if (m_controller && m_controller->is(ViewType::Group))
         return object_cast<Core::Group *>(m_controller);
 
     return nullptr;
@@ -363,6 +368,16 @@ bool View::Private::aboutToBeDestroyed() const
 void View::dumpDebug()
 {
     KDDW_DEBUG("View::dumpDebug: controller={}, type={}, rootController={}\n", ( void * )m_controller, int(d->type()), ( void * )rootView()->controller());
+}
+
+bool View::isFixedWidth() const
+{
+    return !m_inDtor && minSize().width() == maxSizeHint().width();
+}
+
+bool View::isFixedHeight() const
+{
+    return !m_inDtor && minSize().height() == maxSizeHint().height();
 }
 
 /** static */

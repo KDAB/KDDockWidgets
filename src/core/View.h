@@ -149,7 +149,7 @@ public:
         return false;
     }
 
-    /// Equivalent to Qt's QObject::objectProperty()
+    /// Equivalent to Qt's QObject::objectName()
     virtual void setViewName(const QString &) = 0;
     virtual QString viewName() const = 0;
 
@@ -178,8 +178,12 @@ public:
     virtual bool is(ViewType) const;
 
     /// @brief Sets the z order
-    /// Not supported on all platforms
+    /// Not supported on all platforms and only relevant for MDI mode.
     virtual void setZOrder(int);
+
+    /// Returns the zOrder
+    /// Not supported on all platforms and only relevant for MDI mode.
+    virtual int zOrder() const;
 
     /// @Returns a list of child views
     virtual Vector<std::shared_ptr<View>> childViews() const = 0;
@@ -244,6 +248,9 @@ public:
 
     /// Prints some debug to stderr
     void dumpDebug();
+
+    bool isFixedWidth() const;
+    bool isFixedHeight() const;
 
 public:
     class Private;

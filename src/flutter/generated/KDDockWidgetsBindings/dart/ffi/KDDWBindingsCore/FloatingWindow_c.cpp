@@ -90,9 +90,9 @@ bool FloatingWindow_wrapper::hasSingleDockWidget() const
 {
     return ::KDDockWidgets::Core::FloatingWindow::hasSingleDockWidget();
 }
-bool FloatingWindow_wrapper::hasSingleFrame() const
+bool FloatingWindow_wrapper::hasSingleGroup() const
 {
-    return ::KDDockWidgets::Core::FloatingWindow::hasSingleFrame();
+    return ::KDDockWidgets::Core::FloatingWindow::hasSingleGroup();
 }
 bool FloatingWindow_wrapper::isInDragArea(KDDockWidgets::Point globalPoint) const
 {
@@ -311,10 +311,10 @@ bool c_KDDockWidgets__Core__FloatingWindow__hasSingleDockWidget(void *thisObj)
     const auto &result = fromPtr(thisObj)->hasSingleDockWidget();
     return result;
 }
-// hasSingleFrame() const
-bool c_KDDockWidgets__Core__FloatingWindow__hasSingleFrame(void *thisObj)
+// hasSingleGroup() const
+bool c_KDDockWidgets__Core__FloatingWindow__hasSingleGroup(void *thisObj)
 {
-    const auto &result = fromPtr(thisObj)->hasSingleFrame();
+    const auto &result = fromPtr(thisObj)->hasSingleGroup();
     return result;
 }
 // isInDragArea(KDDockWidgets::Point globalPoint) const
@@ -438,16 +438,16 @@ void c_KDDockWidgets__Core__FloatingWindow__registerVirtualMethodCallback(void *
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 976:
+    case 1003:
         wrapper->m_isMDICallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isMDI>(callback);
         break;
-    case 979:
+    case 1006:
         wrapper->m_isWindowCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_isWindow>(callback);
         break;
     case 331:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_setParentView_impl>(callback);
         break;
-    case 995:
+    case 1022:
         wrapper->m_singleDockWidgetCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::FloatingWindow_wrapper::Callback_singleDockWidget>(callback);
         break;
     }

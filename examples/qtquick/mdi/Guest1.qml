@@ -33,11 +33,10 @@ Guest {
         }
 
         onClicked: {
-
-            if (another.dockWidget.visible) {
-                another.dockWidget.close();
+            if (another.isOpen) {
+                another.close();
             } else {
-                another.dockWidget.show();
+                another.show();
             }
         }
     }

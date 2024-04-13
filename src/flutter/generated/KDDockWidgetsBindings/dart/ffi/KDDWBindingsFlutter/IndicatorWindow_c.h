@@ -161,6 +161,8 @@ public:
     virtual bool updatePositions_flutter_nocallback(int overlayWidth, int overlayHeight, KDDockWidgets::Core::Group *hoveredGroup, int visibleLocations);
     virtual QString viewName() const;
     virtual QString viewName_nocallback() const;
+    virtual int zOrder() const;
+    virtual int zOrder_nocallback() const;
     typedef void (*Callback_activateWindow)(void *);
     Callback_activateWindow m_activateWindowCallback = nullptr;
     typedef bool (*Callback_close)(void *);
@@ -297,6 +299,8 @@ public:
     Callback_updatePositions_flutter m_updatePositions_flutterCallback = nullptr;
     typedef QString *(*Callback_viewName)(void *);
     Callback_viewName m_viewNameCallback = nullptr;
+    typedef int (*Callback_zOrder)(void *);
+    Callback_zOrder m_zOrderCallback = nullptr;
 };
 }
 }
@@ -443,6 +447,8 @@ DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__updatePositions(voi
 DOCKS_EXPORT bool c_KDDockWidgets__flutter__IndicatorWindow__updatePositions_flutter_int_int_Group_int(void *thisObj, int overlayWidth, int overlayHeight, void *hoveredGroup_, int visibleLocations);
 // KDDockWidgets::flutter::IndicatorWindow::viewName() const
 DOCKS_EXPORT void *c_KDDockWidgets__flutter__IndicatorWindow__viewName(void *thisObj);
+// KDDockWidgets::flutter::IndicatorWindow::zOrder() const
+DOCKS_EXPORT int c_KDDockWidgets__flutter__IndicatorWindow__zOrder(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__destructor(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__flutter__IndicatorWindow_Finalizer(void *cppObj);

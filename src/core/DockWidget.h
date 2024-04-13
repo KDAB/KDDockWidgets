@@ -89,7 +89,7 @@ public:
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *other,
-                            KDDockWidgets::InitialOption initialOption = {});
+                            const KDDockWidgets::InitialOption &initialOption = {});
 
     /**
      * @brief docks @p other widget into the window that contains this one.
@@ -108,7 +108,7 @@ public:
     addDockWidgetToContainingWindow(KDDockWidgets::Core::DockWidget *other,
                                     KDDockWidgets::Location location,
                                     KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
-                                    KDDockWidgets::InitialOption initialOption = {});
+                                    const KDDockWidgets::InitialOption &initialOption = {});
 
     /**
      * @brief sets the widget which this dock widget hosts.
@@ -375,6 +375,9 @@ public:
      */
     void moveToSideBar();
 
+    /// Removes itself from the sidebar, if it's in the sidebar.
+    void removeFromSideBar();
+
     /// @brief Returns whether this dock widget is overlayed from the side-bar.
     ///
     /// This is only relevant when using the auto-hide and side-bar feature.
@@ -435,6 +438,9 @@ public:
     /// @brief Returns whether this widget has the LayoutSaverOption::Skip flag
     bool skipsRestore() const;
 
+    /// Returns the last reason why the dock widget was closed
+    CloseReason lastCloseReason() const;
+
     /// @brief If this dock widget is floating, then sets its geometry to @p geo.
     ///
     /// If this dock widget is hidden then it stores the geometry so it can be used the next
@@ -460,6 +466,12 @@ public:
     /// only implemented for QtQuick
     void setMDIZ(int z);
 
+    /// returns the z-order in the MDI layout
+    /// Note that this is different than calling View::zOrder() directly on the dock widget
+    /// as the dockwidget is parented into a tabwidget, inside a group (would return 0 always)
+    /// This one is more useful, as you can compare it against other dock widgets inside the same layout
+    int mdiZ() const;
+
     ///@brief Returns whether this dock widget is the main window persistent central widget
     /// This only applies when using MainWindowOption_HasCentralWidget
     bool isPersistentCentralDockWidget() const;
@@ -483,6 +495,13 @@ public:
     /// Returns whether this dock widget was successfully restored in the last LayoutSaver::restore*() call
     /// Reasons for this to be false can be for example the DockWidget not existing at restore time
     bool wasRestored() const;
+
+    /// @internal
+    /// Sets the dock widget unique name.
+    /// DockWidgets have their name set once (passed in ctor), therefore this method doesn't need
+    /// to be called, unless you know what you're doing (like reusing dock widgets during restore).
+    /// Don't open bug reports about this method.
+    void setUniqueName(const QString &);
 
 protected:
     void setParentView_impl(View *parent) override;

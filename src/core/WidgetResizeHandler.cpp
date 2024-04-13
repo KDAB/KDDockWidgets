@@ -137,16 +137,16 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
     } else if (isMDI()) {
         // Case #2: Resizing an embedded MDI "Window"
 
-        // Each Frame has a WidgetResizeHandler instance.
-        // mTarget is the Frame we want to resize.
+        // Each Group has a WidgetResizeHandler instance.
+        // mTarget is the Group we want to resize.
         // but 'o' might not be mTarget, because we're using a global event filter.
         // The global event filter is required because we allow the cursor to be outside the group,
         // a few pixels so we have a nice resize margin. Here we deal with the case where our
-        // mTarget, let's say "Frame 1" is on top of "Frame 2" but cursor is near "Frame 2"'s
+        // mTarget, let's say "Group 1" is on top of "Group 2" but cursor is near "Group 2"'s
         // margins, and would show resize cursor. We only want to continue if the cursor is near the
         // margins of our own group (mTarget)
 
-        auto f = widget->d->firstParentOfType(ViewType::Frame);
+        auto f = widget->d->firstParentOfType(ViewType::Group);
         auto group = f ? f->view()->asGroupController() : nullptr;
         if (group && group->isMDIWrapper()) {
             // We don't care about the inner Option_MDINestable helper group
@@ -158,8 +158,11 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
                 group->view()->d->aboutToBeDestroyed() ? nullptr : group->view()->parentView();
             auto targetParent = mTarget->d->aboutToBeDestroyed() ? nullptr : mTarget->parentView();
             const bool areSiblings = groupParent && groupParent->equals(targetParent);
-            if (areSiblings)
+            if (areSiblings) {
+                if (cursorPosition(Qt5Qt6Compat::eventGlobalPos(e)) == CursorPosition_Undefined)
+                    restoreMouseCursor();
                 return false;
+            }
         }
     }
 
@@ -168,7 +171,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
         if (mTarget->isMaximized())
             break;
 
-        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(e));
+        CursorPosition cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(e));
         updateCursor(cursorPos);
         if (cursorPos == CursorPosition_Undefined)
             return false;
@@ -205,6 +208,9 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
         mTarget->releaseMouse();
         mTarget->releaseKeyboard();
+        if (m_eventFilteringStartsManually)
+            EventFilterInterface::setEnabled(false);
+
         return true;
 
         break;
@@ -346,6 +352,12 @@ bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
 
+void WidgetResizeHandler::requestNCCALCSIZE(HWND winId)
+{
+    SetWindowPos(winId, 0, 0, 0, 0, 0,
+                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+}
+
 /// Handler to enable Aero-snap
 bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
                                                    const QByteArray &eventType, void *message,
@@ -390,6 +402,12 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg
                                                    const NativeFeatures &features)
 {
     if (msg->message == WM_NCCALCSIZE && features.hasShadow()) {
+        if (w->windowState() == WindowState::Minimized && w->hasBeenMinimizedDirectlyFromRestore()) {
+            // Qt is buggy with custom WM_NCCALCSIZE if window is minimized.
+            // Use full frame when minimized. We'll trigger WM_NCCALCSIZE when un-minimized.
+            return false;
+        }
+
         *result = 0;
         return true;
     } else if (msg->message == WM_NCHITTEST && (features.hasResize() || features.hasDrag())) {
@@ -506,6 +524,9 @@ void WidgetResizeHandler::setTarget(View *w)
 
 void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
+    if (!m_handlesMouseCursor)
+        return;
+
     if (!mTargetGuard) {
         // Our target was destroyed while we're processing mouse events, it's fine.
         restoreMouseCursor();
@@ -561,6 +582,9 @@ void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 
 void WidgetResizeHandler::restoreMouseCursor()
 {
+    if (!m_handlesMouseCursor)
+        return;
+
     if (m_usesGlobalEventFilter) {
         if (m_overrideCursorSet) {
             Platform::instance()->restoreMouseCursor();
@@ -571,19 +595,18 @@ void WidgetResizeHandler::restoreMouseCursor()
     }
 }
 
-CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
+CursorPosition WidgetResizeHandler::cursorPosition_(Point globalPos) const
 {
-    if (!mTargetGuard)
-        return CursorPosition_Undefined;
-
 #ifdef KDDW_FRONTEND_QTQUICK
     if (Platform::instance()->isQtQuick() && isMDI()) {
         // Special case for QtQuick. The MouseAreas are driving it and know better what's the
         // cursor position
         auto qtview = static_cast<KDDockWidgets::QtCommon::View_qt *>(mTarget);
         const QVariant v = qtview->viewProperty("cursorPosition");
-        if (v.isValid())
-            return CursorPosition(v.toInt());
+        if (v.isValid()) {
+            auto pos = CursorPosition(v.toInt());
+            return pos;
+        }
     }
 #endif
 
@@ -614,12 +637,39 @@ CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
     return static_cast<CursorPosition>(result);
 }
 
+CursorPosition WidgetResizeHandler::cursorPosition(Point globalPos) const
+{
+    if (!mTargetGuard)
+        return CursorPosition_Undefined;
+
+    auto candidatePos = cursorPosition_(globalPos);
+
+    if (isMDI()) {
+        int result = int(candidatePos);
+
+        if (auto group = mTarget->asGroupController()) {
+            // Honour fixed size. Don't show mouse shape for resizing.
+            if (group->isFixedHeight())
+                result &= ~CursorPosition_Vertical;
+
+            if (group->isFixedWidth())
+                result &= ~CursorPosition_Horizontal;
+        } else {
+            KDDW_ERROR("WidgetResizeHandler::cursorPosition: Expected group");
+        }
+
+        return static_cast<CursorPosition>(result);
+    } else {
+        // For regular docking there's other mechanisms to enforce fixed size
+        return candidatePos;
+    }
+}
+
 /** static */
 void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
 {
     // Does some minor setup on our QWindow.
     // Like adding the drop shadow on Windows and two other workarounds.
-
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         const auto wid = HWND(window->handle());
@@ -628,9 +678,7 @@ void WidgetResizeHandler::setupWindow(Core::Window::Ptr window)
             // nudge. Otherwise what Qt thinks is the client area is not what Windows knows it is.
             // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take
             // note of the margins we're using.
-            const auto winId = HWND(win->handle());
-            SetWindowPos(winId, 0, 0, 0, 0, 0,
-                         SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+            requestNCCALCSIZE(HWND(win->handle()));
         });
 
         const bool usesTransparentFloatingWindow =
@@ -691,3 +739,14 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
     return false;
 }
 #endif
+
+void WidgetResizeHandler::setEventFilterStartsManually()
+{
+    m_eventFilteringStartsManually = true;
+    EventFilterInterface::setEnabled(false);
+}
+
+void WidgetResizeHandler::setHandlesMouseCursor(bool handles)
+{
+    m_handlesMouseCursor = handles;
+}

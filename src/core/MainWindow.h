@@ -90,8 +90,30 @@ public:
     void addDockWidget(KDDockWidgets::Core::DockWidget *dockWidget,
                        KDDockWidgets::Location location,
                        KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
-                       KDDockWidgets::InitialOption initialOption = {});
+                       const KDDockWidgets::InitialOption &initialOption = {});
 
+    // dev mode only for now, as it still has bugs.
+    // We need to be able to dock to relativeTo=hidden dock
+    /**
+     * Docks a DockWidget into this main window at the specified side.
+     * To be used only with MainWindowOption_HasCentralWidget or MainWindowOption_HasCentralFrame.
+     * This is to mimic old QDockWidget system where there were 4 sides around the central widget (not infinite nesting).
+     *
+     * Example:
+     * Adding dock widget D1 to Right results in:
+     *   +---------+--+
+     *   | central |D1|
+     *   +---------+--+
+     * but adding D2 to Right as well will result in
+     *   +---------+--+
+     *   |         |D1|
+     *   | central +--+
+     *   |         |D2|
+     *   +---------+--+
+     *   which is actually equivalent to addDockWidget(D2, Location_onBottom, /relativeTo=/D1);
+     */
+    void addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget,
+                             KDDockWidgets::Location location, const KDDockWidgets::InitialOption &initialOption = {});
     /**
      * @brief Sets a persistent central widget. It can't be detached.
      *
@@ -170,7 +192,7 @@ public:
     void toggleOverlayOnSideBar(KDDockWidgets::Core::DockWidget *dw);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
-    void clearSideBarOverlay(bool deleteFrame = true);
+    void clearSideBarOverlay(bool deleteGroup = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
     KDDockWidgets::Core::SideBar *

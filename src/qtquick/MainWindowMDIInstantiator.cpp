@@ -46,7 +46,7 @@ QVector<QString> MainWindowMDIInstantiator::affinities() const
 }
 
 void MainWindowMDIInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,
-                                              InitialOption addingOption)
+                                              const InitialOption &addingOption)
 {
     if (!dockWidget || !m_mainWindow)
         return;

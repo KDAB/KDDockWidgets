@@ -52,7 +52,10 @@ endfunction()
 
 # tst_qtwidgets
 if(KDDW_FRONTEND_QTWIDGETS)
-    add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+    set(CMAKE_AUTOUIC ON)
+    add_executable(
+        tst_qtwidgets qtwidgets/tst_qtwidgets.cpp qtwidgets/mainwindow.ui ${TESTING_SRCS} ${TESTING_RESOURCES}
+    )
     target_link_libraries(tst_qtwidgets kdbindings kddockwidgets Qt${QT_VERSION_MAJOR}::Test)
     if(KDDockWidgets_HAS_SPDLOG)
         target_link_libraries(tst_qtwidgets spdlog::spdlog)
@@ -60,6 +63,8 @@ if(KDDW_FRONTEND_QTWIDGETS)
     kddw_add_nlohmann(tst_qtwidgets)
     set_compiler_flags(tst_qtwidgets)
     _add_test(tst_qtwidgets)
+    add_subdirectory(manual/qtwidgets_leaks)
+    add_subdirectory(manual/qdockwidget)
 endif()
 
 # tst_qtquick
@@ -130,9 +135,9 @@ add_kddw_test(tst_separator core/tst_separator.cpp)
 add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp)
 add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp)
 
-# This one doesn't even build yet
 if(NOT KDDW_FRONTEND_FLUTTER)
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp)
+    add_kddw_test(tst_native_qpa tst_native_qpa.cpp)
 
     # Check if includes are installed
     add_subdirectory(includes_test)

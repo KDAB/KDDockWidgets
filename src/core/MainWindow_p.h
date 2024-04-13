@@ -117,6 +117,7 @@ public:
     Layout *m_layout = nullptr;
     Core::DockWidget *m_persistentCentralDockWidget = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+    KDBindings::ScopedConnection m_resizeConnection;
     const bool m_supportsAutoHide;
     int m_overlayMargin = 1;
 };
