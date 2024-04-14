@@ -710,6 +710,33 @@ KDDW_QCORO_TASK tst_restoreMaximizedState()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_minimizeRestoreBug()
+{
+    // Tests a bug where an unminimized window would have StartsMinimized in its serialization
+
+    EnsureTopLevelsDeleted e;
+    auto m = Platform::instance()->createMainWindow("MyMainLayout", {}, {});
+
+    auto d1 = createDockWidget("Dock #1");
+    createDockWidget("Dock #2");
+    createDockWidget("Dock #3");
+    auto d4 = createDockWidget("dock4");
+
+    bool ok = false;
+    LayoutSaver restorer;
+    const QByteArray data = Platform::instance()->readFile(":/layouts/minimizeBug.json", /*by-ref*/ ok);
+    CHECK(ok);
+    CHECK(restorer.restoreLayout(data));
+    CHECK(d1->isOpen());
+    CHECK(d4->isOpen());
+    CHECK_EQ(m->view()->window()->windowState(), WindowState::None);
+
+    CHECK(!(d1->floatingWindow()->floatingWindowFlags() & FloatingWindowFlag::StartsMinimized));
+    delete m;
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreFloatingMinimizedState()
 {
     EnsureTopLevelsDeleted e;
@@ -6294,6 +6321,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_maximizeButton),
         TEST(tst_restoreAfterUnminimized),
         TEST(tst_doubleScheduleDelete),
+        TEST(tst_minimizeRestoreBug),
 #endif
         TEST(tst_keepLast)
 };
