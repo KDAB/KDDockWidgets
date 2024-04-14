@@ -557,8 +557,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             fw.parentIndex == -1 ? nullptr : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
         auto flags = static_cast<FloatingWindowFlags>(fw.flags);
-        if (int(fw.windowState) & int(WindowState::Minimized))
-            flags |= FloatingWindowFlag::StartsMinimized;
+        flags.setFlag(FloatingWindowFlag::StartsMinimized, int(fw.windowState) & int(WindowState::Minimized));
 
         auto floatingWindow =
             new Core::FloatingWindow({}, parent, flags);
