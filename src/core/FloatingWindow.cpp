@@ -206,7 +206,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
 
 FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
                                MainWindow *parent)
-    : FloatingWindow({}, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
+    : FloatingWindow(suggestedGeometry, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
     ScopedValueRollback guard(m_disableSetVisible, true);
 
