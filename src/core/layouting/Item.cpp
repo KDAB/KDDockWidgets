@@ -1186,6 +1186,21 @@ int ItemBoxContainer::numSideBySide_recursive(Qt::Orientation o) const
     return num;
 }
 
+bool ItemBoxContainer::percentagesAreSane() const
+{
+    const Item::List visibleChildren = this->visibleChildren();
+    const Vector<double> percentages = d->childPercentages();
+    const double totalPercentage = std::accumulate(percentages.begin(), percentages.end(), 0.0);
+    const double expectedPercentage = visibleChildren.isEmpty() ? 0.0 : 1.0;
+    if (!fuzzyCompare(totalPercentage, expectedPercentage)) {
+        root()->dumpLayout();
+        KDDW_ERROR("Percentages don't add up", totalPercentage, percentages, ( void * )this);
+        return false;
+    }
+
+    return true;
+}
+
 bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
@@ -1280,15 +1295,11 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        const Vector<double> percentages = d->childPercentages();
-        const double totalPercentage = std::accumulate(percentages.begin(), percentages.end(), 0.0);
-        const double expectedPercentage = visibleChildren.isEmpty() ? 0.0 : 1.0;
-        if (!fuzzyCompare(totalPercentage, expectedPercentage)) {
-            root()->dumpLayout();
-            KDDW_ERROR("Percentages don't add up", totalPercentage, percentages, ( void * )this);
+        if (!percentagesAreSane()) {
+            // Percentages might be broken due to buggy old layouts. Try to fix them:
             const_cast<ItemBoxContainer *>(this)->d->updateSeparators_recursive();
-            KDDW_ERROR("percentages={}", d->childPercentages());
-            return false;
+            if (!percentagesAreSane())
+                return false;
         }
     }
 
