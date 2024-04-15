@@ -216,6 +216,7 @@ private Q_SLOTS:
     void tst_tabBarIcons();
     void tst_debugWidgetViewer();
     void tst_addDockWidgetToContainingWindowNested();
+    void tst_restoreInvalidPercentages();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -2947,6 +2948,28 @@ void TestQtWidgets::tst_indicatorsNotShowing()
     QCOMPARE(tlw->controller(), m1.get());
 
     dc->programmaticStopDrag();
+}
+
+void TestQtWidgets::tst_restoreInvalidPercentages()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "mainWindowId1");
+
+    createDockWidget("_kddw_internal_dummy", Platform::instance()->tests_createView({ true }));
+    createDockWidget("_kddw_internal_dummy2", Platform::instance()->tests_createView({ true }));
+    for (int i = 0; i <= 8; ++i) {
+        new QtWidgets::DockWidget(QStringLiteral("dockwidget_tests_%1").arg(i));
+    }
+
+    bool ok = false;
+    LayoutSaver restorer;
+    const QByteArray data = Platform::instance()->readFile(":/layouts/invalidPercentages.json", /*by-ref*/ ok);
+    QVERIFY(ok);
+    QVERIFY(restorer.restoreLayout(data));
+
+    LayoutSaver saver;
+    QVERIFY(!saver.serializeLayout().isEmpty());
 }
 
 int main(int argc, char *argv[])

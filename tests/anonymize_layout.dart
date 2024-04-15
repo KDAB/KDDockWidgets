@@ -48,6 +48,10 @@ main(List<String> args) {
       return;
     }
 
+    /// Skip internals
+    if (["-persistentCentralDockWidget", "_kddw_internal_dummy", "_kddw_internal_dummy2"].contains(name))
+      continue;
+
     contents = contents.replaceAll(name, "dockwidget_tests_$i");
     i++;
   }
