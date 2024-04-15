@@ -444,6 +444,7 @@ public:
     Size minSize() const override;
     Size maxSizeHint() const override;
     Size availableSize() const;
+    bool percentagesAreSane() const;
     Q_REQUIRED_RESULT bool checkSanity() override;
     void dumpLayout(int level = 0, bool printSeparators = true) override;
     void setSize_recursive(
