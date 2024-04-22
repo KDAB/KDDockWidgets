@@ -211,11 +211,12 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation()
 KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
 {
     // Tests with LayoutSaver
-    EnsureTopLevelsDeleted e;
+
     QByteArray saved;
 
     // #1 Tests after a restore
     {
+        EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None, "mainWindow1");
         auto dock1 = createDockWidget("1");
         CHECK(!dock1->hasPreviousDockedLocation());
@@ -234,6 +235,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
 
     // #2. Tests after a restore but with a fresh main window
     {
+        EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None, "mainWindow1");
         auto dock1 = createDockWidget("1");
         CHECK(!dock1->hasPreviousDockedLocation());
@@ -246,6 +248,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
 
     // #3. Tests after a restore but with a fresh main window
     {
+        EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None, "mainWindow1");
         LayoutSaver saver;
         saver.restoreLayout(saved);
@@ -258,6 +261,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
     // #4. Tests with StartHidden
     QByteArray saved2;
     {
+        EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None, "mainWindow2");
         auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true, {}, { 100, 100 } }), {}, {}, false);
         CHECK(dock2->isFloating());
@@ -270,6 +274,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
     }
 
     {
+        EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(501, 500), MainWindowOption_None, "mainWindow2");
         auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true, {}, { 100, 100 } }), {}, {}, false);
 
