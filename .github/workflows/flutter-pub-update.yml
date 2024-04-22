@@ -27,9 +27,7 @@ jobs:
           sudo apt update -qq
           sudo apt install wget curl file unzip zip xz-utils -y
 
-      - name: Install Dart SDK
-        uses: dart-lang/setup-dart@v1
-
+      - name: Install Flutter SDK
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.6'
