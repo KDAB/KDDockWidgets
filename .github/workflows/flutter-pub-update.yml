@@ -30,6 +30,11 @@ jobs:
       - name: Install Dart SDK
         uses: dart-lang/setup-dart@v1
 
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
+          channel: 'stable'
+
       - name: Setup git author name
         uses: fregante/setup-git-user@v2
 
