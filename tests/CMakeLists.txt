@@ -98,6 +98,7 @@ function(add_kddw_test test srcs)
         target_link_libraries(${test} kddockwidgets)
         _add_test(${test})
         target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
+        target_compile_definitions(${test} PRIVATE KDDW_HAS_SPDLOG)
 
         if(KDDockWidgets_FLUTTER_TESTS_AOT)
             set(KDDW_AOT_VALUE 1)
