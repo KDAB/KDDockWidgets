@@ -88,4 +88,4 @@ jobs:
           flutter build linux
 
       - name: Run tests
-        run: xvfb dart run_flutter_tests.dart ${{ join(matrix.preset.args, ' ') }}
+        run: xvfb-run dart run_flutter_tests.dart ${{ join(matrix.preset.args, ' ') }}
