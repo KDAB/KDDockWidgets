@@ -8,7 +8,7 @@ name: (Scheduled) Runs flutter pub upgrade
 
 on:
   schedule:
-  - cron: '0 3 * * *'
+  - cron: '0 0 1 * *' # monthly
   workflow_dispatch:
 
 jobs:
