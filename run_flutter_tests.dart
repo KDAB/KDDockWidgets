@@ -96,7 +96,7 @@ Future<int> runTests(String? singleTestName, List<String> singleTestArgs,
 
   if (singleTestName == null) {
     // Run everything:
-    return await runCommand("ctest", ["-j5"],
+    return await runCommand("ctest", ["-j1", "--output-on-failure"],
         workingDirectory: buildDir, env: env);
   } else {
     // Run a single test:
