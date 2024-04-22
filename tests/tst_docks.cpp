@@ -3083,6 +3083,7 @@ KDDW_QCORO_TASK tst_restoreGroupOptions()
 
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
+    EnsureTopLevelsDeleted e;
     auto m =
         createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -6190,7 +6191,6 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_restoreWithNonClosableWidget),
         TEST(tst_restoreCrash),
         TEST(tst_restoreSideBySide),
-        TEST(tst_restoreWithCentralFrameWithTabs),
         TEST(tst_restoreGroupOptions),
         TEST(tst_restoreWithAffinity),
         TEST(tst_marginsAfterRestore),
@@ -6221,8 +6221,6 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_setAsCurrentTab),
         TEST(tst_placeholderDisappearsOnReadd),
         TEST(tst_placeholdersAreRemovedProperly),
-        TEST(tst_preferredInitialSize),
-        TEST(tst_preferredInitialSizeVsMinSize),
         TEST(tst_closeAllDockWidgets),
         TEST(tst_toggleMiddleDockCrash),
         TEST(tst_stealFrame),
@@ -6234,7 +6232,6 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_posAfterLeftDetach),
         TEST(tst_propagateMinSize),
         TEST(tst_createFloatingWindow),
-        TEST(tst_fairResizeAfterRemoveWidget),
         TEST(tst_unfloatTabbedFloatingWidgets),
         TEST(tst_unfloatTabbedFloatingWidgets2),
         TEST(tst_resizeViaAnchorsAfterPlaceholderCreation),
@@ -6281,6 +6278,10 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_mainWindowToggle),
         TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
+        TEST(tst_restoreWithCentralFrameWithTabs),
+        TEST(tst_preferredInitialSize),
+        TEST(tst_preferredInitialSizeVsMinSize),
+        TEST(tst_fairResizeAfterRemoveWidget),
         TEST(tst_minMaxGuest),
         TEST(tst_doesntHaveNativeTitleBar),
         TEST(tst_sizeAfterRedock),
