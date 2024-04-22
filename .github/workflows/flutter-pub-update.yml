@@ -20,7 +20,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
-        ref: main # always main branch
+        with:
+          ref: "main" # always main branch
 
       - name: Install dependencies
         run: |
