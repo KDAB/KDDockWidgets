@@ -3121,8 +3121,6 @@ KDDW_QCORO_TASK tst_restoreAfterMinSizeChanges()
 
     saver.restoreLayout(saved);
 
-    Platform::instance()->tests_wait(10000000);
-
     KDDW_TEST_RETURN(true);
 }
 
