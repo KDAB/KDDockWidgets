@@ -3097,29 +3097,49 @@ KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 
 KDDW_QCORO_TASK tst_restoreAfterMinSizeChanges()
 {
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(1000, 1000), {}, "tst_restoreWithPlaceholder");
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(Size(1000, 1000), {}, "tst_restoreWithPlaceholder");
 
-    auto guest = Platform::instance()->tests_createView({ true });
-    auto dockA = createDockWidget("A", guest);
-    const auto minSize = Size(300, 300);
-    dockA->view()->setMinimumSize(minSize);
+        auto guest = Platform::instance()->tests_createView({ true });
+        auto dockA = createDockWidget("A", guest);
+        const auto minSize = Size(300, 300);
+        dockA->view()->setMinimumSize(minSize);
 
-    guest = Platform::instance()->tests_createView({ true });
-    auto dockB = createDockWidget("B", guest);
+        guest = Platform::instance()->tests_createView({ true });
+        auto dockB = createDockWidget("B", guest);
 
-    m->addDockWidget(dockB, Location_OnLeft);
-    m->addDockWidget(dockA, Location_OnLeft, nullptr, minSize);
+        m->addDockWidget(dockB, Location_OnLeft);
+        m->addDockWidget(dockA, Location_OnLeft, nullptr, minSize);
 
-    LayoutSaver saver;
-    const auto saved = saver.serializeLayout();
+        LayoutSaver saver;
+        const auto saved = saver.serializeLayout();
 
-    // Min size increaseses:
-    dockA->view()->setMinimumSize({ 600, 300 });
-    dockA->close();
-    dockB->close();
+        // Min size increaseses:
+        dockA->view()->setMinimumSize({ 600, 300 });
+        dockA->close();
+        dockB->close();
 
-    saver.restoreLayout(saved);
+        saver.restoreLayout(saved);
+    }
+
+    // Now from an existing saved layout
+    {
+        auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "mainWindowId1");
+
+        createDockWidget("_kddw_internal_dummy");
+        createDockWidget("_kddw_internal_dummy2");
+        for (int i = 0; i <= 8; ++i) {
+            auto dock = createDockWidget((std::string("dockwidget_tests_") + std::to_string(i)).c_str());
+            dock->view()->setMinimumSize({ 300, 300 });
+        }
+
+        bool ok = false;
+        LayoutSaver restorer;
+        const QByteArray data = Platform::instance()->readFile(":/layouts/minSizeChanges.json", /*by-ref*/ ok);
+        CHECK(ok);
+        CHECK(restorer.restoreLayout(data));
+    }
 
     KDDW_TEST_RETURN(true);
 }
