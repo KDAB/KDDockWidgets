@@ -12,6 +12,7 @@
         <file>layouts/sidebar_restore.json</file>
         <file>layouts/minimizeBug.json</file>
         <file>layouts/invalidPercentages.json</file>
+        <file>layouts/minSizeChanges.json</file>
         <file>main.qml</file>
         <file>main2.qml</file>
         <file>main465.qml</file>
