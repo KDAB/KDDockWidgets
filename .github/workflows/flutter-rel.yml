@@ -26,7 +26,7 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-latest
+          - macos-13
 
         preset:
           - name: release-flutter
@@ -36,7 +36,7 @@ jobs:
             flutter_os: "linux"
           - os: windows-latest
             flutter_os: "windows"
-          - os: macos-latest
+          - os: macos-13
             flutter_os: "macos"
 
     steps:
