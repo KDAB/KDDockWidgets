@@ -3735,6 +3735,11 @@ LayoutingSeparator *ItemBoxContainer::adjacentSeparatorForChild(Item *child, Sid
     return nullptr;
 }
 
+bool ItemBoxContainer::isDeserializing() const
+{
+    return d->m_isDeserializing;
+}
+
 bool ItemBoxContainer::isOverflowing() const
 {
     // This never returns true, unless when loading a buggy layout
