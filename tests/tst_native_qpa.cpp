@@ -140,7 +140,7 @@ void TestNativeQPA::tst_restoreNormalFromMaximized()
 
 void TestNativeQPA::tst_restoreMaximizedFromNormal()
 {
-    if (qApp->platformName() == QLatin1String("offscreen")) {
+    if (qGuiApp->platformName() == QLatin1String("offscreen")) {
         // offscreen: calling showMaximized() on an hidden widget, puts it at pos=2,2 instead of 0,0
         // Ignore this QPA. This file is for testing native QPAs only. offscreen is nice to have
         // if it beahaves well only.
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
     int exitCode = 0;
     for (FrontendType type : Platform::frontendTypes()) {
         KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, type, /*defaultToOffscreenQPA=*/false);
-        qDebug() << "\nTesting platform" << type << "on" << qApp->platformName() << "\n";
+        qDebug() << "\nTesting platform" << type << "on" << qGuiApp->platformName() << "\n";
 
         TestNativeQPA test;
 
