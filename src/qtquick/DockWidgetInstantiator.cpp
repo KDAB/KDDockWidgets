@@ -16,6 +16,8 @@
 #include "Config.h"
 #include "Platform.h"
 
+#include <kdbindings/signal.h>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
@@ -28,6 +30,19 @@ public:
     QString m_title;
     Core::DockWidget *m_dockWidget = nullptr;
     QVector<QString> m_affinities;
+
+    KDBindings::ScopedConnection titleConnection;
+    KDBindings::ScopedConnection closedConnection;
+    KDBindings::ScopedConnection iconConnection;
+    KDBindings::ScopedConnection actualTitleBarConnection;
+    KDBindings::ScopedConnection optionsConnection;
+    KDBindings::ScopedConnection windowActiveAboutToChangeConnection;
+    KDBindings::ScopedConnection isOverlayedConnection;
+    KDBindings::ScopedConnection isFocusedConnection;
+    KDBindings::ScopedConnection isFloatingConnection;
+    KDBindings::ScopedConnection isOpenConnection;
+    KDBindings::ScopedConnection guestViewChangedConnection;
+    KDBindings::ScopedConnection removedFromSideBarConnection;
 };
 
 DockWidgetInstantiator::DockWidgetInstantiator()
@@ -239,21 +254,21 @@ void DockWidgetInstantiator::componentComplete()
                           ->createDockWidget(d->m_uniqueName, qmlEngine(this))
                           ->asDockWidgetController();
 
-    d->m_dockWidget->d->titleChanged.connect([this](const QString &title) { Q_EMIT titleChanged(title); });
-    d->m_dockWidget->d->closed.connect([this] { Q_EMIT closed(); });
-    d->m_dockWidget->d->iconChanged.connect([this] { Q_EMIT iconChanged(); });
-    d->m_dockWidget->d->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
-    d->m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) { Q_EMIT optionsChanged(opts); });
+    d->titleConnection = d->m_dockWidget->d->titleChanged.connect([this](const QString &title) { Q_EMIT titleChanged(title); });
+    d->closedConnection = d->m_dockWidget->d->closed.connect([this] { Q_EMIT closed(); });
+    d->iconConnection = d->m_dockWidget->d->iconChanged.connect([this] { Q_EMIT iconChanged(); });
+    d->actualTitleBarConnection = d->m_dockWidget->d->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
+    d->optionsConnection = d->m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) { Q_EMIT optionsChanged(opts); });
 
-    d->m_dockWidget->d->windowActiveAboutToChange.connect([this](bool is) { Q_EMIT windowActiveAboutToChange(is); });
-    d->m_dockWidget->d->isFocusedChanged.connect([this](bool is) { Q_EMIT isFocusedChanged(is); });
+    d->windowActiveAboutToChangeConnection = d->m_dockWidget->d->windowActiveAboutToChange.connect([this](bool is) { Q_EMIT windowActiveAboutToChange(is); });
+    d->isFocusedConnection = d->m_dockWidget->d->isFocusedChanged.connect([this](bool is) { Q_EMIT isFocusedChanged(is); });
 
-    d->m_dockWidget->d->isOverlayedChanged.connect([this](bool is) { Q_EMIT isOverlayedChanged(is); });
-    d->m_dockWidget->d->isFloatingChanged.connect([this](bool is) { Q_EMIT isFloatingChanged(is); });
-    d->m_dockWidget->d->isOpenChanged.connect([this](bool is) { Q_EMIT isOpenChanged(is); });
+    d->isOverlayedConnection = d->m_dockWidget->d->isOverlayedChanged.connect([this](bool is) { Q_EMIT isOverlayedChanged(is); });
+    d->isFloatingConnection = d->m_dockWidget->d->isFloatingChanged.connect([this](bool is) { Q_EMIT isFloatingChanged(is); });
+    d->isOpenConnection = d->m_dockWidget->d->isOpenChanged.connect([this](bool is) { Q_EMIT isOpenChanged(is); });
 
-    d->m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(d->m_dockWidget->guestView().get())); });
-    d->m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
+    d->guestViewChangedConnection = d->m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(d->m_dockWidget->guestView().get())); });
+    d->removedFromSideBarConnection = d->m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
 
     auto view = this->dockWidget();
     if (d->m_sourceFilename.isEmpty()) {
