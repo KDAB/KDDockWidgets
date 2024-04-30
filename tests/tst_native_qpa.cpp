@@ -42,6 +42,7 @@ public Q_SLOTS:
 private Q_SLOTS:
     void tst_restoreNormalFromMaximized();
     void tst_restoreMaximizedFromNormal();
+    void tst_restoreMaximizedFromMaximized();
 };
 
 void TestNativeQPA::initTestCase()
@@ -194,6 +195,63 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     QVERIFY(m->isVisible());
 
     /// Catch more resizes:
+    QTest::qWait(1000);
+
+    QCOMPARE(m->geometry(), expectedMaximizedGeometry);
+}
+
+void TestNativeQPA::tst_restoreMaximizedFromMaximized()
+{
+    if (qApp->platformName() == QLatin1String("offscreen")) {
+        // offscreen: calling showMaximized() on an hidden widget, puts it at pos=2,2 instead of 0,0
+        // Ignore this QPA. This file is for testing native QPAs only. offscreen is nice to have
+        // if it beahaves well only.
+        return;
+    }
+
+#ifdef Q_OS_MACOS
+    if (Platform::instance()->isQtQuick())
+        return;
+#endif
+
+    // whitelist some macOS warning
+    SetExpectedWarning warn("invalid window content view size");
+
+    // Saves the window state while in maximized state, then restores after the window is shown normal
+    // the window should become maximized again.
+    // qDebug() << qApp->primaryScreen()->geometry();
+    const QSize initialSize(500, 500);
+    auto m = createMainWindow(initialSize, MainWindowOption_None, "m1", false);
+
+    auto windowptr = m->view()->window();
+    auto window = static_cast<QtCommon::Window *>(windowptr.get());
+    QWindow *qtwindow = window->qtWindow();
+    MyEventFilter filter;
+    qtwindow->installEventFilter(&filter);
+
+    m->view()->showMaximized();
+    QVERIFY(filter.waitForState(Qt::WindowMaximized));
+
+    int count = 0;
+    // Qt annoyingly sends us 2 or 3 resize events before the fully maximized one, even when
+    // already having state==Qt::WindowMaximized. Probably depends on platform.
+    // Consume all resize events until window gets big.
+    while (m->geometry().size().width() < 700) {
+        QVERIFY(Platform::instance()->tests_waitForResize(m->view()));
+        count++;
+        QVERIFY(count < 5);
+    }
+
+    const auto expectedMaximizedGeometry = m->geometry();
+    QVERIFY(initialSize != expectedMaximizedGeometry.size());
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(filter.waitForState(Qt::WindowMaximized));
+
+    // Catch more resizes:
     QTest::qWait(1000);
 
     QCOMPARE(m->geometry(), expectedMaximizedGeometry);
