@@ -19,32 +19,53 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
+class DockWidgetInstantiator::Private
+{
+public:
+    std::optional<bool> m_isFloating;
+    QString m_uniqueName;
+    QString m_sourceFilename;
+    QString m_title;
+    Core::DockWidget *m_dockWidget = nullptr;
+    QVector<QString> m_affinities;
+};
+
+DockWidgetInstantiator::DockWidgetInstantiator()
+    : d(new Private())
+{
+}
+
+DockWidgetInstantiator::~DockWidgetInstantiator()
+{
+    delete d;
+}
+
 QString DockWidgetInstantiator::uniqueName() const
 {
-    return m_uniqueName;
+    return d->m_uniqueName;
 }
 
 void DockWidgetInstantiator::setUniqueName(const QString &name)
 {
-    m_uniqueName = name;
+    d->m_uniqueName = name;
     Q_EMIT uniqueNameChanged();
 }
 
 QString DockWidgetInstantiator::source() const
 {
-    return m_sourceFilename;
+    return d->m_sourceFilename;
 }
 
 void DockWidgetInstantiator::setSource(const QString &source)
 {
-    m_sourceFilename = source;
+    d->m_sourceFilename = source;
     Q_EMIT sourceChanged();
 }
 
 QtQuick::DockWidget *DockWidgetInstantiator::dockWidget() const
 {
-    if (m_dockWidget) {
-        return static_cast<QtQuick::DockWidget *>(m_dockWidget->view());
+    if (d->m_dockWidget) {
+        return static_cast<QtQuick::DockWidget *>(d->m_dockWidget->view());
     }
 
     return nullptr;
@@ -52,7 +73,7 @@ QtQuick::DockWidget *DockWidgetInstantiator::dockWidget() const
 
 KDDockWidgets::Core::DockWidget *DockWidgetInstantiator::controller() const
 {
-    return m_dockWidget;
+    return d->m_dockWidget;
 }
 
 QObject *DockWidgetInstantiator::actualTitleBar() const
@@ -66,45 +87,45 @@ QObject *DockWidgetInstantiator::actualTitleBar() const
 
 QString DockWidgetInstantiator::title() const
 {
-    return m_dockWidget ? m_dockWidget->title() : QString();
+    return d->m_dockWidget ? d->m_dockWidget->title() : QString();
 }
 
 void DockWidgetInstantiator::setTitle(const QString &title)
 {
-    if (m_dockWidget)
-        m_dockWidget->setTitle(title);
-    m_title = title;
+    if (d->m_dockWidget)
+        d->m_dockWidget->setTitle(title);
+    d->m_title = title;
 }
 
 bool DockWidgetInstantiator::isFocused() const
 {
-    return m_dockWidget && m_dockWidget->isFocused();
+    return d->m_dockWidget && d->m_dockWidget->isFocused();
 }
 
 bool DockWidgetInstantiator::isFloating() const
 {
-    return m_dockWidget && m_dockWidget->isFloating();
+    return d->m_dockWidget && d->m_dockWidget->isFloating();
 }
 
 bool DockWidgetInstantiator::isOpen() const
 {
-    return m_dockWidget && m_dockWidget->isOpen();
+    return d->m_dockWidget && d->m_dockWidget->isOpen();
 }
 
 void DockWidgetInstantiator::setFloating(bool is)
 {
-    if (m_dockWidget)
-        m_dockWidget->setFloating(is);
-    m_isFloating = is;
+    if (d->m_dockWidget)
+        d->m_dockWidget->setFloating(is);
+    d->m_isFloating = is;
 }
 
 void DockWidgetInstantiator::addDockWidgetAsTab(QQuickItem *other, InitialVisibilityOption option)
 {
-    if (!other || !m_dockWidget)
+    if (!other || !d->m_dockWidget)
         return;
 
     Core::DockWidget *otherDockWidget = Platform::dockWidgetForItem(other);
-    m_dockWidget->addDockWidgetAsTab(otherDockWidget, option);
+    d->m_dockWidget->addDockWidgetAsTab(otherDockWidget, option);
 }
 
 void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other, Location location,
@@ -112,40 +133,40 @@ void DockWidgetInstantiator::addDockWidgetToContainingWindow(QQuickItem *other, 
                                                              QSize initialSize,
                                                              InitialVisibilityOption option)
 {
-    if (!other || !m_dockWidget)
+    if (!other || !d->m_dockWidget)
         return;
 
     Core::DockWidget *otherDockWidget = Platform::dockWidgetForItem(other);
     Core::DockWidget *relativeToDockWidget = Platform::dockWidgetForItem(relativeTo);
 
-    m_dockWidget->addDockWidgetToContainingWindow(otherDockWidget, location, relativeToDockWidget,
-                                                  InitialOption(option, initialSize));
+    d->m_dockWidget->addDockWidgetToContainingWindow(otherDockWidget, location, relativeToDockWidget,
+                                                     InitialOption(option, initialSize));
 }
 
 void DockWidgetInstantiator::setAsCurrentTab()
 {
-    if (m_dockWidget)
-        m_dockWidget->setAsCurrentTab();
+    if (d->m_dockWidget)
+        d->m_dockWidget->setAsCurrentTab();
 }
 
 void DockWidgetInstantiator::forceClose()
 {
-    if (m_dockWidget)
-        m_dockWidget->forceClose();
+    if (d->m_dockWidget)
+        d->m_dockWidget->forceClose();
 }
 
 Q_INVOKABLE bool DockWidgetInstantiator::close()
 {
-    if (m_dockWidget)
-        return m_dockWidget->close();
+    if (d->m_dockWidget)
+        return d->m_dockWidget->close();
 
     return false;
 }
 
 void DockWidgetInstantiator::open()
 {
-    if (m_dockWidget)
-        m_dockWidget->open();
+    if (d->m_dockWidget)
+        d->m_dockWidget->open();
 }
 
 void DockWidgetInstantiator::show()
@@ -156,19 +177,19 @@ void DockWidgetInstantiator::show()
 
 void DockWidgetInstantiator::raise()
 {
-    if (m_dockWidget)
-        m_dockWidget->raise();
+    if (d->m_dockWidget)
+        d->m_dockWidget->raise();
 }
 
 void DockWidgetInstantiator::moveToSideBar()
 {
-    if (m_dockWidget)
-        m_dockWidget->moveToSideBar();
+    if (d->m_dockWidget)
+        d->m_dockWidget->moveToSideBar();
 }
 
 void DockWidgetInstantiator::deleteDockWidget()
 {
-    delete m_dockWidget;
+    delete d->m_dockWidget;
     delete this;
 }
 
@@ -179,75 +200,75 @@ void DockWidgetInstantiator::classBegin()
 
 QVector<QString> DockWidgetInstantiator::affinities() const
 {
-    return m_dockWidget ? m_dockWidget->affinities() : QVector<QString>();
+    return d->m_dockWidget ? d->m_dockWidget->affinities() : QVector<QString>();
 }
 
 void DockWidgetInstantiator::setAffinities(const QVector<QString> &affinities)
 {
-    if (m_affinities != affinities) {
-        m_affinities = affinities;
+    if (d->m_affinities != affinities) {
+        d->m_affinities = affinities;
         Q_EMIT affinitiesChanged();
     }
 }
 
 void DockWidgetInstantiator::componentComplete()
 {
-    if (m_uniqueName.isEmpty()) {
+    if (d->m_uniqueName.isEmpty()) {
         qWarning() << Q_FUNC_INFO
                    << "Each DockWidget need an unique name. Set the uniqueName property.";
         return;
     }
 
-    if (DockRegistry::self()->containsDockWidget(m_uniqueName)) {
+    if (DockRegistry::self()->containsDockWidget(d->m_uniqueName)) {
         // Dock widget already exists. all good.
         return;
     }
 
-    if (m_dockWidget) {
+    if (d->m_dockWidget) {
         qWarning() << Q_FUNC_INFO << "Unexpected bug.";
         return;
     }
     const auto childItems = this->childItems();
-    if (m_sourceFilename.isEmpty() && childItems.size() != 1) {
+    if (d->m_sourceFilename.isEmpty() && childItems.size() != 1) {
         qWarning() << Q_FUNC_INFO << "Either 'source' property must be set or add exactly one child"
-                   << "; source=" << m_sourceFilename << "; num children=" << childItems.size();
+                   << "; source=" << d->m_sourceFilename << "; num children=" << childItems.size();
         return;
     }
 
-    m_dockWidget = ViewFactory::self()
-                       ->createDockWidget(m_uniqueName, qmlEngine(this))
-                       ->asDockWidgetController();
+    d->m_dockWidget = ViewFactory::self()
+                          ->createDockWidget(d->m_uniqueName, qmlEngine(this))
+                          ->asDockWidgetController();
 
-    m_dockWidget->d->titleChanged.connect([this](const QString &title) { Q_EMIT titleChanged(title); });
-    m_dockWidget->d->closed.connect([this] { Q_EMIT closed(); });
-    m_dockWidget->d->iconChanged.connect([this] { Q_EMIT iconChanged(); });
-    m_dockWidget->d->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
-    m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) { Q_EMIT optionsChanged(opts); });
+    d->m_dockWidget->d->titleChanged.connect([this](const QString &title) { Q_EMIT titleChanged(title); });
+    d->m_dockWidget->d->closed.connect([this] { Q_EMIT closed(); });
+    d->m_dockWidget->d->iconChanged.connect([this] { Q_EMIT iconChanged(); });
+    d->m_dockWidget->d->actualTitleBarChanged.connect([this] { Q_EMIT actualTitleBarChanged(); });
+    d->m_dockWidget->d->optionsChanged.connect([this](KDDockWidgets::DockWidgetOptions opts) { Q_EMIT optionsChanged(opts); });
 
-    m_dockWidget->d->windowActiveAboutToChange.connect([this](bool is) { Q_EMIT windowActiveAboutToChange(is); });
-    m_dockWidget->d->isFocusedChanged.connect([this](bool is) { Q_EMIT isFocusedChanged(is); });
+    d->m_dockWidget->d->windowActiveAboutToChange.connect([this](bool is) { Q_EMIT windowActiveAboutToChange(is); });
+    d->m_dockWidget->d->isFocusedChanged.connect([this](bool is) { Q_EMIT isFocusedChanged(is); });
 
-    m_dockWidget->d->isOverlayedChanged.connect([this](bool is) { Q_EMIT isOverlayedChanged(is); });
-    m_dockWidget->d->isFloatingChanged.connect([this](bool is) { Q_EMIT isFloatingChanged(is); });
-    m_dockWidget->d->isOpenChanged.connect([this](bool is) { Q_EMIT isOpenChanged(is); });
+    d->m_dockWidget->d->isOverlayedChanged.connect([this](bool is) { Q_EMIT isOverlayedChanged(is); });
+    d->m_dockWidget->d->isFloatingChanged.connect([this](bool is) { Q_EMIT isFloatingChanged(is); });
+    d->m_dockWidget->d->isOpenChanged.connect([this](bool is) { Q_EMIT isOpenChanged(is); });
 
-    m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(m_dockWidget->guestView().get())); });
-    m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
+    d->m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(d->m_dockWidget->guestView().get())); });
+    d->m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
 
     auto view = this->dockWidget();
-    if (m_sourceFilename.isEmpty()) {
+    if (d->m_sourceFilename.isEmpty()) {
         view->setGuestItem(childItems.constFirst());
     } else {
-        view->setGuestItem(m_sourceFilename);
+        view->setGuestItem(d->m_sourceFilename);
     }
 
-    if (!m_title.isEmpty())
-        m_dockWidget->setTitle(m_title);
+    if (!d->m_title.isEmpty())
+        d->m_dockWidget->setTitle(d->m_title);
 
-    if (m_isFloating.has_value())
-        m_dockWidget->setFloating(m_isFloating.value());
+    if (d->m_isFloating.has_value())
+        d->m_dockWidget->setFloating(d->m_isFloating.value());
 
-    m_dockWidget->setAffinities(m_affinities);
+    d->m_dockWidget->setAffinities(d->m_affinities);
 
     Q_EMIT dockWidgetChanged();
 }
