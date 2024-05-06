@@ -55,6 +55,7 @@ void Button::paintEvent(QPaintEvent *)
     opt.subControls = QStyle::SC_None;
     opt.features = QStyleOptionToolButton::None;
     opt.icon = icon();
+    opt.iconSize = iconSize();
 
     // The first icon size is for scaling 1x, and is what QStyle expects. QStyle will pick ones
     // with higher resolution automatically when needed.
