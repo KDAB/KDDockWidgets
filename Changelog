@@ -11,7 +11,6 @@
   - QtWidgets: Introduced MainWindowOption_QDockWidgets and MainWindowOption_ManualInit
   - QtWidgets: Honours overriding DockWidget::closeEvent() to prevent closing
   - QtWidgets: Fixed crash when unpinning a window
-  - Planned: #448 Implement docking indicator for MDI area
   - Fix crash when doing sequential open() and close() calls (#326)
   - Fix double-clicking the guest widget would make window float
   - 3rdparty: Update to nlohmann json v3.11.3, from v3.10.5. Only relevant if you're not using
