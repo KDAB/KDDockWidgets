@@ -78,8 +78,8 @@ project(
 )
 
 set(KDDockWidgets_VERSION_MAJOR 2)
-set(KDDockWidgets_VERSION_MINOR 0)
-set(KDDockWidgets_VERSION_PATCH 95)
+set(KDDockWidgets_VERSION_MINOR 1)
+set(KDDockWidgets_VERSION_PATCH 1)
 set(KDDockWidgets_VERSION ${KDDockWidgets_VERSION_MAJOR}.${KDDockWidgets_VERSION_MINOR}.${KDDockWidgets_VERSION_PATCH})
 set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by some ECM modules
 set(KDDockWidgets_SOVERSION "2.1")

@@ -50,7 +50,7 @@ public:
 
         if (auto item = m_groupWidget->group()->layoutItem()) {
             if (auto root = item->root()) {
-                if (root->inSetSize()) {
+                if (root->inSetSize() || root->isDeserializing()) {
                     // There's at least one item currently in the middle of a resize
                     // schedule relayout, do not interrupt.
                     QTimer::singleShot(0, m_groupWidget, [this] {
