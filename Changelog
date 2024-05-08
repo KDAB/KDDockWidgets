@@ -1,4 +1,4 @@
-* v2.1.0 (unreleased)
+* v2.1.0 (08 May 2024)
   - Added standalone layouting example using Slint
   - Fixed DPI of icons in TitleBar.qml Looks better when using 150% and 200% scalling now.
   - QtQuick: Fixed redock not working when mixing MDI with docking
