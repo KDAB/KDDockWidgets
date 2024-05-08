@@ -26,9 +26,6 @@ Before creating the tag for the new release check the following:
 
 * Add the real release date to the Changelog section header "vX.Y.Z (unreleased)"
 
-* updates distro/.spec and distro/.dsc files
-* (TODO) script to do that^^
-
 * git commit any changes made above and make sure the CIs are green before continuing.
 
 Then create the new tag using the command:
