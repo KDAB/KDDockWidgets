@@ -1,0 +1,831 @@
+{
+    "allDockWidgets": [
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 4,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "-persistentCentralDockWidget"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 5,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "_kddw_internal_dummy"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 0,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "_kddw_internal_dummy2"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 2,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_6"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 1,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_3"
+        },
+        {
+            "lastCloseReason": 1,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 128,
+                    "width": 852,
+                    "x": 655,
+                    "y": 806
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 11,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_4"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [
+                    [
+                        2,
+                        {
+                            "height": 1130,
+                            "width": 300,
+                            "x": 1452,
+                            "y": 104
+                        }
+                    ]
+                ],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 9,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_7"
+        },
+        {
+            "lastCloseReason": 1,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [
+                    [
+                        2,
+                        {
+                            "height": 1158,
+                            "width": 300,
+                            "x": 1452,
+                            "y": 80
+                        }
+                    ]
+                ],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 8,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_2"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [
+                    [
+                        3,
+                        {
+                            "height": 655,
+                            "width": 300,
+                            "x": 32,
+                            "y": 57
+                        }
+                    ]
+                ],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 3,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_0"
+        },
+        {
+            "lastCloseReason": 1,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 10,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_8"
+        },
+        {
+            "lastCloseReason": 1,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 6,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_5"
+        },
+        {
+            "lastCloseReason": 1,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 7,
+                        "mainWindowUniqueName": "mainWindowId1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dockwidget_tests_1"
+        }
+    ],
+    "closedDockWidgets": [
+        "_kddw_internal_dummy",
+        "_kddw_internal_dummy2",
+        "dockwidget_tests_3",
+        "dockwidget_tests_8",
+        "dockwidget_tests_5",
+        "dockwidget_tests_1"
+    ],
+    "floatingWindows": [],
+    "mainWindows": [
+        {
+            "affinities": null,
+            "geometry": {
+                "height": 600,
+                "width": 875,
+                "x": 350,
+                "y": 226
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "1869": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_4"
+                        ],
+                        "geometry": {
+                            "height": 161,
+                            "width": 873,
+                            "x": 0,
+                            "y": 362
+                        },
+                        "id": "1869",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mainWindowId1",
+                        "objectName": "dockwidget_tests_4",
+                        "options": 1
+                    },
+                    "1921": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_0"
+                        ],
+                        "geometry": {
+                            "height": 362,
+                            "width": 142,
+                            "x": 289,
+                            "y": 0
+                        },
+                        "id": "1921",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mainWindowId1",
+                        "objectName": "dockwidget_tests_0",
+                        "options": 1
+                    },
+                    "1973": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_2"
+                        ],
+                        "geometry": {
+                            "height": 178,
+                            "width": 276,
+                            "x": 597,
+                            "y": 0
+                        },
+                        "id": "1973",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mainWindowId1",
+                        "objectName": "dockwidget_tests_2",
+                        "options": 1
+                    },
+                    "2025": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_7"
+                        ],
+                        "geometry": {
+                            "height": 184,
+                            "width": 276,
+                            "x": 597,
+                            "y": 178
+                        },
+                        "id": "2025",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mainWindowId1",
+                        "objectName": "dockwidget_tests_7",
+                        "options": 1
+                    },
+                    "2077": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dockwidget_tests_6"
+                        ],
+                        "geometry": {
+                            "height": 362,
+                            "width": 289,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "2077",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mainWindowId1",
+                        "objectName": "dockwidget_tests_6",
+                        "options": 1
+                    },
+                    "9": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "-persistentCentralDockWidget"
+                        ],
+                        "geometry": {
+                            "height": 362,
+                            "width": 166,
+                            "x": 431,
+                            "y": 0
+                        },
+                        "id": "9",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mainWindowId1",
+                        "objectName": "-persistentCentralDockWidget",
+                        "options": 10
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "children": [
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 480,
+                                                    "width": 317,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 16777215,
+                                                    "width": 16777215
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 344,
+                                                    "width": 412,
+                                                    "x": 0,
+                                                    "y": 214
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 524078,
+                                                    "width": 524115
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "children": [
+                                                {
+                                                    "guestId": "2077",
+                                                    "isContainer": false,
+                                                    "isVisible": true,
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 362,
+                                                            "width": 289,
+                                                            "x": 0,
+                                                            "y": 0
+                                                        },
+                                                        "maxSizeHint": {
+                                                            "height": 524350,
+                                                            "width": 524329
+                                                        },
+                                                        "minSize": {
+                                                            "height": 362,
+                                                            "width": 289
+                                                        },
+                                                        "percentageWithinParent": 0.23746918652423993
+                                                    }
+                                                },
+                                                {
+                                                    "guestId": "1921",
+                                                    "isContainer": false,
+                                                    "isVisible": true,
+                                                    "sizingInfo": {
+                                                        "geometry": {
+                                                            "height": 362,
+                                                            "width": 142,
+                                                            "x": 289,
+                                                            "y": 0
+                                                        },
+                                                        "maxSizeHint": {
+                                                            "height": 524350,
+                                                            "width": 524329
+                                                        },
+                                                        "minSize": {
+                                                            "height": 163,
+                                                            "width": 142
+                                                        },
+                                                        "percentageWithinParent": 0.76253081347576
+                                                    }
+                                                }
+                                            ],
+                                            "isContainer": true,
+                                            "isVisible": false,
+                                            "orientation": 1,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 362,
+                                                    "width": 431,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 524350,
+                                                    "width": 1048658
+                                                },
+                                                "minSize": {
+                                                    "height": 362,
+                                                    "width": 431
+                                                },
+                                                "percentageWithinParent": 1.0
+                                            }
+                                        }
+                                    ],
+                                    "isContainer": true,
+                                    "isVisible": false,
+                                    "orientation": 2,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 362,
+                                            "width": 431,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "maxSizeHint": {
+                                            "height": 524350,
+                                            "width": 1048658
+                                        },
+                                        "minSize": {
+                                            "height": 362,
+                                            "width": 431
+                                        },
+                                        "percentageWithinParent": 0.733574442435202
+                                    }
+                                },
+                                {
+                                    "guestId": "9",
+                                    "isContainer": false,
+                                    "isVisible": true,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 362,
+                                            "width": 166,
+                                            "x": 431,
+                                            "y": 0
+                                        },
+                                        "maxSizeHint": {
+                                            "height": 524287,
+                                            "width": 524293
+                                        },
+                                        "minSize": {
+                                            "height": 90,
+                                            "width": 166
+                                        },
+                                        "percentageWithinParent": 0.10006027727546715
+                                    }
+                                },
+                                {
+                                    "children": [
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 480,
+                                                    "width": 317,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 16777215,
+                                                    "width": 16777215
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 305,
+                                                    "width": 643,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 524123,
+                                                    "width": 524272
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "isContainer": false,
+                                            "isVisible": false,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 615,
+                                                    "width": 643,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 524123,
+                                                    "width": 524272
+                                                },
+                                                "minSize": {
+                                                    "height": 90,
+                                                    "width": 80
+                                                },
+                                                "percentageWithinParent": 0.0
+                                            }
+                                        },
+                                        {
+                                            "guestId": "1973",
+                                            "isContainer": false,
+                                            "isVisible": true,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 178,
+                                                    "width": 276,
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 524322,
+                                                    "width": 524329
+                                                },
+                                                "minSize": {
+                                                    "height": 125,
+                                                    "width": 274
+                                                },
+                                                "percentageWithinParent": 0.4926739926739927
+                                            }
+                                        },
+                                        {
+                                            "guestId": "2025",
+                                            "isContainer": false,
+                                            "isVisible": true,
+                                            "sizingInfo": {
+                                                "geometry": {
+                                                    "height": 184,
+                                                    "width": 276,
+                                                    "x": 0,
+                                                    "y": 178
+                                                },
+                                                "maxSizeHint": {
+                                                    "height": 524322,
+                                                    "width": 524329
+                                                },
+                                                "minSize": {
+                                                    "height": 125,
+                                                    "width": 276
+                                                },
+                                                "percentageWithinParent": 0.5073260073260073
+                                            }
+                                        }
+                                    ],
+                                    "isContainer": true,
+                                    "isVisible": false,
+                                    "orientation": 2,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 362,
+                                            "width": 276,
+                                            "x": 597,
+                                            "y": 0
+                                        },
+                                        "maxSizeHint": {
+                                            "height": 1048644,
+                                            "width": 524329
+                                        },
+                                        "minSize": {
+                                            "height": 250,
+                                            "width": 276
+                                        },
+                                        "percentageWithinParent": 0.16636528028933092
+                                    }
+                                }
+                            ],
+                            "isContainer": true,
+                            "isVisible": false,
+                            "orientation": 1,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 362,
+                                    "width": 873,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 524287,
+                                    "width": 2097280
+                                },
+                                "minSize": {
+                                    "height": 362,
+                                    "width": 873
+                                },
+                                "percentageWithinParent": 0.7722772277227723
+                            }
+                        },
+                        {
+                            "isContainer": false,
+                            "isVisible": false,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 210,
+                                    "width": 1750,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 16777215,
+                                    "width": 524287
+                                },
+                                "minSize": {
+                                    "height": 90,
+                                    "width": 80
+                                },
+                                "percentageWithinParent": 0.0
+                            }
+                        },
+                        {
+                            "guestId": "1869",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 161,
+                                    "width": 873,
+                                    "x": 0,
+                                    "y": 362
+                                },
+                                "maxSizeHint": {
+                                    "height": 524350,
+                                    "width": 524329
+                                },
+                                "minSize": {
+                                    "height": 161,
+                                    "width": 165
+                                },
+                                "percentageWithinParent": 0.22772277227722773
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 523,
+                            "width": 873,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSizeHint": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 600,
+                "width": 875,
+                "x": 350,
+                "y": 226
+            },
+            "options": 5,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 900,
+                "width": 1440
+            },
+            "uniqueName": "mainWindowId1",
+            "windowState": 0
+        }
+    ],
+    "screenInfo": [
+        {
+            "devicePixelRatio": 1.0,
+            "geometry": {
+                "height": 900,
+                "width": 1440,
+                "x": 0,
+                "y": 0
+            },
+            "index": 0,
+            "name": "\\\\.\\DISPLAY273"
+        }
+    ],
+    "serializationVersion": 3
+}

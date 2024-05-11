@@ -46,6 +46,9 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
     Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
 public:
+    DockWidgetInstantiator();
+    ~DockWidgetInstantiator() override;
+
     QString uniqueName() const;
     void setUniqueName(const QString &);
 
@@ -114,12 +117,8 @@ Q_SIGNALS:
     void affinitiesChanged();
 
 private:
-    std::optional<bool> m_isFloating;
-    QString m_uniqueName;
-    QString m_sourceFilename;
-    QString m_title;
-    Core::DockWidget *m_dockWidget = nullptr;
-    QVector<QString> m_affinities;
+    class Private;
+    Private *const d;
 };
 }
 

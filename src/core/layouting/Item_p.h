@@ -463,6 +463,7 @@ public:
     int length() const;
     bool hasOrientation() const;
     bool isOverflowing() const;
+    bool isDeserializing() const;
 
     /// @brief Returns the number of visible items layed-out horizontally or vertically
     /// But honours nesting
