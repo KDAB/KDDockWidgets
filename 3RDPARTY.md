@@ -34,7 +34,7 @@ These dependencies are only used during build or other CI purposes like running 
 CMake build helpers.
 
 [code](cmake/ECM/modules/)<br>
-[BSD licensed](BSD-3-Clause.txt)
+[BSD licensed](LICENSES/BSD-3-Clause.txt)
 
 ### doxygen-awesome.css
 
