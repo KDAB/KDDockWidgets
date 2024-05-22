@@ -48,13 +48,13 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.22.1'
           channel: 'stable'
 
       # Chose engine from https://github.com/ardera/flutter-ci/releases
       - name: Download flutter engine
         run: |
-          wget --no-verbose https://github.com/ardera/flutter-ci/releases/download/engine%2Fc4cd48e186460b32d44585ce3c103271ab676355/x64-generic.tar.xz
+          wget --no-verbose https://github.com/ardera/flutter-ci/releases/download/engine%2F55eae6864b296dd9f43b2cc7577ec256e5c32a8d/x64-generic.tar.xz
           mkdir flutter_engine
           tar xvf x64-generic.tar.xz -C flutter_engine
           cd flutter_engine

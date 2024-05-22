@@ -68,8 +68,9 @@ The dev preset is not supported though, only `release-flutter`.
 
 ### Bumping Flutter version on CI
 
-Bump version in `.github/workflows/flutter-rel.yml`, push and see if GH action
-passes.
+Bump version in `flutter-rel.yml`, `flutter-pub-update.yml` and `flutter-dev.yml`,
+push and see if GH action passes.
+
 
 ### Running the tests
 
