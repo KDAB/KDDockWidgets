@@ -15,7 +15,7 @@
 ## Build instructions
 
 Adjust paths as needed.<br>
-Checkout branch `2.0`.
+Checkout branch `main`.
 
 ### Linux
 
@@ -65,6 +65,11 @@ Similar to Linux, just use cmd syntax or so.<br>
 The dev preset is not supported though, only `release-flutter`.
 
 ## Development tips
+
+### Bumping Flutter version on CI
+
+Bump version in `.github/workflows/flutter-rel.yml`, push and see if GH action
+passes.
 
 ### Running the tests
 
