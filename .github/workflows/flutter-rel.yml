@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
 # Builds the flutter frontend
-# Doesn't run tests yet though
 
 name: Flutter-rel
 
@@ -54,7 +53,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.7'
+          flutter-version: '3.22.1'
           channel: 'stable'
 
       - name: MSVC into PATH
