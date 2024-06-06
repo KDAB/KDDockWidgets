@@ -48,6 +48,11 @@ DropIndicatorOverlay::DropIndicatorOverlay(DropArea *dropArea, View *view)
                 state->handleMouseMove(Platform::instance()->cursorPos());
             }
         }
+
+        if (WindowBeingDragged *wbd = DragController::instance()->windowBeingDragged()) {
+            /// Don't use transparency if drop areas are inhibited
+            wbd->updateTransparency(!inhibited);
+        }
     });
 }
 
