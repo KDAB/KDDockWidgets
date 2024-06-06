@@ -4779,6 +4779,40 @@ KDDW_QCORO_TASK tst_tabWidgetCurrentIndex()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_doubleClickTabBarRestore()
+{
+    if (!Platform::instance()->isQtWidgets()) {
+        // Only implemented for QtWidgets.
+        // for QtQuick the tabs take the full width and there's no empty "tab widget" background
+        // so solution will have to be different. To be done once it's requested.
+        KDDW_TEST_RETURN(true);
+    }
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
+
+    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnTop);
+    CHECK(!dock1->isFloating());
+
+    auto group = dock1->dptr()->group();
+    auto tabWidget = group->stack()->view();
+
+    Tests::doubleClickOn(tabWidget->mapToGlobal(Point(20, 20)), group->view()->window());
+    CHECK(dock1->isFloating());
+
+    group = dock1->dptr()->group();
+    tabWidget = group->stack()->view();
+
+    // click on the end of the tabWidget so we don't hit a tab
+    Tests::doubleClickOn(tabWidget->mapToGlobal(Point(tabWidget->width() - 50, 20)), group->view()->window());
+    CHECK(!dock1->isFloating());
+    CHECK(dock1->isInMainWindow());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_doubleClickTabToDetach()
 {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -6351,6 +6385,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_restoreRestoresMainWindowPosition),
         TEST(tst_dontCloseDockWidgetBeforeRestore2),
         TEST(tst_doubleClickTabToDetach),
+        TEST(tst_doubleClickTabBarRestore),
         TEST(tst_tabTitleChanges),
         TEST(tst_preventClose),
         TEST(tst_addAndReadd),

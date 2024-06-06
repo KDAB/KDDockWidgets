@@ -12,6 +12,7 @@
 #include "Stack.h"
 #include "Stack_p.h"
 #include "Config.h"
+#include "TitleBar.h"
 #include "ViewFactory.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
@@ -176,7 +177,12 @@ bool Stack::onMouseDoubleClick(Point localPos)
         return false;
 
     if (FloatingWindow *fw = group->floatingWindow()) {
-        if (!fw->hasSingleGroup()) {
+        if (fw->hasSingleGroup()) {
+            // Window is floating, let's restore it to its main window
+            // Minor hack: Even though our titlebar is hidden, all the logic for float/unfloat
+            // is in core/TitleBar.cpp, so just call that.
+            fw->titleBar()->onFloatClicked();
+        } else {
             makeWindow();
             return true;
         }
