@@ -184,8 +184,9 @@ bool Stack::onMouseDoubleClick(Point localPos)
             fw->titleBar()->onFloatClicked();
         } else {
             makeWindow();
-            return true;
         }
+
+        return true;
     } else if (group->isInMainWindow()) {
         makeWindow();
         return true;
