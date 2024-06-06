@@ -126,7 +126,7 @@ void TabBar::mouseMoveEvent(QMouseEvent *e)
 
 void TabBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    d->m_controller->onMouseDoubleClick(e->pos());
+    e->setAccepted(d->m_controller->onMouseDoubleClick(e->pos()));
 }
 
 bool TabBar::event(QEvent *ev)

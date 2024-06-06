@@ -58,7 +58,7 @@ public:
     bool isWindow() const override;
 
     void onMousePress(Point localPos);
-    void onMouseDoubleClick(Point localPos);
+    bool onMouseDoubleClick(Point localPos);
 
     ///@brief returns whether there's only 1 tab
     bool hasSingleDockWidget() const;
