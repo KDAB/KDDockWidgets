@@ -405,12 +405,6 @@ public:
     void setLayoutSaverStrictMode(bool);
     bool layoutSaverUsesStrictMode() const;
 
-    /// For disallowing DnD to be started by mouse and instead require doing programmatically
-    /// Default is false, DnD can be started by mouse, which is the most common use case.
-    /// @sa Core::DockWidget::startDragging()
-    void setOnlyProgrammaticDrag(bool);
-    bool onlyProgrammaticDrag() const;
-
 private:
     KDDW_DELETE_COPY_CTOR(Config)
     Config();
