@@ -224,7 +224,7 @@ void Core::TabBar::onMousePress(Point localPos)
 bool Core::TabBar::onMouseDoubleClick(Point localPos)
 {
     if (DockWidget *dw = dockWidgetAt(localPos)) {
-        dw->setFloating(true);
+        dw->setFloating(!dw->isFloating());
         return true;
     }
 
