@@ -113,9 +113,9 @@ int TabBar_wrapper::numDockWidgets() const
 {
     return ::KDDockWidgets::Core::TabBar::numDockWidgets();
 }
-void TabBar_wrapper::onMouseDoubleClick(KDDockWidgets::Point localPos)
+bool TabBar_wrapper::onMouseDoubleClick(KDDockWidgets::Point localPos)
 {
-    ::KDDockWidgets::Core::TabBar::onMouseDoubleClick(localPos);
+    return ::KDDockWidgets::Core::TabBar::onMouseDoubleClick(localPos);
 }
 void TabBar_wrapper::onMousePress(KDDockWidgets::Point localPos)
 {
@@ -276,11 +276,12 @@ int c_KDDockWidgets__Core__TabBar__numDockWidgets(void *thisObj)
     return result;
 }
 // onMouseDoubleClick(KDDockWidgets::Point localPos)
-void c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_)
+bool c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_)
 {
     assert(localPos_);
     auto &localPos = *reinterpret_cast<KDDockWidgets::Point *>(localPos_);
-    fromPtr(thisObj)->onMouseDoubleClick(localPos);
+    const auto &result = fromPtr(thisObj)->onMouseDoubleClick(localPos);
+    return result;
 }
 // onMousePress(KDDockWidgets::Point localPos)
 void c_KDDockWidgets__Core__TabBar__onMousePress_Point(void *thisObj, void *localPos_)

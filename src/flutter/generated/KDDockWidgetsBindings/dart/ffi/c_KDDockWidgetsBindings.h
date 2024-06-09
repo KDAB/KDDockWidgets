@@ -2026,7 +2026,7 @@ void c_KDDockWidgets__Core__TabBar__moveTabTo_int_int(void *thisObj, int from, i
 // KDDockWidgets::Core::TabBar::numDockWidgets() const
 int c_KDDockWidgets__Core__TabBar__numDockWidgets(void *thisObj);
 // KDDockWidgets::Core::TabBar::onMouseDoubleClick(KDDockWidgets::Point localPos)
-void c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_);
+bool c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::TabBar::onMousePress(KDDockWidgets::Point localPos)
 void c_KDDockWidgets__Core__TabBar__onMousePress_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::TabBar::rectForTab(int index) const
@@ -2849,8 +2849,6 @@ bool c_KDDockWidgets__Config__layoutSaverUsesStrictMode(void *thisObj);
 int c_KDDockWidgets__Config__layoutSpacing(void *thisObj);
 // KDDockWidgets::Config::mdiPopupThreshold() const
 int c_KDDockWidgets__Config__mdiPopupThreshold(void *thisObj);
-// KDDockWidgets::Config::onlyProgrammaticDrag() const
-bool c_KDDockWidgets__Config__onlyProgrammaticDrag(void *thisObj);
 // KDDockWidgets::Config::printDebug()
 void c_KDDockWidgets__Config__printDebug(void *thisObj);
 // KDDockWidgets::Config::self()
@@ -2871,8 +2869,6 @@ void c_KDDockWidgets__Config__setLayoutSaverStrictMode_bool(void *thisObj, bool 
 void c_KDDockWidgets__Config__setLayoutSpacing_int(void *thisObj, int arg__1);
 // KDDockWidgets::Config::setMDIPopupThreshold(int arg__1)
 void c_KDDockWidgets__Config__setMDIPopupThreshold_int(void *thisObj, int arg__1);
-// KDDockWidgets::Config::setOnlyProgrammaticDrag(bool arg__1)
-void c_KDDockWidgets__Config__setOnlyProgrammaticDrag_bool(void *thisObj, bool arg__1);
 // KDDockWidgets::Config::setSeparatorThickness(int value)
 void c_KDDockWidgets__Config__setSeparatorThickness_int(void *thisObj, int value);
 // KDDockWidgets::Config::setStartDragDistance(int arg__1)

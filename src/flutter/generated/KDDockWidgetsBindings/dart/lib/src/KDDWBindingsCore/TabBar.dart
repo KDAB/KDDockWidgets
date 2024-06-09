@@ -192,12 +192,13 @@ class TabBar extends KDDWBindingsCore.Controller {
     return func(thisCpp);
   } // onMouseDoubleClick(KDDockWidgets::Point localPos)
 
-  onMouseDoubleClick(Point localPos) {
-    final void_Func_voidstar_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_voidstar_FFI>>(
+  bool onMouseDoubleClick(Point localPos) {
+    final bool_Func_voidstar_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_voidstar_FFI>>(
             'c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point')
         .asFunction();
-    func(thisCpp, localPos == null ? ffi.nullptr : localPos.thisCpp);
+    return func(thisCpp, localPos == null ? ffi.nullptr : localPos.thisCpp) !=
+        0;
   } // onMousePress(KDDockWidgets::Point localPos)
 
   onMousePress(Point localPos) {

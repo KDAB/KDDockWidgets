@@ -114,14 +114,6 @@ class Config implements ffi.Finalizable {
             'c_KDDockWidgets__Config__mdiPopupThreshold')
         .asFunction();
     return func(thisCpp);
-  } // onlyProgrammaticDrag() const
-
-  bool onlyProgrammaticDrag() {
-    final bool_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Config__onlyProgrammaticDrag')
-        .asFunction();
-    return func(thisCpp) != 0;
   } // printDebug()
 
   printDebug() {
@@ -204,14 +196,6 @@ class Config implements ffi.Finalizable {
             'c_KDDockWidgets__Config__setMDIPopupThreshold_int')
         .asFunction();
     func(thisCpp, arg__1);
-  } // setOnlyProgrammaticDrag(bool arg__1)
-
-  setOnlyProgrammaticDrag(bool arg__1) {
-    final void_Func_voidstar_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_voidstar_ffi_Int8_FFI>>(
-            'c_KDDockWidgets__Config__setOnlyProgrammaticDrag_bool')
-        .asFunction();
-    func(thisCpp, arg__1 ? 1 : 0);
   } // setSeparatorThickness(int value)
 
   setSeparatorThickness(int value) {

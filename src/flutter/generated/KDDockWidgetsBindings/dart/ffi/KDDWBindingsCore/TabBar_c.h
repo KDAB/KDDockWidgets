@@ -40,7 +40,7 @@ public:
     virtual bool isWindow_nocallback() const;
     void moveTabTo(int from, int to);
     int numDockWidgets() const;
-    void onMouseDoubleClick(KDDockWidgets::Point localPos);
+    bool onMouseDoubleClick(KDDockWidgets::Point localPos);
     void onMousePress(KDDockWidgets::Point localPos);
     KDDockWidgets::Rect rectForTab(int index) const;
     void removeDockWidget(KDDockWidgets::Core::DockWidget *dw);
@@ -95,7 +95,7 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__TabBar__moveTabTo_int_int(void *thisObj
 // KDDockWidgets::Core::TabBar::numDockWidgets() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__TabBar__numDockWidgets(void *thisObj);
 // KDDockWidgets::Core::TabBar::onMouseDoubleClick(KDDockWidgets::Point localPos)
-DOCKS_EXPORT void c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_);
+DOCKS_EXPORT bool c_KDDockWidgets__Core__TabBar__onMouseDoubleClick_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::TabBar::onMousePress(KDDockWidgets::Point localPos)
 DOCKS_EXPORT void c_KDDockWidgets__Core__TabBar__onMousePress_Point(void *thisObj, void *localPos_);
 // KDDockWidgets::Core::TabBar::rectForTab(int index) const
