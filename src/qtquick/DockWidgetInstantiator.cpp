@@ -232,7 +232,7 @@ KDDockWidgets::DockWidgetOptions KDDockWidgets::DockWidgetInstantiator::options(
     return d->m_dockWidgetOptions;
 }
 
-void KDDockWidgets::DockWidgetInstantiator::setOptions(DockWidgetOptions dockWidgetOptions) 
+void KDDockWidgets::DockWidgetInstantiator::setOptions(DockWidgetOptions dockWidgetOptions)
 {
     if (d->m_dockWidgetOptions != dockWidgetOptions) {
         d->m_dockWidgetOptions = dockWidgetOptions;
