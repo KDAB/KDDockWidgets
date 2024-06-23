@@ -13,5 +13,5 @@ add_subdirectory(mdi)
 add_subdirectory(customtitlebar)
 add_subdirectory(customtabbar)
 add_subdirectory(customseparator)
-
+add_subdirectory(fixed_central_widget)
 add_subdirectory(mdi_with_docking)
