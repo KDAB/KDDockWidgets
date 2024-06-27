@@ -129,7 +129,7 @@ EmbeddedWindow::~EmbeddedWindow() = default;
 inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 {
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    auto mainwindow = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralFrame).release();
+    auto mainwindow = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralGroup).release();
 
     auto window = new EmbeddedWindow(mainwindow);
 
@@ -1424,7 +1424,7 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
         auto em = createEmbeddedMainWindow(QSize(500, 500));
         m = em->mainWindow;
     } else {
-        m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame).release();
+        m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralGroup).release();
         m->view()->resize(QSize(500, 500));
         m->show();
     }
@@ -1729,7 +1729,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
 void TestQtWidgets::tst_addToHiddenMainWindow()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, {}, false);
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, {}, false);
     auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
     auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
     auto d1 = createDockWidget("1", w1);
@@ -2455,7 +2455,7 @@ void TestQtWidgets::addDockWidgetToSide()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
 
     auto d1 = new QtWidgets::DockWidget("d1");
     auto d2 = new QtWidgets::DockWidget("d2");
@@ -2506,7 +2506,7 @@ void TestQtWidgets::addDockWidgetToSide2()
     // Tests adding relative to a StartHidden
 
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
 
     auto d1 = new QtWidgets::DockWidget("d1");
     auto d2 = new QtWidgets::DockWidget("d2");
@@ -2530,7 +2530,7 @@ void TestQtWidgets::addDockWidgetToSide3()
 {
     // Tests adding relative to a StartHidden but the new one is also hidden
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
 
     auto d1 = new QtWidgets::DockWidget("d1");
     auto d2 = new QtWidgets::DockWidget("d2");
@@ -2555,7 +2555,7 @@ void TestQtWidgets::addDockWidgetToSide4()
 {
     // Tests a case where generated layout would be off by a few pixels
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
 
     auto dummy1 = new QtWidgets::DockWidget("dummy1");
     auto dummy2 = new QtWidgets::DockWidget("dummy2");
@@ -2592,7 +2592,7 @@ void TestQtWidgets::addDockWidgetToSide5()
 {
     // Tests a case where generated layout would be off by a few pixels
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1002, 1002), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1002, 1002), MainWindowOption_HasCentralGroup, "mw1");
 
     auto rightVisible = new QtWidgets::DockWidget("rightVisible");
     auto rightHidden = new QtWidgets::DockWidget("rightHidden");
@@ -2612,7 +2612,7 @@ void TestQtWidgets::addDockWidgetToSideCrash()
     // This test just ensures it doesn't regress
     {
         EnsureTopLevelsDeleted e;
-        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
 
         auto bottom1 = new QtWidgets::DockWidget("bottom1");
         auto left1 = new QtWidgets::DockWidget("left1");
@@ -2638,7 +2638,7 @@ void TestQtWidgets::addDockWidgetToSideCrash()
 
     {
         EnsureTopLevelsDeleted e;
-        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
 
         auto dummy1 = new QtWidgets::DockWidget("dummy1");
         auto dummy2 = new QtWidgets::DockWidget("dummy2");
@@ -2718,7 +2718,7 @@ void TestQtWidgets::tst_crashDuringRestore()
     // Contrived case where if dockWidget->open() was called during restore it would crash
 
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
     auto d1 = new QtWidgets::DockWidget("d1");
     auto d3 = new QtWidgets::DockWidget("d3");
     m1->addDockWidget(d1->asDockWidgetController(), Location_OnRight);
@@ -2738,7 +2738,7 @@ void TestQtWidgets::tst_toggleVsShowHidden()
 {
     // Tests that the QAction doesn't fire when adding as hidden
     EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, "mw1");
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
     auto d1 = new QtWidgets::DockWidget("d1");
     QVERIFY(!d1->toggleAction()->isChecked());
     QVERIFY(!d1->isOpen());

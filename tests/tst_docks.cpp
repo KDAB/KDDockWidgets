@@ -554,7 +554,7 @@ KDDW_QCORO_TASK tst_restoreTwice()
     EnsureTopLevelsDeleted e;
 
     auto m =
-        createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+        createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup, "tst_restoreTwice");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
 
@@ -1724,7 +1724,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
 
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         m->addDockWidgetToSide(dw1, Location_OnLeft, Size(250, 250));
 
         CHECK_EQ(dw1->sizeInLayout().width(), 250);
@@ -1735,7 +1735,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
 
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
         opt.preferredSize = Size(250, 200);
@@ -1750,7 +1750,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
         auto dw2 = newDockWidget("2");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
         opt.preferredSize = Size(250, 200);
@@ -1769,7 +1769,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         EnsureTopLevelsDeleted e;
         auto dw1 = newDockWidget("1");
         auto dw2 = newDockWidget("2");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
         opt.preferredSize = Size(250, 200);
@@ -1789,7 +1789,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         auto dw1 = newDockWidget("1");
         auto dw2 = newDockWidget("2");
         auto dw3 = newDockWidget("3");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
 
         m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
         m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
@@ -1808,7 +1808,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
         auto dw1 = newDockWidget("1");
         auto dw2 = newDockWidget("2");
         auto dw3 = newDockWidget("3");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
 
         m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
         m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
@@ -1855,7 +1855,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         EnsureTopLevelsDeleted e;
         const int minWidth = 300;
         auto dw1 = createDw("1", { minWidth, 300 });
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         m->addDockWidgetToSide(dw1, Location_OnLeft, Size(250, 250));
 
         CHECK(dw1->sizeInLayout().width() >= minWidth);
@@ -1867,7 +1867,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         EnsureTopLevelsDeleted e;
         const int minWidth = 300;
         auto dw1 = createDw("1", { minWidth, 300 });
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
         opt.preferredSize = Size(minWidth - 50, 200);
@@ -1883,7 +1883,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         const int minWidth = 300;
         auto dw1 = createDw("1", { minWidth, 300 });
         auto dw2 = newDockWidget("2");
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
         opt.preferredSize = Size(minWidth - 50, 200);
@@ -1903,7 +1903,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         const int minWidth = 300;
         auto dw1 = createDw("1", { minWidth, 300 });
         auto dw2 = createDw("2", { minWidth, 300 });
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
         InitialOption opt;
         opt.visibility = InitialVisibilityOption::StartHidden;
         opt.preferredSize = Size(minWidth - 50, 200);
@@ -1924,7 +1924,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         auto dw2 = newDockWidget("2");
         const int minWidth = 300;
         auto dw3 = createDw("3", { minWidth, 300 });
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
 
         m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
         m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
@@ -1944,7 +1944,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
         auto dw2 = newDockWidget("2");
         const int minWidth = 300;
         auto dw3 = createDw("3", { minWidth, 300 });
-        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(Size(1200, 1200), MainWindowOption_HasCentralGroup);
 
         m->addDockWidgetToSide(dw1, Location_OnLeft, InitialVisibilityOption::StartHidden);
         m->addDockWidgetToSide(dw2, Location_OnLeft, InitialVisibilityOption::StartHidden);
@@ -3015,7 +3015,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
         EnsureTopLevelsDeleted e1;
         // MainWindow:
         auto m =
-            createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+            createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup, "tst_restoreTwice");
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidgetAsTab(dock1);
         auto layout = m->multiSplitter();
@@ -3033,7 +3033,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
 
     {
         auto m =
-            createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+            createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup, "tst_restoreTwice");
         auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
         auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
@@ -3085,7 +3085,7 @@ KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
     auto m =
-        createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+        createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup, "tst_restoreTwice");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
@@ -4102,7 +4102,7 @@ KDDW_QCORO_TASK tst_stuckSeparator()
 KDDW_QCORO_TASK tst_titlebar_getter()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralFrame);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup);
     m->view()->resize(Size(500, 500));
     m->show();
 
@@ -5735,7 +5735,7 @@ KDDW_QCORO_TASK tst_restoreWithNativeTitleBar()
 KDDW_QCORO_TASK tst_closeTabOfCentralFrame()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame,
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup,
                               "tst_closeTabOfCentralFrame");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
@@ -5752,7 +5752,7 @@ KDDW_QCORO_TASK tst_centralGroupAffinity()
     EnsureTopLevelsDeleted e;
 
     auto m =
-        createMainWindow(Size(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
+        createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup, "tst_centralFrame245");
     const Vector<QString> affinities = { "a" };
     m->setAffinities(affinities);
 

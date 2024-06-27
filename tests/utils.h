@@ -123,7 +123,7 @@ bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
 std::unique_ptr<Core::MainWindow>
 createMainWindow(Size sz = { 1000, 1000 },
-                 KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                 KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralGroup,
                  const QString &name = {}, bool show = true);
 
 

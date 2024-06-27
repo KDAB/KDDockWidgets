@@ -56,7 +56,7 @@ public:
     std::shared_ptr<Core::Window> tests_createWindow() override;
     Core::MainWindow *
     createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
-                     MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                     MainWindowOptions options = MainWindowOption_HasCentralGroup,
                      Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
 protected:

@@ -69,12 +69,13 @@ Q_ENUM_NS(Location)
 
 enum MainWindowOption {
     MainWindowOption_None = 0, ///> No option set
-    MainWindowOption_HasCentralFrame =
+    MainWindowOption_HasCentralGroup =
         1, ///> Makes the MainWindow always have a central group, for tabbing documents
+    MainWindowOption_HasCentralFrame = MainWindowOption_HasCentralGroup, /// deprecated synonym
     MainWindowOption_MDI = 2, ///> The layout will be MDI. DockWidgets can have arbitrary positions,
                               /// not restricted by any layout
     MainWindowOption_HasCentralWidget =
-        4 | MainWindowOption_HasCentralFrame, ///> Similar to MainWindowOption_HasCentralFrame but
+        4 | MainWindowOption_HasCentralGroup, ///> Similar to MainWindowOption_HasCentralGroup but
     ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa
     /// MainWindowBase::setPersistentCentralWidget()
     MainWindowOption_QDockWidgets = 8, ///> Allows the user to use QDockWidget instead of KDDW DockWidget, while using the KDDW MainWindow

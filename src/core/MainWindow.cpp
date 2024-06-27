@@ -104,12 +104,12 @@ void MainWindow::addDockWidgetAsTab(Core::DockWidget *widget)
     if (d->supportsPersistentCentralWidget()) {
         KDDW_ERROR("Not supported with MainWindowOption_HasCentralWidget."
                    "MainWindowOption_HasCentralWidget can only have 1 widget in the center.",
-                   "Use MainWindowOption_HasCentralFrame instead, which is similar but supports "
+                   "Use MainWindowOption_HasCentralGroup instead, which is similar but supports "
                    "tabbing");
     } else if (d->supportsCentralFrame()) {
         dropArea()->centralGroup()->addTab(widget);
     } else {
-        KDDW_ERROR("Not supported without MainWindowOption_HasCentralFrame");
+        KDDW_ERROR("Not supported without MainWindowOption_HasCentralGroup");
     }
 }
 
@@ -135,8 +135,8 @@ void MainWindow::addDockWidgetToSide(KDDockWidgets::Core::DockWidget *dockWidget
     if (!dockWidget || location == Location_None || isMDI())
         return;
 
-    if (!(d->m_options & MainWindowOption_HasCentralFrame)) {
-        KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralFrame or MainWindowOption_HasCentralWidget");
+    if (!(d->m_options & MainWindowOption_HasCentralGroup)) {
+        KDDW_ERROR("MainWindow::addDockWidgetToSide: A central group is required. Either MainWindowOption_HasCentralGroup or MainWindowOption_HasCentralWidget");
         return;
     }
 

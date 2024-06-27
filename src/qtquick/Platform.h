@@ -68,7 +68,7 @@ public:
     Core::View *tests_createNonClosableView(Core::View *parent = nullptr) override;
     Core::MainWindow *
     createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
-                     MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                     MainWindowOptions options = MainWindowOption_HasCentralGroup,
                      Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
 private:

@@ -282,7 +282,7 @@ public:
     /// internally by some tools that need a main window
     virtual Core::MainWindow *
     createMainWindow(const QString &uniqueName, CreateViewOptions,
-                     MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                     MainWindowOptions options = MainWindowOption_HasCentralGroup,
                      View *parent = nullptr, Qt::WindowFlags = {}) const = 0;
 
     virtual void pauseForDebugger();

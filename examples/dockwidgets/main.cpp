@@ -268,7 +268,7 @@ int main(int argc, char **argv)
 #if defined(DOCKS_DEVELOPER_MODE)
     auto internalFlags = KDDockWidgets::Config::self().internalFlags();
 
-    options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame : MainWindowOption_None;
+    options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralGroup : MainWindowOption_None;
 
     if (parser.isSet(centralWidget))
         options |= MainWindowOption_HasCentralWidget;

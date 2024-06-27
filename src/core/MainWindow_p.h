@@ -48,7 +48,7 @@ public:
 
     bool supportsCentralFrame() const
     {
-        return m_options & MainWindowOption_HasCentralFrame;
+        return m_options & MainWindowOption_HasCentralGroup;
     }
 
     bool supportsPersistentCentralWidget() const

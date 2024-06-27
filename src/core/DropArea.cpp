@@ -505,7 +505,7 @@ Core::Group *DropArea::createCentralGroup(MainWindowOptions options)
 {
     Core::Group *group = nullptr;
 
-    if (options & MainWindowOption_HasCentralFrame) {
+    if (options & MainWindowOption_HasCentralGroup) {
         FrameOptions groupOptions = FrameOption_IsCentralFrame;
         const bool hasPersistentCentralWidget =
             (options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
