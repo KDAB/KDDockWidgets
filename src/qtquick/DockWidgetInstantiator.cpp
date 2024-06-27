@@ -18,6 +18,8 @@
 
 #include <kdbindings/signal.h>
 
+#include <optional>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 

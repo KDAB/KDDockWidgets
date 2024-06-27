@@ -15,7 +15,6 @@
 #include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/core/DockRegistry.h"
 
-#include "DockWidgetInstantiator.h"
 #include "Platform.h"
 
 #include <QDebug>

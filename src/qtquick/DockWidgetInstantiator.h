@@ -13,13 +13,10 @@
 #define KD_DOCKWIDGET_INSTANTIATOR_P_H
 
 #include "qtquick/views/DockWidget.h"
-#include "qtquick/views/TitleBar.h"
 
 #include <QQmlParserStatus>
 #include <QQuickItem>
 #include <QString>
-
-#include <optional>
 
 namespace KDDockWidgets {
 
