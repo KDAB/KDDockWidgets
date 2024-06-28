@@ -11,8 +11,17 @@
 
 import QtQuick 2.9
 
-Guest {
+Item {
     anchors.fill: parent
-    background: "qrc:/assets/base.png"
-    logo: "qrc:/assets/KDAB_bubble_fulcolor.png"
+
+    Image {
+        id: logo
+
+        source: "qrc:/assets/KDAB_bubble_blue.png"
+        fillMode: Image.PreserveAspectFit
+        anchors {
+            fill: parent
+            margins: 150
+        }
+    }
 }

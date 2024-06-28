@@ -31,6 +31,7 @@ class DOCKS_EXPORT MainWindowInstantiator : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
+    Q_PROPERTY(QString persistentCentralItemFileName READ persistentCentralItemFileName WRITE setPersistentCentralItemFileName NOTIFY uniqueNameChanged)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
@@ -49,6 +50,9 @@ public:
     void setAffinities(const QVector<QString> &);
 
     bool isMDI() const;
+
+    QString persistentCentralItemFileName() const;
+    void setPersistentCentralItemFileName(const QString &qmlFilename);
 
     /// @brief See KDDockWidgets::Core::MainWindow::addDockWidget()
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, KDDockWidgets::Location location,
@@ -77,9 +81,11 @@ Q_SIGNALS:
     void uniqueNameChanged();
     void optionsChanged();
     void affinitiesChanged();
+    void persistentCentralItemFileNameChanged();
 
 private:
     QString m_uniqueName;
+    QString m_persistentWidgetFileName;
     Core::MainWindow *m_mainWindow = nullptr;
     QVector<QString> m_affinities;
     KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;

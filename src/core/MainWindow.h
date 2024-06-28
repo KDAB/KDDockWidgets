@@ -70,7 +70,7 @@ public:
 
     /**
      * @brief Docks a DockWidget into the central group, tabbed.
-     * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame
+     * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralGroup
      * option.
      * @param dockwidget The dockwidget to dock.
      *
@@ -96,7 +96,7 @@ public:
     // We need to be able to dock to relativeTo=hidden dock
     /**
      * Docks a DockWidget into this main window at the specified side.
-     * To be used only with MainWindowOption_HasCentralWidget or MainWindowOption_HasCentralFrame.
+     * To be used only with MainWindowOption_HasCentralWidget or MainWindowOption_HasCentralGroup.
      * This is to mimic old QDockWidget system where there were 4 sides around the central widget (not infinite nesting).
      *
      * Example:
@@ -118,7 +118,7 @@ public:
      * @brief Sets a persistent central widget. It can't be detached.
      *
      * Requires passing MainWindowOption_HasCentralWidget in the CTOR.
-     * This is similar to the central group concept of MainWindowOption_HasCentralFrame,
+     * This is similar to the central group concept of MainWindowOption_HasCentralGroup,
      * with the difference that it won't show a tabs.
      *
      * @param widget The QWidget (or QQuickItem if built with QtQuick support) that you

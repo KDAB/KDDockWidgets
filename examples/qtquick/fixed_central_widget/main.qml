@@ -37,6 +37,7 @@ ApplicationWindow {
             top: someTopArea.bottom
         }
 
+        persistentCentralItemFileName: ":/CentralWidget.qml"
         options: KDDW.KDDockWidgets.MainWindowOption_HasCentralWidget
 
         // Each main layout needs a unique id
@@ -45,7 +46,7 @@ ApplicationWindow {
         KDDW.DockWidget {
             id: dock4
             uniqueName: "dock4" // Each dock widget needs a unique id
-            source: ":/Another.qml"
+            source: ":/SomeDockWidget.qml"
         }
 
         KDDW.DockWidget {

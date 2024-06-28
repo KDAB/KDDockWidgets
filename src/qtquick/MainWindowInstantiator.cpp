@@ -10,6 +10,7 @@
 */
 
 #include "MainWindowInstantiator.h"
+#include "qtquick/views/MainWindow.h"
 #include "qtquick/views/MainWindowMDI.h"
 #include "kddockwidgets/core/DockWidget.h"
 #include "kddockwidgets/core/MainWindow.h"
@@ -211,13 +212,39 @@ void MainWindowInstantiator::componentComplete()
     const auto mainWindowOptions = MainWindowOptions(m_options);
 
     Core::View *view = nullptr;
-    if (mainWindowOptions & MainWindowOption_MDI)
+    if (mainWindowOptions & MainWindowOption_MDI) {
         view = new QtQuick::MainWindowMDI(m_uniqueName, this);
-    else
+    } else {
         view = new QtQuick::MainWindow(m_uniqueName, mainWindowOptions, this);
+        if ((mainWindowOptions & MainWindowOption_HasCentralWidget) && !m_persistentWidgetFileName.isEmpty()) {
+            static_cast<QtQuick::MainWindow *>(view)->setPersistentCentralView(m_persistentWidgetFileName);
+        }
+    }
 
     m_mainWindow = view->asMainWindowController();
     Q_ASSERT(m_mainWindow);
 
     m_mainWindow->setAffinities(m_affinities);
+}
+
+void MainWindowInstantiator::setPersistentCentralItemFileName(const QString &qmlFilename)
+{
+    if (m_persistentWidgetFileName == qmlFilename)
+        return;
+
+    if (m_mainWindow) {
+        if (auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()))) {
+            mwView->setPersistentCentralView(qmlFilename);
+        } else {
+            qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
+        }
+    }
+
+    m_persistentWidgetFileName = qmlFilename;
+    Q_EMIT persistentCentralItemFileNameChanged();
+}
+
+QString MainWindowInstantiator::persistentCentralItemFileName() const
+{
+    return m_persistentWidgetFileName;
 }
