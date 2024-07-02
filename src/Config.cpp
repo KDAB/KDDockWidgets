@@ -11,7 +11,7 @@
 
 /**
  * @file
- * @brief Application wide config to tune certain behaviours of the framework.
+ * @brief Application wide config to tune certain framework behaviors.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

@@ -26,13 +26,13 @@ repos:
   - id: clang-format
     exclude: (.json)
 - repo: https://github.com/PyCQA/pylint
-  rev: v3.2.3
+  rev: v3.2.4
   hooks:
   - id: pylint
     exclude: ^(.cmake-format.py|conan/conanfile.py)
     additional_dependencies: ["PySide2", "PySide6"]
 - repo: https://github.com/hhatto/autopep8
-  rev: v2.2.0
+  rev: v2.3.1
   hooks:
   - id: autopep8
 - repo: https://github.com/codespell-project/codespell
