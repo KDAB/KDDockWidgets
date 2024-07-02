@@ -7,7 +7,7 @@ ci:
 exclude: ^(cmake/ECM|cmake/KDAB/|src/3rdparty/|code.dev.code-workspace)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
+  rev: v4.6.0
   hooks:
   - id: trailing-whitespace
   - id: end-of-file-fixer
@@ -26,17 +26,17 @@ repos:
   - id: clang-format
     exclude: (.json)
 - repo: https://github.com/PyCQA/pylint
-  rev: v3.1.0
+  rev: v3.2.4
   hooks:
   - id: pylint
     exclude: ^(.cmake-format.py|conan/conanfile.py)
     additional_dependencies: ["PySide2", "PySide6"]
 - repo: https://github.com/hhatto/autopep8
-  rev: v2.1.0
+  rev: v2.3.1
   hooks:
   - id: autopep8
 - repo: https://github.com/codespell-project/codespell
-  rev: v2.2.6
+  rev: v2.3.0
   hooks:
   - id: codespell
 - repo: https://github.com/cheshirekow/cmake-format-precommit
@@ -55,7 +55,7 @@ repos:
     files: \.(md|mdown|markdown)$
     exclude: (docs/book/)
 - repo: https://github.com/fsfe/reuse-tool
-  rev: v3.0.1
+  rev: v3.1.0a1
   hooks:
   - id: reuse
     args: [--suppress-deprecation]
