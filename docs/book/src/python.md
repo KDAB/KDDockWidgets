@@ -2,6 +2,8 @@
 
 These are the instructions for building the `Python bindings` for KDDockWidgets.
 
+There are no bindings for `QtQuick`, it's assumed you're using `QtWidgets`.
+
 Make sure you have PySide6, shiboken6 and shiboken6-generator installed. Their versions need to match your **exact** Qt version.
 Since `Qt 6.6` all these 3 packages are in `PyPi`, so you can simply install them with `pip`. For other Qt versions, consult
 the respective documentation.
