@@ -77,7 +77,7 @@ jobs:
         #with:
           #ref: '2.0' # schedule.cron do not allow branch setting
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           cache: 'pip'
           cache-dependency-path: '.github/workflows/pip-requirements.txt'
