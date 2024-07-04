@@ -3081,6 +3081,29 @@ KDDW_QCORO_TASK tst_restoreGroupOptions()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_dockWidgetTabIndexOverride()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setDockWidgetTabIndexOverrideFunc([](Core::DockWidget *, Core::Group *, int) {
+        return 0;
+    });
+
+    auto m =
+        createMainWindow(Size(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnTop);
+    dock1->addDockWidgetAsTab(dock2);
+
+    /// Redocking will use our override func and move it to index 0
+    CHECK(dock2->tabIndex() == 1);
+    dock2->setFloating(true);
+    dock2->setFloating(false);
+    CHECK(dock2->tabIndex() == 0);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
@@ -6398,6 +6421,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_mainWindowToggle),
         TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
+        TEST(tst_dockWidgetTabIndexOverride),
         TEST(tst_restoreWithCentralFrameWithTabs),
         TEST(tst_preferredInitialSize),
         TEST(tst_preferredInitialSizeVsMinSize),

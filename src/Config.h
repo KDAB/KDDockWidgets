@@ -30,12 +30,14 @@ class MainWindow;
 class DropArea;
 class Draggable;
 class ViewFactory;
+class Group;
 }
 
 typedef KDDockWidgets::Core::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::Core::MainWindow *(*MainWindowFactoryFunc)(const QString &name, KDDockWidgets::MainWindowOptions);
 typedef bool (*DragAboutToStartFunc)(Core::Draggable *draggable);
 typedef void (*DragEndedFunc)();
+typedef int (*DockWidgetTabIndexOverrideFunc)(Core::DockWidget *dw, Core::Group *group, int tabIndex);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///
@@ -343,6 +345,13 @@ public:
     /// @sa setAboutToStartDragFunc
     void setDragEndedFunc(DragEndedFunc func);
     DragEndedFunc dragEndedFunc() const;
+
+    /// Allows to override the tabindex when restoring a dock widget to a tab
+    /// When a dock widget is un-floated (by double click on titlebar) it goes to its
+    /// previous know position in the main window. If that position was tabbed, the provided
+    /// func can be used to change the actual tabIndex that's used.
+    void setDockWidgetTabIndexOverrideFunc(DockWidgetTabIndexOverrideFunc func);
+    DockWidgetTabIndexOverrideFunc dockWidgetTabIndexOverrideFunc() const;
 
     ///@brief Used internally by the framework. Returns the function which was passed to
     /// setDropIndicatorAllowedFunc()

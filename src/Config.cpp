@@ -65,6 +65,7 @@ public:
     DropIndicatorAllowedFunc m_dropIndicatorAllowedFunc = nullptr;
     DragAboutToStartFunc m_dragAboutToStartFunc = nullptr;
     DragEndedFunc m_dragEndedFunc = nullptr;
+    DockWidgetTabIndexOverrideFunc m_restorePlaceholderTabIndexOverride = nullptr;
     ViewFactory *m_viewFactory = nullptr;
     Flags m_flags = Flag_Default;
     MDIFlags m_mdiFlags = MDIFlag_None;
@@ -274,6 +275,16 @@ void Config::setDragEndedFunc(DragEndedFunc func)
 DragEndedFunc Config::dragEndedFunc() const
 {
     return d->m_dragEndedFunc;
+}
+
+void Config::setDockWidgetTabIndexOverrideFunc(DockWidgetTabIndexOverrideFunc func)
+{
+    d->m_restorePlaceholderTabIndexOverride = func;
+}
+
+DockWidgetTabIndexOverrideFunc Config::dockWidgetTabIndexOverrideFunc() const
+{
+    return d->m_restorePlaceholderTabIndexOverride;
 }
 
 void Config::setAbsoluteWidgetMinSize(Size size)

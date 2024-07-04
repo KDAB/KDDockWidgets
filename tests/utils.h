@@ -105,6 +105,7 @@ struct EnsureTopLevelsDeleted
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
         Config::self().setMainWindowFactoryFunc(nullptr);
+        Config::self().setDockWidgetTabIndexOverrideFunc(nullptr);
         Config::self().setInternalFlags(m_originalInternalFlags);
         Config::self().setFlags(m_originalFlags);
         Config::self().setMDIFlags(m_originalMDIFlags);

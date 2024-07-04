@@ -163,10 +163,15 @@ void Layout::restorePlaceholder(Core::DockWidget *dw, Core::Item *item, int tabI
         KDDW_ERROR("Layout::restorePlaceholder: Trying to use a group that's being deleted");
     }
 
-    if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {
-        group->insertWidget(dw, tabIndex);
+    if (auto tabIndexFunc = Config::self().dockWidgetTabIndexOverrideFunc()) {
+        // The user wishes to control the tabIndex himself
+        group->insertWidget(dw, tabIndexFunc(dw, group, tabIndex));
     } else {
-        group->addTab(dw);
+        if (tabIndex != -1 && group->dockWidgetCount() >= tabIndex) {
+            group->insertWidget(dw, tabIndex);
+        } else {
+            group->addTab(dw);
+        }
     }
 
     group->Controller::setVisible(true);
