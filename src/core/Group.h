@@ -290,6 +290,10 @@ public:
 
     LayoutingGuest *asLayoutingGuest() const;
 
+    /// Convenience that just calls close() on all its dock widgets
+    /// Returns whether all dock widgets accepted the close
+    bool close() const;
+
     /// Returns the group that's in the specified item
     static Core::Group *fromItem(const Core::Item *);
 

@@ -1040,6 +1040,18 @@ LayoutingGuest *Group::asLayoutingGuest() const
     return d;
 }
 
+bool Group::close() const
+{
+    bool allAccepted = true;
+
+    const DockWidget::List docks = dockWidgets();
+    for (DockWidget *dock : docks) {
+        allAccepted = allAccepted && dock->close();
+    }
+
+    return allAccepted;
+}
+
 Group::Private::Private(Group *qq, int userType, FrameOptions options)
     : q(qq)
     , m_userType(userType)

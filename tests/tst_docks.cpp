@@ -3104,6 +3104,29 @@ KDDW_QCORO_TASK tst_dockWidgetTabIndexOverride()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_closeGroup()
+{
+    // Tests closing a whole group via Group::close()
+    EnsureTopLevelsDeleted e;
+
+    auto m =
+        createMainWindow(Size(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnTop);
+    dock1->addDockWidgetAsTab(dock2);
+
+    CHECK(dock1->isOpen());
+    CHECK(dock2->isOpen());
+
+    auto group = dock1->d->group();
+    CHECK(group->close());
+    CHECK(!dock1->isOpen());
+    CHECK(!dock2->isOpen());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
@@ -6421,6 +6444,8 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_mainWindowToggle),
         TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
+        TEST(tst_closeGroup),
+        TEST(tst_dockWidgetTabIndexOverride),
         TEST(tst_dockWidgetTabIndexOverride),
         TEST(tst_restoreWithCentralFrameWithTabs),
         TEST(tst_preferredInitialSize),
