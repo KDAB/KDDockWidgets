@@ -69,6 +69,9 @@ public:
     /// Sets the size of this group in the MDI layout
     Q_INVOKABLE void setMDISize(QSize);
 
+    /// Convenience that just calls close() on all its dock widgets
+    /// Returns whether all dock widgets accepted the close
+    Q_INVOKABLE bool closeAllDockWidgets();
 
 protected:
     void removeDockWidget(Core::DockWidget *dw) override;

@@ -280,3 +280,8 @@ void Group::setMDISize(QSize sz)
 
     layout->resizeDockWidget(m_group, sz);
 }
+
+bool Group::closeAllDockWidgets()
+{
+    return m_inDtor || m_group->close();
+}
