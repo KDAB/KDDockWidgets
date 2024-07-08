@@ -749,6 +749,7 @@ void Frame::scheduleDeleteLater()
 {
     qCDebug(creation) << Q_FUNC_INFO << this;
     m_beingDeleted = true;
+    Q_EMIT beingDeleted();
     QTimer::singleShot(0, this, [this] {
         // Can't use deleteLater() here due to QTBUG-83030 (deleteLater() never delivered if triggered by a sendEvent() before event loop starts)
         delete this;
