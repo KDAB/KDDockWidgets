@@ -37,21 +37,6 @@ class Layout;
 class LayoutingHost;
 }
 
-// Just a RAII class so we don't forget to unref
-struct ItemRef
-{
-    explicit ItemRef(KDBindings::ConnectionHandle conn, Core::Item *);
-    ~ItemRef();
-
-    bool isInMainWindow() const;
-
-    Core::ObjectGuard<Core::Item> item;
-    KDBindings::ConnectionHandle connection;
-
-private:
-    KDDW_DELETE_COPY_CTOR(ItemRef)
-};
-
 /**
  * @internal
  * @brief Represents the DockWidget's last position.
@@ -101,12 +86,6 @@ public:
 
     bool containsPlaceholder(Core::Item *) const;
     void removePlaceholders();
-
-    /// @brief Returns the last places where the dock widget was or is
-    const std::vector<std::unique_ptr<ItemRef>> &placeholders() const
-    {
-        return m_placeholders;
-    }
 
     ///@brief Removes the placeholders that belong to this multisplitter
     void removePlaceholders(const Core::LayoutingHost *);
@@ -160,6 +139,22 @@ public:
     }
 
 private:
+    /// Just a RAII class so we don't forget to unref
+    struct ItemRef
+    {
+        explicit ItemRef(KDBindings::ConnectionHandle conn, Core::Item *);
+        ~ItemRef();
+
+        bool isInMainWindow() const;
+
+        Core::ObjectGuard<Core::Item> item;
+        KDBindings::ConnectionHandle connection;
+
+    private:
+        KDDW_DELETE_COPY_CTOR(ItemRef)
+    };
+
+
     // The last places where this dock widget was (or is), so it can be restored when
     // setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
