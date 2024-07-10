@@ -3127,6 +3127,43 @@ KDDW_QCORO_TASK tst_closeGroup()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
+{
+    // Tests that placeholders in floating windows get priority
+    // over main window placeholders if the last state was floating
+
+    EnsureTopLevelsDeleted e;
+
+    auto m =
+        createMainWindow(Size(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+
+    // Make dock1 have a placeholder in the main window:
+    m->addDockWidget(dock1, Location_OnTop);
+    dock2->setFloating(true);
+    CHECK(dock1->hasPreviousDockedLocation());
+    auto lastPos1 = dock1->d->lastPosition();
+    CHECK(lastPos1->isValid());
+    CHECK(lastPos1->placeholderCount() == 1);
+
+    // float it, then nest it with dock2 (floating)
+    dock1->setFloating(true);
+    CHECK(lastPos1->placeholderCount() == 2);
+
+    dock2->addDockWidgetToContainingWindow(dock1, Location_OnTop);
+    CHECK(lastPos1->placeholderCount() == 2);
+
+    dock1->close();
+    dock1->show();
+
+    CHECK(lastPos1->placeholderCount() == 2);
+    // CHECK(!dock1->isInMainWindow());
+    // Platform::instance()->tests_wait(10000000);
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
@@ -6444,6 +6481,7 @@ static const auto s_tests = std::vector<KDDWTest>
         TEST(tst_mainWindowToggle),
         TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
+        TEST(tst_placeholderInFloatingWindow),
         TEST(tst_closeGroup),
         TEST(tst_dockWidgetTabIndexOverride),
         TEST(tst_dockWidgetTabIndexOverride),
