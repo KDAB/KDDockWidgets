@@ -43,6 +43,9 @@ class LayoutingHost;
  *
  * The DockWidget's position is saved when it's closed and restored when it's shown.
  * This class holds that position.
+ *
+ * This class is not directly related to LayoutSaver which saves/restores in bulk. It's more
+ * for redocking back when you double-click a floating dock widget title-bar for example.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS Position
 {
@@ -139,7 +142,7 @@ public:
     }
 
 private:
-    /// Just a RAII class so we don't forget to unref
+    /// A RAII class so we don't forget to unref
     struct ItemRef
     {
         explicit ItemRef(KDBindings::ConnectionHandle conn, Core::Item *);
