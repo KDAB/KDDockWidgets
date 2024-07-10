@@ -82,11 +82,9 @@ Core::Item *Position::layoutItem() const
 
 bool Position::containsPlaceholder(Core::Item *item) const
 {
-    for (const auto &itemRef : m_placeholders)
-        if (itemRef->item == item)
-            return true;
-
-    return false;
+    return std::any_of(m_placeholders.cbegin(), m_placeholders.cend(), [item](const auto &itemRef) {
+        return itemRef->item == item;
+    });
 }
 
 void Position::removePlaceholders()
