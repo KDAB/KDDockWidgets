@@ -71,6 +71,7 @@ public:
     bool m_wasFloating = false;
 
     ///@brief Adds the last layout item where the dock widget was (or is)
+    /// This is called at the moment the dock widget is added into any layout
     void addPlaceholderItem(Core::Item *placeholder);
 
     bool containsPlaceholder(Core::Item *) const;
@@ -84,6 +85,14 @@ public:
 
     ///@brief removes the Item @p placeholder
     void removePlaceholder(Core::Item *placeholder);
+
+    /// The amount of placeholders we know about
+    /// this will be either:
+    /// 0 - if dock widget hasn't been docked
+    /// 1 - if it has been docked
+    /// 2 - if it has been docked to main window and to a floating window
+    /// We don't support memorizing more than 1 main window or more than 1 floating window
+    int placeholderCount() const;
 
     void saveTabIndex(int tabIndex, bool isFloating)
     {

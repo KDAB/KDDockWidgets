@@ -128,6 +128,11 @@ void Position::removePlaceholder(Core::Item *placeholder)
                          m_placeholders.end());
 }
 
+int Position::placeholderCount() const
+{
+    return m_placeholders.size();
+}
+
 void Position::deserialize(const LayoutSaver::Position &lp)
 {
     m_lastFloatingGeometry = lp.lastFloatingGeometry;
