@@ -217,14 +217,14 @@ LayoutSaver::Position Position::serialize() const
     return l;
 }
 
-ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
+Position::ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
     : item(it)
     , connection(std::move(conn))
 {
     item->ref();
 }
 
-ItemRef::~ItemRef()
+Position::ItemRef::~ItemRef()
 {
     if (item && !item->m_inDtor) {
         connection.disconnect();
@@ -232,7 +232,7 @@ ItemRef::~ItemRef()
     }
 }
 
-bool ItemRef::isInMainWindow() const
+bool Position::ItemRef::isInMainWindow() const
 {
     return item && DockRegistry::self()->itemIsInMainWindow(item);
 }
