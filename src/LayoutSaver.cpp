@@ -66,7 +66,7 @@ using namespace KDDockWidgets::Core;
 
 std::map<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
-std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Position>> LayoutSaver::Private::s_unrestoredPositions;
+std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Positions>> LayoutSaver::Private::s_unrestoredPositions;
 std::unordered_map<QString, CloseReason> LayoutSaver::Private::s_unrestoredProperties;
 
 inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
@@ -583,7 +583,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
             KDDW_INFO("Couldn't find dock widget {}", dw->uniqueName);
-            auto pos = std::make_shared<KDDockWidgets::Position>();
+            auto pos = std::make_shared<KDDockWidgets::Positions>();
             pos->deserialize(dw->lastPosition);
             LayoutSaver::Private::s_unrestoredPositions[dw->uniqueName] = pos;
             LayoutSaver::Private::s_unrestoredProperties[dw->uniqueName] = dw->lastCloseReason;
@@ -662,7 +662,7 @@ void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
     {
         auto it = s_unrestoredPositions.find(dw->uniqueName());
         if (it != s_unrestoredPositions.end()) {
-            dw->d->m_lastPosition = it->second;
+            dw->d->m_lastPositions = it->second;
             s_unrestoredPositions.erase(it);
         }
     }

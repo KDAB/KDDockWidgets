@@ -31,12 +31,12 @@
 
 using namespace KDDockWidgets;
 
-Position::~Position()
+Positions::~Positions()
 {
     m_placeholders.clear();
 }
 
-void Position::addPlaceholderItem(Core::Item *placeholder)
+void Positions::addPlaceholderItem(Core::Item *placeholder)
 {
     assert(placeholder);
 
@@ -67,7 +67,7 @@ void Position::addPlaceholderItem(Core::Item *placeholder)
     // meaningful names in separated variables
 }
 
-Core::Item *Position::lastItem() const
+Core::Item *Positions::lastItem() const
 {
     // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
     // In the future we might want to restore it to FloatingWindows.
@@ -80,20 +80,20 @@ Core::Item *Position::lastItem() const
     return nullptr;
 }
 
-bool Position::containsPlaceholder(Core::Item *item) const
+bool Positions::containsPlaceholder(Core::Item *item) const
 {
     return std::any_of(m_placeholders.cbegin(), m_placeholders.cend(), [item](const auto &itemRef) {
         return itemRef->item == item;
     });
 }
 
-void Position::removePlaceholders()
+void Positions::removePlaceholders()
 {
     ScopedValueRollback clearGuard(m_clearing, true);
     m_placeholders.clear();
 }
 
-void Position::removePlaceholders(const Core::LayoutingHost *host)
+void Positions::removePlaceholders(const Core::LayoutingHost *host)
 {
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(),
                                         [host](const std::unique_ptr<ItemRef> &itemref) {
@@ -104,7 +104,7 @@ void Position::removePlaceholders(const Core::LayoutingHost *host)
                          m_placeholders.end());
 }
 
-void Position::removeNonMainWindowPlaceholders()
+void Positions::removeNonMainWindowPlaceholders()
 {
     auto it = m_placeholders.begin();
     while (it != m_placeholders.end()) {
@@ -116,7 +116,7 @@ void Position::removeNonMainWindowPlaceholders()
     }
 }
 
-void Position::removePlaceholder(Core::Item *placeholder)
+void Positions::removePlaceholder(Core::Item *placeholder)
 {
     if (m_clearing) // reentrancy guard
         return;
@@ -128,12 +128,12 @@ void Position::removePlaceholder(Core::Item *placeholder)
                          m_placeholders.end());
 }
 
-int Position::placeholderCount() const
+int Positions::placeholderCount() const
 {
     return m_placeholders.size();
 }
 
-void Position::deserialize(const LayoutSaver::Position &lp)
+void Positions::deserialize(const LayoutSaver::Position &lp)
 {
     m_lastFloatingGeometry = lp.lastFloatingGeometry;
     m_lastOverlayedGeometries = lp.lastOverlayedGeometries;
@@ -181,7 +181,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
     m_wasFloating = lp.wasFloating;
 }
 
-LayoutSaver::Position Position::serialize() const
+LayoutSaver::Position Positions::serialize() const
 {
     LayoutSaver::Position l;
 
@@ -220,19 +220,19 @@ LayoutSaver::Position Position::serialize() const
     return l;
 }
 
-bool Position::isValid() const
+bool Positions::isValid() const
 {
     return lastItem() != nullptr;
 }
 
-Position::ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
+Positions::ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
     : item(it)
     , connection(std::move(conn))
 {
     item->ref();
 }
 
-Position::ItemRef::~ItemRef()
+Positions::ItemRef::~ItemRef()
 {
     if (item && !item->m_inDtor) {
         connection.disconnect();
@@ -240,7 +240,7 @@ Position::ItemRef::~ItemRef()
     }
 }
 
-bool Position::ItemRef::isInMainWindow() const
+bool Positions::ItemRef::isInMainWindow() const
 {
     return item && DockRegistry::self()->itemIsInMainWindow(item);
 }
