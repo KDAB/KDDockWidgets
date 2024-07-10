@@ -62,19 +62,7 @@ public:
      * @brief Returns whether the Position is valid. If invalid then the DockWidget was never
      * in a MainWindow.
      */
-    bool isValid() const
-    {
-        return layoutItem() != nullptr;
-    }
-
-    /**
-     * @brief returns if the dock widget was in a tab
-     * @return if the position is tabbed, false otherwise
-     */
-    bool isTabbed() const
-    {
-        return m_tabIndex != -1;
-    }
+    bool isValid() const;
 
     ///@brief The tab index in case the dock widget was in a TabWidget, -1 otherwise.
     int m_tabIndex = -1;
@@ -84,8 +72,6 @@ public:
 
     ///@brief Adds the last layout item where the dock widget was (or is)
     void addPlaceholderItem(Core::Item *placeholder);
-
-    Core::Item *layoutItem() const;
 
     bool containsPlaceholder(Core::Item *) const;
     void removePlaceholders();
@@ -120,10 +106,7 @@ public:
         return m_lastFloatingGeometry;
     }
 
-    Core::Item *lastItem() const
-    {
-        return layoutItem();
-    }
+    Core::Item *lastItem() const;
 
     int lastTabIndex() const
     {
