@@ -67,7 +67,7 @@ void Position::addPlaceholderItem(Core::Item *placeholder)
     // meaningful names in separated variables
 }
 
-Core::Item *Position::layoutItem() const
+Core::Item *Position::lastItem() const
 {
     // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
     // In the future we might want to restore it to FloatingWindows.
@@ -213,6 +213,11 @@ LayoutSaver::Position Position::serialize() const
     l.lastOverlayedGeometries = m_lastOverlayedGeometries;
 
     return l;
+}
+
+bool Position::isValid() const
+{
+    return lastItem() != nullptr;
 }
 
 Position::ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
