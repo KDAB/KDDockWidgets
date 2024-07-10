@@ -14,6 +14,7 @@
 #include "MultiSplitterConfig.h"
 #include "Widget.h"
 #include "ItemFreeContainer_p.h"
+#include "../Frame_p.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -197,6 +198,8 @@ void Item::setGuestWidget(Widget *guest)
 
         connect(newWidget, &QObject::objectNameChanged, this, &Item::updateObjectName);
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
+        if (auto frame = qobject_cast<Frame *>(newWidget))
+            connect(frame, &Frame::beingDeleted, this, &Item::onWidgetDestroyed); // Frame is scheduled for deletion
         connect(newWidget, SIGNAL(layoutInvalidated()), this, SLOT(onWidgetLayoutRequested()));
 
         if (m_sizingInfo.geometry.isEmpty()) {
@@ -788,7 +791,8 @@ void Item::turnIntoPlaceholder()
     // Turning into placeholder just means hiding it. So we can show it again in its original position.
     // Call removeItem() so we share the code for making the neighbours grow into the space that becomes available
     // after hiding this one
-    parentContainer()->removeItem(this, /*hardDelete=*/false);
+    if (auto parent = parentContainer())
+        parent->removeItem(this, /*hardDelete=*/false);
 }
 
 void Item::updateObjectName()
@@ -809,6 +813,15 @@ void Item::updateObjectName()
 
 void Item::onWidgetDestroyed()
 {
+    if (!m_guest)
+        return;
+
+    if (auto w = guestAsQObject()) {
+        // We may have gotten here because Frame::scheduleDeleteLater was called. Disconnect
+        // signals so we don't get here again when the Frame is finally destroyed.
+        disconnect(w, nullptr, this, nullptr);
+    }
+
     m_guest = nullptr;
 
     if (m_refCount) {

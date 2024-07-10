@@ -126,7 +126,7 @@ void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item,
     }
 
     auto frame = qobject_cast<Frame *>(item->guestAsQObject());
-    Q_ASSERT(frame);
+    Q_ASSERT(frame && !frame->beingDeletedLater());
 
     if (tabIndex != -1 && frame->dockWidgetCount() >= tabIndex) {
         frame->insertWidget(dw, tabIndex);
