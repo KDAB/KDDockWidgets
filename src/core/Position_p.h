@@ -39,21 +39,23 @@ class LayoutingHost;
 
 /**
  * @internal
- * @brief Represents the DockWidget's last position.
+ * @brief Represents the DockWidget's last positions.
  *
- * The DockWidget's position is saved when it's closed and restored when it's shown.
- * This class holds that position.
+ * DockWidgets know where they were in the main window even after they're closed, so that
+ * showing them again puts them in their previous place.
+ *
+ * This class is called Positions since the window might also have a floating position memorized.
  *
  * This class is not directly related to LayoutSaver which saves/restores in bulk. It's more
  * for redocking back when you double-click a floating dock widget title-bar for example.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS Position
+class DOCKS_EXPORT_FOR_UNIT_TESTS Positions
 {
-    KDDW_DELETE_COPY_CTOR(Position)
+    KDDW_DELETE_COPY_CTOR(Positions)
 public:
-    typedef std::shared_ptr<Position> Ptr;
-    Position() = default;
-    ~Position();
+    typedef std::shared_ptr<Positions> Ptr;
+    Positions() = default;
+    ~Positions();
 
     void deserialize(const LayoutSaver::Position &);
     LayoutSaver::Position serialize() const;

@@ -38,7 +38,7 @@ class FloatingWindow;
 class View;
 }
 
-class Position;
+class Positions;
 class DockRegistry;
 
 /// @brief A more granular version of KDDockWidgets::RestoreOption
@@ -343,7 +343,7 @@ public:
 
     /// If a layout is restored but the dock widget doesn't exist, we store its last position here
     /// so when we create the dock widget we can finally restore
-    static std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Position>> s_unrestoredPositions;
+    static std::unordered_map<QString, std::shared_ptr<KDDockWidgets::Positions>> s_unrestoredPositions;
 
     /// Misc unrestored properties we might want to restore. Only CloseReason for now
     /// TODO: If we keep needing to expose more stuff, we can just expose the entire LayoutSaver::Layout instead

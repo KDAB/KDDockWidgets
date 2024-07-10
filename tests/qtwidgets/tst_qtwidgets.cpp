@@ -882,7 +882,7 @@ void TestQtWidgets::tst_openWhenOnSideBar()
         QVERIFY(!m1->overlayedDockWidget());
         QVERIFY(m1->anySideBarIsVisible());
 
-        QVERIFY(!dw1->dptr()->m_lastPosition->wasFloating());
+        QVERIFY(!dw1->dptr()->m_lastPositions->wasFloating());
         dw1->open();
 
         QVERIFY(!m1->overlayedDockWidget());

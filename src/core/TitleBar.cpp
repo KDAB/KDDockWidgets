@@ -478,7 +478,7 @@ void TitleBar::onFloatClicked()
                         current = dock;
 
                     dock->setFloating(true);
-                    dock->dptr()->m_lastPosition->m_tabIndex = i;
+                    dock->dptr()->m_lastPositions->m_tabIndex = i;
                     dock->setFloating(false);
                     ++i;
                 }
