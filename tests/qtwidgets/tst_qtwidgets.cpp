@@ -437,7 +437,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     // Press the float button
     tb1->onFloatClicked();
 
-    QVERIFY(mdiWidget1->d->lastPosition()->isValid());
+    QVERIFY(mdiWidget1->d->lastPosition()->lastItem());
     QVERIFY(mdiWidget1->titleBar()->isVisible());
     QVERIFY(mdiWidget1->isFloating());
 
@@ -603,7 +603,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QVERIFY(mdiTitleBar->isVisible());
 
     QVERIFY(!mdiWidget3->isFloating());
-    QVERIFY(mdiWidget3->d->lastPosition()->isValid());
+    QVERIFY(mdiWidget3->d->lastPosition()->lastItem());
     mdiTitleBar->onFloatClicked();
     QVERIFY(mdiWidget3->isFloating());
 

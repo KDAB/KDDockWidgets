@@ -60,12 +60,6 @@ public:
     void deserialize(const LayoutSaver::Position &);
     LayoutSaver::Position serialize() const;
 
-    /**
-     * @brief Returns whether the Position is valid. If invalid then the DockWidget was never
-     * in a MainWindow.
-     */
-    bool isValid() const;
-
     ///@brief The tab index in case the dock widget was in a TabWidget, -1 otherwise.
     int m_tabIndex = -1;
 
