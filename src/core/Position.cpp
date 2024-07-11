@@ -45,8 +45,8 @@ void Positions::addPlaceholderItem(Core::Item *placeholder)
         return;
 
     if (DockRegistry::self()->itemIsInMainWindow(placeholder)) {
-        // 2. If we have a MainWindow placeholder we don't need nothing else
-        removePlaceholders();
+        // 2. We only support 1 main window placeholder for now
+        removeMainWindowPlaceholders();
     } else {
         // 3. It's a placeholder to a FloatingWindow. Let's still keep any MainWindow placeholders
         // we have as FloatingWindow are temporary so we might need the MainWindow placeholder
@@ -110,6 +110,18 @@ void Positions::removeNonMainWindowPlaceholders()
     while (it != m_placeholders.end()) {
         ItemRef *itemref = it->get();
         if (!itemref->isInMainWindow())
+            it = m_placeholders.erase(it);
+        else
+            ++it;
+    }
+}
+
+void Positions::removeMainWindowPlaceholders()
+{
+    auto it = m_placeholders.begin();
+    while (it != m_placeholders.end()) {
+        ItemRef *itemref = it->get();
+        if (itemref->isInMainWindow())
             it = m_placeholders.erase(it);
         else
             ++it;

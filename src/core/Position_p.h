@@ -85,6 +85,9 @@ public:
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
 
+    ///@brief Removes the placeholders that reference a MainWindow
+    void removeMainWindowPlaceholders();
+
     ///@brief removes the Item @p placeholder
     void removePlaceholder(Core::Item *placeholder);
 
