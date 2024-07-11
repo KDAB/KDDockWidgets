@@ -440,7 +440,7 @@ void DockWidget::show()
 void DockWidget::open()
 {
     if (view()->isRootView()
-        && (d->m_lastPositions->wasFloating() || !d->m_lastPositions->isValid())) {
+        && (d->m_lastPositions->wasFloating() || d->m_lastPositions->lastItem() == nullptr)) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
         d->morphIntoFloatingWindow();
@@ -549,7 +549,7 @@ bool DockWidget::isInSideBar() const
 
 bool DockWidget::hasPreviousDockedLocation() const
 {
-    return d->m_lastPositions->isValid();
+    return d->m_lastPositions->lastItem();
 }
 
 Size DockWidget::lastOverlayedSize() const
@@ -794,7 +794,7 @@ void DockWidget::Private::updateFloatAction()
                                        true); // Guard against recursiveness
 
     if (q->isFloating()) {
-        floatAction->setEnabled(m_lastPositions->isValid());
+        floatAction->setEnabled(m_lastPositions->lastItem());
         floatAction->setChecked(true);
         floatAction->setToolTip(Object::tr("Dock"));
     } else {
@@ -858,10 +858,9 @@ void DockWidget::Private::close()
 
 bool DockWidget::Private::restoreToPreviousPosition()
 {
-    if (!m_lastPositions->isValid())
-        return false;
-
     Core::Item *item = m_lastPositions->lastItem();
+    if (!item)
+        return false;
 
     Layout *layout = DockRegistry::self()->layoutForItem(item);
     assert(layout);
@@ -873,9 +872,6 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we open a dock widget. Let's see if we have to restore it to a previous
     // position.
-
-    if (!m_lastPositions->isValid())
-        return;
 
     Core::Item *layoutItem = m_lastPositions->lastItem();
     if (!layoutItem)

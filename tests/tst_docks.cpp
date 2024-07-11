@@ -2225,7 +2225,7 @@ KDDW_QCORO_TASK tst_setFloatingWhenWasTabbed()
     CHECK(dock2->isFloating());
 
     CHECK_EQ(dock2->dptr()->lastPosition()->lastTabIndex(), 1);
-    CHECK(dock2->dptr()->lastPosition()->isValid());
+    CHECK(dock2->dptr()->lastPosition()->lastItem());
     dock2->setFloating(false);
 
     CHECK(dock1->isTabbed());
@@ -3144,7 +3144,7 @@ KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
     dock2->setFloating(true);
     CHECK(dock1->hasPreviousDockedLocation());
     auto lastPos1 = dock1->d->lastPosition();
-    CHECK(lastPos1->isValid());
+    CHECK(lastPos1->lastItem());
     CHECK(lastPos1->placeholderCount() == 2);
 
     // float it, then nest it with dock2 (floating)
@@ -5738,7 +5738,7 @@ KDDW_QCORO_TASK tst_mixedMDIRestoreToArea()
     CHECK(!mdiLayout->layoutSize().isEmpty());
 
     auto pos = dock0->d->lastPosition();
-    CHECK(pos->isValid());
+    CHECK(pos->lastItem());
     auto originalWindow = dock0->view()->window();
     dock0->setFloating(true);
     dock0->setFloating(false);

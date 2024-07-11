@@ -232,11 +232,6 @@ LayoutSaver::Position Positions::serialize() const
     return l;
 }
 
-bool Positions::isValid() const
-{
-    return lastItem() != nullptr;
-}
-
 Positions::ItemRef::ItemRef(KDBindings::ConnectionHandle conn, Core::Item *it)
     : item(it)
     , connection(std::move(conn))
