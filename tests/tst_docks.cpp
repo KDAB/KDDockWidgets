@@ -3145,7 +3145,7 @@ KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
     CHECK(dock1->hasPreviousDockedLocation());
     auto lastPos1 = dock1->d->lastPosition();
     CHECK(lastPos1->isValid());
-    CHECK(lastPos1->placeholderCount() == 1);
+    CHECK(lastPos1->placeholderCount() == 2);
 
     // float it, then nest it with dock2 (floating)
     dock1->setFloating(true);
