@@ -1,6 +1,7 @@
 * v2.2.0 (unreleased)
   - qtquick: Add support for MainWindowOption_HasCentralWidget
   - Add Config::setDockWidgetTabIndexOverrideFunc() (#165)
+  - Allow to redock back to a floating window (#280)
 
 * v2.1.1 (unreleased)
   -
