@@ -28,6 +28,7 @@ class KDDockWidgets_Location {
 
 class KDDockWidgets_MainWindowOption {
   static const MainWindowOption_None = 0;
+  static const MainWindowOption_HasCentralGroup = 1;
   static const MainWindowOption_HasCentralFrame = 1;
   static const MainWindowOption_MDI = 2;
   static const MainWindowOption_HasCentralWidget = 5;

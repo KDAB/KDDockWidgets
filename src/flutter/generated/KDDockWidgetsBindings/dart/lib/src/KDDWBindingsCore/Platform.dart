@@ -114,7 +114,7 @@ class Platform implements ffi.Finalizable {
   KDDWBindingsCore.MainWindow createMainWindow(
       String? uniqueName, CreateViewOptions arg__2,
       {int options =
-          KDDockWidgets_MainWindowOption.MainWindowOption_HasCentralFrame,
+          KDDockWidgets_MainWindowOption.MainWindowOption_HasCentralGroup,
       required KDDWBindingsCore.View? parent,
       int arg__5 = 0}) {
     final voidstar_Func_voidstar_voidstar_voidstar_int_voidstar_int func = _dylib

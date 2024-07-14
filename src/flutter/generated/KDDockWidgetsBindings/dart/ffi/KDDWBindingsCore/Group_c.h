@@ -44,6 +44,7 @@ public:
     bool anyNonDockable() const;
     bool beingDeletedLater() const;
     KDDockWidgets::Size biggestDockWidgetMaxSize() const;
+    bool close() const;
     bool containsDockWidget(KDDockWidgets::Core::DockWidget *w) const;
     bool containsMouse(KDDockWidgets::Point globalPos) const;
     KDDockWidgets::Core::DockWidget *currentDockWidget() const;
@@ -144,6 +145,8 @@ DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__anyNonDockable(void *thisObj);
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__beingDeletedLater(void *thisObj);
 // KDDockWidgets::Core::Group::biggestDockWidgetMaxSize() const
 DOCKS_EXPORT void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj);
+// KDDockWidgets::Core::Group::close() const
+DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__close(void *thisObj);
 // KDDockWidgets::Core::Group::containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 DOCKS_EXPORT bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Core::Group::containsMouse(KDDockWidgets::Point globalPos) const
@@ -257,8 +260,6 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *t
 // KDDockWidgets::Core::Group::userType() const
 DOCKS_EXPORT int c_KDDockWidgets__Core__Group__userType(void *thisObj);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
-DOCKS_EXPORT bool c_static_KDDockWidgets__Core__Group___get_s_inFloatHack();
-DOCKS_EXPORT void c_static_KDDockWidgets__Core__Group___set_s_inFloatHack_bool(bool s_inFloatHack_);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 DOCKS_EXPORT void c_KDDockWidgets__Core__Group_Finalizer(void *cppObj);
 }

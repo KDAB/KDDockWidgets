@@ -86,6 +86,10 @@ KDDockWidgets::Size Group_wrapper::biggestDockWidgetMaxSize() const
 {
     return ::KDDockWidgets::Core::Group::biggestDockWidgetMaxSize();
 }
+bool Group_wrapper::close() const
+{
+    return ::KDDockWidgets::Core::Group::close();
+}
 bool Group_wrapper::containsDockWidget(KDDockWidgets::Core::DockWidget *w) const
 {
     return ::KDDockWidgets::Core::Group::containsDockWidget(w);
@@ -455,6 +459,12 @@ void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj)
     const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Size> { fromPtr(thisObj)->biggestDockWidgetMaxSize() };
     return result;
 }
+// close() const
+bool c_KDDockWidgets__Core__Group__close(void *thisObj)
+{
+    const auto &result = fromPtr(thisObj)->close();
+    return result;
+}
 // containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_)
 {
@@ -794,14 +804,6 @@ int c_KDDockWidgets__Core__Group__userType(void *thisObj)
 void c_KDDockWidgets__Core__Group__destructor(void *thisObj)
 {
     delete fromPtr(thisObj);
-}
-bool c_static_KDDockWidgets__Core__Group___get_s_inFloatHack()
-{
-    return KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::s_inFloatHack;
-}
-void c_static_KDDockWidgets__Core__Group___set_s_inFloatHack_bool(bool s_inFloatHack_)
-{
-    KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Group_wrapper::s_inFloatHack = s_inFloatHack_;
 }
 void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId)
 {

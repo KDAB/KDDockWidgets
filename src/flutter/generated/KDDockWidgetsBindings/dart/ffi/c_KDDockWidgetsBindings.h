@@ -2307,6 +2307,8 @@ bool c_KDDockWidgets__Core__Group__anyNonDockable(void *thisObj);
 bool c_KDDockWidgets__Core__Group__beingDeletedLater(void *thisObj);
 // KDDockWidgets::Core::Group::biggestDockWidgetMaxSize() const
 void *c_KDDockWidgets__Core__Group__biggestDockWidgetMaxSize(void *thisObj);
+// KDDockWidgets::Core::Group::close() const
+bool c_KDDockWidgets__Core__Group__close(void *thisObj);
 // KDDockWidgets::Core::Group::containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 bool c_KDDockWidgets__Core__Group__containsDockWidget_DockWidget(void *thisObj, void *w_);
 // KDDockWidgets::Core::Group::containsMouse(KDDockWidgets::Point globalPos) const
@@ -2420,8 +2422,6 @@ void c_KDDockWidgets__Core__Group__updateTitleBarVisibility(void *thisObj);
 // KDDockWidgets::Core::Group::userType() const
 int c_KDDockWidgets__Core__Group__userType(void *thisObj);
 void c_KDDockWidgets__Core__Group__destructor(void *thisObj);
-bool c_static_KDDockWidgets__Core__Group___get_s_inFloatHack();
-void c_static_KDDockWidgets__Core__Group___set_s_inFloatHack_bool(bool s_inFloatHack_);
 void c_KDDockWidgets__Core__Group__registerVirtualMethodCallback(void *ptr, void *callback, int methodId);
 void c_KDDockWidgets__Core__Group_Finalizer(void *cppObj); // KDDockWidgets::Core::FloatingWindow::FloatingWindow(KDDockWidgets::Core::Group * group, KDDockWidgets::Rect suggestedGeometry, KDDockWidgets::Core::MainWindow * parent)
 void *c_KDDockWidgets__Core__FloatingWindow__constructor_Group_Rect_MainWindow(void *group_, void *suggestedGeometry_, void *parent_);

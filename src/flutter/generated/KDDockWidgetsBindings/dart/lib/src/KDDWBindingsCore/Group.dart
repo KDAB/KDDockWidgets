@@ -32,22 +32,6 @@ class Group extends KDDWBindingsCore.Controller {
   }
   String getFinalizerName() {
     return "c_KDDockWidgets__Core__Group_Finalizer";
-  }
-
-  static bool get s_inFloatHack {
-    final bool_Func_void func = _dylib
-        .lookup<ffi.NativeFunction<bool_Func_void_FFI>>(
-            'c_static_KDDockWidgets__Core__Group___get_s_inFloatHack')
-        .asFunction();
-    return func() != 0;
-  }
-
-  static set s_inFloatHack(bool s_inFloatHack_) {
-    final void_Func_bool func = _dylib
-        .lookup<ffi.NativeFunction<void_Func_ffi_Int8_FFI>>(
-            'c_static_KDDockWidgets__Core__Group___set_s_inFloatHack_bool')
-        .asFunction();
-    func(s_inFloatHack_ ? 1 : 0);
   } //Group(KDDockWidgets::Core::View * parent)
 
   Group({required KDDWBindingsCore.View? parent}) : super.init() {
@@ -167,6 +151,14 @@ class Group extends KDDWBindingsCore.Controller {
         .asFunction();
     ffi.Pointer<void> result = func(thisCpp);
     return Size.fromCppPointer(result, true);
+  } // close() const
+
+  bool close_2() {
+    final bool_Func_voidstar func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_voidstar_FFI>>(
+            'c_KDDockWidgets__Core__Group__close')
+        .asFunction();
+    return func(thisCpp) != 0;
   } // containsDockWidget(KDDockWidgets::Core::DockWidget * w) const
 
   bool containsDockWidget(KDDWBindingsCore.DockWidget? w) {
