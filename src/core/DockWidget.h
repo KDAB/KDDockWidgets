@@ -394,8 +394,7 @@ public:
     /// Similar to sideBarLocation(), but returns a bool
     bool isInSideBar() const;
 
-    /// @brief Returns whether this floating dock widget knows its previous docked location
-    /// Result only makes sense if it's floating.
+    /// @brief Returns whether this dock widget knows its previous docked location
     ///
     /// When you call dockWidget->setFloating(false) it will only dock if it knows where to.
     bool hasPreviousDockedLocation() const;

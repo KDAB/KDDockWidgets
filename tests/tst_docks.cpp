@@ -222,7 +222,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
         CHECK(!dock1->hasPreviousDockedLocation());
 
         m->addDockWidget(dock1, Location_OnBottom);
-        CHECK(dock1->hasPreviousDockedLocation());
+        CHECK(!dock1->hasPreviousDockedLocation());
         dock1->setFloating(true);
         CHECK(dock1->hasPreviousDockedLocation());
 
@@ -1406,7 +1406,7 @@ KDDW_QCORO_TASK tst_crash()
     CHECK(dock1->isFloating());
     CHECK(!dock1->isInMainWindow());
 
-    Item *layoutItem = dock1->dptr()->lastPosition()->lastItem();
+    Item *layoutItem = dock1->dptr()->lastPosition()->lastItem(dock1);
     CHECK(layoutItem && DockRegistry::self()->itemIsInMainWindow(layoutItem));
     CHECK_EQ(layoutItem, item1);
 
@@ -3142,24 +3142,47 @@ KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
     // Make dock1 have a placeholder in the main window:
     m->addDockWidget(dock1, Location_OnTop);
     dock2->setFloating(true);
-    CHECK(dock1->hasPreviousDockedLocation());
+    CHECK(!dock1->hasPreviousDockedLocation());
     auto lastPos1 = dock1->d->lastPosition();
     CHECK(lastPos1->lastItem());
     CHECK(lastPos1->placeholderCount() == 2);
 
     // float it, then nest it with dock2 (floating)
     dock1->setFloating(true);
+
+    Platform::instance()->tests_wait(1); // needed as FloatingWindow gets shown delayed
     CHECK(lastPos1->placeholderCount() == 2);
 
     dock2->addDockWidgetToContainingWindow(dock1, Location_OnTop);
+
+    Platform::instance()->tests_wait(1); // needed as FloatingWindow gets deleteLater()
     CHECK(lastPos1->placeholderCount() == 2);
 
     dock1->close();
     dock1->show();
 
+    Platform::instance()->tests_wait(1);
     CHECK(lastPos1->placeholderCount() == 2);
-    // CHECK(!dock1->isInMainWindow());
-    // Platform::instance()->tests_wait(10000000);
+
+    CHECK(!dock1->isInMainWindow());
+    CHECK(dock1->floatingWindow() == dock2->floatingWindow());
+
+    // Do it again
+    dock1->close();
+    dock1->show();
+    CHECK(dock1->floatingWindow() == dock2->floatingWindow());
+
+    // Float by titlebar
+    dock1->titleBar()->onFloatClicked();
+    Platform::instance()->tests_wait(1); // needed as FloatingWindow gets deleteLater()
+    CHECK(lastPos1->placeholderCount() == 3);
+
+    auto previousPos = lastPos1->lastItem(dock1);
+    CHECK(previousPos);
+    dock1->titleBar()->onFloatClicked();
+    CHECK(dock1->floatingWindow() == dock2->floatingWindow());
+
+    Platform::instance()->tests_wait(10);
 
     KDDW_TEST_RETURN(true);
 }
@@ -3702,7 +3725,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
         CHECK(layout->checkSanity());
         auto fw2 = dock2->floatingWindow();
         CHECK(fw2);
-        CHECK_EQ(dock2->dptr()->lastPosition()->lastItem(), oldItem2);
+        CHECK_EQ(dock2->dptr()->lastPosition()->lastItem(dock2), oldItem2);
         Item *item2 = fw2->dropArea()->itemForGroup(dock2->dptr()->group());
         CHECK(item2);
         CHECK(item2->host() == fw2->dropArea()->asLayoutingHost());
@@ -5915,11 +5938,11 @@ KDDW_QCORO_TASK tst_unfloatTabbedFloatingWidgets2()
     CHECK_EQ(dock0->floatingWindow(), dock1->floatingWindow());
     CHECK(dock0->floatingWindow() != dock2->floatingWindow());
 
-    // redock, nothing happens as we don't have a previous docked position in main window
+    // redock
     dock0->titleBar()->onFloatClicked();
-    CHECK(dock0->titleBar()->isFloating());
+    CHECK(!dock0->titleBar()->isFloating());
     CHECK_EQ(dock0->floatingWindow(), dock1->floatingWindow());
-    CHECK(dock0->floatingWindow() != dock2->floatingWindow());
+    CHECK(dock0->floatingWindow() == dock2->floatingWindow());
     KDDW_TEST_RETURN(true);
 }
 

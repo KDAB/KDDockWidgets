@@ -53,10 +53,10 @@
 
 static int s_dbg_numFrames = 0;
 
-bool KDDockWidgets::Core::Group::s_inFloatHack = false;
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
+
+Core::Item *Core::Group::s_inFloatHack = nullptr;
 
 namespace KDDockWidgets {
 
