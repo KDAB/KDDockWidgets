@@ -114,7 +114,13 @@ public:
         return m_lastFloatingGeometry;
     }
 
-    Core::Item *lastItem() const;
+
+    /// Returns the placeholder Item where the dock widget *was*
+    /// Pass current to exclude the current layout Item where it's living
+    Core::Item *lastItem(Core::Item *current = nullptr) const;
+
+    /// convenience overload
+    Core::Item *lastItem(const Core::DockWidget *current) const;
 
     int lastTabIndex() const
     {
@@ -148,6 +154,7 @@ private:
         KDDW_DELETE_COPY_CTOR(ItemRef)
     };
 
+    bool itemIsBeingDestroyed(Core::Item *) const;
 
     // The last places where this dock widget was (or is), so it can be restored when
     // setFloating(false) or show() is called.

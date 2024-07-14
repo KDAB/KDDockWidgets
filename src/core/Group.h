@@ -36,6 +36,7 @@ class MainWindow;
 class Stack;
 class TabBar;
 class TitleBar;
+class Item;
 
 class DOCKS_EXPORT Group : public Controller, public FocusScope
 {
@@ -297,7 +298,7 @@ public:
     /// Returns the group that's in the specified item
     static Core::Group *fromItem(const Core::Item *);
 
-    static bool s_inFloatHack;
+    static Core::Item *s_inFloatHack;
 
 protected:
     void isFocusedChangedCallback() override;

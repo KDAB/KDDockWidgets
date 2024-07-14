@@ -18,6 +18,8 @@
 #include "Position_p.h"
 #include "LayoutSaver_p.h"
 #include "Logging_p.h"
+#include "Group.h"
+#include "DockWidget_p.h"
 #include "ScopedValueRollback_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingHost_p.h"
@@ -47,11 +49,6 @@ void Positions::addPlaceholderItem(Core::Item *placeholder)
     if (DockRegistry::self()->itemIsInMainWindow(placeholder)) {
         // 2. We only support 1 main window placeholder for now
         removeMainWindowPlaceholders();
-    } else {
-        // 3. It's a placeholder to a FloatingWindow. Let's still keep any MainWindow placeholders
-        // we have as FloatingWindow are temporary so we might need the MainWindow placeholder
-        // later.
-        removeNonMainWindowPlaceholders();
     }
 
     // Make sure our list only contains valid placeholders. We save the result so we can disconnect
@@ -67,17 +64,44 @@ void Positions::addPlaceholderItem(Core::Item *placeholder)
     // meaningful names in separated variables
 }
 
-Core::Item *Positions::lastItem() const
+bool Positions::itemIsBeingDestroyed(Core::Item *item) const
 {
-    // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
-    // In the future we might want to restore it to FloatingWindows.
+    if (item->m_inDtor)
+        return true;
 
-    for (const auto &itemref : m_placeholders) {
-        if (itemref->isInMainWindow())
-            return itemref->item;
+    Core::Layout *layout = DockRegistry::self()->layoutForItem(item);
+    if (layout) {
+        /// FloatingWindow get destroyed with delete later
+        /// its layout items aren't suitable to dock back in as they will be destroyed
+        if (Core::FloatingWindow *fw = layout->floatingWindow()) {
+            if (fw->beingDeleted())
+                return true;
+        }
+    }
+
+    return false;
+}
+
+Core::Item *Positions::lastItem(Core::Item *current) const
+{
+    for (auto it = m_placeholders.rbegin(), e = m_placeholders.rend(); it != e; ++it) {
+        auto item = (*it)->item;
+
+        if (item == current || item == Core::Group::s_inFloatHack || itemIsBeingDestroyed(item)) {
+            continue;
+        }
+
+        return item;
     }
 
     return nullptr;
+}
+
+
+Core::Item *Positions::lastItem(const Core::DockWidget *current) const
+{
+    Core::Item *currentItem = current ? current->d->item() : nullptr;
+    return lastItem(currentItem);
 }
 
 bool Positions::containsPlaceholder(Core::Item *item) const
@@ -142,7 +166,7 @@ void Positions::removePlaceholder(Core::Item *placeholder)
 
 int Positions::placeholderCount() const
 {
-    return m_placeholders.size();
+    return int(m_placeholders.size());
 }
 
 void Positions::deserialize(const LayoutSaver::Position &lp)
