@@ -47,4 +47,4 @@ function(add_wayland_test test srcs)
     )
 endfunction()
 
-add_wayland_test(tst_wayland_qtwidgets tst_qtwidgets.cpp)
+add_wayland_test(tst_wayland_qtwidgets tst_wayland.cpp)
