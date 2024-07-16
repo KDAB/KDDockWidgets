@@ -69,7 +69,9 @@ WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     , m_guard(m_draggableView)
 {
     init();
-    updateTransparency(/*enable=*/true);
+
+    // Dragged windows normally have transparency, unless we don't have drop indicators
+    updateTransparency(/*enable=*/!Config::self().dropIndicatorsInhibited());
 }
 
 WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
