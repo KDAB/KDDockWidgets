@@ -100,12 +100,17 @@ public:
             name += QStringLiteral("[%1]").arg(w->objectName());
         }
 
+        QWidget *parentWidget = w->parentWidget();
+        if (parentWidget && !w->isWindow() && !w->geometry().intersects(parentWidget->rect())) {
+            qDebug() << "Widget out of bounds! w=" << w << "; geometry=" << w->geometry() << "; parentSize=" << parentWidget->size();
+        }
+
         auto item = new QStandardItem(name);
         item->setData(QVariant::fromValue(w), WidgetRole);
         item->setData(pixmapForWidget(w), PixmapRole);
-
         item->setCheckable(true);
         item->setCheckState(Qt::Checked);
+
         const int indexToInsert = parentItem->rowCount();
         parentItem->insertRow(indexToInsert, item);
 
@@ -203,7 +208,8 @@ public:
                  << "\n  autoFillBackground=" << widget->autoFillBackground()
                  << "\n  Window=" << widget->palette().color(QPalette::Window)
                  << "\n  Base=" << widget->palette().color(QPalette::Base)
-                 << "\n  Button=" << widget->palette().color(QPalette::Button);
+                 << "\n  Button=" << widget->palette().color(QPalette::Button)
+                 << "\n  HWND=" << widget->windowHandle();
 
         if (auto mw = qobject_cast<QMainWindow *>(widget)) {
             qDebug() << "  centralWidget=" << mw->centralWidget();
