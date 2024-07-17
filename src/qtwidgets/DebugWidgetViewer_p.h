@@ -66,41 +66,46 @@ public:
         setPickingEnabled(true);
     }
 
-    void loadWidget(QWidget *widget)
+    void loadPickedWidget(QWidget *widget)
     {
         m_model.clear();
         if (!widget)
             return;
 
-        QWidgetList path;
-        auto p = widget;
-        while (p) {
-            path.append(p);
-            p = p->parentWidget();
-            if (p && p->isWindow())
-                break;
-        }
-
-        QStandardItem *previous = nullptr;
-        for (auto it = path.crbegin(), e = path.crend(); it != e; ++it) {
-            QWidget *w = *it;
-            QString name = QString::fromLatin1(w->metaObject()->className());
-            if (!w->objectName().isEmpty()) {
-                name += QStringLiteral("[%1]").arg(w->objectName());
-            }
-
-            auto item = new QStandardItem(name);
-            item->setData(QVariant::fromValue(w), WidgetRole);
-            item->setData(pixmapForWidget(w), PixmapRole);
-
-            auto parent = previous ? previous : m_model.invisibleRootItem();
-            item->setCheckable(true);
-            item->setCheckState(Qt::Checked);
-            parent->insertRow(0, item);
-            previous = item;
-        }
+        loadWidgetRecursively(widget->window(), m_model.invisibleRootItem());
 
         renderTree();
+    }
+
+    void loadWidgetRecursively(QWidget *w, QStandardItem *parentItem)
+    {
+        if (!w->isVisible())
+            return;
+
+        if (w->size().isEmpty()) {
+            qDebug() << "Ignoring widget with empty size" << w << w->size();
+            return;
+        }
+
+        QString name = QString::fromLatin1(w->metaObject()->className());
+        if (!w->objectName().isEmpty()) {
+            name += QStringLiteral("[%1]").arg(w->objectName());
+        }
+
+        auto item = new QStandardItem(name);
+        item->setData(QVariant::fromValue(w), WidgetRole);
+        item->setData(pixmapForWidget(w), PixmapRole);
+
+        item->setCheckable(true);
+        item->setCheckState(Qt::Checked);
+        const int indexToInsert = parentItem->rowCount();
+        parentItem->insertRow(indexToInsert, item);
+
+        for (auto child : w->children()) {
+            if (auto childWidget = qobject_cast<QWidget *>(child)) {
+                loadWidgetRecursively(childWidget, item);
+            }
+        }
     }
 
     /// Event filter for picking
@@ -111,7 +116,7 @@ public:
 
         if (auto w = qobject_cast<QWidget *>(watched)) {
             setPickingEnabled(false);
-            loadWidget(w);
+            loadPickedWidget(w);
             return true;
         }
 
