@@ -42,7 +42,7 @@ public:
         : QWidget(parent)
     {
         auto pickButton = new QPushButton(QStringLiteral("Pick widget"));
-        pickButton->setObjectName("pick button");
+        pickButton->setObjectName(QStringLiteral("pick button"));
         auto vlay = new QVBoxLayout(this);
         auto hlay = new QHBoxLayout();
 
@@ -63,7 +63,7 @@ public:
 
     void pickWidget()
     {
-        setFilteringEnabled(true);
+        setPickingEnabled(true);
     }
 
     void loadWidget(QWidget *widget)
@@ -77,6 +77,8 @@ public:
         while (p) {
             path.append(p);
             p = p->parentWidget();
+            if (p && p->isWindow())
+                break;
         }
 
         QStandardItem *previous = nullptr;
@@ -84,7 +86,7 @@ public:
             QWidget *w = *it;
             QString name = QString::fromLatin1(w->metaObject()->className());
             if (!w->objectName().isEmpty()) {
-                name += "[" + w->objectName() + "]";
+                name += QStringLiteral("[%1]").arg(w->objectName());
             }
 
             auto item = new QStandardItem(name);
@@ -101,13 +103,14 @@ public:
         renderTree();
     }
 
+    /// Event filter for picking
     bool eventFilter(QObject *watched, QEvent *event) override
     {
         if (event->type() != QEvent::MouseButtonPress)
             return false;
 
         if (auto w = qobject_cast<QWidget *>(watched)) {
-            setFilteringEnabled(false);
+            setPickingEnabled(false);
             loadWidget(w);
             return true;
         }
@@ -115,7 +118,7 @@ public:
         return false;
     }
 
-    void setFilteringEnabled(bool enabled)
+    void setPickingEnabled(bool enabled)
     {
         if (enabled) {
             qApp->setOverrideCursor(Qt::CrossCursor);
