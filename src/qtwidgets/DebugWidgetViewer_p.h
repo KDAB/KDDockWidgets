@@ -59,6 +59,10 @@ public:
         connect(pickButton, &QPushButton::clicked, this,
                 &DebugWidgetViewer::pickWidget);
 
+        connect(&m_model, &QAbstractItemModel::dataChanged, this, [this](const QModelIndex &, const QModelIndex &) {
+            renderTree();
+        });
+
         connect(m_tree.selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &DebugWidgetViewer::onSelectionChanged);
     }
@@ -154,9 +158,12 @@ public:
 
     void renderTree(QStandardItem *node, const QWidget *rootWidget)
     {
-
         QWidget *widget = node->data(WidgetRole).value<QWidget *>();
-        if (widget && node->checkState() == Qt::Checked) {
+        if (widget && node->checkState() != Qt::Checked) {
+            return;
+        }
+
+        if (widget) {
             const QPoint offset = widget->mapTo(rootWidget, QPoint(0, 0));
             widget->render(&m_previewPx, offset, {}, DrawWindowBackground);
         }
