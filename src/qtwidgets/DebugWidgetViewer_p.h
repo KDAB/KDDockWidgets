@@ -27,6 +27,7 @@
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QMainWindow>
+#include <qmenu.h>
 
 enum MyRole {
     WidgetRole = Qt::UserRole + 1,
@@ -48,6 +49,9 @@ public:
 
         m_tree.setMinimumWidth(700);
         m_tree.setModel(&m_model);
+        m_tree.setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(&m_tree, &QTreeView::customContextMenuRequested, this, &DebugWidgetViewer::onCustomContextMenuRequested);
+
         hlay->addWidget(&m_tree);
         hlay->addWidget(&m_preview);
         vlay->addLayout(hlay);
@@ -199,6 +203,24 @@ public:
         }
 
         qDebug() << "END PRINT-------------------";
+    }
+
+    void onCustomContextMenuRequested(QPoint pos)
+    {
+        const QModelIndex index = m_tree.indexAt(pos);
+        if (!index.isValid())
+            return;
+
+        QMenu menu;
+        QAction *a = menu.addAction(QStringLiteral("render to png"));
+        connect(a, &QAction::triggered, this, [&index] {
+            auto widget = index.data(WidgetRole).value<QWidget *>();
+            Q_ASSERT(widget);
+            QPixmap px(widget->size());
+            widget->render(&px, {}, {}, DrawWindowBackground);
+            px.save(QStringLiteral("widget.png"));
+        });
+        menu.exec(m_tree.mapToGlobal(pos));
     }
 
 private:
