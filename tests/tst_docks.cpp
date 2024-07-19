@@ -3188,6 +3188,44 @@ KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
     KDDW_TEST_RETURN(true);
 }
 
+KDDW_QCORO_TASK tst_restoreFloatingWindowGroup()
+{
+    // Tests that if we close the widgets that are tabbed in a floating window
+    // then they get restored to a floating window and not to a main window
+
+    EnsureTopLevelsDeleted e;
+
+    auto m =
+        createMainWindow(Size(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+
+    m->addDockWidget(dock1, Location_OnTop);
+    m->addDockWidget(dock2, Location_OnTop);
+
+    // tab dock1 with dock2 floating
+    dock1->setFloating(true);
+    dock2->setFloating(true);
+    dock1->addDockWidgetAsTab(dock2);
+
+
+    dock1->d->group()->close();
+    CHECK(!dock1->isOpen());
+    CHECK(!dock2->isOpen());
+
+
+    // Re show them:
+    Platform::instance()->tests_wait(10);
+    dock1->setFloating(false);
+    dock2->setFloating(false);
+
+    // TODO: Expected failure
+    // CHECK(dock1->floatingWindow() != nullptr);
+    // CHECK(dock1->floatingWindow() == dock2->floatingWindow());
+
+    KDDW_TEST_RETURN(true);
+}
+
 KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
@@ -6504,6 +6542,7 @@ static const auto s_tests = std::vector<KDDWTest> {
     TEST(tst_mainWindowToggle),
     TEST(tst_startDragging),
 #if !defined(KDDW_FRONTEND_FLUTTER)
+    TEST(tst_restoreFloatingWindowGroup),
     TEST(tst_placeholderInFloatingWindow),
     TEST(tst_closeGroup),
     TEST(tst_dockWidgetTabIndexOverride),
