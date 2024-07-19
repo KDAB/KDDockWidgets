@@ -31,6 +31,7 @@
 #include "core/ViewFactory.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
+#include "clang_format18_workaround.h"
 
 #include <vector>
 #include <memory>
@@ -189,7 +190,7 @@ inline KDDW_QCORO_TASK drag(Core::View *sourceWidget, Point pressGlobalPos, Poin
 {
     if (buttonActions & ButtonAction_Press) {
         if (s_pauseBeforePress)
-            KDDW_CO_AWAIT Core::Platform::instance()->tests_wait(DEBUGGING_PAUSE_DURATION);
+            EVENT_LOOP(DEBUGGING_PAUSE_DURATION);
 
         pressOn(pressGlobalPos, sourceWidget);
     }
@@ -197,7 +198,7 @@ inline KDDW_QCORO_TASK drag(Core::View *sourceWidget, Point pressGlobalPos, Poin
     sourceWidget->activateWindow();
 
     if (s_pauseBeforeMove)
-        KDDW_CO_AWAIT Core::Platform::instance()->tests_wait(DEBUGGING_PAUSE_DURATION);
+        EVENT_LOOP(DEBUGGING_PAUSE_DURATION);
 
     KDDW_CO_AWAIT moveMouseTo(globalDest, sourceWidget);
     pressGlobalPos = sourceWidget->mapToGlobal(Point(10, 10));
@@ -237,7 +238,7 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::Drop
                                             DropLocation dropLocation)
 {
     // run one event loop, needed by flutter
-    KDDW_CO_AWAIT Core::Platform::instance()->tests_wait(100);
+    EVENT_LOOP(100);
 
     auto draggable = draggableFor(fw->view());
     assert(draggable);

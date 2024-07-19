@@ -209,7 +209,7 @@ void TestQtQuick::tst_isFloatingIsEmitted()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    EVENT_LOOP(1);
 }
 
 void TestQtQuick::tst_shutdownCrash()
@@ -304,7 +304,7 @@ void TestQtQuick::tst_childQmlContext()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    EVENT_LOOP(1);
 }
 
 void TestQtQuick::tst_focusBetweenTabs()
@@ -321,7 +321,7 @@ void TestQtQuick::tst_focusBetweenTabs()
     auto floatingDock = DockRegistry::self()->dockByName("floatingDock");
 
     dock1->view()->rootView()->activateWindow();
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(2000);
+    EVENT_LOOP(2000);
     dock1->dptr()->group()->focus();
 
     QVERIFY(dock1->isFocused());

@@ -17,6 +17,7 @@
 #include "core/View_p.h"
 #include "core/Platform.h"
 #include "core/Window_p.h"
+#include "clang_format18_workaround.h"
 
 using namespace KDDockWidgets::Core;
 
@@ -63,7 +64,7 @@ KDDW_QCORO_TASK tst_resize()
     const KDDockWidgets::Size newSize(501, 502);
     window->resize(newSize.width(), newSize.height());
 
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
+    EVENT_LOOP(100);
 
     CHECK_EQ(window->size(), newSize);
 
@@ -106,7 +107,7 @@ KDDW_QCORO_TASK tst_geometry()
     const auto geo = KDDockWidgets::Rect(100, 100, 1000, 1000);
     window->setGeometry(geo);
 
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(100);
+    EVENT_LOOP(100);
     CHECK_EQ(window->geometry(), geo);
 
     window->destroy();

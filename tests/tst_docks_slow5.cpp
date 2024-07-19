@@ -73,7 +73,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         for (int i : docksToHide) {
             docksToCreate.at(i).createdDock->close();
             layout->checkSanity();
-            KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
+            EVENT_LOOP(200);
         }
 
         layout->checkSanity();
@@ -90,8 +90,8 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         for (auto dock : docksToCreate) {
             if (dock.createdDock && dock.createdDock->isVisible()) {
                 dock.createdDock->close();
-                KDDW_CO_AWAIT Platform::instance()->tests_wait(200); // Wait for the docks to be closed. TODO Replace with a global event
-                                                                     // filter and wait for any resize ?
+                EVENT_LOOP(200); // Wait for the docks to be closed. TODO Replace with a global event
+                                 // filter and wait for any resize ?
             }
             ++i;
         }
@@ -354,8 +354,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest>
-{
+static const auto s_tests = std::vector<KDDWTest> {
 #if !defined(KDDW_FRONTEND_FLUTTER)
     TEST(tst_28NestedWidgets)
 #endif

@@ -52,7 +52,7 @@ KDDW_QCORO_TASK tst_setGuestView()
     CHECK(dw->guestView());
     CHECK(dw->view());
     dw->view()->show();
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(500);
+    EVENT_LOOP(500);
 
     CHECK(guest->controller());
     CHECK(dw->floatingWindow());
@@ -187,7 +187,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    EVENT_LOOP(1);
 
     KDDW_TEST_RETURN(true);
 }
@@ -203,7 +203,7 @@ KDDW_QCORO_TASK tst_setSize()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    EVENT_LOOP(1);
 
     KDDW_TEST_RETURN(true);
 }

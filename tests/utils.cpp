@@ -161,7 +161,8 @@ void KDDockWidgets::Tests::pressOn(Point globalPos, Window::Ptr receiver)
 
 KDDW_QCORO_TASK KDDockWidgets::Tests::releaseOn(Point globalPos, View *receiver)
 {
-    KDDW_CO_AWAIT Platform::instance()->tests_releaseOn(globalPos, receiver);
+    auto instance = Platform::instance(); // separate variable due to weird clang-format issue
+    KDDW_CO_AWAIT instance->tests_releaseOn(globalPos, receiver);
     KDDW_CO_RETURN true;
 }
 

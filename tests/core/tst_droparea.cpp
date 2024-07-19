@@ -17,6 +17,7 @@
 #include "core/ViewFactory.h"
 #include "core/Platform.h"
 #include "tests/utils.h"
+#include "../clang_format18_workaround.h"
 
 using namespace KDDockWidgets;
 
@@ -54,7 +55,7 @@ KDDW_QCORO_TASK tst_addWidgetHidden()
 
     auto group = dw->dptr()->group();
     delete dw;
-    KDDW_CO_AWAIT Core::Platform::instance()->tests_waitForDeleted(group);
+    WAIT_FOR_DELETED(group);
 
     KDDW_TEST_RETURN(true);
 }

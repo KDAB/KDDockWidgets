@@ -126,13 +126,13 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
 
     d2->close();
 
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(d3->view());
+    WAIT_FOR_RESIZE(d3->view());
     d2->open(); // Should not result in negative anchor positions (Test will fail due to a spdlog warning)
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(d3->view());
+    WAIT_FOR_RESIZE(d3->view());
     layout->checkSanity();
 
     d2->close();
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForResize(d3->view());
+    WAIT_FOR_RESIZE(d3->view());
     layout->checkSanity();
 
     // Now resize the Window, after removing middle one
@@ -145,7 +145,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
     layout->setLayoutSize(newSize);
 
     d2->destroyLater();
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(d2);
+    WAIT_FOR_DELETED(d2);
     layout->checkSanity();
 
     KDDW_TEST_RETURN(true);
@@ -236,7 +236,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
     layout->checkSanity();
     docks.at(0).createdDock->destroyLater();
     docks.at(4).createdDock->destroyLater();
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(docks.at(4).createdDock);
+    WAIT_FOR_DELETED(docks.at(4).createdDock);
 
     KDDW_TEST_RETURN(true);
 }
@@ -400,7 +400,7 @@ KDDW_QCORO_TASK tst_crash2()
                 layout->checkSanity();
                 if (i == 2) {
                     // Wait for the resizes. This used to make the app crash.
-                    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+                    EVENT_LOOP(1000);
                 }
 
                 docks[i]->setFloating(floatings[i]);
@@ -428,7 +428,7 @@ KDDW_QCORO_TASK tst_crash2()
 KDDW_QCORO_TASK tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    EVENT_LOOP(1);
     KDDW_TEST_RETURN(true);
 }
 

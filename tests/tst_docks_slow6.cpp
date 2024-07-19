@@ -49,15 +49,15 @@ KDDW_QCORO_TASK tst_isFocused()
         auto dock2 = createDockWidget(QStringLiteral("dock2"),
                                       Platform::instance()->tests_createFocusableView({ true }));
 
-        KDDW_CO_AWAIT Platform::instance()->tests_wait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
-                                                             // otherwise dock1 looses again
+        EVENT_LOOP(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
+                         // otherwise dock1 looses again
 
         dock1->window()->move(400, 200);
 
         // 2. Raise dock1 and focus its line edit
         dock1->raise();
         dock1->guestView()->setFocus(Qt::OtherFocusReason);
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
 
         CHECK(dock1->isFocused());
         CHECK(!dock2->isFocused());
@@ -65,10 +65,10 @@ KDDW_QCORO_TASK tst_isFocused()
         // 3. Raise dock2 and focus its line edit
         dock2->view()->raiseAndActivate();
         if (!dock2->window()->window()->isActive())
-            KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->view()->window(), Event::WindowActivate);
+            WAIT_FOR_EVENT(dock2->view()->window(), Event::WindowActivate);
 
         dock2->guestView()->setFocus(Qt::OtherFocusReason);
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
 
         CHECK(!dock1->isFocused());
         CHECK(dock2->guestView()->hasFocus());
@@ -91,7 +91,7 @@ KDDW_QCORO_TASK tst_isFocused()
         auto oldFw3 = dock3->window();
         dock3->raise();
         dock3->guestView()->setFocus(Qt::OtherFocusReason);
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock1->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
         CHECK(!dock1->isFocused());
         CHECK(!dock2->isFocused());
         CHECK(dock3->isFocused());
@@ -100,20 +100,19 @@ KDDW_QCORO_TASK tst_isFocused()
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
         dock2->raise();
         dock2->guestView()->setFocus(Qt::OtherFocusReason);
-        KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(dock2->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock2->guestView().get(), Event::FocusIn);
         CHECK(!dock1->isFocused());
         CHECK(dock2->isFocused());
         CHECK(!dock3->isFocused());
     }
 
     // Spin one event loop so we so some deleteLater()s run. Makes LSAN happy.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000);
+    EVENT_LOOP(1000);
 
     KDDW_CO_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest>
-{
+static const auto s_tests = std::vector<KDDWTest> {
 #if !defined(KDDW_FRONTEND_FLUTTER)
     TEST(tst_isFocused)
 #endif

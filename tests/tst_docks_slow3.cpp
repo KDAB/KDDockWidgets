@@ -60,7 +60,7 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
     dw2->setGuestView(le2->asWrapper());
     dw1->open();
     dw2->open();
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
+    EVENT_LOOP(200);
 
     auto fw1 = dw1->floatingWindow();
     ObjectGuard<Core::FloatingWindow> fw2 = dw2->floatingWindow();
@@ -76,12 +76,12 @@ KDDW_QCORO_TASK tst_dockWidgetGetsFocusWhenDocked()
 
     le1->setFocus(Qt::MouseFocusReason);
 
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(200);
+    EVENT_LOOP(200);
     CHECK(dw1->isFocused());
 
     CHECK(fw1->view()->isActiveWindow());
     KDDW_CO_AWAIT dragFloatingWindowTo(fw2, fw1->dropArea(), DropLocation_Left);
-    KDDW_CO_AWAIT Platform::instance()->tests_waitForEvent(fw1, Event::WindowActivate);
+    WAIT_FOR_EVENT(fw1, Event::WindowActivate);
 
     /// We dropped into floating window 1, it should still be active
     CHECK(fw1->view()->isActiveWindow());
@@ -214,14 +214,14 @@ KDDW_QCORO_TASK tst_close()
              centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
     leftDock->close();
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
+    EVENT_LOOP(250);
     CHECK_EQ(centralDock->dptr()->group()->view()->x(), 0);
     CHECK_EQ(rightDock->dptr()->group()->view()->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
 
     rightDock->close();
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(250);
+    EVENT_LOOP(250);
     Margins margins = mainwindow->centerWidgetMargins();
     CHECK_EQ(centralDock->dptr()->group()->view()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
@@ -295,10 +295,10 @@ KDDW_QCORO_TASK tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = newDockWidget("1");
     dock1->open();
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
+    EVENT_LOOP(1000); // Wait for group to settle
     const Point desiredPos = Point(100, 100);
     dock1->view()->window()->setFramePosition(desiredPos);
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1000); // Wait for group to settle
+    EVENT_LOOP(1000); // Wait for group to settle
     CHECK_EQ(dock1->view()->window()->framePosition(), desiredPos);
 
     dock1->close();
@@ -316,7 +316,7 @@ KDDW_QCORO_TASK tst_positionWhenShown()
 KDDW_QCORO_TASK tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    EVENT_LOOP(1);
     KDDW_TEST_RETURN(true);
 }
 
