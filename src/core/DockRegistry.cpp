@@ -254,6 +254,20 @@ Core::Group *DockRegistry::groupInMDIResize() const
     return nullptr;
 }
 
+Vector<Core::DockWidget *> DockRegistry::dockwidgetsReferencedByDropArea(Core::DropArea *dropArea) const
+{
+    Vector<Core::DockWidget *> dockWidgets;
+
+    for (auto dw : m_dockWidgets) {
+        auto lastPositions = dw->d->lastPosition();
+        if (lastPositions->containsPlaceholderFromLayout(dropArea->asLayoutingHost())) {
+            dockWidgets.append(dw);
+        }
+    }
+
+    return dockWidgets;
+}
+
 void DockRegistry::setCurrentCloseReason(CloseReason reason)
 {
     d->m_currentCloseReason = reason;

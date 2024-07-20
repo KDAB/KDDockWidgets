@@ -220,6 +220,13 @@ public:
     ///@brief Returns the Group which is being resized in a MDI layout. nullptr if none
     Core::Group *groupInMDIResize() const;
 
+
+    /// Returns all dock widgets which have a "previous position" in the specified DropArea
+    /// A DropArea is a layout of dock widgets, when a dock widget is closed, the layout will
+    /// still keep a placeholder for it, so it can be restored to the correct place. This function
+    /// returns all dock widgets that have such placeholder.
+    Vector<Core::DockWidget *> dockwidgetsReferencedByDropArea(Core::DropArea *) const;
+
     void setCurrentCloseReason(CloseReason);
     CloseReason currentCloseReason();
 
