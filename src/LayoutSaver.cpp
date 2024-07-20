@@ -553,7 +553,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         flags.setFlag(FloatingWindowFlag::StartsMinimized, int(fw.windowState) & int(WindowState::Minimized));
 
         auto floatingWindow =
-            new Core::FloatingWindow({}, parent, flags);
+            new Core::FloatingWindow({}, nullptr, parent, flags);
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {

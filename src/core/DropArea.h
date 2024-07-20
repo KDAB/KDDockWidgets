@@ -201,8 +201,7 @@ public:
     explicit PreviousFloatingLayout(Core::DropArea *);
     ~PreviousFloatingLayout();
 
-private:
-    Core::DropArea *const layout;
+    Core::DropArea *layout = nullptr;
 };
 
 }

@@ -140,7 +140,7 @@ MainWindow *actualParent(MainWindow *candidate)
         : candidate;
 }
 
-FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
+FloatingWindow::FloatingWindow(Rect suggestedGeometry, DropArea *dropAreaToReuse, MainWindow *parent,
                                FloatingWindowFlags requestedFlags)
     : Controller(ViewType::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(
@@ -151,7 +151,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
                                                                 // Otherwise the
                                                                 // KDDockWidgets::TitleBar is the
                                                                 // draggable
-    , d(new Private(requestedFlags, this))
+    , d(new Private(requestedFlags, this, dropAreaToReuse))
     , m_titleBar(new Core::TitleBar(this))
 {
     view()->init();
@@ -205,8 +205,8 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
 }
 
 FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
-                               MainWindow *parent)
-    : FloatingWindow({}, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
+                               DropArea *dropAreaToReuse, MainWindow *parent)
+    : FloatingWindow({}, dropAreaToReuse, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
     ScopedValueRollback guard(m_disableSetVisible, true);
 
@@ -262,6 +262,27 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
 
     if (!suggestedGeometry.isNull())
         view()->setGeometry(suggestedGeometry);
+}
+
+/** static */
+FloatingWindow *FloatingWindow::fromExistingDropArea(Core::Group *group, Rect suggestedGeometry,
+                                                     DropArea *dropArea,
+                                                     MainWindow *parent)
+{
+    assert(dropArea);
+
+    // We're reusing a DropArea, transfer ownership to the new FloatingWindow.
+    // DockWidget's m_lastPositions has references to Core::Item* inside this DropArea, DockWidget
+    // no longer needs to keep the unused DropArea alive as it's now owned by FloatingWindow.
+    const auto allDockWidgets = DockRegistry::self()->dockwidgets();
+    for (Core::DockWidget *dw : allDockWidgets) {
+        if (dw->d->m_previousFloatingLayout && dw->d->m_previousFloatingLayout->layout == dropArea) {
+            dw->d->m_previousFloatingLayout->layout = nullptr;
+            dw->d->m_previousFloatingLayout = {};
+        }
+    }
+
+    return new FloatingWindow(group, suggestedGeometry, dropArea, parent);
 }
 
 FloatingWindow::~FloatingWindow()
@@ -394,6 +415,7 @@ void FloatingWindow::setSuggestedGeometry(Rect suggestedRect, SuggestedGeometryH
 void FloatingWindow::scheduleDeleteLater()
 {
     m_deleteScheduled = true;
+
     view()->d->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);
     destroyLater();
@@ -851,10 +873,12 @@ inline FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
     return flags;
 }
 
-FloatingWindow::Private::Private(FloatingWindowFlags requestedFlags, FloatingWindow *q)
+FloatingWindow::Private::Private(FloatingWindowFlags requestedFlags, FloatingWindow *q, DropArea *dropAreaToReuse)
     : m_flags(flagsForFloatingWindow(requestedFlags))
-    , m_dropArea(new DropArea(q->view(), MainWindowOption_None))
+    , m_dropArea(dropAreaToReuse ? dropAreaToReuse : new DropArea(q->view(), MainWindowOption_None))
 {
+    if (dropAreaToReuse)
+        dropAreaToReuse->setParentView(q->view());
 }
 
 void FloatingWindow::saveLastFloatingLayout()
@@ -876,7 +900,7 @@ void FloatingWindow::saveLastFloatingLayout()
     // Give it to all dock widgets so they use it the next time they become floating
     auto layout = std::make_shared<PreviousFloatingLayout>(d->m_dropArea);
 
-    const auto docks = dockWidgets();
+    const auto docks = DockRegistry::self()->dockwidgetsReferencedByDropArea(d->m_dropArea);
     for (auto dock : docks) {
         if (dock->inDtor())
             continue;

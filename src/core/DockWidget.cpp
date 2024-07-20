@@ -622,7 +622,8 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
         geo.setSize(geo.size().expandedTo(group->view()->minSize()));
         Core::FloatingWindow::ensureRectIsOnScreen(geo);
-        auto floatingWindow = new Core::FloatingWindow(group, geo);
+        auto floatingWindow = m_previousFloatingLayout ? FloatingWindow::fromExistingDropArea(group, geo, m_previousFloatingLayout->layout)
+                                                       : new Core::FloatingWindow(group, geo, nullptr);
 
         Core::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();

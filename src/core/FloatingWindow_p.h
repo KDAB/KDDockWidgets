@@ -25,7 +25,7 @@ namespace Core {
 class FloatingWindow::Private
 {
 public:
-    explicit Private(FloatingWindowFlags requestedFlags, FloatingWindow *q);
+    explicit Private(FloatingWindowFlags requestedFlags, FloatingWindow *q, DropArea *dropAreaToReuse);
 
     KDBindings::Signal<> activatedChanged;
     KDBindings::Signal<> numGroupsChanged;
