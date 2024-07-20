@@ -128,6 +128,13 @@ void Positions::removePlaceholders(const Core::LayoutingHost *host)
                          m_placeholders.end());
 }
 
+bool Positions::containsPlaceholderFromLayout(const Core::LayoutingHost *host) const
+{
+    return std::any_of(m_placeholders.cbegin(), m_placeholders.cend(), [host](const std::unique_ptr<ItemRef> &itemref) {
+        return itemref->item && host == itemref->item->host();
+    });
+}
+
 void Positions::removeNonMainWindowPlaceholders()
 {
     auto it = m_placeholders.begin();

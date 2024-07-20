@@ -76,6 +76,9 @@ public:
     ///@brief Removes the placeholders that belong to this multisplitter
     void removePlaceholders(const Core::LayoutingHost *);
 
+    /// Returns whether there's any placeholders from specified layout
+    bool containsPlaceholderFromLayout(const Core::LayoutingHost *) const;
+
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
 
