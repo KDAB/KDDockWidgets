@@ -267,6 +267,11 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
 FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
+
+    /// Keep the Core::Layout around, so DockWidget::show() can still restore to floating
+    /// and go to the correct layout position
+    saveLastFloatingLayout();
+
     view()->d->setAboutToBeDestroyed();
 
     if (auto da = dropArea()) {
@@ -850,4 +855,32 @@ FloatingWindow::Private::Private(FloatingWindowFlags requestedFlags, FloatingWin
     : m_flags(flagsForFloatingWindow(requestedFlags))
     , m_dropArea(new DropArea(q->view(), MainWindowOption_None))
 {
+}
+
+void FloatingWindow::saveLastFloatingLayout()
+{
+    // ~FloatingWindow() is running, but let's keep the Core::Layout alive
+    // so any dock widget that later is promoted to a FloatingWindow can have the same layout.
+    if (!d->m_dropArea)
+        return;
+
+    if (!m_deleteScheduled) {
+        // This is a direct delete of FloatingWindow, not the regular case we're interested in
+        // where the FloatingWindow is deleted later because it's empty
+        return;
+    }
+
+    // relinquish ownership:
+    d->m_dropArea->setParentView(nullptr);
+
+    // Give it to all dock widgets so they use it the next time they become floating
+    auto layout = std::make_shared<PreviousFloatingLayout>(d->m_dropArea);
+
+    const auto docks = dockWidgets();
+    for (auto dock : docks) {
+        if (dock->inDtor())
+            continue;
+
+        dock->d->m_previousFloatingLayout = layout;
+    }
 }

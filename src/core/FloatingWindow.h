@@ -219,6 +219,7 @@ private:
     void onVisibleFrameCountChanged(int count);
     void onCloseEvent(CloseEvent *);
     void updateSizeConstraints();
+    void saveLastFloatingLayout();
 
     bool m_disableSetVisible = false;
     bool m_deleteScheduled = false;

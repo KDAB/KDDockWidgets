@@ -24,6 +24,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/core/Layout.h"
 
+#include <memory>
+
 class TestQtWidgets;
 class TestDocks;
 
@@ -184,7 +186,27 @@ private:
     class Private;
     Private *const d;
 };
+
+/// Class to keep a Core::Layout * alive, so restore as floating window works
+///
+/// DockWidget::show() will try to put the dock widget in its previously known position. That
+/// works well for MainWindow, as it keeps its layout Item alive as a placeholder. However,
+/// FloatingWindow's are deleted all the time, so we need to store it's item Layout somewhere.
+/// We store it inside PreviousFloatingLayout, which takes ownership and is refcounted so we don't leak
+/// unneeded layouts.
+class PreviousFloatingLayout
+{
+public:
+    typedef std::shared_ptr<PreviousFloatingLayout> Ptr;
+    explicit PreviousFloatingLayout(Core::DropArea *);
+    ~PreviousFloatingLayout();
+
+private:
+    Core::DropArea *const layout;
+};
+
 }
+
 }
 
 #endif

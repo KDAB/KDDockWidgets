@@ -24,7 +24,6 @@
 #include "core/TabBar.h"
 #include "core/TabBar_p.h"
 #include "core/MainWindow.h"
-#include "core/Utils_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/Position_p.h"
 #include "core/Platform_p.h"

@@ -19,10 +19,13 @@
 #include "core/View_p.h"
 #include "QtCompat_p.h"
 
+#include <memory>
+
 namespace KDDockWidgets {
 
 namespace Core {
 class SideBar;
+class PreviousFloatingLayout;
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private
 {
@@ -296,6 +299,7 @@ public:
     KDBindings::ScopedConnection m_toggleActionConnection;
     KDBindings::ScopedConnection m_floatActionConnection;
     CloseReason m_lastCloseReason = CloseReason::Unspecified;
+    std::shared_ptr<Core::PreviousFloatingLayout> m_previousFloatingLayout;
 };
 
 }

@@ -726,3 +726,13 @@ Core::Group *DropArea::centralGroup() const
 {
     return d->m_centralGroup;
 }
+
+PreviousFloatingLayout::PreviousFloatingLayout(Core::DropArea *l)
+    : layout(l)
+{
+}
+
+PreviousFloatingLayout::~PreviousFloatingLayout()
+{
+    delete layout;
+}
