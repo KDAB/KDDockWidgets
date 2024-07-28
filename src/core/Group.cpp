@@ -116,6 +116,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
 
 Group::~Group()
 {
+    // qDebug() << "DTOR" << this;
     m_inDtor = true;
     s_dbg_numFrames--;
     if (d->m_layoutItem)

@@ -41,11 +41,9 @@ public:
         FloatingWindowFlags requestedFlags = FloatingWindowFlag::FromGlobalConfig);
 
     explicit FloatingWindow(Core::Group *group, Rect suggestedGeometry,
-                            DropArea *dropAreaToReuse = nullptr,
                             MainWindow *parent = nullptr);
 
-    static FloatingWindow *fromExistingDropArea(Core::Group *group, Rect suggestedGeometry,
-                                                DropArea *dropAreaToReuse,
+    static FloatingWindow *fromExistingDropArea(DropArea *dropAreaToReuse,
                                                 MainWindow *parent = nullptr);
 
     virtual ~FloatingWindow() override;
@@ -220,6 +218,9 @@ protected:
     WindowState m_lastWindowManagerState = WindowState::None;
 
 private:
+    explicit FloatingWindow(DropArea *dropAreaToReuse,
+                            MainWindow *parent = nullptr);
+
     KDDW_DELETE_COPY_CTOR(FloatingWindow)
     Size maxSizeHint() const;
     void onFrameCountChanged(int count);

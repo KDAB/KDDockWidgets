@@ -42,12 +42,12 @@ void Positions::addPlaceholderItem(Core::Item *placeholder)
 {
     assert(placeholder);
 
-    // 1. Already exists, nothing to do
+    // Already exists, nothing to do
     if (containsPlaceholder(placeholder))
         return;
 
     if (DockRegistry::self()->itemIsInMainWindow(placeholder)) {
-        // 2. We only support 1 main window placeholder for now
+        // We only support 1 main window placeholder for now
         removeMainWindowPlaceholders();
     }
 
@@ -159,6 +159,13 @@ void Positions::removeMainWindowPlaceholders()
     }
 }
 
+bool Positions::containsFloatingWindowPlaceholders() const
+{
+    return std::any_of(m_placeholders.cbegin(), m_placeholders.cend(), [](const auto &placeholder) {
+        return !placeholder->isInMainWindow();
+    });
+}
+
 void Positions::removePlaceholder(Core::Item *placeholder)
 {
     if (m_clearing) // reentrancy guard
@@ -237,7 +244,12 @@ LayoutSaver::Position Positions::serialize() const
 
         auto fw = layout->floatingWindow();
         auto mainWindow = layout->mainWindow(/*honourNesting=*/true);
-        assert(mainWindow || fw);
+        if (!fw && !mainWindow) {
+            // This layout is a layout of a deleted floating window, which we're not restoring yet
+            // would need to be serialized first.
+            continue;
+        }
+
         p.isFloatingWindow = fw;
 
         if (p.isFloatingWindow) {

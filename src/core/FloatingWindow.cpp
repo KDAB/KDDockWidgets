@@ -205,8 +205,8 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, DropArea *dropAreaToReuse
 }
 
 FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
-                               DropArea *dropAreaToReuse, MainWindow *parent)
-    : FloatingWindow({}, dropAreaToReuse, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
+                               MainWindow *parent)
+    : FloatingWindow({}, {}, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
     ScopedValueRollback guard(m_disableSetVisible, true);
 
@@ -264,10 +264,14 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
         view()->setGeometry(suggestedGeometry);
 }
 
+FloatingWindow::FloatingWindow(DropArea *dropAreaToReuse,
+                               MainWindow *parent)
+    : FloatingWindow({}, dropAreaToReuse, hackFindParentHarder(nullptr, parent), FloatingWindowFlag::FromGlobalConfig)
+{
+}
+
 /** static */
-FloatingWindow *FloatingWindow::fromExistingDropArea(Core::Group *group, Rect suggestedGeometry,
-                                                     DropArea *dropArea,
-                                                     MainWindow *parent)
+FloatingWindow *FloatingWindow::fromExistingDropArea(DropArea *dropArea, MainWindow *parent)
 {
     assert(dropArea);
 
@@ -282,16 +286,12 @@ FloatingWindow *FloatingWindow::fromExistingDropArea(Core::Group *group, Rect su
         }
     }
 
-    return new FloatingWindow(group, suggestedGeometry, dropArea, parent);
+    return new FloatingWindow(dropArea, parent);
 }
 
 FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
-
-    /// Keep the Core::Layout around, so DockWidget::show() can still restore to floating
-    /// and go to the correct layout position
-    saveLastFloatingLayout();
 
     view()->d->setAboutToBeDestroyed();
 
@@ -419,6 +419,10 @@ void FloatingWindow::scheduleDeleteLater()
     view()->d->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);
     destroyLater();
+
+    /// Keep the Core::Layout around, so DockWidget::show() can still restore to floating
+    /// and go to the correct layout position
+    saveLastFloatingLayout();
 }
 
 Core::DropArea *FloatingWindow::multiSplitter() const
@@ -894,16 +898,26 @@ void FloatingWindow::saveLastFloatingLayout()
         return;
     }
 
+    const bool hasSingleDockWidget = this->hasSingleDockWidget();
+
     // relinquish ownership:
     d->m_dropArea->setParentView(nullptr);
 
     // Give it to all dock widgets so they use it the next time they become floating
     auto layout = std::make_shared<PreviousFloatingLayout>(d->m_dropArea);
 
+
     const auto docks = DockRegistry::self()->dockwidgetsReferencedByDropArea(d->m_dropArea);
     for (auto dock : docks) {
         if (dock->inDtor())
             continue;
+
+        if (hasSingleDockWidget && dock->d->lastPosition()->containsFloatingWindowPlaceholders()) {
+            // Do not save these FloatingWindows without any interesting layout, also
+            // since the dockwidget already has a placeholder in a more intesting FloatingWindow
+            qDebug() << "ignoring";
+            continue;
+        }
 
         dock->d->m_previousFloatingLayout = layout;
     }

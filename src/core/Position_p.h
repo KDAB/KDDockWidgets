@@ -21,6 +21,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "ObjectGuard_p.h"
+#include "layouting/Item_p.h"
 
 #include <kdbindings/signal.h>
 
@@ -78,6 +79,9 @@ public:
 
     /// Returns whether there's any placeholders from specified layout
     bool containsPlaceholderFromLayout(const Core::LayoutingHost *) const;
+
+    /// Returns whether we have placeholders from a floating window
+    bool containsFloatingWindowPlaceholders() const;
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
@@ -141,6 +145,14 @@ public:
         m_lastOverlayedGeometries[loc] = rect;
     }
 
+#ifdef DOCKS_DEVELOPER_MODE
+    void dumpDebug()
+    {
+        for (const auto &p : m_placeholders) {
+            qDebug() << p->item.get() << p->item->host();
+        }
+    }
+#endif
 private:
     /// A RAII class so we don't forget to unref
     struct ItemRef

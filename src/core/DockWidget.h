@@ -399,6 +399,9 @@ public:
     /// When you call dockWidget->setFloating(false) it will only dock if it knows where to.
     bool hasPreviousDockedLocation() const;
 
+    /// Returns whether this dock widget's last location was in a deleted floating window
+    bool previousDockingLocationWasInDeleteFloatingWindow() const;
+
     /// @brief returns the last size the widget has when overlayed
     /// Empty otherwise
     Size lastOverlayedSize() const;

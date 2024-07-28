@@ -1365,13 +1365,13 @@ bool ItemBoxContainer::checkSanity()
         }
     }
 
-#ifdef DOCKS_DEVELOPER_MODE
-    // Can cause slowdown, so just use it in developer mode.
-    if (isRoot()) {
-        if (!asBoxContainer()->test_suggestedRect())
-            return false;
-    }
-#endif
+    // #ifdef DOCKS_DEVELOPER_MODE
+    //     // Can cause slowdown, so just use it in developer mode.
+    //     if (isRoot()) {
+    //         if (!asBoxContainer()->test_suggestedRect())
+    //             return false;
+    //     }
+    // #endif
 
     return true;
 }

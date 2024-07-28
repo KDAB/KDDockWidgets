@@ -222,6 +222,7 @@ Core::FloatingWindow *View::asFloatingWindowController() const
 
 Core::Group *View::asGroupController() const
 {
+    // qDebug() << "ctrl" << m_controller;
     if (m_controller && m_controller->is(ViewType::Group))
         return object_cast<Core::Group *>(m_controller);
 

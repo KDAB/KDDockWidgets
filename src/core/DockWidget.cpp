@@ -439,7 +439,7 @@ void DockWidget::show()
 void DockWidget::open()
 {
     if (view()->isRootView()
-        && (d->m_lastPositions->wasFloating() || d->m_lastPositions->lastItem(this) == nullptr)) {
+        && (/*d->m_lastPositions->wasFloating() || */ d->m_lastPositions->lastItem(this) == nullptr)) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
         d->morphIntoFloatingWindow();
@@ -551,6 +551,11 @@ bool DockWidget::hasPreviousDockedLocation() const
     return d->m_lastPositions->lastItem(this);
 }
 
+bool DockWidget::previousDockingLocationWasInDeleteFloatingWindow() const
+{
+    return d->m_previousFloatingLayout != nullptr;
+}
+
 Size DockWidget::lastOverlayedSize() const
 {
     return d->m_lastOverlayedSize;
@@ -617,13 +622,18 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
             }
         }
 
-        auto group = new Core::Group();
-        group->addTab(q);
-        geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
-        geo.setSize(geo.size().expandedTo(group->view()->minSize()));
-        Core::FloatingWindow::ensureRectIsOnScreen(geo);
-        auto floatingWindow = m_previousFloatingLayout ? FloatingWindow::fromExistingDropArea(group, geo, m_previousFloatingLayout->layout)
-                                                       : new Core::FloatingWindow(group, geo, nullptr);
+        Core::FloatingWindow *floatingWindow = nullptr;
+        if (m_previousFloatingLayout) {
+            floatingWindow = FloatingWindow::fromExistingDropArea(m_previousFloatingLayout->layout);
+        } else {
+            auto group = new Core::Group();
+            group->addTab(q);
+            geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
+            geo.setSize(geo.size().expandedTo(group->view()->minSize()));
+            Core::FloatingWindow::ensureRectIsOnScreen(geo);
+
+            floatingWindow = new Core::FloatingWindow(group, geo, nullptr);
+        }
 
         Core::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();
@@ -872,13 +882,14 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we open a dock widget. Let's see if we have to restore it to a previous
     // position.
-
     Core::Item *layoutItem = m_lastPositions->lastItem(q);
     if (!layoutItem)
         return; // nothing to do, no last position
 
-    if (m_lastPositions->wasFloating())
-        return; // Nothing to do, it was floating before, now it'll just get visible
+    const bool restoringToDeletedFloatingWindow = m_previousFloatingLayout && m_previousFloatingLayout->layout && layoutItem->host() == m_previousFloatingLayout->layout->asLayoutingHost();
+    if (restoringToDeletedFloatingWindow) {
+        morphIntoFloatingWindow();
+    }
 
     Core::Group *group = this->group();
 
@@ -891,7 +902,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     // Now we deal with the case where the DockWidget was close()ed. In this case it doesn't have a
     // parent.
 
-    if (q->view()->parentView()) {
+    if (!restoringToDeletedFloatingWindow && q->view()->parentView()) {
         // Was called due to it being made floating. Nothing to restore.
         return;
     }
