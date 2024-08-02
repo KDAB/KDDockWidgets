@@ -217,8 +217,10 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
     flutter/generated/KDDockWidgetsBindings/dart/ffi/LayoutSaver_c.cpp
 )
 
+set(KDDW_FRONTEND_QTCOMPAT_SRCS qtcompat/Object.cpp)
+
 set(KDDW_FRONTEND_FLUTTER_SRCS
-    qtcompat/Object.cpp
+    ${KDDW_FRONTEND_QTCOMPAT_SRCS}
     flutter/Action.cpp
     flutter/ViewFactory.cpp
     flutter/Window.cpp
