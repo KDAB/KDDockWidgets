@@ -66,4 +66,4 @@ inline T object_cast(const Core::Object *o)
     return dynamic_cast<T>(o);
 }
 
-};
+}

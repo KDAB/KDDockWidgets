@@ -157,5 +157,5 @@ public:
     using Flags = QFlags<Enum>;
 
 namespace Qt {
-Q_DECLARE_FLAGS(MouseButtons, MouseButton);
+Q_DECLARE_FLAGS(MouseButtons, MouseButton)
 }
