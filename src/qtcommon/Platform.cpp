@@ -181,6 +181,8 @@ Platform_qt::Platform_qt()
 
 #ifdef DOCKS_DEVELOPER_MODE
 
+int Platform_qt::s_logicalDpiFactorOverride = 0;
+
 // ctor used by the tests only
 Platform_qt::Platform_qt(QCoreApplication *)
     : m_globalEventFilter(new GlobalEventFilter(this))
@@ -188,7 +190,7 @@ Platform_qt::Platform_qt(QCoreApplication *)
     // We want stability during tests.
     // QMainWindow uses the factor for its margins, we don't want tests failing due
     // to off by 1 or 2 pixels. Use 96dpi everywhere.
-    View_qt::s_logicalDpiFactorOverride = 1;
+    Platform_qt::s_logicalDpiFactorOverride = 1;
 }
 
 #endif

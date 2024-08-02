@@ -104,6 +104,8 @@ public:
     bool tests_waitForDeleted(Core::View *, int timeout = 2000) const override;
     bool tests_waitForDeleted(Core::Controller *, int timeout = 2000) const override;
 
+    static int s_logicalDpiFactorOverride;
+
 #endif
 
 protected:
