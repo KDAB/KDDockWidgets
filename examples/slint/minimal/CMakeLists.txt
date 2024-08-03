@@ -14,7 +14,8 @@ add_executable(slint_minimal main.cpp)
 
 slint_target_sources(slint_minimal main_ui.slint)
 
-target_link_libraries(slint_minimal PRIVATE Slint::Slint)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(slint_minimal PRIVATE Slint::Slint KDAB::kddockwidgets)
 
 if(WIN32)
     # On Windows, copy the Slint DLL next to the application binary so that it's found.

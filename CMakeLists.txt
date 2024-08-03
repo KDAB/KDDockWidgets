@@ -552,6 +552,10 @@ if(KDDockWidgets_EXAMPLES)
         add_subdirectory(src/core/layouting/examples/qtwidgets/)
     endif()
 
+    if(KDDW_FRONTEND_SLINT)
+        add_subdirectory(examples/slint/minimal)
+    endif()
+
     if(KDDW_FRONTEND_FLUTTER AND NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
         add_custom_target(
             kddw-flutter-example ALL

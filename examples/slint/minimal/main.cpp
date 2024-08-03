@@ -11,8 +11,12 @@
 
 #include "main_ui.h"
 
+#include <kddockwidgets/KDDockWidgets.h>
+
 int main(int argc, char **argv)
 {
+    KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::Slint);
+
     auto hello_world = HelloWorld::create();
     hello_world->set_my_label("Hello from C++");
     hello_world->run();

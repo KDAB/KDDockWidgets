@@ -11,7 +11,7 @@
 
 #pragma once
 
-#ifdef KDDW_FRONTEND_QT
+#if defined(KDDW_FRONTEND_QT) || defined(KDDW_FRONTEND_SLINT)
 
 #include <QtCore/QtGlobal>
 
