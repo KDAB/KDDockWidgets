@@ -109,7 +109,10 @@ function(add_kddw_test test srcs)
         _add_test(${test})
     endif()
     target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
-    target_compile_definitions(${test} PRIVATE KDDW_HAS_SPDLOG)
+    if(NOT WIN32)
+        # we don't have spdlog in our windows CI
+        target_compile_definitions(${test} PRIVATE KDDW_HAS_SPDLOG)
+    endif()
 endfunction()
 
 add_kddw_test(tst_docks tst_docks.cpp)
