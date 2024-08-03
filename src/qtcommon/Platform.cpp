@@ -179,22 +179,6 @@ Platform_qt::Platform_qt()
         qWarning() << "Please call KDDockWidgets::initPlatform() after QGuiApplication";
 }
 
-#ifdef DOCKS_DEVELOPER_MODE
-
-int Platform_qt::s_logicalDpiFactorOverride = 0;
-
-// ctor used by the tests only
-Platform_qt::Platform_qt(QCoreApplication *)
-    : m_globalEventFilter(new GlobalEventFilter(this))
-{
-    // We want stability during tests.
-    // QMainWindow uses the factor for its margins, we don't want tests failing due
-    // to off by 1 or 2 pixels. Use 96dpi everywhere.
-    Platform_qt::s_logicalDpiFactorOverride = 1;
-}
-
-#endif
-
 Platform_qt::~Platform_qt()
 {
     delete m_globalEventFilter;
@@ -352,3 +336,133 @@ bool Platform_qt::supportsAeroSnap() const
 #endif
     return false;
 }
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+int Platform_qt::s_logicalDpiFactorOverride = 0;
+
+// ctor used by the tests only
+Platform_qt::Platform_qt(QCoreApplication *)
+    : m_globalEventFilter(new GlobalEventFilter(this))
+{
+    // We want stability during tests.
+    // QMainWindow uses the factor for its margins, we don't want tests failing due
+    // to off by 1 or 2 pixels. Use 96dpi everywhere.
+    Platform_qt::s_logicalDpiFactorOverride = 1;
+}
+
+namespace KDDockWidgets::Tests {
+static QtMessageHandler s_original = nullptr;
+
+static bool shouldBlacklistWarning(const QString &msg, const QString &category)
+{
+    if (category == QLatin1String("qt.qpa.xcb"))
+        return true;
+
+    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket"))
+        || msg.contains(QLatin1String("QWindowsWindow::setGeometry"))
+        || msg.contains(QLatin1String("This plugin does not support"))
+        || msg.contains(QLatin1String("Note that Qt no longer ships fonts"))
+        || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"))
+        || msg.contains(
+            QLatin1String("There's multiple MainWindows, not sure what to do about parenting"))
+        || msg.contains(QLatin1String("Testing::"))
+        || msg.contains(QLatin1String("outside any known screen, using primary screen"))
+        || msg.contains(QLatin1String("Populating font family aliases took"))
+        || msg.contains(QLatin1String("QSGThreadedRenderLoop: expose event received for window"))
+        || msg.contains(QLatin1String("Group.qml:0: ReferenceError: parent is not defined"))
+
+        // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in
+        // Qt.
+        || (msg.contains(QLatin1String("TypeError: Cannot read property"))
+            && msg.contains(QLatin1String("Material")));
+}
+
+static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
+                                        const QString &msg)
+{
+    if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
+        return;
+    s_original(t, context, msg);
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // There's a ton of benign warnings in Qt5 QML when app exits, which add maintenance burden.
+    // Please, jump to Qt 6
+    if (Core::Platform::instance()->isQtQuick())
+        return;
+#endif
+
+    if (t == QtWarningMsg) {
+        const std::string expectedWarning = Core::Platform::instance()->m_expectedWarning;
+        if (!expectedWarning.empty() && msg.contains(QString::fromStdString(expectedWarning)))
+            return;
+
+        if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
+            std::terminate();
+        }
+    }
+}
+
+}
+
+void Platform_qt::installMessageHandler()
+{
+    Tests::s_original = qInstallMessageHandler(Tests::fatalWarningsMessageHandler);
+}
+
+void Platform_qt::uninstallMessageHandler()
+{
+    if (!Tests::s_original)
+        qWarning() << Q_FUNC_INFO
+                   << "No message handler was installed or the fatalWarningsMessageHandler was "
+                      "already uninstalled!";
+    qInstallMessageHandler(Tests::s_original);
+    Tests::s_original = nullptr;
+}
+
+void Platform_qt::tests_initPlatform_impl()
+{
+    qGuiApp->setOrganizationName(QStringLiteral("KDAB"));
+    qGuiApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
+}
+
+void Platform_qt::tests_deinitPlatform_impl()
+{
+    delete qGuiApp;
+}
+
+bool Platform_qt::tests_waitForEvent(std::shared_ptr<Core::Window> window, QEvent::Type type,
+                                     int timeout) const
+{
+    auto windowqt = static_cast<Window *>(window.get());
+    return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
+}
+
+void Platform_qt::maybeSetOffscreenQPA(int argc, char **argv)
+{
+    bool qpaPassed = false;
+
+    for (int i = 1; i < argc; ++i) {
+        if (qstrcmp(argv[i], "-platform") == 0) {
+            qpaPassed = true;
+            break;
+        }
+    }
+
+    if (!qpaPassed && !qEnvironmentVariableIsSet("KDDW_NO_OFFSCREEN")) {
+        // Use offscreen by default as it's less annoying, doesn't create visible windows
+        qputenv("QT_QPA_PLATFORM", "offscreen");
+    }
+}
+
+/*static*/
+QT_BEGIN_NAMESPACE
+extern quintptr Q_CORE_EXPORT qtHookData[];
+QT_END_NAMESPACE
+bool Platform_qt::isGammaray()
+{
+    static bool is = qtHookData[3] != 0;
+    return is;
+}
+
+#endif
