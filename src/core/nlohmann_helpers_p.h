@@ -81,7 +81,8 @@ inline void to_json(nlohmann::json &j, const KDDockWidgets::Vector<QString> &str
         j.push_back(s);
     }
 }
-#ifdef KDDW_FRONTEND_QT
+
+#ifdef KDDW_USES_QT_TYPES
 
 inline void to_json(nlohmann::json &j, QSize size)
 {

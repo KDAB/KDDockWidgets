@@ -13,7 +13,12 @@
 
 // The goal of this file is to provide fallback types for non-Qt frontends such as Flutter
 
-#ifdef KDDW_FRONTEND_QT
+#if defined(KDDW_FRONTEND_QT) || defined(KDDW_FRONTEND_SLINT)
+// Slint uses QWindow for now
+#define KDDW_USES_QT_TYPES
+#endif
+
+#ifdef KDDW_USES_QT_TYPES
 
 #include <QCloseEvent>
 #include <QMouseEvent>
@@ -43,7 +48,7 @@
 
 namespace KDDockWidgets {
 
-#ifdef KDDW_FRONTEND_QT
+#ifdef KDDW_USES_QT_TYPES
 
 using Polygon = QPolygon;
 using Icon = QIcon;
@@ -294,7 +299,7 @@ public:
 #define KDDW_CO_RETURN return
 #endif
 
-#ifndef KDDW_FRONTEND_QT
+#ifndef KDDW_USES_QT_TYPES
 
 // Dummy Qt macros, to avoid too much ifdefs in core/
 #define Q_NAMESPACE

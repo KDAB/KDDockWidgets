@@ -680,6 +680,15 @@
                 "KDDockWidgets_FRONTENDS": "qtwidgets",
                 "KDDockWidgets_QT6": "ON"
             }
+        },
+        {
+            "name": "dev-slint",
+            "description": "Preset for Slint developer-build",
+            "binaryDir": "${sourceDir}/build-dev-slint",
+            "inherits": "dev6",
+            "cacheVariables": {
+                "KDDockWidgets_FRONTENDS": "slint"
+            }
         }
     ],
     "buildPresets": [

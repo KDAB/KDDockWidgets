@@ -81,6 +81,9 @@ set(KDDW_QTCOMMON_SRCS
     qtcommon/DragControllerWayland_p.cpp
 )
 
+# Sources shared by QtWidgets/QtQuick but also slint (until slint doesn't require Qt)
+set(KDDW_QTCOMMON_SLINT_SRC qtcommon/Platform.cpp qtcommon/Screen.cpp qtcommon/Window.cpp)
+
 set(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Action.cpp
     qtwidgets/Window.cpp
@@ -254,6 +257,8 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
+set(KDDW_FRONTEND_SLINT_SRCS ${KDDW_QTCOMMON_SLINT_SRC} slint/Platform.cpp)
+
 set(KDDW_PUBLIC_HEADERS docks_export.h Config.h KDDockWidgets.h LayoutSaver.h Qt5Qt6Compat_p.h QtCompat_p.h)
 
 set(KDDW_CORE_HEADERS
@@ -313,6 +318,10 @@ if(KDDW_FRONTEND_QT)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_QTCOMMON_SRCS})
 endif()
 
+if(KDDW_FRONTEND_SLINT)
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_SLINT_SRCS})
+endif()
+
 if(KDDW_FRONTEND_FLUTTER)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_FLUTTER_SRCS})
 endif()
@@ -356,6 +365,19 @@ endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     target_include_directories(kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>)
+endif()
+
+if(KDDW_FRONTEND_SLINT)
+    target_include_directories(
+        kddockwidgets
+        PRIVATE $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtcompat>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/layouting>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/views>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/indicators>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    )
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
@@ -499,6 +521,11 @@ if(KDDW_FRONTEND_QTQUICK)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK KDDW_FRONTEND_QT)
 endif()
 
+if(KDDW_FRONTEND_SLINT)
+    target_link_libraries(kddockwidgets PUBLIC Qt6::Widgets Qt6::GuiPrivate)
+    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_SLINT)
+endif()
+
 if(NOT KDDW_FRONTEND_QT)
     include(GenerateExportHeader)
     generate_export_header(
@@ -520,7 +547,7 @@ if(KDDockWidgets_HAS_SPDLOG)
     target_link_libraries(kddockwidgets PRIVATE spdlog::spdlog)
 endif()
 
-if(KDDW_FRONTEND_QT)
+if(KDDW_FRONTEND_QT OR KDDW_FRONTEND_SLINT)
     if(WIN32)
         target_link_libraries(kddockwidgets PRIVATE Qt${QT_VERSION_MAJOR}::GuiPrivate dwmapi)
     elseif(

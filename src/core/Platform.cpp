@@ -218,7 +218,18 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         KDDW_UNUSED(defaultToOffscreenQPA);
 #endif
         break;
+    case FrontendType::Slint:
+#ifdef KDDW_FRONTEND_SLINT
+        KDDW_UNUSED(argc);
+        KDDW_UNUSED(argv);
+        KDDW_UNUSED(defaultToOffscreenQPA);
+#endif
+        break;
     }
+
+    KDDW_UNUSED(argc);
+    KDDW_UNUSED(argv);
+    KDDW_UNUSED(defaultToOffscreenQPA);
 
     if (!platform) {
         KDDW_ERROR("Could not initialize platform for type={}. KDDockWidgets was built without support for it");

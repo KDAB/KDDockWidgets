@@ -36,6 +36,10 @@
 
 #endif
 
+#ifdef KDDW_FRONTEND_SLINT
+#include "Qt5Qt6Compat_p.h"
+#endif
+
 namespace KDDockWidgets::QtQuick {
 }
 namespace KDDockWidgets::QtWidgets {
@@ -124,6 +128,7 @@ enum class FrontendType {
     QtWidgets = 1,
     QtQuick,
     Flutter,
+    Slint
 };
 Q_ENUM_NS(FrontendType)
 

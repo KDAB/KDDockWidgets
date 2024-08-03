@@ -160,7 +160,7 @@ set(KDDW_FRONTEND_QTQUICK OFF)
 set(KDDW_FRONTEND_FLUTTER OFF)
 
 if(KDDockWidgets_FRONTENDS)
-    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter;none")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter;slint;none")
 
     foreach(frontend ${KDDockWidgets_FRONTENDS})
         if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
@@ -182,6 +182,11 @@ if(KDDockWidgets_FRONTENDS)
 
     if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
         set(KDDW_FRONTEND_FLUTTER ON)
+    endif()
+
+    if("slint" IN_LIST KDDockWidgets_FRONTENDS)
+        find_package(Qt6 6.6.3 NO_MODULE REQUIRED COMPONENTS Widgets)
+        set(KDDW_FRONTEND_SLINT ON)
     endif()
 
     if("none" IN_LIST KDDockWidgets_FRONTENDS)
@@ -229,8 +234,8 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
-    if(KDDW_FRONTEND_QT)
-        message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
+    if(KDDW_FRONTEND_QT OR KDDW_FRONTEND_SLINT)
+        message(FATAL_ERROR "The flutter frontend is not compatible with the other frontends. Chose a single one.")
     endif()
 
     if(KDDockWidgets_DEVELOPER_MODE AND (APPLE OR WIN32))
@@ -240,8 +245,18 @@ if(KDDW_FRONTEND_FLUTTER)
     endif()
 endif()
 
-if(KDDW_FRONTEND_NONE AND (KDDW_FRONTEND_QT OR KDDW_FRONTEND_FLUTTER))
+if(KDDW_FRONTEND_NONE
+   AND (KDDW_FRONTEND_QT
+        OR KDDW_FRONTEND_FLUTTER
+        OR KDDW_FRONTEND_SLINT)
+)
     message(FATAL_ERROR "Frontend value \"none\" needs to be specified alone")
+endif()
+
+if(KDDW_FRONTEND_SLINT)
+    if(KDDW_FRONTEND_QT AND NOT KDDockWidgets_QT6)
+        message(FATAL_ERROR "Slint requires Qt6, for now")
+    endif()
 endif()
 
 # END frontend enabling
@@ -346,7 +361,7 @@ else()
     set(IS_CLANG_BUILD FALSE)
 endif()
 
-if(KDDW_FRONTEND_QT)
+if(KDDW_FRONTEND_QT OR KDDW_FRONTEND_SLINT)
     set(CMAKE_CXX_STANDARD 17)
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)

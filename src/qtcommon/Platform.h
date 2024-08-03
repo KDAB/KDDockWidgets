@@ -40,7 +40,9 @@ public:
     virtual std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const = 0;
     int screenNumberForWindow(std::shared_ptr<Core::Window>) const override;
 
+#ifndef KDDW_FRONTEND_SLINT
     void sendEvent(Core::View *, QEvent *) const override;
+#endif
 
     bool isProcessingAppQuitEvent() const override;
 

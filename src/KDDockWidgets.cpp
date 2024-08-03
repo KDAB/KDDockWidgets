@@ -26,6 +26,10 @@
 #include "flutter/Platform.h"
 #endif
 
+#ifdef KDDW_FRONTEND_SLINT
+#include "slint/Platform.h"
+#endif
+
 using namespace KDDockWidgets;
 
 void KDDockWidgets::initFrontend(FrontendType type)
@@ -46,6 +50,8 @@ void KDDockWidgets::initFrontend(FrontendType type)
         break;
     case FrontendType::Flutter:
         // Nothing to do, called from Dart
+        break;
+    case KDDockWidgets::FrontendType::Slint:
         break;
     }
 }

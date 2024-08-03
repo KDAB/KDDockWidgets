@@ -1,0 +1,14 @@
+export component HelloWorld inherits Window {
+    width: 400px;
+    height: 400px;
+
+    // Declare an alias that exposes the label's text property to C++
+    in property my_label <=> label.text;
+
+    label := Text {
+       y: parent.width / 2;
+       x: parent.x + 200px;
+       text: "Hello, world";
+       color: blue;
+    }
+}

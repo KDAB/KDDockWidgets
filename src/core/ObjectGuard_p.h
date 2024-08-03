@@ -15,7 +15,7 @@
 /// i.e., it becomes null automatically once the object is destroyed
 /// For Qt, this is simply QPointer, for Flutter it's an equivalent.
 
-#if defined(KDDW_FRONTEND_QT)
+#if defined(KDDW_USES_QT_TYPES)
 
 #include <QPointer>
 

@@ -12,7 +12,7 @@ if(POLICY CMP0043)
     cmake_policy(SET CMP0043 NEW)
 endif()
 
-if(KDDW_FRONTEND_QT)
+if(KDDW_FRONTEND_QT OR KDDW_FRONTEND_SLINT)
     find_package(Qt${QT_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
 endif()
 

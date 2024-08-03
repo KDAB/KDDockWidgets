@@ -225,10 +225,13 @@ int Platform_qt::screenNumberForQWindow(QWindow *window) const
     return -1;
 }
 
+#ifndef KDDW_FRONTEND_SLINT
 void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
-    qGuiApp->sendEvent(QtCommon::View_qt::asQObject(view), ev);
+    if (auto viewqt = dynamic_cast<View_qt *>(view))
+        qGuiApp->sendEvent(viewqt->thisObject(), ev);
 }
+#endif
 
 bool Platform_qt::isProcessingAppQuitEvent() const
 {
