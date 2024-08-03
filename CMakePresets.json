@@ -688,6 +688,9 @@
             "inherits": "dev6",
             "cacheVariables": {
                 "KDDockWidgets_FRONTENDS": "slint"
+            },
+            "warnings": {
+                "uninitialized": false
             }
         }
     ],

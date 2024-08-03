@@ -257,7 +257,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
-set(KDDW_FRONTEND_SLINT_SRCS ${KDDW_QTCOMMON_SLINT_SRC} slint/Platform.cpp)
+set(KDDW_FRONTEND_SLINT_SRCS ${KDDW_QTCOMMON_SLINT_SRC} slint/Platform.cpp slint/ViewFactory.cpp)
 
 set(KDDW_PUBLIC_HEADERS docks_export.h Config.h KDDockWidgets.h LayoutSaver.h Qt5Qt6Compat_p.h QtCompat_p.h)
 

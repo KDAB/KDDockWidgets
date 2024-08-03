@@ -18,7 +18,12 @@ int main(int argc, char **argv)
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::Slint);
 
     auto hello_world = HelloWorld::create();
+    auto foo = FooWindow::create();
+    foo->show();
+
+
     hello_world->set_my_label("Hello from C++");
     hello_world->run();
+
     return 0;
 }

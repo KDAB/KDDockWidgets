@@ -1,14 +1,29 @@
+import { TitleBar } from "TitleBar_ui.slint";
 export component HelloWorld inherits Window {
     width: 400px;
     height: 400px;
 
     // Declare an alias that exposes the label's text property to C++
     in property my_label <=> label.text;
+    callback name();
+
+    TitleBar {
+        callback name();
+        y: 0;
+    }
 
     label := Text {
-       y: parent.width / 2;
-       x: parent.x + 200px;
-       text: "Hello, world";
-       color: blue;
+        callback name1();
+        y: parent.width / 2;
+        x: parent.x + 200px;
+        text: "Hello, world";
+        color: blue;
     }
+}
+
+export component FooWindow inherits Window {
+    width: 1000px;
+    height: 1000px;
+
+    callback hello;
 }

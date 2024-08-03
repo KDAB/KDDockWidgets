@@ -12,9 +12,8 @@ fetchcontent_makeavailable(Slint)
 
 add_executable(slint_minimal main.cpp)
 
-slint_target_sources(slint_minimal main_ui.slint)
+slint_target_sources(slint_minimal main_ui.slint TitleBar_ui.slint)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(slint_minimal PRIVATE Slint::Slint KDAB::kddockwidgets)
 
 if(WIN32)

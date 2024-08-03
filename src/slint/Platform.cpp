@@ -10,6 +10,8 @@
 */
 
 #include "Platform.h"
+#include "ViewFactory.h"
+
 #include <qglobal.h>
 
 
@@ -31,12 +33,12 @@ const char *Platform::name() const
 
 bool Platform::hasActivePopup() const
 {
-    return {};
+    return false;
 }
 
 Core::ViewFactory *Platform::createDefaultViewFactory()
 {
-    return {};
+    return new Slint::ViewFactory();
 }
 
 std::shared_ptr<Core::Window> Platform::windowAt(Point globalPos) const
