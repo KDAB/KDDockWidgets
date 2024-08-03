@@ -46,7 +46,7 @@
 // clazy:excludeall=ctor-missing-parent-argument
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Slint;
+using namespace KDDockWidgets::slint;
 
 
 ViewFactory::~ViewFactory()

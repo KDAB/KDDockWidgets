@@ -16,7 +16,7 @@
 
 namespace KDDockWidgets {
 
-namespace Slint {
+namespace slint {
 class DOCKS_EXPORT Platform : public QtCommon::Platform_qt
 {
 public:

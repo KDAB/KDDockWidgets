@@ -257,7 +257,21 @@ if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
-set(KDDW_FRONTEND_SLINT_SRCS ${KDDW_QTCOMMON_SLINT_SRC} slint/Platform.cpp slint/ViewFactory.cpp)
+set(KDDW_FRONTEND_SLINT_SRCS
+    ${KDDW_QTCOMMON_SLINT_SRC}
+    slint/Platform.cpp
+    slint/ViewFactory.cpp
+    slint/views/DockWidget.cpp
+    slint/views/DropArea.cpp
+    slint/views/FloatingWindow.cpp
+    slint/views/Group.cpp
+    slint/views/MainWindow.cpp
+    slint/views/Separator.cpp
+    slint/views/Stack.cpp
+    slint/views/TabBar.cpp
+    slint/views/TitleBar.cpp
+    slint/views/View.cpp
+)
 
 set(KDDW_PUBLIC_HEADERS docks_export.h Config.h KDDockWidgets.h LayoutSaver.h Qt5Qt6Compat_p.h QtCompat_p.h)
 

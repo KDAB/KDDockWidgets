@@ -16,7 +16,7 @@
 
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Slint;
+using namespace KDDockWidgets::slint;
 
 Platform::Platform()
 {
@@ -38,7 +38,7 @@ bool Platform::hasActivePopup() const
 
 Core::ViewFactory *Platform::createDefaultViewFactory()
 {
-    return new Slint::ViewFactory();
+    return new slint::ViewFactory();
 }
 
 std::shared_ptr<Core::Window> Platform::windowAt(Point globalPos) const

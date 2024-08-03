@@ -24,7 +24,7 @@ class FloatingWindow;
 class MainWindow;
 }
 
-namespace Slint {
+namespace slint {
 
 /**
  * @brief The default ViewFactory for Slint frontend.
