@@ -62,11 +62,16 @@ int main(int argc, char **argv)
         KDDW_TEST_RETURN(result);
     };
 
-    KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
-    const int result = embedder.run();
+    int result = 0;
+    {
+        KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
+        result = embedder.run();
+    }
 
     KDDW_INFO("tests ended with result={}", result);
-    return result;
+
+    /// Skip static destructors, since flutter hangs at exit since > 3.19
+    _exit(result);
 
 #else
     for (FrontendType type : Core::Platform::frontendTypes()) {
