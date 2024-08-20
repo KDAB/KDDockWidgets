@@ -48,19 +48,23 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.24.0'
           channel: 'stable'
 
       # Chose engine from https://github.com/ardera/flutter-ci/releases
       - name: Download flutter engine
         run: |
-          wget --no-verbose https://github.com/ardera/flutter-ci/releases/download/engine%2Fc4cd48e186460b32d44585ce3c103271ab676355/x64-generic.tar.xz
           mkdir flutter_engine
-          tar xvf x64-generic.tar.xz -C flutter_engine
           cd flutter_engine
           mkdir dbg rel
-          cp libflutter_engine.so.debug dbg/libflutter_engine.so
-          cp libflutter_engine.so.release rel/libflutter_engine.so
+          cd dbg
+          wget --no-verbose https://github.com/ardera/flutter-ci/releases/download/engine%2Fb8800d88be4866db1b15f8b954ab2573bba9960f/engine-x64-generic-debug.tar.xz
+          tar xvf engine-x64-generic-debug.tar.xz
+          cd ../rel
+          wget --no-verbose https://github.com/ardera/flutter-ci/releases/download/engine%2Fb8800d88be4866db1b15f8b954ab2573bba9960f/engine-x64-generic-release.tar.xz
+          tar xvf engine-x64-generic-release.tar.xz
+          cd ..
+          wget https://raw.githubusercontent.com/flutter/engine/main/shell/platform/embedder/embedder.h -O flutter_embedder.h
 
       - name: Configure project ${{ matrix.preset.name }}
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
