@@ -9,11 +9,9 @@ name: Flutter-rel
 on:
   push:
     branches:
-      - 2.1
       - main
   pull_request:
     branches:
-      - 2.1
       - main
 
 jobs:
@@ -53,7 +51,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.1'
+          flutter-version: '3.24.0'
           channel: 'stable'
 
       - name: MSVC into PATH
