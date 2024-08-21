@@ -59,6 +59,8 @@ public:
     Q_DECLARE_FLAGS(DockByNameFlags, DockByNameFlag)
 
     static DockRegistry *self();
+    static bool isInitialized();
+
     ~DockRegistry();
     void registerDockWidget(Core::DockWidget *);
     void unregisterDockWidget(Core::DockWidget *);
@@ -229,6 +231,8 @@ public:
 private:
     friend class Core::FocusScope;
     friend class Core::TitleBar;
+
+    static DockRegistry *self(bool create);
 
     explicit DockRegistry(Core::Object *parent = nullptr);
     bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);

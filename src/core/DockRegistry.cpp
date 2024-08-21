@@ -298,15 +298,25 @@ bool DockRegistry::itemIsInMainWindow(const Item *item) const
     return false;
 }
 
-DockRegistry *DockRegistry::self()
+DockRegistry *DockRegistry::self(bool create)
 {
     static ObjectGuard<DockRegistry> s_dockRegistry;
 
-    if (!s_dockRegistry) {
+    if (create && !s_dockRegistry) {
         s_dockRegistry = new DockRegistry();
     }
 
     return s_dockRegistry;
+}
+
+DockRegistry *DockRegistry::self()
+{
+    return self(true);
+}
+
+bool DockRegistry::isInitialized()
+{
+    return self(false);
 }
 
 void DockRegistry::registerDockWidget(Core::DockWidget *dock)
