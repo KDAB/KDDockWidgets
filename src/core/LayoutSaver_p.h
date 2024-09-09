@@ -264,6 +264,7 @@ struct DOCKS_EXPORT LayoutSaver::Layout
 public:
     Layout()
     {
+        assert(!s_currentLayoutBeingRestored);
         s_currentLayoutBeingRestored = this;
 
         const auto screens = Core::Platform::instance()->screens();
