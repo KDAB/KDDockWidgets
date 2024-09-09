@@ -183,6 +183,11 @@ void Positions::deserialize(const LayoutSaver::Position &lp)
                 continue; // Skip
             } else {
                 assert(LayoutSaver::Layout::s_currentLayoutBeingRestored);
+                if (!LayoutSaver::Layout::s_currentLayoutBeingRestored) {
+                    /// Doesn't happen, but let's guard it
+                    KDDW_WARN("Positions::deserialize: Current layout is null, report a bug!");
+                    continue;
+                }
                 auto serializedFw =
                     LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(
                         index);
