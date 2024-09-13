@@ -107,7 +107,7 @@ public:
      * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be
      * at left of widgetBar when the whole splitter is dropped into this one.
      */
-    void addMultiSplitter(Core::DropArea *splitter, KDDockWidgets::Location location,
+    void addMultiSplitter(Core::DropArea *sourceMultiSplitter, KDDockWidgets::Location location,
                           Core::Group *relativeToGroup = nullptr,
                           const InitialOption &option = DefaultSizeMode::Fair);
 
