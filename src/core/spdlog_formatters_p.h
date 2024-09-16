@@ -25,7 +25,7 @@ struct fmt::formatter<KDDockWidgets::Size>
     }
 
     template<typename FormatContext>
-    auto format(KDDockWidgets::Size size, FormatContext &ctx)
+    auto format(KDDockWidgets::Size size, FormatContext &ctx) const
     {
         return fmt::format_to(ctx.out(), "{}x{}", size.width(), size.height());
     }
@@ -40,7 +40,7 @@ struct fmt::formatter<KDDockWidgets::Point>
     }
 
     template<typename FormatContext>
-    auto format(KDDockWidgets::Point point, FormatContext &ctx)
+    auto format(KDDockWidgets::Point point, FormatContext &ctx) const
     {
         return fmt::format_to(ctx.out(), "{}x{}", point.x(), point.y());
     }
@@ -55,7 +55,7 @@ struct fmt::formatter<KDDockWidgets::Rect>
     }
 
     template<typename FormatContext>
-    auto format(KDDockWidgets::Rect r, FormatContext &ctx)
+    auto format(KDDockWidgets::Rect r, FormatContext &ctx) const
     {
         return fmt::format_to(ctx.out(), "Rect({},{} {}x{})", r.x(), r.y(), r.width(), r.height());
     }
@@ -71,7 +71,7 @@ struct fmt::formatter<QString>
     }
 
     template<typename FormatContext>
-    auto format(const QString &str, FormatContext &ctx)
+    auto format(const QString &str, FormatContext &ctx) const
     {
         return fmt::format_to(ctx.out(), "{}", str.toStdString());
     }
@@ -87,7 +87,7 @@ struct fmt::formatter<QVector<T>>
     }
 
     template<typename FormatContext>
-    auto format(const QVector<T> &vec, FormatContext &ctx)
+    auto format(const QVector<T> &vec, FormatContext &ctx) const
     {
 
         auto out = ctx.out();
@@ -109,7 +109,7 @@ struct fmt::formatter<QFlags<F>>
     }
 
     template<typename FormatContext>
-    auto format(QFlags<F> flags, FormatContext &ctx)
+    auto format(QFlags<F> flags, FormatContext &ctx) const
     {
 
         auto out = ctx.out();
@@ -147,7 +147,7 @@ struct fmt::formatter<Qt::Orientation>
     }
 
     template<typename FormatContext>
-    auto format(Qt::Orientation o, FormatContext &ctx)
+    auto format(Qt::Orientation o, FormatContext &ctx) const
     {
         if (o == Qt::Horizontal) {
             return fmt::format_to(ctx.out(), "Horizontal");
@@ -168,7 +168,7 @@ struct fmt::formatter<KDDockWidgets::DropLocation>
     }
 
     template<typename FormatContext>
-    auto format(KDDockWidgets::DropLocation loc, FormatContext &ctx)
+    auto format(KDDockWidgets::DropLocation loc, FormatContext &ctx) const
     {
 
         switch (loc) {
@@ -209,7 +209,7 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
     }
 
     template<typename FormatContext>
-    auto format(const KDDockWidgets::InitialOption &opt, FormatContext &ctx)
+    auto format(const KDDockWidgets::InitialOption &opt, FormatContext &ctx) const
     {
         return fmt::format_to(ctx.out(), "[InitialOption: preferredSize={}, visibility={}]", opt.preferredSize, ( int )opt.visibility);
     }
@@ -225,7 +225,7 @@ struct fmt::formatter<KDDockWidgets::Vector<T>>
     }
 
     template<typename FormatContext>
-    auto format(const KDDockWidgets::Vector<T> &vec, FormatContext &ctx)
+    auto format(const KDDockWidgets::Vector<T> &vec, FormatContext &ctx) const
     {
 
         auto out = ctx.out();
