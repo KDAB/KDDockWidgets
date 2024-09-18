@@ -169,6 +169,9 @@ Q_ENUM_NS(NeighbourSqueezeStrategy)
  * You can pass this to MainWindowBase::addDockWidget() to give an hint of your preferred size
  * and visibility.
  *
+ * Note that if your layout currently has 0 dock widgets, the dockwidget you're adding will always
+ * occupy 100% of the layout, preferredSize won't be honoured.
+ *
  * See below the documentation for InitialOption::visibility and InitialOption::preferredSize.
  *
  * @sa MainWindowBase::addDockWidget()
