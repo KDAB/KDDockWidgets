@@ -7,7 +7,7 @@ ci:
 exclude: ^(cmake/ECM|cmake/KDAB/|src/3rdparty/|code.dev.code-workspace)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
+  rev: v5.0.0
   hooks:
   - id: trailing-whitespace
   - id: end-of-file-fixer
@@ -21,12 +21,12 @@ repos:
   - id: destroyed-symlinks
   - id: check-executables-have-shebangs
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v17.0.6
+  rev: v19.1.1
   hooks:
   - id: clang-format
     exclude: (.json)
 - repo: https://github.com/PyCQA/pylint
-  rev: v3.2.4
+  rev: v3.3.1
   hooks:
   - id: pylint
     exclude: ^(.cmake-format.py|conan/conanfile.py)
@@ -55,12 +55,12 @@ repos:
     files: \.(md|mdown|markdown)$
     exclude: (docs/book/)
 - repo: https://github.com/fsfe/reuse-tool
-  rev: v3.1.0a1
+  rev: v4.0.3
   hooks:
   - id: reuse
     args: [--suppress-deprecation]
 - repo: https://github.com/scop/pre-commit-shfmt
-  rev: v3.8.0-1
+  rev: v3.9.0-1
   hooks:
   - id: shfmt
 - repo: https://github.com/shellcheck-py/shellcheck-py
