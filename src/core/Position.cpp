@@ -198,7 +198,7 @@ LayoutSaver::Position Position::serialize() const
             p.indexOfFloatingWindow = fw->beingDeleted()
                 ? -1
                 : DockRegistry::self()->floatingWindows().indexOf(
-                    fw);
+                      fw);
         } else {
             p.mainWindowUniqueName = mainWindow->uniqueName();
             assert(!p.mainWindowUniqueName.isEmpty());
