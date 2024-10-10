@@ -2,8 +2,8 @@
 
 ## Prerelease Source Checking
 
-* make sure the [github actions CI](https://github.com/KDAB/KDDockWidgetss/actions) is green
-* make sure the [KDAB CI](https://kdab.ci.kdab.com/#/projects/25) is green
+* make sure the [github actions CI](https://github.com/KDAB/KDDockWidgets/actions) is green
+* make sure the [KDAB CI](https://kdab.ci.kdab.com/#/projects/19) is green
 * look for any static checking issues (clazy, clang-tidy, cppcheck, etc) that may need fixing.
   check [KDAB CI](https://kdab-artifacts.ci.kdab.com/analysis/kddockwidgets-stable)
   and [Github Nightly CI](https://github.com/KDAB/KDDockWidgets/actions/workflows/nightly.yml)
@@ -57,7 +57,7 @@ For our paying licensed clients we provide a source code download from our custo
 
 Create a KDADM Jira asking our admins to hang the tar and zips in the customers download area.
 The admins should copy kddockwidgets-X.Y.Z.tar.gz, kddockwidgets-X.Y.Z.zip and kddockwidgets-X.Y.0-doc.zip
-from <https://github.com/KDAB/KDDockWidgets/releases/X.Y.Z>.
+from <https://github.com/KDAB/KDDockWidgets/releases/vX.Y.Z>.
 
 ## Postrelease
 
