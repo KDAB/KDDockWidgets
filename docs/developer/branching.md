@@ -17,9 +17,9 @@ If the current stable branch is X.Y then the new branch will be called X.Y+1.
 For example, if the current stable branch is 2.1 then the new stable branch will be 2.2, like so:
 
 ```shell
-git checkout main
-git branch 2.2
-git checkout 2.2
+    git checkout main
+    git branch 2.2
+    git checkout 2.2
 ```
 
 ## New major version
@@ -30,9 +30,9 @@ If the current stable branch is X.Y then the new branch will be called X+1.0.
 For example, if the current stable branch is 2.1 then the new stable branch will be 3.0, like so:
 
 ```shell
-git checkout main
-git branch 3.0
-git checkout 3.0
+    git checkout main
+    git branch 3.0
+    git checkout 3.0
 ```
 
 ## After branching
@@ -61,6 +61,6 @@ Make all the above changes and then git commit and push the new branch.
 
 ### And finally
 
-* Update the KDABCI to the new stable branch (contact the KDAB CI team)
+* Update the KDABCI to the new stable branch (contact the KDAB CI team <buiildmaster@kdab.com>)
 * Update the Github Default Branch (see Default Branch setting at <https://github.com/KDAB/KDDockWidgets/settings>)
 * Initiate CI builds (both github and KDAB) of the new branch and make sure all is green before continuing.
