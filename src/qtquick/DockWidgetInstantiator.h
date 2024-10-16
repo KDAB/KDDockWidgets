@@ -21,6 +21,8 @@
 
 #include <optional>
 
+#include "KDDockWidgets.h"
+
 namespace KDDockWidgets {
 
 /**
@@ -45,6 +47,8 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
     Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
     Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
+    Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY optionsChanged)
+
 public:
     DockWidgetInstantiator();
     ~DockWidgetInstantiator() override;
@@ -68,7 +72,8 @@ public:
     void setFloating(bool);
     QVector<QString> affinities() const;
     void setAffinities(const QVector<QString> &);
-
+    DockWidgetOptions options() const;
+    void setOptions(DockWidgetOptions dockWidgetOptions);
     Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
                                         KDDockWidgets::InitialVisibilityOption = {});
 
