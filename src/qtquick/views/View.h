@@ -79,7 +79,7 @@ public:
     void setVisible(bool is) override;
 
     void move(int x, int y) override;
-    void setSize(int w, int h) override final;
+    void setSize(int w, int h) final;
 
     void setWidth(int w) override;
     void setHeight(int h) override;
@@ -97,7 +97,7 @@ public:
     void activateWindow() override;
     void raise() override;
     static bool isRootView(const QQuickItem *);
-    bool isRootView() const override final;
+    bool isRootView() const final;
     QQuickView *quickView() const;
     QPoint mapToGlobal(QPoint localPt) const override;
     QPoint mapFromGlobal(QPoint globalPt) const override;

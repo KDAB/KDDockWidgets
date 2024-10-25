@@ -45,7 +45,7 @@ Q_SIGNALS:
     void isVerticalChanged();
 
 private:
-    void init() override final;
+    void init() final;
     QSize minSize() const override;
     Core::Separator *const m_controller;
 };

@@ -62,7 +62,7 @@ Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::Core::DockWidget *);
 
 protected:
-    void init() override final;
+    void init() final;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;

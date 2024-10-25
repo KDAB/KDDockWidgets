@@ -94,7 +94,7 @@ public Q_SLOTS:
     void updateConstraints();
 
 private:
-    void init() override final;
+    void init() final;
     Stack *stackView() const;
     TabBar *tabBarView() const;
 

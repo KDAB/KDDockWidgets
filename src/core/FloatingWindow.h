@@ -48,7 +48,7 @@ public:
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    Core::DockWidget *singleDockWidget() const override final;
+    Core::DockWidget *singleDockWidget() const final;
     bool isWindow() const override;
 
     Vector<DockWidget *> dockWidgets() const;

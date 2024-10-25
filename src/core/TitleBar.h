@@ -50,7 +50,7 @@ public:
     bool isMDI() const override;
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     bool isWindow() const override;
-    Core::DockWidget *singleDockWidget() const override final;
+    Core::DockWidget *singleDockWidget() const final;
 
     void setTitle(const QString &title);
     QString title() const;
