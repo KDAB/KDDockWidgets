@@ -174,9 +174,14 @@ MainWindowFactoryFunc Config::mainWindowFactoryFunc() const
 
 void Config::setViewFactory(ViewFactory *factory)
 {
+    if (factory == d->m_viewFactory)
+        return;
+
     assert(factory);
     delete d->m_viewFactory;
     d->m_viewFactory = factory;
+
+    Core::Platform::instance()->onViewFactoryChanged();
 }
 
 ViewFactory *Config::viewFactory() const

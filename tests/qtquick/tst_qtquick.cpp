@@ -66,6 +66,7 @@ private Q_SLOTS:
     void tst_affinities();
 
     void tst_deleteDockWidget();
+    void tst_setViewFactory();
 };
 
 
@@ -517,6 +518,21 @@ void TestQtQuick::tst_effectiveVisibilityBug()
     const auto mainWindows = DockRegistry::self()->mainwindows();
     QCOMPARE(mainWindows.size(), 1);
     QVERIFY(mainWindows.first()->isVisible());
+}
+
+void TestQtQuick::tst_setViewFactory()
+{
+    // Tests that setting a view factory will refresh the context property
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+    QQmlContext *rootContext = plat()->qmlEngine()->rootContext();
+
+    QCOMPARE(rootContext->contextProperty("_kddw_widgetFactory").value<QObject *>(), Config::self().viewFactory());
+
+    // now change view factory:
+    auto newFactory = Platform::instance()->createDefaultViewFactory();
+    Config::self().setViewFactory(newFactory);
+    QCOMPARE(rootContext->contextProperty("_kddw_widgetFactory").value<QObject *>(), newFactory);
 }
 
 int main(int argc, char *argv[])

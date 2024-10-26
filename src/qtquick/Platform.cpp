@@ -194,6 +194,11 @@ void Platform::updateViewFactoryContextProperty()
                                                    Config::self().viewFactory());
 }
 
+void Platform::onViewFactoryChanged()
+{
+    updateViewFactoryContextProperty();
+}
+
 ViewFactory *Platform::viewFactory() const
 {
     return static_cast<ViewFactory *>(Config::self().viewFactory());

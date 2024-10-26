@@ -54,6 +54,8 @@ public:
     bool usesFallbackMouseGrabber() const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     void ungrabMouse() override;
+    void onViewFactoryChanged() override;
+
     static Platform *instance();
 
     static Core::DockWidget *dockWidgetForItem(QQuickItem *);

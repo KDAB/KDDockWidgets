@@ -194,6 +194,11 @@ public:
     /// Only supported on Qt, for windows
     virtual bool supportsAeroSnap() const;
 
+    /// Called when the Config::viewFactory has changed
+    virtual void onViewFactoryChanged()
+    {
+    }
+
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
