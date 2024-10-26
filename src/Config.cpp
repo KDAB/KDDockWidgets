@@ -172,11 +172,11 @@ MainWindowFactoryFunc Config::mainWindowFactoryFunc() const
     return d->m_mainWindowFactoryFunc;
 }
 
-void Config::setViewFactory(ViewFactory *wf)
+void Config::setViewFactory(ViewFactory *factory)
 {
-    assert(wf);
+    assert(factory);
     delete d->m_viewFactory;
-    d->m_viewFactory = wf;
+    d->m_viewFactory = factory;
 }
 
 ViewFactory *Config::viewFactory() const
