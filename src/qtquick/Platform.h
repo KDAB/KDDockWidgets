@@ -73,6 +73,7 @@ public:
 #endif
 private:
     void init();
+    void updateViewFactoryContextProperty();
     QPointer<QQmlEngine> m_qmlEngine;
     QtQuickHelpers *const m_qquickHelpers;
     Q_DISABLE_COPY(Platform)

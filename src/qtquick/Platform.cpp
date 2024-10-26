@@ -182,8 +182,16 @@ void Platform::setQmlEngine(QQmlEngine *qmlEngine)
     QQmlContext *context = qmlEngine->rootContext();
     context->setContextProperty(QStringLiteral("_kddwHelpers"), m_qquickHelpers);
     context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
-    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"),
-                                Config::self().viewFactory());
+    updateViewFactoryContextProperty();
+}
+
+void Platform::updateViewFactoryContextProperty()
+{
+    if (!m_qmlEngine)
+        return;
+
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddw_widgetFactory"),
+                                                   Config::self().viewFactory());
 }
 
 ViewFactory *Platform::viewFactory() const
