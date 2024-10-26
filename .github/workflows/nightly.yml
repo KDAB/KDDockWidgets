@@ -22,7 +22,6 @@ jobs:
           - windows-2019
           - macos-13
           - macos-12
-          - macos-11
 
         preset:
           - name: ci-release-static-qt5
@@ -78,7 +77,7 @@ jobs:
         #with:
           #ref: '2.0' # schedule.cron do not allow branch setting
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           cache: 'pip'
           cache-dependency-path: '.github/workflows/pip-requirements.txt'
@@ -101,7 +100,9 @@ jobs:
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
+      # python on windows-2022 has a msvc problem
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
+        if: ${{ matrix.os != 'windows-2022' || matrix.preset.name != 'ci-python-qt6' }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
 
       - name: Run tests on Linux (offscreen)

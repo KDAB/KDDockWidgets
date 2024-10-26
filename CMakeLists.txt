@@ -304,6 +304,7 @@ if(NOT KDDockWidgets_NO_SPDLOG)
     endif()
 endif()
 
+# fmt 11 not supported yet, will get to it when it hits archlinux
 if(spdlog_FOUND AND fmt_FOUND)
     set(KDDockWidgets_HAS_SPDLOG TRUE)
 else()
