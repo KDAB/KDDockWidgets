@@ -1,5 +1,6 @@
 * v2.2.0 (unreleased)
   - qtquick: Add support for MainWindowOption_HasCentralWidget
+  - qtquick: Add QtQuick::FloatingWindow::setQuickWindowCreationCallback
   - Add Config::setDockWidgetTabIndexOverrideFunc() (#165)
   - Allow to redock back to a floating window (#280)
 

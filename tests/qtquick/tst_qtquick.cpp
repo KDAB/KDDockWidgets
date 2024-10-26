@@ -19,6 +19,7 @@
 #include "qtquick/views/TitleBar.h"
 #include "qtquick/views/DockWidget.h"
 #include "qtquick/views/MainWindow.h"
+#include "qtquick/views/FloatingWindow.h"
 #include "core/MDILayout.h"
 #include "core/views/MainWindowViewInterface.h"
 #include "core/MainWindow.h"
@@ -67,6 +68,7 @@ private Q_SLOTS:
 
     void tst_deleteDockWidget();
     void tst_setViewFactory();
+    void tst_quickWindowCreationCallback();
 };
 
 
@@ -533,6 +535,27 @@ void TestQtQuick::tst_setViewFactory()
     auto newFactory = Platform::instance()->createDefaultViewFactory();
     Config::self().setViewFactory(newFactory);
     QCOMPARE(rootContext->contextProperty("_kddw_widgetFactory").value<QObject *>(), newFactory);
+}
+
+void TestQtQuick::tst_quickWindowCreationCallback()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+
+    int callCount = 0;
+    auto onWindowCreated = [&](QQuickView *window, QtQuick::MainWindow *parent) -> void {
+        Q_UNUSED(window);
+        Q_UNUSED(parent);
+        callCount++;
+    };
+    QtQuick::FloatingWindow::setQuickWindowCreationCallback(onWindowCreated);
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+    dock0->setFloating(true);
+
+    QCOMPARE(callCount, 1);
+    QtQuick::FloatingWindow::setQuickWindowCreationCallback(nullptr);
 }
 
 int main(int argc, char *argv[])

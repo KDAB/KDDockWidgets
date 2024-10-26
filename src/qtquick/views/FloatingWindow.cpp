@@ -38,6 +38,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
+QuickWindowCreationCallback KDDockWidgets::QtQuick::FloatingWindow::s_quickWindowCreationCallback = {};
+
 namespace KDDockWidgets {
 
 class QuickView : public QQuickView
@@ -139,6 +141,9 @@ FloatingWindow::FloatingWindow(Core::FloatingWindow *controller,
     , m_controller(controller)
 {
     connect(m_quickWindow, &QWindow::windowStateChanged, this, &FloatingWindow::onWindowStateChanged);
+
+    if (s_quickWindowCreationCallback)
+        s_quickWindowCreationCallback(m_quickWindow, parent);
 }
 
 FloatingWindow::~FloatingWindow()
@@ -278,6 +283,12 @@ void FloatingWindow::onWindowStateChanged(Qt::WindowState state)
         WidgetResizeHandler::requestNCCALCSIZE(HWND(window()->handle()));
     }
 #endif
+}
+
+/** static */
+void FloatingWindow::setQuickWindowCreationCallback(QuickWindowCreationCallback callback)
+{
+    s_quickWindowCreationCallback = callback;
 }
 
 #include "FloatingWindow.moc"
