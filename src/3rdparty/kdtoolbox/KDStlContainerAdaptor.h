@@ -296,7 +296,7 @@ struct StdVectorAdaptor : std::vector<T, Args...>
     {
         const auto s = size();
         if (from < 0)
-            from = std::max(from + s, 0);
+            from = (std::max)(from + s, 0);
         if (from < s) {
             const auto b = this->begin();
             const auto e = this->end();
@@ -356,7 +356,7 @@ struct StdVectorAdaptor : std::vector<T, Args...>
 
         if (len < 0)
             len = s;
-        len = std::min(len, s - pos);
+        len = (std::min)(len, s - pos);
 
         const auto b = this->begin() + pos;
         const auto e = b + len;
