@@ -460,7 +460,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     endif()
 endif()
 
-if(MSVC)
+if(WIN32)
     # To unbreak std::min/max
     target_compile_definitions(kddockwidgets PRIVATE NOMINMAX)
 endif()
