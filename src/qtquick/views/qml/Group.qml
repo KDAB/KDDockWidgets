@@ -204,7 +204,8 @@ Rectangle {
             right: parent ? parent.right : undefined
             top: (titleBar && titleBar.visible) ? titleBar.bottom
                                                 : (parent ? parent.top : undefined)
-            topMargin: 1
+
+            // 1 pixel gap so we don't overlap with outer frame. We shouldn't hardcode this though
             leftMargin: 1
             rightMargin: 1
         }
