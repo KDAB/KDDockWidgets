@@ -103,6 +103,9 @@ public:
      *
      * Useful since some dock widgets can be new, and hence not be included in the last saved
      * layout.
+     *
+     * You can use KDDockWidgets::controllersToViews(layoutSaver.restoredDockWidgets()) to
+     * get the corresponding QtWidgets::DockWidget* instead of Core::DockWidget*
      */
     Vector<Core::DockWidget *> restoredDockWidgets() const;
 

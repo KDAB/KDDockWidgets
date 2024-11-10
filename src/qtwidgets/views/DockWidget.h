@@ -44,6 +44,7 @@ class DOCKS_EXPORT DockWidget : public QtWidgets::View<QWidget>,
 {
     Q_OBJECT
 public:
+    using ControllerType = KDDockWidgets::Core::DockWidget;
     using QWidget::size;
 
     /**

@@ -16,12 +16,43 @@
 #include "Controller.h"
 
 #include <memory>
+#include <type_traits>
+#include <algorithm>
 
 QT_BEGIN_NAMESPACE
 class QPainter;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
+
+/// Returns the view associated with the controller
+/// Does not compile if the view and controller types are incompatible.
+/// Feel free to add more View::ControllerType alias to other views
+template<typename V, typename C>
+typename std::enable_if<std::is_same<typename V::ControllerType, C>::value, V *>::type
+controllerToView(C *controller)
+{
+    if (!controller)
+        return nullptr;
+    return dynamic_cast<V *>(controller->view());
+}
+
+/// Same as controllerToView() but for containers
+/// note that the result might have nullptrs
+template<typename V, typename C>
+Vector<V *> controllersToViews(const C &controllers)
+{
+    Vector<V *> views;
+    views.reserve(controllers.size());
+
+    std::transform(controllers.begin(), controllers.end(), std::back_inserter(views),
+                   [](auto controller) {
+                       return controllerToView<V>(controller);
+                   });
+
+    return views;
+}
+
 
 namespace Core {
 
@@ -278,5 +309,4 @@ protected:
 };
 
 }
-
 }

@@ -23,6 +23,8 @@ Non-exhaustive list of controllers and views:
 
 For each of the above there's a View and a Controller. For example, for TitleBar, there's `Core::TitleBar`, implemented in `src/core/TitleBar.cpp`, which is rendered by `QtWidgets::TitleBar` (or `QtQuick::TitleBar` or `Flutter::TitleBar`), implemented in `/src/qtwidgets/views/TitleBar.cpp` and so on.
 
+You can convert from a list of controllers to a list of views with `KDDockWidgets::controllersToViews(controllers)`.
+
 Porting to another GUI toolkit involves reimplementing all views.<br>
 Here's a brief description of each.
 

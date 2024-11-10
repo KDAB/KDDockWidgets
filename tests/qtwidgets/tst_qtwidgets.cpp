@@ -163,6 +163,7 @@ private Q_SLOTS:
     void tstQGraphicsProxyWidget();
 
     // But these are fine to be widget only:
+    void tst_controllerToView();
     void tst_designerMainWindow();
     void tst_tabsNotClickable();
     void tst_embeddedMainWindow();
@@ -2970,6 +2971,20 @@ void TestQtWidgets::tst_restoreInvalidPercentages()
 
     LayoutSaver saver;
     QVERIFY(!saver.serializeLayout().isEmpty());
+}
+
+
+void TestQtWidgets::tst_controllerToView()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw = createDockWidget("dw1", Platform::instance()->tests_createView({ true }));
+    auto dwView = KDDockWidgets::controllerToView<QtWidgets::DockWidget>(dw);
+
+    std::vector<Core::DockWidget *> dws = { dw };
+    auto dwViews = KDDockWidgets::controllersToViews<QtWidgets::DockWidget>(dws);
+
+    QCOMPARE(dw->view(), dwView);
+    QCOMPARE(dws[0]->view(), dwView);
 }
 
 int main(int argc, char *argv[])

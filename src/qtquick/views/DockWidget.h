@@ -54,6 +54,8 @@ class DOCKS_EXPORT DockWidget : public QtQuick::View,
     Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
 public:
+    using ControllerType = KDDockWidgets::Core::DockWidget;
+
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible
