@@ -523,8 +523,7 @@ void View::raiseWindow(Core::View *)
 
 void View::onMouseEvent(Event::Type eventType, Point localPos, Point globalPos, bool leftIsPressed)
 {
-    Qt::MouseButtons buttons = Qt::NoButton;
-    buttons.setFlag(Qt::LeftButton, leftIsPressed);
+    Qt::MouseButton button = leftIsPressed ? Qt::LeftButton : Qt::NoButton;
     Qt::KeyboardModifiers modifiers = Qt::NoModifier;
 
     if (eventType == Event::MouseMove) {
@@ -532,7 +531,7 @@ void View::onMouseEvent(Event::Type eventType, Point localPos, Point globalPos, 
         flutter::Platform::s_lastCursorPosition = globalPos;
     }
 
-    auto me = new MouseEvent(eventType, localPos, globalPos, globalPos, buttons, buttons, modifiers);
+    auto me = new MouseEvent(eventType, localPos, globalPos, globalPos, button, button, modifiers);
 
     if (!deliverViewEventToFilters(me)) {
         // filters allowed the event to propagate, give it to the view.

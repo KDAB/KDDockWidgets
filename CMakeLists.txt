@@ -113,6 +113,7 @@ option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
 option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode" OFF)
+option(KDDockWidgets_FLUTTER_QWINDOW "Flutter backend will use QWindow and QtGui types" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
@@ -182,6 +183,9 @@ if(KDDockWidgets_FRONTENDS)
 
     if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
         set(KDDW_FRONTEND_FLUTTER ON)
+        if(KDDockWidgets_FLUTTER_QWINDOW)
+            find_package(Qt6 6.6 NO_MODULE REQUIRED COMPONENTS Gui)
+        endif()
     endif()
 
     if("none" IN_LIST KDDockWidgets_FRONTENDS)
@@ -237,6 +241,10 @@ if(KDDW_FRONTEND_FLUTTER)
         message(FATAL_ERROR "The flutter frontend only supports developer-mode on Linux. "
                             "You can still develop on Windows/macOS but wait for test results from KDAB CI."
         )
+    endif()
+else()
+    if(KDDockWidgets_FLUTTER_QWINDOW)
+        message(FATAL_ERROR "KDDockWidgets_FLUTTER_QWINDOW only makes sense with the flutter backend")
     endif()
 endif()
 
@@ -345,10 +353,13 @@ endif()
 
 if(KDDW_FRONTEND_QT)
     set(CMAKE_CXX_STANDARD 17)
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_AUTORCC ON)
 else()
     set(CMAKE_CXX_STANDARD 20)
+endif()
+
+if(KDDW_FRONTEND_QT OR KDDockWidgets_FLUTTER_QWINDOW)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
 endif()
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

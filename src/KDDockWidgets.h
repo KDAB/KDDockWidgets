@@ -23,7 +23,7 @@
 
 #include "QtCompat_p.h"
 
-#ifdef KDDW_FRONTEND_QT
+#ifdef KDDW_QTGUI_TYPES
 #include "Qt5Qt6Compat_p.h"
 
 #ifdef Q_OS_WIN

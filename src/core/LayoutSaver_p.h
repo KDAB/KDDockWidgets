@@ -268,9 +268,9 @@ public:
         s_currentLayoutBeingRestored = this;
 
         const auto screens = Core::Platform::instance()->screens();
-        const int numScreens = screens.size();
+        const auto numScreens = screens.size();
         screenInfo.reserve(numScreens);
-        for (int i = 0; i < numScreens; ++i) {
+        for (auto i = 0; i < numScreens; ++i) {
             ScreenInfo info;
             info.index = i;
             info.geometry = screens[i]->geometry();
