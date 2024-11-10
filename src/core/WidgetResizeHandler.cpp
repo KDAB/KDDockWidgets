@@ -16,6 +16,7 @@
 #include "View_p.h"
 #include "Logging_p.h"
 #include "DockRegistry_p.h"
+#include "QtCompat_p.h"
 
 #include "kddockwidgets/core/DockRegistry.h"
 #include "kddockwidgets/core/MDILayout.h"
@@ -27,12 +28,13 @@
 #include <cstdlib>
 
 #if defined(Q_OS_WIN)
+
 #if defined(KDDW_FRONTEND_QTWIDGETS)
 #include "../qtcommon/Platform.h"
 #include <QWidget>
 #endif
 
-#if defined(KDDW_FRONTEND_QT)
+#if defined(KDDW_QTGUI_TYPES)
 #include "../qtcommon/Window_p.h"
 #include <QGuiApplication>
 #include <QtGui/private/qhighdpiscaling_p.h>

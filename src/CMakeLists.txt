@@ -220,7 +220,6 @@ set(KDDW_FRONTEND_DARTBINDINGS_SRCS
 set(KDDW_FRONTEND_QTCOMPAT_SRCS qtcompat/Object.cpp)
 
 set(KDDW_FRONTEND_FLUTTER_SRCS
-    ${KDDW_FRONTEND_QTCOMPAT_SRCS}
     flutter/Action.cpp
     flutter/ViewFactory.cpp
     flutter/Window.cpp
@@ -237,6 +236,10 @@ set(KDDW_FRONTEND_FLUTTER_SRCS
     flutter/views/MainWindow.cpp
     flutter/views/ClassicIndicatorsWindow.cpp
 )
+
+if(NOT KDDockWidgets_FLUTTER_QWINDOW)
+    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_QTCOMPAT_SRCS})
+endif()
 
 if(KDDockWidgets_FLUTTER_NO_BINDINGS)
     # For a special build that just builds core/ and flutter/, but not generated/
@@ -376,6 +379,11 @@ if(KDDW_FRONTEND_FLUTTER)
     # So bindings are exported
     target_compile_definitions(kddockwidgets PRIVATE BUILDING_KDDockWidgets)
 
+    if(KDDockWidgets_FLUTTER_QWINDOW)
+        target_compile_definitions(kddockwidgets PUBLIC KDDW_FLUTTER_QWINDOW)
+        target_link_libraries(kddockwidgets PUBLIC Qt6::Gui Qt6::GuiPrivate)
+    endif()
+
     if(MSVC)
         set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
     else()
@@ -451,7 +459,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     endif()
 
     # Disable -Wconversion for Qt6. The qsizetype to int conversions are harmless
-    if(NOT KDDockWidgets_QT6)
+    if(NOT KDDockWidgets_QT6 AND NOT KDDockWidgets_FLUTTER_QWINDOW)
         target_compile_options(kddockwidgets PRIVATE -Wconversion)
     endif()
 

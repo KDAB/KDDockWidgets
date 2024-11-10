@@ -168,6 +168,18 @@
             ]
         },
         {
+            "name": "release-flutter-qwindow",
+            "displayName": "release-flutter-qwindow",
+            "binaryDir": "${sourceDir}/build-release-flutter-qwindow",
+            "cacheVariables": {
+                "KDDockWidgets_FLUTTER_QWINDOW": "ON",
+                "KDDockWidgets_FLUTTER_NO_BINDINGS": "ON"
+            },
+            "inherits": [
+                "release-flutter"
+            ]
+        },
+        {
             "name": "dev-flutter-no-bindings",
             "displayName": "dev-flutter-no-bindings",
             "binaryDir": "${sourceDir}/build-dev-flutter-no-bindings",

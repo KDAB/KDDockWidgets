@@ -77,7 +77,7 @@ struct fmt::formatter<QString>
     }
 };
 
-#ifdef KDDW_FRONTEND_QT
+#ifdef KDDW_QTGUI_TYPES
 template<typename T>
 struct fmt::formatter<QVector<T>>
 {
@@ -215,7 +215,7 @@ struct fmt::formatter<KDDockWidgets::InitialOption>
     }
 };
 
-#ifndef KDDW_FRONTEND_QT
+#ifndef KDDW_QTGUI_TYPES
 template<typename T>
 struct fmt::formatter<KDDockWidgets::Vector<T>>
 {
