@@ -114,7 +114,9 @@ public:
     void pauseForDebugger() override;
 
     /// Pauses execution, so we can attach Dart's debugger
-    virtual void pauseForDartDebugger() { };
+    virtual void pauseForDartDebugger()
+    {
+    }
 
     // Called by unit-test's main.dart. Runs the tests.
     // The tests are in C++, as they are the same ones for QtWidgets and QtQuick
