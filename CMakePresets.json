@@ -179,6 +179,17 @@
             ]
         },
         {
+            "name": "dev-flutter-qwindow",
+            "displayName": "dev-flutter-qwindow",
+            "binaryDir": "${sourceDir}/build-dev-flutter-qwindow",
+            "cacheVariables": {
+                "KDDockWidgets_FLUTTER_QWINDOW": "ON"
+            },
+            "inherits": [
+                "dev-flutter"
+            ]
+        },
+        {
             "name": "dev-flutter-no-bindings",
             "displayName": "dev-flutter-no-bindings",
             "binaryDir": "${sourceDir}/build-dev-flutter-no-bindings",

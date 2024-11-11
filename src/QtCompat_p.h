@@ -33,10 +33,6 @@
 
 #else
 
-#ifdef KDDW_FRONTEND_FLUTTER
-#include "flutter/qcoro.h"
-#endif
-
 #include "qtcompat/geometry_helpers_p.h"
 #include "qtcompat/enums_p.h"
 #include "qtcompat/string_p.h"
@@ -44,7 +40,11 @@
 #include "kdtoolbox/KDStlContainerAdaptor.h"
 #include <cstdint>
 
-#endif // !Qt
+#endif
+
+#ifdef KDDW_FRONTEND_FLUTTER
+#include "flutter/qcoro.h"
+#endif
 
 namespace KDDockWidgets {
 
