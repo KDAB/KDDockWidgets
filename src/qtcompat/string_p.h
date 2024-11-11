@@ -11,6 +11,12 @@
 
 #pragma once
 
+#ifdef KDDW_QTGUI_TYPES
+
+#include <QString>
+
+#else
+
 #include <string>
 
 /// Dummy QString class so flutter port builds
@@ -105,3 +111,5 @@ struct hash<QString>
 }
 
 using QLatin1String = QString;
+
+#endif

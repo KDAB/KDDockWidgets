@@ -10,10 +10,16 @@
 */
 
 /// Implements a QObject replacement for Flutter
-/// Objects in core/ still use QObject, so we minimize changes for existing Qt users
-/// but for flutter, we use this replacement
+/// We could use it as well for the Qt backend for objects in core/
+/// but we want to reduce changes for Qt users
 
 #pragma once
+
+#ifdef KDDW_QTGUI_TYPES
+
+#include <QObject>
+
+#else
 
 #include "kddockwidgets/docks_export.h"
 #include "enums_p.h"
@@ -67,3 +73,5 @@ inline T object_cast(const Core::Object *o)
 }
 
 }
+
+#endif

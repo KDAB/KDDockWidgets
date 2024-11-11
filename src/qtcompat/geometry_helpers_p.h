@@ -11,6 +11,14 @@
 
 #pragma once
 
+#ifdef KDDW_QTGUI_TYPES
+
+#include <QRect>
+#include <QSize>
+#include <QPoint>
+
+#else
+
 #include <cmath>
 #include <algorithm>
 
@@ -496,3 +504,5 @@ inline void Rect::adjust(int l, int t, int r, int b)
 }
 
 }
+
+#endif
