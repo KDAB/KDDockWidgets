@@ -41,7 +41,7 @@ String generatedFFICpp() {
   return generatedDir() + "/" + "KDDockWidgetsBindings/dart/ffi";
 }
 
-List<String> qtIncludes() {
+List<String> includes() {
   return Utils.includeArguments();
 }
 
@@ -52,7 +52,7 @@ void main(List<String> args_) async {
             "--output-directory=${generatedDir()}",
             "--license-file=license-file-template"
           ] +
-          qtIncludes() +
+          includes() +
           ["bindings_global.h", "typesystem.xml"]);
 
   if (res != 0) {
