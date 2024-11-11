@@ -50,6 +50,12 @@
 #include "../KDDockWidgets.h"
 #include "../Config.h"
 
-#include "../qtcompat/string_p.h"
-#include "../qtcompat/Object_p.h"
-#include "../qtcompat/geometry_helpers_p.h"
+// #ifndef KDDW_FLUTTER_QWINDOW
+
+// #include <QObject>
+
+// #include "../qtcompat/string_p.h"
+// #include "../qtcompat/Object_p.h"
+// #include "../qtcompat/geometry_helpers_p.h"
+
+// #endif

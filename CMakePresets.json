@@ -172,8 +172,7 @@
             "displayName": "release-flutter-qwindow",
             "binaryDir": "${sourceDir}/build-release-flutter-qwindow",
             "cacheVariables": {
-                "KDDockWidgets_FLUTTER_QWINDOW": "ON",
-                "KDDockWidgets_FLUTTER_NO_BINDINGS": "ON"
+                "KDDockWidgets_FLUTTER_QWINDOW": "ON"
             },
             "inherits": [
                 "release-flutter"
