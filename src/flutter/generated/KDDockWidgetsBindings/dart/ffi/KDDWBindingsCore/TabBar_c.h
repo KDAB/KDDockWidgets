@@ -12,9 +12,9 @@
 #include <TabBar.h>
 #include "core/Stack.h"
 #include <core/DockWidget.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <core/Group.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

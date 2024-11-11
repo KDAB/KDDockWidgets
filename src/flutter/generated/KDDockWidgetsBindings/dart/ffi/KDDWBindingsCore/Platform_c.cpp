@@ -286,6 +286,19 @@ void Platform_wrapper::onMainWindowDestroyed_nocallback(KDDockWidgets::Core::Mai
 {
     ::KDDockWidgets::Core::Platform::onMainWindowDestroyed(arg__1);
 }
+void Platform_wrapper::onViewFactoryChanged()
+{
+    if (m_onViewFactoryChangedCallback) {
+        const void *thisPtr = this;
+        m_onViewFactoryChangedCallback(const_cast<void *>(thisPtr));
+    } else {
+        ::KDDockWidgets::Core::Platform::onViewFactoryChanged();
+    }
+}
+void Platform_wrapper::onViewFactoryChanged_nocallback()
+{
+    ::KDDockWidgets::Core::Platform::onViewFactoryChanged();
+}
 void Platform_wrapper::pauseForDebugger()
 {
     if (m_pauseForDebuggerCallback) {
@@ -714,6 +727,11 @@ void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thi
     auto arg__1 = reinterpret_cast<KDDockWidgets::Core::MainWindow *>(arg__1_);
     [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onMainWindowDestroyed_nocallback(arg__1);} else {    return targetPtr->onMainWindowDestroyed(arg__1);} }();
 }
+// onViewFactoryChanged()
+void c_KDDockWidgets__Core__Platform__onViewFactoryChanged(void *thisObj)
+{
+    [&] {auto targetPtr = fromPtr(thisObj);auto wrapperPtr = dynamic_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper*>(targetPtr);if (wrapperPtr) {    return wrapperPtr->onViewFactoryChanged_nocallback();} else {    return targetPtr->onViewFactoryChanged();} }();
+}
 // pauseForDebugger()
 void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj)
 {
@@ -889,57 +907,60 @@ void c_KDDockWidgets__Core__Platform__registerVirtualMethodCallback(void *ptr, v
         wrapper->m_onMainWindowDestroyedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_onMainWindowDestroyed>(callback);
         break;
     case 156:
-        wrapper->m_pauseForDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_pauseForDebugger>(callback);
+        wrapper->m_onViewFactoryChangedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_onViewFactoryChanged>(callback);
         break;
     case 157:
-        wrapper->m_restoreMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_restoreMouseCursor>(callback);
+        wrapper->m_pauseForDebuggerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_pauseForDebugger>(callback);
         break;
     case 158:
-        wrapper->m_runDelayedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_runDelayed>(callback);
+        wrapper->m_restoreMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_restoreMouseCursor>(callback);
         break;
     case 159:
-        wrapper->m_screenNumberForViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenNumberForView>(callback);
+        wrapper->m_runDelayedCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_runDelayed>(callback);
         break;
     case 160:
-        wrapper->m_screenSizeForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenSizeFor>(callback);
+        wrapper->m_screenNumberForViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenNumberForView>(callback);
         break;
     case 161:
-        wrapper->m_sendEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_sendEvent>(callback);
+        wrapper->m_screenSizeForCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_screenSizeFor>(callback);
         break;
     case 162:
-        wrapper->m_setCursorPosCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_setCursorPos>(callback);
+        wrapper->m_sendEventCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_sendEvent>(callback);
         break;
     case 163:
+        wrapper->m_setCursorPosCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_setCursorPos>(callback);
+        break;
+    case 164:
         wrapper->m_setMouseCursorCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_setMouseCursor>(callback);
         break;
-    case 165:
+    case 166:
         wrapper->m_startDragDistance_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_startDragDistance_impl>(callback);
         break;
-    case 166:
+    case 167:
         wrapper->m_supportsAeroSnapCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_supportsAeroSnap>(callback);
         break;
-    case 167:
+    case 168:
         wrapper->m_tests_createFocusableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createFocusableView>(callback);
         break;
-    case 168:
+    case 169:
         wrapper->m_tests_createNonClosableViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createNonClosableView>(callback);
         break;
-    case 169:
+    case 170:
         wrapper->m_tests_createViewCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_createView>(callback);
         break;
-    case 170:
+    case 171:
         wrapper->m_tests_deinitPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_deinitPlatform_impl>(callback);
         break;
-    case 171:
+    case 172:
         wrapper->m_tests_initPlatform_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_tests_initPlatform_impl>(callback);
         break;
-    case 172:
+    case 173:
         wrapper->m_ungrabMouseCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_ungrabMouse>(callback);
         break;
-    case 173:
+    case 174:
         wrapper->m_uninstallMessageHandlerCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_uninstallMessageHandler>(callback);
         break;
-    case 174:
+    case 175:
         wrapper->m_usesFallbackMouseGrabberCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::Platform_wrapper::Callback_usesFallbackMouseGrabber>(callback);
         break;
     }

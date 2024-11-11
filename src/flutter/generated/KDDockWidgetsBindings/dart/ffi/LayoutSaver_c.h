@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include <LayoutSaver.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class LayoutSaver_wrapper : public ::KDDockWidgets::LayoutSaver

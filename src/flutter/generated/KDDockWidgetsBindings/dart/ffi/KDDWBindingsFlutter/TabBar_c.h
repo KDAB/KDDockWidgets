@@ -11,8 +11,8 @@
 #include "kddockwidgets_export.h"
 #include <TabBar.h>
 #include <core/View.h>
-#include <geometry_helpers_p.h>
-#include <string_p.h>
+#include <qtcompat/geometry_helpers_p.h>
+#include <qtcompat/string_p.h>
 #include <core/DockWidget.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

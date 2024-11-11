@@ -13,7 +13,7 @@
 #include <core/DockWidget.h>
 #include <TabBar.h>
 #include <core/Group.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

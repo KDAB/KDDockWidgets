@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include <KDDockWidgets.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class InitialOption_wrapper : public ::KDDockWidgets::InitialOption

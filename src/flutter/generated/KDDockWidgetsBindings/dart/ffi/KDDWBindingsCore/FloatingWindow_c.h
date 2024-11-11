@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include <FloatingWindow.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include "core/MainWindow.h"
 #include <core/Group.h>
 #include <core/DockWidget.h>

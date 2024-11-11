@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include <core/Platform.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class CreateViewOptions_wrapper : public ::KDDockWidgets::Core::CreateViewOptions

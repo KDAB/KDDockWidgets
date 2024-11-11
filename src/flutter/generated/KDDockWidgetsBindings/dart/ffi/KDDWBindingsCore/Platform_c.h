@@ -13,10 +13,10 @@
 #include <ViewFactory.h>
 #include <core/View.h>
 #include <QtCompat_p.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <core/Controller.h>
 #include <DelayedCall_p.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <vector>
@@ -66,6 +66,8 @@ public:
     virtual void onMainWindowCreated_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
     virtual void onMainWindowDestroyed(KDDockWidgets::Core::MainWindow *arg__1);
     virtual void onMainWindowDestroyed_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
+    virtual void onViewFactoryChanged();
+    virtual void onViewFactoryChanged_nocallback();
     virtual void pauseForDebugger();
     virtual void pauseForDebugger_nocallback();
     virtual void restoreMouseCursor();
@@ -135,6 +137,8 @@ public:
     Callback_onMainWindowCreated m_onMainWindowCreatedCallback = nullptr;
     typedef void (*Callback_onMainWindowDestroyed)(void *, KDDockWidgets::Core::MainWindow *arg__1);
     Callback_onMainWindowDestroyed m_onMainWindowDestroyedCallback = nullptr;
+    typedef void (*Callback_onViewFactoryChanged)(void *);
+    Callback_onViewFactoryChanged m_onViewFactoryChangedCallback = nullptr;
     typedef void (*Callback_pauseForDebugger)(void *);
     Callback_pauseForDebugger m_pauseForDebuggerCallback = nullptr;
     typedef void (*Callback_restoreMouseCursor)(void *);
@@ -221,6 +225,8 @@ DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_Flo
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::onViewFactoryChanged()
+DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__onViewFactoryChanged(void *thisObj);
 // KDDockWidgets::Core::Platform::pauseForDebugger()
 DOCKS_EXPORT void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()

@@ -10,9 +10,9 @@
 */
 #include "kddockwidgets_export.h"
 #include <Item_p.h>
-#include <geometry_helpers_p.h>
-#include <Object_p.h>
-#include <string_p.h>
+#include <qtcompat/geometry_helpers_p.h>
+#include <qtcompat/string_p.h>
+#include <qtcompat/Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Item_wrapper : public ::KDDockWidgets::Core::Item

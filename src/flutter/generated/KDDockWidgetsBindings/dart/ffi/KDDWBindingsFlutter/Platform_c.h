@@ -12,14 +12,14 @@
 #include <Platform.h>
 #include <ViewFactory.h>
 #include <core/View.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <core/Controller.h>
 #include <FloatingWindow.h>
 #include "core/MainWindow.h"
 #include <ClassicIndicatorsWindow.h>
 #include <DelayedCall_p.h>
 #include <core/Platform.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include <QtCompat_p.h>
 #include <vector>
 
@@ -67,6 +67,8 @@ public:
     virtual void onMainWindowCreated_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
     virtual void onMainWindowDestroyed(KDDockWidgets::Core::MainWindow *arg__1);
     virtual void onMainWindowDestroyed_nocallback(KDDockWidgets::Core::MainWindow *arg__1);
+    virtual void onViewFactoryChanged();
+    virtual void onViewFactoryChanged_nocallback();
     virtual void pauseForDartDebugger();
     virtual void pauseForDartDebugger_nocallback();
     virtual void pauseForDebugger();
@@ -148,6 +150,8 @@ public:
     Callback_onMainWindowCreated m_onMainWindowCreatedCallback = nullptr;
     typedef void (*Callback_onMainWindowDestroyed)(void *, KDDockWidgets::Core::MainWindow *arg__1);
     Callback_onMainWindowDestroyed m_onMainWindowDestroyedCallback = nullptr;
+    typedef void (*Callback_onViewFactoryChanged)(void *);
+    Callback_onViewFactoryChanged m_onViewFactoryChangedCallback = nullptr;
     typedef void (*Callback_pauseForDartDebugger)(void *);
     Callback_pauseForDartDebugger m_pauseForDartDebuggerCallback = nullptr;
     typedef void (*Callback_pauseForDebugger)(void *);
@@ -234,6 +238,8 @@ DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onFloatingWindowDestroyed_
 DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
 DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::onViewFactoryChanged()
+DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__onViewFactoryChanged(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDartDebugger()
 DOCKS_EXPORT void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDebugger()

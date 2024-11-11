@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "kddockwidgets_export.h"
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class QString_wrapper : public ::QString

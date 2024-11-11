@@ -11,7 +11,7 @@
 #include "kddockwidgets_export.h"
 #include <ViewFactory.h>
 #include <core/View.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include <core/Group.h>
 #include "core/TitleBar.h"
 #include "core/Stack.h"
@@ -23,7 +23,7 @@
 #include <ClassicDropIndicatorOverlay.h>
 #include "core/DropArea.h"
 #include <SideBar.h>
-#include <Object_p.h>
+#include <qtcompat/Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

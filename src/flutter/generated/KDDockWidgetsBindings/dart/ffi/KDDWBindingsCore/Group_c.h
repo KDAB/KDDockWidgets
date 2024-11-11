@@ -16,9 +16,9 @@
 #include <FloatingWindow.h>
 #include "core/Stack.h"
 #include <TabBar.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include "core/TitleBar.h"
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include "core/MainWindow.h"
 #include <Item_p.h>
 #include "core/DropArea.h"

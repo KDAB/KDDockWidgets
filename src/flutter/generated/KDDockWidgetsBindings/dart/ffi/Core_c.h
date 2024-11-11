@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "kddockwidgets_export.h"
-#include <Object_p.h>
+#include <qtcompat/Object_p.h>
 
 extern "C" {
 DOCKS_EXPORT void c_KDDockWidgets__Core_Finalizer(void *cppObj);

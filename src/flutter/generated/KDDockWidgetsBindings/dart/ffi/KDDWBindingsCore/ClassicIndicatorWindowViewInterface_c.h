@@ -10,8 +10,8 @@
 */
 #include "kddockwidgets_export.h"
 #include <ClassicIndicatorWindowViewInterface.h>
-#include <string_p.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/string_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

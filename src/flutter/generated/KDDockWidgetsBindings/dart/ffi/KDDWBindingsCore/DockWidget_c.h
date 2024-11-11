@@ -11,10 +11,10 @@
 #include "kddockwidgets_export.h"
 #include <core/DockWidget.h>
 #include <core/View.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include <KDDockWidgets.h>
 #include <FloatingWindow.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include "core/TitleBar.h"
 #include "core/MainWindow.h"
 

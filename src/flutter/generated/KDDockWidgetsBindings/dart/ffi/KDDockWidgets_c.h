@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include "KDDockWidgets.h"
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 extern "C" {
 // KDDockWidgets::fuzzyCompare(double a, double b, double epsilon)

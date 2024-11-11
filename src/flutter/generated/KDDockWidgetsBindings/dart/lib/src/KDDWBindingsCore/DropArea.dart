@@ -79,9 +79,9 @@ class DropArea extends KDDWBindingsCore.Layout {
         location,
         relativeTo == null ? ffi.nullptr : relativeTo.thisCpp,
         initialOption == null ? ffi.nullptr : initialOption.thisCpp);
-  } // addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
+  } // addMultiSplitter(KDDockWidgets::Core::DropArea * sourceMultiSplitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
 
-  addMultiSplitter(KDDWBindingsCore.DropArea? splitter, int location,
+  addMultiSplitter(KDDWBindingsCore.DropArea? sourceMultiSplitter, int location,
       {required KDDWBindingsCore.Group? relativeToGroup,
       required InitialOption option}) {
     final void_Func_voidstar_voidstar_int_voidstar_voidstar func = _dylib
@@ -92,7 +92,7 @@ class DropArea extends KDDWBindingsCore.Layout {
         .asFunction();
     func(
         thisCpp,
-        splitter == null ? ffi.nullptr : splitter.thisCpp,
+        sourceMultiSplitter == null ? ffi.nullptr : sourceMultiSplitter.thisCpp,
         location,
         relativeToGroup == null ? ffi.nullptr : relativeToGroup.thisCpp,
         option == null ? ffi.nullptr : option.thisCpp);
@@ -308,7 +308,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   String cFunctionSymbolName(int methodId) {
     switch (methodId) {
-      case 334:
+      case 337:
         return "c_KDDockWidgets__Core__DropArea__setParentView_impl_View";
     }
     return super.cFunctionSymbolName(methodId);
@@ -316,7 +316,7 @@ class DropArea extends KDDWBindingsCore.Layout {
 
   static String methodNameFromId(int methodId) {
     switch (methodId) {
-      case 334:
+      case 337:
         return "setParentView_impl";
     }
     throw Error();
@@ -328,9 +328,9 @@ class DropArea extends KDDWBindingsCore.Layout {
         .lookup<ffi.NativeFunction<RegisterMethodIsReimplementedCallback_FFI>>(
             'c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback')
         .asFunction();
-    final callback334 =
+    final callback337 =
         ffi.Pointer.fromFunction<void_Func_voidstar_voidstar_FFI>(
             KDDWBindingsCore.Controller.setParentView_impl_calledFromC);
-    registerCallback(thisCpp, callback334, 334);
+    registerCallback(thisCpp, callback337, 337);
   }
 }

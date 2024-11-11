@@ -11,7 +11,7 @@
 #include "kddockwidgets_export.h"
 #include <Config.h>
 #include <ViewFactory.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class Config_wrapper : public ::KDDockWidgets::Config

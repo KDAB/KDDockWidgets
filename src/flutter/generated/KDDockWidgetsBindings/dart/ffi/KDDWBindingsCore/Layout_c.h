@@ -13,7 +13,7 @@
 #include <core/View.h>
 #include "core/MainWindow.h"
 #include <FloatingWindow.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <core/DockWidget.h>
 #include <Item_p.h>
 #include <core/Group.h>

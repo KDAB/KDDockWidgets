@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 #include "kddockwidgets_export.h"
-#include <Object_p.h>
-#include <string_p.h>
+#include <qtcompat/Object_p.h>
+#include <qtcompat/string_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsCore {

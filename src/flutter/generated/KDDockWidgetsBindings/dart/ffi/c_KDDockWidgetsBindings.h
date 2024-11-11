@@ -301,6 +301,8 @@ void c_KDDockWidgets__Core__Platform__onFloatingWindowDestroyed_FloatingWindow(v
 void c_KDDockWidgets__Core__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::Core::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
 void c_KDDockWidgets__Core__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::Core::Platform::onViewFactoryChanged()
+void c_KDDockWidgets__Core__Platform__onViewFactoryChanged(void *thisObj);
 // KDDockWidgets::Core::Platform::pauseForDebugger()
 void c_KDDockWidgets__Core__Platform__pauseForDebugger(void *thisObj);
 // KDDockWidgets::Core::Platform::restoreMouseCursor()
@@ -381,6 +383,8 @@ void c_KDDockWidgets__flutter__Platform__onFloatingWindowDestroyed_FloatingWindo
 void c_KDDockWidgets__flutter__Platform__onMainWindowCreated_MainWindow(void *thisObj, void *arg__1_);
 // KDDockWidgets::flutter::Platform::onMainWindowDestroyed(KDDockWidgets::Core::MainWindow * arg__1)
 void c_KDDockWidgets__flutter__Platform__onMainWindowDestroyed_MainWindow(void *thisObj, void *arg__1_);
+// KDDockWidgets::flutter::Platform::onViewFactoryChanged()
+void c_KDDockWidgets__flutter__Platform__onViewFactoryChanged(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDartDebugger()
 void c_KDDockWidgets__flutter__Platform__pauseForDartDebugger(void *thisObj);
 // KDDockWidgets::flutter::Platform::pauseForDebugger()
@@ -463,6 +467,8 @@ void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj);
 bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj);
 // KDDockWidgets::DockRegistry::isEmpty(bool excludeBeingDeleted) const
 bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted);
+// KDDockWidgets::DockRegistry::isInitialized()
+bool c_static_KDDockWidgets__DockRegistry__isInitialized();
 // KDDockWidgets::DockRegistry::isSane() const
 bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj);
 // KDDockWidgets::DockRegistry::itemIsInMainWindow(const KDDockWidgets::Core::Item * arg__1) const
@@ -2247,8 +2253,8 @@ void *c_KDDockWidgets__Core__DropArea__constructor_View_MainWindowOptions_bool(v
 void c_KDDockWidgets__Core__DropArea___addDockWidget_DockWidget_Location_Item_InitialOption(void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
 // KDDockWidgets::Core::DropArea::addDockWidget(KDDockWidgets::Core::DockWidget * dw, KDDockWidgets::Location location, KDDockWidgets::Core::DockWidget * relativeTo, const KDDockWidgets::InitialOption & initialOption)
 void c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidget_InitialOption(void *thisObj, void *dw_, int location, void *relativeTo_, void *initialOption_);
-// KDDockWidgets::Core::DropArea::addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
-void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeToGroup_, void *option_);
+// KDDockWidgets::Core::DropArea::addMultiSplitter(KDDockWidgets::Core::DropArea * sourceMultiSplitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
+void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *sourceMultiSplitter_, int location, void *relativeToGroup_, void *option_);
 // KDDockWidgets::Core::DropArea::addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Item * relativeToItem, const KDDockWidgets::InitialOption & option)
 void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Item_InitialOption(void *thisObj, void *widget_, int location, void *relativeToItem_, void *option_);
 // KDDockWidgets::Core::DropArea::centralFrame() const

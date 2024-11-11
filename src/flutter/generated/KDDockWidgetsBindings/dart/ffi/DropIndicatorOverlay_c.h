@@ -13,7 +13,7 @@
 #include "core/DropArea.h"
 #include <core/View.h>
 #include <core/Group.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DropIndicatorOverlay_wrapper : public ::KDDockWidgets::Core::DropIndicatorOverlay

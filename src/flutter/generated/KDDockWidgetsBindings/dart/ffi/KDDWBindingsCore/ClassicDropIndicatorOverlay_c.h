@@ -11,7 +11,7 @@
 #include "kddockwidgets_export.h"
 #include <ClassicDropIndicatorOverlay.h>
 #include "core/DropArea.h"
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <ClassicIndicatorWindowViewInterface.h>
 #include <core/View.h>
 #include <core/Group.h>

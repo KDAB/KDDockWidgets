@@ -14,11 +14,11 @@
 #include "core/MainWindow.h"
 #include <FloatingWindow.h>
 #include <core/Group.h>
-#include <string_p.h>
+#include <qtcompat/string_p.h>
 #include <core/Layout.h>
 #include <Item_p.h>
 #include <SideBar.h>
-#include <Object_p.h>
+#include <qtcompat/Object_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 class DockRegistry_wrapper : public ::KDDockWidgets::DockRegistry
@@ -34,6 +34,7 @@ public:
     KDDockWidgets::Core::Group *groupInMDIResize() const;
     bool hasFloatingWindows() const;
     bool isEmpty(bool excludeBeingDeleted = false) const;
+    static bool isInitialized();
     bool isSane() const;
     bool itemIsInMainWindow(const KDDockWidgets::Core::Item *arg__1) const;
     KDDockWidgets::Core::Layout *layoutForItem(const KDDockWidgets::Core::Item *arg__1) const;
@@ -71,6 +72,8 @@ DOCKS_EXPORT void *c_KDDockWidgets__DockRegistry__groupInMDIResize(void *thisObj
 DOCKS_EXPORT bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj);
 // KDDockWidgets::DockRegistry::isEmpty(bool excludeBeingDeleted) const
 DOCKS_EXPORT bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted);
+// KDDockWidgets::DockRegistry::isInitialized()
+DOCKS_EXPORT bool c_static_KDDockWidgets__DockRegistry__isInitialized();
 // KDDockWidgets::DockRegistry::isSane() const
 DOCKS_EXPORT bool c_KDDockWidgets__DockRegistry__isSane(void *thisObj);
 // KDDockWidgets::DockRegistry::itemIsInMainWindow(const KDDockWidgets::Core::Item * arg__1) const

@@ -65,6 +65,10 @@ bool DockRegistry_wrapper::isEmpty(bool excludeBeingDeleted) const
 {
     return ::KDDockWidgets::DockRegistry::isEmpty(excludeBeingDeleted);
 }
+bool DockRegistry_wrapper::isInitialized()
+{
+    return ::KDDockWidgets::DockRegistry::isInitialized();
+}
 bool DockRegistry_wrapper::isSane() const
 {
     return ::KDDockWidgets::DockRegistry::isSane();
@@ -202,6 +206,12 @@ bool c_KDDockWidgets__DockRegistry__hasFloatingWindows(void *thisObj)
 bool c_KDDockWidgets__DockRegistry__isEmpty_bool(void *thisObj, bool excludeBeingDeleted)
 {
     const auto &result = fromPtr(thisObj)->isEmpty(excludeBeingDeleted);
+    return result;
+}
+// isInitialized()
+bool c_static_KDDockWidgets__DockRegistry__isInitialized()
+{
+    const auto &result = KDDockWidgetsBindings_wrappersNS::DockRegistry_wrapper::isInitialized();
     return result;
 }
 // isSane() const

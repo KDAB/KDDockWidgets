@@ -42,9 +42,9 @@ void DropArea_wrapper::addDockWidget(KDDockWidgets::Core::DockWidget *dw, KDDock
 {
     ::KDDockWidgets::Core::DropArea::addDockWidget(dw, location, relativeTo, initialOption);
 }
-void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Core::DropArea *splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeToGroup, const KDDockWidgets::InitialOption &option)
+void DropArea_wrapper::addMultiSplitter(KDDockWidgets::Core::DropArea *sourceMultiSplitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group *relativeToGroup, const KDDockWidgets::InitialOption &option)
 {
-    ::KDDockWidgets::Core::DropArea::addMultiSplitter(splitter, location, relativeToGroup, option);
+    ::KDDockWidgets::Core::DropArea::addMultiSplitter(sourceMultiSplitter, location, relativeToGroup, option);
 }
 void DropArea_wrapper::addWidget(KDDockWidgets::Core::View *widget, KDDockWidgets::Location location, KDDockWidgets::Core::Item *relativeToItem, const KDDockWidgets::InitialOption &option)
 {
@@ -155,14 +155,14 @@ void c_KDDockWidgets__Core__DropArea__addDockWidget_DockWidget_Location_DockWidg
     auto &initialOption = *reinterpret_cast<KDDockWidgets::InitialOption *>(initialOption_);
     fromPtr(thisObj)->addDockWidget(dw, static_cast<KDDockWidgets::Location>(location), relativeTo, initialOption);
 }
-// addMultiSplitter(KDDockWidgets::Core::DropArea * splitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
-void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *splitter_, int location, void *relativeToGroup_, void *option_)
+// addMultiSplitter(KDDockWidgets::Core::DropArea * sourceMultiSplitter, KDDockWidgets::Location location, KDDockWidgets::Core::Group * relativeToGroup, const KDDockWidgets::InitialOption & option)
+void c_KDDockWidgets__Core__DropArea__addMultiSplitter_DropArea_Location_Group_InitialOption(void *thisObj, void *sourceMultiSplitter_, int location, void *relativeToGroup_, void *option_)
 {
-    auto splitter = reinterpret_cast<KDDockWidgets::Core::DropArea *>(splitter_);
+    auto sourceMultiSplitter = reinterpret_cast<KDDockWidgets::Core::DropArea *>(sourceMultiSplitter_);
     auto relativeToGroup = reinterpret_cast<KDDockWidgets::Core::Group *>(relativeToGroup_);
     assert(option_);
     auto &option = *reinterpret_cast<KDDockWidgets::InitialOption *>(option_);
-    fromPtr(thisObj)->addMultiSplitter(splitter, static_cast<KDDockWidgets::Location>(location), relativeToGroup, option);
+    fromPtr(thisObj)->addMultiSplitter(sourceMultiSplitter, static_cast<KDDockWidgets::Location>(location), relativeToGroup, option);
 }
 // addWidget(KDDockWidgets::Core::View * widget, KDDockWidgets::Location location, KDDockWidgets::Core::Item * relativeToItem, const KDDockWidgets::InitialOption & option)
 void c_KDDockWidgets__Core__DropArea__addWidget_View_Location_Item_InitialOption(void *thisObj, void *widget_, int location, void *relativeToItem_, void *option_)
@@ -259,7 +259,7 @@ void c_KDDockWidgets__Core__DropArea__registerVirtualMethodCallback(void *ptr, v
 {
     auto wrapper = fromWrapperPtr(ptr);
     switch (methodId) {
-    case 334:
+    case 337:
         wrapper->m_setParentView_implCallback = reinterpret_cast<KDDockWidgetsBindings_wrappersNS::KDDWBindingsCore::DropArea_wrapper::Callback_setParentView_impl>(callback);
         break;
     }

@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include <Window_p.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

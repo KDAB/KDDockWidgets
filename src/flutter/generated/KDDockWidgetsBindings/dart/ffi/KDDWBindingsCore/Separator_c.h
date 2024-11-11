@@ -10,7 +10,7 @@
 */
 #include "kddockwidgets_export.h"
 #include <Separator.h>
-#include <geometry_helpers_p.h>
+#include <qtcompat/geometry_helpers_p.h>
 #include <core/View.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {

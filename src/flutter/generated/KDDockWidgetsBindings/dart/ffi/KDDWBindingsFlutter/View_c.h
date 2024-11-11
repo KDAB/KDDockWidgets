@@ -12,18 +12,18 @@
 #include <View.h>
 #include <core/Controller.h>
 #include <core/View.h>
-#include <geometry_helpers_p.h>
-#include <string_p.h>
+#include <qtcompat/geometry_helpers_p.h>
+#include <qtcompat/string_p.h>
 #include "core/DropArea.h"
-#include <FloatingWindow.h>
-#include <QtCompat_p.h>
-#include <TabBar.h>
-#include "core/TitleBar.h"
-#include <core/Layout.h>
-#include "core/MainWindow.h"
-#include "core/Stack.h"
 #include <core/Group.h>
+#include "core/Stack.h"
+#include <QtCompat_p.h>
+#include "core/MainWindow.h"
+#include <FloatingWindow.h>
+#include "core/TitleBar.h"
 #include <core/DockWidget.h>
+#include <core/Layout.h>
+#include <TabBar.h>
 
 namespace KDDockWidgetsBindings_wrappersNS {
 namespace KDDWBindingsFlutter {

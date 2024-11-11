@@ -108,6 +108,15 @@ class DockRegistry extends KDDWBindingsCore.Object {
             'c_KDDockWidgets__DockRegistry__isEmpty_bool')
         .asFunction();
     return func(thisCpp, excludeBeingDeleted ? 1 : 0) != 0;
+  }
+
+  static // isInitialized()
+      bool isInitialized() {
+    final bool_Func_void func = _dylib
+        .lookup<ffi.NativeFunction<bool_Func_void_FFI>>(
+            'c_static_KDDockWidgets__DockRegistry__isInitialized')
+        .asFunction();
+    return func() != 0;
   } // isSane() const
 
   bool isSane() {
@@ -201,6 +210,16 @@ class DockRegistry extends KDDWBindingsCore.Object {
             'c_static_KDDockWidgets__DockRegistry__self')
         .asFunction();
     ffi.Pointer<void> result = func();
+    return DockRegistry.fromCppPointer(result, false);
+  }
+
+  static // self(bool create)
+      DockRegistry self_2(bool create) {
+    final voidstar_Func_bool func = _dylib
+        .lookup<ffi.NativeFunction<voidstar_Func_ffi_Int8_FFI>>(
+            'c_static_KDDockWidgets__DockRegistry__self_bool')
+        .asFunction();
+    ffi.Pointer<void> result = func(create ? 1 : 0);
     return DockRegistry.fromCppPointer(result, false);
   } // setFocusedDockWidget(KDDockWidgets::Core::DockWidget * arg__1)
 
