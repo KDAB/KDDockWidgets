@@ -27,6 +27,7 @@ jobs:
 
         preset:
           - name: release-flutter
+          - name: release-flutter-qwindow
 
         include:
           - os: ubuntu-latest
