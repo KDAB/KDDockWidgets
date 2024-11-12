@@ -11,7 +11,7 @@
 
 #pragma once
 
-#ifdef KDDW_QTGUI_TYPES
+#ifdef KDDW_FLUTTER_QWINDOW
 
 #include <QRect>
 #include <QSize>
