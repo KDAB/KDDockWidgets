@@ -38,6 +38,13 @@ jobs:
             flutter_os: "macos"
 
     steps:
+      - name: Install Qt
+        if: ${{ matrix.preset.name == 'release-flutter-qwindow' }}
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.7.2
+          cache: true
+
       - name: Checkout sources
         uses: actions/checkout@v4
 
