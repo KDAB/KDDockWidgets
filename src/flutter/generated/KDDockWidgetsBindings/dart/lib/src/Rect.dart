@@ -287,16 +287,9 @@ class Rect implements ffi.Finalizable {
             'c_KDDockWidgets__Rect__moveTopLeft_Point')
         .asFunction();
     func(thisCpp, pt == null ? ffi.nullptr : pt.thisCpp);
-  } // pos() const
+  }
 
-  Point pos() {
-    final voidstar_Func_voidstar func = _dylib
-        .lookup<ffi.NativeFunction<voidstar_Func_voidstar_FFI>>(
-            'c_KDDockWidgets__Rect__pos')
-        .asFunction();
-    ffi.Pointer<void> result = func(thisCpp);
-    return Point.fromCppPointer(result, true);
-  } // right() const
+  // right() const
 
   int right() {
     final int_Func_voidstar func = _dylib

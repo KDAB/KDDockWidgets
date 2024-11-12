@@ -208,11 +208,6 @@ public:
     {
     }
 
-    Point pos() const
-    {
-        return m_pos;
-    }
-
     Size size() const
     {
         return m_size;

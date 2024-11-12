@@ -43,7 +43,6 @@ public:
     void moveTo(int x, int y);
     void moveTop(int y);
     void moveTopLeft(KDDockWidgets::Point pt);
-    KDDockWidgets::Point pos() const;
     int right() const;
     void setBottom(int b);
     void setHeight(int h);
@@ -120,8 +119,6 @@ DOCKS_EXPORT void c_KDDockWidgets__Rect__moveTo_int_int(void *thisObj, int x, in
 DOCKS_EXPORT void c_KDDockWidgets__Rect__moveTop_int(void *thisObj, int y);
 // KDDockWidgets::Rect::moveTopLeft(KDDockWidgets::Point pt)
 DOCKS_EXPORT void c_KDDockWidgets__Rect__moveTopLeft_Point(void *thisObj, void *pt_);
-// KDDockWidgets::Rect::pos() const
-DOCKS_EXPORT void *c_KDDockWidgets__Rect__pos(void *thisObj);
 // KDDockWidgets::Rect::right() const
 DOCKS_EXPORT int c_KDDockWidgets__Rect__right(void *thisObj);
 // KDDockWidgets::Rect::setBottom(int b)

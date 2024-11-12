@@ -142,8 +142,6 @@ void c_KDDockWidgets__Rect__moveTo_int_int(void *thisObj, int x, int y);
 void c_KDDockWidgets__Rect__moveTop_int(void *thisObj, int y);
 // KDDockWidgets::Rect::moveTopLeft(KDDockWidgets::Point pt)
 void c_KDDockWidgets__Rect__moveTopLeft_Point(void *thisObj, void *pt_);
-// KDDockWidgets::Rect::pos() const
-void *c_KDDockWidgets__Rect__pos(void *thisObj);
 // KDDockWidgets::Rect::right() const
 int c_KDDockWidgets__Rect__right(void *thisObj);
 // KDDockWidgets::Rect::setBottom(int b)

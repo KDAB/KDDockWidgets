@@ -137,10 +137,7 @@ void Rect_wrapper::moveTopLeft(KDDockWidgets::Point pt)
 {
     ::KDDockWidgets::Rect::moveTopLeft(pt);
 }
-KDDockWidgets::Point Rect_wrapper::pos() const
-{
-    return ::KDDockWidgets::Rect::pos();
-}
+
 int Rect_wrapper::right() const
 {
     return ::KDDockWidgets::Rect::right();
@@ -405,12 +402,7 @@ void c_KDDockWidgets__Rect__moveTopLeft_Point(void *thisObj, void *pt_)
     auto &pt = *reinterpret_cast<KDDockWidgets::Point *>(pt_);
     fromPtr(thisObj)->moveTopLeft(pt);
 }
-// pos() const
-void *c_KDDockWidgets__Rect__pos(void *thisObj)
-{
-    const auto &result = new Dartagnan::ValueWrapper<KDDockWidgets::Point> { fromPtr(thisObj)->pos() };
-    return result;
-}
+
 // right() const
 int c_KDDockWidgets__Rect__right(void *thisObj)
 {
