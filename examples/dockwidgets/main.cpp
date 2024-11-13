@@ -205,6 +205,9 @@ int main(int argc, char **argv)
                                     "The main window will have a non-detachable central widget"));
     parser.addOption(centralWidget);
 
+    QCommandLineOption tabsAtBottom("tabs-at-bottom", QCoreApplication::translate("main", "Shows tabs at bottom"));
+    parser.addOption(tabsAtBottom);
+
     QCommandLineOption ctxtMenuOnTabs(
         "allow-switch-tabs-via-menu",
         QCoreApplication::translate("main", "Allow switching tabs via context menu in tabs area"));
@@ -383,8 +386,8 @@ int main(int argc, char **argv)
         KDDockWidgets::Config::self().setDropIndicatorAllowedFunc(func);
     }
 
+    KDDockWidgets::Config::self().setTabsAtBottom(parser.isSet(tabsAtBottom));
     KDDockWidgets::Config::self().setFlags(flags);
-
 
 
     MyMainWindow::ExampleOptions exampleOptions = {};

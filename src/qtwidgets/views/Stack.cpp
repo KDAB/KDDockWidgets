@@ -54,6 +54,7 @@ Stack::Stack(Core::Stack *controller, QWidget *parent)
     , StackViewInterface(controller)
     , d(new Private())
 {
+    setTabPosition(Config::self().tabsAtBottom() ? TabPosition::South : TabPosition::North);
 }
 
 Stack::~Stack()

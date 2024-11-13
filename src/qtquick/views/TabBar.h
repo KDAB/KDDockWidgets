@@ -49,6 +49,7 @@ class DOCKS_EXPORT TabBar : public QtQuick::View, public Core::TabBarViewInterfa
     Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(int hoveredTabIndex READ hoveredTabIndex NOTIFY hoveredTabIndexChanged)
+    Q_PROPERTY(bool tabsAtBottom READ tabsAtBottom CONSTANT)
 public:
     explicit TabBar(Core::TabBar *controller, QQuickItem *parent = nullptr);
     ~TabBar() override;
@@ -63,6 +64,7 @@ public:
     QRect rectForTab(int index) const override;
     QRect globalRectForTab(int index) const;
     int indexForTabPos(QPoint) const;
+    bool tabsAtBottom() const;
 
     void moveTabTo(int from, int to) override;
     Q_INVOKABLE void setCurrentIndex(int index) override;

@@ -19,6 +19,7 @@
 
 #include "TabBar.h"
 #include "Stack.h"
+#include "Config.h"
 #include "core/DockWidget_p.h"
 #include "kddockwidgets/core/TabBar.h"
 #include "kddockwidgets/core/Stack.h"
@@ -286,6 +287,11 @@ int TabBar::indexForTabPos(QPoint globalPt) const
     }
 
     return -1;
+}
+
+bool TabBar::tabsAtBottom() const
+{
+    return Config::self().tabsAtBottom();
 }
 
 void TabBar::setHoveredTabIndex(int idx)

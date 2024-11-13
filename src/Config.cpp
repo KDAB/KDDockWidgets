@@ -77,6 +77,7 @@ public:
     int m_startDragDistance = -1;
     bool m_dropIndicatorsInhibited = false;
     bool m_layoutSaverStrictMode = false;
+    bool m_showTabsAtBottom = true;
 };
 
 Config::Config()
@@ -322,6 +323,16 @@ void Config::setAbsoluteWidgetMaxSize(Size size)
 Size Config::absoluteWidgetMaxSize() const
 {
     return Item::hardcodedMaximumSize;
+}
+
+void Config::setTabsAtBottom(bool show)
+{
+    d->m_showTabsAtBottom = show;
+}
+
+bool Config::tabsAtBottom() const
+{
+    return d->m_showTabsAtBottom;
 }
 
 Config::InternalFlags Config::internalFlags() const

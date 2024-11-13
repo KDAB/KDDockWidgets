@@ -371,6 +371,11 @@ public:
     void setAbsoluteWidgetMaxSize(Size size);
     Size absoluteWidgetMaxSize() const;
 
+    /// Shows tabs at the bottom of the tab view instead of top
+    /// defaults to false. Call this at start of application only.
+    void setTabsAtBottom(bool);
+    bool tabsAtBottom() const;
+
     ///@brief Disables our internal widget's paint events
     /// By default, KDDockWidget's internal widgets reimplement paintEvent(). Disabling them
     /// (which makes the base-class, QWidget::paintEvent() be called instead) can be useful if you
