@@ -285,3 +285,8 @@ bool Group::closeAllDockWidgets()
 {
     return m_inDtor || m_group->close();
 }
+
+bool Group::tabsAtBottom() const
+{
+    return Config::self().tabsAtBottom();
+}

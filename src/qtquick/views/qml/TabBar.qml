@@ -83,6 +83,7 @@ TabBarBase {
         id: tabBar
 
         width: parent.width
+        position: (root.groupCpp && root.groupCpp.tabsAtBottom) ? TabBar.Footer : TabBar.Header
 
         onCurrentIndexChanged: {
             // Tells the C++ backend that the current dock widget has changed

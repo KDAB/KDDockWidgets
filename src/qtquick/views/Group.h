@@ -44,6 +44,7 @@ class DOCKS_EXPORT Group : public QtQuick::View, public Core::GroupViewInterface
                    actualTitleBarChanged)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
+    Q_PROPERTY(bool tabsAtBottom READ tabsAtBottom CONSTANT)
 
 public:
     explicit Group(Core::Group *controller, QQuickItem *parent = nullptr);
@@ -59,6 +60,7 @@ public:
     QQuickItem *visualItem() const override;
 
     int currentIndex() const;
+    bool tabsAtBottom() const;
 
     // QML interface:
     KDDockWidgets::QtQuick::TitleBar *titleBar() const;

@@ -289,11 +289,6 @@ int TabBar::indexForTabPos(QPoint globalPt) const
     return -1;
 }
 
-bool TabBar::tabsAtBottom() const
-{
-    return Config::self().tabsAtBottom();
-}
-
 void TabBar::setHoveredTabIndex(int idx)
 {
     if (idx == d->m_hoveredTabIndex)

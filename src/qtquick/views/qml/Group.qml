@@ -29,6 +29,7 @@ Rectangle {
     readonly property bool hasCustomMouseEventRedirector: false
     readonly property bool isFixedHeight: groupCpp && groupCpp.isFixedHeight
     readonly property bool isFixedWidth: groupCpp && groupCpp.isFixedWidth
+    readonly property bool tabsAtTop: !groupCpp || !groupCpp.tabsAtBottom
 
     anchors.fill: parent
 
@@ -199,11 +200,20 @@ Rectangle {
         source: groupCpp ? _kddw_widgetFactory.tabbarFilename()
                          : ""
 
+        function topAnchor() {
+            if (root.tabsAtTop) {
+                return (titleBar && titleBar.visible) ? titleBar.bottom
+                                                      : (parent ? parent.top : undefined);
+            } else {
+                return undefined;
+            }
+        }
+
         anchors {
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
-            top: (titleBar && titleBar.visible) ? titleBar.bottom
-                                                : (parent ? parent.top : undefined)
+            top: topAnchor()
+            bottom: root.tabsAtTop ? undefined : parent.bottom;
 
             // 1 pixel gap so we don't overlap with outer frame. We shouldn't hardcode this though
             leftMargin: 1
@@ -213,12 +223,24 @@ Rectangle {
 
     Item {
         id: stackLayout
+
+        function bottomAnchor() {
+            if (!parent)
+                return undefined;
+
+            if (root.tabsAtTop || !tabbar.visible)
+                return parent.bottom;
+
+            return tabbar.top;
+        }
+
         anchors {
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
-            top: (parent && tabbar.visible) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
-                                                                                              : parent ? parent.top : undefined)
-            bottom: parent ? parent.bottom : undefined
+            top: (parent && tabbar.visible && root.tabsAtTop) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
+                                                                                                                : parent ? parent.top
+                                                                                                                         : undefined);
+            bottom: bottomAnchor()
 
             leftMargin: root.contentsMargin
             rightMargin: root.contentsMargin
