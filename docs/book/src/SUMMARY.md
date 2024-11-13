@@ -37,6 +37,7 @@
   - [Custom Styling](custom_styling.md)
   - [Min/Max sizing](min_max_sizing.md)
   - [Public and Private API](private_api.md)
+  - [Drag and Drop](dnd.md)
 ---
 - [For Developers]()
   - [Architecture and Concepts](architecture_and_concepts.md)
