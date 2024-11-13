@@ -77,7 +77,7 @@ public:
     int m_startDragDistance = -1;
     bool m_dropIndicatorsInhibited = false;
     bool m_layoutSaverStrictMode = false;
-    bool m_showTabsAtBottom = true;
+    bool m_showTabsAtBottom = false;
 };
 
 Config::Config()
