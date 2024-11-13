@@ -229,3 +229,15 @@ bool Stack::buttonHidesIfDisabled(TitleBarButtonType type) const
 {
     return d->m_buttonsToHideIfDisabled & type;
 }
+
+bool Stack::dragCanStart(Point pressPos, Point pos) const
+{
+    if (!Draggable::dragCanStart(pressPos, pos))
+        return false;
+
+    if (d->m_group && d->m_group->isCentralGroup()) {
+        return false;
+    }
+
+    return true;
+}

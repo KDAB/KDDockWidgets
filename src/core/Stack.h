@@ -92,6 +92,8 @@ public:
     void setHideDisabledButtons(TitleBarButtonTypes);
     bool buttonHidesIfDisabled(TitleBarButtonType) const;
 
+    bool dragCanStart(Point pressPos, Point pos) const override;
+
 public:
     bool onMouseDoubleClick(Point localPos);
 
