@@ -8,7 +8,7 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.15)
 project(qtwidgets_leak_test)
 
 set(CMAKE_AUTOMOC ON)
