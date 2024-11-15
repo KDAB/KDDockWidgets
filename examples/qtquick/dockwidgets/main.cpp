@@ -89,11 +89,11 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
+    parser.process(app);
     auto flags = KDDockWidgets::Config::self().flags();
 
 #if defined(DOCKS_DEVELOPER_MODE)
     auto internalFlags = KDDockWidgets::Config::self().internalFlags();
-    parser.process(app);
 
     if (parser.isSet(noQtTool))
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;

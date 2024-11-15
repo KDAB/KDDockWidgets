@@ -200,10 +200,10 @@ ApplicationWindow {
     }
 
     function toggleDockWidget(dw) {
-        if (dw.dockWidget.isOpen()) {
-            dw.dockWidget.close();
+        if (dw.isOpen) {
+            dw.close();
         } else {
-            dw.dockWidget.show();
+            dw.show();
         }
     }
 }
