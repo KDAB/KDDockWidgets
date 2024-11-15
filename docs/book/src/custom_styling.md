@@ -16,7 +16,7 @@ You can derive any of these components:
 - `RubberBand`, indicates the drop location when dragging
 - `SideBar`, the sidebar when using the "auto hide feature"
 - `ClassicDropIndicatorOverlay`, the drop indicators
-- `SegmentedDropIndicatorOverlay`, the drop indicators in segmented mode
+- `SegmentedDropIndicatorOverlay`, the drop indicators in segmented mode (not available for QtQuick)
 
 After deriving one or more of the above, create a custom `ViewFactory.h` which returns your derived instances.
 Then call `KDDockWidgets::Config::self().setViewFactory(new MyCustomWidgetFactory());`.
