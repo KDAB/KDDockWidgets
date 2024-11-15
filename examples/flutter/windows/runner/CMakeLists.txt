@@ -3,7 +3,7 @@
 #  SPDX-FileCopyrightText: 2014 The Flutter Authors.
 #  SPDX-License-Identifier: BSD-3-Clause
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(runner LANGUAGES CXX)
 
 # Define the application target. To change its name, change BINARY_NAME in the

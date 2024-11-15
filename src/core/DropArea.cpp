@@ -48,7 +48,12 @@ createDropIndicatorOverlay(Core::DropArea *dropArea)
     case DropIndicatorType::Classic:
         return new Core::ClassicDropIndicatorOverlay(dropArea);
     case DropIndicatorType::Segmented:
-        return new Core::SegmentedDropIndicatorOverlay(dropArea);
+        if (Platform::instance()->isQtWidgets()) {
+            return new Core::SegmentedDropIndicatorOverlay(dropArea);
+        } else {
+            KDDW_ERROR("Only QtWidget backend supports segmented drop indicators");
+            return new Core::ClassicDropIndicatorOverlay(dropArea);
+        }
     case DropIndicatorType::None:
         return new Core::NullDropIndicatorOverlay(dropArea);
     }
