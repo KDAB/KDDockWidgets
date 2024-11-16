@@ -61,6 +61,10 @@ set(KDAB_INSTALL
     CACHE INTERNAL "Install to default KDAB Location"
 )
 
+if(POLICY CMP0177)
+    cmake_policy(SET CMP0177 NEW)
+endif()
+
 if(DEFINED CMAKE_INSTALL_PREFIX)
     if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
         set(KDAB_INSTALL
