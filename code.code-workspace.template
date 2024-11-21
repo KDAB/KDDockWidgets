@@ -37,6 +37,7 @@
       "**/3rdparty"
     ],
     "cmake.copyCompileCommands": "${workspaceFolder:kddockwidgets}/compile_commands.json",
+    "cmake.automaticReconfigure": false,
     "files.insertFinalNewline": true,
     "files.associations": {
       "*.code-workspace.template": "json"
