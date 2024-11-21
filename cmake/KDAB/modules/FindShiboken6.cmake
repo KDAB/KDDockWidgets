@@ -111,10 +111,7 @@ if(SHIBOKEN_BASEDIR)
         PATHS ${SHIBOKEN_SEARCH_PATHS}
     )
 
-    find_program(
-        SHIBOKEN_BINARY shiboken6
-        PATHS ${SHIBOKEN_SEARCH_PATHS}
-    )
+    find_program(SHIBOKEN_BINARY shiboken6 PATHS ${SHIBOKEN_SEARCH_PATHS})
 endif()
 if(SHIBOKEN_INCLUDE_DIR
    AND SHIBOKEN_LIBRARY
