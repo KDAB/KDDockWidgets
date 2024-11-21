@@ -86,8 +86,7 @@ if(PYSIDE6_FOUND)
     #PySide
     #===============================================================================
     find_path(
-        PYSIDE_INCLUDE_DIR
-        pyside.h
+        PYSIDE_INCLUDE_DIR pyside.h
         PATH_SUFFIXES PySide6
         PATHS ${PYSIDE6_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include
     )
@@ -110,9 +109,9 @@ if(PYSIDE6_FOUND)
     )
 
     find_path(
-        PYSIDE_TYPESYSTEMS
-        typesystem_core.xml
-        PATHS ${PYSIDE6_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide6/typesystems /usr/share/PySide6/typesystems
+        PYSIDE_TYPESYSTEMS typesystem_core.xml
+        PATHS ${PYSIDE6_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide6/typesystems
+              /usr/share/PySide6/typesystems
         NO_DEFAULT_PATH
     )
 endif()
