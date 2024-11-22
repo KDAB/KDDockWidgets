@@ -18,7 +18,6 @@ endif()
 
 message(STATUS "PYTHON INSTALL PREFIX ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}")
 
-
 if(WIN32)
     set(PATH_SEP "\;")
 else()
