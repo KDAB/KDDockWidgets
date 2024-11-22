@@ -8,12 +8,10 @@ on:
   push:
     branches:
       - 2.1
-      - 2.0
       - main
   pull_request:
     branches:
       - 2.1
-      - 2.0
       - main
 
 jobs:
