@@ -8,12 +8,10 @@ on:
   push:
     branches:
       - 2.1
-      - 2.0
       - main
   pull_request:
     branches:
       - 2.1
-      - 2.0
       - main
 
 jobs:
@@ -25,7 +23,7 @@ jobs:
         os:
           - ubuntu-22.04
           - windows-2022
-          - macos-12
+          - macos-14
     steps:
       - name: Install Qt 5.15 with options and default aqtversion
         uses: jurplel/install-qt-action@v3
