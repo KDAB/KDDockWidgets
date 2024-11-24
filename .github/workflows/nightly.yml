@@ -20,7 +20,7 @@ jobs:
           - ubuntu-22.04
           - windows-2022
           - windows-2019
-          - macos-14
+          - macos-13
 
         preset:
           - name: ci-release-static-qt5

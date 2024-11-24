@@ -23,7 +23,7 @@ jobs:
         os:
           - ubuntu-22.04
           - windows-2022
-          - macos-14
+          - macos-13
     steps:
       - name: Install Qt 5.15 with options and default aqtversion
         uses: jurplel/install-qt-action@v3
