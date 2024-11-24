@@ -6,8 +6,6 @@
   - Add KDDockWidgets::controllersToViews (#526)
   - Add Config::setTabsAtBottom()
   - Fix case where persistent central widget would detach when dragged
-
-* v2.1.1 (unreleased)
   - Fix windows having transparency when drop indicators inhibited
   - Fix case where persistent central widget would detach when dragged
 
