@@ -54,7 +54,7 @@ public:
     Core::Item *rootItem() const;
 
     /// Set a callback if you want to be notified of a QQuickView being created
-    static void setQuickWindowCreationCallback(QuickWindowCreationCallback);
+    static void setQuickWindowCreationCallback(const QuickWindowCreationCallback &);
 
 protected:
     void setGeometry(QRect) override;

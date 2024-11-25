@@ -286,7 +286,7 @@ void FloatingWindow::onWindowStateChanged(Qt::WindowState state)
 }
 
 /** static */
-void FloatingWindow::setQuickWindowCreationCallback(QuickWindowCreationCallback callback)
+void FloatingWindow::setQuickWindowCreationCallback(const QuickWindowCreationCallback &callback)
 {
     s_quickWindowCreationCallback = callback;
 }
