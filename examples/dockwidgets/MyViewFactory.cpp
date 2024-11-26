@@ -14,6 +14,8 @@
 
 #include <kddockwidgets/qtwidgets/views/TitleBar.h>
 #include <kddockwidgets/qtwidgets/views/Separator.h>
+#include <kddockwidgets/qtwidgets/views/Group.h>
+#include <kddockwidgets/qtcommon/View.h>
 
 #include <QApplication>
 #include <QPainter>
@@ -101,4 +103,11 @@ CustomWidgetFactory::createSeparator(KDDockWidgets::Core::Separator *controller,
                                      KDDockWidgets::Core::View *parent) const
 {
     return new MySeparator(controller, parent);
+}
+
+
+KDDockWidgets::Core::View *CustomWidgetFactory::createGroup(KDDockWidgets::Core::Group *controller, KDDockWidgets::Core::View *parent) const
+{
+    // If you want a different styling, just inherit from QtWidgets::Group() and return it here
+    return new KDDockWidgets::QtWidgets::Group(controller, KDDockWidgets::QtCommon::View_qt::asQWidget(parent));
 }

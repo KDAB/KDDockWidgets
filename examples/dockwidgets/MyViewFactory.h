@@ -23,4 +23,5 @@ public:
                                               KDDockWidgets::Core::View *parent) const override;
     KDDockWidgets::Core::View *createSeparator(KDDockWidgets::Core::Separator *,
                                                KDDockWidgets::Core::View *parent = nullptr) const override;
+    KDDockWidgets::Core::View *createGroup(KDDockWidgets::Core::Group *, KDDockWidgets::Core::View *parent) const override;
 };
