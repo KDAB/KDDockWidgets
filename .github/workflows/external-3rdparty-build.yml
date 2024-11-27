@@ -38,7 +38,7 @@ jobs:
           rm -rf src/3rdparty/kdbindings/
 
       - name: Configure
-        run: cmake -S . --preset dev6
+        run: cmake -S . --preset dev6 -DKDDockWidgets_WERROR=OFF
 
       - name: Build
         run: cmake --build ./build-dev6
