@@ -1,7 +1,7 @@
 /*
   This file is part of KDBindings.
 
-  SPDX-FileCopyrightText: 2021-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sean Harmer <sean.harmer@kdab.com>
 
   SPDX-License-Identifier: MIT
@@ -12,15 +12,27 @@
 #pragma once
 
 #include <assert.h>
-#include <functional>
 #include <memory>
-#include <optional>
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
+#include <forward_list>
 
+#ifdef emit
+static_assert(false, "KDBindings is not compatible with Qt's 'emit' keyword.\n"
+                     "To use KDBindings with Qt, please define QT_NO_EMIT to disable Qt's 'emit' keyword.\n"
+                     "If you're using CMake you can set KDBindings_QT_NO_EMIT to ON to add this.");
+
+// Undefine emit to suppress more compiler errors after the static_assert failure.
+// Otherwise the compiler would drown our custom error message with more errors.
+#undef emit
+#endif
+
+#include <kdbindings/connection_evaluator.h>
 #include <kdbindings/genindex_array.h>
 #include <kdbindings/utils.h>
+
+#include <kdbindings/KDBindingsConfig.h>
 
 /**
  * @brief The main namespace of the KDBindings library.
@@ -28,172 +40,6 @@
  * All public parts of KDBindings are members of this namespace.
  */
 namespace KDBindings {
-
-template<typename... Args>
-class Signal;
-
-namespace Private {
-//
-// This class defines a virtual interface, that the Signal this ConnectionHandle refers
-// to must implement.
-// It allows ConnectionHandle to refer to this non-template class, which then dispatches
-// to the template implementation using virtual function calls.
-// It allows ConnectionHandle to be a non-template class.
-class SignalImplBase
-{
-public:
-    SignalImplBase() = default;
-
-    virtual ~SignalImplBase() = default;
-
-    virtual void disconnect(const GenerationalIndex &id) = 0;
-    virtual bool blockConnection(const GenerationalIndex &id, bool blocked) = 0;
-    virtual bool isConnectionActive(const GenerationalIndex &id) const = 0;
-    virtual bool isConnectionBlocked(const GenerationalIndex &id) const = 0;
-};
-
-} // namespace Private
-
-/**
- * @brief A ConnectionHandle represents the connection of a Signal
- * to a slot (i.e. a function that is called when the Signal is emitted).
- *
- * It is returned from a Signal when a connection is created and used to
- * manage the connection by disconnecting, (un)blocking it and checking its state.
- *
- * To make sure a Connection to an object is disconnected correctly, consider
- * storing a ScopedConnection to its ConnectionHandle inside the object.
- **/
-class ConnectionHandle
-{
-public:
-    /**
-     * A ConnectionHandle can be default constructed.
-     * In this case the ConnectionHandle will not reference any active connection (i.e. isActive() will return false),
-     * and not belong to any Signal.
-     **/
-    ConnectionHandle() = default;
-
-    /**
-     * A ConnectionHandle can be copied.
-     **/
-    ConnectionHandle(const ConnectionHandle &) = default;
-    ConnectionHandle &operator=(const ConnectionHandle &) = default;
-
-    /**
-     * A ConnectionHandle can be moved.
-     **/
-    ConnectionHandle(ConnectionHandle &&) = default;
-    ConnectionHandle &operator=(ConnectionHandle &&) = default;
-
-    /**
-     * Disconnect the slot.
-     *
-     * When this function is called, the function that was passed to Signal::connect
-     * to create this ConnectionHandle will no longer be called when the Signal is emitted.
-     *
-     * If the ConnectionHandle is not active or the connection has already been disconnected,
-     * nothing happens.
-     *
-     * After this call, the ConnectionHandle will be inactive (i.e. isActive() returns false)
-     * and will no longer belong to any Signal (i.e. belongsTo returns false).
-     **/
-    void disconnect()
-    {
-        if (auto shared_impl = checkedLock()) {
-            shared_impl->disconnect(m_id);
-        }
-        // ConnectionHandle is no longer active;
-        m_signalImpl.reset();
-    }
-
-    /**
-     * Check whether the connection of this ConnectionHandle is active.
-     *
-     * @return true if the ConnectionHandle refers to an active Signal
-     * and the connection was not disconnected previously, false otherwise.
-     **/
-    bool isActive() const
-    {
-        return static_cast<bool>(checkedLock());
-    }
-
-    /**
-     * Sets the block state of the connection.
-     * If a connection is blocked, emitting the Signal will no longer call this
-     * connections slot, until the connection is unblocked.
-     *
-     * Behaves the same as calling Signal::blockConnection with this
-     * ConnectionHandle as argument.
-     *
-     * To temporarily block a connection, consider using an instance of ConnectionBlocker,
-     * which offers a RAII-style implementation that makes sure the connection is always
-     * returned to its original state.
-     *
-     * @param blocked The new blocked state of the connection.
-     * @return whether the connection was previously blocked.
-     * @throw std::out_of_range Throws if the connection is not active (i.e. isActive() returns false).
-     **/
-    bool block(bool blocked)
-    {
-        if (auto shared_impl = checkedLock()) {
-            return shared_impl->blockConnection(m_id, blocked);
-        }
-        throw std::out_of_range("Cannot block a non-active connection!");
-    }
-
-    /**
-     * Checks whether the connection is currently blocked.
-     *
-     * To change the blocked state of a connection, call ConnectionHandle::block.
-     *
-     * @return whether the connection is currently blocked.
-     **/
-    bool isBlocked() const
-    {
-        if (auto shared_impl = checkedLock()) {
-            return shared_impl->isConnectionBlocked(m_id);
-        }
-        throw std::out_of_range("Cannot check whether a non-active connection is blocked!");
-    }
-
-    /**
-     * Check whether this ConnectionHandle belongs to the given Signal.
-     *
-     * @return true if this ConnectionHandle refers to a connection within the given Signal
-     **/
-    template<typename... Args>
-    bool belongsTo(const Signal<Args...> &signal) const
-    {
-        auto shared_impl = m_signalImpl.lock();
-        return shared_impl && shared_impl == std::static_pointer_cast<Private::SignalImplBase>(signal.m_impl);
-    }
-
-private:
-    template<typename...>
-    friend class Signal;
-
-    std::weak_ptr<Private::SignalImplBase> m_signalImpl;
-    Private::GenerationalIndex m_id;
-
-    // private, so it is only available from Signal
-    ConnectionHandle(std::weak_ptr<Private::SignalImplBase> signalImpl, Private::GenerationalIndex id)
-        : m_signalImpl{ std::move(signalImpl) }, m_id{ std::move(id) }
-    {
-    }
-
-    // Checks that the weak_ptr can be locked and that the connection is
-    // still active
-    std::shared_ptr<Private::SignalImplBase> checkedLock() const
-    {
-        auto shared_impl = m_signalImpl.lock();
-        if (shared_impl && shared_impl->isConnectionActive(m_id)) {
-            return shared_impl;
-        }
-        return nullptr;
-    }
-};
-
 /**
  * @brief A Signal provides a mechanism for communication between objects.
  *
@@ -206,6 +52,14 @@ private:
  * a Signal when the arguments of the slot match the values the Signal emits.
  *
  * The Args type parameter pack describe which value types the Signal will emit.
+ *
+ * Deferred Connection:
+ *
+ * KDBindings::Signal supports deferred connections, enabling the decoupling of signal
+ * emission from the execution of connected slots. With deferred connections, you can
+ * connect slots to the Signal that are not immediately executed when the signal is emitted.
+ * Instead, you can evaluate these deferred connections at a later time, allowing for
+ * asynchronous or delayed execution of connected slots.
  *
  * Examples:
  * - @ref 01-simple-connection/main.cpp
@@ -242,19 +96,95 @@ class Signal
         // value can be used to disconnect the function again.
         Private::GenerationalIndex connect(std::function<void(Args...)> const &slot)
         {
-            return m_connections.insert({ slot });
+            Connection newConnection;
+            newConnection.slot = slot;
+            return m_connections.insert(std::move(newConnection));
+        }
+
+        // Establish a deferred connection between signal and slot, where ConnectionEvaluator object
+        // is used to queue all the connection to evaluate later. The returned
+        // value can be used to disconnect the slot later.
+        Private::GenerationalIndex connectDeferred(const std::shared_ptr<ConnectionEvaluator> &evaluator, std::function<void(Args...)> const &slot)
+        {
+            auto weakEvaluator = std::weak_ptr<ConnectionEvaluator>(evaluator);
+
+            auto deferredSlot = [weakEvaluator = std::move(weakEvaluator), slot](ConnectionHandle &handle, Args... args) {
+                if (auto evaluatorPtr = weakEvaluator.lock()) {
+                    auto lambda = [slot, args...]() {
+                        slot(args...);
+                    };
+                    evaluatorPtr->enqueueSlotInvocation(handle, lambda);
+                } else {
+                    throw std::runtime_error("ConnectionEvaluator is no longer alive");
+                }
+            };
+
+            Connection newConnection;
+            newConnection.m_connectionEvaluator = evaluator;
+            newConnection.slotReflective = deferredSlot;
+
+            return m_connections.insert(std::move(newConnection));
+        }
+
+        Private::GenerationalIndex connectReflective(std::function<void(ConnectionHandle &handle, Args...)> const &slot)
+        {
+            Connection newConnection;
+            newConnection.slotReflective = slot;
+
+            return m_connections.insert(std::move(newConnection));
         }
 
         // Disconnects a previously connected function
-        void disconnect(const Private::GenerationalIndex &id) override
+        //
+        // WARNING: While this function is marked with noexcept, it *may* terminate the program
+        // if it is not possible to allocate memory or if mutex locking isn't possible.
+        void disconnect(const ConnectionHandle &handle) noexcept override
         {
-            m_connections.erase(id);
+            // If the connection evaluator is still valid, remove any queued up slot invocations
+            // associated with the given handle to prevent them from being evaluated in the future.
+            auto idOpt = handle.m_id; // Retrieve the connection associated with this id
+
+            // Proceed only if the id is valid
+            if (idOpt.has_value()) {
+                auto id = idOpt.value();
+
+                // Retrieve the connection associated with this id
+                auto connection = m_connections.get(id);
+                if (connection && m_isEmitting) {
+                    // We are currently still emitting the signal, so we need to defer the actual
+                    // disconnect until the emit is done.
+                    connection->toBeDisconnected = true;
+                    m_disconnectedDuringEmit = true;
+                    return;
+                }
+
+                if (connection && connection->m_connectionEvaluator.lock()) {
+                    if (auto evaluatorPtr = connection->m_connectionEvaluator.lock()) {
+                        evaluatorPtr->dequeueSlotInvocation(handle);
+                    }
+                }
+
+                // Note: This function may throw if we're out of memory.
+                // As `disconnect` is marked as `noexcept`, this will terminate the program.
+                m_connections.erase(id);
+            }
         }
 
         // Disconnects all previously connected functions
-        void disconnectAll()
+        //
+        // WARNING: While this function is marked with noexcept, it *may* terminate the program
+        // if it is not possible to allocate memory or if mutex locking isn't possible.
+        void disconnectAll() noexcept
         {
-            m_connections.clear();
+            const auto numEntries = m_connections.entriesSize();
+
+            const auto sharedThis = shared_from_this();
+            for (auto i = decltype(numEntries){ 0 }; i < numEntries; ++i) {
+                const auto indexOpt = m_connections.indexAtEntry(i);
+                if (sharedThis && indexOpt) {
+                    disconnect(ConnectionHandle(sharedThis, *indexOpt));
+                }
+            }
         }
 
         bool blockConnection(const Private::GenerationalIndex &id, bool blocked) override
@@ -269,7 +199,7 @@ class Signal
             }
         }
 
-        bool isConnectionActive(const Private::GenerationalIndex &id) const override
+        bool isConnectionActive(const Private::GenerationalIndex &id) const noexcept override
         {
             return m_connections.get(id);
         }
@@ -284,31 +214,83 @@ class Signal
             }
         }
 
-        // Calls all connected functions
-        void emit(Args... p) const
+        void emit(Args... p)
         {
+            if (m_isEmitting) {
+                throw std::runtime_error("Signal is already emitting, nested emits are not supported!");
+            }
+            m_isEmitting = true;
+
             const auto numEntries = m_connections.entriesSize();
 
-            // This loop can tolerate signal handles being disconnected inside a slot,
-            // but adding new connections to a signal inside a slot will still be undefined behaviour
+            // This loop can *not* tolerate new connections being added to the signal inside a slot
+            // Doing so will be undefined behavior
             for (auto i = decltype(numEntries){ 0 }; i < numEntries; ++i) {
                 const auto index = m_connections.indexAtEntry(i);
 
                 if (index) {
                     const auto con = m_connections.get(*index);
 
-                    if (!con->blocked)
-                        con->slot(p...);
+                    if (!con->blocked) {
+                        if (con->slotReflective) {
+                            if (auto sharedThis = shared_from_this(); sharedThis) {
+                                ConnectionHandle handle(sharedThis, *index);
+                                con->slotReflective(handle, p...);
+                            }
+                        } else if (con->slot) {
+                            con->slot(p...);
+                        }
+                    }
+                }
+            }
+            m_isEmitting = false;
+
+            if (m_disconnectedDuringEmit) {
+                m_disconnectedDuringEmit = false;
+
+                // Because m_connections is using a GenerationIndexArray, this loop can tolerate
+                // deletions inside the loop. So iterating over the array and deleting entries from it
+                // should not lead to undefined behavior.
+                for (auto i = decltype(numEntries){ 0 }; i < numEntries; ++i) {
+                    const auto index = m_connections.indexAtEntry(i);
+
+                    if (index.has_value()) {
+                        const auto con = m_connections.get(index.value());
+                        if (con->toBeDisconnected) {
+                            disconnect(ConnectionHandle(shared_from_this(), index));
+                        }
+                    }
                 }
             }
         }
 
     private:
+        friend class Signal;
         struct Connection {
             std::function<void(Args...)> slot;
+            std::function<void(ConnectionHandle &, Args...)> slotReflective;
+            std::weak_ptr<ConnectionEvaluator> m_connectionEvaluator;
             bool blocked{ false };
+            // When we disconnect while the signal is still emitting, we need to defer the actual disconnection
+            // until the emit is done. This flag is set to true when the connection should be disconnected.
+            bool toBeDisconnected{ false };
         };
+
         mutable Private::GenerationalIndexArray<Connection> m_connections;
+
+        // If a reflective slot disconnects itself, we need to make sure to not deconstruct the std::function
+        // while it is still running.
+        // Therefore, defer all slot disconnections until the emit is done.
+        //
+        // Previously, we stored the ConnectionHandles that were to be disconnected in a list.
+        // However, that would mean that disconnecting cannot be noexcept, as it may need to allocate memory in that list.
+        // We can fix this by storing this information within each connection itself (the toBeDisconnected flag).
+        // Because of the memory layout of the `struct Connection`, this shouldn't even use any more memory.
+        //
+        // The only downside is that we need to iterate over all connections to find the ones that need to be disconnected.
+        // This is helped by using the m_disconnedDuringEmit flag to avoid unnecessary iterations.
+        bool m_isEmitting = false;
+        bool m_disconnectedDuringEmit = false;
     };
 
 public:
@@ -330,8 +312,11 @@ public:
      *
      * Therefore, all active ConnectionHandles that belonged to this Signal
      * will no longer be active (i.e. ConnectionHandle::isActive will return false).
+     *
+     * @warning While this function isn't marked as throwing, it *may* throw and terminate the program
+     * if it is not possible to allocate memory or if mutex locking isn't possible.
      */
-    ~Signal()
+    ~Signal() noexcept
     {
         disconnectAll();
     }
@@ -344,12 +329,88 @@ public:
      *
      * @return An instance of ConnectionHandle, that can be used to disconnect
      * or temporarily block the connection.
+     *
+     * @warning Connecting functions to a signal that throw an exception when called is currently undefined behavior.
+     * All connected functions should handle their own exceptions.
+     * For backwards-compatibility, the slot function is not required to be noexcept.
      */
-    ConnectionHandle connect(std::function<void(Args...)> const &slot)
+    KDBINDINGS_WARN_UNUSED ConnectionHandle connect(std::function<void(Args...)> const &slot)
     {
         ensureImpl();
 
         return ConnectionHandle{ m_impl, m_impl->connect(slot) };
+    }
+
+    /**
+     * Establishes a connection between a signal and a slot, allowing the slot to access and manage its own connection handle.
+     * This method is particularly useful for creating connections that can autonomously manage themselves, such as disconnecting
+     * after being triggered a certain number of times or under specific conditions. It wraps the given slot function
+     * to include a reference to the ConnectionHandle as the first parameter, enabling the slot to interact with
+     * its own connection state directly.
+     *
+     * @param slot A std::function that takes a ConnectionHandle reference followed by the signal's parameter types.
+     * @return A ConnectionHandle to the newly established connection, allowing for advanced connection management.
+     *
+     * @warning Connecting functions to a signal that throw an exception when called is currently undefined behavior.
+     * All connected functions should handle their own exceptions.
+     * For backwards-compatibility, the slot function is not required to be noexcept.
+     */
+    KDBINDINGS_WARN_UNUSED ConnectionHandle connectReflective(std::function<void(ConnectionHandle &, Args...)> const &slot)
+    {
+        ensureImpl();
+
+        return ConnectionHandle{ m_impl, m_impl->connectReflective(slot) };
+    }
+
+    /**
+     * Establishes a single-shot connection between a signal and a slot and when the signal is emitted, the connection will be
+     * disconnected and the slot will be called. Note that the slot will be disconnected before it is called. If the slot
+     * triggers another signal emission of the same signal, the slot will not be called again.
+     *
+     * @param slot A std::function that takes the signal's parameter types.
+     * @return An instance of ConnectionHandle, that can be used to disconnect.
+     *
+     * @warning Connecting functions to a signal that throw an exception when called is currently undefined behavior.
+     * All connected functions should handle their own exceptions.
+     * For backwards-compatibility, the slot function is not required to be noexcept.
+     */
+    KDBINDINGS_WARN_UNUSED ConnectionHandle connectSingleShot(std::function<void(Args...)> const &slot)
+    {
+        return connectReflective([slot](ConnectionHandle &handle, Args... args) {
+            handle.disconnect();
+            slot(args...);
+        });
+    }
+
+    /**
+     * @brief Establishes a deferred connection between the provided evaluator and slot.
+     *
+     * @warning Deferred connections are experimental and may be removed or changed in the future.
+     *
+     * This function allows connecting an evaluator and a slot such that the slot's execution
+     * is deferred until the conditions evaluated by the `evaluator` are met.
+     *
+     * First argument to the function is reference to a shared pointer to the ConnectionEvaluator responsible for determining
+     * when the slot should be executed.
+     *
+     * @return An instance of ConnectionHandle, that can be used to disconnect
+     * or temporarily block the connection.
+     *
+     * @note
+     * The Signal class itself is not thread-safe. While the ConnectionEvaluator is inherently
+     * thread-safe, ensure that any concurrent access to this Signal is protected externally to maintain thread safety.
+     *
+     * @warning Connecting functions to a signal that throw an exception when called is currently undefined behavior.
+     * All connected functions should handle their own exceptions.
+     * For backwards-compatibility, the slot function is not required to be noexcept.
+     */
+    KDBINDINGS_WARN_UNUSED ConnectionHandle connectDeferred(const std::shared_ptr<ConnectionEvaluator> &evaluator, std::function<void(Args...)> const &slot)
+    {
+        ensureImpl();
+
+        ConnectionHandle handle(m_impl, {});
+        handle.setId(m_impl->connectDeferred(evaluator, slot));
+        return handle;
     }
 
     /**
@@ -381,13 +442,17 @@ public:
      * @return An instance of a Signal::ConnectionHandle that refers to this connection.
      *          Warning: When connecting a member function you must use the returned ConnectionHandle
      *          to disconnect when the object containing the slot goes out of scope!
+     *
+     * @warning Connecting functions to a signal that throw an exception when called is currently undefined behavior.
+     * All connected functions should handle their own exceptions.
+     * For backwards-compatibility, the slot function is not required to be noexcept.
      **/
     // The enable_if_t makes sure that this connect function specialization is only
     // available if we provide a function that cannot be otherwise converted to a
     // std::function<void(Args...)>, as it otherwise tries to take precedence
     // over the normal connect function.
     template<typename Func, typename... FuncArgs, typename = std::enable_if_t<std::disjunction_v<std::negation<std::is_convertible<Func, std::function<void(Args...)>>>, std::integral_constant<bool, sizeof...(FuncArgs) /*Also enable this function if we want to bind at least one argument*/>>>>
-    ConnectionHandle connect(Func &&slot, FuncArgs &&...args)
+    KDBINDINGS_WARN_UNUSED ConnectionHandle connect(Func &&slot, FuncArgs &&...args)
     {
         std::function<void(Args...)> bound = Private::bind_first(std::forward<Func>(slot), std::forward<FuncArgs>(args)...);
         return connect(bound);
@@ -404,8 +469,8 @@ public:
      */
     void disconnect(const ConnectionHandle &handle)
     {
-        if (m_impl && handle.belongsTo(*this)) {
-            m_impl->disconnect(handle.m_id);
+        if (m_impl && handle.belongsTo(*this) && handle.m_id.has_value()) {
+            m_impl->disconnect(handle);
             // TODO check if Impl is now empty and reset
         } else {
             throw std::out_of_range("Provided ConnectionHandle does not match any connection\nLikely the connection was deleted before!");
@@ -417,8 +482,11 @@ public:
      *
      * All currently active ConnectionHandles that belong to this Signal will no
      * longer be active afterwards. (i.e. ConnectionHandle::isActive will return false).
+     *
+     * @warning While this function is marked with noexcept, it *may* terminate the program
+     * if it is not possible to allocate memory or if mutex locking isn't possible.
      */
-    void disconnectAll()
+    void disconnectAll() noexcept
     {
         if (m_impl) {
             m_impl->disconnectAll();
@@ -449,8 +517,8 @@ public:
      */
     bool blockConnection(const ConnectionHandle &handle, bool blocked)
     {
-        if (m_impl && handle.belongsTo(*this)) {
-            return m_impl->blockConnection(handle.m_id, blocked);
+        if (m_impl && handle.belongsTo(*this) && handle.m_id.has_value()) {
+            return m_impl->blockConnection(*handle.m_id, blocked);
         } else {
             throw std::out_of_range("Provided ConnectionHandle does not match any connection\nLikely the connection was deleted before!");
         }
@@ -472,7 +540,11 @@ public:
             throw std::out_of_range("Provided ConnectionHandle does not match any connection\nLikely the connection was deleted before!");
         }
 
-        return m_impl->isConnectionBlocked(handle.m_id);
+        if (handle.m_id.has_value()) {
+            return m_impl->isConnectionBlocked(*handle.m_id);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -483,10 +555,15 @@ public:
      * therefore consider using (const) references as the Args to the Signal
      * wherever possible.
      *
-     * Note: Slots may disconnect themselves during an emit, however it is
-     * undefined whether a slot that is connected during the emit function
-     * of the Signal will also be called during this emit, or only at the next
-     * emit.
+     * Note: Slots may disconnect themselves during an emit, which will cause the
+     * connection to be disconnected after all slots have been called.
+     *
+     * ⚠️ *Note: Connecting a new slot to a signal while the signal is still
+     * in the emit function is undefined behavior.*
+     *
+     * ⚠️ *Note: This function is **not thread-safe** and **not reentrant**.
+     * Specifically, this means it is undefined behavior to emit a signal from
+     * a slot of that same signal.*
      */
     void emit(Args... p) const
     {
@@ -519,101 +596,6 @@ private:
     // Think of this shared_ptr more like a unique_ptr with additional weak_ptr's
     // in ConnectionHandle that can check whether the Impl object is still alive.
     mutable std::shared_ptr<Impl> m_impl;
-};
-
-/**
- * @brief A ScopedConnection is a RAII-style way to make sure a Connection is disconnected.
- *
- * When the ScopedConnections scope ends, the connection this ScopedConnection guards will be disconnected.
- *
- * Example:
- * - @ref 08-managing-connections/main.cpp
- */
-class ScopedConnection
-{
-public:
-    /**
-     * @brief A ScopedConnection can be default constructed
-     *
-     * A default constructed ScopedConnection has no connection to guard.
-     * Therefore it does nothing when it is destructed, unless a ConnectionHandle is assigned to it.
-     */
-    ScopedConnection() = default;
-
-    /** A ScopedConnection can be move constructed */
-    ScopedConnection(ScopedConnection &&) = default;
-
-    /** A ScopedConnection cannot be copied */
-    ScopedConnection(const ScopedConnection &) = delete;
-    /** A ScopedConnection cannot be copied */
-    ScopedConnection &operator=(const ScopedConnection &) = delete;
-
-    /** A ScopedConnection can be move assigned */
-    ScopedConnection &operator=(ScopedConnection &&other)
-    {
-        m_connection.disconnect();
-        m_connection = std::move(other.m_connection);
-        return *this;
-    }
-
-    /**
-     * A ScopedConnection can be constructed from a ConnectionHandle
-     */
-    ScopedConnection(ConnectionHandle &&h)
-        : m_connection(std::move(h))
-    {
-    }
-
-    /**
-     * A ScopedConnection can be assigned from a ConnectionHandle
-     */
-    ScopedConnection &operator=(ConnectionHandle &&h)
-    {
-        return *this = ScopedConnection(std::move(h));
-    }
-
-    /**
-     * @return the handle to the connection this instance is managing
-     */
-    ConnectionHandle &handle()
-    {
-        return m_connection;
-    }
-
-    /**
-     * @overload
-     */
-    const ConnectionHandle &handle() const
-    {
-        return m_connection;
-    }
-
-    /**
-     * Convenience access to the underlying ConnectionHandle using the `->` operator.
-     */
-    ConnectionHandle *operator->()
-    {
-        return &m_connection;
-    }
-
-    /**
-     * @overload
-     */
-    const ConnectionHandle *operator->() const
-    {
-        return &m_connection;
-    }
-
-    /**
-     * When a ConnectionHandle is destructed it disconnects the connection it guards.
-     */
-    ~ScopedConnection()
-    {
-        m_connection.disconnect();
-    }
-
-private:
-    ConnectionHandle m_connection;
 };
 
 /**

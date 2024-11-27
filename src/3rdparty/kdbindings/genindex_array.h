@@ -36,6 +36,11 @@ namespace Private {
 struct GenerationalIndex {
     uint32_t index = 0;
     uint32_t generation = 0;
+
+    bool operator==(const GenerationalIndex &rhs) const
+    {
+        return index == rhs.index && generation == rhs.generation;
+    }
 };
 
 class GenerationalIndexAllocator
@@ -61,7 +66,8 @@ public:
             return { index, m_entries[index].generation };
         } else {
             // check that we are still within the bounds of uint32_t
-            if (m_entries.size() + 1 >= std::numeric_limits<uint32_t>::max()) {
+            // (parentheses added to avoid Windows min/max macros)
+            if (m_entries.size() + 1 >= (std::numeric_limits<uint32_t>::max)()) {
                 throw std::length_error(std::string("Maximum number of values inside GenerationalIndexArray reached: ") + std::to_string(m_entries.size()));
             }
 
@@ -202,6 +208,6 @@ public:
     }
 };
 
-} //namespace Private
+} // namespace Private
 
 } // namespace KDBindings

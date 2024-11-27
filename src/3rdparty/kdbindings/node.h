@@ -1,7 +1,7 @@
 /*
   This file is part of KDBindings.
 
-  SPDX-FileCopyrightText: 2021-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sean Harmer <sean.harmer@kdab.com>
 
   SPDX-License-Identifier: MIT
@@ -152,7 +152,7 @@ template<typename PropertyType>
 class PropertyNode : public NodeInterface<PropertyType>
 {
 public:
-    explicit PropertyNode(Property<PropertyType> &property)
+    explicit PropertyNode(const Property<PropertyType> &property)
         : m_parent(nullptr), m_dirty(false)
     {
         setProperty(property);
@@ -184,8 +184,7 @@ public:
         return m_property->get();
     }
 
-    // This must currently take a const reference, as the "moved" signal emits a const&
-    void propertyMoved(Property<PropertyType> &property)
+    void propertyMoved(const Property<PropertyType> &property)
     {
         if (&property != m_property) {
             m_property = &property;
@@ -206,15 +205,17 @@ protected:
     const bool *dirtyVariable() const override { return &m_dirty; }
 
 private:
-    void setProperty(Property<PropertyType> &property)
+    void setProperty(const Property<PropertyType> &property)
     {
         m_property = &property;
-        m_valueChangedHandle = m_property->valueChanged().connect(&PropertyNode<PropertyType>::markDirty, this);
-        m_movedHandle = m_property->m_moved.connect(&PropertyNode<PropertyType>::propertyMoved, this);
-        m_destroyedHandle = m_property->destroyed().connect(&PropertyNode<PropertyType>::propertyDestroyed, this);
+
+        // Connect to all signals, even for const properties
+        m_valueChangedHandle = m_property->valueChanged().connect([this]() { this->markDirty(); });
+        m_movedHandle = m_property->m_moved.connect([this](const Property<PropertyType> &newProp) { this->propertyMoved(newProp); });
+        m_destroyedHandle = m_property->destroyed().connect([this]() { this->propertyDestroyed(); });
     }
 
-    Property<PropertyType> *m_property;
+    const Property<PropertyType> *m_property;
     ConnectionHandle m_movedHandle;
     ConnectionHandle m_valueChangedHandle;
     ConnectionHandle m_destroyedHandle;
