@@ -8,6 +8,7 @@
   - Fix case where persistent central widget would detach when dragged
   - Fix windows having transparency when drop indicators inhibited
   - Fix case where persistent central widget would detach when dragged
+  - Allow to build against external KDBindings
 
 * v2.1.0 (08 May 2024)
   - Added standalone layouting example using Slint
