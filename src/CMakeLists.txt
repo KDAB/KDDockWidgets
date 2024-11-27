@@ -340,7 +340,11 @@ else()
     set(DOCKS_INCLUDES_INSTALL_PATH "include/")
 endif()
 
-include(kdbindings.cmake)
+find_package(KDBindings QUIET)
+
+if(NOT TARGET KDAB::KDBindings)
+    include(kdbindings.cmake)
+endif()
 
 target_include_directories(
     kddockwidgets
@@ -522,7 +526,7 @@ if(KDDockWidgets_CODE_COVERAGE)
     target_link_libraries(kddockwidgets PUBLIC kddw_coverage_options)
 endif()
 
-target_link_libraries(kddockwidgets PRIVATE kdbindings)
+target_link_libraries(kddockwidgets PRIVATE KDAB::KDBindings)
 
 if(KDDockWidgets_HAS_SPDLOG)
     target_link_libraries(kddockwidgets PRIVATE spdlog::spdlog)
@@ -576,7 +580,7 @@ endif()
 
 if(KDDW_FRONTEND_QT)
     install(
-        TARGETS kddockwidgets kdbindings
+        TARGETS kddockwidgets
         EXPORT kddockwidgetsTargets
         RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}

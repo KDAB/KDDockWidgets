@@ -1,0 +1,47 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Build against external nlohmann and KDBindings
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-13
+    steps:
+      - name: Install Qt 6.7.2
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.7.2
+          cache: true
+
+      - name: Install Dependencies
+        run: |
+          brew install nlohmann-json
+          brew tap KDAB/tap
+          brew install KDBindings
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      # deleting 3rdparty is an easy way to make sure external worked
+      - name: Delete internal 3rdparty
+        run: |
+          rm -rf src/3rdparty/nlohmann/
+          rm -rf src/3rdparty/kdbindings/
+
+      - name: Configure
+        run: cmake -S . --preset dev6
+
+      - name: Build
+        run: cmake --build ./build-dev6
+
+      - name: Run tests on macOS
+        run: ctest --test-dir ./build-dev --verbose

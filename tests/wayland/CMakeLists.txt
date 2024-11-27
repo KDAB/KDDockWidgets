@@ -28,7 +28,7 @@ function(add_wayland_test test srcs)
     target_link_libraries(
         ${test}
         kddockwidgets
-        kdbindings
+        KDAB::KDBindings
         Wayland::Client
         Qt::WaylandClient
         KF${QT_VERSION_MAJOR}::WaylandClient

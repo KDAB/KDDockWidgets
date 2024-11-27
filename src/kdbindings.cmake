@@ -12,4 +12,5 @@
 # with -Wweak-vtables
 
 add_library(kdbindings INTERFACE)
+add_library(KDAB::KDBindings ALIAS kdbindings)
 target_include_directories(kdbindings SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/3rdparty>)
