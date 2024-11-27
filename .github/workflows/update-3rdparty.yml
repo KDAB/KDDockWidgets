@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Nightly 3rdparty update
+
+on:
+  schedule:
+  - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Install dependencies on Ubuntu
+        run: |
+          sudo apt update -qq
+          sudo apt install rsync -y
+
+      - name: Checkout KDDW
+        uses: actions/checkout@v4
+
+      - name: Checkout KDBindings
+        uses: actions/checkout@v4
+        with:
+          repository: KDAB/KDBindings
+          path: KDBindings
+          ref: main
+
+      - name: setup author
+        run: |
+          git config --global user.email "@"
+          git config --global user.name "update-3rdparty (via Github Actions)"
+
+      - name: sync
+        run: |
+          git checkout -B work/bump_kdbindings
+          rsync -av --delete --exclude sha1.txt ./KDBindings/src/kdbindings/ src/3rdparty/kdbindings/
+          rm src/3rdparty/kdbindings/CMakeLists.txt
+          git diff --quiet || \
+            cd KDBindings/ && git rev-parse HEAD > ../src/3rdparty/kdbindings/sha1.txt && cd .. && \
+            rm -rf KDBindings && \
+            git add . && \
+            git commit -m "Bump 3rdparty/kdbindings" && \
+            git push origin work/bump_kdbindings && \
+            gh pr create --title "Bump 3rdparty/kdbindings" -R KDAB/KDDockWidgets -B main -b "Bump 3rdparty/kdbindings"
+        env:
+          GH_TOKEN: ${{ github.token }}
