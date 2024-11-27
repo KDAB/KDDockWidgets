@@ -31,6 +31,7 @@ if(KDDockWidgets_HAS_SPDLOG)
 endif()
 
 find_package(nlohmann_json QUIET)
+find_package(kdbindings QUIET)
 
 # Function to link to nlohmann
 function(kddw_add_nlohmann test)
