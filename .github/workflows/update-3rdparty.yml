@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Nightly 3rdparty update
+
+on:
+  schedule:
+  - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout KDDW
+        uses: actions/checkout@v4
+
+      - name: Checkout KDBindings
+        uses: actions/checkout@v5
+        with:
+          path: KDBindings
+
+      - name: sync
+        run: |
+          pwd
+          ls
+          # rsync -av --delete
