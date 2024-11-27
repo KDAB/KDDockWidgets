@@ -1,7 +1,7 @@
 /*
   This file is part of KDBindings.
 
-  SPDX-FileCopyrightText: 2021-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sean Harmer <sean.harmer@kdab.com>
 
   SPDX-License-Identifier: MIT
@@ -108,8 +108,8 @@ struct equal_to {
 // Property can declare PropertyNode as a friend
 // class.
 namespace Private {
-    template<typename PropertyType>
-    class PropertyNode;
+template<typename PropertyType>
+class PropertyNode;
 }
 
 /**
@@ -301,6 +301,11 @@ public:
     Signal<> &destroyed() const { return m_destroyed; }
 
     /**
+     * Returns true if this Property has a binding associated with it.
+     */
+    bool hasBinding() const noexcept { return m_updater.get() != nullptr; }
+
+    /**
      * Assign a new value to this Property.
      *
      * If the new value is equal_to the existing value, the value will not be
@@ -381,7 +386,7 @@ private:
     // keep track of moved Properties.
     template<typename PropertyType>
     friend class Private::PropertyNode;
-    Signal<Property<T> &> m_moved;
+    mutable Signal<Property<T> &> m_moved;
 
     mutable Signal<> m_destroyed;
     std::unique_ptr<PropertyUpdater<T>> m_updater;

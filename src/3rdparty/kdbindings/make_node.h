@@ -1,7 +1,7 @@
 /*
   This file is part of KDBindings.
 
-  SPDX-FileCopyrightText: 2021-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sean Harmer <sean.harmer@kdab.com>
 
   SPDX-License-Identifier: MIT
@@ -25,6 +25,11 @@ struct bindable_value_type_ {
 
 template<typename T>
 struct bindable_value_type_<Property<T>> {
+    using type = T;
+};
+
+template<typename T>
+struct bindable_value_type_<const Property<T>> {
     using type = T;
 };
 
@@ -65,6 +70,12 @@ inline Node<std::decay_t<T>> makeNode(T &&value)
 
 template<typename T>
 inline Node<T> makeNode(Property<T> &property)
+{
+    return Node<T>(std::make_unique<PropertyNode<T>>(property));
+}
+
+template<typename T>
+inline Node<T> makeNode(const Property<T> &property)
 {
     return Node<T>(std::make_unique<PropertyNode<T>>(property));
 }
