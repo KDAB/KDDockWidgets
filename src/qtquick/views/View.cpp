@@ -286,7 +286,7 @@ bool View::close(QQuickItem *item)
 {
     if (auto viewqtquick = qobject_cast<View *>(item)) {
         QCloseEvent ev;
-        viewqtquick->Core::View::d->closeRequested.emit(&ev);
+        viewqtquick->Core::View::d->requestClose(&ev);
 
         if (ev.isAccepted()) {
             viewqtquick->setVisible(false);
@@ -487,7 +487,7 @@ void View::setMaximumSize(QSize sz)
     if (maxSizeHint() != sz) {
         setProperty("kddockwidgets_max_size", sz);
         updateGeometry();
-        Core::View::d->layoutInvalidated.emit();
+        Core::View::d->emitLayoutInvalidated();
     }
 }
 
@@ -805,7 +805,7 @@ void View::setMinimumSize(QSize sz)
     if (minSize() != sz) {
         setProperty("kddockwidgets_min_size", sz);
         updateGeometry();
-        Core::View::d->layoutInvalidated.emit();
+        Core::View::d->emitLayoutInvalidated();
     }
 }
 
