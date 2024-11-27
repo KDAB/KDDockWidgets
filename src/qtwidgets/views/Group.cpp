@@ -55,11 +55,11 @@ public:
                     // schedule relayout, do not interrupt.
                     QTimer::singleShot(0, m_groupWidget, [this] {
                         if (!m_groupWidget->inDtor())
-                            m_groupWidget->d->layoutInvalidated.emit();
+                            m_groupWidget->d->emitLayoutInvalidated();
                     });
                 } else {
                     // normal case
-                    m_groupWidget->d->layoutInvalidated.emit();
+                    m_groupWidget->d->emitLayoutInvalidated();
                 }
             }
         }

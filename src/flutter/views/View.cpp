@@ -172,7 +172,7 @@ void View::setMaximumSize(Size s)
     s = s.boundedTo(Core::Item::hardcodedMaximumSize);
     if (s != m_maxSize) {
         m_maxSize = s;
-        d->layoutInvalidated.emit();
+        d->emitLayoutInvalidated();
     }
 }
 
@@ -441,7 +441,7 @@ void View::setMinimumSize(Size s)
     s = s.expandedTo(Core::Item::hardcodedMinimumSize);
     if (s != m_minSize) {
         m_minSize = s;
-        d->layoutInvalidated.emit();
+        d->emitLayoutInvalidated();
     }
 }
 

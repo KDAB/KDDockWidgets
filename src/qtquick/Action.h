@@ -75,6 +75,7 @@ private:
 
     bool m_enabled = true;
     bool m_checked = false;
+    bool m_isToggling = false;
 };
 
 }

@@ -67,6 +67,8 @@ public:
     void setAboutToBeDestroyed();
     bool aboutToBeDestroyed() const;
 
+    void emitLayoutInvalidated();
+
     /// @brief Convenience. See Window::transientWindow().
     std::shared_ptr<Core::Window> transientWindow() const;
 
@@ -99,6 +101,10 @@ public:
     bool m_aboutToBeDestroyed = false;
     const QString m_id;
     const ViewType m_type;
+
+private:
+    bool m_emittingClose = false;
+    bool m_emittingLayoutInvalidated = false;
 };
 
 }

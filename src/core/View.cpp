@@ -405,7 +405,12 @@ Controller *View::Private::firstParentOfType(ViewType type) const
 
 void View::Private::requestClose(CloseEvent *e)
 {
+    if (m_emittingClose)
+        return;
+
+    m_emittingClose = true;
     closeRequested.emit(e);
+    m_emittingClose = false;
 }
 
 Rect View::Private::globalGeometry() const
@@ -500,4 +505,13 @@ bool View::deliverViewEventToFilters(Event *ev)
     }
 
     return false;
+}
+
+void View::Private::emitLayoutInvalidated()
+{
+    if (m_emittingLayoutInvalidated)
+        return;
+    m_emittingLayoutInvalidated = true;
+    layoutInvalidated.emit();
+    m_emittingLayoutInvalidated = false;
 }

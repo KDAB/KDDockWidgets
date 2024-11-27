@@ -91,7 +91,7 @@ void View<T>::setMaximumSize(QSize sz)
 {
     if (sz != QWidget::maximumSize()) {
         T::setMaximumSize(sz);
-        d->layoutInvalidated.emit();
+        d->emitLayoutInvalidated();
     }
 }
 
@@ -99,7 +99,7 @@ template<class T>
 bool View<T>::event(QEvent *e)
 {
     if (e->type() == QEvent::LayoutRequest)
-        d->layoutInvalidated.emit();
+        d->emitLayoutInvalidated();
 
     return T::event(e);
 }
@@ -115,7 +115,7 @@ void View<T>::setMinimumSize(QSize sz)
 {
     if (sz != QWidget::minimumSize()) {
         QWidget::setMinimumSize(sz);
-        d->layoutInvalidated.emit();
+        d->emitLayoutInvalidated();
     }
 }
 

@@ -14,6 +14,8 @@
 #include "core/Logging_p.h"
 #include "core/DockWidget.h"
 
+#include <QScopedValueRollback>
+
 using namespace KDDockWidgets::QtQuick;
 
 Action::Action(Core::DockWidget *dw, const char *debugName)
@@ -42,8 +44,10 @@ bool Action::blockSignals(bool b)
 
 void Action::setChecked(bool checked)
 {
-    if (m_checked == checked)
+    if (m_checked == checked || m_isToggling)
         return;
+
+    QScopedValueRollback<bool> toggling(m_isToggling, true);
 
     m_checked = checked;
 

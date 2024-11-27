@@ -85,7 +85,7 @@ void Group::init()
     });
 
     connect(this, &View::geometryUpdated, this,
-            [this] { Core::View::d->layoutInvalidated.emit(); });
+            [this] { Core::View::d->emitLayoutInvalidated(); });
 
     d->isMDIConnection = m_group->dptr()->isMDIChanged.connect([this] { Q_EMIT isMDIChanged(); });
 
@@ -128,7 +128,7 @@ void Group::updateConstraints()
     setProperty("kddockwidgets_min_size", minSize());
     setProperty("kddockwidgets_max_size", maxSizeHint());
 
-    Core::View::d->layoutInvalidated.emit();
+    Core::View::d->emitLayoutInvalidated();
 }
 
 void Group::removeDockWidget(Core::DockWidget *dw)
