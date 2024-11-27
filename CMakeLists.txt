@@ -108,7 +108,7 @@ option(KDDockWidgets_TESTS "Build the tests" OFF)
 option(KDDockWidgets_WAYLAND_TESTS "Build the wayland tests" OFF)
 option(KDDockWidgets_EXAMPLES "Build the examples" ON)
 option(KDDockWidgets_DOCS "Build the API documentation" OFF)
-option(KDDockWidgets_WERROR "Use -Werror (will be true for developer-mode unconditionally)" OFF)
+option(KDDockWidgets_WERROR "Use -Werror (will be true for developer-mode unconditionally)" ${KDDockWidgets_DEVELOPER_MODE})
 option(KDDockWidgets_X11EXTRAS
        "Link against QtX11Extras to detect if the compositor supports transparency. Not applicable on non-Linux or Qt6."
        ON
@@ -326,7 +326,6 @@ endif()
 # Always build the test harness in developer-mode
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDockWidgets_TESTS ON)
-    set(KDDockWidgets_WERROR ON)
     include(ECMEnableSanitizers)
 
     # Enable assert() in developer mode, regardless of debug vs release
