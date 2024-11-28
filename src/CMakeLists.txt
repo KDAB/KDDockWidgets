@@ -340,12 +340,6 @@ else()
     set(DOCKS_INCLUDES_INSTALL_PATH "include/")
 endif()
 
-find_package(KDBindings QUIET)
-
-if(NOT TARGET KDAB::KDBindings)
-    include(kdbindings.cmake)
-endif()
-
 target_include_directories(
     kddockwidgets
     PUBLIC $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
