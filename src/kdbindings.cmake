@@ -11,6 +11,6 @@
 # Use a separate target for our kdbindings/signal.h header as it doesn't compile
 # with -Wweak-vtables
 
-add_library(kdbindings INTERFACE)
-add_library(KDAB::KDBindings ALIAS kdbindings)
-target_include_directories(kdbindings SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/3rdparty>)
+add_library(KDBindings INTERFACE)
+add_library(KDAB::KDBindings ALIAS KDBindings)
+target_include_directories(KDBindings SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/3rdparty>)
