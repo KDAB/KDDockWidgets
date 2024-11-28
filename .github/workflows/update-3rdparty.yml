@@ -45,6 +45,7 @@ jobs:
         run: |
           git checkout -B work/bump_kdbindings
           rsync -av --delete --exclude sha1.txt ./KDBindings/src/kdbindings/ src/3rdparty/kdbindings/
+          rm src/3rdparty/kdbindings/CMakeLists.txt
           git diff --quiet || \
             (cd KDBindings/ && git rev-parse HEAD) > src/3rdparty/kdbindings/sha1.txt && \
             rm -rf KDBindings && \
