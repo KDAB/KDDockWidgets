@@ -6,7 +6,7 @@ name: Nightly 3rdparty update
 
 on:
   schedule:
-  - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -29,16 +29,22 @@ jobs:
           path: KDBindings
           ref: main
 
+      - name: Checkout ci-release-tools
+        uses: actions/checkout@v4
+        with:
+          repository: KDABLabs/ci-release-tools
+          path: ci-release-tools
+          ref: main
+
       - name: setup author
         run: |
           git config --global user.email "@"
           git config --global user.name "update-3rdparty (via Github Actions)"
 
-      - name: sync
+      - name: sync KDBindings
         run: |
           git checkout -B work/bump_kdbindings
           rsync -av --delete --exclude sha1.txt ./KDBindings/src/kdbindings/ src/3rdparty/kdbindings/
-          rm src/3rdparty/kdbindings/CMakeLists.txt
           git diff --quiet || \
             cd KDBindings/ && git rev-parse HEAD > ../src/3rdparty/kdbindings/sha1.txt && cd .. && \
             rm -rf KDBindings && \
@@ -46,5 +52,22 @@ jobs:
             git commit -m "Bump 3rdparty/kdbindings" && \
             git push origin work/bump_kdbindings && \
             gh pr create --title "Bump 3rdparty/kdbindings" -R KDAB/KDDockWidgets -B main -b "Bump 3rdparty/kdbindings"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: cleanup
+        run: rm -rf KDBindingss
+
+      - name: sync nlohmann
+        run: |
+          LATEST_NLOHMANN=`./ci-release-tools/src/gh_utils.py --get-latest-release=nlohmann/json`
+          wget https://github.com/nlohmann/json/releases/download/${LATEST_NLOHMANN}/json.hpp -O src/3rdparty/nlohmann/nlohmann/json.hpp
+          echo $LATEST_NLOHMANN > src/3rdparty/nlohmann/nlohmann/sha1.txt
+          rm -rf ci-release-tools
+          git diff --quiet src/3rdparty/nlohmann/ || \
+            git add src/3rdparty/nlohmann/ && \
+            git commit -m "Bump 3rdparty/nlohmann" && \
+            git push origin work/bump_nlohmann && \
+            gh pr create --title "Bump 3rdparty/nlohmann" -R KDAB/KDDockWidgets -B main -b "Bump 3rdparty/nlohmann"
         env:
           GH_TOKEN: ${{ github.token }}
