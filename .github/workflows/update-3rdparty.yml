@@ -43,33 +43,30 @@ jobs:
 
       - name: sync KDBindings
         run: |
-          git checkout -B work/bump_kdbindings
           rsync -av --delete --exclude sha1.txt ./KDBindings/src/kdbindings/ src/3rdparty/kdbindings/
           rm src/3rdparty/kdbindings/CMakeLists.txt
           git diff --quiet || \
             (cd KDBindings/ && git rev-parse HEAD) > src/3rdparty/kdbindings/sha1.txt && \
-            rm -rf KDBindings && \
-            git add . && \
+            NEW_BRANCH_NAME=work/bump_kdbindings_`cat src/3rdparty/kdbindings/sha1.txt` && \
+            git checkout -B ${NEW_BRANCH_NAME} && \
+            git add src/3rdparty/kdbindings/ && \
             git commit -m "Bump 3rdparty/kdbindings" && \
-            git push origin work/bump_kdbindings && \
+            git push origin ${NEW_BRANCH_NAME} && \
             gh pr create --title "Bump 3rdparty/kdbindings" -R KDAB/KDDockWidgets -B main -b "Bump 3rdparty/kdbindings"
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: cleanup
-        run: rm -rf KDBindings
-
       - name: sync nlohmann
         run: |
           LATEST_NLOHMANN=`./ci-release-tools/src/gh_utils.py --get-latest-release=nlohmann/json`
+          NEW_BRANCH_NAME=work/bump_nlohmann_${LATEST_NLOHMANN}
           wget https://github.com/nlohmann/json/releases/download/${LATEST_NLOHMANN}/json.hpp -O src/3rdparty/nlohmann/nlohmann/json.hpp
           echo $LATEST_NLOHMANN > src/3rdparty/nlohmann/nlohmann/sha1.txt
-          rm -rf ci-release-tools
           git diff --quiet src/3rdparty/nlohmann/ || \
-            git checkout -B work/bump_nlohmann && \
+            git checkout -B ${NEW_BRANCH_NAME} && \
             git add src/3rdparty/nlohmann/ && \
             git commit -m "Bump 3rdparty/nlohmann" && \
-            git push origin work/bump_nlohmann && \
+            git push origin ${NEW_BRANCH_NAME} && \
             gh pr create --title "Bump 3rdparty/nlohmann" -R KDAB/KDDockWidgets -B main -b "Bump 3rdparty/nlohmann"
         env:
           GH_TOKEN: ${{ github.token }}
