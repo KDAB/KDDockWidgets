@@ -512,6 +512,11 @@ endif()
 # workaround for CMAKE_CURRENT_FUNCTION_LIST_DIR below CMake 3.17
 set(KKDockWidgets_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
+find_package(KDBindings QUIET)
+if(NOT TARGET KDAB::KDBindings)
+    include(src/kdbindings.cmake)
+endif()
+
 if(KDDockWidgets_TESTS)
     enable_testing()
 endif()
