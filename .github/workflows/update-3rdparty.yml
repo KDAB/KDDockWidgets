@@ -66,6 +66,7 @@ jobs:
           echo $LATEST_NLOHMANN > src/3rdparty/nlohmann/nlohmann/sha1.txt
           rm -rf ci-release-tools
           git diff --quiet src/3rdparty/nlohmann/ || \
+            git checkout -B work/bump_nlohmann
             git add src/3rdparty/nlohmann/ && \
             git commit -m "Bump 3rdparty/nlohmann" && \
             git push origin work/bump_nlohmann && \
