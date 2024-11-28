@@ -46,7 +46,7 @@ jobs:
           git checkout -B work/bump_kdbindings
           rsync -av --delete --exclude sha1.txt ./KDBindings/src/kdbindings/ src/3rdparty/kdbindings/
           git diff --quiet || \
-            cd KDBindings/ && git rev-parse HEAD > ../src/3rdparty/kdbindings/sha1.txt && cd .. && \
+            (cd KDBindings/ && git rev-parse HEAD) > src/3rdparty/kdbindings/sha1.txt && \
             rm -rf KDBindings && \
             git add . && \
             git commit -m "Bump 3rdparty/kdbindings" && \
@@ -56,7 +56,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
       - name: cleanup
-        run: rm -rf KDBindingss
+        run: rm -rf KDBindings
 
       - name: sync nlohmann
         run: |
