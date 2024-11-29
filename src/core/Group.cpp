@@ -49,8 +49,6 @@
 
 #include <utility>
 
-#define MARGIN_THRESHOLD 100
-
 static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
