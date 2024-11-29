@@ -26,8 +26,10 @@
 #include <QtX11Extras/QX11Info>
 #endif
 
-#define INDICATOR_WIDTH 40
-#define OUTTER_INDICATOR_MARGIN 10
+enum {
+    INDICATOR_WIDTH = 40,
+    OUTTER_INDICATOR_MARGIN = 10
+};
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;

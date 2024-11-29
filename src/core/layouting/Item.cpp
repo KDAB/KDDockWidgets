@@ -30,7 +30,9 @@
 #include <QTimer>
 #endif
 
-#define LAYOUT_DUMP_INDENT 6
+enum {
+    LAYOUT_DUMP_INDENT = 6
+};
 
 #ifdef Q_CC_MSVC
 #pragma warning(push)
