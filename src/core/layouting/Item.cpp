@@ -59,17 +59,17 @@ Size Core::Item::hardcodedMaximumSize = Size(16777215, 16777215);
 bool Core::ItemBoxContainer::s_inhibitSimplify = false;
 LayoutingSeparator *LayoutingSeparator::s_separatorBeingDragged = nullptr;
 
-inline bool locationIsVertical(Location loc)
+static bool locationIsVertical(Location loc)
 {
     return loc == Location_OnTop || loc == Location_OnBottom;
 }
 
-inline bool locationIsSide1(Location loc)
+static bool locationIsSide1(Location loc)
 {
     return loc == Location_OnLeft || loc == Location_OnTop;
 }
 
-inline Qt::Orientation orientationForLocation(Location loc)
+static Qt::Orientation orientationForLocation(Location loc)
 {
     switch (loc) {
     case Location_OnLeft:
@@ -84,12 +84,12 @@ inline Qt::Orientation orientationForLocation(Location loc)
     return Qt::Vertical;
 }
 
-inline Qt::Orientation oppositeOrientation(Qt::Orientation o)
+static Qt::Orientation oppositeOrientation(Qt::Orientation o)
 {
     return o == Qt::Vertical ? Qt::Horizontal : Qt::Vertical;
 }
 
-inline Rect adjustedRect(Rect r, Qt::Orientation o, int p1, int p2)
+static Rect adjustedRect(Rect r, Qt::Orientation o, int p1, int p2)
 {
     if (o == Qt::Vertical) {
         r.adjust(0, p1, 0, p2);
@@ -118,7 +118,7 @@ struct LengthOnSide
 };
 
 
-NeighbourSqueezeStrategy defaultNeighbourSqueezeStrategy()
+static NeighbourSqueezeStrategy defaultNeighbourSqueezeStrategy()
 {
     return InitialOption::s_defaultNeighbourSqueezeStrategy;
 }

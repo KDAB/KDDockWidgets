@@ -23,7 +23,7 @@ Window::~Window()
 {
 }
 
-inline Core::View *topMostKDDWView(QQuickItem *parent)
+static Core::View *topMostKDDWView(QQuickItem *parent)
 {
     if (!parent)
         return {};

@@ -35,7 +35,7 @@ using namespace KDDockWidgets::QtWidgets;
 
 namespace KDDockWidgets {
 
-inline bool windowManagerHasTranslucency()
+static bool windowManagerHasTranslucency()
 {
     if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY")
         || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))

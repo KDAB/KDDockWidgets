@@ -23,7 +23,7 @@ using namespace KDDockWidgets::QtWidgets;
 
 Window::~Window() = default;
 
-inline QWindow *windowForWidget(QWidget *topLevel)
+static QWindow *windowForWidget(QWidget *topLevel)
 {
     if (!topLevel->windowHandle())
         topLevel->winId();
