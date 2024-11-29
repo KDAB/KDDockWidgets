@@ -828,13 +828,6 @@ bool Item::checkSanity()
             return false;
         }
 
-#if 0 // if guest is explicitly hidden we're not hiding the item yet. And probably won't
-        if (!m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
-
-            KDDW_ERROR("Guest widget isn't visible {}", this);
-            return false;
-        }
-#endif
         // Reminder: m_guest->geometry() is in the coordspace of the host widget (DropArea)
         // while Item::m_sizingInfo.geometry is in the coordspace of the parent container
 
