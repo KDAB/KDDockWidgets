@@ -30,7 +30,7 @@ Controller::Controller(ViewType type, View *view)
 
 Controller::~Controller()
 {
-    d->aboutToBeDeleted.emit();
+    safeEmitSignal(d->aboutToBeDeleted);
 
     m_inDtor = true;
     if (d->m_view && !d->m_view->inDtor())

@@ -79,7 +79,7 @@ DockWidget::~DockWidget()
     d->m_windowActivatedConnection->disconnect();
     d->m_windowDeactivatedConnection->disconnect();
 
-    d->aboutToDelete.emit(this);
+    safeEmitSignal(d->aboutToDelete, this);
     DockRegistry::self()->unregisterDockWidget(this);
     delete d;
 }

@@ -58,7 +58,7 @@ View::View(Controller *controller, ViewType type)
 View::~View()
 {
     m_inDtor = true;
-    d->beingDestroyed.emit();
+    safeEmitSignal(d->beingDestroyed);
 
     if (!d->freed() && !View::is(ViewType::ViewWrapper) && !View::is(ViewType::DropAreaIndicatorOverlay)) {
         // Views should be deleted via View::free()!
