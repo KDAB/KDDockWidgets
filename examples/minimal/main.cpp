@@ -1,87 +1,114 @@
-/*
-  This file is part of KDDockWidgets.
-
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
-
-  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
-
-  Contact KDAB at <info@kdab.com> for commercial licensing options.
-*/
-
-#include "MyWidget.h"
-
 #include <kddockwidgets/MainWindow.h>
 #include <kddockwidgets/DockWidget.h>
 
+#include "kddockwidgets/Config.h"
+#include <kddockwidgets/LayoutSaver.h>
+
 #include <QStyleFactory>
 #include <QApplication>
-
-// clazy:excludeall=qstring-allocations
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMainWindow>
 
 using namespace KDDockWidgets;
 
+struct SuperDock
+{
+    QtWidgets::DockWidget *dockwidget;
+    QtWidgets::MainWindow *mainwindow;
+};
+
+QtWidgets::DockWidget *create_sub_dockwidget(int number, QString label, QColor color)
+{
+    auto set_color = [](QLabel *label, QColor color) {
+        auto pal = label->palette();
+        pal.setColor(QPalette::ColorRole::Window, color);
+        label->setPalette(pal);
+        label->setAutoFillBackground(true);
+    };
+
+    auto subdock = new QtWidgets::DockWidget(QStringLiteral("SubDock-%2 (%1)").arg(number).arg(label));
+    subdock->setAffinityName(QStringLiteral("MainWindow%1").arg(number));
+    auto subwidget = new QLabel(QStringLiteral("subwidget-%1 (%2)").arg(number).arg(label));
+    subwidget->setAlignment(Qt::AlignCenter);
+    set_color(subwidget, color);
+    subdock->setWidget(subwidget);
+    return subdock;
+}
+
+SuperDock create_super_dock(int number)
+{
+    auto mw = new QtWidgets::MainWindow(QStringLiteral("MainWindow%1").arg(number));
+    mw->setAffinities({ QStringLiteral("MainWindow%1").arg(number) });
+    mw->setWindowTitle(QStringLiteral("Main Window %1").arg(number));
+
+    auto container = new QWidget();
+    auto layout = new QVBoxLayout(container);
+    auto label = new QLabel(QStringLiteral("Main Window %1").arg(number));
+    label->setAlignment(Qt::AlignBottom);
+    layout->addWidget(label);
+    layout->addWidget(mw);
+
+    auto superdock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("SuperDock-%1").arg(number));
+    superdock->setAttribute(Qt::WA_DeleteOnClose);
+    superdock->setWidget(container);
+    return { superdock, mw };
+}
+
 int main(int argc, char **argv)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-#endif
     QApplication app(argc, argv);
-    app.setOrganizationName(QStringLiteral("KDAB"));
-    app.setApplicationName(QStringLiteral("Test app"));
 
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 
-    // Fusion looks better in general, but feel free to change
-    qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
+    // auto &config = Config::self();
 
-    // # 1. Create our main window
+    // Create application main window
+    QtWidgets::MainWindow appMainWindow(QStringLiteral("Application MainWindow"));
+    appMainWindow.setWindowTitle("Application Main Window");
+    appMainWindow.resize(600, 200);
+    appMainWindow.show();
 
-    KDDockWidgets::QtWidgets::MainWindow mainWindow(QStringLiteral("MyMainWindow"));
-    mainWindow.setWindowTitle("Main Window");
-    mainWindow.resize(1200, 1200);
-    mainWindow.show();
+    auto menu = new QMenu(QStringLiteral("File"));
+    auto menubar = appMainWindow.menuBar();
+    menubar->addMenu(menu);
 
-    // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
-    auto widget1 = new MyWidget();
-    dock1->setWidget(widget1);
+    auto saveLayoutAction = menu->addAction("Save layout");
+    QObject::connect(saveLayoutAction, &QAction::triggered, [] {
+        KDDockWidgets::LayoutSaver saver;
+        const bool result = saver.saveToFile(QStringLiteral("mylayout.json"));
+        qDebug() << "Saving layout to disk. Result=" << result;
+    });
+    auto restoreLayoutAction = menu->addAction("Restore layout");
+    QObject::connect(restoreLayoutAction, &QAction::triggered, [] {
+        KDDockWidgets::RestoreOptions options = KDDockWidgets::RestoreOption_None;
+        KDDockWidgets::LayoutSaver saver(options);
+        saver.restoreFromFile(QStringLiteral("mylayout.json"));
+    });
 
-    auto dock2 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock2"));
-    auto widget2 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock2->setWidget(widget2);
+    /* Setup the specific layout*/
 
-    auto dock3 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock3"));
-    auto widget3 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock3->setWidget(widget3);
+    // Super-dock 1 with one red sub-dock
+    auto super_dock_1 = create_super_dock(1);
+    auto sub_dock_a_1 = create_sub_dockwidget(1, "A", Qt::red);
+    appMainWindow.addDockWidget(super_dock_1.dockwidget, KDDockWidgets::Location_OnRight);
+    super_dock_1.mainwindow->addDockWidget(sub_dock_a_1, KDDockWidgets::Location_OnRight);
 
-    auto dock4 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock4"));
-    auto widget4 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock4->setWidget(widget4);
+    // Super-dock 2 with one blue sub-dock
+    auto super_dock_2 = create_super_dock(2);
+    auto sub_dock_b_2 = create_sub_dockwidget(2, "B", Qt::blue);
+    appMainWindow.addDockWidget(super_dock_2.dockwidget, KDDockWidgets::Location_OnRight);
+    super_dock_2.mainwindow->addDockWidget(sub_dock_b_2, KDDockWidgets::Location_OnRight);
 
-    auto dock5 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock5"));
-    auto widget5 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock5->setWidget(widget5);
-
-    // 3. Add them to the main window
-    mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnTop);
-
-    // 4. Add dock3 to the right of dock2
-    mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
-
-    // 5. dock4 is docked at the bottom, with 200px height
-    const QSize preferredSize(QSize(/*ignored*/ 0, 200));
-    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
-
-
-    // 5. dock5 will be its own top level (floating window)
-    dock5->open();
+    /* Do the problematic actions for case 1 (visibility) */
+    if (0) {
+        super_dock_1.dockwidget->addDockWidgetAsTab(super_dock_2.dockwidget);
+        super_dock_1.dockwidget->setAsCurrentTab();
+        saveLayoutAction->trigger();
+        restoreLayoutAction->trigger();
+    }
 
     return app.exec();
 }
