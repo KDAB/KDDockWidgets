@@ -38,7 +38,7 @@ jobs:
           - os: ubuntu-22.04
             preset:
               name: ci-clang-tidy-qt6
-              qt_version: "5.15"
+              qt_version: "6.3.*"
 
           - os: ubuntu-22.04
             preset:
