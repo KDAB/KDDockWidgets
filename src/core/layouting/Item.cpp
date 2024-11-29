@@ -3222,7 +3222,7 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
                 const int available = availabilities.at(i);
                 if (available == 0)
                     continue;
-                const int took = std::min(missing, std::min(toTake, available));
+                const int took = std::min({ missing, toTake, available });
                 availabilities[i] -= took;
                 missing -= took;
                 squeezes[i] += took;
