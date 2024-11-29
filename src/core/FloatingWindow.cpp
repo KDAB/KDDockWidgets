@@ -133,7 +133,7 @@ static MainWindow *hackFindParentHarder(Core::Group *group, MainWindow *candidat
     return mainWindows.first();
 }
 
-MainWindow *actualParent(MainWindow *candidate)
+static MainWindow *actualParent(MainWindow *candidate)
 {
     return (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
         ? nullptr
@@ -807,7 +807,7 @@ void FloatingWindow::focus(Qt::FocusReason reason)
     groups.constFirst()->focus(reason);
 }
 
-inline FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
+static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedFlags)
 {
     if (!(requestedFlags & FloatingWindowFlag::FromGlobalConfig)) {
         // User requested specific flags for this floating window

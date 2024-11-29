@@ -860,7 +860,7 @@ bool View::isFixedHeight() const
 }
 
 namespace KDDockWidgets {
-inline QString cleanQRCFilename(const QString &filename)
+static QString cleanQRCFilename(const QString &filename)
 {
     // QFile doesn't understand qrc:/ only :/
 

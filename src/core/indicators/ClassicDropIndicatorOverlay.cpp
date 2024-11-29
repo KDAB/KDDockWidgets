@@ -92,7 +92,7 @@ void ClassicDropIndicatorOverlay::raiseIndicators()
     m_indicatorWindow->raise();
 }
 
-KDDockWidgets::Location locationToMultisplitterLocation(DropLocation location)
+static KDDockWidgets::Location locationToMultisplitterLocation(DropLocation location)
 {
     switch (location) {
     case DropLocation_Left:

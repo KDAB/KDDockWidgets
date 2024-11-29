@@ -36,7 +36,7 @@ using namespace KDDockWidgets::Core;
 namespace KDDockWidgets {
 static qint64 s_nextId = 1;
 
-Controller *maybeCreateController(Controller *controller, ViewType type, View *view)
+static Controller *maybeCreateController(Controller *controller, ViewType type, View *view)
 {
     if (controller)
         return controller;

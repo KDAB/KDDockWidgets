@@ -48,7 +48,7 @@ static void initResources()
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
-inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
+static QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
 {
     QRectF rect = item->boundingRect();
     rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)));
