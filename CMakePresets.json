@@ -428,6 +428,14 @@
       }
     },
     {
+      "name": "clang-tidy-no-werror-qt5",
+      "binaryDir": "${sourceDir}/build-clang-tidy-no-werror-qt5",
+      "inherits": ["ci-clang-tidy-qt5"],
+      "cacheVariables": {
+        "CMAKE_CXX_CLANG_TIDY": "clang-tidy"
+      }
+    },
+    {
       "name": "ci-dev-qt5",
       "displayName": "ci-dev-qt5",
       "description": "Qt5 dev-mode build",
