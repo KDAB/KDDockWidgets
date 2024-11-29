@@ -16,6 +16,9 @@
 #include "kddockwidgets/core/Platform.h"
 #include "core/layouting/Item_p.h"
 #include "core/Group_p.h"
+#include "core/Logging_p.h"
+
+#include <kdbindings/signal.h>
 
 #include <cstdlib>
 #include <string>
@@ -189,6 +192,19 @@ void deleteAll(const T &vec)
 {
     for (const auto &e : vec)
         delete e;
+}
+
+template<typename Signal, typename... Args>
+void safeEmitSignal(Signal &sig, Args &&...args)
+{
+    // KDBindings now can throw exceptions.
+    // we emit some signals in destructors, which should never throw.
+    // this makes clang-tidy happy. In practice there's no throwing.
+    try {
+        sig.emit(std::forward<Args>(args)...);
+    } catch (...) {
+        KDDW_ERROR("Got exception in signal emit!");
+    }
 }
 
 }

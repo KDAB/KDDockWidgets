@@ -46,7 +46,7 @@ public:
 
     explicit Group(View *parent = nullptr, FrameOptions = FrameOption_None,
                    int userType = 0);
-    virtual ~Group() override;
+    ~Group() override;
 
     static Group *deserialize(const LayoutSaver::Group &);
     LayoutSaver::Group serialize() const;

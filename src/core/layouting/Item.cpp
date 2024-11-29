@@ -18,6 +18,7 @@
 #include "core/Logging_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/ScopedValueRollback_p.h"
+#include "core/Utils_p.h"
 #include "core/nlohmann_helpers_p.h"
 
 #include <algorithm>
@@ -949,13 +950,13 @@ Item::Item(bool isContainer, LayoutingHost *hostWidget, ItemContainer *parent)
 Item::~Item()
 {
     m_inDtor = true;
-    aboutToBeDeleted.emit();
+    safeEmitSignal(aboutToBeDeleted);
 
     m_minSizeChangedHandle.disconnect();
     m_visibleChangedHandle.disconnect();
     m_parentChangedConnection.disconnect();
 
-    deleted.emit();
+    safeEmitSignal(deleted);
 }
 
 void Item::turnIntoPlaceholder()
