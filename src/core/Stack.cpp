@@ -10,6 +10,7 @@
 */
 
 #include "Stack.h"
+#include "KDDockWidgets.h"
 #include "Stack_p.h"
 #include "Config.h"
 #include "TitleBar.h"
@@ -70,11 +71,7 @@ bool Stack::insertDockWidget(DockWidget *dock, int index)
 {
     assert(dock);
 
-    if (index < 0)
-        index = 0;
-    if (index > numDockWidgets())
-        index = numDockWidgets();
-
+    index = KDDockWidgets::bound(0, index, numDockWidgets());
     if (contains(dock)) {
         KDDW_ERROR("Refusing to add already existing widget");
         return false;
