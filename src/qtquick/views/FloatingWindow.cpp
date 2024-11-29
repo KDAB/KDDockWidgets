@@ -89,12 +89,12 @@ public:
 
     void onRootItemWidthChanged()
     {
-        setWidth(int(m_view->width()));
+        setWidth(m_view->width());
     }
 
     void onRootItemHeightChanged()
     {
-        setHeight(int(m_view->height()));
+        setHeight(m_view->height());
     }
 
     void updateSize()
