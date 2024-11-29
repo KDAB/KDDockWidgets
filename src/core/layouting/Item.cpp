@@ -4338,8 +4338,8 @@ void LayoutingHost::insertItemRelativeTo(Core::LayoutingGuest *guest, Core::Layo
         return;
     }
 
-    if (auto box = m_rootItem->asBoxContainer())
-        box->insertItemRelativeTo(guest->layoutItem(), relativeTo->layoutItem(), loc, initialOption);
+    if (m_rootItem->asBoxContainer())
+        ItemBoxContainer::insertItemRelativeTo(guest->layoutItem(), relativeTo->layoutItem(), loc, initialOption);
 }
 
 #ifdef Q_CC_MSVC
