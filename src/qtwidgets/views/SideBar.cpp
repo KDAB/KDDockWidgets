@@ -137,7 +137,7 @@ void SideBarButton::paintEvent(QPaintEvent *)
                            : palette().color(QPalette::Highlight).darker());
         pen.setWidth(isHovered ? 2 : 1);
         p.setPen(pen);
-        p.drawLine(3, r.bottom() - 1, r.width() - 3 * 2, r.bottom() - 1);
+        p.drawLine(3, r.bottom() - 1, r.width() - 6, r.bottom() - 1);
     }
 
     QPainter p(this);

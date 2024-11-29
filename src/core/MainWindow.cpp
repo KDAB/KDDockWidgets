@@ -290,7 +290,7 @@ Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation loc
         const int rightSideBarWidth =
             (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width() : 0;
         rect.setHeight((std::max)(300, group->view()->minSize().height()));
-        rect.setWidth(centralAreaGeo.width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
+        rect.setWidth(centralAreaGeo.width() - (margin * 2) - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
             rect.moveTop(centralAreaGeo.bottom() - centerWidgetMargins.bottom() - rect.height()
