@@ -99,10 +99,10 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
         const int indicatorHeight = std::min(s_centralIndicatorMaxHeight, int(indicatorWidth * 0.60));
         const int tabWidth = int(indicatorWidth * 0.267);
         const int tabHeight = int(indicatorHeight * 0.187);
-        const int centerRectLeft = centerPos.x() - indicatorWidth / 2;
-        const int centerRectRight = centerPos.x() + indicatorWidth / 2;
-        const int centerRectBottom = centerPos.y() + indicatorHeight / 2;
-        const int centerRectTop = centerPos.y() - indicatorHeight / 2;
+        const int centerRectLeft = centerPos.x() - (indicatorWidth / 2);
+        const int centerRectRight = centerPos.x() + (indicatorWidth / 2);
+        const int centerRectBottom = centerPos.y() + (indicatorHeight / 2);
+        const int centerRectTop = centerPos.y() - (indicatorHeight / 2);
 
 
         const auto center = Vector<Point> {

@@ -2989,11 +2989,11 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
 
         if (isVertical()) {
             const int available = geo2.y() - geo1.bottom() - layoutSpacing;
-            geo1.setHeight(geo1.height() + available / 2);
+            geo1.setHeight(geo1.height() + (available / 2));
             geo2.setTop(geo1.bottom() + layoutSpacing + 1);
         } else {
             const int available = geo2.x() - geo1.right() - layoutSpacing;
-            geo1.setWidth(geo1.width() + available / 2);
+            geo1.setWidth(geo1.width() + (available / 2));
             geo2.setLeft(geo1.right() + layoutSpacing + 1);
         }
 
