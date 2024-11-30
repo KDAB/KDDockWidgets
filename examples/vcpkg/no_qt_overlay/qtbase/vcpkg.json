@@ -1,0 +1,10 @@
+{
+  "name": "qtbase",
+  "version": "6.8.0",
+  "port-version": 2,
+  "features": {
+    "widgets": {
+      "description": ""
+    }
+  }
+}

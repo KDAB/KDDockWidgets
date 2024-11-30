@@ -16,6 +16,8 @@
 
 ## Building
 
+You can skip building manually and instead consume KDDockWidgets via [vcpkg](#using-via-vcpkg).
+
 Although the build system supports many options, you'll mostly use `-DKDDockWidgets_QT6=ON`, or don't use any option, which defaults to `Qt 5`.
 
 By default, KDDW will be built with support for both `QtWidgets` and `QtQuick`. If you want to save some binary space and compile time,
@@ -76,3 +78,22 @@ The above can be achieved by passing, for example `-DKDDW_FRONTEND_QT -DKDDW_FRO
 Additionally, the include path needs to be setup. This is usually `${YOUR_KDDW_INSTALL_PREFIX}/include/`
 <br><br>
 And finally, the library needs to be linked against. It's called `libkddockwidgets.so` (Qt5) or `libkddockwidgets-qt6.so` (Qt6). On Windows it's called `kddockwidgets2.lib` or `kddockwidgets-qt62.lib`, respectively. Note that debug builds are suffixed with `d`, for example `kddockwidgets2d.lib`.
+
+## Using via vcpkg
+
+Simply installing `KDDockWidgets` with `vcpkg` will pull in Qt and its dependencies
+which can take up to an hour to build. If you prefer to use your system's Qt installation instead,
+pass `-DVCPKG_OVERLAY_PORTS=no_qt_overlay` to the CMake configure step.
+
+Here we'll build our example `kddockwidgets/examples/vcpkg/` for illustration purposes. You can copy `vcpkg.json` and
+`no_qt_overlay/` into your own project.
+
+Adjust the triplet as needed.
+
+```bash
+cd kddockwidgets/examples/vcpkg/
+git clone https://github.com/microsoft/vcpkg.git # typically added as a git submodule
+./vcpkg/bootstrap-vcpkg.sh
+cmake -DVCPKG_TARGET_TRIPLET=x64-linux-dynamic -DVCPKG_OVERLAY_PORTS=no_qt_overlay -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -S . -B build/
+cmake --build build
+```
