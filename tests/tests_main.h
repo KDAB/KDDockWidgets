@@ -18,12 +18,6 @@
 #include "simple_test_framework.h"
 #include "core/Platform.h"
 
-#ifdef KDDW_FRONTEND_FLUTTER
-#include "../flutter/Platform.h"
-#include "flutter_tests_embedder/tests_embedder.h"
-#include "flutter/qcoro.h"
-#endif
-
 #include <iostream>
 
 #ifdef KDDW_HAS_SPDLOG
@@ -56,24 +50,6 @@ int main(int argc, char **argv)
         s_testsToRun = s_tests;
     }
 
-#ifdef KDDW_FRONTEND_FLUTTER
-    KDDockWidgets::flutter::Platform::s_runTestsFunc = []() -> KDDW_QCORO_TASK {
-        auto result = co_await KDDWTest::run(s_testsToRun);
-        KDDW_TEST_RETURN(result);
-    };
-
-    int result = 0;
-    {
-        KDDockWidgets::flutter::TestsEmbedder embedder(argc, argv);
-        result = embedder.run();
-    }
-
-    KDDW_INFO("tests ended with result={}", result);
-
-    /// Skip static destructors, since flutter hangs at exit since > 3.19
-    _exit(result);
-
-#else
     for (FrontendType type : Core::Platform::frontendTypes()) {
         Core::Platform::tests_initPlatform(argc, argv, type);
 #ifndef KDDW_TESTS_NO_FATAL_WARNINGS
@@ -89,5 +65,4 @@ int main(int argc, char **argv)
         Core::Platform::tests_deinitPlatform();
     }
     return 0;
-#endif
 }

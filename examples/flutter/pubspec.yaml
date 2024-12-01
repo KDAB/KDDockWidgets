@@ -1,19 +1,17 @@
 name: kddockwidgets_flutter_example
-description: A new Flutter project.
+description: KDDockWidgets flutter example
 
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0'
+  sdk: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  KDDockWidgetsBindings:
-    path: '../../src/flutter/generated/KDDockWidgetsBindings/dart/'
   KDDockWidgets:
-    path: '../../src/flutter/dart/'
+    path: "../../src/flutter/dart/"
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

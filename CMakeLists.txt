@@ -37,7 +37,7 @@
 # frontends to enable. If not specified, Qt frontends will be enabled based on
 # availability of libraries on your system.
 
-# ## DO NOT USE IF YOU ARE AN END-USER.  FOR THE DEVELOPERS ONLY!! # Special
+# # # DO NOT USE IF YOU ARE AN END-USER.  FOR THE DEVELOPERS ONLY!! # Special
 # CMake Options for Developers
 #
 # -DKDDockWidgets_DEVELOPER_MODE=[true|false] Configure the build for a
@@ -117,9 +117,7 @@ option(KDDockWidgets_X11EXTRAS
 )
 option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
-option(KDDockWidgets_FLUTTER_NO_BINDINGS "Don't build flutter bindings, only the flutter frontend" OFF)
 option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode" OFF)
-option(KDDockWidgets_FLUTTER_QWINDOW "Flutter backend will use QWindow and QtGui types" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
@@ -189,9 +187,7 @@ if(KDDockWidgets_FRONTENDS)
 
     if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
         set(KDDW_FRONTEND_FLUTTER ON)
-        if(KDDockWidgets_FLUTTER_QWINDOW)
-            find_package(Qt6 6.6 NO_MODULE REQUIRED COMPONENTS Gui)
-        endif()
+
     endif()
 
     if("none" IN_LIST KDDockWidgets_FRONTENDS)
@@ -241,16 +237,6 @@ endif()
 if(KDDW_FRONTEND_FLUTTER)
     if(KDDW_FRONTEND_QT)
         message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
-    endif()
-
-    if(KDDockWidgets_DEVELOPER_MODE AND (APPLE OR WIN32))
-        message(FATAL_ERROR "The flutter frontend only supports developer-mode on Linux. "
-                            "You can still develop on Windows/macOS but wait for test results from KDAB CI."
-        )
-    endif()
-else()
-    if(KDDockWidgets_FLUTTER_QWINDOW)
-        message(FATAL_ERROR "KDDockWidgets_FLUTTER_QWINDOW only makes sense with the flutter backend")
     endif()
 endif()
 
@@ -333,21 +319,6 @@ if(KDDockWidgets_DEVELOPER_MODE)
     # Enable assert() in developer mode, regardless of debug vs release
     add_definitions(-UNDEBUG)
 
-    if(KDDW_FRONTEND_FLUTTER)
-        include(FetchContent)
-        set(GLFW_BUILD_EXAMPLE OFF)
-        set(GLFW_BUILD_DOCS OFF)
-        set(GLFW_BUILD_WIN32 ON)
-        set(GLFW_BUILD_TESTS OFF)
-        set(GLFW_USE_WAYLAND OFF)
-
-        fetchcontent_declare(
-            glfw3
-            GIT_REPOSITORY https://github.com/glfw/glfw.git
-            GIT_TAG 3fa2360720eeba1964df3c0ecf4b5df8648a8e52
-        )
-        fetchcontent_makeavailable(glfw3)
-    endif()
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -362,7 +333,7 @@ else()
     set(CMAKE_CXX_STANDARD 20)
 endif()
 
-if(KDDW_FRONTEND_QT OR KDDockWidgets_FLUTTER_QWINDOW)
+if(KDDW_FRONTEND_QT)
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)
 endif()
@@ -396,10 +367,6 @@ macro(set_compiler_flags targetName)
 
         if(MSVC)
             target_compile_options(${targetName} PRIVATE /W4)
-        endif()
-
-        if(KDDW_FRONTEND_FLUTTER AND NOT MSVC)
-            target_compile_options(${targetName} PRIVATE -fcoroutines -Wno-missing-field-initializers)
         endif()
     else()
         if(KDDW_FRONTEND_FLUTTER)
@@ -555,7 +522,7 @@ if(KDDockWidgets_EXAMPLES)
         add_subdirectory(src/core/layouting/examples/qtwidgets/)
     endif()
 
-    if(KDDW_FRONTEND_FLUTTER AND NOT KDDockWidgets_FLUTTER_NO_BINDINGS)
+    if(KDDW_FRONTEND_FLUTTER)
         add_custom_target(
             kddw-flutter-example ALL
             DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example
@@ -587,7 +554,7 @@ if(KDDockWidgets_EXAMPLES)
 endif()
 
 if(KDDockWidgets_TESTS)
-    if(KDDockWidgets_DEVELOPER_MODE)
+    if(KDDockWidgets_DEVELOPER_MODE AND NOT KDDW_FRONTEND_FLUTTER)
         add_subdirectory(tests)
     endif()
 endif()

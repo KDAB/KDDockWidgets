@@ -42,10 +42,6 @@
 
 #endif
 
-#ifdef KDDW_FRONTEND_FLUTTER
-#include "flutter/qcoro.h"
-#endif
-
 namespace KDDockWidgets {
 
 #ifdef KDDW_QTGUI_TYPES
@@ -292,12 +288,10 @@ public:
 
 }
 
-#ifndef KDDW_FRONTEND_FLUTTER
-// Only the flutter uses the coroutines
+// TODO: Remove
 #define KDDW_QCORO_TASK bool
 #define KDDW_CO_AWAIT
 #define KDDW_CO_RETURN return
-#endif
 
 #ifndef KDDW_QTGUI_TYPES
 

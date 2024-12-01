@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgetsBindings/Bindings.dart';
 import 'package:flutter/material.dart';
 
 class MyMenuBar extends StatelessWidget {
@@ -21,12 +20,12 @@ class MyMenuBar extends StatelessWidget {
       final String name = "dw$i";
       widgets.add(MenuItemButton(
         onPressed: () {
-          final dw = DockRegistry.self().dockByName(name);
-          if (dw.isOpen()) {
-            dw.close();
-          } else {
-            dw.open();
-          }
+          // final dw = DockRegistry.self().dockByName(name);
+          // if (dw.isOpen()) {
+          //   dw.close();
+          // } else {
+          //   dw.open();
+          // }
         },
         child: Text(name),
       ));
@@ -53,21 +52,21 @@ class MyMenuBar extends StatelessWidget {
                       ),
                       MenuItemButton(
                         onPressed: () {
-                          final saver = LayoutSaver();
-                          saver.saveToFile("savedLayout.json");
+                          // final saver = LayoutSaver();
+                          // saver.saveToFile("savedLayout.json");
                         },
                         child: const MenuAcceleratorLabel('&Save Layout'),
                       ),
                       MenuItemButton(
                         onPressed: () {
-                          final saver = LayoutSaver();
-                          saver.restoreFromFile("savedLayout.json");
+                          // final saver = LayoutSaver();
+                          // saver.restoreFromFile("savedLayout.json");
                         },
                         child: const MenuAcceleratorLabel('&Restore Layout'),
                       ),
                       MenuItemButton(
                         onPressed: () {
-                          DockRegistry.self().clear();
+                          // DockRegistry.self().clear();
                         },
                         child: const MenuAcceleratorLabel('&Close All'),
                       ),
