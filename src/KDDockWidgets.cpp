@@ -22,10 +22,6 @@
 #include "qtquick/Platform.h"
 #endif
 
-#ifdef KDDW_FRONTEND_FLUTTER
-#include "flutter/Platform.h"
-#endif
-
 using namespace KDDockWidgets;
 
 void KDDockWidgets::initFrontend(FrontendType type)

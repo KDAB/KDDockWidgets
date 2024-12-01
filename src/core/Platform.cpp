@@ -27,10 +27,6 @@
 #include "qtquick/Platform.h"
 #endif
 
-#ifdef KDDW_FRONTEND_FLUTTER
-#include "flutter/Platform.h"
-#endif
-
 #include "Config.h"
 #include "core/layouting/Item_p.h"
 #include "core/Screen_p.h"
@@ -211,11 +207,11 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 #endif
         break;
     case FrontendType::Flutter:
-#ifdef KDDW_FRONTEND_FLUTTER
-        platform = nullptr;
         KDDW_UNUSED(argc);
         KDDW_UNUSED(argv);
         KDDW_UNUSED(defaultToOffscreenQPA);
+#ifdef KDDW_FRONTEND_FLUTTER
+        platform = nullptr;
 #endif
         break;
     }

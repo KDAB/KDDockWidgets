@@ -174,86 +174,15 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
     qtquick/views/ClassicIndicatorsWindow.h
 )
 
-set(KDDW_FRONTEND_DARTBINDINGS_SRCS
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/QString_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Rect_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Point_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Size_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Margins_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/Config_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/CreateViewOptions_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DockRegistry_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/InitialOption_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/DropIndicatorOverlay_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDockWidgets_c.cpp
-    # flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Platform_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/ClassicIndicatorWindowViewInterface_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/ClassicDropIndicatorOverlay_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Controller_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/DropArea_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Layout_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Group_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Stack_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/Separator_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TabBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/SideBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/DockWidget_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/FloatingWindow_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/View_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/TitleBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/MainWindow_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsCore/DelayedCall_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TitleBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Platform_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/View_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/ViewFactory_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Stack_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/TabBar_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/Group_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DropArea_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/DockWidget_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/MainWindow_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/KDDWBindingsFlutter/IndicatorWindow_c.cpp
-    flutter/generated/KDDockWidgetsBindings/dart/ffi/LayoutSaver_c.cpp
-)
-
 set(KDDW_FRONTEND_QTCOMPAT_SRCS qtcompat/Object.cpp)
 
-set(KDDW_FRONTEND_FLUTTER_SRCS
-    flutter/Action.cpp
-    flutter/ViewFactory.cpp
-    flutter/Window.cpp
-    flutter/Screen.cpp
-    flutter/Platform.cpp
-    flutter/views/View.cpp
-    flutter/views/ViewWrapper.cpp
-    flutter/views/DropArea.cpp
-    flutter/views/Stack.cpp
-    flutter/views/DockWidget.cpp
-    flutter/views/Group.cpp
-    flutter/views/TabBar.cpp
-    flutter/views/TitleBar.cpp
-    flutter/views/MainWindow.cpp
-    flutter/views/ClassicIndicatorsWindow.cpp
-)
+set(KDDW_FRONTEND_FLUTTER_SRCS flutter/kddw_bindings.cpp)
 
-if(NOT KDDockWidgets_FLUTTER_QWINDOW)
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_QTCOMPAT_SRCS})
-endif()
-
-if(KDDockWidgets_FLUTTER_NO_BINDINGS)
-    # For a special build that just builds core/ and flutter/, but not generated/
-    add_definitions(-DKDDW_NO_FLUTTER_BINDINGS)
-else()
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_DARTBINDINGS_SRCS})
-endif()
+set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_QTCOMPAT_SRCS})
 
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
-    set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} flutter/CoRoutines.cpp
-                                   ../tests/flutter_tests_embedder/tests_embedder.cpp
-    )
     set(KDDW_QTCOMMON_SRCS ${KDDW_QTCOMMON_SRCS} qtcommon/TestHelpers_qt.cpp)
 endif()
 
@@ -362,25 +291,15 @@ endif()
 if(KDDW_FRONTEND_FLUTTER)
     target_include_directories(
         kddockwidgets
-        PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/generated/KDDockWidgetsBindings>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/flutter/views>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtcompat>
+        PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtcompat>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/layouting>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/views>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/indicators>
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                 $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
     )
 
     # So bindings are exported
     target_compile_definitions(kddockwidgets PRIVATE BUILDING_KDDockWidgets)
-
-    if(KDDockWidgets_FLUTTER_QWINDOW)
-        target_compile_definitions(kddockwidgets PUBLIC KDDW_FLUTTER_QWINDOW)
-        target_link_libraries(kddockwidgets PUBLIC Qt6::Gui Qt6::GuiPrivate)
-    endif()
 
     if(MSVC)
         set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
@@ -395,37 +314,6 @@ if(KDDW_FRONTEND_FLUTTER)
             ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
             PROPERTIES COMPILE_FLAGS "-Wno-unused-function -Wno-unused-variable -Wno-format-security \
                 -Wno-unused-parameter -Wno-shadow -Wno-sign-conversion"
-        )
-    endif()
-
-    if(KDDockWidgets_DEVELOPER_MODE)
-
-        if(NOT DEFINED ENV{FLUTTER_ENGINE_FOLDER})
-            message(FATAL_ERROR "Point env var FLUTTER_ENGINE_FOLDER to engine folder")
-        endif()
-
-        find_program(FLUTTER_EXE flutter REQUIRED)
-        message(STATUS "Flutter SDK: ${FLUTTER_EXE}")
-        get_filename_component(FLUTTER_SDK_PATH ${FLUTTER_EXE} PATH)
-        file(GLOB_RECURSE ICUDTL "${FLUTTER_SDK_PATH}/icudtl.dat")
-        message(STATUS "flutter icudtl.dat file: ${ICUDTL}")
-        if(ICUDTL)
-            add_custom_command(
-                TARGET kddockwidgets
-                PRE_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy ${ICUDTL} ${CMAKE_BINARY_DIR}
-                COMMENT "Copying icudtl.dat to ${CMAKE_BINARY_DIR}"
-            )
-        else()
-            message(FATAL_ERROR "icudtl.dat not found!")
-        endif()
-
-        include_directories($ENV{FLUTTER_ENGINE_FOLDER})
-        target_link_libraries(kddockwidgets PRIVATE glfw $ENV{FLUTTER_ENGINE_FOLDER}/${FLUTTER_ENGINE_LIBRARY})
-
-        target_compile_definitions(
-            kddockwidgets PRIVATE FLUTTER_ICUDTL_DIR="${CMAKE_BINARY_DIR}"
-                                  FLUTTER_TEST_MAIN="${CMAKE_SOURCE_DIR}/tests/flutter_tests_embedder/"
         )
     endif()
 endif()
@@ -457,7 +345,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     endif()
 
     # Disable -Wconversion for Qt6. The qsizetype to int conversions are harmless
-    if(NOT KDDockWidgets_QT6 AND NOT KDDockWidgets_FLUTTER_QWINDOW)
+    if(NOT KDDockWidgets_QT6)
         target_compile_options(kddockwidgets PRIVATE -Wconversion)
     endif()
 

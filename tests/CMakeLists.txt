@@ -94,21 +94,7 @@ function(add_kddw_test test srcs)
 
     kddw_add_nlohmann(${test})
     set_compiler_flags(${test})
-
-    if(KDDW_FRONTEND_FLUTTER)
-        target_link_libraries(${test} kddockwidgets)
-        _add_test(${test})
-
-        if(KDDockWidgets_FLUTTER_TESTS_AOT)
-            set(KDDW_AOT_VALUE 1)
-        else()
-            set(KDDW_AOT_VALUE 0)
-        endif()
-
-        set_tests_properties(${test} PROPERTIES ENVIRONMENT "KDDW_FLUTTER_TESTS_USE_AOT=${KDDW_AOT_VALUE}")
-    else()
-        _add_test(${test})
-    endif()
+    _add_test(${test})
     target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
     if(KDDockWidgets_HAS_SPDLOG)
         target_compile_definitions(${test} PRIVATE KDDW_HAS_SPDLOG)

@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+# Builds the flutter frontend
+
+name: Flutter-rel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-13
+
+        preset:
+          - name: release-flutter
+
+        include:
+          - os: ubuntu-latest
+            flutter_os: "linux"
+          - os: windows-latest
+            flutter_os: "windows"
+          - os: macos-13
+            flutter_os: "macos"
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Install dependencies on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          sudo apt update -qq
+          sudo apt install libgtk-3-dev libglib2.0-dev -y
+
+      - name: Install ninja
+        uses: turtlesec-no/get-ninja@main
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: "stable"
+
+      - name: MSVC into PATH
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure project
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
+
+      - name: Build Project ${{ matrix.preset.build_preset_arg }}
+        run: cmake --build ./build-${{ matrix.preset.name }}
+
+      - name: Build the example
+        run: |
+          cd examples/flutter
+          flutter build ${{ matrix.os.flutter_os }}

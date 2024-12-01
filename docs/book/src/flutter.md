@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Flutter >= 3.13 && Dart 3.1
+- Flutter >= 3.24
 
 - CMake, Ninja
 
@@ -17,67 +17,36 @@
 Adjust paths as needed.<br>
 Checkout branch `main`.
 
-### Linux
-
 Preparatives:
 
 ```bash
 export KDDW_SOURCE_DIR=/home/user/somewhere/kddockwidgets/
+export KDDW_BINDINGS_LIB=/path/to/libkddockwidgets.so # (or dylib or dll)
 ```
 
 Release build (Recommended):
 
 ```bash
-export DARTAGNAN_BINDINGSLIB_PATH=$KDDW_SOURCE_DIR/build-release-flutter/lib
 cd $KDDW_SOURCE_DIR
 cmake --preset=release-flutter
 cmake --build build-release-flutter
+cd examples/flutter/
+flutter pub get
+flutter run -d linux # adjust device as needed
+
+# (optional) run flutter tests:
+cd $KDDW_SOURCE_DIR/src/flutter/dart/ && flutter pub get && flutter test
 ```
 
-If you need to run tests, then you need a developer build, which is a bit more involved.<br>
-You'll need to point `FLUTTER_ENGINE_FOLDER` to the folder containing a vanilla
-flutter engine along with `flutter_embedder.h`.
+If you want to run the C++ tests, then you need a developer build:
 
 Developer build:
 
 ```bash
-export DARTAGNAN_BINDINGSLIB_PATH=$KDDW_SOURCE_DIR/build-dev-flutter/lib
-export FLUTTER_ENGINE_FOLDER=/home/user/somewhere/flutter-embedder/
 cd $KDDW_SOURCE_DIR
 cmake --preset=dev-flutter
 cmake --build build-dev-flutter
-```
-
-## Running the example
-
-```bash
-cd $KDDW_SOURCE_DIR/examples/flutter
-flutter run -d linux # Or macos/windows or nothing if you only have 1 flutter "device"
-```
-
-## macOS
-
-Similar to Linux. The dev preset is not supported though, only `release-flutter`.
-
-## Windows
-
-Similar to Linux, just use cmd syntax or so.<br>
-The dev preset is not supported though, only `release-flutter`.
-
-## Development tips
-
-### Bumping Flutter version on CI
-
-Bump version in `flutter-rel.yml`, `flutter-pub-update.yml` and `flutter-dev.yml`,
-push and see if GH action passes.
-
-
-### Running the tests
-
-On Linux, get a developer build (see above), then run:
-
-```bash
-dart run_flutter_tests.dart build-dev-flutter/
+cd build-dev-flutter && ctest
 ```
 
 ## Pending work
@@ -85,7 +54,5 @@ dart run_flutter_tests.dart build-dev-flutter/
 - Support flutter multi-window
 
 - More styling
-
-- Make more tests pass
 
 - Figure out packaging, probably once Dart's Native Assets is released

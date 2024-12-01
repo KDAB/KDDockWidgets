@@ -21,7 +21,6 @@
 #include "KDDockWidgets.h"
 #include "core/Platform.h"
 #include "core/Logging_p.h"
-#include "flutter/qcoro.h"
 
 #include <string>
 #include <functional>
