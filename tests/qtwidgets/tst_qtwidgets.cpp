@@ -200,6 +200,7 @@ private Q_SLOTS:
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowFloatButton();
+    void tst_nestedMainWindowSaveRestore();
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
@@ -2277,6 +2278,41 @@ void TestQtWidgets::tst_moveTab()
 
     QCOMPARE(tb->currentIndex(), 1);
     QCOMPARE(tb->currentDockWidget(), dockA);
+}
+
+void TestQtWidgets::tst_nestedMainWindowSaveRestore()
+{
+    // This is for #508 . Do not change this configuration.
+    // tests that a save/restore of tabbed nested main windows does not
+    // hide the main window
+
+    EnsureTopLevelsDeleted e;
+
+    auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto nestedMainWindow1 = createMainWindow(QSize(500, 500), MainWindowOption_None, "MW1.1");
+    nestedMainWindow1->setAffinities({ "foo1" });
+    auto nestedMainWindow2 = createMainWindow(QSize(500, 500), MainWindowOption_None, "MW1.2");
+    nestedMainWindow2->setAffinities({ "foo2" });
+
+    auto containerDock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container1"));
+    auto containerDock2 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container2"));
+    auto nestedMainWindowQWidget1 = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow1->view()));
+    auto nestedMainWindowQWidget2 = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow2->view()));
+
+    containerDock1->setWidget(nestedMainWindowQWidget1);
+    containerDock2->setWidget(nestedMainWindowQWidget2);
+
+    mainWindow->addDockWidget(containerDock1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+    mainWindow->addDockWidget(containerDock2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
+
+    containerDock1->addDockWidgetAsTab(containerDock2);
+    containerDock1->setAsCurrentTab();
+
+    LayoutSaver saver;
+    QVERIFY(saver.restoreLayout(saver.serializeLayout()));
+
+    QEXPECT_FAIL("", "TODO: Fix nested widget visibility for #508", Continue);
+    QVERIFY(mainWindow->isVisible());
 }
 
 void TestQtWidgets::tst_nestedMainWindowFloatButton()
