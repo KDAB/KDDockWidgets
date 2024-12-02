@@ -2310,8 +2310,6 @@ void TestQtWidgets::tst_nestedMainWindowSaveRestore()
 
     LayoutSaver saver;
     QVERIFY(saver.restoreLayout(saver.serializeLayout()));
-
-    QEXPECT_FAIL("", "TODO: Fix nested widget visibility for #508", Continue);
     QVERIFY(mainWindow->isVisible());
 }
 

@@ -528,7 +528,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(mainWindow->affinities()))
             continue;
 
-        if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
+        if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry) && !mainWindow->isInDockWidget()) {
             Window::Ptr window = mainWindow->view()->window();
             if (window->windowState() == WindowState::Maximized) {
                 // Restoring geometry needs to be done in normal state.

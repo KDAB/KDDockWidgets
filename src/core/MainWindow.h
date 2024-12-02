@@ -232,6 +232,10 @@ public:
     /// @brief Returns the side bar at the specified location
     Core::SideBar *sideBar(SideBarLocation location) const;
 
+    /// Returns whether this main window is inside a dock widget
+    /// only ever true when using main windows nested inside main windows
+    bool isInDockWidget() const;
+
     // Internal public API:
 
     ///@internal

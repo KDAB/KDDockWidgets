@@ -865,3 +865,15 @@ void MainWindow::setOverlayMargin(int margin)
     d->m_overlayMargin = margin;
     d->overlayMarginChanged.emit(margin);
 }
+
+bool MainWindow::isInDockWidget() const
+{
+    auto v = view();
+    if (!v)
+        return false;
+
+    if (auto p = v->parentView())
+        return p->is(ViewType::DockWidget);
+
+    return false;
+}
