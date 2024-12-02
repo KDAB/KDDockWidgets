@@ -11,6 +11,9 @@ get a patch by doing `git diff > repro.diff` at the repo root.
 
 Also state which KDDW sha1, branch or version you're using, and which operating system.
 
+Cosmetic bugs only reproducible on Qt5 or old operating systems will have lower priority. Please test
+on newer versions before reporting.
+
 ## Copyright Assignment
 
 KDAB will happily accept external contributions; however, **all** contributions require
