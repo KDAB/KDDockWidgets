@@ -12,28 +12,93 @@ SPDX-License-Identifier = "GPL-2.0-only OR GPL-3.0-only"
 
 #misc documentation
 [[annotations]]
-path = ["CONTRIBUTORS.txt", "Changelog", "README.md", "README-porting.md", "README-QtQuick.md", "README-Flutter.md", "README-WASM.md", "README-Wayland.md", "README-troubleshooting", "3RDPARTY.md", "conan/README.txt", "python/examples/README.txt", "python/examples-qt6/README.txt", "docs_devel/**.md", "docs/KDDockWidgets-CopyrightAssignmentForm.pdf", "**.html", "src/3rdparty/qcoro/README", "examples/qtquick/customseparator/README.md", "docs/book/**", "docs/developer/**.md", "book.toml", ".github/actions/qt6-asan/README.md", ".github/actions/qt6-lsan/README.md"]
+path = [
+    "CONTRIBUTORS.txt",
+    "Changelog",
+    "README.md",
+    "README-porting.md",
+    "README-QtQuick.md",
+    "README-Flutter.md",
+    "README-WASM.md",
+    "README-Wayland.md",
+    "README-troubleshooting",
+    "3RDPARTY.md",
+    "conan/README.txt",
+    "python/examples/README.txt",
+    "python/examples-qt6/README.txt",
+    "docs_devel/**.md",
+    "docs/KDDockWidgets-CopyrightAssignmentForm.pdf",
+    "**.html",
+    "src/3rdparty/qcoro/README",
+    "examples/qtquick/customseparator/README.md",
+    "docs/book/**",
+    "docs/developer/**.md",
+    "book.toml",
+    ".github/actions/qt6-asan/README.md",
+    ".github/actions/qt6-lsan/README.md",
+]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"
 SPDX-License-Identifier = "GPL-2.0-only OR GPL-3.0-only"
 
 #misc config files
 [[annotations]]
-path = [".pre-commit-config.yaml", ".codespellrc", ".krazy", ".cmake-format.py", ".clang-format", ".clangd", ".clazy", ".clang-tidy", ".gitignore", ".markdownlint.json", ".pep8", ".pylintrc", ".editorconfig", ".shellcheckrc", "mkdocs.yml", ".github/workflows/mdbook.yml", "code.dev-**.code-workspace", "code.dev**.code-workspace", "vscode.code-workspace", "docs/api/Doxyfile.cmake", "distro/**", "**.yaml", ".github/workflows/pip-requirements.txt", "valgrind.sup", "vscode.code-workspace.template", "REUSE.toml"]
+path = [
+    ".pre-commit-config.yaml",
+    ".codespellrc",
+    ".krazy",
+    ".cmake-format.py",
+    ".clang-format",
+    ".clangd",
+    ".clazy",
+    ".clang-tidy",
+    ".gitignore",
+    ".markdownlint.json",
+    ".pep8",
+    ".pylintrc",
+    ".editorconfig",
+    ".shellcheckrc",
+    "mkdocs.yml",
+    ".github/workflows/mdbook.yml",
+    "code.code-workspace",
+    "code.code-workspace.template",
+    "docs/api/Doxyfile.cmake",
+    "distro/**",
+    "**.yaml",
+    ".github/workflows/pip-requirements.txt",
+    "valgrind.sup",
+    "REUSE.toml",
+    "src/3rdparty/kdbindings/sha1.txt",
+    "src/3rdparty/nlohmann/nlohmann/sha1.txt",
+    "examples/vcpkg/.gitignore",
+]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 #artwork
 [[annotations]]
-path = ["screencap.gif", "images/**", "src/img/**", "docs/api/**.png", "examples/dockwidgets/assets/**.png", "src/img/classic_indicators/**.png", "examples/flutter/assets/**.png", "src/flutter/dart/assets/classic_indicators/**.png"]
+path = [
+    "screencap.gif",
+    "images/**",
+    "src/img/**",
+    "docs/api/**.png",
+    "examples/dockwidgets/assets/**.png",
+    "src/img/classic_indicators/**.png",
+    "examples/flutter/assets/**.png",
+    "src/flutter/dart/assets/classic_indicators/**.png",
+]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"
 SPDX-License-Identifier = "GPL-2.0-only OR GPL-3.0-only"
 
 #3rdparty ECM (a few are missing reuse headers)
 [[annotations]]
-path = ["cmake/ECM/modules/ECMVersionHeader.h.in", "cmake/ECM/modules/ecm_uninstall.cmake.in", "cmake/ECM/modules/BSD-3-Clause.txt"]
+path = [
+    "cmake/ECM/modules/ECMVersionHeader.h.in",
+    "cmake/ECM/modules/ecm_uninstall.cmake.in",
+    "cmake/ECM/modules/BSD-3-Clause.txt",
+]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "The KDE Project"
 SPDX-License-Identifier = "BSD-3-Clause"
@@ -54,7 +119,24 @@ SPDX-License-Identifier = "MIT"
 
 # Flutter
 [[annotations]]
-path = ["tests/flutter_tests_embedder/tests_embedder.**", "examples/flutter/assets/**", "examples/flutter/macos/Runner/Configs/AppInfo.xcconfig", "examples/flutter/.metadata", "examples/flutter/macos/Runner/Assets.xcassets/**", "examples/flutter/macos/Runner.xcodeproj/**", "examples/flutter/macos/Flutter/**", "examples/flutter/macos/Runner.xcworkspace/**", "examples/flutter/macos/.gitignore", "examples/flutter/macos/Runner/Configs/**.xcconfig", "examples/flutter/macos/Runner/Base.lproj/MainMenu.xib", "examples/flutter/macos/Runner/DebugProfile.entitlements", "examples/flutter/macos/Runner/Info.plist", "examples/flutter/macos/Runner/Release.entitlements", "examples/flutter/windows/runner/resources/app_icon.ico", "examples/flutter/windows/runner/runner.exe.manifest"]
+path = [
+    "tests/flutter_tests_embedder/tests_embedder.**",
+    "examples/flutter/assets/**",
+    "examples/flutter/macos/Runner/Configs/AppInfo.xcconfig",
+    "examples/flutter/.metadata",
+    "examples/flutter/macos/Runner/Assets.xcassets/**",
+    "examples/flutter/macos/Runner.xcodeproj/**",
+    "examples/flutter/macos/Flutter/**",
+    "examples/flutter/macos/Runner.xcworkspace/**",
+    "examples/flutter/macos/.gitignore",
+    "examples/flutter/macos/Runner/Configs/**.xcconfig",
+    "examples/flutter/macos/Runner/Base.lproj/MainMenu.xib",
+    "examples/flutter/macos/Runner/DebugProfile.entitlements",
+    "examples/flutter/macos/Runner/Info.plist",
+    "examples/flutter/macos/Runner/Release.entitlements",
+    "examples/flutter/windows/runner/resources/app_icon.ico",
+    "examples/flutter/windows/runner/runner.exe.manifest",
+]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Copyright 2013-2014 The Flutter Authors"
 SPDX-License-Identifier = "LicenseRef-FlutterBSD"
