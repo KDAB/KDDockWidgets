@@ -30,7 +30,7 @@ repos:
     hooks:
       - id: pylint
         exclude: ^(.cmake-format.py|conan/conanfile.py)
-        additional_dependencies: ["PySide2", "PySide6"]
+        additional_dependencies: ["PySide6"]
   - repo: https://github.com/hhatto/autopep8
     rev: v2.3.1
     hooks:
