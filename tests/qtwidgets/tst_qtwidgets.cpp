@@ -200,6 +200,7 @@ private Q_SLOTS:
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowFloatButton();
+    void tst_nestedMainWindowSaveRestore_data();
     void tst_nestedMainWindowSaveRestore();
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
@@ -2280,12 +2281,22 @@ void TestQtWidgets::tst_moveTab()
     QCOMPARE(tb->currentDockWidget(), dockA);
 }
 
+void TestQtWidgets::tst_nestedMainWindowSaveRestore_data()
+{
+    QTest::addColumn<bool>("nestFurther");
+
+    QTest::newRow("true") << true; // parented to DockWidget
+    QTest::newRow("false") << false; // parented to intermediate container
+}
+
 void TestQtWidgets::tst_nestedMainWindowSaveRestore()
 {
     // This is for #508 . Do not change this configuration.
     // tests that a save/restore of tabbed nested main windows does not
     // hide the main window
 
+
+    QFETCH(bool, nestFurther);
     EnsureTopLevelsDeleted e;
 
     auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
@@ -2299,8 +2310,21 @@ void TestQtWidgets::tst_nestedMainWindowSaveRestore()
     auto nestedMainWindowQWidget1 = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow1->view()));
     auto nestedMainWindowQWidget2 = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow2->view()));
 
-    containerDock1->setWidget(nestedMainWindowQWidget1);
-    containerDock2->setWidget(nestedMainWindowQWidget2);
+
+    if (nestFurther) {
+        auto container1 = new QWidget();
+        auto container2 = new QWidget();
+        auto lay1 = new QVBoxLayout(container1);
+        auto lay2 = new QVBoxLayout(container2);
+        lay1->addWidget(nestedMainWindowQWidget1);
+        lay2->addWidget(nestedMainWindowQWidget2);
+
+        containerDock1->setWidget(container1);
+        containerDock2->setWidget(container2);
+    } else {
+        containerDock1->setWidget(nestedMainWindowQWidget1);
+        containerDock2->setWidget(nestedMainWindowQWidget2);
+    }
 
     mainWindow->addDockWidget(containerDock1->asDockWidgetController(), KDDockWidgets::Location_OnRight);
     mainWindow->addDockWidget(containerDock2->asDockWidgetController(), KDDockWidgets::Location_OnRight);
