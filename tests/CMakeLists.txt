@@ -83,58 +83,59 @@ endif()
 #-----------------------------------------------------------------------------
 # Add our tests:
 
-# Function to add a test
-function(add_kddw_test test srcs)
-    add_executable(${test} ${srcs} ${TESTING_RESOURCES} ${TESTING_SRCS})
-    target_link_libraries(${test} kddockwidgets KDAB::KDBindings)
-    target_include_directories(${test} PRIVATE ${CMAKE_BINARY_DIR})
-    if(KDDockWidgets_HAS_SPDLOG)
-        target_link_libraries(${test} spdlog::spdlog)
-    endif()
-
-    kddw_add_nlohmann(${test})
-    set_compiler_flags(${test})
-    _add_test(${test})
-    target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
-    if(KDDockWidgets_HAS_SPDLOG)
-        target_compile_definitions(${test} PRIVATE KDDW_HAS_SPDLOG)
-    endif()
-endfunction()
-
-add_kddw_test(tst_docks tst_docks.cpp)
-
-add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp)
-add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp)
-add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp)
-add_kddw_test(tst_docks_slow4 tst_docks_slow4.cpp)
-add_kddw_test(tst_docks_slow5 tst_docks_slow5.cpp)
-add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp)
-add_kddw_test(tst_docks_slow7 tst_docks_slow7.cpp)
-
-add_kddw_test(tst_multisplitter tst_multisplitter.cpp)
-add_kddw_test(tst_viewguard tst_viewguard.cpp)
-add_kddw_test(tst_view tst_view.cpp)
-add_kddw_test(tst_window tst_window.cpp)
-add_kddw_test(tst_droparea core/tst_droparea.cpp)
-add_kddw_test(tst_platform tst_platform.cpp)
-add_kddw_test(tst_group core/tst_group.cpp)
-add_kddw_test(tst_titlebar core/tst_titlebar.cpp)
-add_kddw_test(tst_stack core/tst_stack.cpp)
-add_kddw_test(tst_tabbar core/tst_tabbar.cpp)
-add_kddw_test(tst_separator core/tst_separator.cpp)
-add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp)
-add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp)
-
 if(KDDW_FRONTEND_QT)
+    # Function to add a test
+    function(add_kddw_test test srcs)
+        add_executable(${test} ${srcs} ${TESTING_RESOURCES} ${TESTING_SRCS})
+        target_link_libraries(${test} kddockwidgets KDAB::KDBindings)
+        target_include_directories(${test} PRIVATE ${CMAKE_BINARY_DIR})
+        if(KDDockWidgets_HAS_SPDLOG)
+            target_link_libraries(${test} spdlog::spdlog)
+        endif()
+
+        kddw_add_nlohmann(${test})
+        set_compiler_flags(${test})
+        _add_test(${test})
+        target_compile_definitions(${test} PRIVATE KDDW_SRC_DIR="${CMAKE_SOURCE_DIR}")
+        if(KDDockWidgets_HAS_SPDLOG)
+            target_compile_definitions(${test} PRIVATE KDDW_HAS_SPDLOG)
+        endif()
+    endfunction()
+
+    add_kddw_test(tst_docks tst_docks.cpp)
+
+    add_kddw_test(tst_docks_slow1 tst_docks_slow1.cpp)
+    add_kddw_test(tst_docks_slow2 tst_docks_slow2.cpp)
+    add_kddw_test(tst_docks_slow3 tst_docks_slow3.cpp)
+    add_kddw_test(tst_docks_slow4 tst_docks_slow4.cpp)
+    add_kddw_test(tst_docks_slow5 tst_docks_slow5.cpp)
+    add_kddw_test(tst_docks_slow6 tst_docks_slow6.cpp)
+    add_kddw_test(tst_docks_slow7 tst_docks_slow7.cpp)
+
+    add_kddw_test(tst_multisplitter tst_multisplitter.cpp)
+    add_kddw_test(tst_viewguard tst_viewguard.cpp)
+    add_kddw_test(tst_view tst_view.cpp)
+    add_kddw_test(tst_window tst_window.cpp)
+    add_kddw_test(tst_droparea core/tst_droparea.cpp)
+    add_kddw_test(tst_platform tst_platform.cpp)
+    add_kddw_test(tst_group core/tst_group.cpp)
+    add_kddw_test(tst_titlebar core/tst_titlebar.cpp)
+    add_kddw_test(tst_stack core/tst_stack.cpp)
+    add_kddw_test(tst_tabbar core/tst_tabbar.cpp)
+    add_kddw_test(tst_separator core/tst_separator.cpp)
+    add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp)
+    add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp)
+
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp)
     add_kddw_test(tst_native_qpa tst_native_qpa.cpp)
 
     # Check if includes are installed
     add_subdirectory(includes_test)
-endif()
 
-if(KDDockWidgets_WAYLAND_TESTS)
-    add_subdirectory(wayland)
+    if(KDDockWidgets_WAYLAND_TESTS)
+        add_subdirectory(wayland)
+    endif()
+
 endif()
 
 #-----------------------------------------------------------------------------
