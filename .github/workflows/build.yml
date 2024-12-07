@@ -11,6 +11,7 @@ on:
       - src/flutter/**
       - tests/flutter/**
       - examples/flutter/**
+      - tests/reference-images/**
 
     branches:
       - main

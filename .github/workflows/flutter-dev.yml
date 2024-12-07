@@ -2,8 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-# Builds the flutter frontend
-# Doesn't run tests yet though
+# Builds the flutter frontend and runs tests
 
 name: Flutter-dev
 
@@ -40,6 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+          token: ${{ secrets.PAT_KDDW_REFERENCE_SCREENSHOTS }}
 
       - name: Install dependencies on Ubuntu
         run: |
@@ -66,9 +66,36 @@ jobs:
         run: |
           cd ${{ github.workspace }}/src/flutter/dart
           flutter pub get
-          cd ${{ github.workspace }}/tests/flutter/
-          flutter pub get
-          cd ${{ github.workspace }}/build-dev-flutter/
-          ctest --output-on-failure
+          flutter test
         env:
           KDDW_BINDINGS_LIB: ${{ github.workspace }}/build-dev-flutter/lib/libkddockwidgets.so
+
+      - name: Setup git author name
+        run: |
+          git config --global user.email "kddw@actions"
+          git config --global user.name "KDDW Actions"
+
+      # the reference is always latest main, as submodule sha1 might be lagging
+      # as it's updated nightly
+      - name: checkout latest main of ref images
+        run: |
+          cd tests/reference-images
+          git checkout main
+
+      - name: Run integration tests
+        run: |
+          cd tests/flutter/
+          flutter pub get
+          xvfb-run flutter test -d linux integration_test/ui_test.dart
+        env:
+          KDDW_BINDINGS_LIB: ${{ github.workspace }}/build-dev-flutter/lib/libkddockwidgets.so
+
+      - name: Compare against reference images
+        shell: bash
+        if: github.event_name == 'pull_request'
+        run: |
+          ./tests/reference-images/compare_images.sh
+        env:
+          PAT: ${{ secrets.PAT_KDDW_REFERENCE_SCREENSHOTS }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GH_TOKEN: ${{ github.token }}
