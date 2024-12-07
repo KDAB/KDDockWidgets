@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+#
+#
+name: Nighly bump tests/reference-images submodule
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: bump submodule
+        run: |
+          cd tests/reference-images/
+          git checkout main
+          cd ../..
+          git add tests/reference-images/
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Bump tests/reference-images/"
+            gh pr create --base main --title "Bump tests/reference-images/" --body "Automatically created via GH actions."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

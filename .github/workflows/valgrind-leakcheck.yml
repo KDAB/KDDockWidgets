@@ -6,12 +6,16 @@ name: Valgrind qtwidgets_leak_test
 
 on:
   push:
+    paths-ignore:
+      # These are built by another workflow
+      - src/flutter/**
+      - tests/flutter/**
+      - examples/flutter/**
+      - tests/reference-images/**
     branches:
-      - 2.1
       - main
   pull_request:
     branches:
-      - 2.1
       - main
 
 jobs:
