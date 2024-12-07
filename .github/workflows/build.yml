@@ -6,6 +6,12 @@ name: CI
 
 on:
   push:
+    paths-ignore:
+      # These are built by another workflow
+      - src/flutter/**
+      - tests/flutter/**
+      - examples/flutter/**
+
     branches:
       - main
   pull_request:

@@ -43,9 +43,9 @@ repos:
     rev: v0.6.13
     hooks:
       - id: cmake-lint
-        exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
+        exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/|tests/flutter/)
       - id: cmake-format
-        exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/)
+        exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/|tests/flutter/)
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.15.0
     hooks:

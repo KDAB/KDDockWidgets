@@ -120,7 +120,6 @@ SPDX-License-Identifier = "MIT"
 # Flutter
 [[annotations]]
 path = [
-    "tests/flutter_tests_embedder/tests_embedder.**",
     "examples/flutter/assets/**",
     "examples/flutter/macos/Runner/Configs/AppInfo.xcconfig",
     "examples/flutter/.metadata",
@@ -136,6 +135,21 @@ path = [
     "examples/flutter/macos/Runner/Release.entitlements",
     "examples/flutter/windows/runner/resources/app_icon.ico",
     "examples/flutter/windows/runner/runner.exe.manifest",
+    "tests/flutter/assets/**",
+    "tests/flutter/macos/Runner/Configs/AppInfo.xcconfig",
+    "tests/flutter/.metadata",
+    "tests/flutter/macos/Runner/Assets.xcassets/**",
+    "tests/flutter/macos/Runner.xcodeproj/**",
+    "tests/flutter/macos/Flutter/**",
+    "tests/flutter/macos/Runner.xcworkspace/**",
+    "tests/flutter/macos/.gitignore",
+    "tests/flutter/macos/Runner/Configs/**.xcconfig",
+    "tests/flutter/macos/Runner/Base.lproj/MainMenu.xib",
+    "tests/flutter/macos/Runner/DebugProfile.entitlements",
+    "tests/flutter/macos/Runner/Info.plist",
+    "tests/flutter/macos/Runner/Release.entitlements",
+    "tests/flutter/windows/runner/resources/app_icon.ico",
+    "tests/flutter/windows/runner/runner.exe.manifest",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Copyright 2013-2014 The Flutter Authors"

@@ -101,15 +101,15 @@ kddockwidgets_example.iml
 /src/core/layouting/build/
 
 # Flutter auto generated files
-/examples/flutter/linux/flutter/generated_plugin_registrant.cc
-/examples/flutter/linux/flutter/generated_plugin_registrant.h
-/examples/flutter/linux/flutter/generated_plugins.cmake
-/examples/flutter/windows/flutter/generated_plugin_registrant.cc
-/examples/flutter/windows/flutter/generated_plugin_registrant.h
-/examples/flutter/windows/flutter/generated_plugins.cmake
-/tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.cc
-/tests/flutter_tests_embedder/linux/flutter/generated_plugin_registrant.h
-/tests/flutter_tests_embedder/linux/flutter/generated_plugins.cmake
+generated_plugin_registrant.cc
+generated_plugin_registrant.h
+generated_plugins.cmake
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+/tests/flutter/build/
+/tests/flutter/macos/Podfile
+/tests/flutter/macos/Podfile.lock
 
 /docs/book/book/
 /book/
