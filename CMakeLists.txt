@@ -554,7 +554,7 @@ if(KDDockWidgets_EXAMPLES)
 endif()
 
 if(KDDockWidgets_TESTS)
-    if(KDDockWidgets_DEVELOPER_MODE AND NOT KDDW_FRONTEND_FLUTTER)
+    if(KDDockWidgets_DEVELOPER_MODE)
         add_subdirectory(tests)
     endif()
 endif()
