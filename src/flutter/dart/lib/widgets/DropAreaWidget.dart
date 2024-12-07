@@ -41,7 +41,9 @@ class DropAreaWidgetState extends State<DropAreaWidget> {
   void scheduleCheckLayoutSize() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final renderBox =
-          dropArea.key.currentContext?.findRenderObject() as RenderBox;
+          dropArea.key.currentContext?.findRenderObject() as RenderBox?;
+
+      if (renderBox == null) return;
 
       final Size size = renderBox.size;
       if (size != oldSize) {

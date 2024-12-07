@@ -62,6 +62,17 @@ jobs:
 
       - name: Run tests
         run: |
+          ls build-dev-flutter/lib
           cd src/flutter/dart
           flutter pub get
-          xvfb-run flutter test
+          flutter test
+        env:
+          KDDW_BINDINGS_LIB: ${{ github.workspace }}/build-dev-flutter/lib/libkddockwidgets.so
+
+      - name: Run integration tests
+        run: |
+          cd tests/flutter/
+          flutter pub get
+          xvfb-run flutter test -d linux integration_test/ui_test.dart
+        env:
+          KDDW_BINDINGS_LIB: ${{ github.workspace }}/build-dev-flutter/lib/libkddockwidgets.so

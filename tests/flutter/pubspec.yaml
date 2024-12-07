@@ -1,0 +1,29 @@
+name: kddockwidgets_flutter_example
+description: KDDockWidgets flutter example
+
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  KDDockWidgets:
+    path: "../../src/flutter/dart/"
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/KDAB_bubble_fulcolor.png
+    - assets/KDAB_bubble_blue.png
