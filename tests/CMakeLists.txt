@@ -138,4 +138,29 @@ if(KDDW_FRONTEND_QT)
 
 endif()
 
+if(KDDW_FRONTEND_FLUTTER)
+    if(UNIX AND NOT APPLE)
+        set(FLUTTER_DEVICE linux)
+        set(TEST_RUNNER "xvfb-run flutter")
+    elseif(WIN32)
+        set(FLUTTER_DEVICE windows)
+        set(TEST_RUNNER flutter)
+    elseif(APPLE)
+        set(FLUTTER_DEVICE macos)
+        set(TEST_RUNNER flutter)
+    endif()
+
+    add_test(
+        NAME tst_flutter_unittests
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/src/flutter/dart/
+        COMMAND flutter test
+    )
+
+    add_test(
+        NAME tst_flutter_integrationtests
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests/flutter/
+        COMMAND ${TEST_RUNNER} test integration_test -d ${FLUTTER_DEVICE}
+    )
+endif()
+
 #-----------------------------------------------------------------------------
