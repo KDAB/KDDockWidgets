@@ -19,6 +19,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:KDDockWidgets/widgets/DropAreaWidget.dart';
 
+import 'package:kddockwidgets_integration_tests/utils.dart';
+
 Future<Finder?> waitForWidget(WidgetTester tester, Key key,
     {int maxTries = 10}) async {
   for (int i = 0; i < maxTries; ++i) {
@@ -98,20 +100,6 @@ void main() async {
     ));
 
     await tester.pump();
-
-    final renderObject = tester.firstRenderObject(find.byType(RepaintBoundary));
-    final image =
-        await (renderObject as RenderRepaintBoundary).toImage(pixelRatio: 2);
-
-    final byteDataFuture = image.toByteData(format: ImageByteFormat.png);
-    await tester.pumpAndSettle();
-
-    final byteData = await byteDataFuture;
-    final buffer = byteData!.buffer.asUint8List();
-
-    // Save the bytes to a file
-    final file = File('screenshot.png');
-    file.writeAsBytesSync(buffer);
-    await tester.pump();
+    await saveScreenShot(tester, prefix: "basic");
   });
 }

@@ -53,6 +53,7 @@ path = [
     ".clazy",
     ".clang-tidy",
     ".gitignore",
+    ".gitmodules",
     ".markdownlint.json",
     ".pep8",
     ".pylintrc",

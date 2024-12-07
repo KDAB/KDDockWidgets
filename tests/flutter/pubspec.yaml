@@ -1,5 +1,5 @@
-name: kddockwidgets_flutter_example
-description: KDDockWidgets flutter example
+name: kddockwidgets_integration_tests
+description: KDDockWidgets integration tests
 
 publish_to: "none"
 version: 1.0.0+1
