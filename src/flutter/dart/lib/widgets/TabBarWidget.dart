@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/models/Group.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

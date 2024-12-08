@@ -11,9 +11,8 @@
 
 import 'dart:developer';
 import 'package:KDDockWidgets/models/DockItem.dart';
-import 'package:KDDockWidgets/models/DropArea.dart';
-import 'package:KDDockWidgets/models/Group.dart';
-import 'package:KDDockWidgets/models/TitleBar.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
+
 import 'package:KDDockWidgets/widgets/DockWidget.dart';
 import 'package:KDDockWidgets/widgets/GroupWidget.dart';
 import 'package:KDDockWidgets/widgets/DropAreaWidget.dart';

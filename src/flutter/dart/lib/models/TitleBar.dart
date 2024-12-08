@@ -9,15 +9,21 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:flutter/material.dart';
+part of kddockwidgets;
 
 class TitleBar {
   String title = "";
   bool isExplicitlyHidden = false;
+  final Group? _group;
 
-  TitleBar({this.title = ""});
+  TitleBar(Group? group, {this.title = ""}) : _group = group {}
 
-  void onCloseClicked() {}
+  void onCloseClicked() {
+    if (_group != null) {
+      _group.close();
+    }
+  }
+
   void onFloatClicked() {}
 
   void onMouseEvent(PointerEvent ev) {}

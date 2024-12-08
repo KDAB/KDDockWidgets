@@ -9,16 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/models/Group.dart';
-import 'package:KDDockWidgets/models/Separator.dart';
-import 'package:KDDockWidgets/models/DockItem.dart';
-import 'package:KDDockWidgets/KDDockWidgets.dart';
-import 'package:KDDockWidgets/private/Bindings.dart';
-import 'package:flutter/widgets.dart';
-
-import 'dart:ffi' as ffi;
-
-import 'package:signals_slots/signals_slots.dart';
+part of kddockwidgets;
 
 enum Location {
   LocationNone,
@@ -28,13 +19,13 @@ enum Location {
   LocationOnBottom
 }
 
-final Map<int, WeakReference<DropArea>> _instances = {};
+final Map<int, WeakReference<DropArea>> _dropAreaInstances = {};
 
 // Called from C++
 void _separatorAddedCallback(ffi.Pointer<ffi.Void> host,
     ffi.Pointer<ffi.Void> separator, int isVertical) {
   try {
-    DropArea dropArea = _instances[host.address]!.target!;
+    DropArea dropArea = _dropAreaInstances[host.address]!.target!;
     dropArea._on_separator_added_in_cpp(
         separator,
         isVertical == 1
@@ -49,7 +40,7 @@ void _separatorAddedCallback(ffi.Pointer<ffi.Void> host,
 void _separatorRemovedCallback(
     ffi.Pointer<ffi.Void> host, ffi.Pointer<ffi.Void> separator) {
   try {
-    DropArea dropArea = _instances[host.address]!.target!;
+    DropArea dropArea = _dropAreaInstances[host.address]!.target!;
     dropArea._on_separator_removed_in_cpp(separator);
   } catch (e) {
     print('Error in _separatorAddedCallback: $e');
@@ -85,10 +76,10 @@ class DropArea implements ffi.Finalizable {
     Bindings.instance.nativeLibrary.set_separator_removed_callback(
         _hostCpp.cast(), separatorRemovedCallbackPointer);
 
-    _instances[_hostCpp.address] = WeakReference<DropArea>(this);
+    _dropAreaInstances[_hostCpp.address] = WeakReference<DropArea>(this);
 
     // cleanup since we don't have dtors
-    _instances.removeWhere((_, weakRef) => weakRef.target == null);
+    _dropAreaInstances.removeWhere((_, weakRef) => weakRef.target == null);
   }
 
   void _addGroup(Group group) {
@@ -120,7 +111,7 @@ class DropArea implements ffi.Finalizable {
       return;
     }
 
-    var group = Group(_hostCpp);
+    var group = Group(this);
     group.addDockWidget(dock);
     _addGroup(group);
 
@@ -175,5 +166,9 @@ class DropArea implements ffi.Finalizable {
     _separators
         .removeWhere((sep) => sep.separatorCpp.address == separator.address);
     layoutChanged.emit();
+  }
+
+  ffi.Pointer<void> get hostPtr {
+    return _hostCpp;
   }
 }
