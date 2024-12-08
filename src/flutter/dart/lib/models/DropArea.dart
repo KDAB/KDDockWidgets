@@ -98,6 +98,10 @@ class DropArea implements ffi.Finalizable {
     return _groups.any((group) => group.containsDockItem(name));
   }
 
+  bool hasGroups() {
+    return _groups.isNotEmpty;
+  }
+
   void setLayoutSize(int width, int height) {
     Bindings.instance.nativeLibrary
         .on_flutter_droparea_widget_resized(_hostCpp.cast(), width, height);

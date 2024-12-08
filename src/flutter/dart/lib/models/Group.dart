@@ -35,7 +35,7 @@ void _geometryChangedCallback(ffi.Pointer<ffi.Void> guest, int x, int y,
   }
 }
 
-class Group extends GeometryItem implements ffi.Finalizable {
+class Group extends GeometryItem implements ffi.Finalizable, ItemWithTitleBar {
   static final _finalizer =
       ffi.NativeFinalizer(finalizerFunc("delete_guest").cast());
 
@@ -160,6 +160,7 @@ class Group extends GeometryItem implements ffi.Finalizable {
     }
   }
 
+  @override
   void close() {
     dropArea._removeGroup(this);
   }

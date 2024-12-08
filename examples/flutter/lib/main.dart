@@ -10,7 +10,6 @@
 */
 
 import 'dart:developer';
-import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:KDDockWidgets/KDDockWidgets.dart';
 
 import 'package:KDDockWidgets/widgets/DockWidget.dart';

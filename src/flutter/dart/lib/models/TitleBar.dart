@@ -11,17 +11,22 @@
 
 part of kddockwidgets;
 
+// Floating windows and tab groups have titlebars
+abstract class ItemWithTitleBar {
+  // called when close button on the titlebar is clicked
+  void close();
+}
+
 class TitleBar {
   String title = "";
   bool isExplicitlyHidden = false;
-  final Group? _group;
+  final ItemWithTitleBar _itemWithTitleBar;
 
-  TitleBar(Group? group, {this.title = ""}) : _group = group {}
+  TitleBar(ItemWithTitleBar itemWithTitleBar, {this.title = ""})
+      : _itemWithTitleBar = itemWithTitleBar {}
 
   void onCloseClicked() {
-    if (_group != null) {
-      _group.close();
-    }
+    _itemWithTitleBar.close();
   }
 
   void onFloatClicked() {}

@@ -9,8 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:flutter/widgets.dart';
-import 'package:signals_slots/signals_slots.dart';
+part of kddockwidgets;
 
 /// represents the state of a dock widget
 
@@ -24,7 +23,9 @@ class DockItem {
   DockItem({
     required this.uniqueName,
     this.guestWidget,
-  });
+  }) {
+    DockRegistry.instance.addDockItem(this);
+  }
 
   String get title {
     if (_title.isNotEmpty) return _title;

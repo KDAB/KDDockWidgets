@@ -10,7 +10,6 @@
 */
 
 import 'package:KDDockWidgets/KDDockWidgets.dart';
-import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:KDDockWidgets/widgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/widgets/TabBarWidget.dart';
 import 'package:KDDockWidgets/widgets/TitleBarWidget.dart';

@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:flutter/widgets.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
 
 class DockWidget extends StatefulWidget {
   final DockItem dockItem;
