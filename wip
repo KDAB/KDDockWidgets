@@ -1,0 +1,6 @@
+next:
+- FloatingWidget.dart
+- Add kdab logos to tests
+- Tests for tabs
+- titlebar float button
+- dockwidget api to add as tab
