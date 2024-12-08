@@ -32,7 +32,10 @@ jobs:
           cd ../..
           git add tests/reference-images/
           if [ -n "$(git status --porcelain)" ]; then
+            BRANCH_NAME=update/ref-images/`git rev-parse HEAD`
+            git checkout -B $BRANCH_NAME
             git commit -m "Bump tests/reference-images/"
+            git push origin $BRANCH_NAME
             gh pr create --base main --title "Bump tests/reference-images/" --body "Automatically created via GH actions."
           fi
         env:
