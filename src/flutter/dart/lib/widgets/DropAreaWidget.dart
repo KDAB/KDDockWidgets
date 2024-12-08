@@ -13,7 +13,7 @@
 import 'package:KDDockWidgets/models/Separator.dart';
 import 'package:KDDockWidgets/widgets/RubberBandWidget.dart';
 import 'package:KDDockWidgets/widgets/GroupWidget.dart';
-import 'package:KDDockWidgets/models/DropArea.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:KDDockWidgets/widgets/SeparatorWidget.dart';
 
 import 'package:flutter/material.dart';

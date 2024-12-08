@@ -11,7 +11,7 @@
 
 import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:KDDockWidgets/models/DropArea.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:KDDockWidgets/private/Bindings.dart';
 
 void main() {
@@ -94,5 +94,15 @@ void main() {
     expect(group.showsTabs(), true);
     expect(group.titlebar.title, group.currentDockItem!.title);
     expect(group.titlebar.title, "title1");
+  });
+
+  test('titlebar closebutton', () {
+    var dropArea = DropArea();
+    var dock1 = DockItem(uniqueName: "dock1");
+    dropArea.addDockItem(dock1, Location.LocationOnLeft);
+    final group = dropArea.groups.first;
+    expect(group.titlebar.isExplicitlyHidden, false);
+    group.titlebar.onCloseClicked();
+    expect(dropArea.groups.isEmpty, true);
   });
 }

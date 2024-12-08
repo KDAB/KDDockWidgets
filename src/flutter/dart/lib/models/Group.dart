@@ -9,16 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'dart:ui';
-
-import 'package:KDDockWidgets/models/DockItem.dart';
-import 'package:KDDockWidgets/models/GeometryItem.dart';
-import 'package:KDDockWidgets/models/TitleBar.dart';
-import 'package:KDDockWidgets/private/Bindings.dart';
-
-import 'dart:ffi' as ffi;
-
-import 'package:signals_slots/signals_slots.dart';
+part of kddockwidgets;
 
 final Map<int, WeakReference<Group>> _instances = {};
 final Map<DockItem, Connection> _titleChangedConnections = {};
@@ -50,14 +41,17 @@ class Group extends GeometryItem implements ffi.Finalizable {
 
   int _currentIndex = -1;
   List<DockItem> items = [];
-  final titlebar = TitleBar();
+  late final TitleBar titlebar;
 
   final ffi.Pointer<void> _hostCpp;
   late final ffi.Pointer<void> guestCpp;
 
   final titleChanged = Signal0();
+  DropArea dropArea;
 
-  Group(this._hostCpp, {super.geometry}) {
+  Group(this.dropArea, {super.geometry}) : _hostCpp = dropArea.hostPtr {
+    titlebar = TitleBar(this);
+
     final callbackPointer = ffi.Pointer.fromFunction<
         ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Int, ffi.Int, ffi.Int,
             ffi.Int, ffi.Int)>(_geometryChangedCallback);
@@ -164,5 +158,9 @@ class Group extends GeometryItem implements ffi.Finalizable {
       titlebar.title = currentDockItem!.title;
       titleChanged.emit();
     }
+  }
+
+  void close() {
+    dropArea._removeGroup(this);
   }
 }

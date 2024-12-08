@@ -9,8 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/models/TitleBar.dart';
-import 'package:KDDockWidgets/models/Group.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:KDDockWidgets/widgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/widgets/TabBarWidget.dart';

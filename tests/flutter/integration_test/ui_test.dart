@@ -13,7 +13,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:KDDockWidgets/models/DockItem.dart';
-import 'package:KDDockWidgets/models/DropArea.dart';
+import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
