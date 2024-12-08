@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:KDDockWidgets/private/Bindings.dart';

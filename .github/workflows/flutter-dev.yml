@@ -38,6 +38,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Install dependencies on Ubuntu
         run: |

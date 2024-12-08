@@ -11,7 +11,6 @@
 
 library kddockwidgets;
 
-import 'package:KDDockWidgets/models/DockItem.dart';
 import 'package:KDDockWidgets/models/GeometryItem.dart';
 import 'package:KDDockWidgets/models/Separator.dart';
 import 'package:KDDockWidgets/private/Bindings.dart';
@@ -24,6 +23,9 @@ import 'package:signals_slots/signals_slots.dart';
 part 'models/Group.dart';
 part 'models/DropArea.dart';
 part 'models/TitleBar.dart';
+part 'models/FloatingItem.dart';
+part 'models/DockRegistry.dart';
+part 'models/DockItem.dart';
 
 class DropLocation {
   static const int DropLocation_None = 0;
