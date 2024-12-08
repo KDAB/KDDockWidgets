@@ -20,6 +20,11 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup git author name
+        run: |
+          git config --global user.email "kddw@actions"
+          git config --global user.name "KDDW Actions"
+
       - name: bump submodule
         run: |
           cd tests/reference-images/
