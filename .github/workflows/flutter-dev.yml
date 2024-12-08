@@ -67,6 +67,6 @@ jobs:
           cd ${{ github.workspace }}/tests/flutter/
           flutter pub get
           cd ${{ github.workspace }}/build-dev-flutter/
-          ctest
+          ctest --output-on-failure
         env:
           KDDW_BINDINGS_LIB: ${{ github.workspace }}/build-dev-flutter/lib/libkddockwidgets.so
