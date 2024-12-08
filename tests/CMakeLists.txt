@@ -141,13 +141,11 @@ endif()
 if(KDDW_FRONTEND_FLUTTER)
     if(UNIX AND NOT APPLE)
         set(FLUTTER_DEVICE linux)
-        set(TEST_RUNNER "xvfb-run flutter")
+        set(TEST_RUNNER "xvfb-run")
     elseif(WIN32)
         set(FLUTTER_DEVICE windows)
-        set(TEST_RUNNER flutter)
     elseif(APPLE)
         set(FLUTTER_DEVICE macos)
-        set(TEST_RUNNER flutter)
     endif()
 
     add_test(
@@ -159,7 +157,7 @@ if(KDDW_FRONTEND_FLUTTER)
     add_test(
         NAME tst_flutter_integrationtests
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests/flutter/
-        COMMAND ${TEST_RUNNER} test integration_test -d ${FLUTTER_DEVICE}
+        COMMAND ${TEST_RUNNER} flutter test integration_test -d ${FLUTTER_DEVICE}
     )
 endif()
 
