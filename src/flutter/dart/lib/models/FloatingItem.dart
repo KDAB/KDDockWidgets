@@ -32,12 +32,7 @@ class FloatingItem implements ItemWithTitleBar {
 
   @override
   void close() {
-    if (!DockRegistry.instance.containsFloatingItem(this)) {
-      // we're closed already, can be removed once we can _groupCountChangedConnection.disconnect()
-      return;
-    }
-
-    // _groupCountChangedConnection.disconnect(); signals_slot bug
+    _groupCountChangedConnection.disconnect();
     DockRegistry.instance.removeFloatingItem(this);
   }
 }

@@ -10,7 +10,7 @@ dependencies:
   meta:
   flutter:
     sdk: flutter
-  signals_slots: ^1.1.0
+  signals_slots: ^1.1.1
 
 dev_dependencies:
   lints: ^5.0.0
