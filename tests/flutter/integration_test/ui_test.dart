@@ -14,9 +14,11 @@ import 'dart:ui';
 
 import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:KDDockWidgets/widgets/DropAreaWidget.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:kddockwidgets_integration_tests/MyWidget.dart';
 
 import 'package:kddockwidgets_integration_tests/utils.dart';
 
@@ -67,19 +69,12 @@ class MyApp extends StatelessWidget {
 
 void main() async {
   testWidgets('Basic test', (WidgetTester tester) async {
-    final dock1 =
-        DockItem(uniqueName: "dw1", guestWidget: Container(color: Colors.cyan));
-    final dock2 =
-        DockItem(uniqueName: "dw2", guestWidget: Container(color: Colors.cyan));
-    final dock3 =
-        DockItem(uniqueName: "dw3", guestWidget: Container(color: Colors.cyan));
+    final dock1 = DockItem(uniqueName: "dw1", guestWidget: MyWidget());
+    final dock2 = DockItem(uniqueName: "dw2", guestWidget: MyWidget());
+    final dock3 = DockItem(uniqueName: "dw3", guestWidget: MyWidget());
 
-    final dock11 = DockItem(
-        uniqueName: "dw11", guestWidget: Container(color: Colors.cyan));
-    final dock12 = DockItem(
-        uniqueName: "dw12", guestWidget: Container(color: Colors.cyan));
-    final dock13 = DockItem(
-        uniqueName: "dw13", guestWidget: Container(color: Colors.cyan));
+    final dock11 = DockItem(uniqueName: "dw11", guestWidget: MyWidget());
+    final dock12 = DockItem(uniqueName: "dw12", guestWidget: MyWidget());
 
     final dropArea = DropArea();
     dropArea.addDockItem(dock1, Location.LocationOnTop);
@@ -88,7 +83,6 @@ void main() async {
     group.addDockWidget(dock3);
     group.addDockWidget(dock11);
     group.addDockWidget(dock12);
-    group.addDockWidget(dock13);
 
     dropArea.setLayoutSize(700, 700);
     final dropAreaWidget = DropAreaWidget(dropArea);
