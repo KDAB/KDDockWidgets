@@ -26,7 +26,6 @@
         <enum-type name="FrontendType" />
         <enum-type name="InitialVisibilityOption" />
         <enum-type name="RestoreOption" flags="RestoreOptions" />
-        <enum-type name="DropIndicatorType" />
         <enum-type name="SideBarLocation" />
         <enum-type name="TitleBarButtonType" />
         <enum-type name="DropLocation" />
