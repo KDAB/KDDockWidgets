@@ -52,14 +52,14 @@
         <value-type name="InitialOption">
             <include file-name="kddockwidgets/KDDockWidgets.h" location="global"/>
         </value-type>
-        
+
         <object-type name="LayoutSaver">
             <include file-name="kddockwidgets/LayoutSaver.h" location="global"/>
         </object-type>
-        
+
         <object-type name="Config">
             <include file-name="kddockwidgets/Config.h" location="global"/>
-            
+
             <enum-type name="Flag" flags="Flags" />
             <enum-type name="CustomizableWidget" flags="CustomizableWidgets" />
             <enum-type name="InternalFlag" flags="InternalFlags" />
@@ -68,12 +68,12 @@
 
         <namespace-type name="Core" visible="no">
             <enum-type name="ViewType" />
-            
+
             <object-type name="DockWidgetViewInterface">
                 <include file-name="kddockwidgets/core/views/DockWidgetViewInterface.h" location="global"/>
                 <rejection class="KDDockWidgets::Core::DockWidgetViewInterface" field-name="m_dockWidget" />
             </object-type>
-            
+
             <object-type name="MainWindowViewInterface">
                 <include file-name="kddockwidgets/core/views/MainWindowViewInterface.h" location="global"/>
                 <rejection class="KDDockWidgets::Core::MainWindowViewInterface" field-name="m_mainWindow" />
@@ -85,11 +85,11 @@
             <object-type name="MainWindow">
                 <include file-name="kddockwidgets/qtwidgets/views/MainWindow.h" location="global"/>
             </object-type>
-            
+
             <object-type name="DockWidget">
                 <include file-name="kddockwidgets/qtwidgets/views/DockWidget.h" location="global"/>
             </object-type>
-            
+
         </namespace-type>
     </namespace-type>
 </typesystem>
