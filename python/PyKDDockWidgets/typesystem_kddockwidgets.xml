@@ -6,7 +6,6 @@
         typesystem because it already include gui and core typesystem -->
     <load-typesystem name="typesystem_widgets.xml" generate="no" />
 
-    <rejection class="KDDockWidgets" function-name="qt_getEnumName" />
     <rejection class="KDDockWidgets" function-name="qt_getEnumMetaObject" />
     <rejection class="KDDockWidgets" function-name="qt_getEnumName" />
 
@@ -28,22 +27,21 @@
         <enum-type name="InitialVisibilityOption" />
         <enum-type name="RestoreOption" flags="RestoreOptions" />
         <enum-type name="DropIndicatorType" />
-        <enum-type name="SizePolicy" />
         <enum-type name="SideBarLocation" />
         <enum-type name="TitleBarButtonType" />
         <enum-type name="DropLocation" />
         <enum-type name="DropIndicatorType" />
         <enum-type name="AddingOption" />
         <enum-type name="WindowState" flags="WindowStates" />
-
         <!-- Internal - just to avoid generation warning -->
         <enum-type name="SuggestedGeometryHint" flags="SuggestedGeometryHints" />
         <enum-type name="CursorPosition" flags="CursorPositions" />
         <enum-type name="FrameOption" flags="FrameOptions" />
         <enum-type name="StackOption" flags="StackOptions" />
         <enum-type name="FloatingWindowFlag" flags="FloatingWindowFlags" />
-        <enum-type name="FloatingWindowFlag" flags="FloatingWindowFlags" />
         <enum-type name="DefaultSizeMode" />
+        <enum-type name="CloseReason"/>
+        <enum-type name="NeighbourSqueezeStrategy"/>
 
         <!-- our classes
              For class we can use two types:
@@ -54,25 +52,32 @@
         <value-type name="InitialOption">
             <include file-name="kddockwidgets/KDDockWidgets.h" location="global"/>
         </value-type>
+        
         <object-type name="LayoutSaver">
             <include file-name="kddockwidgets/LayoutSaver.h" location="global"/>
         </object-type>
+        
         <object-type name="Config">
             <include file-name="kddockwidgets/Config.h" location="global"/>
-
+            
             <enum-type name="Flag" flags="Flags" />
             <enum-type name="CustomizableWidget" flags="CustomizableWidgets" />
             <enum-type name="InternalFlag" flags="InternalFlags" />
+            <enum-type name="MDIFlag" flags="MDIFlags"/>
         </object-type>
 
         <namespace-type name="Core" visible="no">
             <enum-type name="ViewType" />
-            <object-type name="DockWidgetViewInterface" >
-              <include file-name="kddockwidgets/core/views/DockWidgetViewInterface.h" location="global"/>
+            
+            <object-type name="DockWidgetViewInterface">
+                <include file-name="kddockwidgets/core/views/DockWidgetViewInterface.h" location="global"/>
+                <rejection class="KDDockWidgets::Core::DockWidgetViewInterface" field-name="m_dockWidget" />
             </object-type>
+            
             <object-type name="MainWindowViewInterface">
-              <include file-name="kddockwidgets/core/views/MainWindowViewInterface.h" location="global"/>
-              <modify-function signature="addDockWidget(KDDockWidgets::Core::DockWidgetViewInterface*,KDDockWidgets::Location,KDDockWidgets::Core::DockWidgetViewInterface*,KDDockWidgets::InitialOption)" rename="addKDockWidget" />
+                <include file-name="kddockwidgets/core/views/MainWindowViewInterface.h" location="global"/>
+                <rejection class="KDDockWidgets::Core::MainWindowViewInterface" field-name="m_mainWindow" />
+                <modify-function signature="addDockWidget(KDDockWidgets::Core::DockWidgetViewInterface*,KDDockWidgets::Location,KDDockWidgets::Core::DockWidgetViewInterface*,KDDockWidgets::InitialOption)" rename="addKDockWidget" />
             </object-type>
         </namespace-type>
 
@@ -80,9 +85,11 @@
             <object-type name="MainWindow">
                 <include file-name="kddockwidgets/qtwidgets/views/MainWindow.h" location="global"/>
             </object-type>
+            
             <object-type name="DockWidget">
                 <include file-name="kddockwidgets/qtwidgets/views/DockWidget.h" location="global"/>
             </object-type>
+            
         </namespace-type>
     </namespace-type>
 </typesystem>
