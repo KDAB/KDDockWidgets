@@ -33,3 +33,6 @@
 #include <kddockwidgets/qtwidgets/views/MainWindow.h>
 #include <kddockwidgets/qtwidgets/views/DockWidget.h>
 #include <kddockwidgets/qtcommon/View.h>
+# for cbor warnings and enum differ in qualifiers
+#include <QtCore/QCborStreamReader>
+#include <QtCore/qcborstreamreader.h>
