@@ -23,6 +23,24 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtCommon;
 
+namespace {
+#ifdef Q_OS_WINDOWS
+    void setNormalGeometry(QWindow *window) {
+        WINDOWPLACEMENT wp = { sizeof(WINDOWPLACEMENT) };
+
+        if (GetWindowPlacement(hWnd, &wp)) {
+
+            wp.rcNormalPosition.left = rect.x();
+            wp.rcNormalPosition.top = rect.y();
+            wp.rcNormalPosition.right = rect.right() + 1;
+            wp.rcNormalPosition.bottom = rect.bottom() + 1;
+
+            SetWindowPlacement(hWnd, &wp);
+        }
+    }
+#endif
+}
+
 Window::Window(QWindow *window)
     : m_window(window)
 {
