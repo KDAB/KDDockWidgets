@@ -96,6 +96,11 @@ public:
     /// @brief Returns the screen this window is on
     virtual Screen::Ptr screen() const = 0;
 
+    /// @brief Sets the screen this window belongs to
+    /// Does not move it
+    virtual void setScreen(int) = 0;
+    virtual int screenIndex() const = 0;
+
     /// Deletes the underlying window. Only used during tests.
     virtual void destroy() = 0;
 

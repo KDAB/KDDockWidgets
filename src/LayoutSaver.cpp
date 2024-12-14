@@ -642,6 +642,18 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, Window::Ptr
         // The window will be maximized. We first set its geometry to normal
         // Later it's maximized and will remember this value
         geometry = saved.normalGeometry;
+
+        if (saved.screenIndex != Platform::instance()->screenNumberForPoint(geometry.topLeft())) {
+            // Workaround bug #553. Window is maximized on screen 2 but its normal
+            // geometry is on screen 1. Restoring normal geometry would move it to screen 2
+            // To avoid that, we move its normal geometry to screen 2. Could be fixed
+            // without workarounds if Qt supported QWindow::setNormalGeometry()
+            window->setScreen(saved.screenIndex);
+            if (auto screen = window->screen()) {
+                // center is as good as any
+                geometry.moveCenter(screen->geometry().center());
+            }
+        }
     }
 
     Core::FloatingWindow::ensureRectIsOnScreen(geometry);

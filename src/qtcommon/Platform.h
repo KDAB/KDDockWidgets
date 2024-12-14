@@ -39,6 +39,7 @@ public:
     QVector<std::shared_ptr<Core::Window>> windows() const override;
     virtual std::shared_ptr<Core::Window> windowFromQWindow(QWindow *) const = 0;
     int screenNumberForWindow(std::shared_ptr<Core::Window>) const override;
+    int screenNumberForPoint(Point) const override;
 
     void sendEvent(Core::View *, QEvent *) const override;
 

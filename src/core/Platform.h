@@ -83,6 +83,10 @@ public:
     /// @brief Returns the size of the screen where this view is in
     virtual Size screenSizeFor(View *) const = 0;
 
+    /// @brief Returns which screen the point is in
+    /// -1 if not found
+    virtual int screenNumberForPoint(Point) const = 0;
+
     /// @brief Create an empty view
     /// For Qt this would just returns a empty QWidget or QQuickItem
     /// other frontends can return something as basic.

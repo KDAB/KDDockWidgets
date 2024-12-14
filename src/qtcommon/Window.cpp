@@ -17,6 +17,7 @@
 #include <QWindow>
 #include <QScreen>
 #include <QVariant>
+#include <QGuiApplication>
 
 #include <QtGui/private/qhighdpiscaling_p.h>
 
@@ -177,4 +178,30 @@ void Window::setVisible(bool is)
 bool Window::isFullScreen() const
 {
     return m_window->windowStates() & Qt::WindowFullScreen;
+}
+
+void Window::setScreen(int index)
+{
+    const auto screens = qApp->screens();
+    const int numScreens = screens.size();
+    if (index >= numScreens || index < 0) {
+        qWarning() << Q_FUNC_INFO << "index out of bounds" << index << numScreens;
+        return;
+    }
+
+    if (m_window) {
+        m_window->setScreen(screens[index]);
+    } else {
+        qWarning() << Q_FUNC_INFO << "window is nullptr";
+    }
+}
+
+int Window::screenIndex() const
+{
+    if (!m_window) {
+        qWarning() << Q_FUNC_INFO << "window is nullptr";
+        return -1;
+    }
+
+    return qApp->screens().indexOf(m_window->screen());
 }

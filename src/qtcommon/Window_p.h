@@ -54,6 +54,9 @@ public:
     QPoint mapFromGlobal(QPoint globalPos) const override;
     QPoint mapToGlobal(QPoint localPos) const override;
     Screen_qt::Ptr screen() const override;
+    void setScreen(int) override;
+    int screenIndex() const override;
+
     void destroy() override;
     QSize minSize() const override;
     QSize maxSize() const override;

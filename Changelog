@@ -10,6 +10,7 @@
   - Fix case where persistent central widget would detach when dragged
   - Allow to build against external KDBindings
   - Fix restore layout of nested main windows (#508)
+  - Fix restore maximized window corner case (#553)
 
 * v2.1.0 (08 May 2024)
   - Added standalone layouting example using Slint
