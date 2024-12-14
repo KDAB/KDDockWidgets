@@ -216,6 +216,17 @@ int Platform_qt::screenNumberForWindow(std::shared_ptr<Core::Window> window) con
     return screenNumberForQWindow(static_cast<Window *>(window.get())->qtWindow());
 }
 
+int Platform_qt::screenNumberForPoint(Point pt) const
+{
+    const auto screens = qApp->screens();
+    for (int i = 0; i < screens.size(); ++i) {
+        if (screens[i]->geometry().contains(pt))
+            return i;
+    }
+
+    return -1;
+}
+
 int Platform_qt::screenNumberForQWindow(QWindow *window) const
 {
     if (QScreen *screen = window->screen()) {
