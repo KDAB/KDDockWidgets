@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha1:
+        type: string
+        required: true
+        description: "sha1 to be tagged"
+      version:
+        type: string
+        required: true
+        description: "Desired numeric version (without any prefix/suffix)"
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Checkout CI tools
+        uses: actions/checkout@v4
+        with:
+          repository: KDABLabs/ci-release-tools
+          path: ci-release-tools
+          ref: main
+
+      - name: Setup git author name
+        run: |
+          git config --global user.email "github_actions@kdab"
+          git config --global user.name "KDAB GitHub Actions"
+
+      - name: Create release
+        run: |
+          python3 ci-release-tools/src/create_release.py --repo KDDockWidgets --version ${{ github.event.inputs.version }}" --sha1 ${{ github.event.inputs.sha1 }}" --repo-path .
