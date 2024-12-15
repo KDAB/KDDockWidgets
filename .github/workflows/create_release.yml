@@ -36,3 +36,5 @@ jobs:
       - name: Create release
         run: |
           python3 ci-release-tools/src/create_release.py --repo KDDockWidgets --version ${{ github.event.inputs.version }}" --sha1 ${{ github.event.inputs.sha1 }}" --repo-path .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
