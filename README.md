@@ -4,8 +4,8 @@
 
 ![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/2.0/images/kddockwidgets.png?raw=true)
 
-Our brand new [manual](https://kdab.github.io/KDDockWidgets)
-is now the docs entry point for everything related to `KDDockWidgets`.
+Our [manual](https://kdab.github.io/KDDockWidgets)
+is the docs entry point for everything related to `KDDockWidgets`.
 This README only provides minimal information.
 
 <br>
