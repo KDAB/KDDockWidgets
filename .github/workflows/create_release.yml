@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
+name: Creates a release
+
 on:
   workflow_dispatch:
     inputs:
