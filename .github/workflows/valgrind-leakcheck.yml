@@ -12,6 +12,7 @@ on:
       - tests/flutter/**
       - examples/flutter/**
       - tests/reference-images/**
+      - .github/workflows/create_release.yml
     branches:
       - main
   pull_request:

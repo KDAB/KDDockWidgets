@@ -7,11 +7,11 @@ name: Layouting library
 on:
   push:
     branches:
-      - 2.1
       - main
+    paths-ignore:
+      - .github/workflows/create_release.yml
   pull_request:
     branches:
-      - 2.1
       - main
 
 jobs:
