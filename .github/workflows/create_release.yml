@@ -16,6 +16,10 @@ on:
         required: true
         description: "Desired numeric version (without any prefix/suffix)"
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   create_release:
     runs-on: ubuntu-24.04
