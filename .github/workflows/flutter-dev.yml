@@ -10,6 +10,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - .github/workflows/create_release.yml
   pull_request:
     branches:
       - main
