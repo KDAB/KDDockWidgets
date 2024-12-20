@@ -26,6 +26,7 @@ class View;
 
 namespace QtQuick {
 
+using IndicatorWindowCreationCallback = std::function<void(QQuickView *window)>;
 class ClassicDropIndicatorOverlay;
 
 class IndicatorWindow : public QQuickView
@@ -35,7 +36,13 @@ public:
     explicit IndicatorWindow();
     ~IndicatorWindow() override;
 
+    /// Set a callback if you want to be notified of a QQuickView being created
+    static void setQuickWindowCreationCallback(const IndicatorWindowCreationCallback &);
+
     void init(const QUrl &rootQml);
+
+private:
+    static IndicatorWindowCreationCallback s_quickWindowCreationCallback;
 };
 
 class ClassicDropIndicatorOverlay : public QObject, public Core::ClassicIndicatorWindowViewInterface
