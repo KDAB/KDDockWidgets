@@ -6,7 +6,6 @@
         typesystem because it already include gui and core typesystem -->
     <load-typesystem name="typesystem_widgets.xml" generate="no" />
 
-    <rejection class="KDDockWidgets" function-name="qt_getEnumName" />
     <rejection class="KDDockWidgets" function-name="qt_getEnumMetaObject" />
     <rejection class="KDDockWidgets" function-name="qt_getEnumName" />
 
@@ -27,7 +26,6 @@
         <enum-type name="FrontendType" />
         <enum-type name="InitialVisibilityOption" />
         <enum-type name="RestoreOption" flags="RestoreOptions" />
-        <enum-type name="DropIndicatorType" />
         <enum-type name="SizePolicy" />
         <enum-type name="SideBarLocation" />
         <enum-type name="TitleBarButtonType" />
@@ -41,7 +39,6 @@
         <enum-type name="CursorPosition" flags="CursorPositions" />
         <enum-type name="FrameOption" flags="FrameOptions" />
         <enum-type name="StackOption" flags="StackOptions" />
-        <enum-type name="FloatingWindowFlag" flags="FloatingWindowFlags" />
         <enum-type name="FloatingWindowFlag" flags="FloatingWindowFlags" />
         <enum-type name="DefaultSizeMode" />
 
