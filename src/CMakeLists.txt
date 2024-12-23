@@ -408,7 +408,7 @@ if(KDDockWidgets_CODE_COVERAGE)
     target_link_libraries(kddockwidgets PUBLIC kddw_coverage_options)
 endif()
 
-target_link_libraries(kddockwidgets PRIVATE KDAB::KDBindings)
+kddw_link_to_kdbindings(kddockwidgets)
 
 if(KDDockWidgets_HAS_SPDLOG)
     target_link_libraries(kddockwidgets PRIVATE spdlog::spdlog)
