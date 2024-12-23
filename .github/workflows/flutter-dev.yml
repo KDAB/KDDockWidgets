@@ -12,6 +12,7 @@ on:
       - main
     paths-ignore:
       - .github/workflows/create_release.yml
+      - .github/workflows/examples.yml
   pull_request:
     branches:
       - main

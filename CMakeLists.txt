@@ -482,9 +482,7 @@ endif()
 set(KKDockWidgets_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(KDBindings QUIET)
-if(NOT TARGET KDAB::KDBindings)
-    include(src/kdbindings.cmake)
-endif()
+include(src/kdbindings.cmake)
 
 if(KDDockWidgets_TESTS)
     enable_testing()

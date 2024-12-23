@@ -13,7 +13,7 @@ on:
       - examples/flutter/**
       - tests/reference-images/**
       - .github/workflows/create_release.yml
-
+      - .github/workflows/examples.yml
     branches:
       - main
   pull_request:

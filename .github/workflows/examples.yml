@@ -24,6 +24,9 @@ jobs:
           - ubuntu-22.04
           - windows-2022
           - macos-13
+        preset:
+          - release
+          - ci-release-static-qt5
     steps:
       - name: Install Qt 5.15 with options and default aqtversion
         uses: jurplel/install-qt-action@v3
@@ -48,13 +51,13 @@ jobs:
         uses: turtlesec-no/get-ninja@main
 
       - name: Configure
-        run: cmake --preset=release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
+        run: cmake --preset=${{ matrix.preset }} -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
-        run: cmake --build build-release --parallel
+        run: cmake --build build-${{ matrix.preset }} --parallel
 
       - name: Install
-        run: cmake --install build-release
+        run: cmake --install build-${{ matrix.preset }}
 
       - name: Build examples
         run: |
