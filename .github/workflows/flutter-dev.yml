@@ -10,12 +10,14 @@ on:
   push:
     branches:
       - main
+      - 2.2
     paths-ignore:
       - .github/workflows/create_release.yml
       - .github/workflows/examples.yml
   pull_request:
     branches:
       - main
+      - 2.2
 
 jobs:
   build:

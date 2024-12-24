@@ -15,9 +15,11 @@ on:
       - .github/workflows/create_release.yml
     branches:
       - main
+      - 2.2
   pull_request:
     branches:
       - main
+      - 2.2
 
 jobs:
   build:

@@ -16,9 +16,11 @@ on:
       - .github/workflows/examples.yml
     branches:
       - main
+      - 2.2
   pull_request:
     branches:
       - main
+      - 2.2
 
 jobs:
   build:

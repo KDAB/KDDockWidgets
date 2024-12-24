@@ -1,6 +1,9 @@
 * v2.3.0
   - qtquick: Add QtQuick::IndicatorWindow::setQuickWindowCreationCallback
 
+* v2.2.1
+  - Fix linking against static KDDW (#557)
+
 * v2.2.0
   - qtquick: Add support for MainWindowOption_HasCentralWidget
   - qtquick: Add QtQuick::FloatingWindow::setQuickWindowCreationCallback
