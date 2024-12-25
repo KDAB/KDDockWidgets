@@ -30,6 +30,10 @@ class FloatingItem implements ItemWithTitleBar {
     }
   }
 
+  bool showsTitleBar() {
+    return dropArea.groups.length > 1;
+  }
+
   @override
   void close() {
     _groupCountChangedConnection.disconnect();
