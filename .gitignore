@@ -114,3 +114,4 @@ generated_plugins.cmake
 /docs/book/book/
 /book/
 /src/flutter/dart/build/
+/tests/flutter/linux/flutter/ephemeral
