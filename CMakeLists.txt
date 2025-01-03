@@ -81,10 +81,14 @@ project(
     LANGUAGES CXX C
 )
 
-set(KDDockWidgets_VERSION_MAJOR 2)
-set(KDDockWidgets_VERSION_MINOR 2)
-set(KDDockWidgets_VERSION_PATCH 1)
-set(KDDockWidgets_VERSION ${KDDockWidgets_VERSION_MAJOR}.${KDDockWidgets_VERSION_MINOR}.${KDDockWidgets_VERSION_PATCH})
+file(STRINGS version.txt KDDW_VERSION_FILE)
+list(GET KDDW_VERSION_FILE 0 KDDockWidgets_VERSION)
+
+string(REPLACE "." ";" KDDW_VERSION_LIST "${KDDockWidgets_VERSION}")
+list(GET KDDW_VERSION_LIST 0 KDDockWidgets_VERSION_MAJOR)
+list(GET KDDW_VERSION_LIST 1 KDDockWidgets_VERSION_MINOR)
+list(GET KDDW_VERSION_LIST 2 KDDockWidgets_VERSION_PATCH)
+
 set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by some ECM modules
 set(KDDockWidgets_SOVERSION "2.2")
 

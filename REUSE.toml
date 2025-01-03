@@ -23,6 +23,7 @@ path = [
     "README-Wayland.md",
     "README-troubleshooting",
     "3RDPARTY.md",
+    "version.txt",
     "conan/README.txt",
     "python/examples/README.txt",
     "python/examples-qt6/README.txt",
