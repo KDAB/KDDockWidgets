@@ -93,14 +93,6 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Hackery due Shiboken hardcoded paths
-        if: ${{ runner.os == 'Linux' }}
-        run: |
-          sudo mkdir -p /opt/rh/gcc-toolset-10/root/usr/bin/
-          sudo cp /usr/bin/g++-10 /opt/rh/gcc-toolset-10/root/usr/bin/c++
-          sudo mkdir -p /opt/rh/gcc-toolset-10/root/usr/lib/gcc/x86_64-linux-gnu/10/
-          sudo cp /usr/lib/gcc/x86_64-linux-gnu/10/cc1plus /opt/rh/gcc-toolset-10/root/usr/lib/gcc/x86_64-linux-gnu/10/
-
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
