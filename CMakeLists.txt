@@ -162,6 +162,13 @@ else()
     set(QT_MIN_VERSION "5.15")
 endif()
 
+if(KDDockWidgets_DEVELOPER_MODE
+   AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
+   AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "14.1"
+)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fhardened -O1")
+endif()
+
 # BEGIN frontend enabling
 
 set(KDDW_FRONTEND_QTWIDGETS OFF)
