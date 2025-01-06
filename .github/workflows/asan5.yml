@@ -2,11 +2,17 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Nightly ASAN Qt5
+name: ASAN Qt5
 
 on:
-  schedule:
-  - cron: '0 3 * * *'
+  push:
+    branches:
+      - main
+      - 2.2
+  pull_request:
+    branches:
+      - main
+      - 2.2
   workflow_dispatch:
 
 jobs:
