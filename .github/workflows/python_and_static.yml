@@ -22,7 +22,7 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
           - windows-2022
           - windows-2019
           - macos-13
@@ -40,23 +40,23 @@ jobs:
             qt_version: "6.3.*"
 
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             preset:
               name: ci-clang-tidy-qt6
               qt_version: "6.3.*"
 
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             preset:
               name: clazy
               build_preset_arg: '--preset=clazy'
               qt_version: "5.15"
 
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             preset:
               name: ci-dev-valgrind-qt5
               qt_version: "5.15"
 
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             preset:
               name: ci-dev-valgrind-qt6
               qt_version: "6.5.*"
