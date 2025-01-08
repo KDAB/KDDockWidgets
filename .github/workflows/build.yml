@@ -67,16 +67,12 @@ jobs:
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
+        if: env.IS_SELFHOSTED == null || env.IS_SELFHOSTED == ''
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ matrix.preset.qt_version }}
           cache: true
 
-
-      - name: Set Qt env (workaround for self-hosted runners)
-        run: |
-          echo "${RUNNER_WORKSPACE}/Qt/${{ matrix.preset.qt_version }}/gcc_64/bin/" >> $GITHUB_PATH
-          echo $PATH
 
       - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
         if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
