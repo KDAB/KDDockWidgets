@@ -197,3 +197,21 @@
    ...
    fun:_ZN18QThreadPoolPrivate11startThreadEP9QRunnable
 }
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.1
+   obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.1
+   fun:FcInitBringUptoDate
+   fun:FcFontList
+   fun:_ZN19QFontconfigDatabase20populateFontDatabaseEv
+   fun:_ZN20QFontDatabasePrivate18ensureFontDatabaseEv
+   fun:_ZN20QFontDatabasePrivate8findFontERK8QFontDefib
+   fun:_ZN20QFontDatabasePrivate4loadEPK12QFontPrivatei
+   fun:_ZNK12QFontPrivate15engineForScriptEi
+   fun:_ZNK13QFontMetricsF7leadingEv
+   obj:/opt/qt/6.6.0/gcc_64/lib/libQt6Gui.so.6.6.0
+}
