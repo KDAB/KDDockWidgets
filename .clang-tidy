@@ -65,4 +65,5 @@ Checks: '*, -google-*, -objc-*, -llvmlibc-*, -zircon-*,
 -portability-template-virtual-member-function,
 -performance-enum-size,
 -bugprone-narrowing-conversions,
+-clang-diagnostic-deprecated-declarations,
 '
