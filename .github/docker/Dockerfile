@@ -22,13 +22,27 @@ ENV TZ=Europe/Berlin
 ENV LC_CTYPE=C.UTF-8
 ENV PATH=/home/ubuntu/.local/bin:$PATH
 
+ENV IS_SELFHOSTED=1
+ENV CTEST_PARALLEL_LEVEL=12
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt update -qq && apt install build-essential software-properties-common lld git cmake ninja-build vim curl wget gdebi-core libdbus-glib-1-2 \
         mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
         libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
         libxkbcommon-x11-0 libssl-dev openssl unzip clang libgtk-3-dev \
-        time xvfb python3-pip jq sudo -y
+        time xvfb python3-pip jq sudo libxml2-dev libxslt-dev \
+        libx11-xcb1 \
+        libxcb-glx0 \
+        libxcb-keysyms1 \
+        libxcb-image0 \
+        libxcb-shm0 \
+        libxcb-icccm4 \
+        libxcb-sync1 \
+        libxcb-xfixes0 \
+        libxcb-shape0 \
+        libxcb-render-util0 \
+        -y
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN rm /usr/lib/python3.12/EXTERNALLY-MANAGED
@@ -47,6 +61,15 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
 RUN usermod -aG sudo ubuntu
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/ubuntu
 RUN chmod 0440 /etc/sudoers.d/ubuntu
+
+
+# Install Qt
+
+RUN pip install --no-cache-dir aqtinstall
+RUN aqt install-qt linux desktop 6.6.0 gcc_64 --outputdir /opt/qt
+RUN aqt install-qt linux desktop 5.15.2 gcc_64 --outputdir /opt/qt
+ENV PATH=/opt/qt/5.15.2/gcc_64/bin/:/opt/qt/6.6.0/gcc_64/bin/:$PATH
+
 
 USER ubuntu
 WORKDIR /home/ubuntu
