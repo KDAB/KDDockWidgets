@@ -30,7 +30,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update -qq && apt install build-essential software-properties-common lld git cmake ninja-build vim curl wget gdebi-core libdbus-glib-1-2 \
         mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig \
         libxkbcommon-dev mesa-utils libgl1-mesa-dev libglu1-mesa-dev \
-        libxkbcommon-x11-0 libssl-dev openssl unzip clang libgtk-3-dev \
+        libxkbcommon-x11-0 libssl-dev openssl unzip clang clang-tidy libgtk-3-dev \
         time xvfb python3-pip jq sudo libxml2-dev libxslt-dev \
         libx11-xcb1 \
         libxcb-glx0 \
