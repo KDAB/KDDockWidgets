@@ -30,8 +30,12 @@ jobs:
           - release
           - ci-release-static-qt5
     steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
       - name: Install Qt 5.15 with options and default aqtversion
         uses: jurplel/install-qt-action@v3
+        if: env.IS_SELFHOSTED != 1
         with:
           version: 5.15
           cache: true
@@ -53,7 +57,7 @@ jobs:
         uses: turtlesec-no/get-ninja@main
 
       - name: Configure
-        run: cmake --preset=${{ matrix.preset }} -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
+        run: cmake --preset=${{ matrix.preset }} -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_NO_SPDLOG=ON -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
         run: cmake --build build-${{ matrix.preset }} --parallel

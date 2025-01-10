@@ -62,8 +62,12 @@ jobs:
               qt_version: "6.5.*"
 
     steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
         uses: jurplel/install-qt-action@v3
+        if: env.IS_SELFHOSTED != 1
         with:
           version: ${{ matrix.preset.qt_version }}
           cache: true
