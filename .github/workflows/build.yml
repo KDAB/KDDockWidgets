@@ -66,13 +66,15 @@ jobs:
                 - shiboken6-generator==6.6.0 pyside6==6.6.0
 
     steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
-        if: env.IS_SELFHOSTED == null || env.IS_SELFHOSTED == ''
         uses: jurplel/install-qt-action@v4
+        if: env.IS_SELFHOSTED != 1
         with:
           version: ${{ matrix.preset.qt_version }}
           cache: true
-
 
       - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
         if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
