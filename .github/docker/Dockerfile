@@ -70,6 +70,8 @@ RUN aqt install-qt linux desktop 6.6.0 gcc_64 --outputdir /opt/qt
 RUN aqt install-qt linux desktop 5.15.2 gcc_64 --outputdir /opt/qt
 ENV PATH=/opt/qt/5.15.2/gcc_64/bin/:/opt/qt/6.6.0/gcc_64/bin/:$PATH
 
+# shiboken needs it for icu libs
+ENV LD_LIBRARY_PATH=/opt/qt/6.6.0/gcc_64/lib/:$LD_LIBRARY_PATH
 
 USER ubuntu
 WORKDIR /home/ubuntu
