@@ -25,7 +25,7 @@ jobs:
         os:
           - ubuntu-24.04
           - windows-2022
-          - macos-13
+          - macos-15
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
