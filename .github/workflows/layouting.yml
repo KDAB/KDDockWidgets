@@ -30,8 +30,13 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
 
-      - name: Install ninja
+      - name: Install ninja (Windows / Linux)
+        if: ${{ runner.os != 'macOS' }}
         uses: turtlesec-no/get-ninja@main
+
+      - name: Install ninja (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: brew install ninja
 
       - name: Make sure MSVC is found when Ninja generator is in use
         if: ${{ runner.os == 'Windows' }}
