@@ -43,13 +43,12 @@ class Group extends GeometryItem implements ffi.Finalizable, ItemWithTitleBar {
   List<DockItem> items = [];
   late final TitleBar titlebar;
 
-  final ffi.Pointer<void> _hostCpp;
   late final ffi.Pointer<void> guestCpp;
 
   final titleChanged = Signal0();
   DropArea dropArea;
 
-  Group(this.dropArea, {super.geometry}) : _hostCpp = dropArea.hostPtr {
+  Group(this.dropArea, {super.geometry}) {
     titlebar = TitleBar(this);
 
     final callbackPointer = ffi.Pointer.fromFunction<
@@ -58,7 +57,7 @@ class Group extends GeometryItem implements ffi.Finalizable, ItemWithTitleBar {
 
     groupInCtor = this;
     guestCpp = Bindings.instance.nativeLibrary
-        .create_guest(this._hostCpp.cast(), callbackPointer);
+        .create_guest(dropArea.hostPtr.cast(), callbackPointer);
     groupInCtor = null;
 
     _instances[guestCpp.address] = WeakReference<Group>(this);
