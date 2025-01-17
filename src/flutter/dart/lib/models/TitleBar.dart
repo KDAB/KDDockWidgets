@@ -15,6 +15,15 @@ part of kddockwidgets;
 abstract class ItemWithTitleBar {
   // called when close button on the titlebar is clicked
   void close();
+
+  // whether the titlebar is attached to a floating window or group
+  bool isFloating();
+
+  // detaches into a floating window
+  void float();
+
+  // docks a floating window into the main drop area
+  void unfloat();
 }
 
 class TitleBar {
@@ -29,7 +38,17 @@ class TitleBar {
     _itemWithTitleBar.close();
   }
 
-  void onFloatClicked() {}
+  void onFloatClicked() {
+    if (isFloating()) {
+      _itemWithTitleBar.unfloat();
+    } else {
+      _itemWithTitleBar.float();
+    }
+  }
 
   void onMouseEvent(PointerEvent ev) {}
+
+  bool isFloating() {
+    return _itemWithTitleBar.isFloating();
+  }
 }

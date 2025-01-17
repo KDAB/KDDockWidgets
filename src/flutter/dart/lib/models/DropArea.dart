@@ -84,11 +84,13 @@ class DropArea implements ffi.Finalizable {
 
   void _addGroup(Group group) {
     _groups.add(group);
+    group.dropArea = this;
     layoutChanged.emit();
   }
 
   void _removeGroup(Group group) {
     _groups.remove(group);
+
     Bindings.instance.nativeLibrary
         .remove_guest(_hostCpp.cast(), group.guestCpp.cast());
     layoutChanged.emit();
@@ -143,6 +145,10 @@ class DropArea implements ffi.Finalizable {
     }
 
     return false;
+  }
+
+  bool containsGroup(Group group) {
+    return _groups.contains(group);
   }
 
   List<Group> get groups {

@@ -34,9 +34,34 @@ class FloatingItem implements ItemWithTitleBar {
     return dropArea.groups.length > 1;
   }
 
+  bool containsGroup(Group group) {
+    return dropArea.containsGroup(group);
+  }
+
+  void addGroup(Group group) {
+    dropArea._addGroup(group);
+  }
+
   @override
   void close() {
     _groupCountChangedConnection.disconnect();
     DockRegistry.instance.removeFloatingItem(this);
+  }
+
+  @override
+  bool isFloating() {
+    // A floating window is floating
+    return true;
+  }
+
+  @override
+  void unfloat() {
+    // attach floating window into main window again
+  }
+
+  @override
+  void float() {
+    // a floating window is already floating
+    throw "unreachable";
   }
 }
