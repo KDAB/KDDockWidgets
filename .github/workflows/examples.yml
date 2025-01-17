@@ -37,7 +37,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         if: env.IS_SELFHOSTED != 1
         with:
-          version: 6.7
+          version: 6.6
           cache: true
 
       - name: Make sure MSVC is found when Ninja generator is in use
