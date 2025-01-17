@@ -160,8 +160,54 @@ class Group extends GeometryItem implements ffi.Finalizable, ItemWithTitleBar {
     }
   }
 
+  /// Returns the floating item this group is in, if any.
+  /// It might be inside the main window, in which case this returns null
+  FloatingItem? floatingItem() {
+    for (var floatingItem in DockRegistry.instance.floatingItems) {
+      if (floatingItem.containsGroup(this)) return floatingItem;
+    }
+
+    return null;
+  }
+
+  /// If false, then it's inside the main window
+  bool isInFloatingWindow() {
+    return floatingItem() != null;
+  }
+
   @override
   void close() {
     dropArea._removeGroup(this);
+  }
+
+  /// A group is floating if:
+  /// It's in a floating window without nesting
+  /// i.e: it's the only group
+  /// i.e: it can't be detached into a floating window
+  @override
+  bool isFloating() {
+    final fi = floatingItem();
+    if (fi == null) {
+      return false;
+    } else {
+      return fi.dropArea.groups.length == 1;
+    }
+  }
+
+  @override
+  void unfloat() {
+    // a group is already attached
+    throw "unreachable";
+  }
+
+  @override
+  void float() {
+    // transform the group into a floating window
+    if (isFloating()) return;
+
+    dropArea._removeGroup(this);
+
+    final floatingItem = FloatingItem();
+    floatingItem.addGroup(this);
   }
 }
