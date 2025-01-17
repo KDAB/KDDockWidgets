@@ -1,0 +1,123 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Build (Qt6)
+
+on:
+  push:
+    paths-ignore:
+      # These are built by another workflow
+      - src/flutter/**
+      - tests/flutter/**
+      - examples/flutter/**
+      - tests/reference-images/**
+      - .github/workflows/create_release.yml
+      - .github/workflows/examples.yml
+    branches:
+      - main
+      - 2.2
+  pull_request:
+    branches:
+      - main
+      - 2.2
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-24.04
+          - windows-latest
+          - macos-15
+
+        preset:
+          - name: ci-dev-qt6
+            qt_version: "6.3.*"
+          - name: ci-release-qt6
+            qt_version: "6.3.*"
+          - name: ci-qtwidgets-qt6
+            qt_version: "6.3.*"
+          - name: ci-qtquick-qt6
+            qt_version: "6.3.*"
+          - name: ci-dev-static-qt6
+            qt_version: "6.3.*"
+
+        include:
+          - os: ubuntu-latest
+            preset:
+              name: ci-python-qt6
+              qt_version: "6.6.0"
+              detect_leaks: 0
+              apt_pgks:
+                - llvm
+              pip_pgks:
+                - shiboken6-generator==6.6.0 pyside6==6.6.0
+
+    steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
+      - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
+        uses: jurplel/install-qt-action@v4
+        if: env.IS_SELFHOSTED != 1
+        with:
+          version: ${{ matrix.preset.qt_version }}
+          cache: true
+
+      - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
+        if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
+        run: |
+          sudo apt update -qq
+          echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
+
+      # Not using apt_pgks, since spdlog is needed for all configurations:
+      - name: Install spdlog on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          sudo apt install libspdlog-dev -y
+
+      - name: Install Python dependencies (${{ join(matrix.preset.pip_pgks, ' ') }})
+        if: ${{ matrix.preset.pip_pgks }}
+        run: echo ${{ join(matrix.preset.pip_pgks, ' ') }} | xargs pip install
+
+      - name: Install ninja (Windows / Linux)
+        if: ${{ runner.os != 'macOS' }}
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Install ninja (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: brew install ninja
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure project
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
+
+      - name: Build Project ${{ matrix.preset.build_preset_arg }}
+        run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
+
+      - name: Run tests on Linux
+        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
+        env:
+          QT_QUICK_BACKEND: software
+          LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
+
+      - name: Run tests on Window/macOS
+        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
+
+      - name: Read tests log when it fails
+        uses: andstor/file-reader-action@v1
+        if: ${{ failure() && startsWith(matrix.preset.name, 'ci-dev-') }}
+        with:
+          path: "./build-${{ matrix.preset.name }}/Testing/Temporary/LastTest.log"

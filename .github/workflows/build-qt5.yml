@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: CI
+name: Build (Qt5)
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-latest
+          - ubuntu-24.04
           - windows-latest
           - macos-13
 
@@ -43,27 +43,6 @@ jobs:
             qt_version: "5.15"
           - name: ci-qtquick-qt5
             qt_version: "5.15"
-          - name: ci-dev-qt6
-            qt_version: "6.3.*"
-          - name: ci-release-qt6
-            qt_version: "6.3.*"
-          - name: ci-qtwidgets-qt6
-            qt_version: "6.3.*"
-          - name: ci-qtquick-qt6
-            qt_version: "6.3.*"
-          - name: ci-dev-static-qt6
-            qt_version: "6.3.*"
-
-        include:
-          - os: ubuntu-latest
-            preset:
-              name: ci-python-qt6
-              qt_version: "6.6.0"
-              detect_leaks: 0
-              apt_pgks:
-                - llvm
-              pip_pgks:
-                - shiboken6-generator==6.6.0 pyside6==6.6.0
 
     steps:
       - name: Export IS_SELFHOSTED
@@ -76,21 +55,10 @@ jobs:
           version: ${{ matrix.preset.qt_version }}
           cache: true
 
-      - name: Install dependencies on Ubuntu (${{ join(matrix.preset.apt_pgks, ' ') }})
-        if: ${{ runner.os == 'Linux' && matrix.preset.apt_pgks }}
-        run: |
-          sudo apt update -qq
-          echo ${{ join(matrix.preset.apt_pgks, ' ') }} | xargs sudo apt install -y
-
-      # Not using apt_pgks, since spdlog is needed for all configurations:
       - name: Install spdlog on Ubuntu
         if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt install libspdlog-dev -y
-
-      - name: Install Python dependencies (${{ join(matrix.preset.pip_pgks, ' ') }})
-        if: ${{ matrix.preset.pip_pgks }}
-        run: echo ${{ join(matrix.preset.pip_pgks, ' ') }} | xargs pip install
 
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main
