@@ -32,7 +32,7 @@ jobs:
         run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
 
       - name: Install Qt 6.6.0
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         if: env.IS_SELFHOSTED != 1
         with:
           version: 6.6.0
