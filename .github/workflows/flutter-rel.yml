@@ -37,7 +37,7 @@ jobs:
             flutter_os: "linux"
           - os: windows-latest
             flutter_os: "windows"
-          - os: macos-13
+          - os: macos-15
             flutter_os: "macos"
 
     steps:
