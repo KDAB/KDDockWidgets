@@ -98,6 +98,7 @@ public:
             return;
 
         _layoutingHost = parent;
+        _item->setHost(parent);
     }
 
     Core::LayoutingHost *host() const override
@@ -240,6 +241,14 @@ void *create_guest(void *host, void (*callback)(void *guest, int x, int y, int w
 void delete_guest(void *guest)
 {
     delete reinterpret_cast<Guest *>(guest);
+}
+
+void set_guest_host(void *_host, void *_guest)
+{
+    auto host = reinterpret_cast<Host *>(_host);
+    auto guest = reinterpret_cast<Guest *>(_guest);
+
+    guest->setHost(host);
 }
 
 void validate_enum(int location)

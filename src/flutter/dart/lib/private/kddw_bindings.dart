@@ -164,6 +164,23 @@ class NativeLibrary {
   late final _delete_guest =
       _delete_guestPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
+  void set_guest_host(
+    ffi.Pointer<ffi.Void> host,
+    ffi.Pointer<ffi.Void> guest,
+  ) {
+    return _set_guest_host(
+      host,
+      guest,
+    );
+  }
+
+  late final _set_guest_hostPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>>('set_guest_host');
+  late final _set_guest_host = _set_guest_hostPtr.asFunction<
+      void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+
   void insert_item(
     ffi.Pointer<ffi.Void> host,
     ffi.Pointer<ffi.Void> guest,
