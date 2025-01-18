@@ -130,8 +130,23 @@
       }
     },
     {
+      "name": "dev-flutter-asan",
+      "description": "Builds the flutter frontend (ASAN)",
+      "binaryDir": "${sourceDir}/build-dev-flutter-asan",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "KDDockWidgets_WERROR": "ON",
+        "KDDockWidgets_USE_LLD": "ON",
+        "KDDockWidgets_DEVELOPER_MODE": "ON"
+      },
+      "inherits": [
+        "flutter-base",
+        "asan-base"
+      ]
+    },
+    {
       "name": "dev-flutter",
-      "description": "Builds the KDDW layouting for usage with flutter",
+      "description": "Builds the flutter frontend",
       "binaryDir": "${sourceDir}/build-dev-flutter",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
