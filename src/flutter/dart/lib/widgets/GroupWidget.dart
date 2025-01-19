@@ -21,7 +21,7 @@ import 'package:signals_slots/signals_slots.dart';
 
 class GroupWidget extends PositionedWidget {
   final Group group;
-  GroupWidget(this.group, {Key? key}) : super(group, key: key);
+  GroupWidget(this.group) : super(group, key: ObjectKey(group));
 
   @override
   State<PositionedWidget> createState() {

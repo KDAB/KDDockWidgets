@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 
 class FloatingWidget extends StatefulWidget {
   final FloatingItem floatingItem;
-  FloatingWidget(this.floatingItem, {Key? key}) : super(key: key);
+  FloatingWidget(this.floatingItem) : super(key: ObjectKey(floatingItem));
 
   @override
   State<FloatingWidget> createState() {

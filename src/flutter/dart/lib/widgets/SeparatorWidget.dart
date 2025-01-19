@@ -17,7 +17,7 @@ import 'PositionedWidget.dart';
 
 class SeparatorWidget extends PositionedWidget {
   final Separator separator;
-  SeparatorWidget(this.separator, {Key? key}) : super(separator, key: key);
+  SeparatorWidget(this.separator) : super(separator, key: ObjectKey(separator));
 
   @override
   State<PositionedWidget> createState() {

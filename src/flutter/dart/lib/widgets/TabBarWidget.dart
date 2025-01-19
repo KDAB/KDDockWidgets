@@ -19,7 +19,7 @@ import 'dart:ui';
 
 class TabBarWidget extends StatefulWidget {
   final Group group;
-  TabBarWidget(this.group, {Key? key}) : super(key: key);
+  TabBarWidget(this.group) : super(key: ObjectKey(group));
 
   @override
   State<TabBarWidget> createState() {

@@ -95,4 +95,39 @@ void main() async {
     await tester.pump();
     await saveScreenShot(tester, prefix: "basic");
   });
+
+  testWidgets('TitleBar close button', (WidgetTester tester) async {
+    final dock1 = DockItem(uniqueName: "dw1", guestWidget: MyWidget());
+    final dock2 = DockItem(uniqueName: "dw2", guestWidget: MyWidget());
+
+    final dropArea = DropArea();
+    dropArea.addDockItem(dock1, Location.LocationOnTop);
+    dropArea.addDockItem(dock2, Location.LocationOnBottom);
+
+    dropArea.setLayoutSize(700, 700);
+    final dropAreaWidget = DropAreaWidget(dropArea);
+
+    // Build the widget tree
+    await tester.pumpWidget(MyApp(
+      child: dropAreaWidget,
+    ));
+
+    await tester.pump();
+    await saveScreenShot(tester, prefix: "titlebar-close-button");
+
+    expect(dropArea.groups.length, 2);
+    var topGroup = dropArea.groups.first;
+    var bottomGroup = dropArea.groups.last;
+
+    topGroup.titlebar.onCloseClicked();
+    expect(dropArea.containsGroup(topGroup), false);
+    expect(dropArea.containsGroup(bottomGroup), true);
+    expect(dropArea.groups.length, 1);
+    expect(dropArea.groups.first, bottomGroup);
+    expect(bottomGroup.numDockWidgets(), 1);
+    expect(bottomGroup.dockWidgetAt(0), dock2);
+
+    await tester.pump();
+    await saveScreenShot(tester, prefix: "titlebar-close-button-2");
+  });
 }

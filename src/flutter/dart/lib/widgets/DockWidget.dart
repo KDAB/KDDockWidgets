@@ -14,7 +14,7 @@ import 'package:KDDockWidgets/KDDockWidgets.dart';
 
 class DockWidget extends StatefulWidget {
   final DockItem dockItem;
-  DockWidget(this.dockItem, {Key? key}) : super(key: key) {}
+  DockWidget(this.dockItem) : super(key: ObjectKey(dockItem)) {}
 
   @override
   State<DockWidget> createState() {

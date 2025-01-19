@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 
 class TitleBarWidget extends StatefulWidget {
   final TitleBar titlebar;
-  TitleBarWidget(this.titlebar, {Key? key}) : super(key: key);
+  TitleBarWidget(this.titlebar) : super(key: ObjectKey(titlebar));
 
   @override
   State<TitleBarWidget> createState() {
