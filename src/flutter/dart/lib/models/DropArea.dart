@@ -85,6 +85,10 @@ class DropArea implements ffi.Finalizable {
   void _addGroup(Group group) {
     _groups.add(group);
     group.dropArea = this;
+
+    Bindings.instance.nativeLibrary
+        .set_guest_host(hostPtr.cast(), group.guestCpp.cast());
+
     layoutChanged.emit();
   }
 
