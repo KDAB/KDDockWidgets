@@ -83,7 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
     dropArea.groups.first.addDockWidget(dock13);
   }
 
-  void _incrementCounter() {}
+  void _dumpLayout() {
+    dropArea.dumpLayout();
+    dropArea.layoutChanged.emit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // ]),
       body: DropAreaWidget(dropArea),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: _dumpLayout,
+        tooltip: 'Dump Layout',
+        child: const Icon(Icons.bug_report),
       ),
     );
   }
