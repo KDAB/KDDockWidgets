@@ -336,3 +336,10 @@ void set_separator_removed_callback(void *host_, void (*callback)(void *host, vo
     assert(host->_separator_removed_callback == nullptr);
     host->_separator_removed_callback = callback;
 }
+
+void dump_layout(void *host_)
+{
+    assert(host_);
+    auto host = reinterpret_cast<Host *>(host_);
+    host->m_rootItem->dumpLayout();
+}

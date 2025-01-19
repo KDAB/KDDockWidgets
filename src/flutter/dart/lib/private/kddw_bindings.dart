@@ -239,6 +239,20 @@ class NativeLibrary {
   late final _remove_guest = _remove_guestPtr.asFunction<
       void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
 
+  void dump_layout(
+    ffi.Pointer<ffi.Void> host,
+  ) {
+    return _dump_layout(
+      host,
+    );
+  }
+
+  late final _dump_layoutPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
+          'dump_layout');
+  late final _dump_layout =
+      _dump_layoutPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
   /// Separators are created and destroyed by KDDW
   void set_separator_added_callback(
     ffi.Pointer<ffi.Void> host,

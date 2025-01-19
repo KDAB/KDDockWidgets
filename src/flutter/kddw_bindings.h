@@ -30,6 +30,7 @@ DOCKS_EXPORT void set_guest_host(void *host, void *guest);
 DOCKS_EXPORT void insert_item(void *host, void *guest, int location);
 DOCKS_EXPORT void insert_item_relative_to(void *host, void *guest, void *relativeToGuest, int location);
 DOCKS_EXPORT void remove_guest(void *host, void *guest);
+DOCKS_EXPORT void dump_layout(void *host);
 
 /// Separators are created and destroyed by KDDW
 DOCKS_EXPORT void set_separator_added_callback(void *host, void (*callback)(void *host, void *separator, int isVertical));

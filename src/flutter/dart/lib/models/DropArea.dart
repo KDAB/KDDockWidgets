@@ -181,4 +181,8 @@ class DropArea implements ffi.Finalizable {
   ffi.Pointer<void> get hostPtr {
     return _hostCpp;
   }
+
+  void dumpLayout() {
+    Bindings.instance.nativeLibrary.dump_layout(_hostCpp.cast());
+  }
 }
