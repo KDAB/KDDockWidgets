@@ -51,12 +51,10 @@ class Guest : public KDDockWidgets::Core::LayoutingGuest
 {
 public:
     static std::uint64_t s_nextId;
-    explicit Guest(Host *host, void (*callback)(void *guest, int x, int y, int width, int height, int is_visible))
-        : _item(new Core::Item(host))
-        , _uniqueName(QString::fromStdString("id=" + std::to_string(s_nextId)))
+    explicit Guest(Host * /*host*/, void (*callback)(void *guest, int x, int y, int width, int height, int is_visible))
+        : _uniqueName(QString::fromStdString("id=" + std::to_string(s_nextId)))
         , _changed_callback(callback)
     {
-        _item->setGuest(this);
     }
 
     Size minSize() const override
@@ -98,7 +96,6 @@ public:
             return;
 
         _layoutingHost = parent;
-        _item->setHost(parent);
     }
 
     Core::LayoutingHost *host() const override
@@ -118,7 +115,6 @@ public:
     }
 
     Core::LayoutingHost *_layoutingHost = nullptr;
-    Core::Item *const _item;
     QString _uniqueName;
     Rect _geometry;
     bool _isVisible = false;
@@ -276,6 +272,11 @@ void insert_item(void *_host, void *_guest, int _location)
     assert(host);
     assert(guest);
 
+    auto item = new Core::Item(host);
+    item->setGuest(guest);
+    guest->setLayoutItem(item);
+
+
     host->insertItem(guest, location);
 }
 
@@ -318,7 +319,10 @@ void remove_guest(void *host_, void *guest_)
     auto host = reinterpret_cast<Host *>(host_);
     auto guest = reinterpret_cast<Guest *>(guest_);
 
-    host->m_rootItem->removeItem(guest->_item);
+    auto item = host->m_rootItem->itemForView(guest);
+    assert(item);
+
+    host->m_rootItem->removeItem(item);
 }
 
 void set_separator_added_callback(void *host_, void (*callback)(void *host, void *separator, int isVertical))
