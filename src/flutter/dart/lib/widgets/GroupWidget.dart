@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import 'package:KDDockWidgets/HasConnections.dart';
 import 'package:KDDockWidgets/KDDockWidgets.dart';
 import 'package:KDDockWidgets/widgets/PositionedWidget.dart';
 import 'package:KDDockWidgets/widgets/TabBarWidget.dart';
@@ -16,6 +17,7 @@ import 'package:KDDockWidgets/widgets/TitleBarWidget.dart';
 import 'package:KDDockWidgets/widgets/DockWidget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:signals_slots/signals_slots.dart';
 
 class GroupWidget extends PositionedWidget {
   final Group group;
@@ -27,16 +29,23 @@ class GroupWidget extends PositionedWidget {
   }
 }
 
-class GroupWidgetState extends PositionedWidgetState {
+class GroupWidgetState extends PositionedWidgetState with HasConnections {
   final Group group;
+
   GroupWidgetState(this.group) : super(group) {
-    group.changed.connect(() {
+    connect(group.changed, () {
       setState(() {});
     });
 
-    group.titleChanged.connect(() {
+    connect(group.titleChanged, () {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    disconnect();
+    super.dispose();
   }
 
   @override
