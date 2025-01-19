@@ -93,6 +93,7 @@ void main() async {
     ));
 
     await tester.pump();
+    await tester.pumpAndSettle();
     await saveScreenShot(tester, prefix: "basic");
   });
 
@@ -127,7 +128,7 @@ void main() async {
     expect(bottomGroup.numDockWidgets(), 1);
     expect(bottomGroup.dockWidgetAt(0), dock2);
 
-    await tester.pump();
+    await tester.pumpAndSettle();
     await saveScreenShot(tester, prefix: "titlebar-close-button-2");
   });
 }
