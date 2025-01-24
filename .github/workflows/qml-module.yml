@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: 2025 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+# Tests that building KDDW as a QML module works
+
+name: QML module
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-24.04
+
+    steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        if: env.IS_SELFHOSTED != 1
+        with:
+          version: 6.8.1
+          cache: true
+
+      - name: Install spdlog on Ubuntu
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          sudo apt install libspdlog-dev -y
+
+      - name: Install ninja (Windows / Linux)
+        if: ${{ runner.os != 'macOS' }}
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Install ninja (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: brew install ninja
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure project
+        run: cmake -S . -B ./build --preset ci-qtquick-module-qt6
+
+      - name: Build Project
+        run: cmake --build ./build
+
+      - name: qmllint
+        run: ninja -C ./build all_qmllint
+
+      - name: Run tests on Linux
+        run: ctest --test-dir ./build --verbose
+        env:
+          QT_QUICK_BACKEND: software

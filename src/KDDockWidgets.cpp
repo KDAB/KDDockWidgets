@@ -48,7 +48,7 @@ void KDDockWidgets::initFrontend(FrontendType type)
 
 const char *KDDockWidgets::spdlogLoggerName()
 {
-    return "com.kdab.kddockwidgets";
+    return "com.kdab.dockwidgets";
 }
 
 NeighbourSqueezeStrategy InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours;

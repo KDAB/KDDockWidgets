@@ -24,7 +24,6 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterType<MainWindowMDIInstantiator>("com.kdab.dockwidgets", 2, 0, "MDIDockingArea");
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 2, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 2, 0, "LayoutSaver");
-
     qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 2, 0,
                                      "KDDockWidgets", QStringLiteral("Enum access only"));
 }

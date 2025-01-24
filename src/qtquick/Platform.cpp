@@ -83,7 +83,10 @@ void Platform::init()
     initResources();
 #endif
 
+#ifndef KDDW_QML_MODULE
     KDDockWidgets::registerQmlTypes();
+#endif
+
     QQuickWindow::setDefaultAlphaBuffer(true);
 
     qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {

@@ -45,6 +45,17 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
+namespace {
+QString kddwResourcePrefix()
+{
+#ifdef KDDW_QML_MODULE
+    return QStringLiteral("qrc:/qt/qml/com/kdab/dockwidgets");
+#else
+    return QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml");
+#endif
+}
+}
+
 
 ViewFactory::~ViewFactory()
 {
@@ -175,32 +186,32 @@ Core::View *ViewFactory::createMDILayout(Core::MDILayout *controller, Core::View
 
 QUrl ViewFactory::titleBarFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/TitleBar.qml"));
+    return QUrl(QStringLiteral("%1/TitleBar.qml").arg(kddwResourcePrefix()));
 }
 
 QUrl ViewFactory::dockwidgetFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/DockWidget.qml"));
+    return QUrl(QStringLiteral("%1/DockWidget.qml").arg(kddwResourcePrefix()));
 }
 
 QUrl ViewFactory::groupFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/Group.qml"));
+    return QUrl(QStringLiteral("%1/Group.qml").arg(kddwResourcePrefix()));
 }
 
 QUrl ViewFactory::floatingWindowFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/FloatingWindow.qml"));
+    return QUrl(QStringLiteral("%1/FloatingWindow.qml").arg(kddwResourcePrefix()));
 }
 
 QUrl ViewFactory::tabbarFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/TabBar.qml"));
+    return QUrl(QStringLiteral("%1/TabBar.qml").arg(kddwResourcePrefix()));
 }
 
 QUrl ViewFactory::separatorFilename() const
 {
-    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/Separator.qml"));
+    return QUrl(QStringLiteral("%1/Separator.qml").arg(kddwResourcePrefix()));
 }
 
 Core::View *

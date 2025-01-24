@@ -39,6 +39,7 @@ path = [
     ".github/actions/qt6-lsan/README.md",
     ".github/ISSUE_TEMPLATE/bug_report.md",
     ".github/ISSUE_TEMPLATE/config.yml",
+    ".qmllint.ini",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"

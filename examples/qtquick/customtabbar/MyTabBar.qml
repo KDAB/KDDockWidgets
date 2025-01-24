@@ -33,7 +33,7 @@ KDDW.TabBarBase {
         Rectangle {
             id: addButton
             width: 50
-            color: addButtonMouseArea.containsMouse ? (addButtonMouseArea.pressed ? "#d6ce93" : "#ffecd1" ) : "#ffecd1"
+            color: addButtonMouseArea.containsMouse ? (addButtonMouseArea.pressed ? "#d6ce93" : "#ffecd1") : "#ffecd1"
             anchors {
                 right: parent.right
                 top: parent.top
@@ -103,7 +103,7 @@ KDDW.TabBarBase {
         spacing: 2
 
         /// Needed only if you want to style hovered tabs differently
-        property int hoveredIndex: -1;
+        property int hoveredIndex: -1
 
         /// ##HERE## The list of tabs is stored in a C++ model. This repeater populates our tab bar
         Repeater {
@@ -112,7 +112,7 @@ KDDW.TabBarBase {
                 id: tab
                 height: parent.height
                 width: 150
-                readonly property bool isCurrent: index == root.groupCpp.currentIndex;
+                readonly property bool isCurrent: index == root.groupCpp.currentIndex
                 color: (tabBarRow.hoveredIndex == index) ? "#d6ce93" : (isCurrent ? "#d6ce93" : "#ffecd1")
                 border.color: "black"
 

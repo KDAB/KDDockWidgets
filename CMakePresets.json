@@ -24,7 +24,9 @@
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick",
         "KDDockWidgets_USE_LLD": "ON"
       },
-      "inherits": ["base"]
+      "inherits": [
+        "base"
+      ]
     },
     {
       "name": "asan-base",
@@ -32,7 +34,9 @@
       "cacheVariables": {
         "ECM_ENABLE_SANITIZERS": "'address;undefined'"
       },
-      "inherits": ["base"]
+      "inherits": [
+        "base"
+      ]
     },
     {
       "name": "static-base",
@@ -47,21 +51,28 @@
       "name": "dev",
       "displayName": "dev",
       "binaryDir": "${sourceDir}/build-dev",
-      "inherits": ["dev-base"]
+      "inherits": [
+        "dev-base"
+      ]
     },
     {
       "name": "dev-asan",
       "displayName": "dev-asan",
       "description": "An ASAN/UBSAN build",
       "binaryDir": "${sourceDir}/build-dev-asan",
-      "inherits": ["dev-base", "asan-base"]
+      "inherits": [
+        "dev-base",
+        "asan-base"
+      ]
     },
     {
       "name": "dev-valgrind",
       "displayName": "dev-valgrind",
       "description": "A dev preset which runs tests under valgrind",
       "binaryDir": "${sourceDir}/build-dev-valgrind",
-      "inherits": ["dev"],
+      "inherits": [
+        "dev"
+      ],
       "cacheVariables": {
         "KDDockWidgets_USE_VALGRIND": "ON",
         "KDDockWidgets_NO_SPDLOG": "ON"
@@ -72,7 +83,9 @@
       "displayName": "dev-valgrind6",
       "description": "A dev preset which runs tests under valgrind",
       "binaryDir": "${sourceDir}/build-dev-valgrind6",
-      "inherits": ["dev6"],
+      "inherits": [
+        "dev6"
+      ],
       "cacheVariables": {
         "KDDockWidgets_USE_VALGRIND": "ON",
         "KDDockWidgets_NO_SPDLOG": "ON"
@@ -85,7 +98,9 @@
       "cacheVariables": {
         "KDDockWidgets_FRONTENDS": "flutter"
       },
-      "inherits": ["base"],
+      "inherits": [
+        "base"
+      ],
       "warnings": {
         "uninitialized": false
       },
@@ -103,7 +118,9 @@
         "KDDockWidgets_CODE_COVERAGE": "ON",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       },
-      "inherits": ["base"]
+      "inherits": [
+        "base"
+      ]
     },
     {
       "name": "dev-none",
@@ -114,7 +131,9 @@
         "KDDockWidgets_WERROR": "ON",
         "KDDockWidgets_FRONTENDS": "none"
       },
-      "inherits": ["base"]
+      "inherits": [
+        "base"
+      ]
     },
     {
       "name": "dev-slint-layouting",
@@ -163,7 +182,9 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       },
-      "inherits": ["flutter-base"]
+      "inherits": [
+        "flutter-base"
+      ]
     },
     {
       "name": "clazy",
@@ -183,7 +204,9 @@
     },
     {
       "name": "clazy-no-werror",
-      "inherits": ["clazy"],
+      "inherits": [
+        "clazy"
+      ],
       "displayName": "clazy-no-werror",
       "binaryDir": "${sourceDir}/build-clazy-no-werror",
       "cacheVariables": {
@@ -229,14 +252,18 @@
       "displayName": "Qt5 python bindings",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build-python",
-      "inherits": ["python-base"]
+      "inherits": [
+        "python-base"
+      ]
     },
     {
       "name": "python6",
       "displayName": "Qt6 python bindings",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build-python6",
-      "inherits": ["python-base"],
+      "inherits": [
+        "python-base"
+      ],
       "cacheVariables": {
         "KDDockWidgets_QT6": "ON"
       }
@@ -244,7 +271,9 @@
     {
       "name": "ci-python-qt6",
       "displayName": "CI Qt6 python bindings",
-      "inherits": ["python6"],
+      "inherits": [
+        "python6"
+      ],
       "cacheVariables": {
         "Python3_FIND_VIRTUALENV": "ONLY"
       }
@@ -254,7 +283,9 @@
       "displayName": "Qt6 python bindings on macOS via homebrew",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build-homebrew-python6",
-      "inherits": ["python6"],
+      "inherits": [
+        "python6"
+      ],
       "cacheVariables": {
         "Python3_EXECUTABLE": "/opt/homebrew/bin/python3.10"
       }
@@ -280,7 +311,17 @@
         "KDDockWidgets_QT6": "ON",
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
       },
-      "inherits": ["dev-base"]
+      "inherits": [
+        "dev-base"
+      ]
+    },
+    {
+      "name": "dev6-qml-module",
+      "inherits": "dev6",
+      "binaryDir": "${sourceDir}/build-dev6-qml-module",
+      "cacheVariables": {
+        "KDDockWidgets_QML_MODULE": "ON"
+      }
     },
     {
       "name": "dev-asan6",
@@ -290,7 +331,10 @@
         "KDDockWidgets_QT6": "ON",
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
       },
-      "inherits": ["dev-base", "asan-base"]
+      "inherits": [
+        "dev-base",
+        "asan-base"
+      ]
     },
     {
       "name": "dev-clangcl",
@@ -301,7 +345,9 @@
         "KDDockWidgets_DEVELOPER_MODE": "ON",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       },
-      "inherits": ["base"],
+      "inherits": [
+        "base"
+      ],
       "environment": {
         "CC": "clang-cl",
         "CXX": "clang-cl"
@@ -318,7 +364,9 @@
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       },
-      "inherits": ["base"],
+      "inherits": [
+        "base"
+      ],
       "environment": {
         "CC": "clang-cl",
         "CXX": "clang-cl"
@@ -335,7 +383,9 @@
         "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       },
-      "inherits": ["base"],
+      "inherits": [
+        "base"
+      ],
       "environment": {
         "CC": "clang",
         "CXX": "clang++",
@@ -354,7 +404,9 @@
         "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       },
-      "inherits": ["base"],
+      "inherits": [
+        "base"
+      ],
       "environment": {
         "CC": "clang",
         "CXX": "clang++",
@@ -364,7 +416,9 @@
     {
       "name": "dev-no-spdlog",
       "binaryDir": "${sourceDir}/build-dev-no-spdlog",
-      "inherits": ["dev"],
+      "inherits": [
+        "dev"
+      ],
       "cacheVariables": {
         "KDDockWidgets_NO_SPDLOG": "ON"
       }
@@ -383,7 +437,9 @@
     {
       "name": "ci-clang-tidy-qt6",
       "binaryDir": "${sourceDir}/build-clang-tidy-qt6",
-      "inherits": ["release"],
+      "inherits": [
+        "release"
+      ],
       "cacheVariables": {
         "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--warnings-as-errors=*",
         "KDDockWidgets_QT6": "ON",
@@ -393,7 +449,9 @@
     {
       "name": "clang-tidy-no-werror-qt6",
       "binaryDir": "${sourceDir}/build-clang-tidy-no-werror-qt6",
-      "inherits": ["ci-clang-tidy-qt6"],
+      "inherits": [
+        "ci-clang-tidy-qt6"
+      ],
       "cacheVariables": {
         "CMAKE_CXX_CLANG_TIDY": "clang-tidy"
       }
@@ -499,11 +557,26 @@
       }
     },
     {
+      "name": "ci-qtquick-module-qt6",
+      "description": "Qt6 build which excludes QtWidgets and builds as QML module",
+      "binaryDir": "${sourceDir}/build-ci-qtquick-module-qt6",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "KDDockWidgets_DEVELOPER_MODE": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "KDDockWidgets_QT6": "ON",
+        "KDDockWidgets_FRONTENDS": "qtquick",
+        "KDDockWidgets_QML_MODULE": "ON"
+      }
+    },
+    {
       "name": "ci-dev-valgrind-qt5",
       "displayName": "ci-dev-valgrind-qt5",
       "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
       "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt5",
-      "inherits": ["dev-valgrind"],
+      "inherits": [
+        "dev-valgrind"
+      ],
       "cacheVariables": {
         "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
@@ -513,7 +586,9 @@
       "displayName": "ci-dev-valgrind-qt6",
       "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
       "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt6",
-      "inherits": ["dev-valgrind6"],
+      "inherits": [
+        "dev-valgrind6"
+      ],
       "cacheVariables": {
         "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
@@ -523,14 +598,18 @@
       "displayName": "ci-dev-asan-qt5",
       "description": "An ASAN/UBSAN build",
       "binaryDir": "${sourceDir}/build-ci-dev-asan-qt5",
-      "inherits": ["dev-asan"]
+      "inherits": [
+        "dev-asan"
+      ]
     },
     {
       "name": "ci-dev-asan-qt6",
       "displayName": "ci-dev-asan-qt6",
       "description": "An ASAN/UBSAN build",
       "binaryDir": "${sourceDir}/build-ci-dev-asan-qt6",
-      "inherits": ["dev-asan6"]
+      "inherits": [
+        "dev-asan6"
+      ]
     },
     {
       "name": "ci-dev-asan-qtwidgets-qt6",
@@ -541,7 +620,9 @@
         "KDDockWidgets_FRONTENDS": "qtwidgets",
         "KDDockWidgets_NO_SPDLOG": "ON"
       },
-      "inherits": ["dev-asan6"]
+      "inherits": [
+        "dev-asan6"
+      ]
     },
     {
       "name": "ci-dev-asan-qtquick-qt6",
@@ -552,27 +633,41 @@
         "KDDockWidgets_FRONTENDS": "qtquick",
         "KDDockWidgets_NO_SPDLOG": "ON"
       },
-      "inherits": ["dev-asan6"]
+      "inherits": [
+        "dev-asan6"
+      ]
     },
     {
       "name": "ci-release-static-qt5",
       "binaryDir": "${sourceDir}/build-ci-release-static-qt5",
-      "inherits": ["static-base", "ci-release-qt5"]
+      "inherits": [
+        "static-base",
+        "ci-release-qt5"
+      ]
     },
     {
       "name": "ci-dev-static-qt5",
       "binaryDir": "${sourceDir}/build-dev-ci-static-qt5",
-      "inherits": ["static-base", "ci-dev-qt5"]
+      "inherits": [
+        "static-base",
+        "ci-dev-qt5"
+      ]
     },
     {
       "name": "ci-release-static-qt6",
       "binaryDir": "${sourceDir}/build-ci-release-static-qt6",
-      "inherits": ["static-base", "ci-release-qt6"]
+      "inherits": [
+        "static-base",
+        "ci-release-qt6"
+      ]
     },
     {
       "name": "ci-dev-static-qt6",
       "binaryDir": "${sourceDir}/build-ci-dev-static-qt6",
-      "inherits": ["static-base", "ci-dev-qt6"]
+      "inherits": [
+        "static-base",
+        "ci-dev-qt6"
+      ]
     },
     {
       "name": "debug-qtwidgets6",

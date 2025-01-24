@@ -125,6 +125,7 @@ option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode"
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 option(KDDockWidgets_USE_LLD "Use lld for linking" OFF)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
+option(KDDockWidgets_QML_MODULE "The QtQuick support will be built as a QML module" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
@@ -243,6 +244,10 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
     endif()
 
     set(KDDW_FRONTEND_QT ON)
+endif()
+
+if(KDDockWidgets_QML_MODULE AND (NOT KDDW_FRONTEND_QTQUICK OR NOT KDDockWidgets_QT6))
+    message(WARNING "KDDockWidgets_QML_MODULE=ON ignored. Only available for QtQuick on Qt6.")
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)

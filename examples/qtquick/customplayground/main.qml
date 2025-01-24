@@ -29,7 +29,7 @@ ApplicationWindow {
             uniqueName: "dock4"
             source: "qrc:/Guest4.qml"
             onIsFocusedChanged: {
-              console.log("Dock4 focus changed to: " + isFocused);
+                console.log("Dock4 focus changed to: " + isFocused);
             }
         }
 

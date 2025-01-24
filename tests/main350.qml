@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 2.0 as KDDW
@@ -50,6 +49,5 @@ ApplicationWindow {
             addDockWidget(dock4, KDDW.KDDockWidgets.Location_OnBottom);
             dock5.show();
         }
-
     }
 }

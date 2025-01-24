@@ -86,7 +86,7 @@ ApplicationWindow {
             Action {
                 text: qsTr("Close All")
                 onTriggered: {
-                   _kddwDockRegistry.clear();
+                    _kddwDockRegistry.clear();
                 }
             }
 
@@ -94,12 +94,13 @@ ApplicationWindow {
                 // Shows how to use direct deletion
                 text: qsTr("Delete widget #5")
                 onTriggered: {
-                   dock5.deleteDockWidget();
+                    dock5.deleteDockWidget();
                 }
             }
 
-            MenuSeparator { }
-            Action { text: qsTr("&Quit")
+            MenuSeparator {}
+            Action {
+                text: qsTr("&Quit")
                 onTriggered: {
                     Qt.quit();
                 }
@@ -129,7 +130,7 @@ ApplicationWindow {
 
             onIsOpenChanged: {
                 // Just an example of detecting when a dockwidget is closed
-                console.log("Dock4 is open ? " + isOpen)
+                console.log("Dock4 is open ? " + isOpen);
             }
         }
 
@@ -186,9 +187,7 @@ ApplicationWindow {
             // Adds dock6 but specifies a preferred initial size and it starts hidden
             // When toggled it will be shown on the desired dock location.
             // See MainWindowInstantiator_p.h for the API
-            addDockWidget(dock6, KDDW.KDDockWidgets.Location_OnLeft, null,
-                                 Qt.size(500, 100), KDDW.KDDockWidgets.StartHidden);
-
+            addDockWidget(dock6, KDDW.KDDockWidgets.Location_OnLeft, null, Qt.size(500, 100), KDDW.KDDockWidgets.StartHidden);
 
             // dock7 will be tabbed with dock7:
             dock5.addDockWidgetAsTab(dock7);

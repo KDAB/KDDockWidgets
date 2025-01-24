@@ -16,7 +16,7 @@
 #include "LayoutSaver.h"
 
 #include <QObject>
-
+#include <QQmlEngine>
 
 QT_BEGIN_NAMESPACE
 class QQuickItem;
@@ -33,6 +33,7 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT LayoutSaverInstantiator : public QObject, public LayoutSaver
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(LayoutSaver)
     Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
 public:
     explicit LayoutSaverInstantiator(QObject *parent = nullptr);

@@ -30,8 +30,8 @@ MouseArea {
             return Qt.ArrowCursor;
         }
 
-        var isFixedHeight = groupCpp && groupCpp.isFixedHeight
-        var isFixedWidth = groupCpp && groupCpp.isFixedWidth
+        var isFixedHeight = groupCpp && groupCpp.isFixedHeight;
+        var isFixedWidth = groupCpp && groupCpp.isFixedWidth;
         if (isFixedHeight && isFixedWidth)
             return Qt.ArrowCursor;
 
@@ -52,9 +52,9 @@ MouseArea {
 
     onPressed: {
         // install event filter
-        groupCpp.startMDIResize()
+        groupCpp.startMDIResize();
 
         // ignore event, so event filter catches press as well
-        mouse.accepted = false
+        mouse.accepted = false;
     }
 }

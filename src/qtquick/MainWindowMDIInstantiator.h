@@ -17,6 +17,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include <QQuickItem>
+#include <QQmlEngine>
 
 namespace KDDockWidgets {
 
@@ -30,6 +31,7 @@ class SideBar;
 class DOCKS_EXPORT MainWindowMDIInstantiator : public QQuickItem
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(MDIDockingArea)
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QVector<QString> affinities READ affinities CONSTANT)
 public:
