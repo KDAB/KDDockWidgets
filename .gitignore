@@ -115,3 +115,5 @@ generated_plugins.cmake
 /book/
 /src/flutter/dart/build/
 /tests/flutter/linux/flutter/ephemeral
+/src/.qmlls.ini
+/.qmlls.ini

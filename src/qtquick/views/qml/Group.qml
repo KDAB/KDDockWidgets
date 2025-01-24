@@ -54,7 +54,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
 
-
         MDIResizeHandlerHelper {
             anchors {
                 left: parent ? parent.left : undefined
@@ -104,7 +103,7 @@ Rectangle {
             anchors {
                 right: parent ? parent.right : undefined
                 left: parent ? parent.left : undefined
-                bottom: parent ?  parent.bottom : undefined
+                bottom: parent ? parent.bottom : undefined
             }
 
             height: resizeMargin
@@ -132,8 +131,8 @@ Rectangle {
 
         MDIResizeHandlerHelper {
             anchors {
-                left:  parent ? parent.left : undefined
-                top:  parent ? parent.top : undefined
+                left: parent ? parent.left : undefined
+                top: parent ? parent.top : undefined
             }
 
             height: width
@@ -179,11 +178,10 @@ Rectangle {
     Loader {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: groupCpp ? _kddw_widgetFactory.titleBarFilename()
-                         : ""
+        source: groupCpp ? _kddw_widgetFactory.titleBarFilename() : ""
 
         anchors {
-            top:  parent ? parent.top : undefined
+            top: parent ? parent.top : undefined
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
             topMargin: root.titleBarContentsMargin
@@ -197,13 +195,11 @@ Rectangle {
         readonly property QtObject groupCpp: root.groupCpp
         readonly property bool hasCustomMouseEventRedirector: root.hasCustomMouseEventRedirector
 
-        source: groupCpp ? _kddw_widgetFactory.tabbarFilename()
-                         : ""
+        source: groupCpp ? _kddw_widgetFactory.tabbarFilename() : ""
 
         function topAnchor() {
             if (root.tabsAtTop) {
-                return (titleBar && titleBar.visible) ? titleBar.bottom
-                                                      : (parent ? parent.top : undefined);
+                return (titleBar && titleBar.visible) ? titleBar.bottom : (parent ? parent.top : undefined);
             } else {
                 return undefined;
             }
@@ -213,7 +209,7 @@ Rectangle {
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
             top: topAnchor()
-            bottom: root.tabsAtTop ? undefined : parent.bottom;
+            bottom: root.tabsAtTop ? undefined : parent.bottom
 
             // 1 pixel gap so we don't overlap with outer frame. We shouldn't hardcode this though
             leftMargin: 1
@@ -237,9 +233,7 @@ Rectangle {
         anchors {
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
-            top: (parent && tabbar.visible && root.tabsAtTop) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
-                                                                                                                : parent ? parent.top
-                                                                                                                         : undefined);
+            top: (parent && tabbar.visible && root.tabsAtTop) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom : parent ? parent.top : undefined)
             bottom: bottomAnchor()
 
             leftMargin: root.contentsMargin

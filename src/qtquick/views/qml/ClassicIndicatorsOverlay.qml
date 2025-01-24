@@ -69,8 +69,7 @@ Item {
 
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width
-        visible: _kddw_overlayWindow && (_kddw_overlayWindow.innerLeftIndicatorVisible || _kddw_overlayWindow.innerRightIndicatorVisible ||
-                 _kddw_overlayWindow.innerTopIndicatorVisible || _kddw_overlayWindow.innerBottomIndicatorVisible || _kddw_overlayWindow.tabIndicatorVisible)
+        visible: _kddw_overlayWindow && (_kddw_overlayWindow.innerLeftIndicatorVisible || _kddw_overlayWindow.innerRightIndicatorVisible || _kddw_overlayWindow.innerTopIndicatorVisible || _kddw_overlayWindow.innerBottomIndicatorVisible || _kddw_overlayWindow.tabIndicatorVisible)
 
         ClassicIndicator {
             id: innerLeft

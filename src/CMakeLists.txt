@@ -134,10 +134,6 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/Platform.cpp
     qtquick/Helpers.cpp
     qtquick/ViewFactory.cpp
-    qtquick/LayoutSaverInstantiator.cpp
-    qtquick/MainWindowInstantiator.cpp
-    qtquick/MainWindowMDIInstantiator.cpp
-    qtquick/DockWidgetInstantiator.cpp
     qtquick/QmlTypes.cpp
     qtquick/views/DropArea.cpp
     qtquick/views/DockWidget.cpp
@@ -285,7 +281,10 @@ if(KDDW_FRONTEND_QTWIDGETS)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
-    target_include_directories(kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>)
+    target_include_directories(
+        kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>
+                             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtquick>
+    )
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
@@ -530,6 +529,22 @@ endif()
 if(KDDW_FRONTEND_QTQUICK)
     set(QT_QML_GENERATE_QMLLS_INI ON)
 
+    set(KDDW_MODULE_QML_ELEMENTS
+        qtquick/MainWindowInstantiator.cpp
+        qtquick/MainWindowInstantiator.h
+        qtquick/LayoutSaverInstantiator.cpp
+        qtquick/LayoutSaverInstantiator.h
+        qtquick/DockWidgetInstantiator.cpp
+        qtquick/DockWidgetInstantiator.h
+        qtquick/MainWindowMDIInstantiator.cpp
+        qtquick/MainWindowMDIInstantiator.h
+    )
+
+    if(NOT KDDockWidgets_QML_MODULE)
+        # if we're not building a module, we need to build them explicitly
+        target_sources(kddockwidgets PRIVATE ${KDDW_MODULE_QML_ELEMENTS})
+    endif()
+
     set(KDDW_QTQUICK_HEADERS
         qtquick/Platform.h
         qtquick/Action.h
@@ -558,6 +573,57 @@ if(KDDW_FRONTEND_QTQUICK)
         qtquick/views/Group.h
         qtquick/views/TitleBar.h
     )
+
+    if(KDDockWidgets_QML_MODULE)
+        qt_policy(SET QTP0001 NEW)
+
+        # fix resource paths since
+        function(fix_resource_paths)
+            foreach(srcfile IN LISTS ARGN)
+                get_filename_component(FILENAME ${srcfile} NAME)
+                set_source_files_properties(${srcfile} PROPERTIES QT_RESOURCE_ALIAS ${FILENAME})
+            endforeach()
+        endfunction()
+
+        set(KDDW_QML_FILES
+            qtquick/views/qml/DockWidget.qml
+            qtquick/views/qml/DropArea.qml
+            qtquick/views/qml/TitleBarBase.qml
+            qtquick/views/qml/TitleBar.qml
+            qtquick/views/qml/Group.qml
+            qtquick/views/qml/FloatingWindow.qml
+            qtquick/views/qml/TabBarBase.qml
+            qtquick/views/qml/TabBar.qml
+            qtquick/views/qml/Separator.qml
+            qtquick/views/qml/MainWindowMDI.qml
+            qtquick/views/qml/MDIResizeHandlerHelper.qml
+            qtquick/views/qml/RubberBand.qml
+            qtquick/views/qml/TitleBarButton.qml
+            qtquick/views/qml/ClassicIndicatorsOverlay.qml
+            qtquick/views/qml/ClassicIndicator.qml
+        )
+
+        fix_resource_paths(${KDDW_QML_FILES})
+
+        target_compile_definitions(kddockwidgets PUBLIC KDDW_QML_MODULE)
+
+        qt_add_qml_module(
+            kddockwidgets
+            URI
+            com.kdab.dockwidgets
+            VERSION
+            2.0
+            QML_FILES
+            ${KDDW_QML_FILES}
+            NO_CACHEGEN
+            SOURCES
+            KDDockWidgets.h
+            ${KDDW_MODULE_QML_ELEMENTS}
+            OUTPUT_DIRECTORY
+            ${CMAKE_BINARY_DIR}/com/kdab/dockwidgets
+            # NO_PLUGIN # For now. Feel free to enable plugin but add CI test coverage
+        )
+    endif()
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
     install(FILES ${KDDW_QTQUICK_VIEW_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)

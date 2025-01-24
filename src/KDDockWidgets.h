@@ -36,6 +36,16 @@
 
 #endif
 
+#ifdef KDDW_FRONTEND_QTQUICK
+#include <QQmlEngine>
+#endif
+
+#ifndef QML_ELEMENT
+// This is a QWidget only build
+#define QML_ELEMENT
+#endif
+
+
 namespace KDDockWidgets::QtQuick {
 }
 namespace KDDockWidgets::QtWidgets {
@@ -48,6 +58,7 @@ namespace KDDockWidgets::Flutter {
 namespace KDDockWidgets {
 QT_DOCKS_EXPORT
 Q_NAMESPACE
+QML_ELEMENT
 
 namespace QtWidgets {
 class DockWidget;

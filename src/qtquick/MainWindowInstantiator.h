@@ -17,6 +17,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include <QQuickItem>
+#include <QQmlEngine>
 
 namespace KDDockWidgets {
 
@@ -30,6 +31,7 @@ class SideBar;
 class DOCKS_EXPORT MainWindowInstantiator : public QQuickItem
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(DockingArea)
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QString persistentCentralItemFileName READ persistentCentralItemFileName WRITE setPersistentCentralItemFileName NOTIFY uniqueNameChanged)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY

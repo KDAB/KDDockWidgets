@@ -25,12 +25,13 @@ ApplicationWindow {
             Action {
                 text: qsTr("Close All")
                 onTriggered: {
-                   _kddwDockRegistry.clear();
+                    _kddwDockRegistry.clear();
                 }
             }
 
-            MenuSeparator { }
-            Action { text: qsTr("&Quit")
+            MenuSeparator {}
+            Action {
+                text: qsTr("&Quit")
                 onTriggered: {
                     Qt.quit();
                 }

@@ -27,7 +27,7 @@ ApplicationWindow {
                 // For demonstration purposes, show how to change title:
                 text: qsTr("Change title of #4")
                 onTriggered: {
-                  dock4.title = "new title";
+                    dock4.title = "new title";
                 }
             }
         }
@@ -51,13 +51,13 @@ ApplicationWindow {
         id: dock5
         uniqueName: "dock5"
         Rectangle {
-          color: "#85baa1"
-          anchors.fill: parent
-          Text {
-              font.pixelSize: 25
-              text: "Five"
-              anchors.centerIn: parent
-          }
+            color: "#85baa1"
+            anchors.fill: parent
+            Text {
+                font.pixelSize: 25
+                text: "Five"
+                anchors.centerIn: parent
+            }
         }
     }
 
@@ -68,8 +68,8 @@ ApplicationWindow {
         uniqueName: "MyMainLayout"
 
         Component.onCompleted: {
-           addDockWidget(dock4, KDDW.KDDockWidgets.Location_OnBottom);
-           dock4.addDockWidgetAsTab(dock5);
+            addDockWidget(dock4, KDDW.KDDockWidgets.Location_OnBottom);
+            dock4.addDockWidgetAsTab(dock5);
         }
     }
 }
