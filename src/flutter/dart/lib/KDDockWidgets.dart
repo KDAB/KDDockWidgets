@@ -11,9 +11,12 @@
 
 library kddockwidgets;
 
+import 'dart:ui';
+
 import 'package:KDDockWidgets/models/GeometryItem.dart';
 import 'package:KDDockWidgets/models/Separator.dart';
 import 'package:KDDockWidgets/private/Bindings.dart';
+import 'package:KDDockWidgets/widgets/FloatingWidget.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:ffi' as ffi;

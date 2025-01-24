@@ -16,6 +16,7 @@ class DockRegistry {
 
   final floatingItems = <FloatingItem>[];
   final dockItems = <DockItem>[];
+  late final Widget rootMainWidget;
 
   void addFloatingItem(FloatingItem floatingItem) {
     if (floatingItems.contains(floatingItem)) {
@@ -27,6 +28,7 @@ class DockRegistry {
     }
 
     floatingItems.add(floatingItem);
+    recreateViews();
   }
 
   void removeFloatingItem(FloatingItem floatingItem) {
@@ -35,6 +37,7 @@ class DockRegistry {
     }
 
     floatingItems.remove(floatingItem);
+    recreateViews();
   }
 
   void addDockItem(DockItem dockItem) {
@@ -65,6 +68,35 @@ class DockRegistry {
 
   bool containsFloatingItem(FloatingItem floatingItem) {
     return floatingItems.contains(floatingItem);
+  }
+
+  void recreateViews() {
+    final floatingViews = floatingItems.map((fi) {
+      return View(
+          view: PlatformDispatcher.instance.views
+              .where((v) =>
+                  v.viewId == 1) // TODO: Support more than 1 floating window
+              .first,
+          child: MaterialApp(
+              title: 'Floating Window',
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                useMaterial3: true,
+              ),
+              home: Scaffold(
+                  body: Container(
+                color: Colors.orange,
+                child: FloatingWidget(fi),
+              ))));
+    });
+
+    runWidget(ViewCollection(views: [
+      View(
+        view: PlatformDispatcher.instance.implicitView!,
+        child: rootMainWidget,
+      ),
+      ...floatingViews
+    ]));
   }
 
   factory DockRegistry() {

@@ -30,7 +30,8 @@ void main(List<String> args) {
   // Needs to be called before using, so it loads the C++ library
   // KDDW.initLibraryLoader();
 
-  runApp(const MyApp());
+  DockRegistry.instance.rootMainWidget = const MyApp();
+  DockRegistry.instance.recreateViews();
 }
 
 class MyApp extends StatelessWidget {
