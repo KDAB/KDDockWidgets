@@ -528,6 +528,8 @@ if(KDDW_FRONTEND_QTWIDGETS)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
+    set(QT_QML_GENERATE_QMLLS_INI ON)
+
     set(KDDW_QTQUICK_HEADERS
         qtquick/Platform.h
         qtquick/Action.h
