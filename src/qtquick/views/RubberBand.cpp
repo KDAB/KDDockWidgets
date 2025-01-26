@@ -20,13 +20,24 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
+namespace {
+QString rubberbandFile()
+{
+#ifdef KDDW_QML_MODULE
+    return QStringLiteral("qrc:/qt/qml/com/kdab/dockwidgets/RubberBand.qml");
+#else
+    return QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/RubberBand.qml");
+#endif
+}
+}
+
 RubberBand::RubberBand(QQuickItem *parent)
     : View(nullptr, Core::ViewType::RubberBand, parent)
 {
     setVisible(false);
     setZ(1000);
     QQuickItem *visualItem = createItem(
-        plat()->qmlEngine(), QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/RubberBand.qml"));
+        plat()->qmlEngine(), rubberbandFile());
     visualItem->setParent(this);
     visualItem->setParentItem(this);
 }
