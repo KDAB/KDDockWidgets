@@ -37,7 +37,9 @@ class Stack;
 class DOCKS_EXPORT Group : public QtQuick::View, public Core::GroupViewInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)
+    QML_NAMED_ELEMENT(GroupView)
+    QML_UNCREATABLE("Created by the framework only.")
+    Q_PROPERTY(KDDockWidgets::QtQuick::TabBar *tabBar READ tabBarObj CONSTANT)
     Q_PROPERTY(KDDockWidgets::QtQuick::TitleBar *titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int userType READ userType CONSTANT)
     Q_PROPERTY(KDDockWidgets::QtQuick::TitleBar *actualTitleBar READ actualTitleBar NOTIFY
@@ -66,7 +68,7 @@ public:
     KDDockWidgets::QtQuick::TitleBar *titleBar() const;
     KDDockWidgets::QtQuick::TitleBar *actualTitleBar() const;
     int userType() const;
-    QObject *tabBarObj() const;
+    QtQuick::TabBar *tabBarObj() const;
 
     /// Sets the size of this group in the MDI layout
     Q_INVOKABLE void setMDISize(QSize);
