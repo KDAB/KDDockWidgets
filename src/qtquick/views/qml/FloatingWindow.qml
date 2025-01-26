@@ -10,13 +10,15 @@
 */
 
 import QtQuick 2.9
+
+import com.kdab.dockwidgets 2.0
 import "." as KDDW
 
 Rectangle {
     id: root
-    readonly property QtObject floatingWindowCpp: parent
-    readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
-    readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
+    readonly property FloatingWindowView floatingWindowCpp: parent
+    readonly property TitleBarView titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
+    readonly property DropAreaView dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
     readonly property int titleBarHeight: titleBar.heightWhenVisible
     property int margins: 4
 
@@ -35,12 +37,12 @@ Rectangle {
 
     Loader {
         id: titleBar
-        readonly property QtObject titleBarCpp: root.titleBarCpp
+        readonly property TitleBarView titleBarCpp: root.titleBarCpp
         readonly property int heightWhenVisible: item.heightWhenVisible
         source: _kddw_widgetFactory.titleBarFilename()
 
         anchors {
-            top:  parent ? parent.top : undefined
+            top: parent ? parent.top : undefined
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
             margins: root.margins
@@ -61,9 +63,9 @@ Rectangle {
             bottomMargin: root.margins
         }
 
-        onHeightChanged: {
-            // console.log("FloatingWindow.qml.dropArea height changed to " + height + " ; root.height= " + root.height)
-        }
+        onHeightChanged:
+        // console.log("FloatingWindow.qml.dropArea height changed to " + height + " ; root.height= " + root.height)
+        {}
     }
 
     onDropAreaCppChanged: {
@@ -76,11 +78,11 @@ Rectangle {
         }
     }
 
-    onHeightChanged: {
-        // console.log("FloatingWindow.qml.root height changed to " + height)
-    }
+    onHeightChanged:
+    // console.log("FloatingWindow.qml.root height changed to " + height)
+    {}
 
-    onWidthChanged: {
-        // console.log("FloatingWindow.qml.root width changed to " + width)
-    }
+    onWidthChanged:
+    // console.log("FloatingWindow.qml.root width changed to " + width)
+    {}
 }

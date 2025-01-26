@@ -138,7 +138,6 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/views/DropArea.cpp
     qtquick/views/DockWidget.cpp
     qtquick/views/FloatingWindow.cpp
-    qtquick/views/Group.cpp
     qtquick/views/MainWindow.cpp
     qtquick/views/MainWindowMDI.cpp
     qtquick/views/MDILayout.cpp
@@ -146,7 +145,6 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/views/Separator.cpp
     qtquick/views/Stack.cpp
     qtquick/views/TabBar.cpp
-    qtquick/views/TitleBar.cpp
     qtquick/views/View.cpp
     qtquick/views/ViewWrapper.cpp
     qtquick/views/ClassicIndicatorsWindow.cpp
@@ -541,6 +539,10 @@ if(KDDW_FRONTEND_QTQUICK)
         qtquick/DockWidgetInstantiator.h
         qtquick/MainWindowMDIInstantiator.cpp
         qtquick/MainWindowMDIInstantiator.h
+        qtquick/views/Group.cpp
+        qtquick/views/Group.h
+        qtquick/views/TitleBar.cpp
+        qtquick/views/TitleBar.h
     )
 
     if(NOT KDDockWidgets_QML_MODULE)

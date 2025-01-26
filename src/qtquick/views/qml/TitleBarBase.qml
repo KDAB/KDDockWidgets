@@ -10,6 +10,7 @@
 */
 
 import QtQuick 2.9
+import com.kdab.dockwidgets 2.0
 
 /**
  * @brief Base component for title bars.
@@ -24,7 +25,7 @@ import QtQuick 2.9
 Rectangle {
     id: root
 
-    readonly property QtObject titleBarCpp: parent.titleBarCpp // It's set in the loader
+    readonly property TitleBarView titleBarCpp: parent.titleBarCpp // It's set in the loader
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
     readonly property bool floatButtonVisible: titleBarCpp && titleBarCpp.floatButtonVisible
     readonly property bool maximizeButtonVisible: titleBarCpp && titleBarCpp.maximizeButtonVisible
@@ -44,16 +45,16 @@ Rectangle {
     property bool hasCustomMouseEventRedirector: false
 
     /// @brief Signal emitted by a TitleBar.qml component when the close button is clicked
-    signal closeButtonClicked();
+    signal closeButtonClicked
 
     /// @brief Signal emitted by a TitleBar.qml component when the float button is clicked
-    signal floatButtonClicked();
+    signal floatButtonClicked
 
     /// @brief Signal emitted by a TitleBar.qml component when the maximize button is clicked
-    signal maximizeButtonClicked();
+    signal maximizeButtonClicked
 
     /// @brief Signal emitted by a TitleBar.qml component when the minimize button is clicked
-    signal minimizeButtonClicked();
+    signal minimizeButtonClicked
 
     visible: titleBarCpp && titleBarCpp.visible
     height: visible ? heightWhenVisible : 0
@@ -72,7 +73,7 @@ Rectangle {
     onTitleBarCppChanged: {
         if (titleBarCpp) {
             if (!root.hasCustomMouseEventRedirector)
-                titleBarCpp.redirectMouseEvents(titleBarDragMouseArea)
+                titleBarCpp.redirectMouseEvents(titleBarDragMouseArea);
 
             // Setting just so the unit-tests can access the buttons
             titleBarCpp.titleBarQmlItem = this;

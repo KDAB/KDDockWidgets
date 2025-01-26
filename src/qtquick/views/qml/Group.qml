@@ -15,7 +15,7 @@ import com.kdab.dockwidgets 2.0
 Rectangle {
     id: root
 
-    property QtObject groupCpp
+    property GroupView groupCpp
     readonly property QtObject titleBarCpp: groupCpp ? groupCpp.titleBar : null
     readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.implicitHeight + (2 * contentsMargin) + titleBarContentsMargin
     property int contentsMargin: isMDI ? 2 : 1
@@ -190,7 +190,7 @@ Rectangle {
 
     Loader {
         id: tabbar
-        readonly property QtObject groupCpp: root.groupCpp
+        readonly property GroupView groupCpp: root.groupCpp
         readonly property bool hasCustomMouseEventRedirector: root.hasCustomMouseEventRedirector
 
         source: groupCpp ? _kddw_widgetFactory.tabbarFilename() : ""
