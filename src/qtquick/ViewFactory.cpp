@@ -191,7 +191,13 @@ QUrl ViewFactory::titleBarFilename() const
 
 QUrl ViewFactory::dockwidgetFilename() const
 {
+#ifdef KDDW_QML_MODULE
+    // as detected by qmllint, we have both a DockWidget.qml file and a DockWidget C++ type
+    // to make qmllint and tooling happy (like qmlls), return a different name here
+    return QUrl(QStringLiteral("%1/DockWidgetView.qml").arg(kddwResourcePrefix()));
+#else
     return QUrl(QStringLiteral("%1/DockWidget.qml").arg(kddwResourcePrefix()));
+#endif
 }
 
 QUrl ViewFactory::groupFilename() const

@@ -243,7 +243,11 @@ void IndicatorWindow::setQuickWindowCreationCallback(const IndicatorWindowCreati
 
 QUrl ClassicDropIndicatorOverlay::qmlSouceUrl() const
 {
+#ifdef KDDW_QML_MODULE
+    return QUrl(QStringLiteral("qrc:/qt/qml/com/kdab/dockwidgets/ClassicIndicatorsOverlay.qml"));
+#else
     return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml"));
+#endif
 }
 
 QQuickItem *ClassicDropIndicatorOverlay::indicatorForLocation(DropLocation loc) const
