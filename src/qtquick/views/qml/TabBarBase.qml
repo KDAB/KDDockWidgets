@@ -10,7 +10,6 @@
 */
 
 import QtQuick 2.9
-import QtQuick.Controls 2.9
 
 Item {
     id: root
@@ -50,7 +49,7 @@ Item {
     Connections {
         target: root.groupCpp
         function onCurrentIndexChanged() {
-            root.currentTabIndex =  groupCpp.currentIndex;
+            root.currentTabIndex = groupCpp.currentIndex;
         }
     }
 
@@ -65,7 +64,7 @@ Item {
     onTabBarCppChanged: {
         if (tabBarCpp) {
             if (!root.hasCustomMouseEventRedirector)
-                tabBarCpp.redirectMouseEvents(tabBarDragMouseArea)
+                tabBarCpp.redirectMouseEvents(tabBarDragMouseArea);
 
             // Setting just so the unit-tests can access the buttons
             tabBarCpp.tabBarQmlItem = this;
