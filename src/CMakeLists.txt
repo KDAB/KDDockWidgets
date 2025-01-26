@@ -624,6 +624,8 @@ if(KDDW_FRONTEND_QTQUICK)
             ${KDDW_MODULE_QML_ELEMENTS}
             OUTPUT_DIRECTORY
             ${CMAKE_BINARY_DIR}/com/kdab/dockwidgets
+            DEPENDENCIES
+            QtQuick
             # NO_PLUGIN # For now. Feel free to enable plugin but add CI test coverage
         )
     endif()
