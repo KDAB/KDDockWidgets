@@ -248,7 +248,7 @@ void FloatingWindow::init()
     });
 }
 
-QObject *FloatingWindow::titleBar() const
+KDDockWidgets::QtQuick::TitleBar *FloatingWindow::titleBar() const
 {
     if (auto tb = m_controller->titleBar())
         return qobject_cast<TitleBar *>(asQQuickItem(tb->view()));
@@ -256,7 +256,7 @@ QObject *FloatingWindow::titleBar() const
     return nullptr;
 }
 
-QObject *FloatingWindow::dropArea() const
+KDDockWidgets::QtQuick::DropArea *FloatingWindow::dropArea() const
 {
     if (auto da = m_controller->dropArea())
         return qobject_cast<DropArea *>(asQQuickItem(da->view()));

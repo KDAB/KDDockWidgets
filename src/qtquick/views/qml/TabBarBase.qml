@@ -11,16 +11,18 @@
 
 import QtQuick 2.9
 
+import com.kdab.dockwidgets 2.0
+
 Item {
     id: root
 
     readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector
 
     /// This is our C++ Group.cpp view
-    readonly property QtObject groupCpp: parent.groupCpp
+    readonly property GroupView groupCpp: parent.groupCpp
 
     /// This is our C++ TabBar.cpp view
-    readonly property QtObject tabBarCpp: groupCpp ? groupCpp.tabBar : null
+    readonly property TabBarView tabBarCpp: groupCpp ? groupCpp.tabBar : null
 
     /// The number of tabs
     readonly property int count: tabBarCpp ? tabBarCpp.dockWidgetModel.count : 0

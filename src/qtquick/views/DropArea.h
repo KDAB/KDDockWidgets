@@ -28,6 +28,8 @@ class DOCKS_EXPORT DropArea : public QtQuick::View
 {
     Q_OBJECT
 public:
+    QML_NAMED_ELEMENT(DropAreaView)
+    QML_UNCREATABLE("Created by the framework only.")
     explicit DropArea(Core::DropArea *, Core::View *parent);
     ~DropArea();
 

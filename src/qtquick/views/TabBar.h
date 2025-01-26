@@ -44,10 +44,12 @@ class DockWidgetModel;
 class DOCKS_EXPORT TabBar : public QtQuick::View, public Core::TabBarViewInterface
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(TabBarView)
+    QML_UNCREATABLE("Created by the framework only.")
     Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY
                    tabBarQmlItemChanged)
     Q_PROPERTY(bool tabBarAutoHide READ tabBarAutoHide NOTIFY tabBarAutoHideChanged)
-    Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
+    Q_PROPERTY(KDDockWidgets::QtQuick::DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
     Q_PROPERTY(int hoveredTabIndex READ hoveredTabIndex NOTIFY hoveredTabIndexChanged)
 public:
     explicit TabBar(Core::TabBar *controller, QQuickItem *parent = nullptr);
@@ -114,6 +116,8 @@ private:
 class DockWidgetModel : public QAbstractListModel
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_UNCREATABLE("Created by the framework only.")
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
     enum Role {

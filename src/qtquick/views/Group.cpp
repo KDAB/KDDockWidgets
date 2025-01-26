@@ -215,7 +215,7 @@ QSize Group::maxSizeHint() const
     return View::maxSizeHint();
 }
 
-QObject *Group::tabBarObj() const
+QtQuick::TabBar *Group::tabBarObj() const
 {
     return tabBarView();
 }

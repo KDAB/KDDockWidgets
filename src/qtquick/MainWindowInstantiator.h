@@ -16,6 +16,13 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
+// workaround QTBUG-101146, the QML_ELEMENTS Inside views/ aren't being included automatically
+#include "views/Group.h"
+#include "views/TitleBar.h"
+#include "views/TabBar.h"
+#include "views/DropArea.h"
+#include "views/FloatingWindow.h"
+
 #include <QQuickItem>
 #include <QQmlEngine>
 

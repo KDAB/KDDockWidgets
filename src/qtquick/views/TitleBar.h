@@ -29,6 +29,9 @@ namespace QtQuick {
 class DOCKS_EXPORT TitleBar : public QtQuick::View, public Core::TitleBarViewInterface
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(TitleBarView)
+    QML_UNCREATABLE("Created by the framework only.")
+
     // These properties is just for the unit-tests
     Q_PROPERTY(QQuickItem *titleBarQmlItem READ titleBarQmlItem WRITE setTitleBarQmlItem NOTIFY
                    titleBarQmlItemChanged)

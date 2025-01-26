@@ -16,7 +16,7 @@ MouseArea {
     id: root
     required property int resizeMargin
     required property bool resizeAllowed
-    required property QtObject groupCpp
+    required property GroupView groupCpp
     required property int cursorPosition
 
     enabled: resizeAllowed
