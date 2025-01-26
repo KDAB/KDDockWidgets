@@ -595,7 +595,6 @@ if(KDDW_FRONTEND_QTQUICK)
             qtquick/views/qml/TabBarBase.qml
             qtquick/views/qml/TabBar.qml
             qtquick/views/qml/Separator.qml
-            qtquick/views/qml/MainWindowMDI.qml
             qtquick/views/qml/MDIResizeHandlerHelper.qml
             qtquick/views/qml/RubberBand.qml
             qtquick/views/qml/TitleBarButton.qml
