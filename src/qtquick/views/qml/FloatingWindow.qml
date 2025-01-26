@@ -16,7 +16,7 @@ import "." as KDDW
 
 Rectangle {
     id: root
-    readonly property FloatingWindowView floatingWindowCpp: parent
+    readonly property FloatingWindowView floatingWindowCpp: parent // qmllint disable incompatible-type
     readonly property TitleBarView titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property DropAreaView dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
     readonly property int titleBarHeight: titleBar.heightWhenVisible
@@ -38,7 +38,7 @@ Rectangle {
     Loader {
         id: titleBar
         readonly property TitleBarView titleBarCpp: root.titleBarCpp
-        readonly property int heightWhenVisible: item.heightWhenVisible
+        readonly property int heightWhenVisible: item.heightWhenVisible // qmllint disable missing-property
         source: _kddw_widgetFactory.titleBarFilename()
 
         anchors {
