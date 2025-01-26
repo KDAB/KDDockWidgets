@@ -37,8 +37,11 @@ using QuickWindowCreationCallback = std::function<void(QQuickView *window, QtQui
 class DOCKS_EXPORT FloatingWindow : public QtQuick::View
 {
     Q_OBJECT
-    Q_PROPERTY(QObject *titleBar READ titleBar CONSTANT)
-    Q_PROPERTY(QObject *dropArea READ dropArea CONSTANT)
+    QML_NAMED_ELEMENT(FloatingWindowView)
+    QML_UNCREATABLE("Created by the framework only.")
+
+    Q_PROPERTY(KDDockWidgets::QtQuick::TitleBar *titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(KDDockWidgets::QtQuick::DropArea *dropArea READ dropArea CONSTANT)
 public:
     explicit FloatingWindow(Core::FloatingWindow *controller,
                             QtQuick::MainWindow *parent = nullptr,
@@ -48,8 +51,8 @@ public:
     QSize minSize() const override;
 
     // QML interface
-    QObject *titleBar() const;
-    QObject *dropArea() const;
+    KDDockWidgets::QtQuick::TitleBar *titleBar() const;
+    KDDockWidgets::QtQuick::DropArea *dropArea() const;
 
     Core::Item *rootItem() const;
 
