@@ -150,8 +150,11 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/views/View.cpp
     qtquick/views/ViewWrapper.cpp
     qtquick/views/ClassicIndicatorsWindow.cpp
-    qtquick/kddockwidgets_qtquick.qrc
 )
+
+if(NOT KDDockWidgets_QML_MODULE)
+    set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/kddockwidgets_qtquick.qrc)
+endif()
 
 set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
     qtquick/views/DropArea.h
@@ -586,7 +589,6 @@ if(KDDW_FRONTEND_QTQUICK)
         endfunction()
 
         set(KDDW_QML_FILES
-            qtquick/views/qml/DockWidget.qml
             qtquick/views/qml/DropArea.qml
             qtquick/views/qml/TitleBarBase.qml
             qtquick/views/qml/TitleBar.qml
@@ -601,6 +603,7 @@ if(KDDW_FRONTEND_QTQUICK)
             qtquick/views/qml/TitleBarButton.qml
             qtquick/views/qml/ClassicIndicatorsOverlay.qml
             qtquick/views/qml/ClassicIndicator.qml
+            qtquick/views/qml/DockWidgetView.qml
         )
 
         fix_resource_paths(${KDDW_QML_FILES})
