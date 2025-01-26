@@ -17,7 +17,7 @@ Rectangle {
 
     property GroupView groupCpp
     readonly property QtObject titleBarCpp: groupCpp ? groupCpp.titleBar : null
-    readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.implicitHeight + (2 * contentsMargin) + titleBarContentsMargin
+    readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.implicitHeight + (2 * contentsMargin) + titleBarContentsMargin // qmllint disable missing-property
     property int contentsMargin: isMDI ? 2 : 1
     property int titleBarContentsMargin: 1
     property int mouseResizeMargin: 8
