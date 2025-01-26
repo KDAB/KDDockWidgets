@@ -16,7 +16,7 @@ import "." as KDDW
 
 Rectangle {
     id: root
-    readonly property FloatingWindowView floatingWindowCpp: parent
+    required property FloatingWindowView floatingWindowCpp
     readonly property TitleBarView titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property DropAreaView dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
     readonly property int titleBarHeight: titleBar.heightWhenVisible

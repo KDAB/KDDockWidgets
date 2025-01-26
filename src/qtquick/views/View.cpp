@@ -159,10 +159,11 @@ void View::setGeometry(QRect rect)
     Core::View::move(rect.topLeft());
 }
 
-QQuickItem *View::createItem(QQmlEngine *engine, const QString &filename, QQmlContext *context)
+QQuickItem *View::createItem(QQmlEngine *engine, const QString &filename, QQmlContext *context, const QVariantMap &initialProperties)
 {
     QQmlComponent component(engine, filename);
-    QObject *obj = component.create(context);
+
+    QObject *obj = component.createWithInitialProperties(initialProperties, context);
     if (!obj) {
         qWarning() << Q_FUNC_INFO << component.errorString();
         return nullptr;

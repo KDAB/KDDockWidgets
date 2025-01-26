@@ -209,8 +209,11 @@ void FloatingWindow::init()
     m_quickWindow->installEventFilter(this); // for window resizing
     m_controller->maybeCreateResizeHandler();
 
+
+    QVariantMap initialProperties;
+    initialProperties.insert(QStringLiteral("floatingWindowCpp"), QVariant::fromValue(this));
     m_visualItem = createItem(m_quickWindow->engine(),
-                              plat()->viewFactory()->floatingWindowFilename().toString());
+                              plat()->viewFactory()->floatingWindowFilename().toString(), nullptr, initialProperties);
     Q_ASSERT(m_visualItem);
 
     // Ensure our window size is never smaller than our min-size
