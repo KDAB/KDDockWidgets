@@ -10,7 +10,6 @@
 */
 
 #include "RubberBand.h"
-#include "Config.h"
 #include "qtquick/Platform.h"
 
 #include <QQmlEngine>
