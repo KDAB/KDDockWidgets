@@ -16,10 +16,10 @@ import com.kdab.dockwidgets 2.0
 Item {
     id: root
 
-    readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector
+    readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector // qmllint disable missing-property
 
     /// This is our C++ Group.cpp view
-    readonly property GroupView groupCpp: parent.groupCpp
+    readonly property GroupView groupCpp: parent.groupCpp // qmllint disable missing-property
 
     /// This is our C++ TabBar.cpp view
     readonly property TabBarView tabBarCpp: groupCpp ? groupCpp.tabBar : null
