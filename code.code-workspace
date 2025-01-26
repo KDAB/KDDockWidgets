@@ -45,7 +45,7 @@
     "qt-qml.qmlls.customExePath": "/data/secured/home/serj/Qt/6.8.1/gcc_64/bin/qmlls",
     "qt-qml.qmlls.verboseOutput": true,
     "qt-qml.qmlls.additionalImportPaths": [
-      "/data/sources/kddockwidgets/build-dev6/com/kdab/kddockwidgets/"
+      "/data/sources/kddockwidgets/build-dev6-qml-module"
     ]
   },
   "launch": {
