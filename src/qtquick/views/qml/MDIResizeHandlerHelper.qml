@@ -9,8 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 import QtQuick 2.9
-import QtQuick.Controls 2.9
-import QtQuick.Layouts 1.9
 
 import com.kdab.dockwidgets 2.0
 
