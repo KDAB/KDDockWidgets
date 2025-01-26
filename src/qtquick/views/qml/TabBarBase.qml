@@ -16,10 +16,10 @@ import com.kdab.dockwidgets 2.0
 Item {
     id: root
 
-    readonly property bool hasCustomMouseEventRedirector: parent.hasCustomMouseEventRedirector
+    required property bool hasCustomMouseEventRedirector
 
     /// This is our C++ Group.cpp view
-    readonly property GroupView groupCpp: parent.groupCpp
+    required property GroupView groupCpp
 
     /// This is our C++ TabBar.cpp view
     readonly property TabBarView tabBarCpp: groupCpp ? groupCpp.tabBar : null

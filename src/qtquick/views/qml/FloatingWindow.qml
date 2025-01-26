@@ -37,9 +37,7 @@ Rectangle {
 
     Loader {
         id: titleBar
-        readonly property TitleBarView titleBarCpp: root.titleBarCpp
         readonly property int heightWhenVisible: item.heightWhenVisible
-        source: _kddw_widgetFactory.titleBarFilename()
 
         anchors {
             top: parent ? parent.top : undefined
@@ -85,4 +83,10 @@ Rectangle {
     onWidthChanged:
     // console.log("FloatingWindow.qml.root width changed to " + width)
     {}
+
+    Component.onCompleted: {
+        titleBar.setSource(_kddw_widgetFactory.titleBarFilename(), {
+            'titleBarCpp': root.titleBarCpp
+        });
+    }
 }

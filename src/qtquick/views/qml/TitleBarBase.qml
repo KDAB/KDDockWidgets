@@ -25,7 +25,7 @@ import com.kdab.dockwidgets 2.0
 Rectangle {
     id: root
 
-    readonly property TitleBarView titleBarCpp: parent.titleBarCpp // It's set in the loader
+    required property TitleBarView titleBarCpp
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
     readonly property bool floatButtonVisible: titleBarCpp && titleBarCpp.floatButtonVisible
     readonly property bool maximizeButtonVisible: titleBarCpp && titleBarCpp.maximizeButtonVisible

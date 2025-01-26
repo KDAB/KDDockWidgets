@@ -16,7 +16,7 @@ Rectangle {
     id: root
 
     property GroupView groupCpp
-    readonly property QtObject titleBarCpp: groupCpp ? groupCpp.titleBar : null
+    readonly property TitleBarView titleBarCpp: groupCpp ? groupCpp.titleBar : null
     readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.implicitHeight + (2 * contentsMargin) + titleBarContentsMargin
     property int contentsMargin: isMDI ? 2 : 1
     property int titleBarContentsMargin: 1
@@ -42,6 +42,7 @@ Rectangle {
         if (groupCpp) {
             groupCpp.setStackLayout(stackLayout);
         }
+        updateLoaderSource();
     }
 
     onNonContentsHeightChanged: {
@@ -175,8 +176,6 @@ Rectangle {
 
     Loader {
         id: titleBar
-        readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: groupCpp ? _kddw_widgetFactory.titleBarFilename() : ""
 
         anchors {
             top: parent ? parent.top : undefined
@@ -191,9 +190,6 @@ Rectangle {
     Loader {
         id: tabbar
         readonly property GroupView groupCpp: root.groupCpp
-        readonly property bool hasCustomMouseEventRedirector: root.hasCustomMouseEventRedirector
-
-        source: groupCpp ? _kddw_widgetFactory.tabbarFilename() : ""
 
         function topAnchor() {
             if (root.tabsAtTop) {
@@ -238,5 +234,25 @@ Rectangle {
             rightMargin: root.contentsMargin
             bottomMargin: root.contentsMargin
         }
+    }
+
+    function updateLoaderSource() {
+        if (groupCpp) {
+            tabbar.setSource(_kddw_widgetFactory.tabbarFilename(), {
+                'hasCustomMouseEventRedirector': hasCustomMouseEventRedirector,
+                'groupCpp': groupCpp
+            });
+
+            titleBar.setSource(_kddw_widgetFactory.titleBarFilename(), {
+                'titleBarCpp': titleBarCpp
+            });
+        } else {
+            tabbar.setSource("");
+            titleBar.setSource("");
+        }
+    }
+
+    Component.onCompleted: {
+        updateLoaderSource();
     }
 }
