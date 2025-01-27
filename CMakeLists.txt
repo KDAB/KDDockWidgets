@@ -246,6 +246,13 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
     set(KDDW_FRONTEND_QT ON)
 endif()
 
+if(KDDockWidgets_QML_MODULE AND Qt6Core_VERSION VERSION_LESS "6.8.0")
+    # We have workarounds for QTBUG-101146, but only since 6.8 the generated includes are guarded
+    # with _has_include
+    message(WARNING "KDDockWidgets_QML_MODULE=ON ignored. Only available since Qt 6.8.")
+    set(KDDockWidgets_QML_MODULE OFF)
+endif()
+
 if(KDDockWidgets_QML_MODULE AND (NOT KDDW_FRONTEND_QTQUICK OR NOT KDDockWidgets_QT6))
     message(WARNING "KDDockWidgets_QML_MODULE=ON ignored. Only available for QtQuick on Qt6.")
 endif()
