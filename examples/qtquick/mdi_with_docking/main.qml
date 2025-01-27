@@ -25,7 +25,7 @@ ApplicationWindow {
             Action {
                 text: qsTr("Close All")
                 onTriggered: {
-                    _kddwDockRegistry.clear();
+                    KDDW.Singletons.dockRegistry.clear();
                 }
             }
 

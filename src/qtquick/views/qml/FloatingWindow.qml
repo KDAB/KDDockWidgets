@@ -39,7 +39,7 @@ Rectangle {
         id: titleBar
         readonly property TitleBarView titleBarCpp: root.titleBarCpp
         readonly property int heightWhenVisible: item.heightWhenVisible // qmllint disable missing-property
-        source: _kddw_widgetFactory.titleBarFilename()
+        source: Singletons.widgetFactory.titleBarFilename()
 
         anchors {
             top: parent ? parent.top : undefined

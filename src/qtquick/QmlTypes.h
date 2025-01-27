@@ -20,6 +20,9 @@
 #define KD_QMLTYPES_H
 
 namespace KDDockWidgets {
+// This is only called for:
+// Qt5
+// Qt6 if KDDockWidgets_QML_MODULE=OFF
 void registerQmlTypes();
 }
 

@@ -53,7 +53,7 @@ public:
 
 private:
     DockWidget::List &groupingByRef(DockWidget *);
-    Vector<DockWidget::List> m_groupings;
+    QVector<DockWidget::List> m_groupings;
 };
 
 }
@@ -134,8 +134,8 @@ bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
     return excludeBeingDeleted ? !hasFloatingWindows() : m_floatingWindows.isEmpty();
 }
 
-bool DockRegistry::affinitiesMatch(const Vector<QString> &affinities1,
-                                   const Vector<QString> &affinities2) const
+bool DockRegistry::affinitiesMatch(const QVector<QString> &affinities1,
+                                   const QVector<QString> &affinities2) const
 {
     if (affinities1.isEmpty() && affinities2.isEmpty())
         return true;
@@ -150,9 +150,9 @@ bool DockRegistry::affinitiesMatch(const Vector<QString> &affinities1,
     return false;
 }
 
-Vector<QString> DockRegistry::mainWindowsNames() const
+QVector<QString> DockRegistry::mainWindowsNames() const
 {
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(m_mainWindows.size());
     for (auto mw : m_mainWindows)
         names.push_back(mw->uniqueName());
@@ -160,9 +160,9 @@ Vector<QString> DockRegistry::mainWindowsNames() const
     return names;
 }
 
-Vector<QString> DockRegistry::dockWidgetNames() const
+QVector<QString> DockRegistry::dockWidgetNames() const
 {
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(m_dockWidgets.size());
     for (auto dw : m_dockWidgets)
         names.push_back(dw->uniqueName());
@@ -242,7 +242,7 @@ Core::Group *DockRegistry::groupInMDIResize() const
             continue;
 
         Layout *layout = mw->layout();
-        const Vector<Core::Group *> groups = layout->groups();
+        const QVector<Core::Group *> groups = layout->groups();
         for (Core::Group *group : groups) {
             if (WidgetResizeHandler *wrh = group->resizeHandler()) {
                 if (wrh->isResizing())
@@ -270,13 +270,13 @@ DockRegistry::Private *DockRegistry::dptr() const
 }
 
 Core::MainWindow::List
-DockRegistry::mainWindowsWithAffinity(const Vector<QString> &affinities) const
+DockRegistry::mainWindowsWithAffinity(const QVector<QString> &affinities) const
 {
     Core::MainWindow::List result;
     result.reserve(m_mainWindows.size());
 
     for (auto mw : m_mainWindows) {
-        const Vector<QString> mwAffinities = mw->affinities();
+        const QVector<QString> mwAffinities = mw->affinities();
         if (affinitiesMatch(mwAffinities, affinities))
             result.push_back(mw);
     }
@@ -495,7 +495,7 @@ Core::DockWidget::List DockRegistry::dockwidgets() const
     return m_dockWidgets;
 }
 
-Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &names)
+Core::DockWidget::List DockRegistry::dockWidgets(const QVector<QString> &names)
 {
     Core::DockWidget::List result;
     result.reserve(names.size());
@@ -508,7 +508,7 @@ Core::DockWidget::List DockRegistry::dockWidgets(const Vector<QString> &names)
     return result;
 }
 
-Core::MainWindow::List DockRegistry::mainWindows(const Vector<QString> &names)
+Core::MainWindow::List DockRegistry::mainWindows(const QVector<QString> &names)
 {
     Core::MainWindow::List result;
     result.reserve(names.size());
@@ -540,9 +540,9 @@ Core::MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-Vector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
+QVector<Core::MainWindowViewInterface *> DockRegistry::mainDockingAreas() const
 {
-    Vector<Core::MainWindowViewInterface *> areas;
+    QVector<Core::MainWindowViewInterface *> areas;
 
     for (auto mw : m_mainWindows) {
         if (View *view = mw->view()) {
@@ -559,10 +559,10 @@ Core::Group::List DockRegistry::groups() const
     return m_groups;
 }
 
-Vector<Core::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted, bool honourSkipped) const
+QVector<Core::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted, bool honourSkipped) const
 {
     // Returns all the FloatingWindow which aren't being deleted
-    Vector<Core::FloatingWindow *> result;
+    QVector<Core::FloatingWindow *> result;
     result.reserve(m_floatingWindows.size());
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (!includeBeingDeleted && fw->beingDeleted())
@@ -664,7 +664,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     return windows;
 }
 
-void DockRegistry::clear(const Vector<QString> &affinities)
+void DockRegistry::clear(const QVector<QString> &affinities)
 {
     // Clears everything
     clear(m_dockWidgets, m_mainWindows, affinities);
@@ -672,7 +672,7 @@ void DockRegistry::clear(const Vector<QString> &affinities)
 
 void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
                          const Core::MainWindow::List &mainWindows,
-                         const Vector<QString> &affinities)
+                         const QVector<QString> &affinities)
 {
     for (auto dw : std::as_const(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
