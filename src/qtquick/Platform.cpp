@@ -266,3 +266,8 @@ Core::DockWidget *Platform::dockWidgetForItem(QQuickItem *item)
 
     return nullptr;
 }
+
+QtQuickHelpers *Platform::helpers() const
+{
+    return m_qquickHelpers;
+}

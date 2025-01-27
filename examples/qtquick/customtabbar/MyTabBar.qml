@@ -53,7 +53,7 @@ KDDW.TabBarBase {
                 onPressed: {
                     /// Do not use random uuids if you're planing to use layout save/restore!
                     /// Using them here for convenience of the exercise
-                    var uniqueName = _kddwHelpers.generateUuid();
+                    var uniqueName = Singletons.helpers.generateUuid();
 
                     var code = `import com.kdab.dockwidgets 2.0 as KDDW;
                                 import QtQuick 2.6;

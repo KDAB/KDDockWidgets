@@ -14,8 +14,13 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/core/View.h"
+#include "kddockwidgets/core/DockWidget.h"
+#include "kddockwidgets/core/MainWindow.h"
 #include "kddockwidgets/QtCompat_p.h"
 #include "kddockwidgets/core/EventFilterInterface.h"
+
+#include <QVector>
+#include <QObject>
 
 #include <map>
 #include <memory>
@@ -47,7 +52,8 @@ class MainWindowMDI;
 class DOCKS_EXPORT DockRegistry : public Core::Object, public Core::EventFilterInterface
 {
     Q_OBJECT
-
+    QML_ELEMENT
+    QML_UNCREATABLE("Created by the framework only.")
 public:
     enum class DockByNameFlag {
         None = 0,
@@ -61,7 +67,7 @@ public:
     static DockRegistry *self();
     static bool isInitialized();
 
-    ~DockRegistry();
+    ~DockRegistry() override;
     void registerDockWidget(Core::DockWidget *);
     void unregisterDockWidget(Core::DockWidget *);
 
@@ -92,37 +98,37 @@ public:
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
-    Vector<Core::DockWidget *> dockwidgets() const;
+    QVector<Core::DockWidget *> dockwidgets() const;
 
     ///@brief overload returning only the ones with the specified names
-    Vector<Core::DockWidget *> dockWidgets(const Vector<QString> &names);
+    QVector<Core::DockWidget *> dockWidgets(const QVector<QString> &names);
 
     ///@brief returns all closed DockWidget instances
     /// @param honourSkipped If true, won't include dock widgets with LayoutSaverOption::Skip
-    Vector<Core::DockWidget *> closedDockwidgets(bool honourSkipped) const;
+    QVector<Core::DockWidget *> closedDockwidgets(bool honourSkipped) const;
 
     ///@brief returns all MainWindow instances
-    Vector<Core::MainWindow *> mainwindows() const;
+    QVector<Core::MainWindow *> mainwindows() const;
 
     /// @brief returns all MainWindow instances
     /// Like mainwindows(), but with better suited for QtQuick and better terminology
     /// as we're phasing out the "MainWindow" name there
-    Vector<Core::MainWindowViewInterface *> mainDockingAreas() const;
+    QVector<Core::MainWindowViewInterface *> mainDockingAreas() const;
 
     ///@brief overload returning only the ones with the specified names
-    Vector<Core::MainWindow *> mainWindows(const Vector<QString> &names);
+    QVector<Core::MainWindow *> mainWindows(const QVector<QString> &names);
 
     ///@brief returns a list of all Frame instances
-    Vector<Core::Group *> groups() const;
+    QVector<Core::Group *> groups() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
-    Vector<Core::FloatingWindow *>
+    QVector<Core::FloatingWindow *>
     floatingWindows(bool includeBeingDeleted = false, bool honourSkipped = false) const;
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both
     /// QtWidgets and QtQuick
-    Vector<std::shared_ptr<Core::Window>> floatingQWindows() const;
+    QVector<std::shared_ptr<Core::Window>> floatingQWindows() const;
 
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;
@@ -148,7 +154,7 @@ public:
     /// MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
-    Vector<std::shared_ptr<Core::Window>> topLevels(bool excludeFloatingDocks = false) const;
+    QVector<std::shared_ptr<Core::Window>> topLevels(bool excludeFloatingDocks = false) const;
 
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows
@@ -156,14 +162,14 @@ public:
      * @param affinities if specified only closes dock widgets and main windows with the specified
      * affinities
      */
-    Q_INVOKABLE void clear(const Vector<QString> &affinities = {});
+    Q_INVOKABLE void clear(const QVector<QString> &affinities = {});
 
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
-    void clear(const Vector<Core::DockWidget *> &dockWidgets,
-               const Vector<Core::MainWindow *> &mainWindows,
-               const Vector<QString> &affinities);
+    void clear(const QVector<Core::DockWidget *> &dockWidgets,
+               const QVector<Core::MainWindow *> &mainWindows,
+               const QVector<QString> &affinities);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
@@ -183,7 +189,7 @@ public:
     /**
      * @brief Returns all main windows which match at least one of the @p affinities
      */
-    Vector<Core::MainWindow *> mainWindowsWithAffinity(const Vector<QString> &affinities) const;
+    QVector<Core::MainWindow *> mainWindowsWithAffinity(const QVector<QString> &affinities) const;
 
     /// @brief Returns the Layout where the specified item is in
     Core::Layout *layoutForItem(const Core::Item *) const;
@@ -192,13 +198,13 @@ public:
     /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
     bool itemIsInMainWindow(const Core::Item *) const;
 
-    bool affinitiesMatch(const Vector<QString> &affinities1, const Vector<QString> &affinities2) const;
+    bool affinitiesMatch(const QVector<QString> &affinities1, const QVector<QString> &affinities2) const;
 
     /// @brief Returns a list of all known main window unique names
-    Vector<QString> mainWindowsNames() const;
+    QVector<QString> mainWindowsNames() const;
 
     /// @brief Returns a list of all known dock widget unique names
-    Vector<QString> dockWidgetNames() const;
+    QVector<QString> dockWidgetNames() const;
 
     /// @brief returns if the specified window has some other window on top (with higher Z)
     /// This is an approximation, as we don't have ways to compare Z, so we mostly intersect
@@ -245,16 +251,16 @@ private:
     bool onMouseButtonPress(Core::View *, MouseEvent *) override;
 
     // To honour Config::Flag_AutoHideAsTabGroups:
-    void addSideBarGrouping(const Vector<Core::DockWidget *> &);
-    void removeSideBarGrouping(const Vector<Core::DockWidget *> &);
-    Vector<Core::DockWidget *> sideBarGroupingFor(Core::DockWidget *) const;
+    void addSideBarGrouping(const QVector<Core::DockWidget *> &);
+    void removeSideBarGrouping(const QVector<Core::DockWidget *> &);
+    QVector<Core::DockWidget *> sideBarGroupingFor(Core::DockWidget *) const;
 
     Private *const d;
 
-    Vector<Core::DockWidget *> m_dockWidgets;
-    Vector<Core::MainWindow *> m_mainWindows;
-    Vector<Core::Group *> m_groups;
-    Vector<Core::FloatingWindow *> m_floatingWindows;
+    QVector<Core::DockWidget *> m_dockWidgets;
+    QVector<Core::MainWindow *> m_mainWindows;
+    QVector<Core::Group *> m_groups;
+    QVector<Core::FloatingWindow *> m_floatingWindows;
 
     ///@brief Dock widget id remapping, used by LayoutSaver
     ///

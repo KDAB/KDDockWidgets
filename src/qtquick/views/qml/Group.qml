@@ -22,7 +22,7 @@ Rectangle {
     property int titleBarContentsMargin: 1
     property int mouseResizeMargin: 8
     readonly property bool isMDI: groupCpp && groupCpp.isMDI
-    readonly property bool resizeAllowed: root.isMDI && !_kddwHelpers.isDragging && _kddwDockRegistry && (!_kddwHelpers.groupViewInMDIResize || _kddwHelpers.groupViewInMDIResize === groupCpp)
+    readonly property bool resizeAllowed: root.isMDI && !Singletons.helpers.isDragging && Singletons.dockRegistry && (!Singletons.helpers.groupViewInMDIResize || Singletons.helpers.groupViewInMDIResize === groupCpp)
     property alias tabBarHeight: tabbar.height
     readonly property bool hasCustomMouseEventRedirector: false
     readonly property bool isFixedHeight: groupCpp && groupCpp.isFixedHeight
@@ -176,7 +176,7 @@ Rectangle {
     Loader {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: groupCpp ? _kddw_widgetFactory.titleBarFilename() : ""
+        source: groupCpp ? Singletons.widgetFactory.titleBarFilename() : ""
 
         anchors {
             top: parent ? parent.top : undefined
@@ -193,7 +193,7 @@ Rectangle {
         readonly property GroupView groupCpp: root.groupCpp
         readonly property bool hasCustomMouseEventRedirector: root.hasCustomMouseEventRedirector
 
-        source: groupCpp ? _kddw_widgetFactory.tabbarFilename() : ""
+        source: groupCpp ? Singletons.widgetFactory.tabbarFilename() : ""
 
         function topAnchor() {
             if (root.tabsAtTop) {

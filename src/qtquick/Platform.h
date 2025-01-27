@@ -56,6 +56,8 @@ public:
     void ungrabMouse() override;
     void onViewFactoryChanged() override;
 
+    QtQuickHelpers *helpers() const;
+
     static Platform *instance();
 
     static Core::DockWidget *dockWidgetForItem(QQuickItem *);

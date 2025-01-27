@@ -14,6 +14,8 @@
 
 #include "kddockwidgets/core/ViewFactory.h"
 
+#include <QQmlEngine>
+
 // clazy:excludeall=ctor-missing-parent-argument
 
 /**
@@ -49,6 +51,8 @@ namespace QtQuick {
 class DOCKS_EXPORT ViewFactory : public Core::ViewFactory
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_UNCREATABLE("Created by the framework only.")
 public:
     ViewFactory() = default;
     ~ViewFactory() override;

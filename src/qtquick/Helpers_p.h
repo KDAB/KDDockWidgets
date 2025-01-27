@@ -12,7 +12,7 @@
 #ifndef KD_QTQUICK_HELPERS_P_H
 #define KD_QTQUICK_HELPERS_P_H
 
-#include <QObject>
+#include <QQmlEngine>
 
 #include <kdbindings/signal.h>
 
@@ -26,6 +26,8 @@ namespace KDDockWidgets {
 class QtQuickHelpers : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_UNCREATABLE("Created by the framework only.")
     Q_PROPERTY(
         QObject *groupViewInMDIResize READ groupViewInMDIResize NOTIFY groupInMDIResizeChanged)
 
