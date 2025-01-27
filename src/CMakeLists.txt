@@ -529,6 +529,13 @@ if(KDDW_FRONTEND_QTQUICK)
     set(QT_QML_GENERATE_QMLLS_INI ON)
 
     set(KDDW_MODULE_QML_ELEMENTS
+        qtquick/Singletons.cpp
+        qtquick/Singletons_p.h
+        qtquick/Helpers.cpp
+        qtquick/Helpers_p.h
+        qtquick/ViewFactory.cpp
+        qtquick/ViewFactory.h
+        core/ViewFactory.h
         qtquick/MainWindowInstantiator.cpp
         qtquick/MainWindowInstantiator.h
         qtquick/LayoutSaverInstantiator.cpp

@@ -62,7 +62,7 @@ ApplicationWindow {
                 onTriggered: {
                     /// Do not use random uuids if you're planing to use layout save/restore!
                     /// Using them here for convenience of the exercise
-                    var uniqueName = _kddwHelpers.generateUuid();
+                    var uniqueName = KDDW.Singletons.helpers.generateUuid();
 
                     var code = `import com.kdab.dockwidgets 2.0 as KDDW;
                                 import QtQuick 2.6;
@@ -86,7 +86,7 @@ ApplicationWindow {
             Action {
                 text: qsTr("Close All")
                 onTriggered: {
-                    _kddwDockRegistry.clear();
+                    KDDW.Singletons.dockRegistry.clear();
                 }
             }
 

@@ -14,6 +14,7 @@
 #include "MainWindowInstantiator.h"
 #include "MainWindowMDIInstantiator.h"
 #include "LayoutSaverInstantiator.h"
+#include "Singletons_p.h"
 
 #include "views/Group.h"
 #include "views/TitleBar.h"
@@ -50,4 +51,8 @@ void KDDockWidgets::registerQmlTypes()
 
     qmlRegisterUncreatableType<QtQuick::DockWidgetModel>("com.kdab.dockwidgets", 2, 0,
                                                          "DockWidgetModel", QStringLiteral("Internal usage only"));
+
+    qmlRegisterSingletonType<QtQuick::Singletons>("com.kdab.dockwidgets", 2, 0, "Singletons", [](QQmlEngine *, QJSEngine *) -> QObject * {
+        return new QtQuick::Singletons();
+    });
 }

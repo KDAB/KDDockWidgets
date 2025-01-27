@@ -38,11 +38,10 @@
 
 #ifdef KDDW_FRONTEND_QTQUICK
 #include <QQmlEngine>
-#endif
-
-#ifndef QML_ELEMENT
-// This is a QWidget only build
+#else
+// So QWidget builds don't break
 #define QML_ELEMENT
+#define QML_UNCREATABLE(x) static_assert(true, "");
 #endif
 
 
