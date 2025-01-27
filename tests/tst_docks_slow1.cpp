@@ -41,9 +41,9 @@ using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
 
-KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
+bool tst_invalidPlaceholderPosition()
 {
-    auto func = [](bool restore1First) -> KDDW_QCORO_TASK {
+    auto func = [](bool restore1First) -> bool {
         // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
         // result: the bottom most one didn't have it's top separator at y=0
 
@@ -108,23 +108,23 @@ KDDW_QCORO_TASK tst_invalidPlaceholderPosition()
         dock1->destroyLater();
         dock2->destroyLater();
 
-        CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2));
+        CHECK(Platform::instance()->tests_waitForDeleted(dock2));
 
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func(true)) {
+    if (!func(true)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func(false)) {
+    if (!func(false)) {
         KDDW_TEST_RETURN(false);
     }
 
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_startHidden()
+bool tst_startHidden()
 {
     // A really simple test for InitialVisibilityOption::StartHidden
     EnsureTopLevelsDeleted e;
@@ -137,7 +137,7 @@ KDDW_QCORO_TASK tst_startHidden()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_startHidden2()
+bool tst_startHidden2()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -200,9 +200,9 @@ KDDW_QCORO_TASK tst_startHidden2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_invalidJSON()
+bool tst_invalidJSON()
 {
-    auto func = [](QString layoutFileName, int numDockWidgets, std::string expectedWarning, bool expectedResult) -> KDDW_QCORO_TASK {
+    auto func = [](QString layoutFileName, int numDockWidgets, std::string expectedWarning, bool expectedResult) -> bool {
         const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/") + layoutFileName);
 
         EnsureTopLevelsDeleted e;
@@ -220,22 +220,22 @@ KDDW_QCORO_TASK tst_invalidJSON()
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func("unsupported-serialization-version.json", 10, "Serialization format is too old", false)) {
+    if (!func("unsupported-serialization-version.json", 10, "Serialization format is too old", false)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func("invalid.json", 29, "", false)) {
+    if (!func("invalid.json", 29, "", false)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func("overlapping-item.json", 2, "Unexpected pos", true)) {
+    if (!func("overlapping-item.json", 2, "Unexpected pos", true)) {
         KDDW_TEST_RETURN(false);
     }
 
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_keepLast()
+bool tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);

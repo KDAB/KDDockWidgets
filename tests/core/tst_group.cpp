@@ -16,7 +16,7 @@
 
 using namespace KDDockWidgets;
 
-KDDW_QCORO_TASK tst_groupCtor()
+bool tst_groupCtor()
 {
     auto group = new Core::Group(nullptr, {});
     CHECK(group->view()->is(Core::ViewType::Group));
@@ -26,7 +26,7 @@ KDDW_QCORO_TASK tst_groupCtor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dragRect()
+bool tst_dragRect()
 {
     auto group = new Core::Group(nullptr, {});
     // This used to crash. Test that it doesn't.

@@ -146,9 +146,9 @@ void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
 void doubleClickOn(Point globalPos, std::shared_ptr<Core::Window> receiver);
 void pressOn(Point globalPos, Core::View *receiver);
 void pressOn(Point globalPos, std::shared_ptr<Core::Window> receiver);
-KDDW_QCORO_TASK releaseOn(Point globalPos, Core::View *receiver);
+bool releaseOn(Point globalPos, Core::View *receiver);
 void clickOn(Point globalPos, Core::View *receiver);
-KDDW_QCORO_TASK moveMouseTo(Point globalDest, Core::View *receiver);
+bool moveMouseTo(Point globalDest, Core::View *receiver);
 
 inline Core::FloatingWindow *createFloatingWindow()
 {
@@ -184,9 +184,9 @@ inline Core::View *draggableFor(Core::View *view)
     return draggable;
 }
 
-inline KDDW_QCORO_TASK drag(Core::View *sourceWidget, Point pressGlobalPos, Point globalDest,
-                            ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
-                                | ButtonAction_Release)
+inline bool drag(Core::View *sourceWidget, Point pressGlobalPos, Point globalDest,
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
+                     | ButtonAction_Release)
 {
     if (buttonActions & ButtonAction_Press) {
         if (s_pauseBeforePress)
@@ -200,17 +200,17 @@ inline KDDW_QCORO_TASK drag(Core::View *sourceWidget, Point pressGlobalPos, Poin
     if (s_pauseBeforeMove)
         EVENT_LOOP(DEBUGGING_PAUSE_DURATION);
 
-    KDDW_CO_AWAIT moveMouseTo(globalDest, sourceWidget);
+    moveMouseTo(globalDest, sourceWidget);
     pressGlobalPos = sourceWidget->mapToGlobal(Point(10, 10));
     if (buttonActions & ButtonAction_Release)
-        KDDW_CO_AWAIT releaseOn(globalDest, sourceWidget);
+        releaseOn(globalDest, sourceWidget);
 
-    KDDW_CO_RETURN true;
+    return true;
 }
 
-inline KDDW_QCORO_TASK drag(Core::View *sourceView, Point globalDest,
-                            ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
-                                | ButtonAction_Release)
+inline bool drag(Core::View *sourceView, Point globalDest,
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
+                     | ButtonAction_Release)
 {
     assert(sourceView && sourceView->controller()->isVisible());
 
@@ -219,23 +219,23 @@ inline KDDW_QCORO_TASK drag(Core::View *sourceView, Point globalDest,
     assert(draggable && draggable->controller()->isVisible());
     const Point pressGlobalPos = draggable->mapToGlobal(Point(15, 15));
 
-    auto result = KDDW_CO_AWAIT drag(draggable, pressGlobalPos, globalDest, buttonActions);
-    KDDW_CO_RETURN result;
+    auto result = drag(draggable, pressGlobalPos, globalDest, buttonActions);
+    return result;
 }
 
-inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Point globalDest,
-                                            ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
-                                                | ButtonAction_Release)
+inline bool dragFloatingWindowTo(Core::FloatingWindow *fw, Point globalDest,
+                                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press)
+                                     | ButtonAction_Release)
 {
     Core::View *draggable = draggableFor(fw->view());
     assert(draggable);
     assert(draggable->controller()->isVisible());
-    auto result = KDDW_CO_AWAIT drag(draggable, draggable->mapToGlobal(Point(10, 10)), globalDest, buttonActions);
-    KDDW_CO_RETURN result;
+    auto result = drag(draggable, draggable->mapToGlobal(Point(10, 10)), globalDest, buttonActions);
+    return result;
 }
 
-inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::DropArea *target,
-                                            DropLocation dropLocation)
+inline bool dragFloatingWindowTo(Core::FloatingWindow *fw, Core::DropArea *target,
+                                 DropLocation dropLocation)
 {
     // run one event loop, needed by flutter
     EVENT_LOOP(100);
@@ -244,15 +244,15 @@ inline KDDW_QCORO_TASK dragFloatingWindowTo(Core::FloatingWindow *fw, Core::Drop
     assert(draggable);
 
     // First we drag over it, so the drop indicators appear:
-    KDDW_CO_AWAIT drag(draggable, draggable->mapToGlobal(Point(10, 10)),
-                       target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
+    drag(draggable, draggable->mapToGlobal(Point(10, 10)),
+         target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
     Core::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();
     const Point dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
-    auto result = KDDW_CO_AWAIT drag(draggable, Point(), dropPoint, ButtonAction_Release);
-    KDDW_CO_RETURN result;
+    auto result = drag(draggable, Point(), dropPoint, ButtonAction_Release);
+    return result;
 }
 
 inline int osWindowMinWidth()

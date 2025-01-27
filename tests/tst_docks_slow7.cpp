@@ -40,9 +40,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-KDDW_QCORO_TASK tst_dragByTabBar()
+bool tst_dragByTabBar()
 {
-    auto func = [](bool documentMode, bool tabsAlwaysVisible) -> KDDW_QCORO_TASK {
+    auto func = [](bool documentMode, bool tabsAlwaysVisible) -> bool {
         EnsureTopLevelsDeleted e;
         auto flags = KDDockWidgets::Config::self().flags()
             | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
@@ -73,31 +73,31 @@ KDDW_QCORO_TASK tst_dragByTabBar()
         CHECK(fw->isVisible());
         CHECK(!fw->titleBar()->isVisible());
 
-        KDDW_CO_AWAIT dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+        dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
 
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func(false, false)) {
+    if (!func(false, false)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func(true, false)) {
+    if (!func(true, false)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func(false, true)) {
+    if (!func(false, true)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func(true, true)) {
+    if (!func(true, true)) {
         KDDW_TEST_RETURN(false);
     }
 
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition()
+bool tst_negativeAnchorPosition()
 {
     // Tests that we don't hit:
     // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions)
@@ -151,7 +151,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition2()
+bool tst_negativeAnchorPosition2()
 {
     // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
     EnsureTopLevelsDeleted e;
@@ -176,11 +176,11 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition2()
     dock1->setFloating(false);
     dock2->destroyLater();
     layout->checkSanity();
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock2));
+    CHECK(Platform::instance()->tests_waitForDeleted(dock2));
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition3()
+bool tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
@@ -204,7 +204,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition3()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition4()
+bool tst_negativeAnchorPosition4()
 {
     // 1. Tests that we don't get a warning
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name =
@@ -241,7 +241,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition4()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition5()
+bool tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     std::vector<DockDescriptor> docks = {
@@ -267,11 +267,11 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition5()
     for (auto dock : DockRegistry::self()->dockwidgets())
         dock->destroyLater();
 
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock0));
+    CHECK(Platform::instance()->tests_waitForDeleted(dock0));
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition6()
+bool tst_negativeAnchorPosition6()
 {
     // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or
     // vice-versa)
@@ -310,7 +310,7 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition6()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_negativeAnchorPosition7()
+bool tst_negativeAnchorPosition7()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
@@ -339,9 +339,9 @@ KDDW_QCORO_TASK tst_negativeAnchorPosition7()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_crash2()
+bool tst_crash2()
 {
-    auto func = [](bool show) -> KDDW_QCORO_TASK {
+    auto func = [](bool show) -> bool {
         {
             EnsureTopLevelsDeleted e;
             auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
@@ -414,18 +414,18 @@ KDDW_QCORO_TASK tst_crash2()
         KDDW_TEST_RETURN(true);
     };
 
-    if (!KDDW_CO_AWAIT func(true)) {
+    if (!func(true)) {
         KDDW_TEST_RETURN(false);
     }
 
-    if (!KDDW_CO_AWAIT func(false)) {
+    if (!func(false)) {
         KDDW_TEST_RETURN(false);
     }
 
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_keepLast()
+bool tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);

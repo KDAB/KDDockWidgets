@@ -159,11 +159,11 @@ void KDDockWidgets::Tests::pressOn(Point globalPos, Window::Ptr receiver)
     Platform::instance()->tests_pressOn(globalPos, receiver);
 }
 
-KDDW_QCORO_TASK KDDockWidgets::Tests::releaseOn(Point globalPos, View *receiver)
+bool KDDockWidgets::Tests::releaseOn(Point globalPos, View *receiver)
 {
     auto instance = Platform::instance(); // separate variable due to weird clang-format issue
-    KDDW_CO_AWAIT instance->tests_releaseOn(globalPos, receiver);
-    KDDW_CO_RETURN true;
+    instance->tests_releaseOn(globalPos, receiver);
+    return true;
 }
 
 void KDDockWidgets::Tests::clickOn(Point globalPos, View *receiver)
@@ -172,7 +172,7 @@ void KDDockWidgets::Tests::clickOn(Point globalPos, View *receiver)
     releaseOn(globalPos, receiver);
 }
 
-KDDW_QCORO_TASK KDDockWidgets::Tests::moveMouseTo(Point globalDest, View *receiver)
+bool KDDockWidgets::Tests::moveMouseTo(Point globalDest, View *receiver)
 {
     Point globalSrc = receiver->mapToGlobal(Point(5, 5));
 
@@ -188,11 +188,11 @@ KDDW_QCORO_TASK KDDockWidgets::Tests::moveMouseTo(Point globalDest, View *receiv
             globalSrc.setY(globalSrc.y() - 1);
         }
 
-        if (!KDDW_CO_AWAIT Platform::instance()->tests_mouseMove(globalSrc, receiver))
-            KDDW_CO_RETURN true;
+        if (!Platform::instance()->tests_mouseMove(globalSrc, receiver))
+            return true;
     }
 
-    KDDW_CO_RETURN true;
+    return true;
 }
 
 void KDDockWidgets::Tests::nestDockWidget(Core::DockWidget *dock, DropArea *dropArea,

@@ -24,7 +24,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-KDDW_QCORO_TASK tst_dockWidgetCtor()
+bool tst_dockWidgetCtor()
 {
     Tests::EnsureTopLevelsDeleted e;
 
@@ -38,7 +38,7 @@ KDDW_QCORO_TASK tst_dockWidgetCtor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setGuestView()
+bool tst_setGuestView()
 {
     Tests::EnsureTopLevelsDeleted e;
 
@@ -74,7 +74,7 @@ KDDW_QCORO_TASK tst_setGuestView()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_toggleAction()
+bool tst_toggleAction()
 {
     Tests::EnsureTopLevelsDeleted e;
 
@@ -88,7 +88,7 @@ KDDW_QCORO_TASK tst_toggleAction()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_isOpen()
+bool tst_isOpen()
 {
     Tests::EnsureTopLevelsDeleted e;
 
@@ -126,7 +126,7 @@ KDDW_QCORO_TASK tst_isOpen()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setAsCurrentTab()
+bool tst_setAsCurrentTab()
 {
     Tests::EnsureTopLevelsDeleted e;
 
@@ -159,7 +159,7 @@ KDDW_QCORO_TASK tst_setAsCurrentTab()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dwCloseAndReopen()
+bool tst_dwCloseAndReopen()
 {
     {
         Tests::EnsureTopLevelsDeleted e;
@@ -176,7 +176,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
         CHECK(titleBar->isVisible());
         titleBar->onCloseClicked();
         CHECK(!dw->isOpen());
-        CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw));
+        CHECK(Platform::instance()->tests_waitForDeleted(fw));
         CHECK(!fw);
 
         CHECK(!dw->floatingWindow());
@@ -192,7 +192,7 @@ KDDW_QCORO_TASK tst_dwCloseAndReopen()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setSize()
+bool tst_setSize()
 {
     {
         Tests::EnsureTopLevelsDeleted e;

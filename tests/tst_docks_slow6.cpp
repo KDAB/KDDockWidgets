@@ -38,7 +38,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-KDDW_QCORO_TASK tst_isFocused()
+bool tst_isFocused()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -109,7 +109,7 @@ KDDW_QCORO_TASK tst_isFocused()
     // Spin one event loop so we so some deleteLater()s run. Makes LSAN happy.
     EVENT_LOOP(1000);
 
-    KDDW_CO_RETURN(true);
+    return true;
 }
 
 static const auto s_tests = std::vector<KDDWTest> {

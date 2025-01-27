@@ -21,7 +21,7 @@
 
 using namespace KDDockWidgets::Core;
 
-KDDW_QCORO_TASK tst_windowCtor()
+bool tst_windowCtor()
 {
     auto window = Platform::instance()->tests_createWindow();
     CHECK(window);
@@ -32,7 +32,7 @@ KDDW_QCORO_TASK tst_windowCtor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setVisible()
+bool tst_setVisible()
 {
     auto window = Platform::instance()->tests_createWindow();
     CHECK(window);
@@ -49,7 +49,7 @@ KDDW_QCORO_TASK tst_setVisible()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_handle()
+bool tst_handle()
 {
     auto window = Platform::instance()->tests_createWindow();
     CHECK(window->handle());
@@ -58,7 +58,7 @@ KDDW_QCORO_TASK tst_handle()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resize()
+bool tst_resize()
 {
     auto window = Platform::instance()->tests_createWindow();
     const KDDockWidgets::Size newSize(501, 502);
@@ -73,7 +73,7 @@ KDDW_QCORO_TASK tst_resize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_activate()
+bool tst_activate()
 {
     auto window = Platform::instance()->tests_createWindow();
     // CHECK(window->isActive());
@@ -85,7 +85,7 @@ KDDW_QCORO_TASK tst_activate()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_equals()
+bool tst_equals()
 {
     auto window1 = Platform::instance()->tests_createWindow();
     auto window2 = Platform::instance()->tests_createWindow();
@@ -100,7 +100,7 @@ KDDW_QCORO_TASK tst_equals()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_geometry()
+bool tst_geometry()
 {
     auto window = Platform::instance()->tests_createWindow();
 

@@ -16,7 +16,7 @@
 
 using namespace KDDockWidgets;
 
-KDDW_QCORO_TASK tst_titleBarCtor()
+bool tst_titleBarCtor()
 {
     auto group = new Core::Group(nullptr, {});
     auto tb = new Core::TitleBar(group);
