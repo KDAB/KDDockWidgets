@@ -179,7 +179,7 @@ static ItemBoxContainer *createRootWithSingleItem()
     return root;
 }
 
-KDDW_QCORO_TASK tst_createRoot()
+bool tst_createRoot()
 {
     DeleteViews deleteViews;
 
@@ -194,7 +194,7 @@ KDDW_QCORO_TASK tst_createRoot()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertOne()
+bool tst_insertOne()
 {
     DeleteViews deleteViews;
 
@@ -214,7 +214,7 @@ KDDW_QCORO_TASK tst_insertOne()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertThreeSideBySide()
+bool tst_insertThreeSideBySide()
 {
     DeleteViews deleteViews;
 
@@ -235,7 +235,7 @@ KDDW_QCORO_TASK tst_insertThreeSideBySide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertTwoHorizontal()
+bool tst_insertTwoHorizontal()
 {
     DeleteViews deleteViews;
 
@@ -250,7 +250,7 @@ KDDW_QCORO_TASK tst_insertTwoHorizontal()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertTwoVertical()
+bool tst_insertTwoVertical()
 {
     DeleteViews deleteViews;
 
@@ -265,7 +265,7 @@ KDDW_QCORO_TASK tst_insertTwoVertical()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertOnWidgetItem1()
+bool tst_insertOnWidgetItem1()
 {
     DeleteViews deleteViews;
 
@@ -290,7 +290,7 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem1()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertOnWidgetItem2()
+bool tst_insertOnWidgetItem2()
 {
     DeleteViews deleteViews;
 
@@ -315,7 +315,7 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertOnWidgetItem1DifferentOrientation()
+bool tst_insertOnWidgetItem1DifferentOrientation()
 {
     DeleteViews deleteViews;
 
@@ -368,7 +368,7 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem1DifferentOrientation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertOnWidgetItem2DifferentOrientation()
+bool tst_insertOnWidgetItem2DifferentOrientation()
 {
     DeleteViews deleteViews;
 
@@ -424,7 +424,7 @@ KDDW_QCORO_TASK tst_insertOnWidgetItem2DifferentOrientation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertOnRootDifferentOrientation()
+bool tst_insertOnRootDifferentOrientation()
 {
     DeleteViews deleteViews;
 
@@ -456,7 +456,7 @@ KDDW_QCORO_TASK tst_insertOnRootDifferentOrientation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_removeItem1()
+bool tst_removeItem1()
 {
     //        [       4     ]
     // Result [1, 2, |3 3.2|]
@@ -509,7 +509,7 @@ KDDW_QCORO_TASK tst_removeItem1()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_removeItem2()
+bool tst_removeItem2()
 {
     DeleteViews deleteViews;
 
@@ -528,7 +528,7 @@ KDDW_QCORO_TASK tst_removeItem2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_minSize()
+bool tst_minSize()
 {
     DeleteViews deleteViews;
 
@@ -557,7 +557,7 @@ KDDW_QCORO_TASK tst_minSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resize()
+bool tst_resize()
 {
     DeleteViews deleteViews;
 
@@ -598,7 +598,7 @@ KDDW_QCORO_TASK tst_resize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeWithConstraints()
+bool tst_resizeWithConstraints()
 {
     DeleteViews deleteViews;
 
@@ -640,7 +640,7 @@ KDDW_QCORO_TASK tst_resizeWithConstraints()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_availableSize()
+bool tst_availableSize()
 {
     DeleteViews deleteViews;
 
@@ -725,7 +725,7 @@ KDDW_QCORO_TASK tst_availableSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_missingSize()
+bool tst_missingSize()
 {
     DeleteViews deleteViews;
 
@@ -756,7 +756,7 @@ KDDW_QCORO_TASK tst_missingSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_ensureEnoughSize()
+bool tst_ensureEnoughSize()
 {
     DeleteViews deleteViews;
 
@@ -787,7 +787,7 @@ KDDW_QCORO_TASK tst_ensureEnoughSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_turnIntoPlaceholder()
+bool tst_turnIntoPlaceholder()
 {
     DeleteViews deleteViews;
 
@@ -827,7 +827,7 @@ KDDW_QCORO_TASK tst_turnIntoPlaceholder()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_suggestedRect()
+bool tst_suggestedRect()
 {
     DeleteViews deleteViews;
 
@@ -899,7 +899,7 @@ KDDW_QCORO_TASK tst_suggestedRect()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_suggestedRect2()
+bool tst_suggestedRect2()
 {
     DeleteViews deleteViews;
 
@@ -924,7 +924,7 @@ KDDW_QCORO_TASK tst_suggestedRect2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_suggestedRect3()
+bool tst_suggestedRect3()
 {
     DeleteViews deleteViews;
 
@@ -948,7 +948,7 @@ KDDW_QCORO_TASK tst_suggestedRect3()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_suggestedRect4()
+bool tst_suggestedRect4()
 {
     DeleteViews deleteViews;
 
@@ -983,7 +983,7 @@ KDDW_QCORO_TASK tst_suggestedRect4()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertAnotherRoot()
+bool tst_insertAnotherRoot()
 {
     DeleteViews deleteViews;
 
@@ -1037,7 +1037,7 @@ KDDW_QCORO_TASK tst_insertAnotherRoot()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_misc1()
+bool tst_misc1()
 {
     DeleteViews deleteViews;
 
@@ -1062,7 +1062,7 @@ KDDW_QCORO_TASK tst_misc1()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_misc2()
+bool tst_misc2()
 {
     DeleteViews deleteViews;
 
@@ -1098,7 +1098,7 @@ KDDW_QCORO_TASK tst_misc2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_misc3()
+bool tst_misc3()
 {
     DeleteViews deleteViews;
 
@@ -1119,7 +1119,7 @@ KDDW_QCORO_TASK tst_misc3()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_containerGetsHidden()
+bool tst_containerGetsHidden()
 {
     DeleteViews deleteViews;
 
@@ -1146,7 +1146,7 @@ KDDW_QCORO_TASK tst_containerGetsHidden()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_minSizeChanges()
+bool tst_minSizeChanges()
 {
     DeleteViews deleteViews;
 
@@ -1176,7 +1176,7 @@ KDDW_QCORO_TASK tst_minSizeChanges()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_numSeparators()
+bool tst_numSeparators()
 {
     DeleteViews deleteViews;
 
@@ -1217,7 +1217,7 @@ KDDW_QCORO_TASK tst_numSeparators()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_separatorMinMax()
+bool tst_separatorMinMax()
 {
     DeleteViews deleteViews;
 
@@ -1240,7 +1240,7 @@ KDDW_QCORO_TASK tst_separatorMinMax()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_separatorRecreatedOnParentChange()
+bool tst_separatorRecreatedOnParentChange()
 {
     DeleteViews deleteViews;
 
@@ -1262,7 +1262,7 @@ KDDW_QCORO_TASK tst_separatorRecreatedOnParentChange()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_containerReducesSize()
+bool tst_containerReducesSize()
 {
     DeleteViews deleteViews;
 
@@ -1291,7 +1291,7 @@ KDDW_QCORO_TASK tst_containerReducesSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_insertHiddenContainer()
+bool tst_insertHiddenContainer()
 {
     DeleteViews deleteViews;
 
@@ -1313,7 +1313,7 @@ KDDW_QCORO_TASK tst_insertHiddenContainer()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_availableOnSide()
+bool tst_availableOnSide()
 {
     DeleteViews deleteViews;
 
@@ -1389,7 +1389,7 @@ KDDW_QCORO_TASK tst_availableOnSide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_availableToGrowOnSide()
+bool tst_availableToGrowOnSide()
 {
     DeleteViews deleteViews;
 
@@ -1433,7 +1433,7 @@ KDDW_QCORO_TASK tst_availableToGrowOnSide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeViaSeparator()
+bool tst_resizeViaSeparator()
 {
     DeleteViews deleteViews;
 
@@ -1469,7 +1469,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeViaSeparator2()
+bool tst_resizeViaSeparator2()
 {
     DeleteViews deleteViews;
 
@@ -1527,7 +1527,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeViaSeparator3()
+bool tst_resizeViaSeparator3()
 {
     DeleteViews deleteViews;
 
@@ -1586,7 +1586,7 @@ KDDW_QCORO_TASK tst_resizeViaSeparator3()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mapToRoot()
+bool tst_mapToRoot()
 {
     DeleteViews deleteViews;
 
@@ -1613,7 +1613,7 @@ KDDW_QCORO_TASK tst_mapToRoot()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
+bool tst_closeAndRestorePreservesPosition()
 {
     DeleteViews deleteViews;
 
@@ -1653,7 +1653,7 @@ KDDW_QCORO_TASK tst_closeAndRestorePreservesPosition()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
+bool tst_minSizeChangedBeforeRestore()
 {
     DeleteViews deleteViews;
 
@@ -1675,7 +1675,7 @@ KDDW_QCORO_TASK tst_minSizeChangedBeforeRestore()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_separatorMoveCrash()
+bool tst_separatorMoveCrash()
 {
     DeleteViews deleteViews;
 
@@ -1706,7 +1706,7 @@ KDDW_QCORO_TASK tst_separatorMoveCrash()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_separatorMoveHonoursMax()
+bool tst_separatorMoveHonoursMax()
 {
     DeleteViews deleteViews;
 
@@ -1749,7 +1749,7 @@ KDDW_QCORO_TASK tst_separatorMoveHonoursMax()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maxSizeHonoured1()
+bool tst_maxSizeHonoured1()
 {
     DeleteViews deleteViews;
 
@@ -1774,7 +1774,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured1()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maxSizeHonoured2()
+bool tst_maxSizeHonoured2()
 {
     DeleteViews deleteViews;
 
@@ -1804,7 +1804,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maxSizeHonoured3()
+bool tst_maxSizeHonoured3()
 {
     DeleteViews deleteViews;
 
@@ -1862,7 +1862,7 @@ KDDW_QCORO_TASK tst_maxSizeHonoured3()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_requestEqualSize()
+bool tst_requestEqualSize()
 {
     DeleteViews deleteViews;
 
@@ -1931,7 +1931,7 @@ KDDW_QCORO_TASK tst_requestEqualSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
+bool tst_maxSizeHonouredWhenAnotherRemoved()
 {
     DeleteViews deleteViews;
 
@@ -1958,7 +1958,7 @@ KDDW_QCORO_TASK tst_maxSizeHonouredWhenAnotherRemoved()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_simplify()
+bool tst_simplify()
 {
     DeleteViews deleteViews;
 
@@ -1988,7 +1988,7 @@ KDDW_QCORO_TASK tst_simplify()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_adjacentLayoutBorders()
+bool tst_adjacentLayoutBorders()
 {
     DeleteViews deleteViews;
 
@@ -2034,7 +2034,7 @@ KDDW_QCORO_TASK tst_adjacentLayoutBorders()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_numSideBySide_recursive()
+bool tst_numSideBySide_recursive()
 {
     DeleteViews deleteViews;
 
@@ -2076,7 +2076,7 @@ KDDW_QCORO_TASK tst_numSideBySide_recursive()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_sizingInfoSerialization()
+bool tst_sizingInfoSerialization()
 {
     DeleteViews deleteViews;
 
@@ -2101,7 +2101,7 @@ KDDW_QCORO_TASK tst_sizingInfoSerialization()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_itemSerialization()
+bool tst_itemSerialization()
 {
     DeleteViews deleteViews;
 
@@ -2128,7 +2128,7 @@ KDDW_QCORO_TASK tst_itemSerialization()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_outermostVisibleNeighbor()
+bool tst_outermostVisibleNeighbor()
 {
     DeleteViews deleteViews;
 
@@ -2172,7 +2172,7 @@ KDDW_QCORO_TASK tst_outermostVisibleNeighbor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_outermostNeighbor()
+bool tst_outermostNeighbor()
 {
     DeleteViews deleteViews;
 
@@ -2216,7 +2216,7 @@ KDDW_QCORO_TASK tst_outermostNeighbor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_relativeToHidden()
+bool tst_relativeToHidden()
 {
     // Tests that we can insert relative to an hidden item
 
@@ -2250,7 +2250,7 @@ KDDW_QCORO_TASK tst_relativeToHidden()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_spuriousResize()
+bool tst_spuriousResize()
 {
     DeleteViews deleteViews;
 
@@ -2275,7 +2275,7 @@ KDDW_QCORO_TASK tst_spuriousResize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_relayoutIfNeeded()
+bool tst_relayoutIfNeeded()
 {
     DeleteViews deleteViews;
 

@@ -233,7 +233,7 @@ void TestQtQuick::tst_shutdownCrash()
     // delete group;
 
     // // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    // KDDW_CO_AWAIT Platform::instance()->tests_wait(1);
+    // Platform::instance()->tests_wait(1);
 }
 
 void TestQtQuick::tst_childQmlContext()
@@ -407,7 +407,6 @@ void TestQtQuick::tst_focusBetweenTabs()
     QVERIFY(floatingDockField->hasActiveFocus());
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    KDDW_CO_AWAIT
     Platform::instance()
         ->tests_wait(1);
 }

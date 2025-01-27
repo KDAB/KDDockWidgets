@@ -17,7 +17,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-KDDW_QCORO_TASK tst_viewGuard()
+bool tst_viewGuard()
 {
     ViewGuard g(nullptr);
     CHECK(g.isNull());
@@ -42,7 +42,7 @@ KDDW_QCORO_TASK tst_viewGuard()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_objectGuard()
+bool tst_objectGuard()
 {
     {
         ObjectGuard<Controller> guard;

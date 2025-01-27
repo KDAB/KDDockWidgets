@@ -68,7 +68,7 @@ inline int widgetMinLength(Core::Group *group, Qt::Orientation o)
     return lengthForSize(sz, o);
 }
 
-KDDW_QCORO_TASK tst_simple1()
+bool tst_simple1()
 {
     // Simply create a MainWindow
     EnsureTopLevelsDeleted e;
@@ -78,7 +78,7 @@ KDDW_QCORO_TASK tst_simple1()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_simple2()
+bool tst_simple2()
 {
     // Simply create a MainWindow, and dock something on top
     EnsureTopLevelsDeleted e;
@@ -93,7 +93,7 @@ KDDW_QCORO_TASK tst_simple2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_minMaxGuest()
+bool tst_minMaxGuest()
 {
     // Tests some min/max size cases, regarding guest and the dock widget
 
@@ -126,7 +126,7 @@ KDDW_QCORO_TASK tst_minMaxGuest()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_doesntHaveNativeTitleBar()
+bool tst_doesntHaveNativeTitleBar()
 {
     // Tests that a floating window doesn't have a native title bar
     // This test is mostly to test a bug that was happening with QtQuick, where the native title bar
@@ -147,7 +147,7 @@ KDDW_QCORO_TASK tst_doesntHaveNativeTitleBar()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeWindow2()
+bool tst_resizeWindow2()
 {
     // Tests that resizing the width of the main window will never move horizontal anchors
 
@@ -174,7 +174,7 @@ KDDW_QCORO_TASK tst_resizeWindow2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_hasPreviousDockedLocation()
+bool tst_hasPreviousDockedLocation()
 {
     // Tests Core::DockWidget::hasPreviousDockedLocation()
 
@@ -209,7 +209,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
+bool tst_hasPreviousDockedLocation2()
 {
     // Tests with LayoutSaver
 
@@ -291,7 +291,7 @@ KDDW_QCORO_TASK tst_hasPreviousDockedLocation2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_LayoutSaverOpenedDocks()
+bool tst_LayoutSaverOpenedDocks()
 {
     QByteArray saved1;
     QByteArray saved2;
@@ -329,7 +329,7 @@ KDDW_QCORO_TASK tst_LayoutSaverOpenedDocks()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_ghostSeparator()
+bool tst_ghostSeparator()
 {
     // Tests a situation where a separator wouldn't be removed after a widget had been removed
     EnsureTopLevelsDeleted e;
@@ -365,7 +365,7 @@ KDDW_QCORO_TASK tst_ghostSeparator()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_detachFromMainWindow()
+bool tst_detachFromMainWindow()
 {
     // Tests a situation where clicking the float button wouldn't work on QtQuick
     EnsureTopLevelsDeleted e;
@@ -384,7 +384,7 @@ KDDW_QCORO_TASK tst_detachFromMainWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_detachPos()
+bool tst_detachPos()
 {
     // Tests a situation where detaching a dock widget would send it to a bogus position
     EnsureTopLevelsDeleted e;
@@ -416,7 +416,7 @@ KDDW_QCORO_TASK tst_detachPos()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_floatingWindowSize()
+bool tst_floatingWindowSize()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
@@ -431,7 +431,7 @@ KDDW_QCORO_TASK tst_floatingWindowSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabbingWithAffinities()
+bool tst_tabbingWithAffinities()
 {
     EnsureTopLevelsDeleted e;
     // Tests that dock widgets with different affinities should not tab together
@@ -473,7 +473,7 @@ KDDW_QCORO_TASK tst_tabbingWithAffinities()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_sizeAfterRedock()
+bool tst_sizeAfterRedock()
 {
     EnsureTopLevelsDeleted e;
     auto dw1 = newDockWidget(QStringLiteral("1"));
@@ -510,7 +510,7 @@ KDDW_QCORO_TASK tst_sizeAfterRedock()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_honourUserGeometry()
+bool tst_honourUserGeometry()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -526,7 +526,7 @@ KDDW_QCORO_TASK tst_honourUserGeometry()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_floatingWindowTitleBug()
+bool tst_floatingWindowTitleBug()
 {
     // Test for #74
     EnsureTopLevelsDeleted e;
@@ -549,7 +549,7 @@ KDDW_QCORO_TASK tst_floatingWindowTitleBug()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreTwice()
+bool tst_restoreTwice()
 {
     // Tests that restoring multiple times doesn't hide the floating windows for some reason
     EnsureTopLevelsDeleted e;
@@ -587,9 +587,9 @@ KDDW_QCORO_TASK tst_restoreTwice()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
+bool tst_restoreWithInvalidCurrentTab()
 {
-    auto test = [](bool strictMode) -> KDDW_QCORO_TASK {
+    auto test = [](bool strictMode) -> bool {
         EnsureTopLevelsDeleted e;
         KDDockWidgets::Config::self().setLayoutSaverStrictMode(strictMode);
 
@@ -625,18 +625,18 @@ KDDW_QCORO_TASK tst_restoreWithInvalidCurrentTab()
 
     // We test both in strict mode and in non-strict mode. Since neither should crash.
 
-    if (!KDDW_CO_AWAIT test(false)) {
+    if (!test(false)) {
         KDDW_TEST_RETURN(false);
     }
 
     SetExpectedWarning ignoreWarning("Invalid tab index");
 
-    const bool result = KDDW_CO_AWAIT test(true);
+    const bool result = test(true);
 
     KDDW_TEST_RETURN(result);
 }
 
-KDDW_QCORO_TASK tst_restoreNlohmanException()
+bool tst_restoreNlohmanException()
 {
     LayoutSaver saver;
 
@@ -649,7 +649,7 @@ KDDW_QCORO_TASK tst_restoreNlohmanException()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreEmpty()
+bool tst_restoreEmpty()
 {
     EnsureTopLevelsDeleted e;
 
@@ -669,7 +669,7 @@ KDDW_QCORO_TASK tst_restoreEmpty()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreCentralFrame()
+bool tst_restoreCentralFrame()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500));
@@ -696,7 +696,7 @@ KDDW_QCORO_TASK tst_restoreCentralFrame()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreMaximizedState()
+bool tst_restoreMaximizedState()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -716,7 +716,7 @@ KDDW_QCORO_TASK tst_restoreMaximizedState()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_minimizeRestoreBug()
+bool tst_minimizeRestoreBug()
 {
     // Tests a bug where an unminimized window would have StartsMinimized in its serialization
 
@@ -743,7 +743,7 @@ KDDW_QCORO_TASK tst_minimizeRestoreBug()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreFloatingMinimizedState()
+bool tst_restoreFloatingMinimizedState()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget(
@@ -770,7 +770,7 @@ KDDW_QCORO_TASK tst_restoreFloatingMinimizedState()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreNonExistingDockWidget()
+bool tst_restoreNonExistingDockWidget()
 {
     // If the layout is old and doesn't know about some dock widget, then we need to float it
     // before restoring the MainWindow's layout
@@ -803,7 +803,7 @@ KDDW_QCORO_TASK tst_restoreNonExistingDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setFloatingSimple()
+bool tst_setFloatingSimple()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -823,7 +823,7 @@ KDDW_QCORO_TASK tst_setFloatingSimple()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_nonDockable()
+bool tst_nonDockable()
 {
     { // First test without Option_NotDockable
         EnsureTopLevelsDeleted e;
@@ -849,7 +849,7 @@ KDDW_QCORO_TASK tst_nonDockable()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeDockWidgets()
+bool tst_closeDockWidgets()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("hello1");
@@ -865,7 +865,7 @@ KDDW_QCORO_TASK tst_closeDockWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeReason()
+bool tst_closeReason()
 {
     QByteArray saved;
 
@@ -919,7 +919,7 @@ KDDW_QCORO_TASK tst_closeReason()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_layoutEqually()
+bool tst_layoutEqually()
 {
     EnsureTopLevelsDeleted e;
 
@@ -945,7 +945,7 @@ KDDW_QCORO_TASK tst_layoutEqually()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_doubleClose()
+bool tst_doubleClose()
 {
     {
         // Via close()
@@ -992,7 +992,7 @@ KDDW_QCORO_TASK tst_doubleClose()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dockInternal()
+bool tst_dockInternal()
 {
     /**
      * Here we dock relative to an existing widget, and not to the drop-area.
@@ -1010,7 +1010,7 @@ KDDW_QCORO_TASK tst_dockInternal()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maximizeAndRestore()
+bool tst_maximizeAndRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -1035,7 +1035,7 @@ KDDW_QCORO_TASK tst_maximizeAndRestore()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_propagateResize2()
+bool tst_propagateResize2()
 {
     // |5|1|2|
     // | |3|4|
@@ -1062,19 +1062,19 @@ KDDW_QCORO_TASK tst_propagateResize2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_shutdown()
+bool tst_shutdown()
 {
     EnsureTopLevelsDeleted e;
     createDockWidget("doc1");
 
     auto m = createMainWindow();
     m->show();
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForWindowActive(m->view()->window()));
+    CHECK(Platform::instance()->tests_waitForWindowActive(m->view()->window()));
 
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeReparentsToNull()
+bool tst_closeReparentsToNull()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
@@ -1087,7 +1087,7 @@ KDDW_QCORO_TASK tst_closeReparentsToNull()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_invalidAnchorGroup()
+bool tst_invalidAnchorGroup()
 {
     // Tests a bug I got. Should not warn.
     EnsureTopLevelsDeleted e;
@@ -1132,7 +1132,7 @@ KDDW_QCORO_TASK tst_invalidAnchorGroup()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_doubleScheduleDelete()
+bool tst_doubleScheduleDelete()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 =
@@ -1147,7 +1147,7 @@ KDDW_QCORO_TASK tst_doubleScheduleDelete()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_repeatedShowHide()
+bool tst_repeatedShowHide()
 {
     EnsureTopLevelsDeleted e;
 
@@ -1165,7 +1165,7 @@ KDDW_QCORO_TASK tst_repeatedShowHide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addAsPlaceholder()
+bool tst_addAsPlaceholder()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -1199,7 +1199,7 @@ KDDW_QCORO_TASK tst_addAsPlaceholder()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_removeItem()
+bool tst_removeItem()
 {
     // Tests that MultiSplitterLayout::removeItem() works
     EnsureTopLevelsDeleted e;
@@ -1301,7 +1301,7 @@ KDDW_QCORO_TASK tst_removeItem()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_clear()
+bool tst_clear()
 {
     // Tests MultiSplitterLayout::clear()
     EnsureTopLevelsDeleted e;
@@ -1334,7 +1334,7 @@ KDDW_QCORO_TASK tst_clear()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_samePositionAfterHideRestore()
+bool tst_samePositionAfterHideRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -1356,7 +1356,7 @@ KDDW_QCORO_TASK tst_samePositionAfterHideRestore()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_startClosed()
+bool tst_startClosed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -1387,7 +1387,7 @@ KDDW_QCORO_TASK tst_startClosed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_crash()
+bool tst_crash()
 {
     // tests some crash I got
 
@@ -1422,7 +1422,7 @@ KDDW_QCORO_TASK tst_crash()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_refUnrefItem()
+bool tst_refUnrefItem()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -1490,7 +1490,7 @@ KDDW_QCORO_TASK tst_refUnrefItem()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_placeholderCount()
+bool tst_placeholderCount()
 {
     EnsureTopLevelsDeleted e;
     // Tests MultiSplitterLayout::count(),visibleCount() and placeholdercount()
@@ -1547,7 +1547,7 @@ KDDW_QCORO_TASK tst_placeholderCount()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_availableLengthForOrientation()
+bool tst_availableLengthForOrientation()
 {
     EnsureTopLevelsDeleted e;
 
@@ -1580,7 +1580,7 @@ KDDW_QCORO_TASK tst_availableLengthForOrientation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setAsCurrentTab()
+bool tst_setAsCurrentTab()
 {
     EnsureTopLevelsDeleted e;
 
@@ -1611,7 +1611,7 @@ KDDW_QCORO_TASK tst_setAsCurrentTab()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_placeholderDisappearsOnReadd()
+bool tst_placeholderDisappearsOnReadd()
 {
     // This tests that addMultiSplitter also updates refcount of placeholders
 
@@ -1650,7 +1650,7 @@ KDDW_QCORO_TASK tst_placeholderDisappearsOnReadd()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_placeholdersAreRemovedProperly()
+bool tst_placeholdersAreRemovedProperly()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None); // Remove central group
@@ -1686,7 +1686,7 @@ KDDW_QCORO_TASK tst_placeholdersAreRemovedProperly()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_floatMaintainsSize()
+bool tst_floatMaintainsSize()
 {
     // Tests that when we make a window float by pressing the float button, it will popup with
     // the same size it had when docked
@@ -1706,7 +1706,7 @@ KDDW_QCORO_TASK tst_floatMaintainsSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_preferredInitialSize()
+bool tst_preferredInitialSize()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -1825,7 +1825,7 @@ KDDW_QCORO_TASK tst_preferredInitialSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
+bool tst_preferredInitialSizeVsMinSize()
 {
     // Tests what happens if we ask for a preferredInitial size smaller than min-size
     // Should use the min size instead
@@ -1961,7 +1961,7 @@ KDDW_QCORO_TASK tst_preferredInitialSizeVsMinSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeAllDockWidgets()
+bool tst_closeAllDockWidgets()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2020,7 +2020,7 @@ KDDW_QCORO_TASK tst_closeAllDockWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_toggleMiddleDockCrash()
+bool tst_toggleMiddleDockCrash()
 {
     // tests some crash I got
 
@@ -2054,7 +2054,7 @@ KDDW_QCORO_TASK tst_toggleMiddleDockCrash()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_stealFrame()
+bool tst_stealFrame()
 {
     // Tests using addWidget() with dock widgets which are already in a layout
     EnsureTopLevelsDeleted e;
@@ -2162,7 +2162,7 @@ KDDW_QCORO_TASK tst_stealFrame()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setFloatingWhenWasTabbed()
+bool tst_setFloatingWhenWasTabbed()
 {
     // Tests DockWidget::isTabbed() and DockWidget::setFloating(false|true) when tabbed (it should
     // redock) setFloating(false) for side-by-side is tested in another function
@@ -2269,7 +2269,7 @@ KDDW_QCORO_TASK tst_setFloatingWhenWasTabbed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabTitleChanges()
+bool tst_tabTitleChanges()
 {
     // Tests that the tab's title changes if the dock widget's title changes
     EnsureTopLevelsDeleted e;
@@ -2285,7 +2285,7 @@ KDDW_QCORO_TASK tst_tabTitleChanges()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setWidget()
+bool tst_setWidget()
 {
     EnsureTopLevelsDeleted e;
     auto dw = newDockWidget(QStringLiteral("FOO"));
@@ -2298,7 +2298,7 @@ KDDW_QCORO_TASK tst_setWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_floatingLastPosAfterDoubleClose()
+bool tst_floatingLastPosAfterDoubleClose()
 {
     EnsureTopLevelsDeleted e;
     auto d1 = newDockWidget(QStringLiteral("a"));
@@ -2310,7 +2310,7 @@ KDDW_QCORO_TASK tst_floatingLastPosAfterDoubleClose()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_honourGeometryOfHiddenWindow()
+bool tst_honourGeometryOfHiddenWindow()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2331,7 +2331,7 @@ KDDW_QCORO_TASK tst_honourGeometryOfHiddenWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_registry()
+bool tst_registry()
 {
     EnsureTopLevelsDeleted e;
     auto dr = DockRegistry::self();
@@ -2344,7 +2344,7 @@ KDDW_QCORO_TASK tst_registry()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_posAfterLeftDetach()
+bool tst_posAfterLeftDetach()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -2363,7 +2363,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
         // Flutter is a bit slower showing stuff, needs 1 event loop
         EVENT_LOOP(100);
 
-        KDDW_CO_AWAIT drag(dock2->view(), globalDest);
+        drag(dock2->view(), globalDest);
         CHECK(fw->dropArea()->checkSanity());
         const Point actualEndPos = dock2->mapToGlobal(Point(0, 0));
         CHECK(actualEndPos.x() - globalSrc.x()
@@ -2396,7 +2396,7 @@ KDDW_QCORO_TASK tst_posAfterLeftDetach()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_preventClose()
+bool tst_preventClose()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2429,7 +2429,7 @@ KDDW_QCORO_TASK tst_preventClose()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_propagateMinSize()
+bool tst_propagateMinSize()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -2445,7 +2445,7 @@ KDDW_QCORO_TASK tst_propagateMinSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_createFloatingWindow()
+bool tst_createFloatingWindow()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2466,7 +2466,7 @@ KDDW_QCORO_TASK tst_createFloatingWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addAndReadd()
+bool tst_addAndReadd()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2488,7 +2488,7 @@ KDDW_QCORO_TASK tst_addAndReadd()
     auto fw = dock1->floatingWindow();
     CHECK(fw);
     auto dropArea = m->dropArea();
-    KDDW_CO_AWAIT dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     CHECK(dock1->dptr()->group()->titleBar()->isVisible());
     fw->titleBar()->makeWindow();
     m->layout()->checkSanity();
@@ -2499,7 +2499,7 @@ KDDW_QCORO_TASK tst_addAndReadd()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addToSmallMainWindow1()
+bool tst_addToSmallMainWindow1()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -2544,7 +2544,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow1()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addToSmallMainWindow2()
+bool tst_addToSmallMainWindow2()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -2575,7 +2575,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addToSmallMainWindow3()
+bool tst_addToSmallMainWindow3()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -2594,13 +2594,13 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow3()
     auto fw = dock2->dptr()->morphIntoFloatingWindow();
     CHECK(fw->isVisible());
     CHECK(dropArea->checkSanity());
-    KDDW_CO_AWAIT dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
+    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     CHECK(m->dropArea()->checkSanity());
     delete fw;
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addToSmallMainWindow4()
+bool tst_addToSmallMainWindow4()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(100, 100), MainWindowOption_None);
@@ -2628,7 +2628,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow4()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addToSmallMainWindow5()
+bool tst_addToSmallMainWindow5()
 {
     EnsureTopLevelsDeleted e;
     // Test test shouldn't spit any warnings
@@ -2644,7 +2644,7 @@ KDDW_QCORO_TASK tst_addToSmallMainWindow5()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
+bool tst_fairResizeAfterRemoveWidget()
 {
     // 1. Add 3 dock widgets horizontally, remove the middle one, make sure
     // both left and right widgets get a share of the new available space
@@ -2690,7 +2690,7 @@ KDDW_QCORO_TASK tst_fairResizeAfterRemoveWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreNonClosable()
+bool tst_restoreNonClosable()
 {
     // Tests that restoring state also restores the Option_NotClosable option
 
@@ -2748,7 +2748,7 @@ KDDW_QCORO_TASK tst_restoreNonClosable()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreRestoresMainWindowPosition()
+bool tst_restoreRestoresMainWindowPosition()
 {
     // Tests that MainWindow position is restored by LayoutSaver
     {
@@ -2767,7 +2767,7 @@ KDDW_QCORO_TASK tst_restoreRestoresMainWindowPosition()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
+bool tst_resizeViaAnchorsAfterPlaceholderCreation()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2840,7 +2840,7 @@ KDDW_QCORO_TASK tst_resizeViaAnchorsAfterPlaceholderCreation()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_rectForDropCrash()
+bool tst_rectForDropCrash()
 {
     // Tests a crash I got in MultiSplitterLayout::rectForDrop() (asserts being hit)
     EnsureTopLevelsDeleted e;
@@ -2867,7 +2867,7 @@ KDDW_QCORO_TASK tst_rectForDropCrash()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreAfterResize()
+bool tst_restoreAfterResize()
 {
     // Tests a crash I got when the layout received a resize event *while* restoring
 
@@ -2894,7 +2894,7 @@ KDDW_QCORO_TASK tst_restoreAfterResize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithNonClosableWidget()
+bool tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(500, 500), {}, "tst_restoreWithNonClosableWidget");
@@ -2910,7 +2910,7 @@ KDDW_QCORO_TASK tst_restoreWithNonClosableWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreNestedAndTabbed()
+bool tst_restoreNestedAndTabbed()
 {
     // Just a more involved test
 
@@ -2979,7 +2979,7 @@ KDDW_QCORO_TASK tst_restoreNestedAndTabbed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreCrash()
+bool tst_restoreCrash()
 {
     EnsureTopLevelsDeleted e;
 
@@ -3006,7 +3006,7 @@ KDDW_QCORO_TASK tst_restoreCrash()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreSideBySide()
+bool tst_restoreSideBySide()
 {
     // Save a layout that has a floating window with nesting
     EnsureTopLevelsDeleted e;
@@ -3048,7 +3048,7 @@ KDDW_QCORO_TASK tst_restoreSideBySide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreGroupOptions()
+bool tst_restoreGroupOptions()
 {
     // tests that saving with some Config flags and restoring with other Config flags
     // doesn't get us into trouble. Namely we shouldn't restore "alwaysShowFlags" and
@@ -3082,7 +3082,7 @@ KDDW_QCORO_TASK tst_restoreGroupOptions()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dockWidgetTabIndexOverride()
+bool tst_dockWidgetTabIndexOverride()
 {
     EnsureTopLevelsDeleted e;
     Config::self().setDockWidgetTabIndexOverrideFunc([](Core::DockWidget *, Core::Group *, int) {
@@ -3105,7 +3105,7 @@ KDDW_QCORO_TASK tst_dockWidgetTabIndexOverride()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeGroup()
+bool tst_closeGroup()
 {
     // Tests closing a whole group via Group::close()
     EnsureTopLevelsDeleted e;
@@ -3128,7 +3128,7 @@ KDDW_QCORO_TASK tst_closeGroup()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
+bool tst_placeholderInFloatingWindow()
 {
     // Tests that placeholders in floating windows get priority
     // over main window placeholders if the last state was floating
@@ -3188,7 +3188,7 @@ KDDW_QCORO_TASK tst_placeholderInFloatingWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
+bool tst_restoreWithCentralFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
     auto m =
@@ -3208,7 +3208,7 @@ KDDW_QCORO_TASK tst_restoreWithCentralFrameWithTabs()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreAfterMinSizeChanges()
+bool tst_restoreAfterMinSizeChanges()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -3257,7 +3257,7 @@ KDDW_QCORO_TASK tst_restoreAfterMinSizeChanges()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithPlaceholder()
+bool tst_restoreWithPlaceholder()
 {
     // Float dock1, save and restore, then unfloat and see if dock2 goes back to where it was
 
@@ -3315,7 +3315,7 @@ KDDW_QCORO_TASK tst_restoreWithPlaceholder()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithAffinity()
+bool tst_restoreWithAffinity()
 {
     EnsureTopLevelsDeleted e;
 
@@ -3360,7 +3360,7 @@ KDDW_QCORO_TASK tst_restoreWithAffinity()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_marginsAfterRestore()
+bool tst_marginsAfterRestore()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -3387,7 +3387,7 @@ KDDW_QCORO_TASK tst_marginsAfterRestore()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mainWindowToggle()
+bool tst_mainWindowToggle()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
@@ -3409,7 +3409,7 @@ KDDW_QCORO_TASK tst_mainWindowToggle()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_startDragging()
+bool tst_startDragging()
 {
     auto dc = DragController::instance();
 
@@ -3433,7 +3433,7 @@ KDDW_QCORO_TASK tst_startDragging()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithNewDockWidgets()
+bool tst_restoreWithNewDockWidgets()
 {
     // Tests that if the LayoutSaver doesn't know about some dock widget
     // when it saves the layout, then it won't close it when restoring layout
@@ -3451,7 +3451,7 @@ KDDW_QCORO_TASK tst_restoreWithNewDockWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithDockFactory()
+bool tst_restoreWithDockFactory()
 {
     // Tests that restore the layout with a missing dock widget will recreate the dock widget using
     // a factory
@@ -3497,7 +3497,7 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithDockFactory2()
+bool tst_restoreWithDockFactory2()
 {
     // Teste that the factory function can do id remapping.
     // For example, if id "foo" is missing, the factory can return a
@@ -3524,7 +3524,7 @@ KDDW_QCORO_TASK tst_restoreWithDockFactory2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addDockWidgetToMainWindow()
+bool tst_addDockWidgetToMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -3543,7 +3543,7 @@ KDDW_QCORO_TASK tst_addDockWidgetToMainWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addDockWidgetToContainingWindow()
+bool tst_addDockWidgetToContainingWindow()
 {
     { // Test with a floating window
         EnsureTopLevelsDeleted e;
@@ -3579,7 +3579,7 @@ KDDW_QCORO_TASK tst_addDockWidgetToContainingWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_notClosable()
+bool tst_notClosable()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -3632,7 +3632,7 @@ KDDW_QCORO_TASK tst_notClosable()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dragOverTitleBar()
+bool tst_dragOverTitleBar()
 {
     // Tests that dragging over the title bar is returning DropLocation_None
 
@@ -3657,7 +3657,7 @@ KDDW_QCORO_TASK tst_dragOverTitleBar()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setFloatingGeometry()
+bool tst_setFloatingGeometry()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget(
@@ -3679,7 +3679,7 @@ KDDW_QCORO_TASK tst_setFloatingGeometry()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
+bool tst_setFloatingAfterDraggedFromTabToSideBySide()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -3754,7 +3754,7 @@ KDDW_QCORO_TASK tst_setFloatingAfterDraggedFromTabToSideBySide()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_setFloatingAFrameWithTabs()
+bool tst_setFloatingAFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -3787,7 +3787,7 @@ KDDW_QCORO_TASK tst_setFloatingAFrameWithTabs()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_toggleDockWidgetWithHiddenTitleBar()
+bool tst_toggleDockWidgetWithHiddenTitleBar()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
@@ -3809,7 +3809,7 @@ KDDW_QCORO_TASK tst_toggleDockWidgetWithHiddenTitleBar()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_availableSizeWithPlaceholders()
+bool tst_availableSizeWithPlaceholders()
 {
     // Tests MultiSplitterLayout::available() with and without placeholders. The result should be
     // the same.
@@ -3880,7 +3880,7 @@ KDDW_QCORO_TASK tst_availableSizeWithPlaceholders()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_anchorFollowingItselfAssert()
+bool tst_anchorFollowingItselfAssert()
 {
     // 1. Tests that we don't assert in Anchor::setFollowee()
     //  ASSERT: "this != m_followee" in file ../src/layouting/Anchor.cpp
@@ -3914,7 +3914,7 @@ KDDW_QCORO_TASK tst_anchorFollowingItselfAssert()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_moreTitleBarCornerCases()
+bool tst_moreTitleBarCornerCases()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -3978,7 +3978,7 @@ KDDW_QCORO_TASK tst_moreTitleBarCornerCases()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_isInMainWindow()
+bool tst_isInMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto dw = newDockWidget(QStringLiteral("FOO"));
@@ -3996,7 +3996,7 @@ KDDW_QCORO_TASK tst_isInMainWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_sizeConstraintWarning()
+bool tst_sizeConstraintWarning()
 {
     // Tests that we don't get the warning: MultiSplitterLayout::checkSanity: Widget has height= 122
     // but minimum is 144 KDDockWidgets::Item Code autogenerated by the fuzzer:
@@ -4170,7 +4170,7 @@ KDDW_QCORO_TASK tst_sizeConstraintWarning()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_stuckSeparator()
+bool tst_stuckSeparator()
 {
     const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/stuck-separator.json"));
 
@@ -4206,7 +4206,7 @@ KDDW_QCORO_TASK tst_stuckSeparator()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_titlebar_getter()
+bool tst_titlebar_getter()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup);
@@ -4226,7 +4226,7 @@ KDDW_QCORO_TASK tst_titlebar_getter()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dockNotFillingSpace()
+bool tst_dockNotFillingSpace()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000));
@@ -4254,7 +4254,7 @@ KDDW_QCORO_TASK tst_dockNotFillingSpace()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_lastFloatingPositionIsRestored()
+bool tst_lastFloatingPositionIsRestored()
 {
     EnsureTopLevelsDeleted e;
 
@@ -4301,7 +4301,7 @@ KDDW_QCORO_TASK tst_lastFloatingPositionIsRestored()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
+bool tst_titleBarFocusedWhenTabsChange()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
@@ -4357,7 +4357,7 @@ KDDW_QCORO_TASK tst_titleBarFocusedWhenTabsChange()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_floatingAction()
+bool tst_floatingAction()
 {
     // Tests DockWidget::floatAction()
 
@@ -4618,7 +4618,7 @@ KDDW_QCORO_TASK tst_floatingAction()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_raise()
+bool tst_raise()
 {
     // Tests DockWidget::raise();
     EnsureTopLevelsDeleted e;
@@ -4637,7 +4637,7 @@ KDDW_QCORO_TASK tst_raise()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore()
+bool tst_dontCloseDockWidgetBeforeRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -4683,7 +4683,7 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore2()
+bool tst_dontCloseDockWidgetBeforeRestore2()
 {
     // In this case we have a floating window with two dock widgets tabbed, both having
     // LayoutSaverOption::Skip Meaning the whole window should be skipped
@@ -4722,7 +4722,7 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore3()
+bool tst_dontCloseDockWidgetBeforeRestore3()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -4746,7 +4746,7 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore3()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore4()
+bool tst_dontCloseDockWidgetBeforeRestore4()
 {
     // Tests a case where the dock widget would get an invalid size.
     // Widgets which skip layout restore were be skipping LayoutSaver::onResize()
@@ -4782,7 +4782,7 @@ KDDW_QCORO_TASK tst_dontCloseDockWidgetBeforeRestore4()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_skipRestoreInsideMainWindow()
+bool tst_skipRestoreInsideMainWindow()
 {
     // Tests that a docked widget doesn't get redocked when restoring if it has LayoutSaverOption::Skip
     EnsureTopLevelsDeleted e;
@@ -4802,7 +4802,7 @@ KDDW_QCORO_TASK tst_skipRestoreInsideMainWindow()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeOnlyCurrentTab()
+bool tst_closeOnlyCurrentTab()
 {
     {
         // Case of a floating window with tabs
@@ -4858,7 +4858,7 @@ KDDW_QCORO_TASK tst_closeOnlyCurrentTab()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabWidgetCurrentIndex()
+bool tst_tabWidgetCurrentIndex()
 {
     EnsureTopLevelsDeleted e;
 
@@ -4886,7 +4886,7 @@ KDDW_QCORO_TASK tst_tabWidgetCurrentIndex()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_doubleClickTabBarRestore()
+bool tst_doubleClickTabBarRestore()
 {
     if (!Platform::instance()->isQtWidgets()) {
         // Only implemented for QtWidgets.
@@ -4920,7 +4920,7 @@ KDDW_QCORO_TASK tst_doubleClickTabBarRestore()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_doubleClickTabRestore()
+bool tst_doubleClickTabRestore()
 {
     // Like tst_doubleClickTabBarRestore but we click on the tab itself
 
@@ -4957,7 +4957,7 @@ KDDW_QCORO_TASK tst_doubleClickTabRestore()
 }
 
 
-KDDW_QCORO_TASK tst_doubleClickTabToDetach()
+bool tst_doubleClickTabToDetach()
 {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     // Platform::instance()->tests_doubleClickOn(QWindow) doesn't work anymore on Qt6
@@ -4986,7 +4986,7 @@ KDDW_QCORO_TASK tst_doubleClickTabToDetach()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addingOptionHiddenTabbed()
+bool tst_addingOptionHiddenTabbed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
@@ -5004,7 +5004,7 @@ KDDW_QCORO_TASK tst_addingOptionHiddenTabbed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_flagDoubleClick()
+bool tst_flagDoubleClick()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -5053,7 +5053,7 @@ KDDW_QCORO_TASK tst_flagDoubleClick()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maxSizedHonouredAfterRemoved()
+bool tst_maxSizedHonouredAfterRemoved()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -5102,7 +5102,7 @@ KDDW_QCORO_TASK tst_maxSizedHonouredAfterRemoved()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addDockWidgetAsTabToDockWidget()
+bool tst_addDockWidgetAsTabToDockWidget()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -5176,7 +5176,7 @@ KDDW_QCORO_TASK tst_addDockWidgetAsTabToDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeTabHidesDockWidget()
+bool tst_closeTabHidesDockWidget()
 {
     // Tests that closing some tabbed dock widgets will hide them
     // QtQuick had a bug where they would still be visible
@@ -5234,7 +5234,7 @@ KDDW_QCORO_TASK tst_closeTabHidesDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_propagateSizeHonoursMinSize()
+bool tst_propagateSizeHonoursMinSize()
 {
     // Here we dock a widget on the left size, and on the right side.
     // When docking the second one, the 1st one shouldn't be squeezed too much, as it has a min size
@@ -5288,7 +5288,7 @@ KDDW_QCORO_TASK tst_propagateSizeHonoursMinSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_constraintsPropagateUp()
+bool tst_constraintsPropagateUp()
 {
     // Mostly for QtQuick, which doesn't have any layouts, so we need to make the propagation
     // Manually in DockWidgetQuick::minimumSize(), in Frame_qtquick, etc.
@@ -5324,7 +5324,7 @@ KDDW_QCORO_TASK tst_constraintsPropagateUp()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
+bool tst_constraintsAfterPlaceholder()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(500, 500), MainWindowOption_None);
@@ -5367,7 +5367,7 @@ KDDW_QCORO_TASK tst_constraintsAfterPlaceholder()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_dragBySingleTab()
+bool tst_dragBySingleTab()
 {
     // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
     EnsureTopLevelsDeleted e;
@@ -5383,14 +5383,14 @@ KDDW_QCORO_TASK tst_dragBySingleTab()
     CHECK(tabBar);
     SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing
                                                            // in this case
-    KDDW_CO_AWAIT drag(tabBar->view(), globalPressPos, Point(0, 0));
+    drag(tabBar->view(), globalPressPos, Point(0, 0));
 
     delete dock1;
     WAIT_FOR_DELETED(group1);
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_deleteOnClose()
+bool tst_deleteOnClose()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -5433,7 +5433,7 @@ KDDW_QCORO_TASK tst_deleteOnClose()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_toggleAction()
+bool tst_toggleAction()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -5463,7 +5463,7 @@ KDDW_QCORO_TASK tst_toggleAction()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_redocksToPreviousTabIndex()
+bool tst_redocksToPreviousTabIndex()
 {
     // Checks that when reordering tabs with mouse, floating and redocking, they go back to their
     // previous index
@@ -5512,7 +5512,7 @@ KDDW_QCORO_TASK tst_redocksToPreviousTabIndex()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_toggleTabbed()
+bool tst_toggleTabbed()
 {
     // Testing the weird bugs reported in #211
 
@@ -5552,7 +5552,7 @@ KDDW_QCORO_TASK tst_toggleTabbed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_toggleTabbed2()
+bool tst_toggleTabbed2()
 {
     // Testing the weird bugs reported in #215
     EnsureTopLevelsDeleted e;
@@ -5579,7 +5579,7 @@ KDDW_QCORO_TASK tst_toggleTabbed2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizePropagatesEvenly()
+bool tst_resizePropagatesEvenly()
 {
     // For github issue #186
     // Usually resizing main window will resize dock widgets evenly, but if you resize multiple
@@ -5605,7 +5605,7 @@ KDDW_QCORO_TASK tst_resizePropagatesEvenly()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addMDIDockWidget()
+bool tst_addMDIDockWidget()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5622,7 +5622,7 @@ KDDW_QCORO_TASK tst_addMDIDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mdiSetSize()
+bool tst_mdiSetSize()
 {
     // Tests that adding a dockwidget to MDI preserves its size
     EnsureTopLevelsDeleted e;
@@ -5648,7 +5648,7 @@ KDDW_QCORO_TASK tst_mdiSetSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mdiCrash()
+bool tst_mdiCrash()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
@@ -5669,7 +5669,7 @@ KDDW_QCORO_TASK tst_mdiCrash()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mdiZorder()
+bool tst_mdiZorder()
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // The test is failing on Qt5+QtQuick.
@@ -5714,7 +5714,7 @@ KDDW_QCORO_TASK tst_mdiZorder()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mdiZorder2()
+bool tst_mdiZorder2()
 {
     // Tests that clicking a mdi widget will NOT raise its when using MDIFlag_NoClickToRaise
     EnsureTopLevelsDeleted e;
@@ -5747,7 +5747,7 @@ KDDW_QCORO_TASK tst_mdiZorder2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_mixedMDIRestoreToArea()
+bool tst_mixedMDIRestoreToArea()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5771,7 +5771,7 @@ KDDW_QCORO_TASK tst_mixedMDIRestoreToArea()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
+bool tst_redockToMDIRestoresPosition()
 {
     // Tests that setFloating(false) puts the dock widget where it was before floating
 
@@ -5815,7 +5815,7 @@ KDDW_QCORO_TASK tst_redockToMDIRestoresPosition()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreWithNativeTitleBar()
+bool tst_restoreWithNativeTitleBar()
 {
 #ifdef Q_OS_WIN // Other OS don't support this
     EnsureTopLevelsDeleted e;
@@ -5839,7 +5839,7 @@ KDDW_QCORO_TASK tst_restoreWithNativeTitleBar()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closeTabOfCentralFrame()
+bool tst_closeTabOfCentralFrame()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralGroup,
@@ -5854,7 +5854,7 @@ KDDW_QCORO_TASK tst_closeTabOfCentralFrame()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_centralGroupAffinity()
+bool tst_centralGroupAffinity()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5868,7 +5868,7 @@ KDDW_QCORO_TASK tst_centralGroupAffinity()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_persistentCentralWidget()
+bool tst_persistentCentralWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget);
@@ -5891,7 +5891,7 @@ KDDW_QCORO_TASK tst_persistentCentralWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_unfloatTabbedFloatingWidgets()
+bool tst_unfloatTabbedFloatingWidgets()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5915,7 +5915,7 @@ KDDW_QCORO_TASK tst_unfloatTabbedFloatingWidgets()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_unfloatTabbedFloatingWidgets2()
+bool tst_unfloatTabbedFloatingWidgets2()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5947,7 +5947,7 @@ KDDW_QCORO_TASK tst_unfloatTabbedFloatingWidgets2()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_currentTabMatchesDockWidget()
+bool tst_currentTabMatchesDockWidget()
 {
     // Tests that if a dock widget is current, then it's also visible. And vice-versa.
 
@@ -5982,7 +5982,7 @@ KDDW_QCORO_TASK tst_currentTabMatchesDockWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_titlebarNumDockWidgetsChanged()
+bool tst_titlebarNumDockWidgetsChanged()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -6016,7 +6016,7 @@ KDDW_QCORO_TASK tst_titlebarNumDockWidgetsChanged()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_closed()
+bool tst_closed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -6045,7 +6045,7 @@ KDDW_QCORO_TASK tst_closed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_maximizeButton()
+bool tst_maximizeButton()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
@@ -6072,7 +6072,7 @@ KDDW_QCORO_TASK tst_maximizeButton()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreAfterUnminimized()
+bool tst_restoreAfterUnminimized()
 {
     // Save a layout with a minimized window, then unminimize (show it), restore layout
     // Result should be that the widget gets minimized again
@@ -6111,7 +6111,7 @@ KDDW_QCORO_TASK tst_restoreAfterUnminimized()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_restoreFlagsFromVersion16()
+bool tst_restoreFlagsFromVersion16()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
@@ -6129,7 +6129,7 @@ KDDW_QCORO_TASK tst_restoreFlagsFromVersion16()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_map()
+bool tst_map()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -6150,7 +6150,7 @@ KDDW_QCORO_TASK tst_map()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_childViewAt()
+bool tst_childViewAt()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -6170,7 +6170,7 @@ KDDW_QCORO_TASK tst_childViewAt()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_resizeInLayout()
+bool tst_resizeInLayout()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
@@ -6224,14 +6224,14 @@ KDDW_QCORO_TASK tst_resizeInLayout()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_keepLast()
+bool tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_scopedValueRollback()
+bool tst_scopedValueRollback()
 {
     bool v1 = false;
     bool v2 = true;
@@ -6265,7 +6265,7 @@ KDDW_QCORO_TASK tst_scopedValueRollback()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_point()
+bool tst_point()
 {
     Point pt;
     CHECK(pt.isNull());
@@ -6280,7 +6280,7 @@ KDDW_QCORO_TASK tst_point()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_size()
+bool tst_size()
 {
     Size sz;
     CHECK_EQ(sz, Size(-1, -1));
@@ -6309,7 +6309,7 @@ KDDW_QCORO_TASK tst_size()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_rect()
+bool tst_rect()
 {
     Rect r;
 

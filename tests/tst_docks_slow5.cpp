@@ -38,9 +38,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-KDDW_QCORO_TASK tst_28NestedWidgets()
+bool tst_28NestedWidgets()
 {
-    auto func = [](Vector<DockDescriptor> docksToCreate, Vector<int> docksToHide) -> KDDW_QCORO_TASK {
+    auto func = [](Vector<DockDescriptor> docksToCreate, Vector<int> docksToHide) -> bool {
         // Tests a case that used to cause negative anchor position when turning into placeholder
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -80,7 +80,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
         for (int i : docksToHide) {
             docksToCreate.at(i).createdDock->destroyLater();
-            CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
+            CHECK(Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
         }
 
         layout->checkSanity();
@@ -101,7 +101,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         // Cleanup
         for (auto dock : DockRegistry::self()->dockwidgets()) {
             dock->destroyLater();
-            CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(dock));
+            CHECK(Platform::instance()->tests_waitForDeleted(dock));
         }
 
         KDDW_TEST_RETURN(true);
@@ -138,7 +138,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
     if (Platform::instance()->isQtWidgets()) {
-        if (!KDDW_CO_AWAIT func(docks, Vector<int> { 11, 0 })) {
+        if (!func(docks, Vector<int> { 11, 0 })) {
             KDDW_TEST_RETURN(false);
         }
     }
@@ -157,7 +157,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
         docksToHide.push_back(i);
     }
 
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -173,7 +173,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     };
     if (Platform::instance()->isQtWidgets()) {
         // 2. Produced valgrind invalid reads while adding
-        if (!KDDW_CO_AWAIT func(docks, {})) {
+        if (!func(docks, {})) {
             KDDW_TEST_RETURN(false);
         }
     }
@@ -186,7 +186,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     };
 
     if (Platform::instance()->isQtWidgets()) {
-        if (!KDDW_CO_AWAIT func(docks, {})) {
+        if (!func(docks, {})) {
             KDDW_TEST_RETURN(false);
         }
     }
@@ -201,7 +201,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     if (Platform::instance()->isQtWidgets()) {
         // Tests for void KDDockWidgets::Anchor::setPosition(int,
         // KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
-        if (!KDDW_CO_AWAIT func(docks, {})) {
+        if (!func(docks, {})) {
             KDDW_TEST_RETURN(false);
         }
     }
@@ -242,7 +242,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     }
     if (Platform::instance()->isQtWidgets()) {
         // bug_with_holes
-        if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+        if (!func(docks, docksToHide)) {
             KDDW_TEST_RETURN(false);
         }
     }
@@ -280,7 +280,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // add_as_placeholder
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -289,7 +289,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     // add_as_placeholder_simple
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -300,7 +300,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // isSquashed_assert
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -311,7 +311,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // negative_pos_warning
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -321,7 +321,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
     docksToHide.clear();
     // bug
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -332,7 +332,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
 
     docksToHide.clear();
     // bug2
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 
@@ -347,7 +347,7 @@ KDDW_QCORO_TASK tst_28NestedWidgets()
     docksToHide.clear();
 
     // bug3
-    if (!KDDW_CO_AWAIT func(docks, docksToHide)) {
+    if (!func(docks, docksToHide)) {
         KDDW_TEST_RETURN(false);
     }
 

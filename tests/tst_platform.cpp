@@ -19,7 +19,7 @@
 
 using namespace KDDockWidgets::Core;
 
-KDDW_QCORO_TASK tst_platform()
+bool tst_platform()
 {
     auto plat = Platform::instance();
     CHECK(plat);
@@ -27,7 +27,7 @@ KDDW_QCORO_TASK tst_platform()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_name()
+bool tst_name()
 {
     // Checks that Platform::name() returns something
     auto plat = Platform::instance();
@@ -36,7 +36,7 @@ KDDW_QCORO_TASK tst_name()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_createDefaultViewFactory()
+bool tst_createDefaultViewFactory()
 {
     auto plat = Platform::instance();
     ViewFactory *vf = plat->createDefaultViewFactory();
@@ -46,7 +46,7 @@ KDDW_QCORO_TASK tst_createDefaultViewFactory()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_startDragDistance()
+bool tst_startDragDistance()
 {
     auto plat = Platform::instance();
     const int defaultDistance = plat->startDragDistance();

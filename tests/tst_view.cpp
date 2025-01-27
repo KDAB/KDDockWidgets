@@ -26,7 +26,7 @@ inline Core::View *createViewAndWindow(Core::CreateViewOptions opts, Core::View 
     return Core::Platform::instance()->tests_createView(opts, parent);
 }
 
-KDDW_QCORO_TASK tst_viewSetParent()
+bool tst_viewSetParent()
 {
     auto rootView = createViewAndWindow({});
     CHECK(rootView);
@@ -60,7 +60,7 @@ KDDW_QCORO_TASK tst_viewSetParent()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewRoot()
+bool tst_viewRoot()
 {
     auto rootView = createViewAndWindow({});
     auto childView = createViewAndWindow({ true }, rootView);
@@ -87,7 +87,7 @@ KDDW_QCORO_TASK tst_viewRoot()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewIsVisible()
+bool tst_viewIsVisible()
 {
     auto rootView = createViewAndWindow({});
     CHECK(!rootView->controller()->isVisible());
@@ -120,7 +120,7 @@ KDDW_QCORO_TASK tst_viewIsVisible()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewGeometry()
+bool tst_viewGeometry()
 {
     // Test with a top-level view first
     auto rootView = createViewAndWindow({});
@@ -158,7 +158,7 @@ KDDW_QCORO_TASK tst_viewGeometry()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewMinSize()
+bool tst_viewMinSize()
 {
     const Size sizeHint = {};
     const Size minSize = { 201, 202 };
@@ -172,7 +172,7 @@ KDDW_QCORO_TASK tst_viewMinSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewMaxSize()
+bool tst_viewMaxSize()
 {
     const Size sizeHint = {};
     const Size minSize = { 201, 202 };
@@ -187,7 +187,7 @@ KDDW_QCORO_TASK tst_viewMaxSize()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewObjectName()
+bool tst_viewObjectName()
 {
     auto rootView = createViewAndWindow({});
 
@@ -199,7 +199,7 @@ KDDW_QCORO_TASK tst_viewObjectName()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewCloseRequested()
+bool tst_viewCloseRequested()
 {
     // Tests that the closeRequested signal is emitted
 
@@ -218,7 +218,7 @@ KDDW_QCORO_TASK tst_viewCloseRequested()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_viewFocusPolicy()
+bool tst_viewFocusPolicy()
 {
     auto rootView = createViewAndWindow({});
     CHECK_EQ(rootView->focusPolicy(), Qt::NoFocus);
@@ -226,7 +226,7 @@ KDDW_QCORO_TASK tst_viewFocusPolicy()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_hasFocus()
+bool tst_hasFocus()
 {
     auto rootView = createViewAndWindow({});
     rootView->show();
@@ -253,7 +253,7 @@ KDDW_QCORO_TASK tst_hasFocus()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_parentDeletesChildViews()
+bool tst_parentDeletesChildViews()
 {
     // Tests that deleting a parent view also deletes its children
 

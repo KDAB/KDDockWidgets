@@ -23,7 +23,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-KDDW_QCORO_TASK tst_floatingWindowCtor()
+bool tst_floatingWindowCtor()
 {
     Tests::EnsureTopLevelsDeleted ensure;
 
@@ -55,7 +55,7 @@ KDDW_QCORO_TASK tst_floatingWindowCtor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_floatingWindowClose()
+bool tst_floatingWindowClose()
 {
     // Tests that a floating window is deleted after being closed
 
@@ -71,7 +71,7 @@ KDDW_QCORO_TASK tst_floatingWindowClose()
     CHECK(!fw->groups().first()->titleBar()->isVisible());
     titleBar->onCloseClicked();
     CHECK(!dw->isOpen());
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw));
+    CHECK(Platform::instance()->tests_waitForDeleted(fw));
     CHECK(!fw);
 
     delete dw;

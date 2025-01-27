@@ -17,7 +17,7 @@
 
 using namespace KDDockWidgets;
 
-KDDW_QCORO_TASK tst_stackCtor()
+bool tst_stackCtor()
 {
     Core::Group group(nullptr, {});
     Core::Stack stack(&group, {});

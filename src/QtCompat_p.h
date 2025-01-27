@@ -288,11 +288,6 @@ public:
 
 }
 
-// TODO: Remove
-#define KDDW_QCORO_TASK bool
-#define KDDW_CO_AWAIT
-#define KDDW_CO_RETURN return
-
 #ifndef KDDW_QTGUI_TYPES
 
 // Dummy Qt macros, to avoid too much ifdefs in core/

@@ -39,7 +39,7 @@ using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
 
-KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
+bool tst_invalidLayoutAfterRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -60,7 +60,7 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     dock2->close();
     dock1->close();
 
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(f1));
+    CHECK(Platform::instance()->tests_waitForDeleted(f1));
 
     dock3->open();
     CHECK(dock3->titleBar()->isVisible());
@@ -93,14 +93,14 @@ KDDW_QCORO_TASK tst_invalidLayoutAfterRestore()
     // Drop left of dock3
     layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group()->layoutItem());
 
-    CHECK(KDDW_CO_AWAIT Platform::instance()->tests_waitForDeleted(fw2));
+    CHECK(Platform::instance()->tests_waitForDeleted(fw2));
     CHECK_EQ(layout->layoutWidth(), oldContentsWidth);
     layout->checkSanity();
 
-    KDDW_CO_RETURN(true);
+    return true;
 }
 
-KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
+bool tst_setFloatingWhenSideBySide()
 {
     // Tests DockWidget::setFloating(false|true) when side-by-side (it should put it where it was)
     EnsureTopLevelsDeleted e;
@@ -151,10 +151,10 @@ KDDW_QCORO_TASK tst_setFloatingWhenSideBySide()
         layout->checkSanity();
     }
 
-    KDDW_CO_RETURN(true);
+    return true;
 }
 
-KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
+bool tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setInternalFlags(KDDockWidgets::Config::InternalFlag_NoAeroSnap);
@@ -175,7 +175,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 
     auto da2 = fw2->dropArea();
     const Point dragDestPos = da2->mapToGlobal(da2->rect().center());
-    KDDW_CO_AWAIT dragFloatingWindowTo(fw, dragDestPos);
+    dragFloatingWindowTo(fw, dragDestPos);
     CHECK(fw2->dropArea()->checkSanity());
     CHECK_EQ(fw2->groups().size(), 1);
     auto f2 = fw2->groups().constFirst();
@@ -185,10 +185,10 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 
     CHECK_EQ(f2->dockWidgetCount(), 3);
 
-    KDDW_CO_RETURN(true);
+    return true;
 }
 
-KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
+bool tst_dockWindowWithTwoSideBySideFramesIntoRight()
 {
     EnsureTopLevelsDeleted e;
 
@@ -205,7 +205,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
 
     EVENT_LOOP(1000);
 
-    KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
 
 
     // run one event loop, needed by flutter
@@ -214,10 +214,10 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoRight()
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
 
-    KDDW_CO_RETURN(true);
+    return true;
 }
 
-KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
+bool tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 {
     EnsureTopLevelsDeleted e;
 
@@ -237,7 +237,7 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     CHECK(fw2->dropArea()->checkSanity());
     EVENT_LOOP(1000);
 
-    KDDW_CO_AWAIT dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
 
     // run one event loop, needed by flutter
     EVENT_LOOP(1000);
@@ -245,10 +245,10 @@ KDDW_QCORO_TASK tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     CHECK_EQ(fw2->groups().size(), 3);
     CHECK(fw2->dropArea()->checkSanity());
 
-    KDDW_CO_RETURN(true);
+    return true;
 }
 
-KDDW_QCORO_TASK tst_keepLast()
+bool tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);

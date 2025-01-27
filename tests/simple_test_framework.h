@@ -38,7 +38,7 @@
 #define KDDW_TEST_RETURN(res)                                           \
     if (!res)                                                           \
         KDDW_WARN("FAILED: at={} ; line={}", KDDW_FUNC_INFO, __LINE__); \
-    KDDW_CO_RETURN res;
+    return res;
 
 #define CHECK assert
 #define CHECK_EQ(a, b) assert((a) == (b))
@@ -46,22 +46,22 @@
 struct KDDWTest
 {
     std::string name;
-    std::function<KDDW_QCORO_TASK()> func;
+    std::function<bool()> func;
 
-    KDDW_QCORO_TASK run()
+    bool run()
     {
         std::cout << "Running " << name << std::endl;
-        auto result = KDDW_CO_AWAIT func();
+        auto result = func();
         if (!result)
             std::cerr << "FAILED! " << name << std::endl;
         KDDW_TEST_RETURN(result);
     }
 
-    static KDDW_QCORO_TASK run(const std::vector<KDDWTest> &tests)
+    static bool run(const std::vector<KDDWTest> &tests)
     {
         std::cout << "Running tests for Platform " << KDDockWidgets::Core::Platform::instance()->name() << "\n";
         for (KDDWTest test : tests) {
-            auto result = KDDW_CO_AWAIT test.run();
+            auto result = test.run();
             if (!result) {
                 KDDW_TEST_RETURN(result);
             }

@@ -21,7 +21,7 @@
 
 using namespace KDDockWidgets;
 
-KDDW_QCORO_TASK tst_dropAreaCtor()
+bool tst_dropAreaCtor()
 {
     // Tests that ctor runs and doesn't leak
     Core::DropArea da(nullptr, {});
@@ -29,7 +29,7 @@ KDDW_QCORO_TASK tst_dropAreaCtor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addWidget()
+bool tst_addWidget()
 {
     auto group = new Core::Group();
     Core::DropArea da(nullptr, {});
@@ -38,7 +38,7 @@ KDDW_QCORO_TASK tst_addWidget()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_addWidgetHidden()
+bool tst_addWidgetHidden()
 {
     // Test adding a widget that starts hidden
 

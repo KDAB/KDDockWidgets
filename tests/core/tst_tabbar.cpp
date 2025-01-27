@@ -22,7 +22,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-KDDW_QCORO_TASK tst_tabBarCtor()
+bool tst_tabBarCtor()
 {
     Core::Group group(nullptr, {});
     Core::Stack stack(&group, {});
@@ -33,7 +33,7 @@ KDDW_QCORO_TASK tst_tabBarCtor()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabBarIndexes()
+bool tst_tabBarIndexes()
 {
     Core::Group group(nullptr, {});
     Core::TabBar *tabBar = group.tabBar();
@@ -122,7 +122,7 @@ KDDW_QCORO_TASK tst_tabBarIndexes()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabBarDWDestroyed()
+bool tst_tabBarDWDestroyed()
 {
     /// Tests if indexes are correct if dock widget destroyed itself
     Core::Group group(nullptr, {});
@@ -161,7 +161,7 @@ KDDW_QCORO_TASK tst_tabBarDWDestroyed()
     KDDW_TEST_RETURN(true);
 }
 
-KDDW_QCORO_TASK tst_tabBarDWClosed()
+bool tst_tabBarDWClosed()
 {
     {
         /// Tests if indexes are correct if dock widget are closed (but not destroyed)

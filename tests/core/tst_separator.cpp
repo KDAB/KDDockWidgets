@@ -16,7 +16,7 @@
 
 using namespace KDDockWidgets;
 
-KDDW_QCORO_TASK tst_separatorCtor()
+bool tst_separatorCtor()
 {
     Core::DropArea dropArea(nullptr, MainWindowOption_None);
     Core::Separator separator(dropArea.asLayoutingHost(), Qt::Vertical, nullptr);
