@@ -12,7 +12,6 @@
 #include "Config.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "core/layouting/Item_p.h"
-#include "core/Platform.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
@@ -23,6 +22,8 @@
 #endif
 
 using namespace KDDockWidgets;
+
+#ifdef KDDW_FRONTEND_QT
 
 void KDDockWidgets::initFrontend(FrontendType type)
 {
@@ -45,6 +46,8 @@ void KDDockWidgets::initFrontend(FrontendType type)
         break;
     }
 }
+
+#endif
 
 const char *KDDockWidgets::spdlogLoggerName()
 {

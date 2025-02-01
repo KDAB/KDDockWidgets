@@ -24,7 +24,6 @@ namespace KDDockWidgets {
 
 namespace Core {
 class View;
-class Group;
 class ItemContainer;
 class ItemBoxContainer;
 class Item;

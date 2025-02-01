@@ -14,7 +14,6 @@
 
 #include "core/View.h"
 #include "core/Logging_p.h"
-#include "core/Utils_p.h"
 
 using namespace KDDockWidgets::Core;
 
@@ -55,7 +54,9 @@ void ItemFreeContainer::addDockWidget(Item *item, Point localPt)
 
 void ItemFreeContainer::clear()
 {
-    deleteAll(m_children);
+    for (const auto &c : std::as_const(m_children))
+        delete c;
+
     m_children.clear();
 }
 

@@ -18,7 +18,6 @@
 #include "core/Logging_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/ScopedValueRollback_p.h"
-#include "core/Utils_p.h"
 #include "core/nlohmann_helpers_p.h"
 
 #include <algorithm>
@@ -61,6 +60,20 @@ Size Core::Item::hardcodedMaximumSize = Size(16777215, 16777215);
 
 bool Core::ItemBoxContainer::s_inhibitSimplify = false;
 LayoutingSeparator *LayoutingSeparator::s_separatorBeingDragged = nullptr;
+
+
+template<typename Signal, typename... Args>
+void safeEmitSignal(Signal &sig, Args &&...args)
+{
+    // KDBindings now can throw exceptions.
+    // we emit some signals in destructors, which should never throw.
+    // this makes clang-tidy happy. In practice there's no throwing.
+    try {
+        sig.emit(std::forward<Args>(args)...);
+    } catch (...) {
+        KDDW_ERROR("Got exception in signal emit!");
+    }
+}
 
 static bool locationIsVertical(Location loc)
 {
