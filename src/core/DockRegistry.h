@@ -49,7 +49,7 @@ struct WindowBeingDragged;
 
 class MainWindowMDI;
 
-class DOCKS_EXPORT DockRegistry : public Core::Object, public Core::EventFilterInterface
+class DOCKS_EXPORT DockRegistry : public QObject, public Core::EventFilterInterface
 {
     Q_OBJECT
     QML_ELEMENT
