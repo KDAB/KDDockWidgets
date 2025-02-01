@@ -19,12 +19,12 @@ if(KDDW_FRONTEND_QT)
     )
 endif()
 
+set(KDDW_LAYOUTING_SRCS core/layouting/Item.cpp core/layouting/ItemFreeContainer.cpp core/Logging.cpp KDDockWidgets.cpp)
+
 set(KDDW_BACKEND_SRCS
-    KDDockWidgets.cpp
     Config.cpp
     LayoutSaver.cpp
     core/Position.cpp
-    core/Logging.cpp
     core/DelayedCall.cpp
     core/Draggable.cpp
     core/WindowBeingDragged.cpp
@@ -56,8 +56,6 @@ set(KDDW_BACKEND_SRCS
     core/indicators/NullDropIndicatorOverlay.cpp
     core/indicators/ClassicDropIndicatorOverlay.cpp
     core/indicators/SegmentedDropIndicatorOverlay.cpp
-    core/layouting/Item.cpp
-    core/layouting/ItemFreeContainer.cpp
     core/views/ClassicIndicatorWindowViewInterface.cpp
     core/views/MainWindowMDIViewInterface.cpp
     core/views/MainWindowViewInterface.cpp
@@ -227,7 +225,7 @@ set(KDDW_INDICATOR_HEADERS core/indicators/NullDropIndicatorOverlay.h core/indic
                            core/indicators/SegmentedDropIndicatorOverlay.h
 )
 
-set(DOCKSLIBS_SRCS ${KDDW_BACKEND_SRCS})
+set(DOCKSLIBS_SRCS ${KDDW_LAYOUTING_SRCS})
 
 if(KDDW_FRONTEND_QTWIDGETS)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_QTWIDGETS_SRCS})
@@ -238,7 +236,7 @@ if(KDDW_FRONTEND_QTQUICK)
 endif()
 
 if(KDDW_FRONTEND_QT)
-    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_QTCOMMON_SRCS})
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_BACKEND_SRCS} ${KDDW_QTCOMMON_SRCS})
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)

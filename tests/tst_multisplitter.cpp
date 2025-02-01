@@ -106,7 +106,7 @@ struct DeleteViews
 {
     ~DeleteViews()
     {
-        deleteAll(s_views);
+        qDeleteAll(s_views);
         s_views.clear();
     }
 };

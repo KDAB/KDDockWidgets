@@ -370,8 +370,8 @@ bool tst_crash2()
                 docks[i]->setFloating(floatings[i]);
             }
 
-            deleteAll(docks);
-            deleteAll(DockRegistry::self()->groups());
+            qDeleteAll(docks);
+            qDeleteAll(DockRegistry::self()->groups());
         }
 
         {
@@ -407,8 +407,8 @@ bool tst_crash2()
             }
             layout->checkSanity();
 
-            deleteAll(docks);
-            deleteAll(DockRegistry::self()->groups());
+            qDeleteAll(docks);
+            qDeleteAll(DockRegistry::self()->groups());
         }
 
         KDDW_TEST_RETURN(true);

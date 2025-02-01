@@ -187,13 +187,6 @@ inline bool scalingFactorIsSupported(double factor)
 #endif
 }
 
-template<typename T>
-void deleteAll(const T &vec)
-{
-    for (const auto &e : vec)
-        delete e;
-}
-
 template<typename Signal, typename... Args>
 void safeEmitSignal(Signal &sig, Args &&...args)
 {
