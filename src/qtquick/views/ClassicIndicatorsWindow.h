@@ -48,6 +48,8 @@ private:
 class ClassicDropIndicatorOverlay : public QObject, public Core::ClassicIndicatorWindowViewInterface
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_UNCREATABLE("Created by the framework only.")
     Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY
                    indicatorsVisibleChanged)
     Q_PROPERTY(bool innerRightIndicatorVisible READ innerRightIndicatorVisible NOTIFY
