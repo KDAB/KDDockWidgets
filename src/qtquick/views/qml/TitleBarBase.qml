@@ -65,8 +65,8 @@ Rectangle {
         objectName: "titleBarMouseArea" // Name used by tests only
         anchors.fill: parent
         onDoubleClicked: {
-            if (titleBarCpp)
-                titleBarCpp.onDoubleClicked();
+            if (root.titleBarCpp)
+                root.titleBarCpp.onDoubleClicked();
         }
     }
 

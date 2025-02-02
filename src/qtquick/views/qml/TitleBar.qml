@@ -67,7 +67,7 @@ TitleBarBase {
         TitleBarButton {
             id: minimizeButton
             visible: root.minimizeButtonVisible
-            imageSource: imagePath("min")
+            imageSource: root.imagePath("min")
             onClicked: {
                 root.minimizeButtonClicked();
             }
@@ -76,17 +76,17 @@ TitleBarBase {
         TitleBarButton {
             id: floatButton
             visible: root.floatButtonVisible
-            imageSource: imagePath("dock-float")
+            imageSource: root.imagePath("dock-float")
             onClicked: {
                 root.floatButtonClicked();
-                console.log(dpiSuffix())
+                console.log(root.dpiSuffix());
             }
         }
 
         TitleBarButton {
             id: maximizeButton
             visible: root.maximizeButtonVisible
-            imageSource: root.maximizeUsesRestoreIcon ? imagePath("dock-float") : imagePath("max");
+            imageSource: root.maximizeUsesRestoreIcon ? root.imagePath("dock-float") : root.imagePath("max")
             onClicked: {
                 root.maximizeButtonClicked();
             }
@@ -95,7 +95,7 @@ TitleBarBase {
         TitleBarButton {
             id: closeButton
             enabled: root.closeButtonEnabled
-            imageSource: imagePath("close")
+            imageSource: root.imagePath("close")
             onClicked: {
                 root.closeButtonClicked();
             }

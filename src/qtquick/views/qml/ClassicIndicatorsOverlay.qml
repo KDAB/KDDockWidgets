@@ -25,7 +25,7 @@ Item {
         indicatorType: KDDockWidgets.DropLocation_OutterLeft
         anchors {
             left: parent.left
-            leftMargin: outterMargin
+            leftMargin: root.outterMargin
             verticalCenter: parent.verticalCenter
         }
     }
@@ -35,7 +35,7 @@ Item {
         indicatorType: KDDockWidgets.DropLocation_OutterRight
         anchors {
             right: parent.right
-            rightMargin: outterMargin
+            rightMargin: root.outterMargin
             verticalCenter: parent.verticalCenter
         }
     }
@@ -45,7 +45,7 @@ Item {
         indicatorType: KDDockWidgets.DropLocation_OutterTop
         anchors {
             top: parent.top
-            topMargin: outterMargin
+            topMargin: root.outterMargin
             horizontalCenter: parent.horizontalCenter
         }
     }
@@ -55,7 +55,7 @@ Item {
         indicatorType: KDDockWidgets.DropLocation_OutterBottom
         anchors {
             bottom: parent.bottom
-            bottomMargin: outterMargin
+            bottomMargin: root.outterMargin
             horizontalCenter: parent.horizontalCenter
         }
     }
@@ -77,7 +77,7 @@ Item {
             indicatorType: KDDockWidgets.DropLocation_Left
             anchors {
                 right: centerIndicator.left
-                rightMargin: innerMargin
+                rightMargin: root.innerMargin
                 verticalCenter: parent.verticalCenter
             }
         }
@@ -95,7 +95,7 @@ Item {
             indicatorType: KDDockWidgets.DropLocation_Right
             anchors {
                 left: centerIndicator.right
-                leftMargin: innerMargin
+                leftMargin: root.innerMargin
                 verticalCenter: parent.verticalCenter
             }
         }
@@ -106,7 +106,7 @@ Item {
             indicatorType: KDDockWidgets.DropLocation_Top
             anchors {
                 bottom: centerIndicator.top
-                bottomMargin: innerMargin
+                bottomMargin: root.innerMargin
                 horizontalCenter: parent.horizontalCenter
             }
         }
@@ -117,7 +117,7 @@ Item {
             indicatorType: KDDockWidgets.DropLocation_Bottom
             anchors {
                 top: centerIndicator.bottom
-                topMargin: innerMargin
+                topMargin: root.innerMargin
                 horizontalCenter: parent.horizontalCenter
             }
         }
