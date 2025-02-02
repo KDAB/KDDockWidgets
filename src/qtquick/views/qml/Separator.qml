@@ -19,23 +19,22 @@ Rectangle {
     readonly property QtObject kddwSeparator: parent
 
     MouseArea {
-        cursorShape: kddwSeparator ? (kddwSeparator.isVertical ? Qt.SizeVerCursor : Qt.SizeHorCursor)
-                                   : Qt.SizeHorCursor
+        cursorShape: root.kddwSeparator ? (root.kddwSeparator.isVertical ? Qt.SizeVerCursor : Qt.SizeHorCursor) : Qt.SizeHorCursor
         anchors.fill: parent
         onPressed: {
-            kddwSeparator.onMousePressed();
+            root.kddwSeparator.onMousePressed();
         }
 
         onReleased: {
-            kddwSeparator.onMouseReleased();
+            root.kddwSeparator.onMouseReleased();
         }
 
-        onPositionChanged: (mouse) => {
-            kddwSeparator.onMouseMoved(Qt.point(mouse.x, mouse.y));
+        onPositionChanged: mouse => {
+            root.kddwSeparator.onMouseMoved(Qt.point(mouse.x, mouse.y));
         }
 
         onDoubleClicked: {
-            kddwSeparator.onMouseDoubleClicked();
+            root.kddwSeparator.onMouseDoubleClicked();
         }
     }
 }

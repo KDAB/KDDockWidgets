@@ -51,7 +51,7 @@ Item {
     Connections {
         target: root.groupCpp
         function onCurrentIndexChanged() {
-            root.currentTabIndex = groupCpp.currentIndex;
+            root.currentTabIndex = root.groupCpp.currentIndex;
         }
     }
 

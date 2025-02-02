@@ -48,7 +48,7 @@ MouseArea {
         }
     }
 
-    onPressed: {
+    onPressed: function (mouse) {
         // install event filter
         groupCpp.startMDIResize();
 
