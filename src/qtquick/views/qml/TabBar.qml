@@ -12,14 +12,13 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.9
 
-
 TabBarBase {
     id: root
 
     // Helper, only applies if you're using the TabBar from QQControls.
     // Returns the internal ListView
     function getInternalListView() {
-        for(var i = 0; i < tabBar.children.length; ++i) {
+        for (var i = 0; i < tabBar.children.length; ++i) {
             if (tabBar.children[i].toString().startsWith("QQuickListView"))
                 return tabBar.children[i];
         }
@@ -76,7 +75,7 @@ TabBarBase {
 
     onCurrentTabIndexChanged: {
         // A change coming from C++
-        tabBar.currentIndex = root.currentTabIndex
+        tabBar.currentIndex = root.currentTabIndex;
     }
 
     TabBar {
@@ -87,14 +86,14 @@ TabBarBase {
 
         onCurrentIndexChanged: {
             // Tells the C++ backend that the current dock widget has changed
-            root.currentTabIndex = this.currentIndex
+            root.currentTabIndex = this.currentIndex;
         }
 
         // If the currentIndex changes in the C++ backend then update it here
         Connections {
             target: root.groupCpp
             function onCurrentIndexChanged() {
-                root.currentTabIndex = groupCpp.currentIndex;
+                root.currentTabIndex = root.groupCpp.currentIndex;
             }
         }
 

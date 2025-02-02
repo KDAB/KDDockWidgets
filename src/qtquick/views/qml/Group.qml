@@ -176,7 +176,7 @@ Rectangle {
     Loader {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: groupCpp ? Singletons.widgetFactory.titleBarFilename() : ""
+        source: root.groupCpp ? Singletons.widgetFactory.titleBarFilename() : ""
 
         anchors {
             top: parent ? parent.top : undefined
