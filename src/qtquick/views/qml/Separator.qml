@@ -10,13 +10,14 @@
 */
 
 import QtQuick 2.6
+import com.kdab.dockwidgets 2.0
 
 Rectangle {
     id: root
     anchors.fill: parent
     color: "#eff0f1"
 
-    readonly property QtObject kddwSeparator: parent
+    readonly property SeparatorView kddwSeparator: parent
 
     MouseArea {
         cursorShape: root.kddwSeparator ? (root.kddwSeparator.isVertical ? Qt.SizeVerCursor : Qt.SizeHorCursor) : Qt.SizeHorCursor
