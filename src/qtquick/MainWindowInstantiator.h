@@ -23,6 +23,7 @@
 #include "views/DropArea.h"
 #include "views/FloatingWindow.h"
 #include "views/Separator.h"
+#include "views/ClassicIndicatorsWindow.h"
 
 #include <QQuickItem>
 #include <QQmlEngine>
