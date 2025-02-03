@@ -101,6 +101,8 @@ TabBarBase {
             /// The list of tabs is stored in a C++ model. This repeater populates our TabBar.
             model: root.groupCpp ? root.groupCpp.tabBar.dockWidgetModel : 0
             TabButton {
+                required property int index
+                required property string title
                 readonly property int tabIndex: index
                 text: title
             }
