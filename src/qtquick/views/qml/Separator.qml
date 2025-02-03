@@ -17,7 +17,7 @@ Rectangle {
     anchors.fill: parent
     color: "#eff0f1"
 
-    readonly property SeparatorView kddwSeparator: parent
+    readonly property SeparatorView kddwSeparator: parent // qmllint disable incompatible-type
 
     MouseArea {
         cursorShape: root.kddwSeparator ? (root.kddwSeparator.isVertical ? Qt.SizeVerCursor : Qt.SizeHorCursor) : Qt.SizeHorCursor

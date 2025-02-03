@@ -18,7 +18,7 @@ Item {
     readonly property int outterMargin: 10
     readonly property int innerMargin: 10
     readonly property QtObject innerIndicators: innerIndicators
-    readonly property ClassicDropIndicatorOverlay overlayWindow: _kddw_overlayWindow
+    readonly property ClassicDropIndicatorOverlay overlayWindow: _kddw_overlayWindow // qmllint disable unqualified
     visible: width > 50 && height > 50 // don't show if window is too small'
 
     ClassicIndicator {
