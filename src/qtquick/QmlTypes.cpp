@@ -49,8 +49,15 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterUncreatableType<QtQuick::FloatingWindow>("com.kdab.dockwidgets", 2, 0,
                                                         "FloatingWindowView", QStringLiteral("Internal usage only"));
 
+    qmlRegisterUncreatableType<QtQuick::Separator>("com.kdab.dockwidgets", 2, 0,
+                                                   "SeparatorView", QStringLiteral("Internal usage only"));
+
     qmlRegisterUncreatableType<QtQuick::DockWidgetModel>("com.kdab.dockwidgets", 2, 0,
                                                          "DockWidgetModel", QStringLiteral("Internal usage only"));
+
+
+    qmlRegisterUncreatableType<QtQuick::ClassicDropIndicatorOverlay>("com.kdab.dockwidgets", 2, 0,
+                                                                     "ClassicDropIndicatorOverlay", QStringLiteral("Internal usage only"));
 
     qmlRegisterSingletonType<QtQuick::Singletons>("com.kdab.dockwidgets", 2, 0, "Singletons", [](QQmlEngine *, QJSEngine *) -> QObject * {
         return new QtQuick::Singletons();

@@ -22,6 +22,7 @@ Item {
     visible: width > 50 && height > 50 // don't show if window is too small'
 
     ClassicIndicator {
+        overlayWindow: root.overlayWindow
         visible: root.overlayWindow && root.overlayWindow.outterLeftIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterLeft
         anchors {
@@ -32,6 +33,7 @@ Item {
     }
 
     ClassicIndicator {
+        overlayWindow: root.overlayWindow
         visible: root.overlayWindow && root.overlayWindow.outterRightIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterRight
         anchors {
@@ -42,6 +44,7 @@ Item {
     }
 
     ClassicIndicator {
+        overlayWindow: root.overlayWindow
         visible: root.overlayWindow && root.overlayWindow.outterTopIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterTop
         anchors {
@@ -52,6 +55,7 @@ Item {
     }
 
     ClassicIndicator {
+        overlayWindow: root.overlayWindow
         visible: root.overlayWindow && root.overlayWindow.outterBottomIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterBottom
         anchors {
@@ -74,6 +78,7 @@ Item {
 
         ClassicIndicator {
             id: innerLeft
+            overlayWindow: root.overlayWindow
             visible: root.overlayWindow && root.overlayWindow.innerLeftIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Left
             anchors {
@@ -85,6 +90,7 @@ Item {
 
         ClassicIndicator {
             id: centerIndicator
+            overlayWindow: root.overlayWindow
             visible: root.overlayWindow && root.overlayWindow.tabIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Center
             anchors.centerIn: parent
@@ -92,6 +98,7 @@ Item {
 
         ClassicIndicator {
             id: innerRight
+            overlayWindow: root.overlayWindow
             visible: root.overlayWindow && root.overlayWindow.innerRightIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Right
             anchors {
@@ -103,6 +110,7 @@ Item {
 
         ClassicIndicator {
             id: innerTop
+            overlayWindow: root.overlayWindow
             visible: root.overlayWindow && root.overlayWindow.innerTopIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Top
             anchors {
@@ -114,6 +122,7 @@ Item {
 
         ClassicIndicator {
             id: innerBottom
+            overlayWindow: root.overlayWindow
             visible: root.overlayWindow && root.overlayWindow.innerBottomIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Bottom
             anchors {

@@ -14,8 +14,7 @@ import com.kdab.dockwidgets 2.0
 
 Image {
     id: root
-
-    readonly property ClassicDropIndicatorOverlay overlayWindow: _kddw_overlayWindow
+    required property ClassicDropIndicatorOverlay overlayWindow
     property int indicatorType: KDDockWidgets.DropLocation_None
     readonly property bool isHovered: root.overlayWindow && root.overlayWindow.currentDropLocation === indicatorType
 
