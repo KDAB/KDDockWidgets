@@ -152,7 +152,7 @@ void Controller::destroyLater()
 {
 #ifdef KDDW_FRONTEND_QT
     if (!usesQTBUG83030Workaround()) {
-        qDebug() << "DELETE-LATER";
+        qDebug() << "DELETE-LATER" << this;
         QObject::deleteLater();
         return;
     }
