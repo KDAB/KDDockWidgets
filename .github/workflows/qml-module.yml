@@ -22,7 +22,7 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-22.04 # 24.04 would trigger self-hosted which has Qt 6.6, which doesn't have has_include in QML type registion
+          - ubuntu-24.04 # 24.04 would trigger self-hosted which has Qt 6.6, which doesn't have has_include in QML type registion
 
     steps:
       - name: Export IS_SELFHOSTED
@@ -32,7 +32,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         if: env.IS_SELFHOSTED != 1
         with:
-          version: 6.8.1
+          version: 6.8.2
           cache: true
 
       - name: Install spdlog on Ubuntu
