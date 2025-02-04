@@ -266,6 +266,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
 
 FloatingWindow::~FloatingWindow()
 {
+    qDebug() << "~FloatingWindow" << this;
     m_inDtor = true;
     view()->d->setAboutToBeDestroyed();
 
