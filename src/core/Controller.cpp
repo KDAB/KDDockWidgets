@@ -151,7 +151,7 @@ void Controller::setParentView_impl(View *parent)
 void Controller::destroyLater()
 {
 #ifdef KDDW_FRONTEND_QT
-    if (!usesQTBUG83030Workaround() && false) {
+    if (!usesQTBUG83030Workaround()) {
         qDebug() << "DELETE-LATER" << this;
         QObject::deleteLater();
         return;

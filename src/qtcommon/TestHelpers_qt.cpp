@@ -37,7 +37,9 @@ static void sleepWithEventLoop(int ms)
     QTimer::singleShot(ms, &loop, [&loop] {
         loop.exit();
     });
+    qDebug() << "Enter nested";
     loop.exec();
+    qDebug() << "Exit nested";
 }
 
 template<typename Func>
