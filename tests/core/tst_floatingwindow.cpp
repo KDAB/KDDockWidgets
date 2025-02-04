@@ -71,6 +71,7 @@ bool tst_floatingWindowClose()
     CHECK(!fw->groups().first()->titleBar()->isVisible());
     titleBar->onCloseClicked();
     CHECK(!dw->isOpen());
+    EVENT_LOOP(100);
     CHECK(Platform::instance()->tests_waitForDeleted(fw));
     CHECK(!fw);
 
