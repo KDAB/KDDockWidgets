@@ -389,6 +389,7 @@ void FloatingWindow::setSuggestedGeometry(Rect suggestedRect, SuggestedGeometryH
 
 void FloatingWindow::scheduleDeleteLater()
 {
+    qDebug() << "SCHEDULE" << this;
     m_deleteScheduled = true;
     view()->d->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);

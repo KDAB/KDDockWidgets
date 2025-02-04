@@ -56,7 +56,9 @@
         "type": "lldb",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [],
+        "args": [
+          "tst_floatingWindowClose"
+        ],
         "cwd": "${command:cmake.buildDirectory}",
         "env": {
           "KDDW_TEST_FRONTEND": "1"
