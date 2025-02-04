@@ -152,12 +152,14 @@ void Controller::destroyLater()
 {
 #ifdef KDDW_FRONTEND_QT
     if (!usesQTBUG83030Workaround()) {
+        qDebug() << "DELETE-LATER";
         QObject::deleteLater();
         return;
     }
 #endif
 
     // Path for Flutter and QTBUG-83030:
+    qDebug() << "DELETE-LATER-2";
     Platform::instance()->runDelayed(0, new DelayedDelete(this));
 }
 
