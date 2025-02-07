@@ -32,6 +32,8 @@
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
 
+#include <QTest>
+
 #include <vector>
 #include <memory>
 
@@ -44,9 +46,6 @@ static bool s_pauseBeforeMove = false; // for debugging
 #define DEBUGGING_PAUSE_DURATION 5000 // 5 seconds
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
-
-#define EVENT_LOOP(millis) \
-    KDDockWidgets::Core::Platform::instance()->tests_wait(millis)
 
 #define WAIT_FOR_RESIZE(window) \
     KDDockWidgets::Core::Platform::instance()->tests_waitForResize(window)
@@ -201,7 +200,7 @@ inline bool drag(Core::View *sourceWidget, Point pressGlobalPos, Point globalDes
 {
     if (buttonActions & ButtonAction_Press) {
         if (s_pauseBeforePress)
-            EVENT_LOOP(DEBUGGING_PAUSE_DURATION);
+            QTest::qWait(DEBUGGING_PAUSE_DURATION);
 
         pressOn(pressGlobalPos, sourceWidget);
     }
@@ -209,7 +208,7 @@ inline bool drag(Core::View *sourceWidget, Point pressGlobalPos, Point globalDes
     sourceWidget->activateWindow();
 
     if (s_pauseBeforeMove)
-        EVENT_LOOP(DEBUGGING_PAUSE_DURATION);
+        QTest::qWait(DEBUGGING_PAUSE_DURATION);
 
     moveMouseTo(globalDest, sourceWidget);
     pressGlobalPos = sourceWidget->mapToGlobal(Point(10, 10));
@@ -249,7 +248,7 @@ inline bool dragFloatingWindowTo(Core::FloatingWindow *fw, Core::DropArea *targe
                                  DropLocation dropLocation)
 {
     // run one event loop, needed by flutter
-    EVENT_LOOP(100);
+    QTest::qWait(100);
 
     auto draggable = draggableFor(fw->view());
     assert(draggable);

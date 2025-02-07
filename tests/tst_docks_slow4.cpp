@@ -109,7 +109,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.6 Drag the tabbed group over a 3rd floating window
     auto dock3 = createDockWidget("doc3");
-    EVENT_LOOP(1000); // Test is flaky otherwise
+    QTest::qWait(1000); // Test is flaky otherwise
 
     auto fw2 = dock2->floatingWindow();
     finalPoint = dock3->window()->geometry().center() + Point(7, 7);
@@ -164,7 +164,7 @@ void TestDocks::tst_restoreSimple()
     const Point dock2FloatingPoint = Point(150, 150);
     dock2->view()->window()->setFramePosition(dock2FloatingPoint);
     QVERIFY(dock2->isVisible());
-    EVENT_LOOP(1000); // Wait for group to settle
+    QTest::qWait(1000); // Wait for group to settle
 
     const Point dock3FloatingPoint = Point(200, 200);
     dock3->view()->window()->setFramePosition(dock3FloatingPoint);
@@ -214,7 +214,7 @@ void TestDocks::tst_restoreSimple()
     dock3->dptr()->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can
                                               // compare already.
 
-    EVENT_LOOP(300);
+    QTest::qWait(300);
     QCOMPARE(dock3->view()->window()->framePosition(), dock3FloatingPoint);
 }
 
@@ -230,7 +230,7 @@ void TestDocks::tst_restoreSimplest()
     LayoutSaver saver;
     QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
 
-    EVENT_LOOP(300);
+    QTest::qWait(300);
 
     QVERIFY(layout->checkSanity());
     QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
@@ -240,7 +240,7 @@ void TestDocks::tst_restoreSimplest()
 void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDocks

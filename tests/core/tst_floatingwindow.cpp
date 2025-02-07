@@ -47,7 +47,7 @@ void TestFloatingWindow::tst_floatingWindowCtor()
     QVERIFY(dw->floatingWindow());
 
     /// Wait for FloatingWindow to be created
-    EVENT_LOOP(100);
+    QTest::qWait(100);
 
     auto rootView = dw->view()->rootView();
     QVERIFY(rootView);

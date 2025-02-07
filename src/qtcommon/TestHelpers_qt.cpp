@@ -23,22 +23,12 @@
 #include <QGuiApplication>
 #include <QElapsedTimer>
 
+#include <QTest>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtCommon;
 
 namespace KDDockWidgets::Tests {
-
-static void sleepWithEventLoop(int ms)
-{
-    if (!ms)
-        return;
-
-    QEventLoop loop;
-    QTimer::singleShot(ms, &loop, [&loop] {
-        loop.exit();
-    });
-    loop.exec();
-}
 
 template<typename Func>
 static bool waitFor(Func func, int timeout)
@@ -50,7 +40,7 @@ static bool waitFor(Func func, int timeout)
         if (timer.elapsed() >= timeout)
             return false;
 
-        sleepWithEventLoop(100);
+        QTest::qWait(100);
     }
 
     return true;
@@ -84,7 +74,7 @@ EventFilter::~EventFilter() = default;
 
 bool Platform_qt::tests_wait(int ms) const
 {
-    Tests::sleepWithEventLoop(ms);
+    QTest::qWait(ms);
     return true;
 }
 
@@ -109,7 +99,7 @@ bool Platform_qt::tests_waitForEvent(Core::Object *w, QEvent::Type type, int tim
 
     while (!filter.m_got && time.elapsed() < timeout) {
         qGuiApp->processEvents();
-        Tests::sleepWithEventLoop(50);
+        QTest::qWait(50);
     }
 
     return filter.m_got;
@@ -142,7 +132,7 @@ bool Platform_qt::tests_waitForDeleted(Core::View *view, int timeout) const
 
     while (ptr && time.elapsed() < timeout) {
         qGuiApp->processEvents();
-        Tests::sleepWithEventLoop(50);
+        QTest::qWait(50);
     }
 
     const bool wasDeleted = !ptr;
@@ -160,7 +150,7 @@ bool Platform_qt::tests_waitForDeleted(Core::Controller *o, int timeout) const
 
     while (ptr && time.elapsed() < timeout) {
         qGuiApp->processEvents();
-        Tests::sleepWithEventLoop(50);
+        QTest::qWait(50);
     }
 
     const bool wasDeleted = !ptr;

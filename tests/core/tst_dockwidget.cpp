@@ -64,7 +64,7 @@ void TestDockWidget::tst_setGuestView()
     QVERIFY(dw->guestView());
     QVERIFY(dw->view());
     dw->view()->show();
-    EVENT_LOOP(500);
+    QTest::qWait(500);
 
     QVERIFY(guest->controller());
     QVERIFY(dw->floatingWindow());
@@ -190,7 +190,7 @@ void TestDockWidget::tst_dwCloseAndReopen()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 void TestDockWidget::tst_setSize()
@@ -204,7 +204,7 @@ void TestDockWidget::tst_setSize()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDockWidget

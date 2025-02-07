@@ -65,7 +65,7 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     dw2->setGuestView(le2->asWrapper());
     dw1->open();
     dw2->open();
-    EVENT_LOOP(200);
+    QTest::qWait(200);
 
     auto fw1 = dw1->floatingWindow();
     ObjectGuard<Core::FloatingWindow> fw2 = dw2->floatingWindow();
@@ -81,7 +81,7 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 
     le1->setFocus(Qt::MouseFocusReason);
 
-    EVENT_LOOP(200);
+    QTest::qWait(200);
     QVERIFY(dw1->isFocused());
 
     QVERIFY(fw1->view()->isActiveWindow());
@@ -215,14 +215,14 @@ void TestDocks::tst_close()
              centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
     leftDock->close();
-    EVENT_LOOP(250);
+    QTest::qWait(250);
     QCOMPARE(centralDock->dptr()->group()->view()->x(), 0);
     QCOMPARE(rightDock->dptr()->group()->view()->x(),
              centralDock->dptr()->group()->view()->geometry().right() + Item::layoutSpacing
                  + 1);
 
     rightDock->close();
-    EVENT_LOOP(250);
+    QTest::qWait(250);
     Margins margins = mainwindow->centerWidgetMargins();
     QCOMPARE(centralDock->dptr()->group()->view()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
@@ -294,10 +294,10 @@ void TestDocks::tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = newDockWidget("1");
     dock1->open();
-    EVENT_LOOP(1000); // Wait for group to settle
+    QTest::qWait(1000); // Wait for group to settle
     const Point desiredPos = Point(100, 100);
     dock1->view()->window()->setFramePosition(desiredPos);
-    EVENT_LOOP(1000); // Wait for group to settle
+    QTest::qWait(1000); // Wait for group to settle
     QCOMPARE(dock1->view()->window()->framePosition(), desiredPos);
 
     dock1->close();
@@ -313,7 +313,7 @@ void TestDocks::tst_positionWhenShown()
 void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDocks

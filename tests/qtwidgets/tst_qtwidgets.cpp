@@ -2469,14 +2469,14 @@ void TestQtWidgets::tst_focusBetweenTabs()
     leFloating->setFocus();
     QVERIFY(dock3->dockWidget()->isCurrentTab());
     m1->view()->activateWindow();
-    EVENT_LOOP(1);
+    QTest::qWait(1);
     le3->setFocus();
 
     QVERIFY(le3->hasFocus());
     dock2->setAsCurrentTab();
     QVERIFY(dock2->dockWidget()->isCurrentTab());
     le2->setFocus();
-    EVENT_LOOP(1);
+    QTest::qWait(1);
     QVERIFY(le2->hasFocus());
 
     // 2. Now, cycling tabs should toggle focus between le2 and le3
@@ -2502,7 +2502,7 @@ void TestQtWidgets::tst_focusBetweenTabs()
     auto titlebarFloating = floatingDock->actualTitleBar()->view();
     QVERIFY(titlebarFloating->isVisible());
     titlebarFloating->setFocus(Qt::MouseFocusReason);
-    EVENT_LOOP(1000);
+    QTest::qWait(1000);
 
     QVERIFY(leFloating->hasFocus());
     QVERIFY(!le1->hasFocus());

@@ -73,7 +73,7 @@ void TestWindow::tst_resize()
     const KDDockWidgets::Size newSize(501, 502);
     window->resize(newSize.width(), newSize.height());
 
-    EVENT_LOOP(100);
+    QTest::qWait(100);
 
     QCOMPARE(window->size(), newSize);
 
@@ -110,7 +110,7 @@ void TestWindow::tst_geometry()
     const auto geo = KDDockWidgets::Rect(100, 100, 1000, 1000);
     window->setGeometry(geo);
 
-    EVENT_LOOP(100);
+    QTest::qWait(100);
     QCOMPARE(window->geometry(), geo);
 
     window->destroy();
