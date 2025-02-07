@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Static and Python
+name: Static, python, clang-tidy and valgrind
 
 on:
   workflow_dispatch:
@@ -49,11 +49,6 @@ jobs:
             preset:
               name: clazy
               build_preset_arg: '--preset=clazy'
-              qt_version: "5.15"
-
-          - os: ubuntu-24.04
-            preset:
-              name: ci-dev-valgrind-qt5
               qt_version: "5.15"
 
           - os: ubuntu-24.04
