@@ -384,7 +384,7 @@ void TestDocks::tst_crash2()
                 layout->checkSanity();
                 if (i == 2) {
                     // Wait for the resizes. This used to make the app crash.
-                    EVENT_LOOP(1000);
+                    QTest::qWait(1000);
                 }
 
                 docks[i]->setFloating(floatings[i]);
@@ -403,7 +403,7 @@ void TestDocks::tst_crash2()
 void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDocks

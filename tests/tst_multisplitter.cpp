@@ -9,8 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "simple_test_framework.h"
-
 #include "core/layouting/Item_p.h"
 #include "core/layouting/LayoutingHost_p.h"
 #include "core/layouting/LayoutingGuest_p.h"
@@ -20,6 +18,8 @@
 #include "core/Utils_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/ScopedValueRollback_p.h"
+
+#include <QTest>
 
 #include <memory.h>
 #include <cstdlib>
@@ -249,12 +249,12 @@ void TestLayouting::tst_createRoot()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-    CHECK(root->isRoot());
-    CHECK(root->isContainer());
-    CHECK(root->hasOrientation());
-    CHECK_EQ(root->size(), Size(1000, 1000));
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->isRoot());
+    QVERIFY(root->isContainer());
+    QVERIFY(root->hasOrientation());
+    QCOMPARE(root->size(), Size(1000, 1000));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertOne()
@@ -264,15 +264,15 @@ void TestLayouting::tst_insertOne()
     auto root = createRoot();
     auto item = createItem();
     root->insertItem(item, Location_OnTop);
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->numChildren(), 1);
-    CHECK(!item->isContainer());
-    CHECK_EQ(root->size(), Size(1000, 1000));
-    CHECK_EQ(item->size(), root->size());
-    CHECK_EQ(item->pos(), Point());
-    CHECK_EQ(item->pos(), root->pos());
-    CHECK(root->hasChildren());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->numChildren(), 1);
+    QVERIFY(!item->isContainer());
+    QCOMPARE(root->size(), Size(1000, 1000));
+    QCOMPARE(item->size(), root->size());
+    QCOMPARE(item->pos(), Point());
+    QCOMPARE(item->pos(), root->pos());
+    QVERIFY(root->hasChildren());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertThreeSideBySide()
@@ -289,9 +289,9 @@ void TestLayouting::tst_insertThreeSideBySide()
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
 
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->numChildren(), 3);
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->numChildren(), 3);
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertTwoHorizontal()
@@ -303,8 +303,8 @@ void TestLayouting::tst_insertTwoHorizontal()
     auto item2 = createItem();
     root->insertItem(item1, Location_OnLeft);
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnRight);
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertTwoVertical()
@@ -316,8 +316,8 @@ void TestLayouting::tst_insertTwoVertical()
     auto item2 = createItem();
     root->insertItem(item1, Location_OnTop);
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertOnWidgetItem1()
@@ -335,12 +335,12 @@ void TestLayouting::tst_insertOnWidgetItem1()
     root->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item3, item2, Location_OnRight);
 
-    CHECK(item3->x() > item2->x());
-    CHECK_EQ(item3->y(), item2->y());
+    QVERIFY(item3->x() > item2->x());
+    QCOMPARE(item3->y(), item2->y());
 
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->numChildren(), 3);
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->numChildren(), 3);
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertOnWidgetItem2()
@@ -357,13 +357,13 @@ void TestLayouting::tst_insertOnWidgetItem2()
     root->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item3, item2, Location_OnLeft);
 
-    CHECK(item1->x() < item3->x());
-    CHECK(item3->x() < item2->x());
-    CHECK_EQ(item3->y(), item2->y());
+    QVERIFY(item1->x() < item3->x());
+    QVERIFY(item3->x() < item2->x());
+    QCOMPARE(item3->y(), item2->y());
 
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->numChildren(), 3);
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->numChildren(), 3);
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertOnWidgetItem1DifferentOrientation()
@@ -379,42 +379,42 @@ void TestLayouting::tst_insertOnWidgetItem1DifferentOrientation()
     auto item3 = createItem();
     auto item31 = createItem();
     root->insertItem(item1, Location_OnLeft);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     root->insertItem(item2, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     ItemBoxContainer::insertItemRelativeTo(item3, item2, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnBottom);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     auto container3 = item3->parentBoxContainer();
-    CHECK(container3->isContainer());
-    CHECK(container3 != root.get());
-    CHECK(root->isHorizontal());
-    CHECK(container3->isVertical());
+    QVERIFY(container3->isContainer());
+    QVERIFY(container3 != root.get());
+    QVERIFY(root->isHorizontal());
+    QVERIFY(container3->isVertical());
 
-    CHECK_EQ(root->numChildren(), 3);
-    CHECK_EQ(container3->numChildren(), 2);
+    QCOMPARE(root->numChildren(), 3);
+    QCOMPARE(container3->numChildren(), 2);
 
-    CHECK(item1->x() < item2->x());
-    CHECK(item3->parentBoxContainer()->x() > item2->x());
-    CHECK_EQ(item3->x(), 0);
-    CHECK_EQ(item3->y(), item2->y());
-    CHECK_EQ(item1->y(), item2->y());
+    QVERIFY(item1->x() < item2->x());
+    QVERIFY(item3->parentBoxContainer()->x() > item2->x());
+    QCOMPARE(item3->x(), 0);
+    QCOMPARE(item3->y(), item2->y());
+    QCOMPARE(item1->y(), item2->y());
 
-    CHECK(item31->y() >= item3->y());
-    CHECK_EQ(item31->parentBoxContainer(), container3);
-    CHECK_EQ(item3->parentBoxContainer(), container3);
-    CHECK_EQ(container3->parentBoxContainer(), root.get());
-    CHECK_EQ(Point(0, 0), item3->pos());
-    CHECK_EQ(container3->width(), item3->width());
-    CHECK_EQ(container3->height(), item3->height() + st + item31->height());
+    QVERIFY(item31->y() >= item3->y());
+    QCOMPARE(item31->parentBoxContainer(), container3);
+    QCOMPARE(item3->parentBoxContainer(), container3);
+    QCOMPARE(container3->parentBoxContainer(), root.get());
+    QCOMPARE(Point(0, 0), item3->pos());
+    QCOMPARE(container3->width(), item3->width());
+    QCOMPARE(container3->height(), item3->height() + st + item31->height());
 
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertOnWidgetItem2DifferentOrientation()
@@ -436,39 +436,39 @@ void TestLayouting::tst_insertOnWidgetItem2DifferentOrientation()
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
     auto container3Parent = item3->parentBoxContainer();
     ItemBoxContainer::insertItemRelativeTo(item5, item3, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
     auto container3 = item3->parentBoxContainer();
 
-    CHECK_EQ(container3->parentBoxContainer(), container3Parent);
+    QCOMPARE(container3->parentBoxContainer(), container3Parent);
 
-    CHECK(container3->isContainer());
-    CHECK(container3 != root.get());
-    CHECK(root->isHorizontal());
-    CHECK(container3->isHorizontal());
-    CHECK(container3Parent->isVertical());
+    QVERIFY(container3->isContainer());
+    QVERIFY(container3 != root.get());
+    QVERIFY(root->isHorizontal());
+    QVERIFY(container3->isHorizontal());
+    QVERIFY(container3Parent->isVertical());
 
-    CHECK_EQ(root->numChildren(), 3);
-    CHECK_EQ(container3->numChildren(), 2);
-    CHECK_EQ(container3Parent->numChildren(), 2);
+    QCOMPARE(root->numChildren(), 3);
+    QCOMPARE(container3->numChildren(), 2);
+    QCOMPARE(container3Parent->numChildren(), 2);
 
-    CHECK(item1->x() < item2->x());
-    CHECK_EQ(container3->pos(), Point(0, 0l));
-    CHECK_EQ(item3->pos(), container3->pos());
-    CHECK(container3Parent->x() > item2->x());
-    CHECK_EQ(item3->y(), item2->y());
-    CHECK_EQ(item1->y(), item2->y());
+    QVERIFY(item1->x() < item2->x());
+    QCOMPARE(container3->pos(), Point(0, 0l));
+    QCOMPARE(item3->pos(), container3->pos());
+    QVERIFY(container3Parent->x() > item2->x());
+    QCOMPARE(item3->y(), item2->y());
+    QCOMPARE(item1->y(), item2->y());
 
-    CHECK(item4->y() >= item3->y());
-    CHECK_EQ(item4->parentBoxContainer(), container3Parent);
-    CHECK_EQ(item3->parentBoxContainer(), container3);
-    CHECK_EQ(container3Parent->parentBoxContainer(), root.get());
-    CHECK_EQ(container3->pos(), item3->pos());
-    CHECK_EQ(container3->width(), item3->width() + item5->width() + st);
-    CHECK_EQ(container3->height(), item3->height());
-    CHECK_EQ(container3Parent->height(), item3->height() + st + item4->height());
+    QVERIFY(item4->y() >= item3->y());
+    QCOMPARE(item4->parentBoxContainer(), container3Parent);
+    QCOMPARE(item3->parentBoxContainer(), container3);
+    QCOMPARE(container3Parent->parentBoxContainer(), root.get());
+    QCOMPARE(container3->pos(), item3->pos());
+    QCOMPARE(container3->width(), item3->width() + item5->width() + st);
+    QCOMPARE(container3->height(), item3->height());
+    QCOMPARE(container3Parent->height(), item3->height() + st + item4->height());
 
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_insertOnRootDifferentOrientation()
@@ -493,12 +493,12 @@ void TestLayouting::tst_insertOnRootDifferentOrientation()
     ItemBoxContainer::insertItemRelativeTo(item32, item3, Location_OnRight);
     root->insertItem(item4, Location_OnTop);
 
-    CHECK_EQ(item4->parentBoxContainer(), root.get());
-    CHECK_EQ(item4->pos(), root->pos());
-    CHECK_EQ(item4->width(), root->width());
+    QCOMPARE(item4->parentBoxContainer(), root.get());
+    QCOMPARE(item4->pos(), root->pos());
+    QCOMPARE(item4->width(), root->width());
 
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_removeItem1()
@@ -522,34 +522,34 @@ void TestLayouting::tst_removeItem1()
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnBottom);
     ItemBoxContainer::insertItemRelativeTo(item32, item3, Location_OnRight);
     root->insertItem(item4, Location_OnTop);
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->numChildren(), 2);
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->numChildren(), 2);
 
     root->removeItem(item4);
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->numChildren(), 1);
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->numChildren(), 1);
 
     auto c1 = item1->parentBoxContainer();
-    CHECK_EQ(c1->pos(), Point(0, 0));
-    CHECK_EQ(c1->width(), root->width());
-    CHECK_EQ(c1->height(), item1->height());
-    CHECK_EQ(c1->height(), root->height());
+    QCOMPARE(c1->pos(), Point(0, 0));
+    QCOMPARE(c1->width(), root->width());
+    QCOMPARE(c1->height(), item1->height());
+    QCOMPARE(c1->height(), root->height());
 
     const int item3and32Width = item3->width() + item32->width() + st;
     root->removeItem(item32);
 
-    CHECK_EQ(item3->width(), item3and32Width);
-    CHECK(root->checkSanity());
+    QCOMPARE(item3->width(), item3and32Width);
+    QVERIFY(root->checkSanity());
 
     root->removeItem(item31);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
-    CHECK_EQ(item2->height(), item3->height());
+    QCOMPARE(item2->height(), item3->height());
 
     ObjectGuard<Item> c3 = item3->parentBoxContainer();
     root->removeItem(c3);
-    CHECK(c3.isNull());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(c3.isNull());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_removeItem2()
@@ -587,13 +587,13 @@ void TestLayouting::tst_minSize()
     root->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item22, item2, Location_OnBottom);
 
-    CHECK_EQ(item2->minSize(), Size(200, 300));
-    CHECK_EQ(item2->parentBoxContainer()->minSize(), Size(200, 300 + 100 + st));
+    QCOMPARE(item2->minSize(), Size(200, 300));
+    QCOMPARE(item2->parentBoxContainer()->minSize(), Size(200, 300 + 100 + st));
 
-    CHECK_EQ(root->minSize(), Size(101 + 200 + st, 300 + 100 + st));
-    CHECK(root->checkSanity());
+    QCOMPARE(root->minSize(), Size(101 + 200 + st, 300 + 100 + st));
+    QVERIFY(root->checkSanity());
 
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_resize()
@@ -616,23 +616,23 @@ void TestLayouting::tst_resize()
 
     // Now resize:
     root->setSize_recursive({ 2000, 505 });
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
-    CHECK(item1Percentage - (1.0 * item1->width() / root->width()) < 0.01);
-    CHECK(item2Percentage - (1.0 * item2->width() / root->width()) < 0.01);
-    CHECK(item3Percentage - (1.0 * item3->width() / root->width()) < 0.01);
-    CHECK_EQ(root->width(), 2000);
-    CHECK_EQ(root->height(), 505);
-    CHECK_EQ(item1->height(), 505);
-    CHECK_EQ(item2->height(), 505);
-    CHECK_EQ(item3->height(), 505);
+    QVERIFY(item1Percentage - (1.0 * item1->width() / root->width()) < 0.01);
+    QVERIFY(item2Percentage - (1.0 * item2->width() / root->width()) < 0.01);
+    QVERIFY(item3Percentage - (1.0 * item3->width() / root->width()) < 0.01);
+    QCOMPARE(root->width(), 2000);
+    QCOMPARE(root->height(), 505);
+    QCOMPARE(item1->height(), 505);
+    QCOMPARE(item2->height(), 505);
+    QCOMPARE(item3->height(), 505);
 
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnBottom);
 
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
     root->setSize_recursive({ 2500, 505 });
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_resizeWithConstraints()
@@ -648,12 +648,12 @@ void TestLayouting::tst_resizeWithConstraints()
         auto item1 = createItem();
         item1->setMinSize(Size(500, 500));
         root->insertItem(item1, Location_OnLeft);
-        CHECK(root->checkSanity());
+        QVERIFY(root->checkSanity());
 
         root->setSize_recursive(item1->minSize()); // Still fits
         root->setSize_recursive(item1->minSize() - Size(1, 0)); // wouldn't fit
-        CHECK_EQ(root->size(), item1->size()); // still has the old size
-        CHECK(serializeDeserializeTest(root));
+        QCOMPARE(root->size(), item1->size()); // still has the old size
+        QVERIFY(serializeDeserializeTest(root));
     }
 
     {
@@ -670,7 +670,7 @@ void TestLayouting::tst_resizeWithConstraints()
         root->insertItem(item1, Location_OnLeft);
         root->insertItem(item2, Location_OnRight);
         root->insertItem(item3, Location_OnRight);
-        CHECK(root->checkSanity());
+        QVERIFY(root->checkSanity());
     }
     Platform::instance()->m_expectedWarning.clear();
 }
@@ -680,8 +680,8 @@ void TestLayouting::tst_availableSize()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-    CHECK_EQ(root->availableSize(), Size(1000, 1000));
-    CHECK_EQ(root->minSize(), Size(0, 0));
+    QCOMPARE(root->availableSize(), Size(1000, 1000));
+    QCOMPARE(root->minSize(), Size(0, 0));
 
     auto item1 = createItem();
     auto item2 = createItem();
@@ -691,48 +691,48 @@ void TestLayouting::tst_availableSize()
     item3->m_sizingInfo.minSize = { 100, 100 };
 
     root->insertItem(item1, Location_OnLeft);
-    CHECK_EQ(root->availableSize(), Size(900, 900));
-    CHECK_EQ(root->minSize(), Size(100, 100));
-    CHECK_EQ(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursMinLengthFor(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(root->availableSize(), Size(900, 900));
+    QCOMPARE(root->minSize(), Size(100, 100));
+    QCOMPARE(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursMinLengthFor(item1, Side2, Qt::Horizontal), 0);
 
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical), 0);
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     root->insertItem(item2, Location_OnLeft);
-    CHECK_EQ(root->availableSize(), Size(800 - st, 900));
-    CHECK_EQ(root->minSize(), Size(200 + st, 100));
-    CHECK_EQ(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), item2->width());
-    CHECK_EQ(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursLengthFor(item2, Side1, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursLengthFor(item2, Side2, Qt::Horizontal), item1->width());
-    CHECK_EQ(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), item2->minSize().width());
-    CHECK_EQ(root->neighboursMinLengthFor(item1, Side2, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursMinLengthFor(item2, Side1, Qt::Horizontal), 0);
-    CHECK_EQ(root->neighboursMinLengthFor(item2, Side2, Qt::Horizontal), item1->minSize().width());
+    QCOMPARE(root->availableSize(), Size(800 - st, 900));
+    QCOMPARE(root->minSize(), Size(200 + st, 100));
+    QCOMPARE(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), item2->width());
+    QCOMPARE(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursLengthFor(item2, Side1, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursLengthFor(item2, Side2, Qt::Horizontal), item1->width());
+    QCOMPARE(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), item2->minSize().width());
+    QCOMPARE(root->neighboursMinLengthFor(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursMinLengthFor(item2, Side1, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursMinLengthFor(item2, Side2, Qt::Horizontal), item1->minSize().width());
 
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical), 0);
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal), item2->width());
-    CHECK_EQ(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical), 0);
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal), item2->width());
+    QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     root->insertItem(item3, Location_OnBottom);
-    CHECK_EQ(root->availableSize(), Size(800 - st, 800 - st));
-    CHECK_EQ(root->minSize(), Size(200 + st, 100 + 100 + st));
-    CHECK_EQ(item3->parentBoxContainer()->neighboursMinLengthFor(item3, Side1, Qt::Vertical),
+    QCOMPARE(root->availableSize(), Size(800 - st, 800 - st));
+    QCOMPARE(root->minSize(), Size(200 + st, 100 + 100 + st));
+    QCOMPARE(item3->parentBoxContainer()->neighboursMinLengthFor(item3, Side1, Qt::Vertical),
              item1->minSize().height());
 
     auto container2 = item2->parentBoxContainer();
-    CHECK_EQ(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
-    CHECK_EQ(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical),
+    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
+    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical),
              item3->height());
-    CHECK_EQ(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal),
+    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side1, Qt::Horizontal),
              item2->width());
-    CHECK_EQ(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
+    QCOMPARE(container2->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     // More nesting
     auto item4 = createItem();
@@ -741,21 +741,21 @@ void TestLayouting::tst_availableSize()
     ItemBoxContainer::insertItemRelativeTo(item5, item4, Location_OnBottom);
 
     auto container4 = item4->parentBoxContainer();
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Vertical),
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Vertical),
              item1->height());
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Vertical),
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Vertical),
              item5->height());
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Horizontal),
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side1, Qt::Horizontal),
              item3->width());
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Horizontal), 0);
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Vertical),
+    QCOMPARE(container4->neighboursLengthFor_recursive(item4, Side2, Qt::Horizontal), 0);
+    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Vertical),
              item4->height() + item1->height());
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Vertical), 0);
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Horizontal),
+    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Vertical), 0);
+    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Horizontal),
              item3->width());
-    CHECK_EQ(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Horizontal), 0);
+    QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Horizontal), 0);
 
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_missingSize()
@@ -763,8 +763,8 @@ void TestLayouting::tst_missingSize()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-    CHECK_EQ(root->size(), Size(1000, 1000));
-    CHECK_EQ(root->availableSize(), Size(1000, 1000));
+    QCOMPARE(root->size(), Size(1000, 1000));
+    QCOMPARE(root->availableSize(), Size(1000, 1000));
 
     Item *item1 = createItem();
     item1->setMinSize({ 100, 100 });
@@ -777,7 +777,7 @@ void TestLayouting::tst_missingSize()
 
     // Test with an existing item
     root->insertItem(item1, Location_OnTop);
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(serializeDeserializeTest(root));
 
     // Add just so the views are deleted at the end
     root->insertItem(item2, Location_OnTop);
@@ -800,20 +800,20 @@ void TestLayouting::tst_ensureEnoughSize()
     // Insert to empty layout:
 
     root->insertItem(item1, Location_OnLeft);
-    CHECK_EQ(root->size(), Size(2000, 1000));
-    CHECK_EQ(item1->size(), Size(2000, 1000));
-    CHECK_EQ(item1->minSize(), root->minSize());
-    CHECK(root->checkSanity());
+    QCOMPARE(root->size(), Size(2000, 1000));
+    QCOMPARE(item1->size(), Size(2000, 1000));
+    QCOMPARE(item1->minSize(), root->minSize());
+    QVERIFY(root->checkSanity());
 
     // Insert to non-empty layout
     Item *item2 = createItem();
     item2->setMinSize({ 2000, 2000 });
     root->insertItem(item2, Location_OnRight);
-    CHECK(root->checkSanity());
-    CHECK_EQ(
+    QVERIFY(root->checkSanity());
+    QCOMPARE(
         root->size(),
         Size(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_turnIntoPlaceholder()
@@ -830,28 +830,28 @@ void TestLayouting::tst_turnIntoPlaceholder()
     Item *item2 = createItem();
     Item *item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
-    CHECK_EQ(numVisibleItems, 1);
-    CHECK(item1->isVisible());
+    QCOMPARE(numVisibleItems, 1);
+    QVERIFY(item1->isVisible());
     item1->turnIntoPlaceholder();
-    CHECK_EQ(numVisibleItems, 0);
-    CHECK(!item1->isVisible());
-    CHECK_EQ(root->visibleCount_recursive(), 0);
-    CHECK_EQ(root->count_recursive(), 1);
-    CHECK(root->checkSanity());
+    QCOMPARE(numVisibleItems, 0);
+    QVERIFY(!item1->isVisible());
+    QCOMPARE(root->visibleCount_recursive(), 0);
+    QCOMPARE(root->count_recursive(), 1);
+    QVERIFY(root->checkSanity());
 
     root->insertItem(item2, Location_OnLeft);
-    CHECK(root->checkSanity());
-    CHECK_EQ(numVisibleItems, 1);
+    QVERIFY(root->checkSanity());
+    QCOMPARE(numVisibleItems, 1);
 
     root->insertItem(item3, Location_OnLeft);
-    CHECK_EQ(numVisibleItems, 2);
-    CHECK(root->checkSanity());
-    CHECK_EQ(item2->width() + item3->width() + st, root->width());
+    QCOMPARE(numVisibleItems, 2);
+    QVERIFY(root->checkSanity());
+    QCOMPARE(item2->width() + item3->width() + st, root->width());
     item2->turnIntoPlaceholder();
-    CHECK_EQ(numVisibleItems, 1);
-    CHECK(root->checkSanity());
-    CHECK_EQ(item3->width(), root->width());
-    CHECK(serializeDeserializeTest(root));
+    QCOMPARE(numVisibleItems, 1);
+    QVERIFY(root->checkSanity());
+    QCOMPARE(item3->width(), root->width());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_suggestedRect()
@@ -870,18 +870,18 @@ void TestLayouting::tst_suggestedRect()
     Rect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
 
     // Test relative to root:
-    CHECK(leftRect.width() >= minSize.width());
-    CHECK(topRect.height() >= minSize.height());
-    CHECK(bottomRect.height() >= minSize.height());
-    CHECK(rightRect.width() >= minSize.width());
-    CHECK_EQ(leftRect.topLeft(), Point(0, 0));
-    CHECK_EQ(leftRect.bottomLeft(), root->rect().bottomLeft());
-    CHECK_EQ(rightRect.topRight(), root->rect().topRight());
-    CHECK_EQ(rightRect.bottomRight(), root->rect().bottomRight());
-    CHECK_EQ(topRect.topLeft(), root->rect().topLeft());
-    CHECK_EQ(topRect.topRight(), root->rect().topRight());
-    CHECK_EQ(bottomRect.bottomLeft(), root->rect().bottomLeft());
-    CHECK_EQ(bottomRect.bottomRight(), root->rect().bottomRight());
+    QVERIFY(leftRect.width() >= minSize.width());
+    QVERIFY(topRect.height() >= minSize.height());
+    QVERIFY(bottomRect.height() >= minSize.height());
+    QVERIFY(rightRect.width() >= minSize.width());
+    QCOMPARE(leftRect.topLeft(), Point(0, 0));
+    QCOMPARE(leftRect.bottomLeft(), root->rect().bottomLeft());
+    QCOMPARE(rightRect.topRight(), root->rect().topRight());
+    QCOMPARE(rightRect.bottomRight(), root->rect().bottomRight());
+    QCOMPARE(topRect.topLeft(), root->rect().topLeft());
+    QCOMPARE(topRect.topRight(), root->rect().topRight());
+    QCOMPARE(bottomRect.bottomLeft(), root->rect().bottomLeft());
+    QCOMPARE(bottomRect.bottomRight(), root->rect().bottomRight());
 
     // Test relative to an item
     Item *item1 = createItem();
@@ -891,18 +891,18 @@ void TestLayouting::tst_suggestedRect()
     topRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnTop);
     bottomRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnBottom);
     rightRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnRight);
-    CHECK(leftRect.width() >= minSize.width());
-    CHECK(topRect.height() >= minSize.height());
-    CHECK(bottomRect.height() >= minSize.height());
-    CHECK(rightRect.width() >= minSize.width());
-    CHECK_EQ(leftRect.topLeft(), Point(0, 0));
-    CHECK_EQ(leftRect.bottomLeft(), root->rect().bottomLeft());
-    CHECK_EQ(rightRect.topRight(), root->rect().topRight());
-    CHECK_EQ(rightRect.bottomRight(), root->rect().bottomRight());
-    CHECK_EQ(topRect.topLeft(), root->rect().topLeft());
-    CHECK_EQ(topRect.topRight(), root->rect().topRight());
-    CHECK_EQ(bottomRect.bottomLeft(), root->rect().bottomLeft());
-    CHECK_EQ(bottomRect.bottomRight(), root->rect().bottomRight());
+    QVERIFY(leftRect.width() >= minSize.width());
+    QVERIFY(topRect.height() >= minSize.height());
+    QVERIFY(bottomRect.height() >= minSize.height());
+    QVERIFY(rightRect.width() >= minSize.width());
+    QCOMPARE(leftRect.topLeft(), Point(0, 0));
+    QCOMPARE(leftRect.bottomLeft(), root->rect().bottomLeft());
+    QCOMPARE(rightRect.topRight(), root->rect().topRight());
+    QCOMPARE(rightRect.bottomRight(), root->rect().bottomRight());
+    QCOMPARE(topRect.topLeft(), root->rect().topLeft());
+    QCOMPARE(topRect.topRight(), root->rect().topRight());
+    QCOMPARE(bottomRect.bottomLeft(), root->rect().bottomLeft());
+    QCOMPARE(bottomRect.bottomRight(), root->rect().bottomRight());
 
     // Insert another item:
     Item *item2 = createItem();
@@ -912,16 +912,16 @@ void TestLayouting::tst_suggestedRect()
     topRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnTop);
     bottomRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnBottom);
     rightRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnRight);
-    CHECK_EQ(leftRect.y(), item2->geometry().y());
-    CHECK(leftRect.x() < item2->geometry().x());
-    CHECK(leftRect.x() > item1->geometry().x());
-    CHECK_EQ(rightRect.topRight(), root->rect().topRight());
-    CHECK_EQ(rightRect.bottomRight(), root->rect().bottomRight());
-    CHECK_EQ(topRect.topLeft(), item2->geometry().topLeft());
-    CHECK_EQ(topRect.topRight(), item2->geometry().topRight());
-    CHECK_EQ(bottomRect.bottomLeft(), item2->geometry().bottomLeft());
-    CHECK_EQ(bottomRect.bottomRight(), item2->geometry().bottomRight());
-    CHECK(serializeDeserializeTest(root));
+    QCOMPARE(leftRect.y(), item2->geometry().y());
+    QVERIFY(leftRect.x() < item2->geometry().x());
+    QVERIFY(leftRect.x() > item1->geometry().x());
+    QCOMPARE(rightRect.topRight(), root->rect().topRight());
+    QCOMPARE(rightRect.bottomRight(), root->rect().bottomRight());
+    QCOMPARE(topRect.topLeft(), item2->geometry().topLeft());
+    QCOMPARE(topRect.topRight(), item2->geometry().topRight());
+    QCOMPARE(bottomRect.bottomLeft(), item2->geometry().bottomLeft());
+    QCOMPARE(bottomRect.bottomRight(), item2->geometry().bottomRight());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_suggestedRect2()
@@ -942,9 +942,9 @@ void TestLayouting::tst_suggestedRect2()
     root2->insertItem(item, Location_OnRight);
     root1->insertItem(root2.release(), Location_OnRight);
 
-    CHECK(item->parentBoxContainer()
-              ->suggestedDropRect(&itemBeingDropped, item, Location_OnRight)
-              .isValid());
+    QVERIFY(item->parentBoxContainer()
+                ->suggestedDropRect(&itemBeingDropped, item, Location_OnRight)
+                .isValid());
 }
 
 void TestLayouting::tst_suggestedRect3()
@@ -961,9 +961,9 @@ void TestLayouting::tst_suggestedRect3()
     root1->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item3, item2, Location_OnBottom);
 
-    CHECK(!item3->parentBoxContainer()
-               ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
-               .isEmpty());
+    QVERIFY(!item3->parentBoxContainer()
+                 ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
+                 .isEmpty());
 
     /// insert just to cleanup at shutdown
     root1->insertItem(itemToDrop, Location_OnRight);
@@ -993,10 +993,10 @@ void TestLayouting::tst_suggestedRect4()
 
     Item *itemToDrop = createItem();
 
-    CHECK(root->checkSanity());
-    CHECK(!item3->parentBoxContainer()
-               ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
-               .isEmpty());
+    QVERIFY(root->checkSanity());
+    QVERIFY(!item3->parentBoxContainer()
+                 ->suggestedDropRect(itemToDrop, item3, Location_OnLeft)
+                 .isEmpty());
 
     /// insert just to cleanup at shutdown
     root->insertItem(itemToDrop, Location_OnRight);
@@ -1018,15 +1018,15 @@ void TestLayouting::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnBottom);
 
-        CHECK_EQ(root1->host(), host1);
-        CHECK_EQ(item2->host(), host1);
+        QCOMPARE(root1->host(), host1);
+        QCOMPARE(item2->host(), host1);
         const auto &items = root1->items_recursive();
         for (Item *item : items) {
-            CHECK_EQ(item->host(), host1);
-            CHECK(item->isVisible());
+            QCOMPARE(item->host(), host1);
+            QVERIFY(item->isVisible());
         }
-        CHECK(root1->checkSanity());
-        CHECK(serializeDeserializeTest(root1));
+        QVERIFY(root1->checkSanity());
+        QVERIFY(serializeDeserializeTest(root1));
     }
 
     {
@@ -1043,14 +1043,14 @@ void TestLayouting::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnTop);
 
-        CHECK_EQ(root1->host(), host1);
-        CHECK_EQ(item2->host(), host1);
+        QCOMPARE(root1->host(), host1);
+        QCOMPARE(item2->host(), host1);
         for (Item *item : root1->items_recursive()) {
-            CHECK_EQ(item->host(), host1);
-            CHECK(item->isVisible());
+            QCOMPARE(item->host(), host1);
+            QVERIFY(item->isVisible());
         }
-        CHECK(root1->checkSanity());
-        CHECK(serializeDeserializeTest(root1));
+        QVERIFY(root1->checkSanity());
+        QVERIFY(serializeDeserializeTest(root1));
     }
 }
 
@@ -1073,8 +1073,8 @@ void TestLayouting::tst_misc1()
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnRight);
     root->insertItem(item5, Location_OnLeft);
 
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_misc2()
@@ -1095,20 +1095,20 @@ void TestLayouting::tst_misc2()
     Item *item5 = root5->childItems().constFirst();
 
     root->insertItem(root1, Location_OnTop);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
     ItemBoxContainer::insertItemRelativeTo(root2, item1, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
     root->insertItem(item3, Location_OnBottom);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
     ItemBoxContainer::insertItemRelativeTo(root4, item3, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     root->insertItem(root5, Location_OnLeft);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     item5->parentBoxContainer()->removeItem(item5);
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_misc3()
@@ -1127,7 +1127,7 @@ void TestLayouting::tst_misc3()
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
     root->insertItem(root2, Location_OnRight);
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_containerGetsHidden()
@@ -1139,20 +1139,20 @@ void TestLayouting::tst_containerGetsHidden()
     Item *item2 = createItem();
     Item *item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     root->insertItem(item2, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     ItemBoxContainer::insertItemRelativeTo(item3, item2, Location_OnBottom);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     item2->turnIntoPlaceholder();
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     item3->turnIntoPlaceholder();
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_minSizeChanges()
@@ -1164,23 +1164,23 @@ void TestLayouting::tst_minSizeChanges()
     root->insertItem(item1, Location_OnLeft);
 
     root->setSize_recursive(Size(200, 200));
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     auto w1 = item1;
     w1->setMinSize(Size(300, 300));
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->size(), Size(300, 300));
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->size(), Size(300, 300));
 
     Item *item2 = createItem();
     root->insertItem(item2, Location_OnTop);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     root->setSize_recursive(Size(1000, 1000));
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     w1->setMinSize(Size(700, 700));
-    CHECK(root->checkSanity());
-    CHECK(serializeDeserializeTest(root));
+    QVERIFY(root->checkSanity());
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_numSeparators()
@@ -1193,33 +1193,33 @@ void TestLayouting::tst_numSeparators()
     Item *item3 = createItem();
     Item *item4 = createItem();
 
-    CHECK_EQ(root->separators_recursive().size(), 0);
+    QCOMPARE(root->separators_recursive().size(), 0);
 
     root->insertItem(item1, Location_OnLeft);
-    CHECK_EQ(root->separators_recursive().size(), 0);
+    QCOMPARE(root->separators_recursive().size(), 0);
 
     root->insertItem(item2, Location_OnLeft);
-    CHECK_EQ(root->separators_recursive().size(), 1);
+    QCOMPARE(root->separators_recursive().size(), 1);
 
     root->insertItem(item3, Location_OnTop);
-    CHECK_EQ(root->separators_recursive().size(), 2);
+    QCOMPARE(root->separators_recursive().size(), 2);
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnRight);
-    CHECK_EQ(root->separators_recursive().size(), 3);
+    QCOMPARE(root->separators_recursive().size(), 3);
 
     root->removeItem(item3);
-    CHECK_EQ(root->separators_recursive().size(), 2);
+    QCOMPARE(root->separators_recursive().size(), 2);
 
     root->clear();
-    CHECK_EQ(root->separators_recursive().size(), 0);
+    QCOMPARE(root->separators_recursive().size(), 0);
 
     Item *item5 = createItem();
     Item *item6 = createItem();
 
     root->insertItem(item5, Location_OnLeft);
-    CHECK_EQ(root->separators_recursive().size(), 0);
+    QCOMPARE(root->separators_recursive().size(), 0);
     root->insertItem(item6, Location_OnLeft, KDDockWidgets::InitialVisibilityOption::StartHidden);
-    CHECK_EQ(root->separators_recursive().size(), 0);
-    CHECK(serializeDeserializeTest(root));
+    QCOMPARE(root->separators_recursive().size(), 0);
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_separatorMinMax()
@@ -1235,12 +1235,12 @@ void TestLayouting::tst_separatorMinMax()
     item2->setMinSize(Size(200, 200));
 
     auto separator = root->separators_recursive().at(0);
-    CHECK_EQ(root->minPosForSeparator(separator), 200);
-    CHECK_EQ(root->minPosForSeparator_global(separator), 200); // same, since there's no nesting
+    QCOMPARE(root->minPosForSeparator(separator), 200);
+    QCOMPARE(root->minPosForSeparator_global(separator), 200); // same, since there's no nesting
 
-    CHECK_EQ(root->maxPosForSeparator(separator), root->width() - st - 200);
-    CHECK_EQ(root->maxPosForSeparator(separator), root->width() - st - 200);
-    CHECK(serializeDeserializeTest(root));
+    QCOMPARE(root->maxPosForSeparator(separator), root->width() - st - 200);
+    QCOMPARE(root->maxPosForSeparator(separator), root->width() - st - 200);
+    QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestLayouting::tst_separatorRecreatedOnParentChange()
@@ -1260,7 +1260,7 @@ void TestLayouting::tst_separatorRecreatedOnParentChange()
     root2->insertItem(item22, Location_OnLeft);
 
     root1->insertItem(root2.get(), Location_OnTop);
-    CHECK(root1->checkSanity());
+    QVERIFY(root1->checkSanity());
 }
 
 void TestLayouting::tst_containerReducesSize()
@@ -1278,16 +1278,16 @@ void TestLayouting::tst_containerReducesSize()
     Item *item22 = createItem();
     ItemBoxContainer::insertItemRelativeTo(item21, item2, Location_OnTop);
     ItemBoxContainer::insertItemRelativeTo(item22, item2, Location_OnTop);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     item2->turnIntoPlaceholder();
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     item21->turnIntoPlaceholder();
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     item22->turnIntoPlaceholder();
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 }
 
 void TestLayouting::tst_insertHiddenContainer()
@@ -1299,15 +1299,15 @@ void TestLayouting::tst_insertHiddenContainer()
     Item *item2 = createItem();
     root2->insertItem(item2, Location_OnLeft, KDDockWidgets::InitialVisibilityOption::StartHidden);
 
-    CHECK(root1->checkSanity());
-    CHECK(root2->checkSanity());
+    QVERIFY(root1->checkSanity());
+    QVERIFY(root2->checkSanity());
 
     root1->insertItem(root2.release(), Location_OnTop);
-    CHECK(root1->checkSanity());
+    QVERIFY(root1->checkSanity());
 
     auto anotherRoot = createRoot();
     anotherRoot->insertItem(root1.release(), Location_OnTop);
-    CHECK(anotherRoot->checkSanity());
+    QVERIFY(anotherRoot->checkSanity());
 }
 
 void TestLayouting::tst_availableOnSide()
@@ -1321,52 +1321,52 @@ void TestLayouting::tst_availableOnSide()
     root->setSize(Size(1000, 1000));
     root->insertItem(item1, Location_OnLeft);
 
-    CHECK_EQ(root->availableToSqueezeOnSide(item1, Side1), 0);
-    CHECK_EQ(root->availableToSqueezeOnSide(item1, Side2), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side2), 0);
 
     Item *item2 = createItem(/*min=*/Size(200, 200));
     root->insertItem(item2, Location_OnRight);
     auto separator = root->separators_recursive()[0];
-    CHECK_EQ(root->minPosForSeparator_global(separator), item1->minSize().width());
-    CHECK_EQ(root->maxPosForSeparator_global(separator),
+    QCOMPARE(root->minPosForSeparator_global(separator), item1->minSize().width());
+    QCOMPARE(root->maxPosForSeparator_global(separator),
              root->width() - item2->minSize().width() - Item::layoutSpacing);
 
-    CHECK_EQ(root->availableToSqueezeOnSide(item1, Side1), 0);
-    CHECK_EQ(root->availableToSqueezeOnSide(item1, Side2),
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side2),
              item2->width() - item2->minSize().width());
-    CHECK_EQ(root->availableToSqueezeOnSide(item2, Side1),
+    QCOMPARE(root->availableToSqueezeOnSide(item2, Side1),
              item1->width() - item1->minSize().width());
-    CHECK_EQ(root->availableToSqueezeOnSide(item2, Side2), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item2, Side2), 0);
 
     Item *item3 = createItem(/*min=*/Size(200, 200));
     root->insertItem(item3, Location_OnRight);
-    CHECK(root->checkSanity());
-    CHECK_EQ(root->availableToSqueezeOnSide(item3, Side1),
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->availableToSqueezeOnSide(item3, Side1),
              (item1->width() - item1->minSize().width())
                  + (item2->width() - item2->minSize().width()));
-    CHECK_EQ(root->availableToSqueezeOnSide(item3, Side2), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item3, Side2), 0);
 
     auto separator2 = root->separators_recursive()[1];
-    CHECK_EQ(root->minPosForSeparator_global(separator2),
+    QCOMPARE(root->minPosForSeparator_global(separator2),
              item1->minSize().width() + item2->minSize().width() + Item::layoutSpacing);
-    CHECK_EQ(root->maxPosForSeparator_global(separator2),
+    QCOMPARE(root->maxPosForSeparator_global(separator2),
              root->width() - item3->minSize().width() - Item::layoutSpacing);
 
     Item *item4 = createItem(/*min=*/Size(200, 200));
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
 
     auto c = item3->parentBoxContainer();
-    CHECK_EQ(c->availableToSqueezeOnSide_recursive(item3, Side1, Qt::Horizontal),
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side1, Qt::Horizontal),
              (item1->width() - item1->minSize().width())
                  + (item2->width() - item2->minSize().width()));
-    CHECK_EQ(c->availableToSqueezeOnSide_recursive(item3, Side2, Qt::Horizontal), 0);
-    CHECK_EQ(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Horizontal),
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side2, Qt::Horizontal), 0);
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Horizontal),
              (item1->width() - item1->minSize().width())
                  + (item2->width() - item2->minSize().width()));
-    CHECK_EQ(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Horizontal), 0);
-    CHECK_EQ(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Vertical),
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Horizontal), 0);
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Vertical),
              (item3->height() - item3->minSize().height()));
-    CHECK_EQ(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Vertical), 0);
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Vertical), 0);
 
     Item *item31 = createItem(/*min=*/Size(100, 100));
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnRight);
@@ -1374,13 +1374,13 @@ void TestLayouting::tst_availableOnSide()
     auto separator31 = container31->separators().at(0);
 
     // Since we don't have widgets with max-size, these two must be the same
-    CHECK_EQ(container31->minPosForSeparator_global(separator31, false),
+    QCOMPARE(container31->minPosForSeparator_global(separator31, false),
              container31->minPosForSeparator_global(separator31, true));
 
-    CHECK_EQ(container31->minPosForSeparator_global(separator31),
+    QCOMPARE(container31->minPosForSeparator_global(separator31),
              item1->minSize().width() + item2->minSize().width() + item3->minSize().width()
                  + 2 * Item::layoutSpacing);
-    CHECK_EQ(container31->maxPosForSeparator_global(separator31),
+    QCOMPARE(container31->maxPosForSeparator_global(separator31),
              root->width() - item31->minSize().width() - Item::layoutSpacing);
 }
 
@@ -1394,8 +1394,8 @@ void TestLayouting::tst_availableToGrowOnSide()
     root->setSize(Size(1000, 1000));
     root->insertItem(item1, Location_OnLeft);
 
-    CHECK_EQ(root->availableToGrowOnSide(item1, Side1), 0);
-    CHECK_EQ(root->availableToGrowOnSide(item1, Side2), 0);
+    QCOMPARE(root->availableToGrowOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToGrowOnSide(item1, Side2), 0);
 
     Item *item2 = createItem(/*min=*/Size(200, 200));
     root->insertItem(item2, Location_OnRight);
@@ -1403,26 +1403,26 @@ void TestLayouting::tst_availableToGrowOnSide()
     // give a resize, so item1 gets smaller than its max-size. Will be unneeded soon
     root->setSize_recursive(Size(1001, 1001));
 
-    CHECK_EQ(root->availableToGrowOnSide(item1, Side1), 0);
-    CHECK_EQ(root->availableToGrowOnSide(item2, Side2), 0);
-    CHECK_EQ(root->availableToGrowOnSide(item1, Side2), root->length() - item2->width());
-    CHECK_EQ(root->availableToGrowOnSide(item2, Side1),
+    QCOMPARE(root->availableToGrowOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToGrowOnSide(item2, Side2), 0);
+    QCOMPARE(root->availableToGrowOnSide(item1, Side2), root->length() - item2->width());
+    QCOMPARE(root->availableToGrowOnSide(item2, Side1),
              item1->maxSizeHint().width() - item1->width());
 
     auto separator = root->separators_recursive()[0];
-    CHECK_EQ(root->minPosForSeparator_global(separator, true), item1->minSize().width());
-    CHECK_EQ(root->maxPosForSeparator_global(separator, true), item1->maxSizeHint().width());
+    QCOMPARE(root->minPosForSeparator_global(separator, true), item1->minSize().width());
+    QCOMPARE(root->maxPosForSeparator_global(separator, true), item1->maxSizeHint().width());
 
     Item *item3 = createItem(/*min=*/Size(200, 200), /*max=*/Size(200, 200));
     root->insertItem(item3, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
-    CHECK_EQ(root->availableToGrowOnSide(item3, Side2), 0);
-    CHECK_EQ(root->availableToGrowOnSide(item3, Side1),
+    QCOMPARE(root->availableToGrowOnSide(item3, Side2), 0);
+    QCOMPARE(root->availableToGrowOnSide(item3, Side1),
              root->length() - item2->width() - item1->width());
-    CHECK_EQ(root->availableToGrowOnSide(item2, Side1),
+    QCOMPARE(root->availableToGrowOnSide(item2, Side1),
              item1->maxSizeHint().width() - item1->width());
-    CHECK_EQ(root->availableToGrowOnSide(item2, Side2),
+    QCOMPARE(root->availableToGrowOnSide(item2, Side2),
              item3->maxSizeHint().width() - item3->width());
 }
 
@@ -1442,12 +1442,12 @@ void TestLayouting::tst_resizeViaSeparator()
     const int delta = -50;
 
     root->requestSeparatorMove(separator, delta);
-    CHECK_EQ(separator->position(), oldPos + delta);
+    QCOMPARE(separator->position(), oldPos + delta);
 
     // Now move right
     oldPos = separator->position();
     root->requestSeparatorMove(separator, -delta);
-    CHECK_EQ(separator->position(), oldPos - delta);
+    QCOMPARE(separator->position(), oldPos - delta);
 
 
     Item *item3 = createItem(/*min=*/Size(100, 100));
@@ -1494,26 +1494,26 @@ void TestLayouting::tst_resizeViaSeparator2()
     resizeChildrenTo1000px();
 
     const auto separators = root->separators_recursive();
-    CHECK(root->checkSanity());
-    CHECK_EQ(separators.size(), 3);
+    QVERIFY(root->checkSanity());
+    QCOMPARE(separators.size(), 3);
 
     root->requestSeparatorMove(separators[1], delta);
 
-    CHECK_EQ(item1->width(),
+    QCOMPARE(item1->width(),
              originalChildWidth); // item1 didn't change when we moved the second separator, only
                                   // item2 and 3 are supposed to move
-    CHECK_EQ(item2->width(), originalChildWidth + delta);
-    CHECK_EQ(item3->width(), originalChildWidth - delta);
-    CHECK_EQ(item4->width(), originalChildWidth);
+    QCOMPARE(item2->width(), originalChildWidth + delta);
+    QCOMPARE(item3->width(), originalChildWidth - delta);
+    QCOMPARE(item4->width(), originalChildWidth);
 
     // And back
     root->requestSeparatorMove(separators[1], -delta);
-    CHECK_EQ(item1->width(),
+    QCOMPARE(item1->width(),
              originalChildWidth); // item1 didn't change when we moved the second separator, only
                                   // item2 and 3 are supposed to move
-    CHECK_EQ(item2->width(), originalChildWidth);
-    CHECK_EQ(item3->width(), originalChildWidth);
-    CHECK_EQ(item4->width(), originalChildWidth);
+    QCOMPARE(item2->width(), originalChildWidth);
+    QCOMPARE(item3->width(), originalChildWidth);
+    QCOMPARE(item4->width(), originalChildWidth);
 }
 
 void TestLayouting::tst_resizeViaSeparator3()
@@ -1545,7 +1545,7 @@ void TestLayouting::tst_resizeViaSeparator3()
     // Our horizontal separator
     const auto separators = root->separators();
     const auto horizontalSeparator = separators[0];
-    CHECK_EQ(separators.size(), 1);
+    QCOMPARE(separators.size(), 1);
 
     const int delta = 10;
     const int oldH1 = item1->height();
@@ -1554,23 +1554,23 @@ void TestLayouting::tst_resizeViaSeparator3()
     const int oldH4 = item4->height();
 
     // If the following ever fails, then make sure item4 has space before we move the separator
-    CHECK(item4->availableLength(Qt::Vertical) > delta);
+    QVERIFY(item4->availableLength(Qt::Vertical) > delta);
 
     // Move separator up:
     root->requestSeparatorMove(horizontalSeparator, -delta);
 
-    CHECK_EQ(item2->height(), oldH2 + delta);
-    CHECK_EQ(item3->height(), oldH3 - delta);
-    CHECK_EQ(item4->height(), oldH4 - delta);
-    CHECK_EQ(item1->height(), oldH1);
+    QCOMPARE(item2->height(), oldH2 + delta);
+    QCOMPARE(item3->height(), oldH3 - delta);
+    QCOMPARE(item4->height(), oldH4 - delta);
+    QCOMPARE(item1->height(), oldH1);
 
     // Move down again
     root->requestSeparatorMove(horizontalSeparator, delta);
 
-    CHECK_EQ(item2->height(), oldH2);
-    CHECK_EQ(item3->height(), oldH3);
-    CHECK_EQ(item4->height(), oldH4);
-    CHECK_EQ(item1->height(), oldH1);
+    QCOMPARE(item2->height(), oldH2);
+    QCOMPARE(item3->height(), oldH3);
+    QCOMPARE(item4->height(), oldH4);
+    QCOMPARE(item1->height(), oldH1);
 }
 
 void TestLayouting::tst_mapToRoot()
@@ -1590,12 +1590,12 @@ void TestLayouting::tst_mapToRoot()
     root2->insertItem(item21, Location_OnLeft);
     root2->insertItem(item22, Location_OnRight);
     root->insertItem(root2.release(), Location_OnBottom);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     auto c = item22->parentBoxContainer();
     Point rootPt = c->mapToRoot(Point(0, 0));
-    CHECK_EQ(rootPt, Point(0, item1->height() + st));
-    CHECK_EQ(c->mapFromRoot(rootPt), Point(0, 0));
+    QCOMPARE(rootPt, Point(0, item1->height() + st));
+    QCOMPARE(c->mapFromRoot(rootPt), Point(0, 0));
 }
 
 void TestLayouting::tst_closeAndRestorePreservesPosition()
@@ -1624,16 +1624,16 @@ void TestLayouting::tst_closeAndRestorePreservesPosition()
     item3->turnIntoPlaceholder();
 
     // Test that both sides reclaimed the space equally
-    CHECK_EQ(item1->width(), oldW1);
-    CHECK(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::layoutSpacing);
-    CHECK(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::layoutSpacing);
+    QCOMPARE(item1->width(), oldW1);
+    QVERIFY(std::abs(item2->width() - (oldW2 + (oldW2 / 2))) < Item::layoutSpacing);
+    QVERIFY(std::abs(item4->width() - (oldW4 + (oldW4 / 2))) < Item::layoutSpacing);
 
     item3->restore(guest3);
 
-    CHECK_EQ(item1->width(), oldW1);
-    CHECK_EQ(item2->width(), oldW2);
-    CHECK_EQ(item3->width(), oldW3);
-    CHECK_EQ(item4->width(), oldW4);
+    QCOMPARE(item1->width(), oldW1);
+    QCOMPARE(item2->width(), oldW2);
+    QCOMPARE(item3->width(), oldW3);
+    QCOMPARE(item4->width(), oldW4);
 }
 
 void TestLayouting::tst_minSizeChangedBeforeRestore()
@@ -1697,7 +1697,7 @@ void TestLayouting::tst_separatorMoveHonoursMax()
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
 
     auto separator1 = root->separators()[0];
     auto separator2 = root->separators()[1];
@@ -1707,23 +1707,23 @@ void TestLayouting::tst_separatorMoveHonoursMax()
     // const int min2 = root->minPosForSeparator_global(separator2);
     const int max2 = root->maxPosForSeparator_global(separator2);
 
-    CHECK_EQ(min1, item1->minSize().width());
+    QCOMPARE(min1, item1->minSize().width());
 
     root->requestSeparatorMove(separator1, -(separator1->position() - min1));
-    CHECK(item2->width() <= maxWidth);
-    CHECK(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
+    QVERIFY(root->checkSanity());
 
     root->requestSeparatorMove(separator2, max2 - separator2->position());
-    CHECK(root->checkSanity());
-    CHECK(item2->width() <= maxWidth);
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
 
     root->requestSeparatorMove(separator1, max1 - separator1->position());
-    CHECK(root->checkSanity());
-    CHECK(item2->width() <= maxWidth);
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
 
     root->requestSeparatorMove(separator1, -(separator1->position() - min1));
-    CHECK(root->checkSanity());
-    CHECK(item2->width() <= maxWidth);
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
 }
 
 void TestLayouting::tst_maxSizeHonoured1()
@@ -1740,13 +1740,13 @@ void TestLayouting::tst_maxSizeHonoured1()
 
     auto guest2 = item2->guest();
     const int maxHeight = 250;
-    CHECK_EQ(dynamic_cast<Guest *>(guest2)->m_view->size(), item2->size());
+    QCOMPARE(dynamic_cast<Guest *>(guest2)->m_view->size(), item2->size());
     dynamic_cast<Guest *>(guest2)->m_view->setMaximumSize(Size(250, maxHeight));
-    CHECK_EQ(dynamic_cast<Guest *>(guest2)->m_view->size(), item2->size());
-    CHECK_EQ(item2->maxSizeHint(), guest2->maxSizeHint());
+    QCOMPARE(dynamic_cast<Guest *>(guest2)->m_view->size(), item2->size());
+    QCOMPARE(item2->maxSizeHint(), guest2->maxSizeHint());
 
     root->insertItem(item2, Location_OnBottom);
-    CHECK_EQ(item2->height(), maxHeight);
+    QCOMPARE(item2->height(), maxHeight);
 }
 
 void TestLayouting::tst_maxSizeHonoured2()
@@ -1774,7 +1774,7 @@ void TestLayouting::tst_maxSizeHonoured2()
     item2->setMaxSizeHint(Size(200, 200));
 
     root1->insertItem(root2.release(), Location_OnBottom);
-    CHECK_EQ(item2->parentBoxContainer()->maxSizeHint(), item2->maxSizeHint());
+    QCOMPARE(item2->parentBoxContainer()->maxSizeHint(), item2->maxSizeHint());
 }
 
 void TestLayouting::tst_maxSizeHonoured3()
@@ -1794,15 +1794,15 @@ void TestLayouting::tst_maxSizeHonoured3()
         root->insertItem(item1, Location_OnTop);
 
         // When adding, we respect max-size
-        CHECK(item1->height() <= maxHeight);
-        CHECK(item1->height() >= minHeight);
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
 
         // Now resize the window
         root->setSize_recursive(Size(200, 8000));
 
         // and we respected max-size too
-        CHECK(item1->height() <= maxHeight);
-        CHECK(item1->height() >= minHeight);
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
     }
 
     {
@@ -1821,15 +1821,15 @@ void TestLayouting::tst_maxSizeHonoured3()
         root2->insertItem(root1.release(), Location_OnTop);
 
         // When adding, we respect max-size
-        CHECK(item1->height() <= maxHeight);
-        CHECK(item1->height() >= minHeight);
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
 
         // Now resize the window
         root2->setSize_recursive(Size(200, 8000));
 
         // and we respected max-size too
-        CHECK(item1->height() <= maxHeight);
-        CHECK(item1->height() >= minHeight);
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
     }
 }
 
@@ -1852,11 +1852,11 @@ void TestLayouting::tst_requestEqualSize()
 
         root->requestSeparatorMove(separator, -item1Squeeze);
 
-        CHECK_EQ(item1->width(), item1->minSize().width());
-        CHECK_EQ(item2->width(), root->length() - st - item1->width());
+        QCOMPARE(item1->width(), item1->minSize().width());
+        QCOMPARE(item2->width(), root->length() - st - item1->width());
 
         root->requestEqualSize(separator);
-        CHECK(std::abs(item1->width() - item2->width()) < 5);
+        QVERIFY(std::abs(item1->width() - item2->width()) < 5);
     }
 
     {
@@ -1869,11 +1869,11 @@ void TestLayouting::tst_requestEqualSize()
         root->insertItem(item2, Location_OnRight);
         root->insertItem(item1, Location_OnLeft);
 
-        CHECK_EQ(item1->width(), item1->maxSizeHint().width());
+        QCOMPARE(item1->width(), item1->maxSizeHint().width());
         auto separator = root->separators().constFirst();
         root->requestEqualSize(separator);
         // Separator didn't move, doing so would make item1 bigger than its max size
-        CHECK_EQ(item1->width(), item1->maxSizeHint().width());
+        QCOMPARE(item1->width(), item1->maxSizeHint().width());
 
         {
             // Let's put the separator further right manually, then try again:
@@ -1885,18 +1885,18 @@ void TestLayouting::tst_requestEqualSize()
         }
 
 
-        CHECK_EQ(item1->width(), maxWidth1 + 20);
+        QCOMPARE(item1->width(), maxWidth1 + 20);
 
         // Double clicking on the separator will put it back at a sane place
 
         const int minPos = root->minPosForSeparator_global(separator, true);
         const int maxPos = root->maxPosForSeparator_global(separator, true);
 
-        CHECK_EQ(minPos, minWidth1);
-        CHECK_EQ(maxPos, maxWidth1);
+        QCOMPARE(minPos, minWidth1);
+        QCOMPARE(maxPos, maxWidth1);
 
         root->requestEqualSize(separator);
-        CHECK_EQ(item1->width(), maxWidth1);
+        QCOMPARE(item1->width(), maxWidth1);
     }
 }
 
@@ -1918,9 +1918,9 @@ void TestLayouting::tst_maxSizeHonouredWhenAnotherRemoved()
     root->insertItem(item2, Location_OnBottom);
     root->insertItem(item3, Location_OnBottom);
 
-    CHECK(item2->height() <= maxHeight);
+    QVERIFY(item2->height() <= maxHeight);
     root->removeItem(item3);
-    CHECK(item2->height() <= maxHeight);
+    QVERIFY(item2->height() <= maxHeight);
 
     root->dumpLayout();
 }
@@ -1944,12 +1944,12 @@ void TestLayouting::tst_simplify()
     root2->insertItem(root22.release(), Location_OnLeft);
     root->insertItem(root2.release(), Location_OnBottom);
 
-    CHECK(root->childItems().at(2)->isContainer());
+    QVERIFY(root->childItems().at(2)->isContainer());
 
     root->simplify();
 
     for (Item *item : root->childItems()) {
-        CHECK(!item->isContainer());
+        QVERIFY(!item->isContainer());
     }
 }
 
@@ -1968,33 +1968,33 @@ void TestLayouting::tst_adjacentLayoutBorders()
     const int allBorders = int(LayoutBorderLocation_All);
 
     auto borders1 = item1->adjacentLayoutBorders();
-    CHECK_EQ(borders1, allBorders);
+    QCOMPARE(borders1, allBorders);
     root->insertItem(item2, Location_OnBottom);
 
     borders1 = item1->adjacentLayoutBorders();
-    CHECK_EQ(borders1, allBorders & ~LayoutBorderLocation_South);
+    QCOMPARE(borders1, allBorders & ~LayoutBorderLocation_South);
 
     auto borders2 = item2->adjacentLayoutBorders();
-    CHECK_EQ(borders2, allBorders & ~LayoutBorderLocation_North);
+    QCOMPARE(borders2, allBorders & ~LayoutBorderLocation_North);
 
     root->insertItem(item3, Location_OnRight);
 
     borders1 = item1->adjacentLayoutBorders();
-    CHECK_EQ(borders1, LayoutBorderLocation_North | LayoutBorderLocation_West);
+    QCOMPARE(borders1, LayoutBorderLocation_North | LayoutBorderLocation_West);
 
     borders2 = item2->adjacentLayoutBorders();
-    CHECK_EQ(borders2, LayoutBorderLocation_South | LayoutBorderLocation_West);
+    QCOMPARE(borders2, LayoutBorderLocation_South | LayoutBorderLocation_West);
 
     auto borders3 = item3->adjacentLayoutBorders();
-    CHECK_EQ(borders3, allBorders & ~(LayoutBorderLocation_West));
+    QCOMPARE(borders3, allBorders & ~(LayoutBorderLocation_West));
 
     ItemBoxContainer::insertItemRelativeTo(item4, item3, Location_OnBottom);
     auto borders4 = item4->adjacentLayoutBorders();
-    CHECK_EQ(borders4, LayoutBorderLocation_East | LayoutBorderLocation_South);
+    QCOMPARE(borders4, LayoutBorderLocation_East | LayoutBorderLocation_South);
 
     root->insertItem(item5, Location_OnRight);
     borders4 = item4->adjacentLayoutBorders();
-    CHECK_EQ(borders4, LayoutBorderLocation_South);
+    QCOMPARE(borders4, LayoutBorderLocation_South);
 }
 
 void TestLayouting::tst_numSideBySide_recursive()
@@ -2002,39 +2002,39 @@ void TestLayouting::tst_numSideBySide_recursive()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-    CHECK(root->isVertical());
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 0);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 0);
+    QVERIFY(root->isVertical());
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 0);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 0);
 
     auto item1 = createItem();
     root->insertItem(item1, Location_OnRight);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 1);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 1);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 1);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 1);
 
 
     auto item2 = createItem();
     root->insertItem(item2, Location_OnTop);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 2);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 1);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 2);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 1);
 
     auto item3 = createItem();
     root->insertItem(item3, Location_OnTop);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 3);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 1);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 3);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 1);
 
     auto item1Child = createItem();
     ItemBoxContainer::insertItemRelativeTo(item1Child, item1, Location_OnLeft);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 3);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 2);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 3);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
 
     auto item1Child1Child = createItem();
     ItemBoxContainer::insertItemRelativeTo(item1Child1Child, item1Child, Location_OnBottom);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 4);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 2);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 4);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
 
     item2->turnIntoPlaceholder();
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 3);
-    CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 2);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 3);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
 }
 
 void TestLayouting::tst_sizingInfoSerialization()
@@ -2053,11 +2053,11 @@ void TestLayouting::tst_sizingInfoSerialization()
     SizingInfo info2;
     json.get_to(info2);
 
-    CHECK_EQ(info2.minSize, info.minSize);
-    CHECK_EQ(info2.maxSizeHint, info.maxSizeHint);
-    CHECK_EQ(info2.geometry, info.geometry);
-    CHECK_EQ(info2.isBeingInserted, info.isBeingInserted);
-    CHECK_EQ(info2.percentageWithinParent, info.percentageWithinParent);
+    QCOMPARE(info2.minSize, info.minSize);
+    QCOMPARE(info2.maxSizeHint, info.maxSizeHint);
+    QCOMPARE(info2.geometry, info.geometry);
+    QCOMPARE(info2.isBeingInserted, info.isBeingInserted);
+    QCOMPARE(info2.percentageWithinParent, info.percentageWithinParent);
 }
 
 void TestLayouting::tst_itemSerialization()
@@ -2078,10 +2078,10 @@ void TestLayouting::tst_itemSerialization()
     Item *rootItem = root.get();
     nlohmann::json json = rootItem;
 
-    CHECK_EQ(json["children"].size(), 2);
-    CHECK(json["isContainer"]);
-    CHECK(json["children"][0]["isContainer"]);
-    CHECK(!json["children"][1]["isContainer"]);
+    QCOMPARE(json["children"].size(), 2);
+    QVERIFY(json["isContainer"]);
+    QVERIFY(json["children"][0]["isContainer"]);
+    QVERIFY(!json["children"][1]["isContainer"]);
 }
 
 void TestLayouting::tst_outermostVisibleNeighbor()
@@ -2091,7 +2091,7 @@ void TestLayouting::tst_outermostVisibleNeighbor()
     auto root = createRoot();
     root->setSize({ 1000, 1000 });
 
-    CHECK(!root->outermostNeighbor(KDDockWidgets::Location_OnRight));
+    QVERIFY(!root->outermostNeighbor(KDDockWidgets::Location_OnRight));
 
     auto item1 = createItem();
     auto item2 = createItem();
@@ -2101,29 +2101,29 @@ void TestLayouting::tst_outermostVisibleNeighbor()
 
 
     root->insertItem(item1, Location_OnRight);
-    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft));
-    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight));
+    QVERIFY(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft));
+    QVERIFY(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight));
 
     root->insertItem(item2, Location_OnRight);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item2);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item2);
 
     root->insertItem(item3, Location_OnRight);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
 
     root->insertItem(item0, Location_OnLeft);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
 
     root->insertItem(itemTop, Location_OnTop);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), itemTop);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), itemTop);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
 }
 
 void TestLayouting::tst_outermostNeighbor()
@@ -2133,7 +2133,7 @@ void TestLayouting::tst_outermostNeighbor()
     auto root = createRoot();
     root->setSize({ 1000, 1000 });
 
-    CHECK(!root->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
+    QVERIFY(!root->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
 
     auto item1 = createItem();
     auto item2 = createItem();
@@ -2142,30 +2142,30 @@ void TestLayouting::tst_outermostNeighbor()
     auto itemTop = createItem();
 
     root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
-    CHECK(item1->parentBoxContainer() == root.get());
-    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false));
-    CHECK(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
+    QVERIFY(item1->parentBoxContainer() == root.get());
+    QVERIFY(!item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false));
+    QVERIFY(!item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false));
 
     root->insertItem(item2, Location_OnRight, InitialVisibilityOption::StartHidden);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item2);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item2);
 
     root->insertItem(item3, Location_OnRight, InitialVisibilityOption::StartHidden);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
 
     root->insertItem(item0, Location_OnLeft, InitialVisibilityOption::StartHidden);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
 
     root->insertItem(itemTop, Location_OnTop, InitialVisibilityOption::StartHidden);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom, false), nullptr);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), itemTop);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
-    CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnBottom, false), nullptr);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), itemTop);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
+    QCOMPARE(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
 }
 
 void TestLayouting::tst_relativeToHidden()
@@ -2182,22 +2182,22 @@ void TestLayouting::tst_relativeToHidden()
 
     root->insertItem(item0, Location_OnRight);
     root->insertItem(item1, Location_OnRight, InitialVisibilityOption::StartHidden);
-    CHECK(!item1->isVisible());
+    QVERIFY(!item1->isVisible());
 
-    CHECK(root->checkSanity());
+    QVERIFY(root->checkSanity());
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
-    CHECK(root->checkSanity());
-    CHECK(!item1->isVisible());
-    CHECK(item2->isVisible());
+    QVERIFY(root->checkSanity());
+    QVERIFY(!item1->isVisible());
+    QVERIFY(item2->isVisible());
 
-    CHECK_EQ(root->childItems().size(), 2);
+    QCOMPARE(root->childItems().size(), 2);
     auto innerContainer = root->childItems().constLast()->asBoxContainer();
-    CHECK(innerContainer);
+    QVERIFY(innerContainer);
 
-    CHECK_EQ(innerContainer->childItems().size(), 2);
-    CHECK(innerContainer->isVertical());
-    CHECK_EQ(innerContainer->childItems()[0], item1);
-    CHECK_EQ(innerContainer->childItems()[1], item2);
+    QCOMPARE(innerContainer->childItems().size(), 2);
+    QVERIFY(innerContainer->isVertical());
+    QCOMPARE(innerContainer->childItems()[0], item1);
+    QCOMPARE(innerContainer->childItems()[1], item2);
 }
 
 void TestLayouting::tst_spuriousResize()
@@ -2219,7 +2219,7 @@ void TestLayouting::tst_spuriousResize()
     auto guest1 = static_cast<Guest *>(item1->guest());
     guest1->m_numSetGeometry = 0;
     root->insertItem(item3, Location_OnRight, Size(200, 200));
-    CHECK_EQ(guest1->m_numSetGeometry, 1);
+    QCOMPARE(guest1->m_numSetGeometry, 1);
 }
 
 void TestLayouting::tst_relayoutIfNeeded()
@@ -2241,21 +2241,21 @@ void TestLayouting::tst_relayoutIfNeeded()
     ItemBoxContainer::insertItemRelativeTo(item11, item1, Location_OnBottom);
     ItemBoxContainer::insertItemRelativeTo(item12, item1, Location_OnBottom);
 
-    CHECK(root->checkSanity());
-    CHECK(!root->isOverflowing());
+    QVERIFY(root->checkSanity());
+    QVERIFY(!root->isOverflowing());
 
     // Make item1's min width bigger than it's actual width. Layout is now invalid!
     item1->m_sizingInfo.minSize = { item1->width() + 1, 0 };
 
     {
         SetExpectedWarning w("Size constraints not honoured");
-        CHECK(!root->checkSanity());
+        QVERIFY(!root->checkSanity());
     }
 
     root->relayoutIfNeeded();
     root->positionItems_recursive();
-    CHECK(!root->isOverflowing());
-    CHECK(root->checkSanity());
+    QVERIFY(!root->isOverflowing());
+    QVERIFY(root->checkSanity());
 }
 
 #define KDDW_TEST_NAME TestLayouting

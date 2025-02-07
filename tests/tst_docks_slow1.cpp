@@ -215,7 +215,7 @@ void TestDocks::tst_invalidJSON()
 void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDocks

@@ -339,7 +339,7 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
-    EVENT_LOOP(1);
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDocks

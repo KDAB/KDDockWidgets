@@ -52,8 +52,8 @@ void TestDocks::tst_isFocused()
         auto dock2 = createDockWidget(QStringLiteral("dock2"),
                                       Platform::instance()->tests_createFocusableView({ true }));
 
-        EVENT_LOOP(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
-                         // otherwise dock1 looses again
+        QTest::qWait(400); // macOS is flaky here, needs dock2 to be shown first before focusing dock1,
+                           // otherwise dock1 looses again
 
         dock1->window()->move(400, 200);
 
@@ -110,7 +110,7 @@ void TestDocks::tst_isFocused()
     }
 
     // Spin one event loop so we so some deleteLater()s run. Makes LSAN happy.
-    EVENT_LOOP(1000);
+    QTest::qWait(1000);
 }
 
 #define KDDW_TEST_NAME TestDocks
