@@ -9,21 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// We don't care about performance related checks in the tests
-// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
-
-// A test that was extracted out from tst_docks.cpp as it was too slow
-// By using a separate executable it can be parallelized by ctest.
-
 #include "utils.h"
-#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
 #include "core/ViewFactory.h"
-#include "core/MDILayout.h"
 #include "core/DropArea.h"
 #include "core/MainWindow.h"
 #include "core/DockWidget.h"
@@ -34,15 +26,31 @@
 #include "core/SideBar.h"
 #include "core/Platform.h"
 
-#include <vector>
+#include <QtTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-bool tst_dragByTabBar()
+class TestDocks : public QObject
 {
-    auto func = [](bool documentMode, bool tabsAlwaysVisible) -> bool {
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_dragByTabBar();
+    void tst_negativeAnchorPosition();
+    void tst_negativeAnchorPosition2();
+    void tst_negativeAnchorPosition3();
+    void tst_negativeAnchorPosition4();
+    void tst_negativeAnchorPosition5();
+    void tst_negativeAnchorPosition6();
+    void tst_negativeAnchorPosition7();
+    void tst_crash2();
+    void tst_keepLast();
+};
+
+void TestDocks::tst_dragByTabBar()
+{
+    auto func = [](bool documentMode, bool tabsAlwaysVisible) {
         EnsureTopLevelsDeleted e;
         auto flags = KDDockWidgets::Config::self().flags()
             | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
@@ -70,34 +78,19 @@ bool tst_dragByTabBar()
 
         auto fw = dock2->floatingWindow();
         fw->view()->move(m->pos() + Point(500, 500));
-        CHECK(fw->isVisible());
-        CHECK(!fw->titleBar()->isVisible());
+        QVERIFY(fw->isVisible());
+        QVERIFY(!fw->titleBar()->isVisible());
 
         dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
-
-        KDDW_TEST_RETURN(true);
     };
 
-    if (!func(false, false)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func(true, false)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func(false, true)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func(true, true)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    KDDW_TEST_RETURN(true);
+    func(false, false);
+    func(true, false);
+    func(false, true);
+    func(true, true);
 }
 
-bool tst_negativeAnchorPosition()
+void TestDocks::tst_negativeAnchorPosition()
 {
     // Tests that we don't hit:
     // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions)
@@ -140,18 +133,16 @@ bool tst_negativeAnchorPosition()
         layout->layoutSize().height() - layout->view()->minSize().height();
     const Size newSize = { layout->layoutWidth(), layout->layoutHeight() - availableToShrink };
 
-    CHECK(layout->layoutMinimumSize().expandedTo(newSize) == newSize);
+    QVERIFY(layout->layoutMinimumSize().expandedTo(newSize) == newSize);
 
     layout->setLayoutSize(newSize);
 
     d2->destroyLater();
     WAIT_FOR_DELETED(d2);
     layout->checkSanity();
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_negativeAnchorPosition2()
+void TestDocks::tst_negativeAnchorPosition2()
 {
     // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
     EnsureTopLevelsDeleted e;
@@ -169,18 +160,17 @@ bool tst_negativeAnchorPosition2()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     m->addDockWidget(dock3, Location_OnRight);
-    CHECK_EQ(layout->placeholderCount(), 1);
-    CHECK_EQ(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->count(), 3);
 
     dock1->setFloating(true);
     dock1->setFloating(false);
     dock2->destroyLater();
     layout->checkSanity();
-    CHECK(Platform::instance()->tests_waitForDeleted(dock2));
-    KDDW_TEST_RETURN(true);
+    QVERIFY(Platform::instance()->tests_waitForDeleted(dock2));
 }
 
-bool tst_negativeAnchorPosition3()
+void TestDocks::tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
@@ -201,10 +191,9 @@ bool tst_negativeAnchorPosition3()
 
     dock1->setFloating(true);
     layout->checkSanity();
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_negativeAnchorPosition4()
+void TestDocks::tst_negativeAnchorPosition4()
 {
     // 1. Tests that we don't get a warning
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name =
@@ -237,11 +226,9 @@ bool tst_negativeAnchorPosition4()
     docks.at(0).createdDock->destroyLater();
     docks.at(4).createdDock->destroyLater();
     WAIT_FOR_DELETED(docks.at(4).createdDock);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_negativeAnchorPosition5()
+void TestDocks::tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     std::vector<DockDescriptor> docks = {
@@ -259,19 +246,18 @@ bool tst_negativeAnchorPosition5()
     auto dock1 = docks.at(1).createdDock;
 
     dock1->open();
-    CHECK(layout->checkSanity());
+    QVERIFY(layout->checkSanity());
     dock0->open();
-    CHECK(layout->checkSanity());
+    QVERIFY(layout->checkSanity());
 
     // Cleanup
     for (auto dock : DockRegistry::self()->dockwidgets())
         dock->destroyLater();
 
-    CHECK(Platform::instance()->tests_waitForDeleted(dock0));
-    KDDW_TEST_RETURN(true);
+    QVERIFY(Platform::instance()->tests_waitForDeleted(dock0));
 }
 
-bool tst_negativeAnchorPosition6()
+void TestDocks::tst_negativeAnchorPosition6()
 {
     // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or
     // vice-versa)
@@ -297,8 +283,8 @@ bool tst_negativeAnchorPosition6()
     m->addDockWidget(d2, Location_OnBottom);
     m->addDockWidget(d3, Location_OnBottom);
 
-    CHECK_EQ(layout->count(), 3);
-    CHECK_EQ(layout->placeholderCount(), 0);
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
 
     m->addDockWidget(d4, Location_OnRight, d3);
 
@@ -307,10 +293,9 @@ bool tst_negativeAnchorPosition6()
     Item *centralItem = m->dropArea()->centralFrame();
     layout->rectForDrop(nullptr, Location_OnTop, centralItem);
     layout->checkSanity();
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_negativeAnchorPosition7()
+void TestDocks::tst_negativeAnchorPosition7()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
@@ -336,12 +321,11 @@ bool tst_negativeAnchorPosition7()
     // Stack: 1, 3, 2
     m->addDockWidget(d3, Location_OnTop, d2);
     m->layout()->checkSanity();
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_crash2()
+void TestDocks::tst_crash2()
 {
-    auto func = [](bool show) -> bool {
+    auto func = [](bool show) {
         {
             EnsureTopLevelsDeleted e;
             auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
@@ -410,39 +394,19 @@ bool tst_crash2()
             qDeleteAll(docks);
             qDeleteAll(DockRegistry::self()->groups());
         }
-
-        KDDW_TEST_RETURN(true);
     };
 
-    if (!func(true)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func(false)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    KDDW_TEST_RETURN(true);
+    func(true);
+    func(false);
 }
 
-bool tst_keepLast()
+void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-    TEST(tst_dragByTabBar),
-    TEST(tst_negativeAnchorPosition),
-    TEST(tst_negativeAnchorPosition2),
-    TEST(tst_negativeAnchorPosition3),
-    TEST(tst_negativeAnchorPosition4),
-    TEST(tst_negativeAnchorPosition5),
-    TEST(tst_negativeAnchorPosition6),
-    TEST(tst_negativeAnchorPosition7),
-    TEST(tst_crash2),
-    TEST(tst_keepLast), // Keep this test at the end
-};
+#define KDDW_TEST_NAME TestDocks
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_docks_slow7.moc"

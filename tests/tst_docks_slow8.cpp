@@ -41,10 +41,6 @@
 #include <iostream>
 #include <cstdlib>
 
-#ifdef KDDW_HAS_SPDLOG
-#include "fatal_logger.h"
-#endif
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
@@ -346,26 +342,7 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     EVENT_LOOP(1);
 }
 
-int main(int argc, char *argv[])
-{
-#ifdef KDDW_HAS_SPDLOG
-    FatalLogger::create();
-#endif
-
-    int exitCode = 0;
-    for (FrontendType type : Platform::frontendTypes()) {
-        KDDW_INFO("\nTesting platform {}\n", int(type));
-        KDDockWidgets::Core::Platform::tests_initPlatform(argc, argv, type);
-
-        TestDocks test;
-
-        const int code = QTest::qExec(&test, argc, argv);
-        if (code != 0)
-            exitCode = 1;
-        KDDockWidgets::Core::Platform::tests_deinitPlatform();
-    }
-
-    return exitCode;
-}
+#define KDDW_TEST_NAME TestDocks
+#include "test_main_qt.h"
 
 #include "tst_docks_slow8.moc"

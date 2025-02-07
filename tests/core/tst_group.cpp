@@ -9,33 +9,41 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../simple_test_framework.h"
 #include "core/Group.h"
-#include "core/Platform.h"
+#include "core/View.h"
 #include "kddockwidgets/Config.h"
 
-using namespace KDDockWidgets;
+#include <QTest>
 
-bool tst_groupCtor()
+using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
+
+class TestGroup : public QObject
+{
+    Q_OBJECT
+
+private Q_SLOTS:
+    void tst_groupCtor();
+    void tst_dragRect();
+};
+
+void TestGroup::tst_groupCtor()
 {
     auto group = new Core::Group(nullptr, {});
-    CHECK(group->view()->is(Core::ViewType::Group));
-    CHECK(group->view()->asWrapper()->is(Core::ViewType::Group));
+    QVERIFY(group->view()->is(Core::ViewType::Group));
+    QVERIFY(group->view()->asWrapper()->is(Core::ViewType::Group));
     delete group;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_dragRect()
+void TestGroup::tst_dragRect()
 {
     auto group = new Core::Group(nullptr, {});
     // This used to crash. Test that it doesn't.
     group->dragRect();
     delete group;
-
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_groupCtor), TEST(tst_dragRect) };
+#define KDDW_TEST_NAME TestGroup
+#include "../test_main_qt.h"
 
-#include "../tests_main.h"
+#include "tst_group.moc"

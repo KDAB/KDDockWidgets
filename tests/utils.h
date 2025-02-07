@@ -31,7 +31,6 @@
 #include "core/ViewFactory.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
-#include "clang_format18_workaround.h"
 
 #include <vector>
 #include <memory>
@@ -45,6 +44,18 @@ static bool s_pauseBeforeMove = false; // for debugging
 #define DEBUGGING_PAUSE_DURATION 5000 // 5 seconds
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
+
+#define EVENT_LOOP(millis) \
+    KDDockWidgets::Core::Platform::instance()->tests_wait(millis)
+
+#define WAIT_FOR_RESIZE(window) \
+    KDDockWidgets::Core::Platform::instance()->tests_waitForResize(window)
+
+#define WAIT_FOR_DELETED(window) \
+    KDDockWidgets::Core::Platform::instance()->tests_waitForDeleted(window)
+
+#define WAIT_FOR_EVENT(window, event) \
+    KDDockWidgets::Core::Platform::instance()->tests_waitForEvent(window, event)
 
 namespace KDDockWidgets {
 

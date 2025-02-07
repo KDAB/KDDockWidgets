@@ -9,23 +9,30 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../simple_test_framework.h"
 #include "core/Separator.h"
-#include "core/Platform.h"
 #include "core/DropArea.h"
 
-using namespace KDDockWidgets;
+#include <QTest>
 
-bool tst_separatorCtor()
+using namespace KDDockWidgets;
+using namespace KDDockWidgets::Core;
+
+class TestSeparator : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_separatorCtor();
+};
+
+void TestSeparator::tst_separatorCtor()
 {
     Core::DropArea dropArea(nullptr, MainWindowOption_None);
     Core::Separator separator(dropArea.asLayoutingHost(), Qt::Vertical, nullptr);
-    CHECK(separator.view()->is(Core::ViewType::Separator));
-    CHECK(separator.view()->asWrapper()->is(Core::ViewType::Separator));
-
-    KDDW_TEST_RETURN(true);
+    QVERIFY(separator.view()->is(Core::ViewType::Separator));
+    QVERIFY(separator.view()->asWrapper()->is(Core::ViewType::Separator));
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_separatorCtor) };
+#define KDDW_TEST_NAME TestSeparator
+#include "../test_main_qt.h"
 
-#include "../tests_main.h"
+#include "tst_separator.moc"

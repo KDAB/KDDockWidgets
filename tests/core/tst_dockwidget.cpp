@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../simple_test_framework.h"
 #include "../utils.h"
 #include "core/DockWidget.h"
 #include "core/FloatingWindow.h"
@@ -18,115 +17,122 @@
 #include "core/Platform.h"
 #include "core/TitleBar.h"
 #include "core/ViewFactory.h"
-#include "core/Window_p.h"
+#include "core/ObjectGuard_p.h"
 #include "Config.h"
+
+#include <QTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-bool tst_dockWidgetCtor()
+class TestDockWidget : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_dockWidgetCtor();
+    void tst_setGuestView();
+    void tst_toggleAction();
+    void tst_isOpen();
+    void tst_setAsCurrentTab();
+    void tst_dwCloseAndReopen();
+    void tst_setSize();
+};
+
+void TestDockWidget::tst_dockWidgetCtor()
 {
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    CHECK(dw->view()->is(ViewType::DockWidget));
-    CHECK(dw->view()->asWrapper()->is(ViewType::DockWidget));
+    QVERIFY(dw->view()->is(ViewType::DockWidget));
+    QVERIFY(dw->view()->asWrapper()->is(ViewType::DockWidget));
     dw->view()->show();
 
     delete dw;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_setGuestView()
+void TestDockWidget::tst_setGuestView()
 {
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    CHECK(Platform::instance());
+    QVERIFY(Platform::instance());
     auto childView = Platform::instance()->tests_createView({ true });
-    CHECK(childView);
+    QVERIFY(childView);
     auto guest = childView->asWrapper();
-    CHECK(guest);
+    QVERIFY(guest);
     dw->setGuestView(guest);
-    CHECK(dw->guestView());
-    CHECK(dw->view());
+    QVERIFY(dw->guestView());
+    QVERIFY(dw->view());
     dw->view()->show();
     EVENT_LOOP(500);
 
-    CHECK(guest->controller());
-    CHECK(dw->floatingWindow());
-    CHECK(dw->floatingWindow()->isVisible());
-    CHECK(dw->isVisible());
-    CHECK(guest->isVisible());
-    CHECK(guest->controller()->isVisible());
-    CHECK(dw->guestView()->equals(guest));
-    CHECK(dw->view()->window());
-    CHECK(guest->window());
+    QVERIFY(guest->controller());
+    QVERIFY(dw->floatingWindow());
+    QVERIFY(dw->floatingWindow()->isVisible());
+    QVERIFY(dw->isVisible());
+    QVERIFY(guest->isVisible());
+    QVERIFY(guest->controller()->isVisible());
+    QVERIFY(dw->guestView()->equals(guest));
+    QVERIFY(dw->view()->window());
+    QVERIFY(guest->window());
 
-    CHECK(guest->parentView());
-    CHECK(guest->parentView()->equals(dw->view()));
-    CHECK(dw->view()->rootView()->equals(guest->rootView()));
-    CHECK(dw->view()->window()->equals(guest->window()));
+    QVERIFY(guest->parentView());
+    QVERIFY(guest->parentView()->equals(dw->view()));
+    QVERIFY(dw->view()->rootView()->equals(guest->rootView()));
+    QVERIFY(dw->view()->window()->equals(guest->window()));
 
     delete dw;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_toggleAction()
+void TestDockWidget::tst_toggleAction()
 {
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
 
-    CHECK(!dw->toggleAction()->isChecked());
-    CHECK(dw->toggleAction()->isEnabled());
+    QVERIFY(!dw->toggleAction()->isChecked());
+    QVERIFY(dw->toggleAction()->isEnabled());
 
     delete dw;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_isOpen()
+void TestDockWidget::tst_isOpen()
 {
     Tests::EnsureTopLevelsDeleted e;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
 
     // Starts closed
-    CHECK(!dw->isOpen());
+    QVERIFY(!dw->isOpen());
 
     dw->open();
-    CHECK(dw->isOpen());
-    CHECK(dw->isFloating());
+    QVERIFY(dw->isOpen());
+    QVERIFY(dw->isFloating());
 
     // close() closes
     dw->close();
-    CHECK(!dw->isOpen());
+    QVERIFY(!dw->isOpen());
 
     // Dockwidget in a non-current tab is not visible, but still counts as open
     dw->open();
-    CHECK(dw->d->group());
-    CHECK(dw->isOpen());
-    CHECK(dw->isFloating());
+    QVERIFY(dw->d->group());
+    QVERIFY(dw->isOpen());
+    QVERIFY(dw->isFloating());
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
-    CHECK(dw->isCurrentTab());
+    QVERIFY(dw->isCurrentTab());
     dw->addDockWidgetAsTab(dw2);
-    CHECK(dw2->isOpen());
+    QVERIFY(dw2->isOpen());
     dw2->setAsCurrentTab();
-    CHECK(!dw->isCurrentTab());
-    CHECK(dw2->isCurrentTab());
-    CHECK(dw->isOpen());
-    CHECK(dw2->isOpen());
+    QVERIFY(!dw->isCurrentTab());
+    QVERIFY(dw2->isCurrentTab());
+    QVERIFY(dw->isOpen());
+    QVERIFY(dw2->isOpen());
 
     delete dw;
     delete dw2;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_setAsCurrentTab()
+void TestDockWidget::tst_setAsCurrentTab()
 {
     Tests::EnsureTopLevelsDeleted e;
 
@@ -134,32 +140,29 @@ bool tst_setAsCurrentTab()
     auto dw2 = Config::self().viewFactory()->createDockWidget("dw2")->asDockWidgetController();
     auto dw3 = Config::self().viewFactory()->createDockWidget("dw3")->asDockWidgetController();
 
-    CHECK(dw->view());
+    QVERIFY(dw->view());
     dw->view()->show();
-    CHECK(dw->d->group());
-    CHECK(dw->isOpen());
+    QVERIFY(dw->d->group());
+    QVERIFY(dw->isOpen());
 
     dw->addDockWidgetAsTab(dw2);
     dw->addDockWidgetAsTab(dw3);
     dw->setAsCurrentTab();
 
-    CHECK(dw->isCurrentTab());
-    CHECK(!dw2->isCurrentTab());
-    CHECK(!dw3->isCurrentTab());
+    QVERIFY(dw->isCurrentTab());
+    QVERIFY(!dw2->isCurrentTab());
+    QVERIFY(!dw3->isCurrentTab());
 
     Core::Group *group = dw->d->group();
-    CHECK_EQ(group->currentIndex(), 0);
-    CHECK_EQ(group->currentDockWidget(), dw);
+    QCOMPARE(group->currentIndex(), 0);
+    QCOMPARE(group->currentDockWidget(), dw);
 
     delete dw;
     delete dw2;
     delete dw3;
-
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_dwCloseAndReopen()
+void TestDockWidget::tst_dwCloseAndReopen()
 {
     {
         Tests::EnsureTopLevelsDeleted e;
@@ -169,18 +172,18 @@ bool tst_dwCloseAndReopen()
         auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
         dw->view()->show();
         ObjectGuard<Core::FloatingWindow> fw = dw->floatingWindow();
-        CHECK(fw);
+        QVERIFY(fw);
 
         auto titleBar = fw->titleBar();
-        CHECK(titleBar);
-        CHECK(titleBar->isVisible());
+        QVERIFY(titleBar);
+        QVERIFY(titleBar->isVisible());
         titleBar->onCloseClicked();
-        CHECK(!dw->isOpen());
-        CHECK(Platform::instance()->tests_waitForDeleted(fw));
-        CHECK(!fw);
+        QVERIFY(!dw->isOpen());
+        QVERIFY(Platform::instance()->tests_waitForDeleted(fw));
+        QVERIFY(!fw);
 
-        CHECK(!dw->floatingWindow());
-        CHECK(!dw->view()->parentView());
+        QVERIFY(!dw->floatingWindow());
+        QVERIFY(!dw->view()->parentView());
         dw->open();
 
         delete dw;
@@ -188,34 +191,23 @@ bool tst_dwCloseAndReopen()
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_setSize()
+void TestDockWidget::tst_setSize()
 {
     {
         Tests::EnsureTopLevelsDeleted e;
         auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
         const Size size = Size(501, 502);
         dw->view()->setSize(size);
-        CHECK_EQ(dw->view()->size(), size);
+        QCOMPARE(dw->view()->size(), size);
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);
-
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-    TEST(tst_dockWidgetCtor),
-    TEST(tst_toggleAction),
-    TEST(tst_setGuestView),
-    TEST(tst_isOpen),
-    TEST(tst_setAsCurrentTab),
-    TEST(tst_dwCloseAndReopen),
-    TEST(tst_setSize),
-};
+#define KDDW_TEST_NAME TestDockWidget
+#include "../test_main_qt.h"
 
-#include "../tests_main.h"
+#include "tst_dockwidget.moc"

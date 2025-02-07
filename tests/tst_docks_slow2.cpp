@@ -9,14 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// We don't care about performance related checks in the tests
-// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
-
-// A test that was extracted out from tst_docks.cpp as it was too slow
-// By using a separate executable it can be parallelized by ctest.
-
 #include "utils.h"
-#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -27,19 +20,32 @@
 #include "core/DropArea.h"
 #include "core/MainWindow.h"
 #include "core/DockWidget.h"
-
 #include "core/Separator.h"
 #include "core/TabBar.h"
 #include "core/Stack.h"
 #include "core/SideBar.h"
 #include "core/Platform.h"
 
+#include <QTest>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
+class TestDocks : public QObject
+{
+    Q_OBJECT
 
-bool tst_invalidLayoutAfterRestore()
+private Q_SLOTS:
+    void tst_invalidLayoutAfterRestore();
+    void tst_setFloatingWhenSideBySide();
+    void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
+    void tst_dockWindowWithTwoSideBySideFramesIntoRight();
+    void tst_dockWindowWithTwoSideBySideFramesIntoLeft();
+    void tst_keepLast();
+};
+
+void TestDocks::tst_invalidLayoutAfterRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -60,10 +66,10 @@ bool tst_invalidLayoutAfterRestore()
     dock2->close();
     dock1->close();
 
-    CHECK(Platform::instance()->tests_waitForDeleted(f1));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(f1));
 
     dock3->open();
-    CHECK(dock3->titleBar()->isVisible());
+    QVERIFY(dock3->titleBar()->isVisible());
     dock2->open();
     dock1->open();
     WAIT_FOR_EVENT(m.get(), Event::LayoutRequest); // So MainWindow min
@@ -73,34 +79,32 @@ bool tst_invalidLayoutAfterRestore()
     Item *item3 = layout->itemForGroup(dock3->dptr()->group());
     Item *item4 = dropArea->centralFrame();
 
-    CHECK(item1);
-    CHECK(item3);
-    CHECK(item4);
-    CHECK_EQ(layout->count(), 4);
-    CHECK_EQ(layout->placeholderCount(), 0);
+    QVERIFY(item1);
+    QVERIFY(item3);
+    QVERIFY(item4);
+    QCOMPARE(layout->count(), 4);
+    QCOMPARE(layout->placeholderCount(), 0);
 
     // Detach dock2
     ObjectGuard<Core::Group> f2 = dock2->dptr()->group();
     f2->detachTab(dock2);
-    CHECK(!f2.data());
+    QVERIFY(!f2.data());
 
     EVENT_LOOP(200);
     auto fw2 = dock2->floatingWindow();
-    CHECK_EQ(layout->view()->minSize().width(),
+    QCOMPARE(layout->view()->minSize().width(),
              2 * Item::layoutSpacing + item1->minSize().width() + item3->minSize().width()
                  + item4->minSize().width());
 
     // Drop left of dock3
     layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->group()->layoutItem());
 
-    CHECK(Platform::instance()->tests_waitForDeleted(fw2));
-    CHECK_EQ(layout->layoutWidth(), oldContentsWidth);
+    QVERIFY(Platform::instance()->tests_waitForDeleted(fw2));
+    QCOMPARE(layout->layoutWidth(), oldContentsWidth);
     layout->checkSanity();
-
-    return true;
 }
 
-bool tst_setFloatingWhenSideBySide()
+void TestDocks::tst_setFloatingWhenSideBySide()
 {
     // Tests DockWidget::setFloating(false|true) when side-by-side (it should put it where it was)
     EnsureTopLevelsDeleted e;
@@ -115,15 +119,15 @@ bool tst_setFloatingWhenSideBySide()
 
         ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
         dock1->setFloating(true);
-        CHECK(dock1->isFloating());
+        QVERIFY(dock1->isFloating());
         auto fw = dock1->floatingWindow();
-        CHECK(fw);
+        QVERIFY(fw);
 
         // 2. Put it back, via setFloating(). It should return to its place.
         dock1->setFloating(false);
 
-        CHECK(!dock1->isFloating());
-        CHECK(!dock1->isTabbed());
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock1->isTabbed());
     }
 
     {
@@ -140,21 +144,19 @@ bool tst_setFloatingWhenSideBySide()
         m->addDockWidget(dock3, KDDockWidgets::Location_OnRight);
         auto f2 = dock2->dptr()->group();
         Item *item2 = layout->itemForGroup(f2);
-        CHECK(item2);
+        QVERIFY(item2);
         dock2->close();
         dock3->close();
         WAIT_FOR_DELETED(f2);
         dock2->open();
         WAIT_FOR_RESIZE(dock2->view());
 
-        CHECK_EQ(item2->geometry(), dock2->dptr()->group()->view()->geometry());
+        QCOMPARE(item2->geometry(), dock2->dptr()->group()->view()->geometry());
         layout->checkSanity();
     }
-
-    return true;
 }
 
-bool tst_dockWindowWithTwoSideBySideFramesIntoCenter()
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setInternalFlags(KDDockWidgets::Config::InternalFlag_NoAeroSnap);
@@ -164,8 +166,8 @@ bool tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto fw = createFloatingWindow();
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
-    CHECK_EQ(fw->groups().size(), 2);
-    CHECK(fw->dropArea()->checkSanity());
+    QCOMPARE(fw->groups().size(), 2);
+    QVERIFY(fw->dropArea()->checkSanity());
 
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
@@ -176,19 +178,17 @@ bool tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto da2 = fw2->dropArea();
     const Point dragDestPos = da2->mapToGlobal(da2->rect().center());
     dragFloatingWindowTo(fw, dragDestPos);
-    CHECK(fw2->dropArea()->checkSanity());
-    CHECK_EQ(fw2->groups().size(), 1);
+    QVERIFY(fw2->dropArea()->checkSanity());
+    QCOMPARE(fw2->groups().size(), 1);
     auto f2 = fw2->groups().constFirst();
 
     // run one event loop, needed by flutter
     EVENT_LOOP(1);
 
-    CHECK_EQ(f2->dockWidgetCount(), 3);
-
-    return true;
+    QCOMPARE(f2->dockWidgetCount(), 3);
 }
 
-bool tst_dockWindowWithTwoSideBySideFramesIntoRight()
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
 {
     EnsureTopLevelsDeleted e;
 
@@ -197,7 +197,7 @@ bool tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr,
                    KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
-    CHECK_EQ(fw->groups().size(), 2);
+    QCOMPARE(fw->groups().size(), 2);
 
     auto fw2 = createFloatingWindow();
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
@@ -211,13 +211,11 @@ bool tst_dockWindowWithTwoSideBySideFramesIntoRight()
     // run one event loop, needed by flutter
     EVENT_LOOP(1000);
 
-    CHECK_EQ(fw2->groups().size(), 3);
-    CHECK(fw2->dropArea()->checkSanity());
-
-    return true;
+    QCOMPARE(fw2->groups().size(), 3);
+    QVERIFY(fw2->dropArea()->checkSanity());
 }
 
-bool tst_dockWindowWithTwoSideBySideFramesIntoLeft()
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 {
     EnsureTopLevelsDeleted e;
 
@@ -228,13 +226,13 @@ bool tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
-    CHECK_EQ(fw->groups().size(), 2);
+    QCOMPARE(fw->groups().size(), 2);
 
     auto fw2 = createFloatingWindow();
     fw2->setObjectName("fw2");
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
-    CHECK(fw2->dropArea()->checkSanity());
+    QVERIFY(fw2->dropArea()->checkSanity());
     EVENT_LOOP(1000);
 
     dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
@@ -242,26 +240,17 @@ bool tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     // run one event loop, needed by flutter
     EVENT_LOOP(1000);
 
-    CHECK_EQ(fw2->groups().size(), 3);
-    CHECK(fw2->dropArea()->checkSanity());
-
-    return true;
+    QCOMPARE(fw2->groups().size(), 3);
+    QVERIFY(fw2->dropArea()->checkSanity());
 }
 
-bool tst_keepLast()
+void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-    TEST(tst_invalidLayoutAfterRestore),
-    TEST(tst_setFloatingWhenSideBySide),
-    TEST(tst_dockWindowWithTwoSideBySideFramesIntoCenter),
-    TEST(tst_dockWindowWithTwoSideBySideFramesIntoRight),
-    TEST(tst_dockWindowWithTwoSideBySideFramesIntoLeft),
-    TEST(tst_keepLast), // Keep this test at the end
-};
+#define KDDW_TEST_NAME TestDocks
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_docks_slow2.moc"
