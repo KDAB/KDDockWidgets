@@ -9,7 +9,6 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../simple_test_framework.h"
 #include "core/FloatingWindow.h"
 #include "core/Group.h"
 #include "core/TitleBar.h"
@@ -20,67 +19,72 @@
 #include "Config.h"
 #include "tests/utils.h"
 
+#include <QTest>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-bool tst_floatingWindowCtor()
+class TestFloatingWindow : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_floatingWindowCtor();
+    void tst_floatingWindowClose();
+};
+
+void TestFloatingWindow::tst_floatingWindowCtor()
 {
     Tests::EnsureTopLevelsDeleted ensure;
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    CHECK(dw->view()->rootView()->is(ViewType::DockWidget));
-    CHECK(!dw->view()->parentView());
+    QVERIFY(dw->view()->rootView()->is(ViewType::DockWidget));
+    QVERIFY(!dw->view()->parentView());
 
     dw->view()->show();
-    CHECK(dw->view()->parentView());
-    CHECK(dw->view()->rootView()->is(ViewType::FloatingWindow));
+    QVERIFY(dw->view()->parentView());
+    QVERIFY(dw->view()->rootView()->is(ViewType::FloatingWindow));
 
-    CHECK(dw->floatingWindow());
+    QVERIFY(dw->floatingWindow());
 
     /// Wait for FloatingWindow to be created
     EVENT_LOOP(100);
 
     auto rootView = dw->view()->rootView();
-    CHECK(rootView);
+    QVERIFY(rootView);
 
-    CHECK(rootView->is(ViewType::FloatingWindow));
-    CHECK(rootView->controller());
-    CHECK(rootView->controller()->is(ViewType::FloatingWindow));
-    CHECK(rootView->controller()->isVisible());
+    QVERIFY(rootView->is(ViewType::FloatingWindow));
+    QVERIFY(rootView->controller());
+    QVERIFY(rootView->controller()->is(ViewType::FloatingWindow));
+    QVERIFY(rootView->controller()->isVisible());
 
     Core::FloatingWindow *fw = dw->floatingWindow();
-    CHECK(fw);
-    CHECK(fw->view()->equals(rootView));
-
-    KDDW_TEST_RETURN(true);
+    QVERIFY(fw);
+    QVERIFY(fw->view()->equals(rootView));
 }
 
-bool tst_floatingWindowClose()
+void TestFloatingWindow::tst_floatingWindowClose()
 {
     // Tests that a floating window is deleted after being closed
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     dw->view()->show();
     ObjectGuard<Core::FloatingWindow> fw = dw->floatingWindow();
-    CHECK(fw);
+    QVERIFY(fw);
 
     auto titleBar = fw->titleBar();
-    CHECK(titleBar);
-    CHECK(titleBar->isVisible());
-    CHECK_EQ(fw->groups().length(), 1);
-    CHECK(!fw->groups().first()->titleBar()->isVisible());
+    QVERIFY(titleBar);
+    QVERIFY(titleBar->isVisible());
+    QCOMPARE(fw->groups().length(), 1);
+    QVERIFY(!fw->groups().first()->titleBar()->isVisible());
     titleBar->onCloseClicked();
-    CHECK(!dw->isOpen());
-    CHECK(Platform::instance()->tests_waitForDeleted(fw));
-    CHECK(!fw);
+    QVERIFY(!dw->isOpen());
+    QVERIFY(Platform::instance()->tests_waitForDeleted(fw));
+    QVERIFY(!fw);
 
     delete dw;
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-    TEST(tst_floatingWindowClose),
-    TEST(tst_floatingWindowCtor)
-};
+#define KDDW_TEST_NAME TestFloatingWindow
+#include "../test_main_qt.h"
 
-#include "../tests_main.h"
+#include "tst_floatingwindow.moc"

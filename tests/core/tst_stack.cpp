@@ -9,24 +9,30 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../simple_test_framework.h"
-#include "core/Platform.h"
 #include "core/Group.h"
 #include "core/Stack.h"
+#include "core/View.h"
 
+#include <QTest>
 
 using namespace KDDockWidgets;
 
-bool tst_stackCtor()
+class TestStack : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_stackCtor();
+};
+
+void TestStack::tst_stackCtor()
 {
     Core::Group group(nullptr, {});
     Core::Stack stack(&group, {});
-    CHECK(stack.view()->is(Core::ViewType::Stack));
-    CHECK(stack.view()->asWrapper()->is(Core::ViewType::Stack));
-
-    KDDW_TEST_RETURN(true);
+    QVERIFY(stack.view()->is(Core::ViewType::Stack));
+    QVERIFY(stack.view()->asWrapper()->is(Core::ViewType::Stack));
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_stackCtor) };
+#define KDDW_TEST_NAME TestStack
+#include "../test_main_qt.h"
 
-#include "../tests_main.h"
+#include "tst_stack.moc"

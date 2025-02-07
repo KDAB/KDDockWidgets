@@ -9,14 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// We don't care about performance related checks in the tests
-// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
-
-// A test that was extracted out from tst_docks.cpp as it was too slow
-// By using a separate executable it can be parallelized by ctest.
-
 #include "utils.h"
-#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/Position_p.h"
 #include "core/WindowBeingDragged_p.h"
@@ -32,18 +25,27 @@
 #include "core/TabBar.h"
 #include "core/Stack.h"
 #include "core/SideBar.h"
-#include "core/Platform.h"
 
-#include <iostream>
+#include <QTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-
-bool tst_invalidPlaceholderPosition()
+class TestDocks : public QObject
 {
-    auto func = [](bool restore1First) -> bool {
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_invalidPlaceholderPosition();
+    void tst_startHidden();
+    void tst_startHidden2();
+    void tst_invalidJSON();
+    void tst_keepLast();
+};
+
+void TestDocks::tst_invalidPlaceholderPosition()
+{
+    auto func = [](bool restore1First) {
         // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
         // result: the bottom most one didn't have it's top separator at y=0
 
@@ -63,68 +65,59 @@ bool tst_invalidPlaceholderPosition()
         auto group1 = dock1->dptr()->group();
         auto group2 = dock2->dptr()->group();
         auto group3 = dock3->dptr()->group();
-        CHECK_EQ(group1->view()->y(), 0);
+        QCOMPARE(group1->view()->y(), 0);
 
         // Close 1
-        CHECK(dock1->isOpen());
-        CHECK(dock1->view()->isVisible());
+        QVERIFY(dock1->isOpen());
+        QVERIFY(dock1->view()->isVisible());
         dock1->close();
-        CHECK(!dock1->isOpen());
-        CHECK(!dock1->view()->isVisible());
+        QVERIFY(!dock1->isOpen());
+        QVERIFY(!dock1->view()->isVisible());
 
         WAIT_FOR_RESIZE(group2->view());
 
         // Check that group2 moved up to y=0
-        CHECK_EQ(group2->view()->y(), 0);
+        QCOMPARE(group2->view()->y(), 0);
 
         // Close 2
         dock2->close();
         WAIT_FOR_RESIZE(dock3->view());
 
-        CHECK(layout->checkSanity());
-        CHECK_EQ(layout->count(), 3);
-        CHECK_EQ(layout->placeholderCount(), 2);
+        QVERIFY(layout->checkSanity());
+        QCOMPARE(layout->count(), 3);
+        QCOMPARE(layout->placeholderCount(), 2);
 
         // Check that group3 moved up to y=1
-        CHECK_EQ(group3->view()->y(), 0);
+        QCOMPARE(group3->view()->y(), 0);
 
         // Now restore:
         auto toRestore1 = restore1First ? dock1 : dock2;
         auto toRestore2 = restore1First ? dock2 : dock1;
 
         toRestore1->open();
-        CHECK_EQ(layout->placeholderCount(), 1);
-        CHECK(dock3->isVisible());
-        CHECK(!dock3->size().isNull());
+        QCOMPARE(layout->placeholderCount(), 1);
+        QVERIFY(dock3->isVisible());
+        QVERIFY(!dock3->size().isNull());
 
         toRestore2->open();
 
         WAIT_FOR_RESIZE(group3->view());
-        CHECK(layout->checkSanity());
-        CHECK_EQ(layout->count(), 3);
-        CHECK_EQ(layout->placeholderCount(), 0);
+        QVERIFY(layout->checkSanity());
+        QCOMPARE(layout->count(), 3);
+        QCOMPARE(layout->placeholderCount(), 0);
         layout->checkSanity();
 
         dock1->destroyLater();
         dock2->destroyLater();
 
-        CHECK(Platform::instance()->tests_waitForDeleted(dock2));
-
-        KDDW_TEST_RETURN(true);
+        QVERIFY(Platform::instance()->tests_waitForDeleted(dock2));
     };
 
-    if (!func(true)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func(false)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    KDDW_TEST_RETURN(true);
+    func(true);
+    func(false);
 }
 
-bool tst_startHidden()
+void TestDocks::tst_startHidden()
 {
     // A really simple test for InitialVisibilityOption::StartHidden
     EnsureTopLevelsDeleted e;
@@ -133,11 +126,9 @@ bool tst_startHidden()
                                   /*show=*/false);
     m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     delete dock1;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_startHidden2()
+void TestDocks::tst_startHidden2()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -151,21 +142,21 @@ bool tst_startHidden2()
         Core::DropArea *layout = dropArea;
 
         m->addDockWidget(dock1, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
-        CHECK(layout->checkSanity());
+        QVERIFY(layout->checkSanity());
 
-        CHECK_EQ(layout->count(), 1);
-        CHECK_EQ(layout->placeholderCount(), 1);
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 1);
 
         m->addDockWidget(dock2, Location_OnTop);
-        CHECK(layout->checkSanity());
+        QVERIFY(layout->checkSanity());
 
-        CHECK_EQ(layout->count(), 2);
-        CHECK_EQ(layout->placeholderCount(), 1);
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 1);
 
         dock1->open();
 
-        CHECK_EQ(layout->count(), 2);
-        CHECK_EQ(layout->placeholderCount(), 0);
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
 
         WAIT_FOR_RESIZE(dock2->view());
     }
@@ -188,21 +179,19 @@ bool tst_startHidden2()
 
         dock1->open();
 
-        CHECK_EQ(layout->count(), 3);
-        CHECK_EQ(layout->placeholderCount(), 2);
+        QCOMPARE(layout->count(), 3);
+        QCOMPARE(layout->placeholderCount(), 2);
 
         dock2->open();
         dock3->open();
         WAIT_FOR_RESIZE(dock2->view());
         layout->checkSanity();
     }
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_invalidJSON()
+void TestDocks::tst_invalidJSON()
 {
-    auto func = [](QString layoutFileName, int numDockWidgets, std::string expectedWarning, bool expectedResult) -> bool {
+    auto func = [](QString layoutFileName, int numDockWidgets, std::string expectedWarning, bool expectedResult) {
         const QString absoluteLayoutFileName = resourceFileName(QStringLiteral("layouts/") + layoutFileName);
 
         EnsureTopLevelsDeleted e;
@@ -215,39 +204,21 @@ bool tst_invalidJSON()
         SetExpectedWarning sew(expectedWarning);
 
         LayoutSaver restorer;
-        CHECK_EQ(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
-
-        KDDW_TEST_RETURN(true);
+        QCOMPARE(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
     };
 
-    if (!func("unsupported-serialization-version.json", 10, "Serialization format is too old", false)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func("invalid.json", 29, "", false)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    if (!func("overlapping-item.json", 2, "Unexpected pos", true)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    KDDW_TEST_RETURN(true);
+    func("unsupported-serialization-version.json", 10, "Serialization format is too old", false);
+    func("invalid.json", 29, "", false);
+    func("overlapping-item.json", 2, "Unexpected pos", true);
 }
 
-bool tst_keepLast()
+void TestDocks::tst_keepLast()
 {
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     EVENT_LOOP(1);
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-    TEST(tst_invalidPlaceholderPosition),
-    TEST(tst_startHidden),
-    TEST(tst_startHidden2),
-    TEST(tst_invalidJSON),
-    TEST(tst_keepLast), // Keep this test at the end
-};
+#define KDDW_TEST_NAME TestDocks
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_docks_slow1.moc"

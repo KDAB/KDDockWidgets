@@ -9,25 +9,32 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../simple_test_framework.h"
-#include "core/Platform.h"
 #include "core/TitleBar.h"
 #include "core/Group.h"
+#include "core/View.h"
+
+#include <QTest>
 
 using namespace KDDockWidgets;
 
-bool tst_titleBarCtor()
+class TestTitleBar : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_titleBarCtor();
+};
+
+void TestTitleBar::tst_titleBarCtor()
 {
     auto group = new Core::Group(nullptr, {});
     auto tb = new Core::TitleBar(group);
-    CHECK(tb->view()->is(Core::ViewType::TitleBar));
-    CHECK(tb->view()->asWrapper()->is(Core::ViewType::TitleBar));
+    QVERIFY(tb->view()->is(Core::ViewType::TitleBar));
+    QVERIFY(tb->view()->asWrapper()->is(Core::ViewType::TitleBar));
     delete tb;
     delete group;
-
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_titleBarCtor) };
+#define KDDW_TEST_NAME TestTitleBar
+#include "../test_main_qt.h"
 
-#include "../tests_main.h"
+#include "tst_titlebar.moc"

@@ -9,61 +9,60 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "simple_test_framework.h"
 #include "core/View_p.h"
 #include "core/ViewFactory.h"
 #include "core/Platform.h"
 #include "Config.h"
 
+#include <QTest>
 #include <string>
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-bool tst_platform()
+class TestPlatform : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_platform();
+    void tst_name();
+    void tst_createDefaultViewFactory();
+    void tst_startDragDistance();
+};
+
+void TestPlatform::tst_platform()
 {
     auto plat = Platform::instance();
-    CHECK(plat);
-
-    KDDW_TEST_RETURN(true);
+    QVERIFY(plat);
 }
 
-bool tst_name()
+void TestPlatform::tst_name()
 {
     // Checks that Platform::name() returns something
     auto plat = Platform::instance();
-    CHECK(!std::string(plat->name()).empty());
-
-    KDDW_TEST_RETURN(true);
+    QVERIFY(!std::string(plat->name()).empty());
 }
 
-bool tst_createDefaultViewFactory()
+void TestPlatform::tst_createDefaultViewFactory()
 {
     auto plat = Platform::instance();
     ViewFactory *vf = plat->createDefaultViewFactory();
-    CHECK(vf);
+    QVERIFY(vf);
     delete vf;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_startDragDistance()
+void TestPlatform::tst_startDragDistance()
 {
     auto plat = Platform::instance();
     const int defaultDistance = plat->startDragDistance();
-    CHECK(defaultDistance >= -1);
+    QVERIFY(defaultDistance >= -1);
 
     const int newDistance = defaultDistance + 1;
     KDDockWidgets::Config::self().setStartDragDistance(newDistance);
-    CHECK_EQ(plat->startDragDistance(), newDistance);
-
-    KDDW_TEST_RETURN(true);
+    QCOMPARE(plat->startDragDistance(), newDistance);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-    TEST(tst_platform),
-    TEST(tst_name),
-    TEST(tst_createDefaultViewFactory),
-    TEST(tst_startDragDistance)
-};
+#define KDDW_TEST_NAME TestPlatform
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_platform.moc"

@@ -9,77 +9,84 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "simple_test_framework.h"
 #include "core/ViewGuard.h"
 #include "core/ObjectGuard_p.h"
 #include "core/Platform.h"
 
+#include <QTest>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 
-bool tst_viewGuard()
+class TestGuards : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_viewGuard();
+    void tst_objectGuard();
+};
+
+void TestGuards::tst_viewGuard()
 {
     ViewGuard g(nullptr);
-    CHECK(g.isNull());
+    QVERIFY(g.isNull());
 
     {
         auto view = Platform::instance()->tests_createView({});
         g = view;
-        CHECK(!g.isNull());
+        QVERIFY(!g.isNull());
         delete view;
     }
 
-    CHECK(g.isNull());
+    QVERIFY(g.isNull());
 
     // Test when ViewGuard is destroyed before view
     // May not crash without ASAN
     auto view = Platform::instance()->tests_createView({});
     {
         ViewGuard gg(view);
-        CHECK(!gg.isNull());
+        QVERIFY(!gg.isNull());
     }
     delete view;
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_objectGuard()
+void TestGuards::tst_objectGuard()
 {
     {
         ObjectGuard<Controller> guard;
-        CHECK(!guard);
-        CHECK(guard.isNull());
-        CHECK(guard.data() == nullptr);
+        QVERIFY(!guard);
+        QVERIFY(guard.isNull());
+        QVERIFY(guard.data() == nullptr);
     }
 
     {
         auto c = new Controller(ViewType::DockWidget, nullptr);
         ObjectGuard<Controller> guard(c);
-        CHECK(guard);
-        CHECK(!guard.isNull());
-        CHECK(guard.data() != nullptr);
+        QVERIFY(guard);
+        QVERIFY(!guard.isNull());
+        QVERIFY(guard.data() != nullptr);
 
         delete c;
-        CHECK(!guard);
-        CHECK(guard.isNull());
-        CHECK(guard.data() == nullptr);
+        QVERIFY(!guard);
+        QVERIFY(guard.isNull());
+        QVERIFY(guard.data() == nullptr);
 
         auto c2 = new Controller(ViewType::DockWidget, nullptr);
 
         // Test assignment
         guard = c2;
-        CHECK(guard);
-        CHECK(!guard.isNull());
-        CHECK(guard.data() != nullptr);
+        QVERIFY(guard);
+        QVERIFY(!guard.isNull());
+        QVERIFY(guard.data() != nullptr);
 
         delete c2;
-        CHECK(!guard);
-        CHECK(guard.isNull());
-        CHECK(guard.data() == nullptr);
+        QVERIFY(!guard);
+        QVERIFY(guard.isNull());
+        QVERIFY(guard.data() == nullptr);
     }
-
-    KDDW_TEST_RETURN(true);
 }
 
-static const auto s_tests = std::vector<KDDWTest> { TEST(tst_objectGuard) };
+#define KDDW_TEST_NAME TestGuards
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_viewguard.moc"

@@ -9,14 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// We don't care about performance related checks in the tests
-// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
-
-// A test that was extracted out from tst_docks.cpp as it was too slow
-// By using a separate executable it can be parallelized by ctest.
-
 #include "utils.h"
-#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/WindowBeingDragged_p.h"
 #include "core/layouting/Item_p.h"
@@ -34,11 +27,21 @@
 #include "core/SideBar.h"
 #include "core/Platform.h"
 
+#include <QTest>
+#include <qtestcase.h>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-bool tst_isFocused()
+class TestDocks : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_isFocused();
+};
+
+void TestDocks::tst_isFocused()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -59,8 +62,8 @@ bool tst_isFocused()
         dock1->guestView()->setFocus(Qt::OtherFocusReason);
         WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
 
-        CHECK(dock1->isFocused());
-        CHECK(!dock2->isFocused());
+        QVERIFY(dock1->isFocused());
+        QVERIFY(!dock2->isFocused());
 
         // 3. Raise dock2 and focus its line edit
         dock2->view()->raiseAndActivate();
@@ -70,20 +73,20 @@ bool tst_isFocused()
         dock2->guestView()->setFocus(Qt::OtherFocusReason);
         WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
 
-        CHECK(!dock1->isFocused());
-        CHECK(dock2->guestView()->hasFocus());
-        CHECK(dock2->isFocused());
+        QVERIFY(!dock1->isFocused());
+        QVERIFY(dock2->guestView()->hasFocus());
+        QVERIFY(dock2->isFocused());
 
         // 4. Tab dock1, it's current tab now
         auto oldFw1 = dock1->window();
         dock2->addDockWidgetAsTab(dock1);
-        CHECK(dock1->isFocused());
-        CHECK(!dock2->isFocused());
+        QVERIFY(dock1->isFocused());
+        QVERIFY(!dock2->isFocused());
 
         // 5. Set dock2 as current tab again
         dock2->raise();
-        CHECK(!dock1->isFocused());
-        CHECK(dock2->isFocused());
+        QVERIFY(!dock1->isFocused());
+        QVERIFY(dock2->isFocused());
 
         // 6. Create dock3, focus it
         auto dock3 = createDockWidget(QStringLiteral("dock3"),
@@ -92,30 +95,25 @@ bool tst_isFocused()
         dock3->raise();
         dock3->guestView()->setFocus(Qt::OtherFocusReason);
         WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
-        CHECK(!dock1->isFocused());
-        CHECK(!dock2->isFocused());
-        CHECK(dock3->isFocused());
+        QVERIFY(!dock1->isFocused());
+        QVERIFY(!dock2->isFocused());
+        QVERIFY(dock3->isFocused());
 
         // 4. Add dock3 to the 1st window, nested, focus 2 again
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
         dock2->raise();
         dock2->guestView()->setFocus(Qt::OtherFocusReason);
         WAIT_FOR_EVENT(dock2->guestView().get(), Event::FocusIn);
-        CHECK(!dock1->isFocused());
-        CHECK(dock2->isFocused());
-        CHECK(!dock3->isFocused());
+        QVERIFY(!dock1->isFocused());
+        QVERIFY(dock2->isFocused());
+        QVERIFY(!dock3->isFocused());
     }
 
     // Spin one event loop so we so some deleteLater()s run. Makes LSAN happy.
     EVENT_LOOP(1000);
-
-    return true;
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-#if !defined(KDDW_FRONTEND_FLUTTER)
-    TEST(tst_isFocused)
-#endif
-};
+#define KDDW_TEST_NAME TestDocks
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_docks_slow6.moc"
