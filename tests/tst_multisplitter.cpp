@@ -30,6 +30,71 @@ using namespace KDDockWidgets::Core;
 
 static int st = Item::layoutSpacing;
 
+class TestLayouting : public QObject
+{
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_createRoot();
+    void tst_insertOne();
+    void tst_insertThreeSideBySide();
+    void tst_insertTwoHorizontal();
+    void tst_insertTwoVertical();
+    void tst_insertOnWidgetItem1();
+    void tst_insertOnWidgetItem2();
+    void tst_insertOnWidgetItem1DifferentOrientation();
+    void tst_insertOnWidgetItem2DifferentOrientation();
+    void tst_insertOnRootDifferentOrientation();
+    void tst_removeItem1();
+    void tst_removeItem2();
+    void tst_minSize();
+    void tst_resize();
+    void tst_resizeWithConstraints();
+    void tst_availableSize();
+    void tst_missingSize();
+    void tst_ensureEnoughSize();
+    void tst_turnIntoPlaceholder();
+    void tst_suggestedRect();
+    void tst_suggestedRect2();
+    void tst_suggestedRect3();
+    void tst_suggestedRect4();
+    void tst_insertAnotherRoot();
+    void tst_misc1();
+    void tst_misc2();
+    void tst_misc3();
+    void tst_containerGetsHidden();
+    void tst_minSizeChanges();
+    void tst_numSeparators();
+    void tst_separatorMinMax();
+    void tst_separatorRecreatedOnParentChange();
+    void tst_containerReducesSize();
+    void tst_insertHiddenContainer();
+    void tst_availableOnSide();
+    void tst_availableToGrowOnSide();
+    void tst_resizeViaSeparator();
+    void tst_resizeViaSeparator2();
+    void tst_resizeViaSeparator3();
+    void tst_mapToRoot();
+    void tst_closeAndRestorePreservesPosition();
+    void tst_minSizeChangedBeforeRestore();
+    void tst_separatorMoveCrash();
+    void tst_separatorMoveHonoursMax();
+    void tst_maxSizeHonoured1();
+    void tst_maxSizeHonoured2();
+    void tst_maxSizeHonoured3();
+    void tst_requestEqualSize();
+    void tst_maxSizeHonouredWhenAnotherRemoved();
+    void tst_simplify();
+    void tst_adjacentLayoutBorders();
+    void tst_numSideBySide_recursive();
+    void tst_sizingInfoSerialization();
+    void tst_itemSerialization();
+    void tst_relayoutIfNeeded();
+    void tst_outermostVisibleNeighbor();
+    void tst_outermostNeighbor();
+    void tst_relativeToHidden();
+    void tst_spuriousResize();
+};
+
 namespace {
 
 class Guest : public Core::LayoutingGuest
@@ -179,7 +244,7 @@ static ItemBoxContainer *createRootWithSingleItem()
     return root;
 }
 
-bool tst_createRoot()
+void TestLayouting::tst_createRoot()
 {
     DeleteViews deleteViews;
 
@@ -190,11 +255,9 @@ bool tst_createRoot()
     CHECK_EQ(root->size(), Size(1000, 1000));
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertOne()
+void TestLayouting::tst_insertOne()
 {
     DeleteViews deleteViews;
 
@@ -210,11 +273,9 @@ bool tst_insertOne()
     CHECK_EQ(item->pos(), root->pos());
     CHECK(root->hasChildren());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertThreeSideBySide()
+void TestLayouting::tst_insertThreeSideBySide()
 {
     DeleteViews deleteViews;
 
@@ -231,11 +292,9 @@ bool tst_insertThreeSideBySide()
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 3);
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertTwoHorizontal()
+void TestLayouting::tst_insertTwoHorizontal()
 {
     DeleteViews deleteViews;
 
@@ -246,11 +305,9 @@ bool tst_insertTwoHorizontal()
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnRight);
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertTwoVertical()
+void TestLayouting::tst_insertTwoVertical()
 {
     DeleteViews deleteViews;
 
@@ -261,11 +318,9 @@ bool tst_insertTwoVertical()
     ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnBottom);
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertOnWidgetItem1()
+void TestLayouting::tst_insertOnWidgetItem1()
 {
     DeleteViews deleteViews;
 
@@ -286,11 +341,9 @@ bool tst_insertOnWidgetItem1()
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 3);
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertOnWidgetItem2()
+void TestLayouting::tst_insertOnWidgetItem2()
 {
     DeleteViews deleteViews;
 
@@ -311,11 +364,9 @@ bool tst_insertOnWidgetItem2()
     CHECK(root->checkSanity());
     CHECK_EQ(root->numChildren(), 3);
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertOnWidgetItem1DifferentOrientation()
+void TestLayouting::tst_insertOnWidgetItem1DifferentOrientation()
 {
     DeleteViews deleteViews;
 
@@ -364,11 +415,9 @@ bool tst_insertOnWidgetItem1DifferentOrientation()
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertOnWidgetItem2DifferentOrientation()
+void TestLayouting::tst_insertOnWidgetItem2DifferentOrientation()
 {
     DeleteViews deleteViews;
 
@@ -420,11 +469,9 @@ bool tst_insertOnWidgetItem2DifferentOrientation()
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertOnRootDifferentOrientation()
+void TestLayouting::tst_insertOnRootDifferentOrientation()
 {
     DeleteViews deleteViews;
 
@@ -452,11 +499,9 @@ bool tst_insertOnRootDifferentOrientation()
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_removeItem1()
+void TestLayouting::tst_removeItem1()
 {
     //        [       4     ]
     // Result [1, 2, |3 3.2|]
@@ -505,11 +550,9 @@ bool tst_removeItem1()
     root->removeItem(c3);
     CHECK(c3.isNull());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_removeItem2()
+void TestLayouting::tst_removeItem2()
 {
     DeleteViews deleteViews;
 
@@ -524,11 +567,9 @@ bool tst_removeItem2()
     ItemBoxContainer::insertItemRelativeTo(item31, item3, Location_OnBottom);
     item31->parentBoxContainer()->removeItem(item31);
     item3->parentBoxContainer()->removeItem(item3);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_minSize()
+void TestLayouting::tst_minSize()
 {
     DeleteViews deleteViews;
 
@@ -553,11 +594,9 @@ bool tst_minSize()
     CHECK(root->checkSanity());
 
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_resize()
+void TestLayouting::tst_resize()
 {
     DeleteViews deleteViews;
 
@@ -594,11 +633,9 @@ bool tst_resize()
     root->setSize_recursive({ 2500, 505 });
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_resizeWithConstraints()
+void TestLayouting::tst_resizeWithConstraints()
 {
     DeleteViews deleteViews;
 
@@ -636,11 +673,9 @@ bool tst_resizeWithConstraints()
         CHECK(root->checkSanity());
     }
     Platform::instance()->m_expectedWarning.clear();
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_availableSize()
+void TestLayouting::tst_availableSize()
 {
     DeleteViews deleteViews;
 
@@ -721,11 +756,9 @@ bool tst_availableSize()
     CHECK_EQ(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Horizontal), 0);
 
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_missingSize()
+void TestLayouting::tst_missingSize()
 {
     DeleteViews deleteViews;
 
@@ -752,11 +785,9 @@ bool tst_missingSize()
 
     delete item2;
     delete item3;
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_ensureEnoughSize()
+void TestLayouting::tst_ensureEnoughSize()
 {
     DeleteViews deleteViews;
 
@@ -783,11 +814,9 @@ bool tst_ensureEnoughSize()
         root->size(),
         Size(item1->minSize().width() + item2->minSize().width() + st, item2->minSize().height()));
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_turnIntoPlaceholder()
+void TestLayouting::tst_turnIntoPlaceholder()
 {
     DeleteViews deleteViews;
 
@@ -823,11 +852,9 @@ bool tst_turnIntoPlaceholder()
     CHECK(root->checkSanity());
     CHECK_EQ(item3->width(), root->width());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_suggestedRect()
+void TestLayouting::tst_suggestedRect()
 {
     DeleteViews deleteViews;
 
@@ -895,11 +922,9 @@ bool tst_suggestedRect()
     CHECK_EQ(bottomRect.bottomLeft(), item2->geometry().bottomLeft());
     CHECK_EQ(bottomRect.bottomRight(), item2->geometry().bottomRight());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_suggestedRect2()
+void TestLayouting::tst_suggestedRect2()
 {
     DeleteViews deleteViews;
 
@@ -920,11 +945,9 @@ bool tst_suggestedRect2()
     CHECK(item->parentBoxContainer()
               ->suggestedDropRect(&itemBeingDropped, item, Location_OnRight)
               .isValid());
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_suggestedRect3()
+void TestLayouting::tst_suggestedRect3()
 {
     DeleteViews deleteViews;
 
@@ -944,11 +967,9 @@ bool tst_suggestedRect3()
 
     /// insert just to cleanup at shutdown
     root1->insertItem(itemToDrop, Location_OnRight);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_suggestedRect4()
+void TestLayouting::tst_suggestedRect4()
 {
     DeleteViews deleteViews;
 
@@ -979,11 +1000,9 @@ bool tst_suggestedRect4()
 
     /// insert just to cleanup at shutdown
     root->insertItem(itemToDrop, Location_OnRight);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertAnotherRoot()
+void TestLayouting::tst_insertAnotherRoot()
 {
     DeleteViews deleteViews;
 
@@ -1033,11 +1052,9 @@ bool tst_insertAnotherRoot()
         CHECK(root1->checkSanity());
         CHECK(serializeDeserializeTest(root1));
     }
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_misc1()
+void TestLayouting::tst_misc1()
 {
     DeleteViews deleteViews;
 
@@ -1058,11 +1075,9 @@ bool tst_misc1()
 
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_misc2()
+void TestLayouting::tst_misc2()
 {
     DeleteViews deleteViews;
 
@@ -1094,11 +1109,9 @@ bool tst_misc2()
     item5->parentBoxContainer()->removeItem(item5);
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_misc3()
+void TestLayouting::tst_misc3()
 {
     DeleteViews deleteViews;
 
@@ -1115,11 +1128,9 @@ bool tst_misc3()
     root->insertItem(item2, Location_OnRight);
     root->insertItem(root2, Location_OnRight);
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_containerGetsHidden()
+void TestLayouting::tst_containerGetsHidden()
 {
     DeleteViews deleteViews;
 
@@ -1142,11 +1153,9 @@ bool tst_containerGetsHidden()
     item3->turnIntoPlaceholder();
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_minSizeChanges()
+void TestLayouting::tst_minSizeChanges()
 {
     DeleteViews deleteViews;
 
@@ -1172,11 +1181,9 @@ bool tst_minSizeChanges()
     w1->setMinSize(Size(700, 700));
     CHECK(root->checkSanity());
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_numSeparators()
+void TestLayouting::tst_numSeparators()
 {
     DeleteViews deleteViews;
 
@@ -1213,11 +1220,9 @@ bool tst_numSeparators()
     root->insertItem(item6, Location_OnLeft, KDDockWidgets::InitialVisibilityOption::StartHidden);
     CHECK_EQ(root->separators_recursive().size(), 0);
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_separatorMinMax()
+void TestLayouting::tst_separatorMinMax()
 {
     DeleteViews deleteViews;
 
@@ -1236,11 +1241,9 @@ bool tst_separatorMinMax()
     CHECK_EQ(root->maxPosForSeparator(separator), root->width() - st - 200);
     CHECK_EQ(root->maxPosForSeparator(separator), root->width() - st - 200);
     CHECK(serializeDeserializeTest(root));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_separatorRecreatedOnParentChange()
+void TestLayouting::tst_separatorRecreatedOnParentChange()
 {
     DeleteViews deleteViews;
 
@@ -1258,11 +1261,9 @@ bool tst_separatorRecreatedOnParentChange()
 
     root1->insertItem(root2.get(), Location_OnTop);
     CHECK(root1->checkSanity());
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_containerReducesSize()
+void TestLayouting::tst_containerReducesSize()
 {
     DeleteViews deleteViews;
 
@@ -1287,11 +1288,9 @@ bool tst_containerReducesSize()
 
     item22->turnIntoPlaceholder();
     CHECK(root->checkSanity());
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_insertHiddenContainer()
+void TestLayouting::tst_insertHiddenContainer()
 {
     DeleteViews deleteViews;
 
@@ -1309,11 +1308,9 @@ bool tst_insertHiddenContainer()
     auto anotherRoot = createRoot();
     anotherRoot->insertItem(root1.release(), Location_OnTop);
     CHECK(anotherRoot->checkSanity());
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_availableOnSide()
+void TestLayouting::tst_availableOnSide()
 {
     DeleteViews deleteViews;
 
@@ -1385,11 +1382,9 @@ bool tst_availableOnSide()
                  + 2 * Item::layoutSpacing);
     CHECK_EQ(container31->maxPosForSeparator_global(separator31),
              root->width() - item31->minSize().width() - Item::layoutSpacing);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_availableToGrowOnSide()
+void TestLayouting::tst_availableToGrowOnSide()
 {
     DeleteViews deleteViews;
 
@@ -1429,11 +1424,9 @@ bool tst_availableToGrowOnSide()
              item1->maxSizeHint().width() - item1->width());
     CHECK_EQ(root->availableToGrowOnSide(item2, Side2),
              item3->maxSizeHint().width() - item3->width());
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_resizeViaSeparator()
+void TestLayouting::tst_resizeViaSeparator()
 {
     DeleteViews deleteViews;
 
@@ -1465,11 +1458,9 @@ bool tst_resizeViaSeparator()
     item1->turnIntoPlaceholder();
     separator = root->separators_recursive().at(0);
     root->requestSeparatorMove(separator, delta);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_resizeViaSeparator2()
+void TestLayouting::tst_resizeViaSeparator2()
 {
     DeleteViews deleteViews;
 
@@ -1523,11 +1514,9 @@ bool tst_resizeViaSeparator2()
     CHECK_EQ(item2->width(), originalChildWidth);
     CHECK_EQ(item3->width(), originalChildWidth);
     CHECK_EQ(item4->width(), originalChildWidth);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_resizeViaSeparator3()
+void TestLayouting::tst_resizeViaSeparator3()
 {
     DeleteViews deleteViews;
 
@@ -1582,11 +1571,9 @@ bool tst_resizeViaSeparator3()
     CHECK_EQ(item3->height(), oldH3);
     CHECK_EQ(item4->height(), oldH4);
     CHECK_EQ(item1->height(), oldH1);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_mapToRoot()
+void TestLayouting::tst_mapToRoot()
 {
     DeleteViews deleteViews;
 
@@ -1609,11 +1596,9 @@ bool tst_mapToRoot()
     Point rootPt = c->mapToRoot(Point(0, 0));
     CHECK_EQ(rootPt, Point(0, item1->height() + st));
     CHECK_EQ(c->mapFromRoot(rootPt), Point(0, 0));
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_closeAndRestorePreservesPosition()
+void TestLayouting::tst_closeAndRestorePreservesPosition()
 {
     DeleteViews deleteViews;
 
@@ -1649,11 +1634,9 @@ bool tst_closeAndRestorePreservesPosition()
     CHECK_EQ(item2->width(), oldW2);
     CHECK_EQ(item3->width(), oldW3);
     CHECK_EQ(item4->width(), oldW4);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_minSizeChangedBeforeRestore()
+void TestLayouting::tst_minSizeChangedBeforeRestore()
 {
     DeleteViews deleteViews;
 
@@ -1671,11 +1654,9 @@ bool tst_minSizeChangedBeforeRestore()
     item2->turnIntoPlaceholder();
     dynamic_cast<Guest *>(guest2)->m_view->setMinimumSize(newMinSize);
     item2->restore(guest2);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_separatorMoveCrash()
+void TestLayouting::tst_separatorMoveCrash()
 {
     DeleteViews deleteViews;
 
@@ -1702,11 +1683,9 @@ bool tst_separatorMoveCrash()
 
     // Separator squeezes item5 and starts squeezing item6 by 10px
     c->requestSeparatorMove(separator, available5 + 10);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_separatorMoveHonoursMax()
+void TestLayouting::tst_separatorMoveHonoursMax()
 {
     DeleteViews deleteViews;
 
@@ -1745,11 +1724,9 @@ bool tst_separatorMoveHonoursMax()
     root->requestSeparatorMove(separator1, -(separator1->position() - min1));
     CHECK(root->checkSanity());
     CHECK(item2->width() <= maxWidth);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_maxSizeHonoured1()
+void TestLayouting::tst_maxSizeHonoured1()
 {
     DeleteViews deleteViews;
 
@@ -1770,11 +1747,9 @@ bool tst_maxSizeHonoured1()
 
     root->insertItem(item2, Location_OnBottom);
     CHECK_EQ(item2->height(), maxHeight);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_maxSizeHonoured2()
+void TestLayouting::tst_maxSizeHonoured2()
 {
     DeleteViews deleteViews;
 
@@ -1800,11 +1775,9 @@ bool tst_maxSizeHonoured2()
 
     root1->insertItem(root2.release(), Location_OnBottom);
     CHECK_EQ(item2->parentBoxContainer()->maxSizeHint(), item2->maxSizeHint());
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_maxSizeHonoured3()
+void TestLayouting::tst_maxSizeHonoured3()
 {
     DeleteViews deleteViews;
 
@@ -1858,11 +1831,9 @@ bool tst_maxSizeHonoured3()
         CHECK(item1->height() <= maxHeight);
         CHECK(item1->height() >= minHeight);
     }
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_requestEqualSize()
+void TestLayouting::tst_requestEqualSize()
 {
     DeleteViews deleteViews;
 
@@ -1927,11 +1898,9 @@ bool tst_requestEqualSize()
         root->requestEqualSize(separator);
         CHECK_EQ(item1->width(), maxWidth1);
     }
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_maxSizeHonouredWhenAnotherRemoved()
+void TestLayouting::tst_maxSizeHonouredWhenAnotherRemoved()
 {
     DeleteViews deleteViews;
 
@@ -1954,11 +1923,9 @@ bool tst_maxSizeHonouredWhenAnotherRemoved()
     CHECK(item2->height() <= maxHeight);
 
     root->dumpLayout();
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_simplify()
+void TestLayouting::tst_simplify()
 {
     DeleteViews deleteViews;
 
@@ -1984,11 +1951,9 @@ bool tst_simplify()
     for (Item *item : root->childItems()) {
         CHECK(!item->isContainer());
     }
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_adjacentLayoutBorders()
+void TestLayouting::tst_adjacentLayoutBorders()
 {
     DeleteViews deleteViews;
 
@@ -2030,11 +1995,9 @@ bool tst_adjacentLayoutBorders()
     root->insertItem(item5, Location_OnRight);
     borders4 = item4->adjacentLayoutBorders();
     CHECK_EQ(borders4, LayoutBorderLocation_South);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_numSideBySide_recursive()
+void TestLayouting::tst_numSideBySide_recursive()
 {
     DeleteViews deleteViews;
 
@@ -2072,11 +2035,9 @@ bool tst_numSideBySide_recursive()
     item2->turnIntoPlaceholder();
     CHECK_EQ(root->numSideBySide_recursive(Qt::Vertical), 3);
     CHECK_EQ(root->numSideBySide_recursive(Qt::Horizontal), 2);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_sizingInfoSerialization()
+void TestLayouting::tst_sizingInfoSerialization()
 {
     DeleteViews deleteViews;
 
@@ -2097,11 +2058,9 @@ bool tst_sizingInfoSerialization()
     CHECK_EQ(info2.geometry, info.geometry);
     CHECK_EQ(info2.isBeingInserted, info.isBeingInserted);
     CHECK_EQ(info2.percentageWithinParent, info.percentageWithinParent);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_itemSerialization()
+void TestLayouting::tst_itemSerialization()
 {
     DeleteViews deleteViews;
 
@@ -2123,12 +2082,9 @@ bool tst_itemSerialization()
     CHECK(json["isContainer"]);
     CHECK(json["children"][0]["isContainer"]);
     CHECK(!json["children"][1]["isContainer"]);
-
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_outermostVisibleNeighbor()
+void TestLayouting::tst_outermostVisibleNeighbor()
 {
     DeleteViews deleteViews;
 
@@ -2168,11 +2124,9 @@ bool tst_outermostVisibleNeighbor()
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop), itemTop);
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft), item0);
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight), item3);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_outermostNeighbor()
+void TestLayouting::tst_outermostNeighbor()
 {
     DeleteViews deleteViews;
 
@@ -2212,11 +2166,9 @@ bool tst_outermostNeighbor()
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnTop, false), itemTop);
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnLeft, false), item0);
     CHECK_EQ(item1->outermostNeighbor(KDDockWidgets::Location_OnRight, false), item3);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_relativeToHidden()
+void TestLayouting::tst_relativeToHidden()
 {
     // Tests that we can insert relative to an hidden item
 
@@ -2246,11 +2198,9 @@ bool tst_relativeToHidden()
     CHECK(innerContainer->isVertical());
     CHECK_EQ(innerContainer->childItems()[0], item1);
     CHECK_EQ(innerContainer->childItems()[1], item2);
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_spuriousResize()
+void TestLayouting::tst_spuriousResize()
 {
     DeleteViews deleteViews;
 
@@ -2270,12 +2220,9 @@ bool tst_spuriousResize()
     guest1->m_numSetGeometry = 0;
     root->insertItem(item3, Location_OnRight, Size(200, 200));
     CHECK_EQ(guest1->m_numSetGeometry, 1);
-
-
-    KDDW_TEST_RETURN(true);
 }
 
-bool tst_relayoutIfNeeded()
+void TestLayouting::tst_relayoutIfNeeded()
 {
     DeleteViews deleteViews;
 
@@ -2309,70 +2256,9 @@ bool tst_relayoutIfNeeded()
     root->positionItems_recursive();
     CHECK(!root->isOverflowing());
     CHECK(root->checkSanity());
-
-    KDDW_TEST_RETURN(true);
 }
 
-static const std::vector<KDDWTest> s_tests = {
-    TEST(tst_createRoot),
-    TEST(tst_insertOne),
-    TEST(tst_insertThreeSideBySide),
-    TEST(tst_insertTwoHorizontal),
-    TEST(tst_insertTwoVertical),
-    TEST(tst_insertOnWidgetItem1),
-    TEST(tst_insertOnWidgetItem2),
-    TEST(tst_insertOnWidgetItem1DifferentOrientation),
-    TEST(tst_insertOnWidgetItem2DifferentOrientation),
-    TEST(tst_insertOnRootDifferentOrientation),
-    TEST(tst_removeItem1),
-    TEST(tst_removeItem2),
-    TEST(tst_minSize),
-    TEST(tst_resize),
-    TEST(tst_resizeWithConstraints),
-    TEST(tst_availableSize),
-    TEST(tst_missingSize),
-    TEST(tst_ensureEnoughSize),
-    TEST(tst_turnIntoPlaceholder),
-    TEST(tst_suggestedRect),
-    TEST(tst_suggestedRect2),
-    TEST(tst_suggestedRect3),
-    TEST(tst_suggestedRect4),
-    TEST(tst_insertAnotherRoot),
-    TEST(tst_misc1),
-    TEST(tst_misc2),
-    TEST(tst_misc3),
-    TEST(tst_containerGetsHidden),
-    TEST(tst_minSizeChanges),
-    TEST(tst_numSeparators),
-    TEST(tst_separatorMinMax),
-    TEST(tst_separatorRecreatedOnParentChange),
-    TEST(tst_containerReducesSize),
-    TEST(tst_insertHiddenContainer),
-    TEST(tst_availableOnSide),
-    TEST(tst_availableToGrowOnSide),
-    TEST(tst_resizeViaSeparator),
-    TEST(tst_resizeViaSeparator2),
-    TEST(tst_resizeViaSeparator3),
-    TEST(tst_mapToRoot),
-    TEST(tst_closeAndRestorePreservesPosition),
-    TEST(tst_minSizeChangedBeforeRestore),
-    TEST(tst_separatorMoveCrash),
-    TEST(tst_separatorMoveHonoursMax),
-    TEST(tst_maxSizeHonoured1),
-    TEST(tst_maxSizeHonoured2),
-    TEST(tst_maxSizeHonoured3),
-    TEST(tst_requestEqualSize),
-    TEST(tst_maxSizeHonouredWhenAnotherRemoved),
-    TEST(tst_simplify),
-    TEST(tst_adjacentLayoutBorders),
-    TEST(tst_numSideBySide_recursive),
-    TEST(tst_sizingInfoSerialization),
-    TEST(tst_itemSerialization),
-    TEST(tst_relayoutIfNeeded),
-    TEST(tst_outermostVisibleNeighbor),
-    TEST(tst_outermostNeighbor),
-    TEST(tst_relativeToHidden),
-    TEST(tst_spuriousResize),
-};
+#define KDDW_TEST_NAME TestLayouting
+#include "test_main_qt.h"
 
-#include "tests_main.h"
+#include "tst_multisplitter.moc"
