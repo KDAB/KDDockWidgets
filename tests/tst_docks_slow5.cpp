@@ -9,38 +9,32 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// We don't care about performance related checks in the tests
-// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
-
-// A test that was extracted out from tst_docks.cpp as it was too slow
-// By using a separate executable it can be parallelized by ctest.
-
 #include "utils.h"
-#include "simple_test_framework.h"
 #include "Config.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Position_p.h"
-#include "core/WindowBeingDragged_p.h"
-#include "core/layouting/Item_p.h"
 #include "core/ViewFactory.h"
-#include "core/MDILayout.h"
 #include "core/DropArea.h"
 #include "core/MainWindow.h"
 #include "core/DockWidget.h"
-#include "core/DockWidget_p.h"
-#include "core/Separator.h"
-#include "core/TabBar.h"
-#include "core/Stack.h"
-#include "core/SideBar.h"
 #include "core/Platform.h"
+
+#include <QTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 
-bool tst_28NestedWidgets()
+class TestDocks : public QObject
 {
-    auto func = [](Vector<DockDescriptor> docksToCreate, Vector<int> docksToHide) -> bool {
+    Q_OBJECT
+private Q_SLOTS:
+    void tst_28NestedWidgets();
+};
+
+void TestDocks::tst_28NestedWidgets()
+{
+    auto func = [](Vector<DockDescriptor> docksToCreate, Vector<int> docksToHide) {
         // Tests a case that used to cause negative anchor position when turning into placeholder
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -56,7 +50,7 @@ bool tst_28NestedWidgets()
             if (desc.relativeToIndex != -1)
                 relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
             m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
-            CHECK(layout->checkSanity());
+            QVERIFY(layout->checkSanity());
             ++i;
         }
 
@@ -65,33 +59,33 @@ bool tst_28NestedWidgets()
         // Run the saver in these complex scenarios:
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
-        CHECK(!saved.isEmpty());
-        CHECK(saver.restoreLayout(saved));
+        QVERIFY(!saved.isEmpty());
+        QVERIFY(saver.restoreLayout(saved));
 
         layout->checkSanity();
 
         for (int i : docksToHide) {
             docksToCreate.at(i).createdDock->close();
             layout->checkSanity();
-            EVENT_LOOP(200);
+            QTest::qWait(200);
         }
 
         layout->checkSanity();
 
         for (int i : docksToHide) {
             docksToCreate.at(i).createdDock->destroyLater();
-            CHECK(Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
+            QVERIFY(Platform::instance()->tests_waitForDeleted(docksToCreate.at(i).createdDock));
         }
 
         layout->checkSanity();
 
         // And hide the remaining ones
         i = 0;
-        for (auto dock : docksToCreate) {
+        for (const auto &dock : docksToCreate) {
             if (dock.createdDock && dock.createdDock->isVisible()) {
                 dock.createdDock->close();
-                EVENT_LOOP(200); // Wait for the docks to be closed. TODO Replace with a global event
-                                 // filter and wait for any resize ?
+                QTest::qWait(200); // Wait for the docks to be closed. TODO Replace with a global event
+                                   // filter and wait for any resize ?
             }
             ++i;
         }
@@ -101,10 +95,8 @@ bool tst_28NestedWidgets()
         // Cleanup
         for (auto dock : DockRegistry::self()->dockwidgets()) {
             dock->destroyLater();
-            CHECK(Platform::instance()->tests_waitForDeleted(dock));
+            QVERIFY(Platform::instance()->tests_waitForDeleted(dock));
         }
-
-        KDDW_TEST_RETURN(true);
     };
 
     Vector<DockDescriptor> docks = {
@@ -137,10 +129,9 @@ bool tst_28NestedWidgets()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
+
     if (Platform::instance()->isQtWidgets()) {
-        if (!func(docks, Vector<int> { 11, 0 })) {
-            KDDW_TEST_RETURN(false);
-        }
+        func(docks, Vector<int> { 11, 0 });
     }
 
     docks = {
@@ -149,7 +140,6 @@ bool tst_28NestedWidgets()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-
     };
 
     Vector<int> docksToHide;
@@ -157,9 +147,7 @@ bool tst_28NestedWidgets()
         docksToHide.push_back(i);
     }
 
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -173,9 +161,7 @@ bool tst_28NestedWidgets()
     };
     if (Platform::instance()->isQtWidgets()) {
         // 2. Produced valgrind invalid reads while adding
-        if (!func(docks, {})) {
-            KDDW_TEST_RETURN(false);
-        }
+        func(docks, {});
     }
 
     docks = {
@@ -186,9 +172,7 @@ bool tst_28NestedWidgets()
     };
 
     if (Platform::instance()->isQtWidgets()) {
-        if (!func(docks, {})) {
-            KDDW_TEST_RETURN(false);
-        }
+        func(docks, {});
     }
 
     docks = {
@@ -201,39 +185,39 @@ bool tst_28NestedWidgets()
     if (Platform::instance()->isQtWidgets()) {
         // Tests for void KDDockWidgets::Anchor::setPosition(int,
         // KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
-        if (!func(docks, {})) {
-            KDDW_TEST_RETURN(false);
-        }
+        func(docks, {});
     }
 
-    docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
-              { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
+    docks = {
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
+    };
 
     docksToHide.clear();
     for (int i = 0; i < 28; ++i) {
@@ -242,9 +226,7 @@ bool tst_28NestedWidgets()
     }
     if (Platform::instance()->isQtWidgets()) {
         // bug_with_holes
-        if (!func(docks, docksToHide)) {
-            KDDW_TEST_RETURN(false);
-        }
+        func(docks, docksToHide);
     }
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -280,18 +262,14 @@ bool tst_28NestedWidgets()
     docksToHide.clear();
 
     // add_as_placeholder
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     // add_as_placeholder_simple
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = { { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -300,9 +278,7 @@ bool tst_28NestedWidgets()
     docksToHide.clear();
 
     // isSquashed_assert
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -311,9 +287,7 @@ bool tst_28NestedWidgets()
     docksToHide.clear();
 
     // negative_pos_warning
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = { { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -321,9 +295,7 @@ bool tst_28NestedWidgets()
 
     docksToHide.clear();
     // bug
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = { { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -332,9 +304,7 @@ bool tst_28NestedWidgets()
 
     docksToHide.clear();
     // bug2
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
+    func(docks, docksToHide);
 
     docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
               { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -347,18 +317,10 @@ bool tst_28NestedWidgets()
     docksToHide.clear();
 
     // bug3
-    if (!func(docks, docksToHide)) {
-        KDDW_TEST_RETURN(false);
-    }
-
-    KDDW_TEST_RETURN(true);
+    func(docks, docksToHide);
 }
 
-static const auto s_tests = std::vector<KDDWTest> {
-#if !defined(KDDW_FRONTEND_FLUTTER)
-    TEST(tst_28NestedWidgets)
-#endif
-};
+#define KDDW_TEST_NAME TestDocks
+#include "test_main_qt.h"
 
-
-#include "tests_main.h"
+#include "tst_docks_slow5.moc"
