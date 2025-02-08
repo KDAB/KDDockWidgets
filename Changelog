@@ -1,6 +1,6 @@
 * v2.3.0
   - qtquick: Add QtQuick::IndicatorWindow::setQuickWindowCreationCallback
-
+  - qtquick: Add support for building as a QML module and fixed all qmllint warnings
 * v2.2.1
   - Fix linking against static KDDW (#557)
 
