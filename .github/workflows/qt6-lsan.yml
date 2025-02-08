@@ -5,8 +5,14 @@
 name: Nightly Qt6 LSAN build
 
 on:
-  schedule:
-  - cron: '0 3 * * *'
+  push:
+    branches:
+      - main
+      - 2.2
+  pull_request:
+    branches:
+      - main
+      - 2.2
   workflow_dispatch:
 
 jobs:

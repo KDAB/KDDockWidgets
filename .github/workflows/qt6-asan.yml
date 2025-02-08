@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Qt6 ASAN build
+name: Qt6 ASAN
 
 on:
   push:

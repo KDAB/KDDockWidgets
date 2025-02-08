@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Valgrind qtwidgets_leak_test
+name: Valgrind leakcheck
 
 on:
   push:
@@ -27,7 +27,6 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-
       - name: Export IS_SELFHOSTED
         run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
 
