@@ -11,7 +11,7 @@
 # Pass the following variables to cmake to control the build:
 #
 # -DKDDockWidgets_QT6=[true|false] Build against Qt6 rather than Qt5
-# Default=false (Qt5 will be used even if Qt6 is available)
+# Default=true
 #
 # -DKDDockWidgets_STATIC=[true|false] Build static versions of the libraries
 # Default=false
@@ -104,7 +104,7 @@ set(KDDockWidgets_LIBRARY_POSTFIX
     CACHE STRING "Appends the specified string to the library name. Not applicable to VS generator."
 )
 
-option(KDDockWidgets_QT6 "Build against Qt 6" OFF)
+option(KDDockWidgets_QT6 "Build against Qt 6" ON)
 option(KDDockWidgets_DEVELOPER_MODE "Developer Mode" OFF)
 option(KDDockWidgets_PYTHON_BINDINGS "Build python bindings" OFF)
 option(KDDockWidgets_STATIC "Build statically" OFF)

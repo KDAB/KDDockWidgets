@@ -18,7 +18,7 @@
 
 You can skip building manually and instead consume KDDockWidgets via [vcpkg](#using-via-vcpkg).
 
-Although the build system supports many options, you'll mostly use `-DKDDockWidgets_QT6=ON`, or don't use any option, which defaults to `Qt 5`.
+Although the build system supports many options, you'll mostly use `-DKDDockWidgets_QT6=ON`, or `OFF` for `Qt 5`.
 
 By default, KDDW will be built with support for both `QtWidgets` and `QtQuick`. If you want to save some binary space and compile time,
 consider passing `-DKDDockWidgets_FRONTENDS="qtwidgets"` or `-DKDDockWidgets_FRONTENDS="qtquick"`.
