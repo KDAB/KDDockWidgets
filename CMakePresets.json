@@ -68,20 +68,21 @@
     {
       "name": "dev-valgrind",
       "displayName": "dev-valgrind",
-      "description": "A dev preset which runs tests under valgrind",
+      "description": "A Qt5 dev preset which runs tests under valgrind",
       "binaryDir": "${sourceDir}/build-dev-valgrind",
       "inherits": [
         "dev"
       ],
       "cacheVariables": {
         "KDDockWidgets_USE_VALGRIND": "ON",
+        "KDDockWidgets_QT6": "OFF",
         "KDDockWidgets_NO_SPDLOG": "ON"
       }
     },
     {
       "name": "dev-valgrind6",
       "displayName": "dev-valgrind6",
-      "description": "A dev preset which runs tests under valgrind",
+      "description": "A Qt6 dev preset which runs tests under valgrind",
       "binaryDir": "${sourceDir}/build-dev-valgrind6",
       "inherits": [
         "dev6"
@@ -193,6 +194,7 @@
       "binaryDir": "${sourceDir}/build-clazy",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "KDDockWidgets_QT6": "OFF",
         "KDDockWidgets_WERROR": "ON",
         "KDDockWidgets_EXAMPLES": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
@@ -220,6 +222,7 @@
       "binaryDir": "${sourceDir}/build-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_UNITY_BUILD": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       }
@@ -231,6 +234,7 @@
       "binaryDir": "${sourceDir}/build-release-no-x11extras",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_UNITY_BUILD": "OFF",
         "KDDockWidgets_X11EXTRAS": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
@@ -254,7 +258,10 @@
       "binaryDir": "${sourceDir}/build-python",
       "inherits": [
         "python-base"
-      ]
+      ],
+      "cacheVariables": {
+        "KDDockWidgets_QT6": "OFF"
+      }
     },
     {
       "name": "python6",
@@ -464,6 +471,7 @@
       "generator": "Ninja",
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "ON",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_BUILD_TYPE": "Debug",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       }
@@ -476,6 +484,7 @@
       "generator": "Ninja",
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_BUILD_TYPE": "Release",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       }
@@ -488,6 +497,7 @@
       "generator": "Ninja",
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_BUILD_TYPE": "Release",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
@@ -500,6 +510,7 @@
       "generator": "Ninja",
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_BUILD_TYPE": "Release",
         "KDDockWidgets_FRONTENDS": "qtquick"
       }
@@ -578,6 +589,7 @@
         "dev-valgrind"
       ],
       "cacheVariables": {
+        "KDDockWidgets_QT6": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
     },
@@ -600,7 +612,10 @@
       "binaryDir": "${sourceDir}/build-ci-dev-asan-qt5",
       "inherits": [
         "dev-asan"
-      ]
+      ],
+      "cacheVariables": {
+        "KDDockWidgets_QT6": "OFF"
+      }
     },
     {
       "name": "ci-dev-asan-qt6",

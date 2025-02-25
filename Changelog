@@ -1,4 +1,6 @@
 * v2.3.0
+  - KDDockWidgets now looks for Qt6 by default, rather than Qt5. If your Qt5
+    build broke, pass -DKDDockWidgets_QT6=OFF to CMake.
   - qtquick: Add QtQuick::IndicatorWindow::setQuickWindowCreationCallback
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
 * v2.2.1
