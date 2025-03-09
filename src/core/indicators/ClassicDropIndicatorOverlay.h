@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "core/DropIndicatorOverlay.h"
+#include "kddockwidgets/core/DropIndicatorOverlay.h"
 
 namespace KDDockWidgets {
 
