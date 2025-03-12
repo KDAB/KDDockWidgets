@@ -1,3 +1,5 @@
 [submodule "tests/reference-images"]
 	path = tests/reference-images
 	url = https://github.com/KDAB/kddockwidgets-reference-test-screenshots.git
+	update = none
+	ignore = all
