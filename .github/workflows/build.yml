@@ -98,10 +98,13 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
-        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install
 
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
+
+      - name: Install
+        run: cmake --build ./build-${{ matrix.preset.name }} --target install
 
       - name: Run tests on Linux
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
