@@ -1,0 +1,58 @@
+# SPDX-FileCopyrightText: 2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: clang-cl
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - windows-latest
+        preset:
+          - name: dev-clangcl6
+
+    steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
+      - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
+        uses: jurplel/install-qt-action@v4
+        if: env.IS_SELFHOSTED != 1
+        with:
+          version: "6.8.2"
+          cache: true
+
+      - name: Install ninja
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install
+
+      - name: Build
+        run: cmake --build ./build-${{ matrix.preset.name }}
+
+      - name: Install
+        run: cmake --build ./build-${{ matrix.preset.name }} --target install
+
+      - name: Run tests
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
