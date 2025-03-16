@@ -32,7 +32,7 @@
       "name": "asan-base",
       "hidden": true,
       "cacheVariables": {
-        "ECM_ENABLE_SANITIZERS": "'address;undefined'"
+        "KDDockWidgets_ENABLE_SANITIZERS": "ON"
       },
       "inherits": [
         "base"
@@ -377,6 +377,20 @@
       "environment": {
         "CC": "clang-cl",
         "CXX": "clang-cl"
+      }
+    },
+    {
+      "name": "dev-clangcl-asan6",
+      "description": "this preset is not working, patches accepted",
+      "binaryDir": "${sourceDir}/build-dev-clangcl-asan6",
+      "inherits": [
+        "dev-clangcl6",
+        "asan-base"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "KDDockWidgets_STATIC": "ON",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded"
       }
     },
     {
