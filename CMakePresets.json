@@ -381,6 +381,7 @@
     },
     {
       "name": "dev-clangcl-asan6",
+      "binaryDir": "${sourceDir}/build-dev-clangcl-asan6",
       "inherits": ["dev-clangcl6", "asan-base"]
     },
     {
