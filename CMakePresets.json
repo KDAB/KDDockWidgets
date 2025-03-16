@@ -382,7 +382,10 @@
     {
       "name": "dev-clangcl-asan6",
       "binaryDir": "${sourceDir}/build-dev-clangcl-asan6",
-      "inherits": ["dev-clangcl6", "asan-base"]
+      "inherits": ["dev-clangcl6", "asan-base"],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
     },
     {
       "name": "dev-time-trace",
