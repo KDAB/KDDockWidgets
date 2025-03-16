@@ -337,7 +337,21 @@ endif()
 # Always build the test harness in developer-mode
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDockWidgets_TESTS ON)
-    include(ECMEnableSanitizers)
+
+    if(KDDockWidgets_ENABLE_SANITIZERS)
+        if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
+            # clang-cl preset isn't working
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+        elseif(MSVC)
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+        else()
+            set(CMAKE_CXX_FLAGS
+                "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls"
+            )
+            set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -fsanitize=address -fsanitize=undefined")
+            set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address -fsanitize=undefined")
+        endif()
+    endif()
 
     # Enable assert() in developer mode, regardless of debug vs release
     add_definitions(-UNDEBUG)
