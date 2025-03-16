@@ -380,6 +380,10 @@
       }
     },
     {
+      "name": "dev-clangcl-asan6",
+      "inherits": ["dev-clangcl6", "asan-base"]
+    },
+    {
       "name": "dev-time-trace",
       "displayName": "dev-time-trace",
       "binaryDir": "${sourceDir}/build-dev-time-trace",
