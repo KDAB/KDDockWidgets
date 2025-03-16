@@ -401,8 +401,16 @@ macro(set_compiler_flags targetName)
     endif()
 
     # Enable -Werror
-    if(KDDockWidgets_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
-        target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
+    if(KDDockWidgets_WERROR)
+        if(MSVC)
+            if(KDDockWidgets_QT6 AND NOT ${targetName} MATCHES "^tst_")
+                # don't werror the tests
+                # /wd4702 unreachable code after std::terminate
+                target_compile_options(${targetName} PRIVATE /WX /wd4702)
+            endif()
+        else()
+            target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
+        endif()
     endif()
 
     if(KDDockWidgets_HAS_SPDLOG)
