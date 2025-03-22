@@ -125,7 +125,7 @@ public:
 
         // Make a copy, as there could be reentrancy and filters getting removed while event being
         // processed
-        const auto &filters = std::as_const(q->d->m_globalEventFilters);
+        const auto filters = std::as_const(q->d->m_globalEventFilters);
 
         for (EventFilterInterface *filter : filters) {
             // Filter might have been deleted meanwhile
