@@ -44,6 +44,7 @@ repos:
     hooks:
       - id: cmake-lint
         exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/|tests/flutter/)
+        args: ["--line-width=1000"] # we don't care about line-width
       - id: cmake-format
         exclude: (.py.cmake|Doxyfile.cmake|examples/flutter/|tests/flutter/)
   - repo: https://github.com/DavidAnson/markdownlint-cli2
