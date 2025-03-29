@@ -212,7 +212,7 @@ public:
     static void raiseAndActivate(QWidget *w)
     {
         w->window()->raise();
-        const bool isWayland = qApp->platformName() == QLatin1String("wayland");
+        const bool isWayland = qGuiApp->platformName() == QLatin1String("wayland");
         if (!isWayland)
             w->window()->activateWindow();
     }
