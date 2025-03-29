@@ -9,8 +9,6 @@ on:
     branches:
       - main
       - 2.2
-    paths-ignore:
-      - .github/workflows/create_release.yml
   pull_request:
     branches:
       - main

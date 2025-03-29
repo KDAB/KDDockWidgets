@@ -6,14 +6,6 @@ name: Build (Qt5)
 
 on:
   push:
-    paths-ignore:
-      # These are built by another workflow
-      - src/flutter/**
-      - tests/flutter/**
-      - examples/flutter/**
-      - tests/reference-images/**
-      - .github/workflows/create_release.yml
-      - .github/workflows/examples.yml
     branches:
       - main
       - 2.2
