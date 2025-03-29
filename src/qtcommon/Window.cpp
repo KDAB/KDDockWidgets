@@ -182,7 +182,7 @@ bool Window::isFullScreen() const
 
 void Window::setScreen(int index)
 {
-    const auto screens = qApp->screens();
+    const auto screens = qGuiApp->screens();
     const int numScreens = screens.size();
     if (index >= numScreens || index < 0) {
         qWarning() << Q_FUNC_INFO << "index out of bounds" << index << numScreens;
@@ -203,5 +203,5 @@ int Window::screenIndex() const
         return -1;
     }
 
-    return qApp->screens().indexOf(m_window->screen());
+    return qGuiApp->screens().indexOf(m_window->screen());
 }

@@ -139,11 +139,11 @@ public:
     void setPickingEnabled(bool enabled)
     {
         if (enabled) {
-            qApp->setOverrideCursor(Qt::CrossCursor);
-            qApp->installEventFilter(this);
+            qGuiApp->setOverrideCursor(Qt::CrossCursor);
+            qGuiApp->installEventFilter(this);
         } else {
-            qApp->removeEventFilter(this);
-            qApp->restoreOverrideCursor();
+            qGuiApp->removeEventFilter(this);
+            qGuiApp->restoreOverrideCursor();
         }
     }
 
