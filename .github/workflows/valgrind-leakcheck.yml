@@ -6,13 +6,6 @@ name: Valgrind leakcheck
 
 on:
   push:
-    paths-ignore:
-      # These are built by another workflow
-      - src/flutter/**
-      - tests/flutter/**
-      - examples/flutter/**
-      - tests/reference-images/**
-      - .github/workflows/create_release.yml
     branches:
       - main
       - 2.2
