@@ -4,6 +4,9 @@
   - qtquick: Add QtQuick::IndicatorWindow::setQuickWindowCreationCallback
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
 
+* v2.2.3
+  - Fix potential crash found by ASAN
+
 * v2.2.2
   - Fix submodule url. Changed from SSH to HTTPS. This is only important for
     people cloning from a git tag. v2.2.1 tarball is identical otherwise.
