@@ -419,7 +419,7 @@ int main(int argc, char **argv)
         ///   3.1. We also install an event filter to show the drop indicators when ctrl is pressed
 
         KDDockWidgets::Config::self().setDragAboutToStartFunc([](Core::Draggable *draggable) -> bool {
-            const bool ctrlIsPressed = qApp->keyboardModifiers() & Qt::ControlModifier;
+            const bool ctrlIsPressed = qGuiApp->keyboardModifiers() & Qt::ControlModifier;
 
             if (ctrlIsPressed || draggable->isInProgrammaticDrag()) {
                 KDDockWidgets::Config::self().setDropIndicatorsInhibited(false);
@@ -427,7 +427,7 @@ int main(int argc, char **argv)
             }
 
             if (draggable->isWindow()) {
-                qApp->installEventFilter(s_ctrlKeyEventFilter);
+                qGuiApp->installEventFilter(s_ctrlKeyEventFilter);
 
                 // Ctrl might already be pressed before the DnD even starts, so honour that as well
                 KDDockWidgets::Config::self().setDropIndicatorsInhibited(!ctrlIsPressed);
@@ -440,7 +440,7 @@ int main(int argc, char **argv)
 
         KDDockWidgets::Config::self().setDragEndedFunc([]() {
             // cleanup
-            qApp->removeEventFilter(s_ctrlKeyEventFilter);
+            qGuiApp->removeEventFilter(s_ctrlKeyEventFilter);
         });
     }
 

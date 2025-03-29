@@ -158,7 +158,7 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
 
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
-    // qDebug() << qApp->primaryScreen()->geometry();
+    // qDebug() << qGuiApp->primaryScreen()->geometry();
     const QSize initialSize(500, 500);
     auto m = createMainWindow(initialSize, MainWindowOption_None, "m1", false);
 
@@ -202,7 +202,7 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
 
 void TestNativeQPA::tst_restoreMaximizedFromMaximized()
 {
-    if (qApp->platformName() == QLatin1String("offscreen")) {
+    if (qGuiApp->platformName() == QLatin1String("offscreen")) {
         // offscreen: calling showMaximized() on an hidden widget, puts it at pos=2,2 instead of 0,0
         // Ignore this QPA. This file is for testing native QPAs only. offscreen is nice to have
         // if it beahaves well only.
@@ -219,7 +219,7 @@ void TestNativeQPA::tst_restoreMaximizedFromMaximized()
 
     // Saves the window state while in maximized state, then restores after the window is shown normal
     // the window should become maximized again.
-    // qDebug() << qApp->primaryScreen()->geometry();
+    // qDebug() << qGuiApp->primaryScreen()->geometry();
     const QSize initialSize(500, 500);
     auto m = createMainWindow(initialSize, MainWindowOption_None, "m1", false);
 

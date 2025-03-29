@@ -134,7 +134,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     if (m_exampleOptions & ExampleOption::CtrlKeyFiltersDropIndicators) {
         /// Drop indicators will only be visible when ctrl is pressed
         KDDockWidgets::Config::self().setDropIndicatorsInhibited(true);
-        qApp->installEventFilter(new CtrlKeyEventFilter(this));
+        qGuiApp->installEventFilter(new CtrlKeyEventFilter(this));
     }
 }
 
