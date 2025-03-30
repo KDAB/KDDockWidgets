@@ -37,8 +37,20 @@ jobs:
           version: 6.8.2
           cache: true
 
+      - name: Install ninja (Windows)
+        if: ${{ runner.os != 'macOS' }}
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Install ninja (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: brew install ninja
+
       - name: Checkout sources
         uses: actions/checkout@v4
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
