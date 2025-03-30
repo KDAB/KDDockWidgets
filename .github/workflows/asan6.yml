@@ -56,7 +56,7 @@ jobs:
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
-        run: cmake --build ./build-${{ matrix.preset.name }}
+        run: cmake --build ./build-${{ matrix.preset.name }} --verbose
 
       - name: Run tests
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
