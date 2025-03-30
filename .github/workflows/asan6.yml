@@ -20,12 +20,13 @@ on:
 
 jobs:
   build:
-    runs-on:
-      - windows-latest
-      - macos-15
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
+        os:
+          - windows-latest
+          - macos-15
         preset:
           - name: ci-dev-asan-qt6
 
