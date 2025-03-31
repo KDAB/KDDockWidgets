@@ -2109,6 +2109,48 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
         (q->isVertical() && heightChanged_) || (q->isHorizontal() && widthChanged_);
     const int totalNewLength = q->usableLength();
 
+    std::function<int(const Item::List &)> indexOfCentralFrame;
+    indexOfCentralFrame = [&indexOfCentralFrame](const Item::List &children) -> int {
+        const Item *centralFrame = nullptr;
+        for (auto *child : children) {
+            const auto *guest = child->guest();
+            const bool isCentralFrame = guest ? guest->flags() & IsCentralFrame : false;
+            if (isCentralFrame) {
+                return children.indexOf(child);
+            } else if (child->isContainer()) {
+                auto container = dynamic_cast<ItemBoxContainer *>(child);
+                int index = indexOfCentralFrame(container->visibleChildren());
+                if (index != -1)
+                    return children.indexOf(child);
+            }
+        }
+        return -1;
+    };
+
+    if (strategy == ChildrenResizeStrategy::GiveDropAreaWithCentralFrameAllExtra) {
+        auto children = q->visibleChildren();
+        int index = children.count() > 1 ? indexOfCentralFrame(children) : -1;
+        if (index == -1) {
+            strategy = ChildrenResizeStrategy::Percentage;
+        } else {
+            int remaining = totalNewLength;
+            for (int i = 0; i < count; ++i) {
+                const bool isCentralFrame = i == index;
+                if (isCentralFrame)
+                    continue;
+
+                const SizingInfo &itemSize = childSizes[i];
+                remaining -= itemSize.length(q->orientation());
+            }
+            SizingInfo &itemSize = childSizes[index];
+            if (q->isVertical()) {
+                itemSize.geometry.setSize({ q->width(), remaining });
+            } else {
+                itemSize.geometry.setSize({ remaining, q->height() });
+            }
+        }
+    }
+
     if (strategy == ChildrenResizeStrategy::Percentage) {
         // In this strategy mode, each children will preserve its current relative size. So, if a
         // child is occupying 50% of this container, then it will still occupy that after the

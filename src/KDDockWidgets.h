@@ -90,7 +90,8 @@ enum MainWindowOption {
     /// MainWindowBase::setPersistentCentralWidget()
     MainWindowOption_QDockWidgets = 8, ///> Allows the user to use QDockWidget instead of KDDW DockWidget, while using the KDDW MainWindow
                                        ///> Useful as a porting aid, where you want to migrate your main windows 1 by 1
-    MainWindowOption_ManualInit = 16 ///> For compatibility with setupUi() from UIC. See manualInit() for more details
+    MainWindowOption_ManualInit = 16, ///> For compatibility with setupUi() from UIC. See manualInit() for more details
+    MainWindowOption_CentralWidgetGetsAllExtraSpace = 32, ///> defines that all resize events to the main window lead to the central widget getting all extra space
 };
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
