@@ -2111,10 +2111,9 @@ void ItemBoxContainer::Private::resizeChildren(Size oldSize, Size newSize,
 
     std::function<int(const Item::List &)> indexOfCentralFrame;
     indexOfCentralFrame = [&indexOfCentralFrame](const Item::List &children) -> int {
-        const Item *centralFrame = nullptr;
         for (auto *child : children) {
             const auto *guest = child->guest();
-            const bool isCentralFrame = guest ? guest->flags() & IsCentralFrame : false;
+            const bool isCentralFrame = guest && (guest->flags() & IsCentralFrame);
             if (isCentralFrame) {
                 return children.indexOf(child);
             } else if (child->isContainer()) {
