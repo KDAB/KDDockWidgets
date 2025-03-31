@@ -205,6 +205,13 @@ int main(int argc, char **argv)
                                     "The main window will have a non-detachable central widget"));
     parser.addOption(centralWidget);
 
+    QCommandLineOption centralWidgetAllExtraSize(
+        "central-widget-all-extra-size",
+        QCoreApplication::translate("main",
+                                    "The main window will have a non-detachable central widget which "
+                                    "gets all the extra space when the window is enlarged (imples --central-widget"));
+    parser.addOption(centralWidgetAllExtraSize);
+
     QCommandLineOption tabsAtBottom("tabs-at-bottom", QCoreApplication::translate("main", "Shows tabs at bottom"));
     parser.addOption(tabsAtBottom);
 
@@ -275,6 +282,11 @@ int main(int argc, char **argv)
 
     if (parser.isSet(centralWidget))
         options |= MainWindowOption_HasCentralWidget;
+
+    if (parser.isSet(centralWidgetAllExtraSize)) {
+        options |= MainWindowOption_HasCentralWidget;
+        options |= MainWindowOption_CentralWidgetGetsAllExtraSpace;
+    }
 
     if (parser.isSet(noQtTool))
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;

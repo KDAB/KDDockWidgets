@@ -115,6 +115,11 @@ public:
         return q->view()->d->freed();
     }
 
+    LayoutingGuestFlags flags() const override
+    {
+        return m_options & FrameOption_IsCentralFrame ? IsCentralFrame : None;
+    }
+
     Group *const q;
     int m_userType = 0;
     FrameOptions m_options = FrameOption_None;

@@ -23,6 +23,12 @@ namespace Core {
 class Item;
 class LayoutingHost;
 
+enum LayoutingGuestFlag {
+    None = 0,
+    IsCentralFrame = 1
+};
+Q_DECLARE_FLAGS(LayoutingGuestFlags, LayoutingGuestFlag)
+
 /// The interface graphical components need to implement in order to be hosted by a layout
 /// The layout engine doesn't know about any GUI, only about LayoutingHost and LayoutingGuest
 /// This allows to keep the layouting engine separate from the rest of KDDW and even
@@ -41,6 +47,11 @@ public:
     virtual void setHost(LayoutingHost *parent) = 0;
     virtual LayoutingHost *host() const = 0;
     virtual QString id() const = 0;
+
+    virtual LayoutingGuestFlags flags() const
+    {
+        return None;
+    }
 
     virtual bool freed() const
     {
