@@ -65,3 +65,9 @@ repos:
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [fix, feat, ci, tests, chore, refactor, docs]
