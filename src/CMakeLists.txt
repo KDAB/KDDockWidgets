@@ -624,7 +624,6 @@ if(KDDW_FRONTEND_QTQUICK)
             2.0
             QML_FILES
             ${KDDW_QML_FILES}
-            NO_CACHEGEN
             SOURCES
             KDDockWidgets.h
             ${KDDW_MODULE_QML_ELEMENTS}
