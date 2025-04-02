@@ -28,7 +28,7 @@ TitleBarBase {
     color: "#eff0f1"
     heightWhenVisible: 30
 
-    function dpiSuffix() {
+    function dpiSuffix(): string {
         // Since Qt's built-in @Nx doesn't support fractionals, we load the correct image manually
         if (Screen.devicePixelRatio === 1) {
             return "";
@@ -41,7 +41,7 @@ TitleBarBase {
         }
     }
 
-    function imagePath(id) {
+    function imagePath(id: string): string {
         return "qrc:/img/" + id + dpiSuffix() + ".png";
     }
 

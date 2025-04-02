@@ -17,7 +17,7 @@ TabBarBase {
 
     // Helper, only applies if you're using the TabBar from QQControls.
     // Returns the internal ListView
-    function getInternalListView() {
+    function getInternalListView(): QtObject {
         for (var i = 0; i < tabBar.children.length; ++i) {
             if (tabBar.children[i].toString().startsWith("QQuickListView"))
                 return tabBar.children[i];
