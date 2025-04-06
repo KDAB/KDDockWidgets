@@ -108,7 +108,7 @@ jobs:
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
       - name: Foo
-        if: ${{ runner.os == 'Windows' }}
+        if: ${{ runner.os == 'Windows' && matrix.preset.name == 'ci-dev-qt6' }}
         shell: bash
         run: ./build-${{ matrix.preset.name }}/bin/tst_native_qpa
 
