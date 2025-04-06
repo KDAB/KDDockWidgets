@@ -107,6 +107,10 @@ jobs:
           QT_QUICK_BACKEND: software
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
+      - name: Foo
+        if: ${{ runner.os == 'Windows' }}
+        run: ./build-${{ matrix.preset.name }}/bin/tst_native_qpa
+
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose --output-on-failure
