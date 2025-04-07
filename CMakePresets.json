@@ -311,6 +311,14 @@
       }
     },
     {
+      "name": "release6-qml-module",
+      "inherits": "release6",
+      "binaryDir": "${sourceDir}/build-release6-qml-module",
+      "cacheVariables": {
+        "KDDockWidgets_QML_MODULE": "ON"
+      }
+    },
+    {
       "name": "dev6",
       "displayName": "dev6",
       "binaryDir": "${sourceDir}/build-dev6",
