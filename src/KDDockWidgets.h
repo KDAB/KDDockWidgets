@@ -436,7 +436,7 @@ inline T *findAncestor(QWidget *widget)
 template<typename T>
 T bound(T minVal, T value, T maxVal)
 {
-    return (std::max)(minVal, (std::min)(value, maxVal));
+    return ( std::max )(minVal, ( std::min )(value, maxVal));
 }
 
 inline bool fuzzyCompare(double a, double b, double epsilon = 0.0001)
