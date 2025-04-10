@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-
 # Launches the argument with CDB, prints backtrace of exit
 # Used to debug weird crashes in CI where process simply exits
 
