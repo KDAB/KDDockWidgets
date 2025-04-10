@@ -1,4 +1,7 @@
 bm msvcrt!exit
+bm ExitProcess
+sxe av
+sxe eh
 g
 .lines
 kv
