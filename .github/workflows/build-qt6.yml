@@ -111,6 +111,8 @@ jobs:
         shell: bash
         if: ${{ runner.os == 'Windows' && matrix.preset.name == 'ci-dev-qt6' }}
         run: .github/cdb.sh build-${{ matrix.preset.name }}/bin/tst_native_qpa.exe
+        env:
+          QT_DEBUG_PLUGINS: 1
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
