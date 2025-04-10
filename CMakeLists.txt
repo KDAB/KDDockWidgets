@@ -356,6 +356,8 @@ if(KDDockWidgets_DEVELOPER_MODE)
     # Enable assert() in developer mode, regardless of debug vs release
     add_definitions(-UNDEBUG)
 
+    # Enable Qml debugger in developer mode
+    add_definitions(-DQT_QML_DEBUG)
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
