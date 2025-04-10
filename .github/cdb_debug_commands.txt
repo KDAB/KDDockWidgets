@@ -1,0 +1,6 @@
+bm msvcrt!exit
+g
+.lines
+kv
+q
+
