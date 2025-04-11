@@ -1,6 +1,9 @@
-bm msvcrt!exit
-bm ExitProcess
+bm msvcrt!exit "k; g"
+bm kernel32!ExitProcess "k; g"
+bm ntdll!RtlExitUserThread "k; g"
+bp ntdll!NtTerminateProcess
 sxe av
+$ sxe eh
 sxe ib
 sxe gb
 g

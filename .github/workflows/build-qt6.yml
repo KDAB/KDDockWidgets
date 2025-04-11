@@ -110,7 +110,7 @@ jobs:
       - name: Foo
         shell: bash
         if: ${{ runner.os == 'Windows' && matrix.preset.name == 'ci-dev-qt6' }}
-        run: .github/cdb.sh build-${{ matrix.preset.name }}/bin/tst_native_qpa.exe
+        run: .github/cdb.sh -g -G -lines build-${{ matrix.preset.name }}/bin/tst_native_qpa.exe -style fusion
         env:
           QT_DEBUG_PLUGINS: 1
 
