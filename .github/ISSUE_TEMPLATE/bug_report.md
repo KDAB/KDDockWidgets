@@ -7,13 +7,17 @@ assignees: iamsergio
 
 ---
 
+For better prioritization of work, please:
+    - Commercial users: Report via our internal support e-mail.
+    - GPL users: Paste a url to your open-source app. Also be sure to test with
+      Qt 6 before reporting Qt 5 problems.
+
 ## Environment
 
 - OS:
 - Qt Version:
 - KDDockWidgets version:
 - KDDockWidgets QtQuick or QtWidgets ?
-- Is your application open-source, if so please paste url here:
 
 ## Self reproducible example
 
