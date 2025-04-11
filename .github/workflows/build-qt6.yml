@@ -28,7 +28,7 @@ jobs:
 
         preset:
           - name: ci-dev-qt6
-            qt_version: "6.3.*"
+            qt_version: "6.9.0"
           - name: ci-release-qt6
             qt_version: "6.3.*"
           - name: ci-qtwidgets-qt6
@@ -107,12 +107,11 @@ jobs:
           QT_QUICK_BACKEND: software
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
+      - name: Foo
+        shell: bash
+        if: ${{ runner.os == 'Windows' && matrix.preset.name == 'ci-dev-qt6' }}
+        run: ./build-${{ matrix.preset.name }}/bin/tst_native_qpa.exe -style fusion
+
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
-
-      - name: Read tests log when it fails
-        uses: andstor/file-reader-action@v1
-        if: ${{ failure() && startsWith(matrix.preset.name, 'ci-dev-') }}
-        with:
-          path: "./build-${{ matrix.preset.name }}/Testing/Temporary/LastTest.log"
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose --output-on-failure

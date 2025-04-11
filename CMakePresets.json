@@ -303,7 +303,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build-release6",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_QT6": "ON",
         "CMAKE_UNITY_BUILD": "OFF",
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
@@ -507,7 +507,7 @@
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
         "KDDockWidgets_QT6": "OFF",
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       }
     },
@@ -520,7 +520,7 @@
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
         "KDDockWidgets_QT6": "OFF",
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
     },
@@ -533,7 +533,7 @@
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
         "KDDockWidgets_QT6": "OFF",
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_FRONTENDS": "qtquick"
       }
     },
@@ -558,7 +558,7 @@
       "generator": "Ninja",
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_QT6": "ON",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       }
@@ -571,7 +571,7 @@
       "generator": "Ninja",
       "cacheVariables": {
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_QT6": "ON",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
