@@ -34,7 +34,9 @@
 
 #include "Window_p.h"
 #include "kdbindings/signal.h"
-
+#ifdef KDDW_FRONTEND_QT
+#include <QTimer>
+#endif
 #include <algorithm>
 
 using namespace KDDockWidgets;
@@ -410,30 +412,35 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
         result = false;
         break;
     }
+#ifdef KDDW_FRONTEND_QT
+    QTimer::singleShot(0, [=]() {
+#endif
+        if (result) {
+            // Window receiving the drop gets raised
+            // Window receiving the drop gets raised.
+            // Exception: Under EGLFS we don't raise the fullscreen main window, as then all floating
+            // windows would go behind. It's also unneeded to raise, as it's fullscreen.
 
-    if (result) {
-        // Window receiving the drop gets raised
-        // Window receiving the drop gets raised.
-        // Exception: Under EGLFS we don't raise the fullscreen main window, as then all floating
-        // windows would go behind. It's also unneeded to raise, as it's fullscreen.
+            const bool isEGLFSRootWindow =
+                isEGLFS() && (view()->window()->isFullScreen() || window()->isMaximized());
+            if (!isEGLFSRootWindow)
+                view()->raiseAndActivate();
 
-        const bool isEGLFSRootWindow =
-            isEGLFS() && (view()->window()->isFullScreen() || window()->isMaximized());
-        if (!isEGLFSRootWindow)
-            view()->raiseAndActivate();
-
-        if (needToFocusNewlyDroppedWidgets) {
-            // Let's also focus the newly dropped dock widget
-            if (!droppedDockWidgets.isEmpty()) {
-                // If more than 1 was dropped, we only focus the first one
-                Core::Group *group = droppedDockWidgets.first()->d->group();
-                group->FocusScope::focus(Qt::MouseFocusReason);
-            } else {
-                // Doesn't happen.
-                KDDW_ERROR("Nothing was dropped?");
+            if (needToFocusNewlyDroppedWidgets) {
+                // Let's also focus the newly dropped dock widget
+                if (!droppedDockWidgets.isEmpty()) {
+                    // If more than 1 was dropped, we only focus the first one
+                    Core::Group *group = droppedDockWidgets.first()->d->group();
+                    group->FocusScope::focus(Qt::MouseFocusReason);
+                } else {
+                    // Doesn't happen.
+                    KDDW_ERROR("Nothing was dropped?");
+                }
             }
         }
-    }
+#ifdef KDDW_FRONTEND_QT
+    }); // Qt bug workaround
+#endif
 
     return result;
 }
