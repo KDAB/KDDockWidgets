@@ -420,7 +420,15 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Core::Group *acceptingGro
         const bool isEGLFSRootWindow =
             isEGLFS() && (view()->window()->isFullScreen() || window()->isMaximized());
         if (!isEGLFSRootWindow)
+#ifdef Q_OS_MACOS
+            // On macOS there's weird flashing ( #608 ) when activating the main window.
+            // It's unneeded there, as the main window is always raised when we drag a floating window
+            // (unlike other platforms), so OK to skip it here.
+            if (!isInMainWindow())
+                view()->raiseAndActivate();
+#else
             view()->raiseAndActivate();
+#endif
 
         if (needToFocusNewlyDroppedWidgets) {
             // Let's also focus the newly dropped dock widget
