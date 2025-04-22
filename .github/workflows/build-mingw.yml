@@ -25,7 +25,7 @@ jobs:
       matrix:
         preset:
           - name: ci-dev-qt6
-            qt_version: "6.8.*"
+            qt_version: "6.9.*"
 
     steps:
       - name: Export IS_SELFHOSTED
