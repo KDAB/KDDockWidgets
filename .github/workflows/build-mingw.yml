@@ -1,0 +1,62 @@
+# SPDX-FileCopyrightText: 2025 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+# MinGW workflow is separate as it can potentially be quite different and we don't want too many ifs in the main workflow
+
+name: Build (MinGW Qt6)
+
+on:
+  push:
+    branches:
+      - main
+      - "2.2"
+  pull_request:
+    branches:
+      - main
+      - "2.2"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        preset:
+          - name: ci-dev-qt6
+            qt_version: "6.8.*"
+
+    steps:
+      - name: Export IS_SELFHOSTED
+        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
+
+      - name: Install Qt ${{ matrix.preset.qt_version }}
+        uses: jurplel/install-qt-action@v4
+        if: env.IS_SELFHOSTED != 1
+        with:
+          version: ${{ matrix.preset.qt_version }}
+          cache: true
+          arch: win64_llvm_mingw
+          tools: tools_llvm_mingw1706 tools_ninja
+
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Add MinGW to PATH
+        run: |
+          echo "${Qt6_DIR}/../../../Tools/llvm-mingw1706_64/bin" >> $GITHUB_PATH
+          echo "${Qt6_DIR}/../../../Tools/Ninja/bin" >> $GITHUB_PATH
+
+      - name: Configure project
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install
+
+      - name: Build Project
+        run: cmake --build ./build-${{ matrix.preset.name }} --verbose
+
+      - name: Install
+        run: cmake --build ./build-${{ matrix.preset.name }} --target install
+
+      - name: Run tests
+        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') }}
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
