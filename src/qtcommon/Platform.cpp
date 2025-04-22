@@ -374,6 +374,7 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
         || msg.contains(QLatin1String("QWindowsWindow::setGeometry"))
         || msg.contains(QLatin1String("This plugin does not support"))
         || msg.contains(QLatin1String("Note that Qt no longer ships fonts"))
+        || msg.contains(QLatin1String("Unable to set geometry"))
         || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"))
         || msg.contains(
             QLatin1String("There's multiple MainWindows, not sure what to do about parenting"))
