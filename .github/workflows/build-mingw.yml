@@ -39,6 +39,7 @@ jobs:
           cache: true
           arch: win64_llvm_mingw
           tools: tools_llvm_mingw1706 tools_ninja
+          modules: debug_info
 
       - name: Checkout sources
         uses: actions/checkout@v4
