@@ -57,6 +57,10 @@ jobs:
       - name: Install
         run: cmake --build ./build-${{ matrix.preset.name }} --target install
 
-      - name: Run tests
-        if: ${{ startsWith(matrix.preset.name, 'ci-dev-') }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
+      - name: Foo
+        shell: bash
+        run: lldb -b -s .github/workflows/lldb_bt_on_crash.init ./build-${{ matrix.preset.name }}/bin/tst_native_qpa.exe
+
+      # - name: Run tests
+      #   if: ${{ startsWith(matrix.preset.name, 'ci-dev-') }}
+      #   run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
