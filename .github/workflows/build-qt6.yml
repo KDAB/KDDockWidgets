@@ -102,14 +102,14 @@ jobs:
 
       - name: Run tests on Linux
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
         env:
           QT_QUICK_BACKEND: software
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
 
       - name: Read tests log when it fails
         uses: andstor/file-reader-action@v1

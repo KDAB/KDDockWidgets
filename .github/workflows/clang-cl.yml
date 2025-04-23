@@ -55,4 +55,4 @@ jobs:
         run: cmake --build ./build-${{ matrix.preset.name }} --target install
 
       - name: Run tests
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
