@@ -28,7 +28,7 @@ jobs:
 
         preset:
           - name: ci-dev-qt6
-            qt_version: "6.3.*"
+            qt_version: "6.9.0"
           - name: ci-release-qt6
             qt_version: "6.3.*"
           - name: ci-qtwidgets-qt6
@@ -109,10 +109,4 @@ jobs:
 
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
-
-      - name: Read tests log when it fails
-        uses: andstor/file-reader-action@v1
-        if: ${{ failure() && startsWith(matrix.preset.name, 'ci-dev-') }}
-        with:
-          path: "./build-${{ matrix.preset.name }}/Testing/Temporary/LastTest.log"
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose --output-on-failure -j 4
