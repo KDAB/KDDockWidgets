@@ -1,0 +1,16 @@
+$ SPDX-FileCopyrightText: 2025 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+$
+$ SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+bm msvcrt!exit "k; g"
+bm kernel32!ExitProcess "k; g"
+bm ntdll!RtlExitUserThread "k; g"
+bp ntdll!NtTerminateProcess
+sxe av
+$ sxe eh
+sxe ib
+sxe gb
+g
+.lines
+kv
+q
