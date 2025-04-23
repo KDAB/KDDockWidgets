@@ -370,6 +370,14 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
     if (category == QLatin1String("qt.qpa.xcb"))
         return true;
 
+#ifdef Q_OS_WIN
+#if QT_VERSION == QT_VERSION_CHECK(6, 9, 0)
+    // QTBUG-135844
+    if (qGuiApp->applicationFilePath().contains(QLatin1String("tst_native_qpa.exe")))
+        return true;
+#endif
+#endif
+
     return msg.contains(QLatin1String("QSocketNotifier: Invalid socket"))
         || msg.contains(QLatin1String("QWindowsWindow::setGeometry"))
         || msg.contains(QLatin1String("This plugin does not support"))
