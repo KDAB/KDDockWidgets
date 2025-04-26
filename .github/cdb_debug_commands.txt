@@ -2,15 +2,5 @@ $ SPDX-FileCopyrightText: 2025 Klarälvdalens Datakonsult AB, a KDAB Group compa
 $
 $ SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-bm msvcrt!exit "k; g"
-bm kernel32!ExitProcess "k; g"
-bm ntdll!RtlExitUserThread "k; g"
-bp ntdll!NtTerminateProcess
-sxe av
-$ sxe eh
-sxe ib
-sxe gb
+sxe -c ".dump /ma /u .\crash.dmp; q" av
 g
-.lines
-kv
-q
