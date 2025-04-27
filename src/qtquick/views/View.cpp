@@ -9,6 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include <qglobal.h>
+
+#if QT_VERSION == QT_VERSION_CHECK(6, 10, 0)
+// Compile failure in Qt QtQuick private headers
+#undef QT_NO_CAST_FROM_BYTEARRAY
+#endif
+
 #include "View.h"
 #include "core/Utils_p.h"
 #include "core/View_p.h"
