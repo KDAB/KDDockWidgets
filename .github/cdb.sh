@@ -7,4 +7,4 @@
 # Launches the argument with CDB, prints backtrace of exit
 # Used to debug weird crashes in CI where process simply exits
 
-"/C/Program Files (x86)/Windows Kits/10/Debuggers/x64/cdb.exe" -G -cfr cdb_debug_commands.txt $*
+"/C/Program Files (x86)/Windows Kits/10/Debuggers/x64/cdb.exe" -G -cfr cdb_debug_commands.txt "$*"
