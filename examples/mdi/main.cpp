@@ -27,8 +27,8 @@ int main(int argc, char **argv)
 #endif
     QApplication app(argc, argv);
 
-    app.setOrganizationName(QStringLiteral("KDAB"));
-    app.setApplicationName(QStringLiteral("Test app"));
+    QCoreApplication::setOrganizationName(QStringLiteral("KDAB"));
+    QCoreApplication::setApplicationName(QStringLiteral("Test app"));
 
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 

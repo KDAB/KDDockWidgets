@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 #endif
     QApplication app(argc, argv);
 
-    app.setOrganizationName(QStringLiteral("KDAB"));
-    app.setApplicationName(QStringLiteral("App supporting both docking and a MDI area"));
+    QCoreApplication::setOrganizationName(QStringLiteral("KDAB"));
+    QCoreApplication::setApplicationName(QStringLiteral("App supporting both docking and a MDI area"));
 
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 

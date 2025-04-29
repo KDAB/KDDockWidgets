@@ -35,8 +35,8 @@ int main(int argc, char **argv)
         QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
         QApplication app(argc, argv);
-        app.setOrganizationName(QStringLiteral("KDAB"));
-        app.setApplicationName(QStringLiteral("Test app"));
+        QCoreApplication::setOrganizationName(QStringLiteral("KDAB"));
+        QCoreApplication::setApplicationName(QStringLiteral("Test app"));
         qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
         KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
