@@ -5,6 +5,7 @@
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
   - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
   - Internal nlohmann bumped to v3.12
+  - Fix crash when using QAction to float tabs
 
 * v2.2.3
   - Fix potential crash found by ASAN
