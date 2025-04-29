@@ -355,11 +355,17 @@ if(KDDockWidgets_DEVELOPER_MODE)
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
         else()
             set(CMAKE_CXX_FLAGS
-                "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls"
+                "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=undefined"
             )
             set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -fsanitize=address -fsanitize=undefined")
             set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address -fsanitize=undefined")
         endif()
+    endif()
+
+    if (NOT MSVC)
+        set(CMAKE_CXX_FLAGS
+            "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fno-optimize-sibling-calls"
+        )
     endif()
 
     # Enable assert() in developer mode, regardless of debug vs release
