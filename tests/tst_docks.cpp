@@ -4626,6 +4626,34 @@ void TestDocks::tst_floatingAction()
         QVERIFY(!dock2->floatAction()->isChecked());
         QVERIFY(!dock1->floatAction()->isChecked());
     }
+
+    {
+        EnsureTopLevelsDeleted e;
+
+        // Here we test:
+        // - main window with 1 docked widgets, and a dockwidget2 that's floating
+        // - tab dock1 into dockwidget2 (they are tabbed now)
+        // - toggle the float action of dockwidget1
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+
+        m->addDockWidget(dock1, Location_OnLeft);
+        dock2->show();
+
+        dock2->addDockWidgetAsTab(dock1);
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock2->isFloating());
+
+        {
+            SetExpectedWarning sew("Got exception in signal");
+            dock1->floatAction()->toggle();
+        }
+
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock2->isFloating());
+    }
 }
 
 void TestDocks::tst_raise()
