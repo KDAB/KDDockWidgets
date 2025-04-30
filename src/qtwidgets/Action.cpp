@@ -25,8 +25,9 @@ Action::Action(Core::DockWidget *dw, const char *debugName)
         if (m_lastCheckedState != checked) {
             m_lastCheckedState = checked;
             if (!signalsBlocked()) {
-                KDDW_TRACE("Action::toggled({}) ; dw={} ; {}", checked, ( void * )d->dockWidget, d->debugName);
+                blockSignals(true); // user might call the QAction directly, so protect here as well
                 safeEmitSignal(d->toggled, checked);
+                blockSignals(false);
             }
         }
     });
