@@ -46,4 +46,4 @@ jobs:
         run: cmake --build ./build-dev6
 
       - name: Run tests on macOS
-        run: ctest --test-dir ./build-dev6 --verbose
+        run: ctest --test-dir ./build-dev6 --verbose -j 4
