@@ -4646,10 +4646,7 @@ void TestDocks::tst_floatingAction()
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
 
-        {
-            SetExpectedWarning sew("Got exception in signal");
-            dock1->floatAction()->toggle();
-        }
+        dock1->floatAction()->toggle();
 
         QVERIFY(dock1->isFloating());
         QVERIFY(dock2->isFloating());
