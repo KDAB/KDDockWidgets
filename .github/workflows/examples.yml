@@ -23,7 +23,7 @@ jobs:
         os:
           - ubuntu-24.04
           - windows-2022
-          - macos-13
+          - macos-14
         preset:
           - release6
           - ci-release-static-qt6

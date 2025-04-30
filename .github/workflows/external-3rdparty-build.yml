@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: Install Qt 6.7.2
         uses: jurplel/install-qt-action@v4
