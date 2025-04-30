@@ -102,7 +102,7 @@ jobs:
 
       - name: Run tests on Linux (offscreen)
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure -j 4
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
