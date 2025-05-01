@@ -194,7 +194,7 @@
       "binaryDir": "${sourceDir}/build-clazy",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "KDDockWidgets_QT6": "OFF",
+        "KDDockWidgets_QT6": "ON",
         "KDDockWidgets_WERROR": "ON",
         "KDDockWidgets_EXAMPLES": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
