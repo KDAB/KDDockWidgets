@@ -11,6 +11,7 @@
 # Docker container used by self-hosted runner
 
 # docker build --build-arg GITHUB_RUNNER_TOKEN=<TOKEN> -t kddw_gh_runner .
+# docker build --build-arg GITHUB_RUNNER_TOKEN=<TOKEN2> -t kddw_gh_runner2 .
 # docker run -it kddw_gh_runner /home/ubuntu/actions-runner/run.sh
 
 FROM ubuntu:24.04
