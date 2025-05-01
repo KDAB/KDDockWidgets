@@ -30,7 +30,7 @@ public:
     ~CustomFrameHelper() override;
 
 public Q_SLOTS:
-    void applyCustomFrame(Core::Window::Ptr);
+    void applyCustomFrame(KDDockWidgets::Core::Window::Ptr);
 
 protected:
     bool nativeEventFilter(const QByteArray &eventType, void *message,
