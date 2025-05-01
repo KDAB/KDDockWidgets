@@ -35,6 +35,10 @@ jobs:
             qt_version: "5.15"
           - name: ci-qtquick-qt5
             qt_version: "5.15"
+          - name: ci-release-static-qt5
+            qt_version: "5.15"
+          - name: ci-dev-static-qt5
+            qt_version: "5.15"
 
     steps:
       - name: Export IS_SELFHOSTED

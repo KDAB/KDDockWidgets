@@ -23,7 +23,7 @@ jobs:
       matrix:
         os:
           - ubuntu-24.04
-          - windows-latest
+          - windows-2022
           - macos-15
 
         preset:
@@ -36,6 +36,8 @@ jobs:
           - name: ci-qtquick-qt6
             qt_version: "6.3.*"
           - name: ci-dev-static-qt6
+            qt_version: "6.3.*"
+          - name: ci-release-static-qt6
             qt_version: "6.3.*"
 
         include:

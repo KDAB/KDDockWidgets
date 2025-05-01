@@ -2,14 +2,14 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Static, python, clang-tidy and valgrind
+name: python, clang-tidy and valgrind
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-      - 2.2
+      - "2.2"
   pull_request:
     branches:
       - main
@@ -23,44 +23,26 @@ jobs:
       matrix:
         os:
           - ubuntu-24.04
-          - windows-2022
-          - windows-2019
-          - macos-14
 
         preset:
-          - name: ci-release-static-qt5
-            qt_version: "5.15"
-          - name: ci-dev-static-qt5
-            qt_version: "5.15"
           - name: ci-python-qt6
             qt_version: "6.6.0"
-          - name: ci-release-static-qt6
+
+          - name: ci-clang-tidy-qt6
             qt_version: "6.3.*"
-          - name: ci-dev-static-qt6
-            qt_version: "6.3.*"
 
-        include:
-          - os: ubuntu-24.04
-            preset:
-              name: ci-clang-tidy-qt6
-              qt_version: "6.3.*"
+          - name: clazy
+            build_preset_arg: "--preset=clazy"
+            qt_version: "5.15"
 
-          - os: ubuntu-24.04
-            preset:
-              name: clazy
-              build_preset_arg: '--preset=clazy'
-              qt_version: "5.15"
-
-          - os: ubuntu-24.04
-            preset:
-              name: ci-dev-valgrind-qt6
-              qt_version: "6.5.*"
+          - name: ci-dev-valgrind-qt6
+            qt_version: "6.5.*"
 
     steps:
       - name: Export IS_SELFHOSTED
         run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
 
-      - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
+      - name: Install Qt ${{ matrix.preset.qt_version }}
         uses: jurplel/install-qt-action@v4
         if: env.IS_SELFHOSTED != 1
         with:
@@ -77,32 +59,25 @@ jobs:
           sudo apt install libspdlog-dev lld valgrind clazy llvm -y
 
       - uses: actions/checkout@v4
-        #with:
-          #ref: '2.0' # schedule.cron do not allow branch setting
 
       - uses: actions/setup-python@v5
         with:
-          cache: 'pip'
-          cache-dependency-path: '.github/workflows/pip-requirements.txt'
-          python-version: '3.9'
+          cache: "pip"
+          cache-dependency-path: ".github/workflows/pip-requirements.txt"
+          python-version: "3.9"
 
       - run: pip3.9 install -r .github/workflows/pip-requirements.txt
-
-      - name: Make sure MSVC is found when Ninja generator is in use
-        if: ${{ runner.os == 'Windows' }}
-        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
 
-      # python on windows-2022 has a msvc problem
       - name: Build Project ${{ matrix.preset.build_preset_arg }}
         if: ${{ matrix.os != 'windows-2022' || matrix.preset.name != 'ci-python-qt6' }}
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
 
       - name: Run tests on Linux (offscreen)
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os == 'Linux' }}
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure -j 4
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
