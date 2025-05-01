@@ -2272,6 +2272,7 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
         // Each grower will grow a bit (round-robin)
         auto toGrow = std::max(1, amountAvailableToGrow / int(indexesOfGrowers.size()));
 
+        // TODO: Use cbegin/cend once we drop Qt 5
         for (auto it = indexesOfGrowers.begin(); it != indexesOfGrowers.end();) {
             const int index = *it;
             SizingInfo &sizing = sizes[index];
@@ -2286,7 +2287,7 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
 
             if (sizing.availableToGrow(m_orientation) == 0) {
                 // It's no longer a grower
-                it = indexesOfGrowers.erase(it);
+                it = indexesOfGrowers.erase(it); // clazy:exclude=strict-iterators
             } else {
                 it++;
             }
@@ -2298,6 +2299,7 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
         // Each shrinker will shrink a bit (round-robin)
         auto toShrink = std::max(1, amountNeededToShrink / int(indexesOfShrinkers.size()));
 
+        // TODO: Use cbegin/cend once we drop Qt 5
         for (auto it = indexesOfShrinkers.begin(); it != indexesOfShrinkers.end();) {
             const int index = *it;
             SizingInfo &sizing = sizes[index];
@@ -2312,7 +2314,7 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
 
             if (sizing.neededToShrink(m_orientation) == 0) {
                 // It's no longer a shrinker
-                it = indexesOfShrinkers.erase(it);
+                it = indexesOfShrinkers.erase(it); // clazy:exclude=strict-iterators
             } else {
                 it++;
             }
@@ -3246,6 +3248,7 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
     NeighbourSqueezeStrategy strategy, bool reversed) const
 {
     Vector<int> availabilities;
+    availabilities.reserve(std::distance(begin, end));
     for (auto it = begin; it < end; ++it) {
         availabilities.push_back(it->availableLength(d->m_orientation));
     }
