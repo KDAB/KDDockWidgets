@@ -7,3 +7,7 @@ services:
     image: kddw_gh_runner
     command: /home/ubuntu/actions-runner/run.sh
     restart: always
+  github-runner2:
+    image: kddw_gh_runner2
+    command: /home/ubuntu/actions-runner/run.sh
+    restart: always
