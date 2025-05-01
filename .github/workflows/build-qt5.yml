@@ -31,12 +31,6 @@ jobs:
             qt_version: "5.15"
           - name: ci-release-qt5
             qt_version: "5.15"
-          - name: ci-qtwidgets-qt5
-            qt_version: "5.15"
-          - name: ci-qtquick-qt5
-            qt_version: "5.15"
-          - name: ci-release-static-qt5
-            qt_version: "5.15"
           - name: ci-dev-static-qt5
             qt_version: "5.15"
 
