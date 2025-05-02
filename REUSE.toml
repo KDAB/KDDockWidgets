@@ -76,6 +76,7 @@ path = [
     "src/3rdparty/kdbindings/sha1.txt",
     "src/3rdparty/nlohmann/nlohmann/sha1.txt",
     "examples/vcpkg/.gitignore",
+    "version.txt"
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"
