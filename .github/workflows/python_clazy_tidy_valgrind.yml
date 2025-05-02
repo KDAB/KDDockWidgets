@@ -33,7 +33,7 @@ jobs:
 
           - name: clazy
             build_preset_arg: "--preset=clazy"
-            qt_version: "5.15"
+            qt_version: "6.5.0"
 
           - name: ci-dev-valgrind-qt6
             qt_version: "6.5.*"
