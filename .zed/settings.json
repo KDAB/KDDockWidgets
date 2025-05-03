@@ -1,0 +1,10 @@
+{
+  "languages": {
+    "Dart": {
+      "enable_language_server": false
+    },
+    "Python": {
+      "enable_language_server": false
+    }
+  }
+}
