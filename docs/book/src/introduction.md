@@ -48,7 +48,7 @@ creative with their requests, so it was clear we needed a better docking framewo
     - Customize window frames
     - Custom widget separators
 - Cross-platform (macOS, Linux, Windows, WebAssembly, Wayland, X11/XCB, EGLFS are working)
-  See README-Wayland.md and README-WASM.md for platform specific information.
+  See [Wayland](qpa-wayland.md) and [WebAssembly](qpa-wasm.md) for platform specific information.
 - Layouting engine honouring min/max size constraints and some size policies
 - PySide bindings
 - Clean codebase
