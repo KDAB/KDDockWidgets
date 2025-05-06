@@ -731,6 +731,21 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
 
     if (!child || !m_floatingWindow->equals(child->rootView()))
         return false;
+
+    const bool parentIsDockWidget = [&child]() -> bool {
+        auto parent = child->parentView();
+        while (parent) {
+            if (parent->is(Core::ViewType::DockWidget))
+                return true;
+            parent = parent->parentView();
+        }
+        return false;
+    }();
+    if (parentIsDockWidget) {
+        // we don't want to filter this message for native widgets contained in the dock widget
+        return false;
+    }
+
     const bool isThisWindow = m_floatingWindow->equals(child);
 
     if (!isThisWindow) {
