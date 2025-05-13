@@ -637,6 +637,21 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
     QWidget *child = QWidget::find(wid);
     if (!child || child->window() != m_floatingWindow)
         return false;
+
+    const bool parentIsDockWidget = [child]() -> bool {
+        const auto *parent = child->parentWidget();
+        while (parent) {
+            if (qobject_cast<const DockWidgetBase *>(parent))
+                return true;
+            parent = parent->parentWidget();
+        }
+        return false;
+    }();
+    if (parentIsDockWidget) {
+        // we don't want to filter this message for native widgets contained in the dock widget
+        return false;
+    }
+
     const bool isThisWindow = child == m_floatingWindow;
 
     if (!isThisWindow) {
