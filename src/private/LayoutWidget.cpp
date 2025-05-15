@@ -153,7 +153,8 @@ void LayoutWidget::setLayoutSize(QSize size)
         Layouting::ChildrenResizeStrategy strategy = Layouting::ChildrenResizeStrategy::Percentage;
         const auto *main = mainWindow();
         if (!restoreInProgress && main && main->options() & MainWindowOption_CentralWidgetGetsAllExtraSpace)
-            strategy = Layouting::ChildrenResizeStrategy::GiveDropAreaWithCentralFrameAllExtra;;
+            strategy = Layouting::ChildrenResizeStrategy::GiveDropAreaWithCentralFrameAllExtra;
+        ;
 
         m_rootItem->setSize_recursive(size, strategy);
 
