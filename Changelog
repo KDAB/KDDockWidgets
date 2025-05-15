@@ -3,6 +3,7 @@
  - Added Config::Flag_AutoHideAsTabGroups, which allows all tabs to go to/from sidebar at once.
  - Fixed resize gap of auto-hide overlay resize on its left border
  - Blacklisted Qt 6.6.1 and 6.5.3 on Windows due to QTBUG-117704
+ - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
 
 * v1.7.0 (03 May 2023)
  - Introduce DockWidget::setFloatingWindowFlags(flags). Allows for different

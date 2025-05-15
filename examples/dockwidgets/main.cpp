@@ -132,6 +132,13 @@ int main(int argc, char **argv)
                                      QCoreApplication::translate("main", "The main window will have a non-detachable central widget"));
     parser.addOption(centralWidget);
 
+    QCommandLineOption centralWidgetAllExtraSize(
+        "central-widget-all-extra-size",
+        QCoreApplication::translate("main",
+                                    "The main window will have a non-detachable central widget which "
+                                    "gets all the extra space when the window is enlarged (imples --central-widget"));
+    parser.addOption(centralWidgetAllExtraSize);
+
     QCommandLineOption ctxtMenuOnTabs("allow-switch-tabs-via-menu",
                                       QCoreApplication::translate("main", "Allow switching tabs via context menu in tabs area"));
     parser.addOption(ctxtMenuOnTabs);
@@ -183,6 +190,11 @@ int main(int argc, char **argv)
 
     if (parser.isSet(centralWidget))
         options |= MainWindowOption_HasCentralWidget;
+
+    if (parser.isSet(centralWidgetAllExtraSize)) {
+        options |= MainWindowOption_HasCentralWidget;
+        options |= MainWindowOption_CentralWidgetGetsAllExtraSpace;
+    }
 
     if (parser.isSet(noQtTool))
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;

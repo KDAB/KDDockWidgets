@@ -55,7 +55,8 @@ Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption)
 enum class ChildrenResizeStrategy {
     Percentage, ///< Resizes the container in a way that all children will keep occupying the same percentage
     Side1SeparatorMove, ///< When resizing a container, it takes/adds space from Side1 children first
-    Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
+    Side2SeparatorMove, ///< When resizing a container, it takes/adds space from Side2 children first
+    GiveDropAreaWithCentralFrameAllExtra ///< When resizing a container, it gives all extra space to a drop area with central frame fix, otherwise same as Percentage
 };
 Q_ENUM_NS(ChildrenResizeStrategy)
 

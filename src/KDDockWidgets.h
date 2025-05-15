@@ -56,6 +56,7 @@ enum MainWindowOption {
     MainWindowOption_MDI = 2, ///> The layout will be MDI. DockWidgets can have arbitrary positions, not restricted by any layout
     MainWindowOption_HasCentralWidget = 4 | MainWindowOption_HasCentralFrame, ///> Similar to MainWindowOption_HasCentralFrame but
     ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa MainWindowBase::setPersistentCentralWidget()
+    MainWindowOption_CentralWidgetGetsAllExtraSpace = 32, ///> defines that all resize events to the main window lead to the central widget getting all extra space
 };
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
