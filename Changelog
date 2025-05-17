@@ -8,9 +8,11 @@
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
   - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
   - Internal nlohmann bumped to v3.12
-  - Fix crash when using QAction to float tabs
   - QtWidgets::ViewFactory::createTitleBarButton() is now virtual
   - Support window managers without translucency in Qt 6 (#629)
+
+* v2.2.4
+  - Fix crash when using QAction to float tabs
 
 * v2.2.3
   - Fix potential crash found by ASAN
