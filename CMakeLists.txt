@@ -90,7 +90,7 @@ list(GET KDDW_VERSION_LIST 1 KDDockWidgets_VERSION_MINOR)
 list(GET KDDW_VERSION_LIST 2 KDDockWidgets_VERSION_PATCH)
 
 set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by some ECM modules
-set(KDDockWidgets_SOVERSION "2.2")
+set(KDDockWidgets_SOVERSION "3")
 
 include(FeatureSummary)
 

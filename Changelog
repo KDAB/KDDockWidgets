@@ -1,11 +1,13 @@
 * v2.3.0
   - KDDockWidgets now looks for Qt6 by default, rather than Qt5. If your Qt5
     build broke, pass -DKDDockWidgets_QT6=OFF to CMake.
+  - Library soname bump
   - qtquick: Add QtQuick::IndicatorWindow::setQuickWindowCreationCallback
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
   - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
   - Internal nlohmann bumped to v3.12
   - Fix crash when using QAction to float tabs
+  - QtWidgets::ViewFactory::createTitleBarButton() is now virtual
 
 * v2.2.3
   - Fix potential crash found by ASAN

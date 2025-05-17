@@ -74,7 +74,7 @@ public:
     Core::View *createMDILayout(Core::MDILayout *, Core::View *parent) const override;
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     void clearIconCache();
-    QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
+    virtual QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
     Core::ClassicIndicatorWindowViewInterface *
     createClassicIndicatorWindow(Core::ClassicDropIndicatorOverlay *, Core::View *parent) const override;
