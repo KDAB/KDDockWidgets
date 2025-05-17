@@ -6,7 +6,7 @@
 - Qt 5.15.x or Qt6 >= 6.2
 - Ninja (Other generators might work but are untested)
 - C++17 capable compiler. Minimum VS2019 on Windows.
-- Qt X11Extras module if on Linux/X11
+- Qt X11Extras module if on Linux/X11 (only if Qt 5)
 - Qt Quick and QuickControls2 modules if using the QtQuick support
 - Qt private development headers, for instance, for Qt5:
   - SUSE: libqt5-qtbase-private-headers-devel
