@@ -382,6 +382,12 @@ if(KDDW_FRONTEND_QTWIDGETS)
         PUBLIC Qt${QT_VERSION_MAJOR}::Widgets
         PRIVATE Qt${QT_VERSION_MAJOR}::WidgetsPrivate
     )
+
+    if(KDDockWidgets_QT6)
+        target_link_libraries(kddockwidgets PRIVATE Qt6::GuiPrivate # qx11extras_p.h
+        )
+    endif()
+
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTWIDGETS KDDW_FRONTEND_QT)
 endif()
 
