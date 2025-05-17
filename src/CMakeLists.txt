@@ -384,9 +384,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
     )
 
     if(KDDockWidgets_QT6)
-        target_link_libraries(
-            kddockwidgets
-            PRIVATE Qt6::GuiPrivate # qx11extras_p.h
+        target_link_libraries(kddockwidgets PRIVATE Qt6::GuiPrivate # qx11extras_p.h
         )
     endif()
 
