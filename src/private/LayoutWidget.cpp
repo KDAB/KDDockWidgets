@@ -149,8 +149,16 @@ void LayoutWidget::unrefOldPlaceholders(const Frame::List &framesBeingAdded) con
 void LayoutWidget::setLayoutSize(QSize size)
 {
     if (size != this->size()) {
-        m_rootItem->setSize_recursive(size);
-        if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
+        const bool restoreInProgress = LayoutSaver::restoreInProgress();
+        Layouting::ChildrenResizeStrategy strategy = Layouting::ChildrenResizeStrategy::Percentage;
+        const auto *main = mainWindow();
+        if (!restoreInProgress && main && main->options() & MainWindowOption_CentralWidgetGetsAllExtraSpace)
+            strategy = Layouting::ChildrenResizeStrategy::GiveDropAreaWithCentralFrameAllExtra;
+        ;
+
+        m_rootItem->setSize_recursive(size, strategy);
+
+        if (!m_inResizeEvent && !restoreInProgress)
             resize(size);
     }
 }
