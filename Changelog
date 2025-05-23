@@ -10,6 +10,7 @@
   - Internal nlohmann bumped to v3.12
   - QtWidgets::ViewFactory::createTitleBarButton() is now virtual
   - Support window managers without translucency in Qt 6 (#629)
+  - Add Config::Flag_DisableDoubleClick
 
 * v2.2.4
   - Fix crash when using QAction to float tabs
