@@ -13,24 +13,24 @@ set -e
 
 SCRIPT_PATH=$(dirname "$(readlink -f "$0")")
 
-cd $SCRIPT_PATH
+cd "$SCRIPT_PATH"
 docker build -t kddw-qt6-asan -f Dockerfile_qtasan .
 
 CONTAINER_ID=$(docker run -d -it kddw-qt6-asan bash)
 echo "Container started with ID: $CONTAINER_ID"
 
 echo "exporting..."
-docker export -o mycontainer.tar $CONTAINER_ID
+docker export -o mycontainer.tar "$CONTAINER_ID"
 
 echo "importing..."
 IMPORTED_IMAGE=$(docker import mycontainer.tar)
 
 echo "tagging.. $IMPORTED_IMAGE"
-docker tag $IMPORTED_IMAGE iamsergio/kddw-qt6-asan
+docker tag "$IMPORTED_IMAGE" iamsergio/kddw-qt6-asan
 
 echo "pushing..."
 docker push iamsergio/kddw-qt6-asan
 
 echo "killing..."
-docker kill $CONTAINER_ID
+docker kill "$CONTAINER_ID"
 rm mycontainer.tar
