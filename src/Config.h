@@ -131,6 +131,7 @@ public:
         Flag_AllowSwitchingTabsViaMenu = 0x80000, ///< Allow switching tabs via a context menu when
                                                   ///< right clicking on the tab area
         Flag_AutoHideAsTabGroups = 0x100000, ///< If tabbed dockwidgets are sent to/from sidebar, they're all sent and restored together
+        Flag_DisableDoubleClick = 0x200000, ///< Do not maximize of float if a title or tab is double-clicked.
         Flag_Default = Flag_AeroSnapWithClientDecos ///< The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

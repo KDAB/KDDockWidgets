@@ -167,7 +167,9 @@ Icon TitleBar::icon() const
 
 bool TitleBar::onDoubleClicked()
 {
-    if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes) && m_floatingWindow) {
+    if (Config::self().flags() & Config::Flag_DisableDoubleClick) {
+        return false;
+    } else if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes) && m_floatingWindow) {
         // Not using isFloating(), as that can be a dock widget nested in a floating window. By
         // convention it's floating, but it's not the title bar of the top-level window.
         toggleMaximized();
