@@ -1,3 +1,6 @@
+* v2.2.5
+  - Fix version being reported as 2.2.3
+
 * v2.2.4
   - Fix crash when using QAction to float tabs
 
