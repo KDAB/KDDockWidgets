@@ -36,7 +36,6 @@ class MyProxy : public QProxyStyle
     Q_OBJECT
 public:
     MyProxy()
-        : QProxyStyle(qApp->style())
     {
         setParent(qApp);
     }
