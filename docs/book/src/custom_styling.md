@@ -28,3 +28,9 @@ See `examples/dockwidgets/MyViewFactory.h` for QtWidgets, or `examples/qtquick/c
 `Qt StyleSheets` are not, and will not, be supported. See the comments in
 `examples/dockwidgets/MyTitleBar_CSS.h` for why. You can however use some minimal
 CSS, as shown in that example, just don't report bugs about it.
+
+## Known Issues
+
+- tabbars use a `QProxyStyle` to workaround a Qt bug. That proxy style is based on the `QApplication`'s style.
+If you later change `QApplication`'s style, that won't propagate to the existing `QProxyStyle`. See possible
+workaround in https://github.com/KDAB/KDDockWidgets/issues/635
