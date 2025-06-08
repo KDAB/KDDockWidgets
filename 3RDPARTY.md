@@ -7,6 +7,7 @@ Here we list which 3rdparty software used and possibly shipped by KDDW and their
 ### nlohmann JSON
 
 JSON c++ library.<br>
+Copyright 2013 - 2025 Niels Lohmann <https://nlohmann.me>
 [code](src/3rdparty/nlohmann/nlohmann/json.hpp)<br>
 [MIT licensed](LICENSES/MIT.txt)
 
@@ -14,6 +15,8 @@ JSON c++ library.<br>
 
 Non-Qt signal/slot implementation.
 
+Copyright 2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+`src/3rdparty/kdbindings/genindex_array.h` is Copyright 2021 Jeremy Burns
 [code](src/3rdparty/kdbindings/)<br>
 [MIT licensed](LICENSES/MIT.txt)
 
@@ -22,6 +25,7 @@ Non-Qt signal/slot implementation.
 Only used for a Flutter build.
 Replacement for QVector.
 
+Copyright (C) 2021 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 [code](src/3rdparty/kdtoolbox/KDStlContainerAdaptor.h)<br>
 [MIT licensed](LICENSES/MIT.txt)
 
@@ -41,13 +45,6 @@ CMake build helpers.
 Template to generate documentation.
 
 [code](docs/api/doxygen-awesome.css)<br>
-[MIT licensed](LICENSES/MIT.txt)
-
-### QCoro
-
-co-routine Qt implementation, only used by Flutter unit-tests.
-
-[code](src/3rdparty/qcoro/)<br>
 [MIT licensed](LICENSES/MIT.txt)
 
 ### Flutter embedder and generated files
