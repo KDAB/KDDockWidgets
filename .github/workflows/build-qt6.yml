@@ -40,17 +40,6 @@ jobs:
           - name: ci-release-static-qt6
             qt_version: "6.3.*"
 
-        include:
-          - os: ubuntu-latest
-            preset:
-              name: ci-python-qt6
-              qt_version: "6.6.0"
-              detect_leaks: 0
-              apt_pgks:
-                - llvm
-              pip_pgks:
-                - shiboken6-generator==6.6.0 pyside6==6.6.0
-
     steps:
       - name: Export IS_SELFHOSTED
         run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
@@ -73,10 +62,6 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt install libspdlog-dev -y
-
-      - name: Install Python dependencies (${{ join(matrix.preset.pip_pgks, ' ') }})
-        if: ${{ matrix.preset.pip_pgks }}
-        run: echo ${{ join(matrix.preset.pip_pgks, ' ') }} | xargs pip install
 
       - name: Install ninja (Windows / Linux)
         if: ${{ runner.os != 'macOS' }}
