@@ -456,6 +456,16 @@ public:
     void setUserType(int userType);
     int userType() const;
 
+#ifdef KDDW_FRONTEND_QT
+    /// @brief Sets user data that can be attached to this dock widget
+    /// The user data is serialized when using LayoutSaver and can be retrieved with userData().
+    /// KDDW does not read or care about the contents of this data.
+    void setUserData(const QVariantMap &userData);
+
+    /// @brief Returns the user data attached to this dock widget
+    QVariantMap userData() const;
+#endif
+
     /// @brief Sets this dock widgets position to pos within the MDI layout
     /// This only applies if the main window is in MDI mode, which it is not by default
     void setMDIPosition(Point pos);

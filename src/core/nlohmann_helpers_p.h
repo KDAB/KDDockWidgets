@@ -15,6 +15,10 @@
 #include "QtCompat_p.h"
 
 #include <nlohmann/json.hpp>
+#ifdef KDDW_FRONTEND_QT
+#include <QVariant>
+#include <QVariantMap>
+#endif
 
 namespace KDDockWidgets {
 
@@ -104,5 +108,87 @@ inline void from_json(const nlohmann::json &j, QRect &rect)
 }
 
 #endif
+
+inline void to_json(nlohmann::json &j, const QVariant &v)
+{
+    if (v.isNull()) {
+        j = nullptr;
+    } else if (v.typeId() == QMetaType::QString) {
+        j = v.toString().toStdString();
+    } else if (v.typeId() == QMetaType::Bool) {
+        j = v.toBool();
+    } else if (v.typeId() == QMetaType::Int) {
+        j = v.toInt();
+    } else if (v.typeId() == QMetaType::Double) {
+        j = v.toDouble();
+    } else if (v.typeId() == QMetaType::QStringList) {
+        QStringList list = v.toStringList();
+        j = nlohmann::json::array();
+        for (const auto &s : list)
+            j.push_back(s.toStdString());
+    } else if (v.typeId() == QMetaType::QVariantMap) {
+        j = v.toMap();
+    } else if (v.typeId() == QMetaType::QVariantList) {
+        QVariantList list = v.toList();
+        j = nlohmann::json::array();
+        for (const auto &item : list)
+            j.push_back(item);
+    } else {
+        // fallback for unknown types
+        j = v.toString().toStdString();
+    }
+}
+
+inline void from_json(const nlohmann::json &j, QVariant &v)
+{
+    if (j.is_null()) {
+        v = QVariant();
+    } else if (j.is_string()) {
+        v = QString::fromStdString(j.get<std::string>());
+    } else if (j.is_boolean()) {
+        v = j.get<bool>();
+    } else if (j.is_number_integer()) {
+        v = j.get<int>();
+    } else if (j.is_number_float()) {
+        v = j.get<double>();
+    } else if (j.is_array()) {
+        QVariantList list;
+        for (const auto &item : j) {
+            QVariant value;
+            from_json(item, value);
+            list.append(value);
+        }
+        v = list;
+    } else if (j.is_object()) {
+        QVariantMap map;
+        for (auto it = j.begin(); it != j.end(); ++it) {
+            QVariant value;
+            from_json(it.value(), value);
+            map.insert(QString::fromStdString(it.key()), value);
+        }
+        v = map;
+    } else {
+        v = QVariant();
+    }
+}
+
+inline void to_json(nlohmann::json &j, const QVariantMap &map)
+{
+    for (auto it = map.constBegin(); it != map.constEnd(); ++it) {
+        j[it.key().toStdString()] = it.value();
+    }
+}
+
+inline void from_json(const nlohmann::json &j, QVariantMap &map)
+{
+    map.clear();
+    if (j.is_object()) {
+        for (auto it = j.begin(); it != j.end(); ++it) {
+            QVariant value;
+            from_json(it.value(), value);
+            map.insert(QString::fromStdString(it.key()), value);
+        }
+    }
+}
 
 QT_END_NAMESPACE

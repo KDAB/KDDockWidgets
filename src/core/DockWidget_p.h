@@ -296,6 +296,9 @@ public:
     KDBindings::ScopedConnection m_toggleActionConnection;
     KDBindings::ScopedConnection m_floatActionConnection;
     CloseReason m_lastCloseReason = CloseReason::Unspecified;
+#ifdef KDDW_FRONTEND_QT
+    QVariantMap m_userData;
+#endif
 };
 
 }

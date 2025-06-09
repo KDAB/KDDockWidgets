@@ -239,6 +239,7 @@ private Q_SLOTS:
     void tst_complex();
     void tst_restoreFloatingMaximizedState();
     void tst_findAncestor();
+    void tst_userData();
 };
 
 void TestQtWidgets::tst_designerMainWindow()
@@ -2139,6 +2140,53 @@ void TestQtWidgets::tst_findAncestor()
 
     QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(mainWindow));
     QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(dockWidget));
+}
+
+void TestQtWidgets::tst_userData()
+{
+    QByteArray saved;
+
+    QVariantMap userData1;
+    userData1["key1"] = "value1";
+    userData1["key2"] = 123;
+    userData1["key3"] = true;
+
+    QVariantMap userData2;
+    userData2["name"] = "Test Dock";
+    userData2["priority"] = 5;
+    userData2["nested"] = QVariantMap { { "subkey", "subvalue" } };
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow({}, {}, "mw1");
+
+        auto dock1 = createDockWidget("dock1");
+        dock1->setUserData(userData1);
+
+        auto dock2 = createDockWidget("dock2");
+        dock2->setUserData(userData2);
+
+        QCOMPARE(dock1->userData(), userData1);
+        QCOMPARE(dock2->userData(), userData2);
+
+        LayoutSaver saver;
+        saved = saver.serializeLayout();
+    }
+
+    EnsureTopLevelsDeleted e;
+
+    QVERIFY(!saved.isEmpty());
+
+    auto m = createMainWindow({}, {}, "mw1");
+
+    auto dock1 = createDockWidget("dock1");
+    auto dock2 = createDockWidget("dock2");
+
+    LayoutSaver restorer;
+
+    QVERIFY(restorer.restoreLayout(saved));
+    QCOMPARE(dock1->userData(), userData1);
+    QCOMPARE(dock2->userData(), userData2);
 }
 
 void TestQtWidgets::tst_standaloneTitleBar()

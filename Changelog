@@ -12,6 +12,7 @@
   - Support window managers without translucency in Qt 6 (#629)
   - Add Config::Flag_DisableDoubleClick
   - Don't steal QStyle ownership from QApplication
+  - Added Core::DockWidget::setUserData(QVariantMap)
 
 * v2.2.5
   - Fix version being reported as 2.2.3

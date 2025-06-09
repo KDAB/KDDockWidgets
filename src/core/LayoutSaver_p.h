@@ -136,6 +136,9 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     Vector<QString> affinities;
     LayoutSaver::Position lastPosition;
     CloseReason lastCloseReason;
+#ifdef KDDW_FRONTEND_QT
+    QVariantMap userData;
+#endif
 
 private:
     DockWidget()
