@@ -351,7 +351,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 
     dw.lastPosition = jsonValue(json, "lastPosition", LayoutSaver::Position());
     dw.lastCloseReason = jsonValue(json, "lastCloseReason", CloseReason::Unspecified);
-    
+
 #ifdef KDDW_FRONTEND_QT
     auto userDataIt = json.find("userData");
     if (userDataIt != json.end()) {
