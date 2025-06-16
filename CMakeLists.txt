@@ -218,18 +218,26 @@ else()
     set(ENABLED_FRONTENDS "")
     message("No frontends specified explicitly.")
 
-    # qtwidgets
+    # find Qt modules before defining which frontends to build
     find_package(Qt${QT_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE COMPONENTS Widgets Quick QuickControls2)
 
     if(Qt${QT_VERSION_MAJOR}Widgets_FOUND)
         list(APPEND ENABLED_FRONTENDS "qtwidgets")
         set(KDDW_FRONTEND_QTWIDGETS ON)
+        if(Qt6Core_VERSION VERSION_GREATER_EQUAL "6.10.0")
+            set(QT_NO_PRIVATE_MODULE_WARNING ON)
+            find_package(Qt6 ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS WidgetsPrivate)
+        endif()
     endif()
 
     # qtquick
     if(Qt${QT_VERSION_MAJOR}Quick_FOUND AND Qt${QT_VERSION_MAJOR}QuickControls2_FOUND)
         list(APPEND ENABLED_FRONTENDS "qtquick")
         set(KDDW_FRONTEND_QTQUICK ON)
+        if(Qt6Core_VERSION VERSION_GREATER_EQUAL "6.10.0")
+            set(QT_NO_PRIVATE_MODULE_WARNING ON)
+            find_package(Qt6 ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS QuickPrivate)
+        endif()
     endif()
 
     if(NOT ENABLED_FRONTENDS)
