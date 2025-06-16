@@ -942,6 +942,9 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
         if (auto guest = dw->guestView())
             guest->setVisible(true);
         dw->d->m_wasRestored = true;
+#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        dw->d->m_userData = saved->userData;
+#endif
 
         if (dw->affinities() != saved->affinities) {
             KDDW_ERROR("Affinity name changed from {} to {}", dw->affinities(), "; to", saved->affinities);
@@ -963,6 +966,18 @@ int DockWidget::userType() const
 {
     return d->m_userType;
 }
+
+#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void DockWidget::setUserData(const QVariantMap &userData)
+{
+    d->m_userData = userData;
+}
+
+QVariantMap DockWidget::userData() const
+{
+    return d->m_userData;
+}
+#endif
 
 void DockWidget::setMDIPosition(Point pos)
 {
@@ -1016,6 +1031,9 @@ LayoutSaver::DockWidget::Ptr DockWidget::Private::serialize() const
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());
     ptr->affinities = q->affinities();
     ptr->lastCloseReason = m_lastCloseReason;
+#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    ptr->userData = m_userData;
+#endif
 
     return ptr;
 }
