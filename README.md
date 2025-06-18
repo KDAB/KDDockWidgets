@@ -26,6 +26,7 @@ to expose every internal widget and every knob for the app developer to tune.
 
 ## Features
 
+- Supports QtWidgets and QtQuick/QML
 - Provide advanced docking that QDockWidget doesn't support
   - Native window resize on Windows (allowing for Aero-snap even with custom title bar decorations)
   - Arrow drop indicators for great drop precision
