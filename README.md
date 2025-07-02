@@ -86,6 +86,6 @@ Blogs and publications: https://www.kdab.com/resources
 
 Videos (Tutorials and more): https://www.youtube.com/@KDABtv
 
-Software Developer Training for Qt, Modern C++, Rust, OpenGL and more: https://training.kdab.com  
+Software Developer Training for Qt, Modern C++, Rust, OpenGL and more: https://training.kdab.com
 
 Software Consulting and Development Services for Embedded and Desktop Applications https://www.kdab.com/services/

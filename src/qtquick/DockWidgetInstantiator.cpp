@@ -32,6 +32,9 @@ public:
     QString m_title;
     Core::DockWidget *m_dockWidget = nullptr;
     QVector<QString> m_affinities;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QVariantMap m_userData;
+#endif
 
     KDBindings::ScopedConnection titleConnection;
     KDBindings::ScopedConnection closedConnection;
@@ -228,6 +231,24 @@ void DockWidgetInstantiator::setAffinities(const QVector<QString> &affinities)
     }
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+QVariantMap DockWidgetInstantiator::userData() const
+{
+    return d->m_dockWidget ? d->m_dockWidget->userData() : d->m_userData;
+}
+
+void DockWidgetInstantiator::setUserData(const QVariantMap &userData)
+{
+    if (d->m_userData != this->userData()) {
+        d->m_userData = userData;
+        if (d->m_dockWidget) {
+            d->m_dockWidget->setUserData(userData);
+        }
+        Q_EMIT userDataChanged();
+    }
+}
+#endif
+
 void DockWidgetInstantiator::componentComplete()
 {
     if (d->m_uniqueName.isEmpty()) {
@@ -286,6 +307,10 @@ void DockWidgetInstantiator::componentComplete()
         d->m_dockWidget->setFloating(d->m_isFloating.value());
 
     d->m_dockWidget->setAffinities(d->m_affinities);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    d->m_dockWidget->setUserData(d->m_userData);
+#endif
 
     Q_EMIT dockWidgetChanged();
 }
