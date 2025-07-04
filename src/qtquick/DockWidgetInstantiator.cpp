@@ -239,7 +239,7 @@ QVariantMap DockWidgetInstantiator::userData() const
 
 void DockWidgetInstantiator::setUserData(const QVariantMap &userData)
 {
-    if (d->m_userData != this->userData()) {
+    if (userData != this->userData()) {
         d->m_userData = userData;
         if (d->m_dockWidget) {
             d->m_dockWidget->setUserData(userData);
