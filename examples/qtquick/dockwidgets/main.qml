@@ -127,6 +127,11 @@ ApplicationWindow {
             id: dock4
             uniqueName: "dock4" // Each dock widget needs a unique id
             source: ":/Another.qml"
+            userData: { "color" : "#00000000" }
+
+            onUserDataChanged: {
+                console.log("User data changed: " + userData["color"]);
+            }
 
             onIsOpenChanged: {
                 // Just an example of detecting when a dockwidget is closed
