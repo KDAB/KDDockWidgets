@@ -1,0 +1,18 @@
+// SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+[
+  {
+    "adapter": "GDB",
+    "label": "qtwidgets_dockwidgets (GDB)",
+    "program": "$ZED_WORKTREE_ROOT/build-dev6/bin/qtwidgets_dockwidgets",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "request": "launch"
+  },
+  {
+    "adapter": "GDB",
+    "label": "qtquick_dockwidgets (GDB)",
+    "program": "$ZED_WORKTREE_ROOT/build-dev6/bin/qtquick_dockwidgets",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "request": "launch"
+  }
+]
