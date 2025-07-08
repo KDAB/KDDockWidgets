@@ -970,7 +970,10 @@ int DockWidget::userType() const
 #if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 void DockWidget::setUserData(const QVariantMap &userData)
 {
-    d->m_userData = userData;
+    if (d->m_userData != userData) {
+        d->m_userData = userData;
+        d->userDataChanged.emit();
+    }
 }
 
 QVariantMap DockWidget::userData() const

@@ -214,6 +214,9 @@ public:
     ///@param isFloating
     KDBindings::Signal<bool> isFloatingChanged;
 
+    /// Emitted when userData changes
+    KDBindings::Signal<> userDataChanged;
+
     ///@brief emitted when this dock widget is removed from a side-bar.
     /// Only relevant for the auto-hide/sidebar feature
     KDBindings::Signal<> removedFromSideBar;

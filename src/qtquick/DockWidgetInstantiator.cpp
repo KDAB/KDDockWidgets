@@ -34,6 +34,7 @@ public:
     QVector<QString> m_affinities;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QVariantMap m_userData;
+    KDBindings::ScopedConnection userDataConnection;
 #endif
 
     KDBindings::ScopedConnection titleConnection;
@@ -292,6 +293,10 @@ void DockWidgetInstantiator::componentComplete()
 
     d->guestViewChangedConnection = d->m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(d->m_dockWidget->guestView().get())); });
     d->removedFromSideBarConnection = d->m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    d->userDataConnection = d->m_dockWidget->d->userDataChanged.connect([this] { Q_EMIT userDataChanged(); });
+#endif
 
     auto view = this->dockWidget();
     if (d->m_sourceFilename.isEmpty()) {
