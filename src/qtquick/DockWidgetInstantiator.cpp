@@ -244,8 +244,10 @@ void DockWidgetInstantiator::setUserData(const QVariantMap &userData)
         d->m_userData = userData;
         if (d->m_dockWidget) {
             d->m_dockWidget->setUserData(userData);
+            // already emits signal
+        } else {
+            Q_EMIT userDataChanged();
         }
-        Q_EMIT userDataChanged();
     }
 }
 #endif
