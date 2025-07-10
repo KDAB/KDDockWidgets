@@ -84,17 +84,16 @@ ApplicationWindow {
             }
 
             Action {
-                text: qsTr("Close All")
+                text: qsTr("Clear user data")
                 onTriggered: {
-                    KDDW.Singletons.dockRegistry.clear();
+                    dock4.userData = {}
                 }
             }
 
             Action {
-                // Shows how to use direct deletion
-                text: qsTr("Delete widget #5")
+                text: qsTr("Set user data")
                 onTriggered: {
-                    dock5.deleteDockWidget();
+                    dock4.userData = { "color": "value1"}
                 }
             }
 
