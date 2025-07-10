@@ -152,9 +152,10 @@ void LayoutWidget::setLayoutSize(QSize size)
         const bool restoreInProgress = LayoutSaver::restoreInProgress();
         Layouting::ChildrenResizeStrategy strategy = Layouting::ChildrenResizeStrategy::Percentage;
         const auto *main = mainWindow();
-        if (!restoreInProgress && main && main->options() & MainWindowOption_CentralWidgetGetsAllExtraSpace)
+        // Don't access options() before the MainWindow is registered. This crashes on Windows.
+        const bool registered = DockRegistry::self()->mainwindows().contains(main);
+        if (!restoreInProgress && registered && main->options() & MainWindowOption_CentralWidgetGetsAllExtraSpace)
             strategy = Layouting::ChildrenResizeStrategy::GiveDropAreaWithCentralFrameAllExtra;
-        ;
 
         m_rootItem->setSize_recursive(size, strategy);
 
