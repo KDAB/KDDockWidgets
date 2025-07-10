@@ -294,10 +294,6 @@ void DockWidgetInstantiator::componentComplete()
     d->guestViewChangedConnection = d->m_dockWidget->d->guestViewChanged.connect([this] { Q_EMIT guestViewChanged(QtQuick::asQQuickItem(d->m_dockWidget->guestView().get())); });
     d->removedFromSideBarConnection = d->m_dockWidget->d->removedFromSideBar.connect([this] { Q_EMIT removedFromSideBar(); });
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    d->userDataConnection = d->m_dockWidget->d->userDataChanged.connect([this] { Q_EMIT userDataChanged(); });
-#endif
-
     auto view = this->dockWidget();
     if (d->m_sourceFilename.isEmpty()) {
         view->setGuestItem(childItems.constFirst());
@@ -315,6 +311,7 @@ void DockWidgetInstantiator::componentComplete()
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     d->m_dockWidget->setUserData(d->m_userData);
+    d->userDataConnection = d->m_dockWidget->d->userDataChanged.connect([this] { Q_EMIT userDataChanged(); });
 #endif
 
     Q_EMIT dockWidgetChanged();
