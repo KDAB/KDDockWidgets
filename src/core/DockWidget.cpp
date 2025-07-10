@@ -943,7 +943,7 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
             guest->setVisible(true);
         dw->d->m_wasRestored = true;
 #if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        dw->d->m_userData = saved->userData;
+        dw->setUserData(saved->userData);
 #endif
 
         if (dw->affinities() != saved->affinities) {
