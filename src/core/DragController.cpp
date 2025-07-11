@@ -1027,13 +1027,15 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
         // as it's a parent (TODO: How will it work with multiple MainWindows ?) The floating window
         // list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
-        View *tlwBeingDragged = m_windowBeingDragged->floatingWindow()->view();
-        if (auto tl = qtTopLevelUnderCursor_impl(
-                globalPos, DockRegistry::self()->floatingQWindows(), tlwBeingDragged))
-            return tl;
+        FloatingWindow *floatingWindow = m_windowBeingDragged->floatingWindow();
+        if (floatingWindow) {
+            if (auto tl = qtTopLevelUnderCursor_impl(
+                    globalPos, DockRegistry::self()->floatingQWindows(), floatingWindow->view()))
+                return tl;
 
-        return qtTopLevelUnderCursor_impl(
-            globalPos, DockRegistry::self()->topLevels(/*excludeFloatingDocks=*/true), tlwBeingDragged);
+            return qtTopLevelUnderCursor_impl(
+                globalPos, DockRegistry::self()->topLevels(/*excludeFloatingDocks=*/true), floatingWindow->view());
+        }
     }
 
     KDDW_TRACE("No top-level found");
