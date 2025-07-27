@@ -412,7 +412,7 @@ macro(set_compiler_flags targetName)
             PRIVATE QT_FORCE_ASSERTS
         )
 
-        if(NOT MSVC AND NOT APPLE)
+        if(NOT WIN32 AND NOT APPLE)
             target_compile_options(${targetName} PRIVATE -Wall -Wextra -Woverloaded-virtual)
             if(KDDockWidgets_USE_LLD)
                 target_link_options(${targetName} PRIVATE -fuse-ld=lld)
