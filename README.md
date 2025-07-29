@@ -66,6 +66,10 @@ to expose every internal widget and every knob for the app developer to tune.
 
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
+## Showcases
+
+Read about how [NVIDIA implemented KDDockWidgets](https://www.kdab.com/why-kdab/proven-excellence/nvidia-improved-developer-tools-with-kddockwidgets/) in their their NSight Suite developer toolkit, which is built with Qt. 
+
 ## Licensing
 
 KDDockWidgets is © Klarälvdalens Datakonsult AB (KDAB) and is licensed according
