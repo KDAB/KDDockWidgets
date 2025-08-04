@@ -68,7 +68,7 @@ to expose every internal widget and every knob for the app developer to tune.
 
 ## Showcases
 
-Read about how [NVIDIA implemented KDDockWidgets](https://www.kdab.com/why-kdab/proven-excellence/nvidia-improved-developer-tools-with-kddockwidgets/) in their their NSight Suite developer toolkit, which is built with Qt. 
+Read about how [NVIDIA implemented KDDockWidgets](https://www.kdab.com/why-kdab/proven-excellence/nvidia-improved-developer-tools-with-kddockwidgets/) in their their NSight Suite developer toolkit, which is built with Qt.
 
 ## Licensing
 
