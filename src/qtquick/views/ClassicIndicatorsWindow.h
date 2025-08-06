@@ -29,7 +29,7 @@ namespace QtQuick {
 using IndicatorWindowCreationCallback = std::function<void(QQuickView *window)>;
 class ClassicDropIndicatorOverlay;
 
-class IndicatorWindow : public QQuickView
+class DOCKS_EXPORT IndicatorWindow : public QQuickView
 {
     Q_OBJECT
 public:
