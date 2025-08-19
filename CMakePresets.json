@@ -319,6 +319,15 @@
       }
     },
     {
+      "name": "release6-static-qml-module",
+      "inherits": "release6",
+      "binaryDir": "${sourceDir}/build-release6-static-qml-module",
+      "cacheVariables": {
+        "KDDockWidgets_QML_MODULE": "ON",
+        "KDDockWidgets_STATIC": "ON"
+      }
+    },
+    {
       "name": "dev6",
       "displayName": "dev6",
       "binaryDir": "${sourceDir}/build-dev6",
@@ -600,6 +609,20 @@
         "KDDockWidgets_QT6": "ON",
         "KDDockWidgets_FRONTENDS": "qtquick",
         "KDDockWidgets_QML_MODULE": "ON"
+      }
+    },
+    {
+      "name": "ci-static-qtquick-module-qt6",
+      "description": "Qt6 static build which excludes QtWidgets and builds as QML module",
+      "binaryDir": "${sourceDir}/build-ci-static-qtquick-module-qt6",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "KDDockWidgets_DEVELOPER_MODE": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "KDDockWidgets_QT6": "ON",
+        "KDDockWidgets_FRONTENDS": "qtquick",
+        "KDDockWidgets_QML_MODULE": "ON",
+        "KDDockWidgets_STATIC": "ON"
       }
     },
     {
