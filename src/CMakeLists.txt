@@ -464,30 +464,6 @@ if(WIN32)
     endif()
 endif()
 
-if(KDDW_FRONTEND_QT)
-    install(
-        TARGETS kddockwidgets
-        EXPORT kddockwidgetsTargets
-        RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
-        LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
-        ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
-    )
-    if(MSVC AND NOT KDDockWidgets_STATIC)
-        install(
-            FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>"
-            DESTINATION ${INSTALL_RUNTIME_DIR}
-            CONFIGURATIONS Debug RelWithDebInfo
-        )
-    endif()
-
-    # install(FILES ${camelcase_HEADERS} DESTINATION
-    # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-    install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
-    install(FILES ${KDDW_CORE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
-    install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)
-    install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
-endif()
-
 if(KDDW_FRONTEND_QTWIDGETS)
 
     set(KDDW_QTWIDGET_HEADERS qtwidgets/ViewFactory.h)
@@ -637,8 +613,13 @@ if(KDDW_FRONTEND_QTQUICK)
             ${CMAKE_BINARY_DIR}/com/kdab/dockwidgets
             DEPENDENCIES
             QtQuick
-            # NO_PLUGIN # For now. Feel free to enable plugin but add CI test coverage
+            OUTPUT_TARGETS
+            KDDW_STATIC_QML_MODULE_OUTPUT_TARGETS
         )
+
+        if(KDDockWidgets_STATIC)
+            target_link_libraries(kddockwidgets PRIVATE kddockwidgetsplugin)
+        endif()
     endif()
 
     install(FILES ${KDDW_QTQUICK_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick)
@@ -646,6 +627,41 @@ if(KDDW_FRONTEND_QTQUICK)
     install(FILES ${KDDW_FRONTEND_QTQUICK_VIEW_HEADERS}
             DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/qtquick/views
     )
+endif()
+
+if(KDDW_FRONTEND_QT)
+    install(
+        TARGETS kddockwidgets
+        EXPORT kddockwidgetsTargets
+        RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
+        LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
+        ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
+    )
+
+    if(KDDockWidgets_QML_MODULE AND KDDockWidgets_STATIC)
+        install(TARGETS kddockwidgetsplugin EXPORT kddockwidgetsTargets)
+
+        foreach(extra_target ${KDDW_STATIC_QML_MODULE_OUTPUT_TARGETS})
+            if(TARGET ${extra_target})
+                install(TARGETS ${extra_target} EXPORT kddockwidgetsTargets)
+            endif()
+        endforeach()
+    endif()
+
+    if(MSVC AND NOT KDDockWidgets_STATIC)
+        install(
+            FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>"
+            DESTINATION ${INSTALL_RUNTIME_DIR}
+            CONFIGURATIONS Debug RelWithDebInfo
+        )
+    endif()
+
+    # install(FILES ${camelcase_HEADERS} DESTINATION
+    # ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+    install(FILES ${KDDW_PUBLIC_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
+    install(FILES ${KDDW_CORE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core)
+    install(FILES ${KDDW_VIEWINTERFACE_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/views)
+    install(FILES ${KDDW_INDICATOR_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/core/indicators)
 endif()
 
 if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
