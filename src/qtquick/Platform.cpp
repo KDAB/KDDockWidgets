@@ -41,7 +41,10 @@
 static void initResources()
 {
     Q_INIT_RESOURCE(kddockwidgets_resources);
+
+#ifndef KDDW_QML_MODULE
     Q_INIT_RESOURCE(kddockwidgets_qtquick);
+#endif
 }
 #endif
 
