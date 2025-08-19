@@ -23,6 +23,9 @@ jobs:
       matrix:
         os:
           - ubuntu-22.04 # 24.04 would trigger self-hosted which has Qt 6.6, which doesn't have has_include in QML type registion
+        preset:
+          - ci-qtquick-module-qt6
+          - ci-static-qtquick-module-qt6
 
     steps:
       - name: Export IS_SELFHOSTED
@@ -56,7 +59,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
-        run: cmake -S . -B ./build --preset ci-qtquick-module-qt6
+        run: cmake -S . -B ./build --preset ${{ matrix.preset }}
 
       - name: Build Project
         run: cmake --build ./build
