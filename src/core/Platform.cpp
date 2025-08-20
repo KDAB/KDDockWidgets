@@ -21,6 +21,7 @@
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform.h"
+#include <QApplication>
 #endif
 
 #ifdef KDDW_FRONTEND_QTQUICK
@@ -92,8 +93,19 @@ Platform *Platform::instance()
         // For convenience, if there's only 1 frontend supported then don't
         // require the user to call initFrontend(), just do it here.
         const auto types = Platform::frontendTypes();
-        if (types.size() == 1)
+        if (types.size() == 1) {
             KDDockWidgets::initFrontend(types[0]);
+            return s_platform;
+        }
+
+// More convenience: if KDDW supports both QtWidgets and QtQuick but doesn't have QApplication,
+// choose the QtQuick frontend
+#if defined(KDDW_FRONTEND_QTWIDGETS) && defined(KDDW_FRONTEND_QTQUICK)
+        if (qGuiApp && !qobject_cast<QApplication *>(qGuiApp)) {
+            KDDockWidgets::initFrontend(FrontendType::QtQuick);
+            return s_platform;
+        }
+#endif
     }
 
     return s_platform;
