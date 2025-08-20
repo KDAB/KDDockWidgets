@@ -27,6 +27,7 @@ path = [
     "conan/README.txt",
     "python/examples/README.txt",
     "python/examples-qt6/README.txt",
+    "examples/qtquick/pure_qml/README.md",
     "docs_devel/**.md",
     "docs/KDDockWidgets-CopyrightAssignmentForm.pdf",
     "**.html",

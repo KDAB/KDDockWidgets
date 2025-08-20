@@ -16,6 +16,13 @@ If you do have both QtWidgets and QtQuick support built, then don't forget to:
 KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtQuick);
 ```
 
+## Building as a QML plugin and running without C++
+
+If you build KDDW with `-DKDDockWidgets_QML_MODULE=ON` it will generate
+a QML plugin, which you can use without having to explicitly link to KDDW.
+
+See `examples/qtquick/pure_qml/` README.md and examples.
+
 ## Troubleshooting
 
 - `QtGraphicalEffects` is not supported, as it's buggy when moving between different QWindows.

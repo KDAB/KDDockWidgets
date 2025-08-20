@@ -19,6 +19,7 @@
 #include "Platform.h"
 
 #include <QDebug>
+#include <QQmlEngine>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
@@ -188,6 +189,8 @@ void MainWindowInstantiator::classBegin()
 
 void MainWindowInstantiator::componentComplete()
 {
+    plat()->ensureQmlEngine(this);
+
     if (m_uniqueName.isEmpty()) {
         qWarning() << Q_FUNC_INFO
                    << "Each DockWidget need an unique name. Set the uniqueName property.";

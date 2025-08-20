@@ -162,10 +162,11 @@ QSize Platform::screenSizeFor(Core::View *view) const
     return {};
 }
 
-QQmlEngine *Platform::qmlEngine() const
+QQmlEngine *Platform::qmlEngine(bool silent) const
 {
-    if (!m_qmlEngine)
+    if (!m_qmlEngine && !silent) {
         qWarning() << "Please call KDDockWidgets::QtQuick::Platform::self()->setQmlEngine(engine)";
+    }
 
     return m_qmlEngine;
 }
@@ -189,6 +190,18 @@ void Platform::setQmlEngine(QQmlEngine *qmlEngine)
     context->setContextProperty(QStringLiteral("_kddwHelpers"), m_qquickHelpers);
     context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
     updateViewFactoryContextProperty();
+}
+
+void Platform::ensureQmlEngine(QObject *context)
+{
+    // for the case where user doesn't have any C++ or can't call
+    // KDDockWidgets::QtQuick::Platform::instance()->setQmlEngine()
+    // for example when running with qml.exe tool
+
+    Q_ASSERT(context);
+    if (!qmlEngine(/*silent=*/true)) {
+        setQmlEngine(::qmlEngine(context));
+    }
 }
 
 void Platform::updateViewFactoryContextProperty()
