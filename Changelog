@@ -6,6 +6,7 @@
     - New dependency on QtGuiPrivate (for qtx11extras_p.h header), on Linux
   - qtquick: Add QtQuick::IndicatorWindow::setQuickWindowCreationCallback
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
+  - qtquick: User no longer needs to call KDDockWidgets::initFrontend() if you're using QGuiApplication instead of QApplication
   - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
   - Internal nlohmann bumped to v3.12
   - QtWidgets::ViewFactory::createTitleBarButton() is now virtual
