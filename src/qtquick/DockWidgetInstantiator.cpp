@@ -254,6 +254,8 @@ void DockWidgetInstantiator::setUserData(const QVariantMap &userData)
 
 void DockWidgetInstantiator::componentComplete()
 {
+    plat()->ensureQmlEngine(this);
+
     if (d->m_uniqueName.isEmpty()) {
         qWarning() << Q_FUNC_INFO
                    << "Each DockWidget need an unique name. Set the uniqueName property.";
