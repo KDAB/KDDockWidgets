@@ -58,9 +58,7 @@
         "program": "${command:cmake.launchTargetPath}",
         "args": [],
         "cwd": "${command:cmake.buildDirectory}",
-        "env": {
-          "KDDW_TEST_FRONTEND": "1"
-        }
+        "env": {}
       },
       {
         "name": "Example via Wayland",
