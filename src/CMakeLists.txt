@@ -133,6 +133,7 @@ set(KDDW_FRONTEND_QTQUICK_SRCS
     qtquick/Helpers.cpp
     qtquick/ViewFactory.cpp
     qtquick/QmlTypes.cpp
+    qtquick/QmlConfig.cpp
     qtquick/views/DropArea.cpp
     qtquick/views/DockWidget.cpp
     qtquick/views/FloatingWindow.cpp
@@ -545,6 +546,7 @@ if(KDDW_FRONTEND_QTQUICK)
         qtquick/LayoutSaverInstantiator.h
         qtquick/MainWindowInstantiator.h
         qtquick/MainWindowMDIInstantiator.h
+        qtquick/QmlConfig.h
     )
 
     set(KDDW_QTQUICK_VIEW_HEADERS

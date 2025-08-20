@@ -8,6 +8,7 @@
   - qtquick: Add support for building as a QML module and fixed all qmllint warnings
   - qtquick: Add support to use as QML plugin without requiring C++ or explicit linking
   - qtquick: User no longer needs to call KDDockWidgets::initFrontend() if you're using QGuiApplication instead of QApplication
+  - qtquick: Implement QML api for Config::setDockWidgetFactoryFunc
   - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
   - Internal nlohmann bumped to v3.12
   - QtWidgets::ViewFactory::createTitleBarButton() is now virtual

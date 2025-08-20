@@ -57,8 +57,8 @@ public:
     QString source() const;
     void setSource(const QString &);
 
-    KDDockWidgets::QtQuick::DockWidget *dockWidget() const;
-    KDDockWidgets::Core::DockWidget *controller() const;
+    Q_INVOKABLE KDDockWidgets::QtQuick::DockWidget *dockWidget() const;
+    Q_INVOKABLE KDDockWidgets::Core::DockWidget *controller() const;
     QObject *actualTitleBar() const;
 
     QString title() const;
