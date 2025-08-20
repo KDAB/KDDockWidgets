@@ -165,4 +165,17 @@ if(KDDW_FRONTEND_FLUTTER)
     )
 endif()
 
+# qml.exe standalone test
+if(KDDW_FRONTEND_QTQUICK
+   AND KDDockWidgets_QML_MODULE
+   AND NOT KDDockWidgets_STATIC
+)
+    add_test(
+        NAME tst_qml_standalone
+        COMMAND ${CMAKE_COMMAND} -E env QT_FATAL_WARNINGS=1 qml -I ${CMAKE_BINARY_DIR} tests/qml_standalone_test.qml
+                -platform offscreen
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+endif()
+
 #-----------------------------------------------------------------------------
