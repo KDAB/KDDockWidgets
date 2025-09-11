@@ -70,7 +70,7 @@ bool StateDraggingWayland::handleMouseMove(QPoint)
     return false;
 }
 
-bool StateDraggingWayland::handleDragEnter(DragMoveEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDragEnter(DragMoveEvent *ev, DropArea *dropArea, QPoint globalEventPos)
 {
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
@@ -81,8 +81,7 @@ bool StateDraggingWayland::handleDragEnter(DragMoveEvent *ev, DropArea *dropArea
         return true;
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(),
-                    dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
+    dropArea->hover(q->m_windowBeingDragged.get(), globalEventPos);
 
     ev->accept();
     return true;
@@ -95,15 +94,14 @@ bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
     return true;
 }
 
-bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea, QPoint globalEventPos)
 {
     KDDW_DEBUG(Q_FUNC_INFO);
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    if (dropArea->drop(q->m_windowBeingDragged.get(),
-                       dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
+    if (dropArea->drop(q->m_windowBeingDragged.get(), globalEventPos)) {
         ev->setDropAction(Qt::MoveAction);
         ev->accept();
         q->dropped.emit();
@@ -115,7 +113,7 @@ bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea)
     return true;
 }
 
-bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
+bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea, QPoint globalEventPos)
 {
     KDDW_DEBUG("StateDraggingWayland::handleDragMove");
 
@@ -125,8 +123,7 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea)
         return false; // Not for us, some other user drag.
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(),
-                    dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
+    dropArea->hover(q->m_windowBeingDragged.get(), globalEventPos);
 
     return true;
 }

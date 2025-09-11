@@ -17,6 +17,7 @@
   - Don't steal QStyle ownership from QApplication
   - Added Core::DockWidget::setUserData(QVariantMap)
   - Fixed static build when using QML module
+  - Wayland: Fix dropping over dock widgets that also accept drops, like nested QQuickWidget (#658)
 
 * v2.2.5
   - Fix version being reported as 2.2.3
