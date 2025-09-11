@@ -208,7 +208,7 @@ public:
     }
 
     // Only interesting for Wayland
-    virtual bool handleDragEnter(DragMoveEvent *, DropArea *)
+    virtual bool handleDragEnter(DragMoveEvent *, DropArea *, QPoint)
     {
         return false;
     }
@@ -216,11 +216,11 @@ public:
     {
         return false;
     }
-    virtual bool handleDragMove(DragMoveEvent *, DropArea *)
+    virtual bool handleDragMove(DragMoveEvent *, DropArea *, QPoint)
     {
         return false;
     }
-    virtual bool handleDrop(DropEvent *, DropArea *)
+    virtual bool handleDrop(DropEvent *, DropArea *, QPoint)
     {
         return false;
     }

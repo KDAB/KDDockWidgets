@@ -720,10 +720,14 @@ bool DragController::onDnDEvent(View *view, Event *e)
     // Wayland is very different. It uses QDrag for the dragging of a window.
     if (view) {
         KDDW_DEBUG("DragController::onDnDEvent: ev={}, dropArea=", int(e->type()), ( void * )view->asDropAreaController());
-        if (auto dropArea = view->asDropAreaController()) {
+
+        if (auto dropArea = qobject_cast<Core::DropArea *>(Core::View::firstParentOfType(view, ViewType::DropArea))) {
+            auto dropEvent = static_cast<DropEvent *>(e);
+            const QPoint globalEventPosition = view->mapToGlobal(Qt5Qt6Compat::eventPos(dropEvent));
+
             switch (int(e->type())) {
             case Event::DragEnter:
-                if (activeState()->handleDragEnter(static_cast<DragMoveEvent *>(e), dropArea))
+                if (activeState()->handleDragEnter(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
                     return true;
                 break;
             case Event::DragLeave:
@@ -731,11 +735,11 @@ bool DragController::onDnDEvent(View *view, Event *e)
                     return true;
                 break;
             case Event::DragMove:
-                if (activeState()->handleDragMove(static_cast<DragMoveEvent *>(e), dropArea))
+                if (activeState()->handleDragMove(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
                     return true;
                 break;
             case Event::Drop:
-                if (activeState()->handleDrop(static_cast<DropEvent *>(e), dropArea))
+                if (activeState()->handleDrop(dropEvent, dropArea, globalEventPosition))
                     return true;
                 break;
             default:
