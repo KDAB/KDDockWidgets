@@ -24,6 +24,9 @@ jobs:
           version: 6.7.2
           cache: true
 
+      - name: Fix CMake # otherwise: Error: cmake is already installed from local/pinned!
+        run: brew uninstall cmake || true
+
       - name: Install Dependencies
         run: |
           brew install nlohmann-json
