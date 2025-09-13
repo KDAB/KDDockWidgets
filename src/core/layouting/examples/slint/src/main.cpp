@@ -337,7 +337,7 @@ int main(int argc, char **argv)
     host.insertItem(guest1, KDDockWidgets::Location_OnLeft);
     host.insertItem(guest2, KDDockWidgets::Location_OnRight);
     host.insertItemRelativeTo(guest3, /*relativeTo=*/guest2, KDDockWidgets::Location_OnBottom);
-    host.insertItem(guest4, KDDockWidgets::Location_OnTop, Size(0, 200));
+    host.insertItem(guest4, KDDockWidgets::Location_OnTop, QSize(0, 200));
 
     ui->run();
     return 0;

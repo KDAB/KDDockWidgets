@@ -64,16 +64,16 @@ public:
     virtual std::shared_ptr<View> focusedView() const = 0;
 
     /// @brief Returns all windows
-    virtual Vector<std::shared_ptr<Core::Window>> windows() const = 0;
+    virtual QVector<std::shared_ptr<Core::Window>> windows() const = 0;
 
     /// @brief Creates and returns the default ViewFactory
     virtual ViewFactory *createDefaultViewFactory() = 0;
 
     /// @brief Returns the window at the specified global coordinates
-    virtual std::shared_ptr<Core::Window> windowAt(Point globalPos) const = 0;
+    virtual std::shared_ptr<Core::Window> windowAt(QPoint globalPos) const = 0;
 
     /// @brief Sends the specified event to the specified view
-    virtual void sendEvent(View *, Event *) const = 0;
+    virtual void sendEvent(View *, QEvent *) const = 0;
 
     /// @brief Returns the screen index for the specified view or window.
     /// It's up to the platform to decide how screens are ordered, kddw won't care.
@@ -81,11 +81,11 @@ public:
     virtual int screenNumberForWindow(std::shared_ptr<Core::Window>) const = 0;
 
     /// @brief Returns the size of the screen where this view is in
-    virtual Size screenSizeFor(View *) const = 0;
+    virtual QSize screenSizeFor(View *) const = 0;
 
     /// @brief Returns which screen the point is in
     /// -1 if not found
-    virtual int screenNumberForPoint(Point) const = 0;
+    virtual int screenNumberForPoint(QPoint) const = 0;
 
     /// @brief Create an empty view
     /// For Qt this would just returns a empty QWidget or QQuickItem
@@ -113,7 +113,7 @@ public:
     /// @brief Returns whether the specified global position is on top of a view
     /// that isn't draggable. This is needed since not the entire title bar is draggable.
     /// For example, clicking on the close button shouldn't start a drag.
-    virtual bool inDisallowedDragView(Point globalPos) const = 0;
+    virtual bool inDisallowedDragView(QPoint globalPos) const = 0;
 
     /// @brief Releases the mouse grab, if any
     virtual void ungrabMouse() = 0;
@@ -156,7 +156,7 @@ public:
     virtual bool isLeftMouseButtonPressed() const = 0;
 
     /// @brief Returns all available screens
-    virtual Vector<std::shared_ptr<Screen>> screens() const = 0;
+    virtual QVector<std::shared_ptr<Screen>> screens() const = 0;
 
     virtual std::shared_ptr<Screen> primaryScreen() const = 0;
 
@@ -185,10 +185,10 @@ public:
     virtual void onMainWindowDestroyed(Core::MainWindow *);
 
     /// Returns the mouse cursor position in screen coordinates
-    virtual Point cursorPos() const = 0;
+    virtual QPoint cursorPos() const = 0;
 
     /// Sets the mouse cursor position in screen coordinates
-    virtual void setCursorPos(Point) = 0;
+    virtual void setCursorPos(QPoint) = 0;
 
     /// Reads the specified and returns its content
     /// The default implementation uses std::ifstream while the Qt implementation
@@ -234,17 +234,17 @@ public:
 
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
-    virtual bool tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
-    virtual bool tests_waitForEvent(View *, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
-    virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
+    virtual bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                                     int timeout = DEFAULT_TIMEOUT) const = 0;
 
-    virtual void tests_doubleClickOn(Point globalPos, View *receiver) = 0;
-    virtual void tests_doubleClickOn(Point globalPos, std::shared_ptr<Core::Window> receiver) = 0;
-    virtual void tests_pressOn(Point globalPos, View *receiver) = 0;
-    virtual void tests_pressOn(Point globalPos, std::shared_ptr<Core::Window> receiver) = 0;
-    virtual bool tests_releaseOn(Point globalPos, View *receiver) = 0;
-    virtual bool tests_mouseMove(Point globalPos, View *receiver) = 0;
+    virtual void tests_doubleClickOn(QPoint globalPos, View *receiver) = 0;
+    virtual void tests_doubleClickOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
+    virtual void tests_pressOn(QPoint globalPos, View *receiver) = 0;
+    virtual void tests_pressOn(QPoint globalPos, std::shared_ptr<Core::Window> receiver) = 0;
+    virtual bool tests_releaseOn(QPoint globalPos, View *receiver) = 0;
+    virtual bool tests_mouseMove(QPoint globalPos, View *receiver) = 0;
 
     /// @brief Creates a Window. For the sole purpose of unit-testing Window.
     /// The created window should be visible.
@@ -352,13 +352,13 @@ struct SetExpectedWarning
 struct CreateViewOptions
 {
     bool isVisible = false;
-    Size sizeHint = {};
-    Size minSize = { 0, 0 };
-    Size maxSize = Size(16777215, 16777215);
-    Size size = { 1000, 1000 };
+    QSize sizeHint = {};
+    QSize minSize = { 0, 0 };
+    QSize maxSize = QSize(16777215, 16777215);
+    QSize size = { 1000, 1000 };
     bool createWindow = false;
 
-    Size getMinSize() const
+    QSize getMinSize() const
     {
         return minSize;
     }

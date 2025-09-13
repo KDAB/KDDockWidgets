@@ -107,7 +107,7 @@ public:
      * You can use KDDockWidgets::controllersToViews(layoutSaver.restoredDockWidgets()) to
      * get the corresponding QtWidgets::DockWidget* instead of Core::DockWidget*
      */
-    Vector<Core::DockWidget *> restoredDockWidgets() const;
+    QVector<Core::DockWidget *> restoredDockWidgets() const;
 
     /**
      * @brief Sets the list of affinity names for which restore and save will be applied on.
@@ -116,18 +116,18 @@ public:
      * Any window with empty affinity will also be subject to save/restore, regardless of @p
      * affinityNames.
      */
-    void setAffinityNames(const Vector<QString> &affinityNames);
+    void setAffinityNames(const QVector<QString> &affinityNames);
 
     /**
      * @brief Returns the list of opened dock widgets in the specified layout
      *
      * This operation does not have side-effects, no dock widget will be actually restored.
      */
-    static Vector<QString> openedDockWidgetsInLayout(const QString &jsonFilename);
-    static Vector<QString> openedDockWidgetsInLayout(const QByteArray &serialized);
+    static QVector<QString> openedDockWidgetsInLayout(const QString &jsonFilename);
+    static QVector<QString> openedDockWidgetsInLayout(const QByteArray &serialized);
 
-    static Vector<QString> sideBarDockWidgetsInLayout(const QString &jsonFilename);
-    static Vector<QString> sideBarDockWidgetsInLayout(const QByteArray &serialized);
+    static QVector<QString> sideBarDockWidgetsInLayout(const QString &jsonFilename);
+    static QVector<QString> sideBarDockWidgetsInLayout(const QByteArray &serialized);
 
     /// @internal Returns the private-impl. Not intended for public use.
     class Private;

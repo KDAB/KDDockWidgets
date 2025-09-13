@@ -364,7 +364,7 @@ Core::ItemContainer *Layout::rootItem() const
     return d->m_rootItem;
 }
 
-void Layout::onCloseEvent(CloseEvent *e)
+void Layout::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // Accepted by default (will close unless ignored)
 

@@ -62,7 +62,7 @@ class DOCKS_EXPORT MainWindow : public Controller
 {
     Q_OBJECT
 public:
-    typedef Vector<MainWindow *> List;
+    typedef QVector<MainWindow *> List;
 
     explicit MainWindow(View *view, const QString &uniqueName, MainWindowOptions options);
 
@@ -150,12 +150,12 @@ public:
      *
      * @p name The affinity names.
      */
-    void setAffinities(const Vector<QString> &names);
+    void setAffinities(const QVector<QString> &names);
 
     /**
      * @brief Returns the list of affinity names. Empty by default.
      */
-    Vector<QString> affinities() const;
+    QVector<QString> affinities() const;
 
     /// @brief layouts all the widgets so they have an equal size within their parent container
     ///
@@ -261,14 +261,14 @@ public:
 
 
     /// @internal
-    Margins centerWidgetMargins() const;
+    QMargins centerWidgetMargins() const;
 
     /// @internal
     void init(const QString &name);
 
 protected:
     void setUniqueName(const QString &uniqueName);
-    Rect centralAreaGeometry() const;
+    QRect centralAreaGeometry() const;
 
 private:
     class Private;

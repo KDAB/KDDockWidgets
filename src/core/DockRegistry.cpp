@@ -58,8 +58,8 @@ private:
 
 }
 
-DockRegistry::DockRegistry(Core::Object *parent)
-    : Core::Object(parent)
+DockRegistry::DockRegistry(QObject *parent)
+    : QObject(parent)
     , d(new Private())
     , m_sideBarGroupings(new SideBarGroupings())
 {
@@ -176,7 +176,7 @@ bool DockRegistry::isProbablyObscured(Core::Window::Ptr window,
     if (!window)
         return false;
 
-    const Rect geo = window->geometry();
+    const QRect geo = window->geometry();
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         Window::Ptr fwWindow = fw->view()->window();
         if (fw == exclude || fwWindow->equals(window))
@@ -696,7 +696,7 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
     }
 }
 
-bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
+bool DockRegistry::onMouseButtonPress(View *view, QMouseEvent *event)
 {
     if (!view)
         return false;
@@ -740,7 +740,7 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
     return false;
 }
 
-bool DockRegistry::onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *ev)
+bool DockRegistry::onDockWidgetPressed(Core::DockWidget *dw, QMouseEvent *ev)
 {
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.

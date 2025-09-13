@@ -135,9 +135,9 @@ void SideBar::toggleOverlay(DockWidget *dw)
     m_mainWindow->toggleOverlayOnSideBar(dw);
 }
 
-Vector<QString> SideBar::serialize() const
+QVector<QString> SideBar::serialize() const
 {
-    Vector<QString> ids;
+    QVector<QString> ids;
     ids.reserve(m_dockWidgets.size());
     for (DockWidget *dw : m_dockWidgets)
         ids.push_back(dw->uniqueName());
@@ -151,7 +151,7 @@ void SideBar::clear()
         removeDockWidget(dw);
 }
 
-Vector<DockWidget *> SideBar::dockWidgets() const
+QVector<DockWidget *> SideBar::dockWidgets() const
 {
     return m_dockWidgets;
 }

@@ -60,13 +60,13 @@ public:
 
     /// @brief returns a serialization of this sidebar's state
     /// Currently it's just a list of dock widget ids
-    Vector<QString> serialize() const;
+    QVector<QString> serialize() const;
 
     /// @brief clears the sidebar (removes all dock widgets from it)
     void clear();
 
     /// @brief returns the list of dock widgets in this sidebar
-    Vector<DockWidget *> dockWidgets() const;
+    QVector<DockWidget *> dockWidgets() const;
 
     void onButtonClicked(DockWidget *dw);
 
@@ -77,7 +77,7 @@ private:
     Private *const d;
 
     MainWindow *const m_mainWindow;
-    Vector<DockWidget *> m_dockWidgets;
+    QVector<DockWidget *> m_dockWidgets;
     const SideBarLocation m_location;
     const Qt::Orientation m_orientation;
 };

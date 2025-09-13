@@ -62,7 +62,7 @@ public:
     void init()
     {
         updateTitle();
-        q->view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
+        q->view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
     }
 
     /**
@@ -112,7 +112,7 @@ public:
     Positions::Ptr &lastPosition();
 
     void forceClose();
-    Point defaultCenterPosForFloating();
+    QPoint defaultCenterPosForFloating();
 
     void onWindowActivated(std::shared_ptr<View> rootView);
     void onWindowDeactivated(std::shared_ptr<View> rootView);
@@ -125,7 +125,7 @@ public:
     bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
     void onParentChanged();
 
     /**
@@ -266,10 +266,10 @@ private:
     QString m_uniqueName;
 
 public:
-    Vector<QString> affinities;
+    QVector<QString> affinities;
     QString title;
-    Icon titleBarIcon;
-    Icon tabBarIcon;
+    QIcon titleBarIcon;
+    QIcon tabBarIcon;
     std::shared_ptr<View> guest;
     DockWidget *const q;
     DockWidgetOptions options;
@@ -291,7 +291,7 @@ public:
     bool m_inCloseEvent = false;
     bool m_removingFromOverlay = false;
     bool m_wasRestored = false;
-    Size m_lastOverlayedSize = Size(0, 0);
+    QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
     int m_willUpdateActions = 0;
     KDBindings::ScopedConnection m_windowActivatedConnection;
