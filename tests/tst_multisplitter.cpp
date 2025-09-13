@@ -136,7 +136,7 @@ public:
         return m_view->maxSizeHint();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         if (r != geometry()) {
             m_numSetGeometry++;
@@ -149,7 +149,7 @@ public:
         m_view->setVisible(is);
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return m_view->geometry();
     }
@@ -213,7 +213,7 @@ static Item *createItem(Size minSz = {}, Size maxSz = {})
     static int count = 0;
     count++;
     auto item = new Item(nullptr);
-    item->setGeometry(Rect(0, 0, 200, 200));
+    item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QString::number(count));
     Core::CreateViewOptions opts;
     if (minSz.isValid())
@@ -252,7 +252,7 @@ void TestLayouting::tst_createRoot()
     QVERIFY(root->isRoot());
     QVERIFY(root->isContainer());
     QVERIFY(root->hasOrientation());
-    QCOMPARE(root->size(), Size(1000, 1000));
+    QCOMPARE(root->size(), QSize(1000, 1000));
     QVERIFY(root->checkSanity());
     QVERIFY(serializeDeserializeTest(root));
 }
@@ -267,9 +267,9 @@ void TestLayouting::tst_insertOne()
     QVERIFY(root->checkSanity());
     QCOMPARE(root->numChildren(), 1);
     QVERIFY(!item->isContainer());
-    QCOMPARE(root->size(), Size(1000, 1000));
+    QCOMPARE(root->size(), QSize(1000, 1000));
     QCOMPARE(item->size(), root->size());
-    QCOMPARE(item->pos(), Point());
+    QCOMPARE(item->pos(), QPoint());
     QCOMPARE(item->pos(), root->pos());
     QVERIFY(root->hasChildren());
     QVERIFY(serializeDeserializeTest(root));
@@ -452,7 +452,7 @@ void TestLayouting::tst_insertOnWidgetItem2DifferentOrientation()
     QCOMPARE(container3Parent->numChildren(), 2);
 
     QVERIFY(item1->x() < item2->x());
-    QCOMPARE(container3->pos(), Point(0, 0l));
+    QCOMPARE(container3->pos(), QPoint(0, 0l));
     QCOMPARE(item3->pos(), container3->pos());
     QVERIFY(container3Parent->x() > item2->x());
     QCOMPARE(item3->y(), item2->y());
@@ -530,7 +530,7 @@ void TestLayouting::tst_removeItem1()
     QCOMPARE(root->numChildren(), 1);
 
     auto c1 = item1->parentBoxContainer();
-    QCOMPARE(c1->pos(), Point(0, 0));
+    QCOMPARE(c1->pos(), QPoint(0, 0));
     QCOMPARE(c1->width(), root->width());
     QCOMPARE(c1->height(), item1->height());
     QCOMPARE(c1->height(), root->height());
@@ -587,10 +587,10 @@ void TestLayouting::tst_minSize()
     root->insertItem(item2, Location_OnRight);
     ItemBoxContainer::insertItemRelativeTo(item22, item2, Location_OnBottom);
 
-    QCOMPARE(item2->minSize(), Size(200, 300));
-    QCOMPARE(item2->parentBoxContainer()->minSize(), Size(200, 300 + 100 + st));
+    QCOMPARE(item2->minSize(), QSize(200, 300));
+    QCOMPARE(item2->parentBoxContainer()->minSize(), QSize(200, 300 + 100 + st));
 
-    QCOMPARE(root->minSize(), Size(101 + 200 + st, 300 + 100 + st));
+    QCOMPARE(root->minSize(), QSize(101 + 200 + st, 300 + 100 + st));
     QVERIFY(root->checkSanity());
 
     QVERIFY(serializeDeserializeTest(root));
@@ -680,8 +680,8 @@ void TestLayouting::tst_availableSize()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-    QCOMPARE(root->availableSize(), Size(1000, 1000));
-    QCOMPARE(root->minSize(), Size(0, 0));
+    QCOMPARE(root->availableSize(), QSize(1000, 1000));
+    QCOMPARE(root->minSize(), QSize(0, 0));
 
     auto item1 = createItem();
     auto item2 = createItem();
@@ -691,8 +691,8 @@ void TestLayouting::tst_availableSize()
     item3->m_sizingInfo.minSize = { 100, 100 };
 
     root->insertItem(item1, Location_OnLeft);
-    QCOMPARE(root->availableSize(), Size(900, 900));
-    QCOMPARE(root->minSize(), Size(100, 100));
+    QCOMPARE(root->availableSize(), QSize(900, 900));
+    QCOMPARE(root->minSize(), QSize(100, 100));
     QCOMPARE(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), 0);
     QCOMPARE(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
     QCOMPARE(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), 0);
@@ -704,8 +704,8 @@ void TestLayouting::tst_availableSize()
     QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     root->insertItem(item2, Location_OnLeft);
-    QCOMPARE(root->availableSize(), Size(800 - st, 900));
-    QCOMPARE(root->minSize(), Size(200 + st, 100));
+    QCOMPARE(root->availableSize(), QSize(800 - st, 900));
+    QCOMPARE(root->minSize(), QSize(200 + st, 100));
     QCOMPARE(root->neighboursLengthFor(item1, Side1, Qt::Horizontal), item2->width());
     QCOMPARE(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
     QCOMPARE(root->neighboursLengthFor(item2, Side1, Qt::Horizontal), 0);
@@ -721,8 +721,8 @@ void TestLayouting::tst_availableSize()
     QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Horizontal), 0);
 
     root->insertItem(item3, Location_OnBottom);
-    QCOMPARE(root->availableSize(), Size(800 - st, 800 - st));
-    QCOMPARE(root->minSize(), Size(200 + st, 100 + 100 + st));
+    QCOMPARE(root->availableSize(), QSize(800 - st, 800 - st));
+    QCOMPARE(root->minSize(), QSize(200 + st, 100 + 100 + st));
     QCOMPARE(item3->parentBoxContainer()->neighboursMinLengthFor(item3, Side1, Qt::Vertical),
              item1->minSize().height());
 
@@ -763,8 +763,8 @@ void TestLayouting::tst_missingSize()
     DeleteViews deleteViews;
 
     auto root = createRoot();
-    QCOMPARE(root->size(), Size(1000, 1000));
-    QCOMPARE(root->availableSize(), Size(1000, 1000));
+    QCOMPARE(root->size(), QSize(1000, 1000));
+    QCOMPARE(root->availableSize(), QSize(1000, 1000));
 
     Item *item1 = createItem();
     item1->setMinSize({ 100, 100 });
@@ -800,8 +800,8 @@ void TestLayouting::tst_ensureEnoughSize()
     // Insert to empty layout:
 
     root->insertItem(item1, Location_OnLeft);
-    QCOMPARE(root->size(), Size(2000, 1000));
-    QCOMPARE(item1->size(), Size(2000, 1000));
+    QCOMPARE(root->size(), QSize(2000, 1000));
+    QCOMPARE(item1->size(), QSize(2000, 1000));
     QCOMPARE(item1->minSize(), root->minSize());
     QVERIFY(root->checkSanity());
 
@@ -864,17 +864,17 @@ void TestLayouting::tst_suggestedRect()
     Item itemBeingDropped(nullptr);
     itemBeingDropped.setMinSize(minSize);
 
-    Rect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
-    Rect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
-    Rect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
-    Rect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
+    QRect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
+    QRect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
+    QRect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
+    QRect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
 
     // Test relative to root:
     QVERIFY(leftRect.width() >= minSize.width());
     QVERIFY(topRect.height() >= minSize.height());
     QVERIFY(bottomRect.height() >= minSize.height());
     QVERIFY(rightRect.width() >= minSize.width());
-    QCOMPARE(leftRect.topLeft(), Point(0, 0));
+    QCOMPARE(leftRect.topLeft(), QPoint(0, 0));
     QCOMPARE(leftRect.bottomLeft(), root->rect().bottomLeft());
     QCOMPARE(rightRect.topRight(), root->rect().topRight());
     QCOMPARE(rightRect.bottomRight(), root->rect().bottomRight());
@@ -895,7 +895,7 @@ void TestLayouting::tst_suggestedRect()
     QVERIFY(topRect.height() >= minSize.height());
     QVERIFY(bottomRect.height() >= minSize.height());
     QVERIFY(rightRect.width() >= minSize.width());
-    QCOMPARE(leftRect.topLeft(), Point(0, 0));
+    QCOMPARE(leftRect.topLeft(), QPoint(0, 0));
     QCOMPARE(leftRect.bottomLeft(), root->rect().bottomLeft());
     QCOMPARE(rightRect.topRight(), root->rect().topRight());
     QCOMPARE(rightRect.bottomRight(), root->rect().bottomRight());
@@ -1169,7 +1169,7 @@ void TestLayouting::tst_minSizeChanges()
     auto w1 = item1;
     w1->setMinSize(Size(300, 300));
     QVERIFY(root->checkSanity());
-    QCOMPARE(root->size(), Size(300, 300));
+    QCOMPARE(root->size(), QSize(300, 300));
 
     Item *item2 = createItem();
     root->insertItem(item2, Location_OnTop);
@@ -1594,8 +1594,8 @@ void TestLayouting::tst_mapToRoot()
 
     auto c = item22->parentBoxContainer();
     Point rootPt = c->mapToRoot(Point(0, 0));
-    QCOMPARE(rootPt, Point(0, item1->height() + st));
-    QCOMPARE(c->mapFromRoot(rootPt), Point(0, 0));
+    QCOMPARE(rootPt, QPoint(0, item1->height() + st));
+    QCOMPARE(c->mapFromRoot(rootPt), QPoint(0, 0));
 }
 
 void TestLayouting::tst_closeAndRestorePreservesPosition()
@@ -1692,7 +1692,7 @@ void TestLayouting::tst_separatorMoveHonoursMax()
     const int maxWidth = 250;
     auto root = createRoot();
     auto item1 = createItem();
-    auto item2 = createItem({}, Size(maxWidth, 250));
+    auto item2 = createItem({}, QSize(maxWidth, 250));
     auto item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
@@ -1786,7 +1786,7 @@ void TestLayouting::tst_maxSizeHonoured3()
         auto root = createRoot();
         const int minHeight = 100;
         const int maxHeight = 200;
-        auto item1 = createItem(Size(100, minHeight), Size(200, maxHeight));
+        auto item1 = createItem(Size(100, minHeight), QSize(200, maxHeight));
         auto item2 = createItem();
         root->setSize(Size(2000, 2000));
 
@@ -1811,7 +1811,7 @@ void TestLayouting::tst_maxSizeHonoured3()
         auto root2 = createRoot();
         const int minHeight = 100;
         const int maxHeight = 200;
-        auto item1 = createItem(Size(100, minHeight), Size(200, maxHeight));
+        auto item1 = createItem(Size(100, minHeight), QSize(200, maxHeight));
         auto item2 = createItem();
         root1->setSize(Size(2000, 2000));
         root2->setSize(Size(2000, 2000));
@@ -1864,7 +1864,7 @@ void TestLayouting::tst_requestEqualSize()
         auto root = createRoot();
         const int minWidth1 = 100;
         const int maxWidth1 = 200;
-        auto item1 = createItem(Size(minWidth1, 100), Size(maxWidth1, 200));
+        auto item1 = createItem(Size(minWidth1, 100), QSize(maxWidth1, 200));
         auto item2 = createItem();
         root->insertItem(item2, Location_OnRight);
         root->insertItem(item1, Location_OnLeft);
@@ -1912,7 +1912,7 @@ void TestLayouting::tst_maxSizeHonouredWhenAnotherRemoved()
     auto item1 = createItem();
     const int minHeight = 100;
     const int maxHeight = 200;
-    auto item2 = createItem(Size(100, minHeight), Size(200, maxHeight));
+    auto item2 = createItem(Size(100, minHeight), QSize(200, maxHeight));
     auto item3 = createItem();
     root->insertItem(item1, Location_OnTop);
     root->insertItem(item2, Location_OnBottom);
@@ -2218,7 +2218,7 @@ void TestLayouting::tst_spuriousResize()
     // This used to generate a spurious resize
     auto guest1 = static_cast<Guest *>(item1->guest());
     guest1->m_numSetGeometry = 0;
-    root->insertItem(item3, Location_OnRight, Size(200, 200));
+    root->insertItem(item3, Location_OnRight, QSize(200, 200));
     QCOMPARE(guest1->m_numSetGeometry, 1);
 }
 

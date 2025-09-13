@@ -36,12 +36,12 @@ public:
     {
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return QWidget::geometry();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         QWidget::setGeometry(r);
     }
@@ -61,7 +61,11 @@ public:
         onMouseMove(mapToParent(ev->pos()));
     }
 
-    void enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *) override
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)    
+    void enterEvent(QEnterEvent *) override
+#else
+    void enterEvent(QEvent *) override
+#endif
     {
         if (isVertical())
             setCursor(Qt::SizeVerCursor);
@@ -129,7 +133,7 @@ public:
         return QWidget::maximumSize();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         QWidget::setGeometry(r);
     }
@@ -139,7 +143,7 @@ public:
         QWidget::setVisible(is);
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return QWidget::geometry();
     }

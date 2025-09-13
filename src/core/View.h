@@ -40,9 +40,9 @@ controllerToView(C *controller)
 /// Same as controllerToView() but for containers
 /// note that the result might have nullptrs
 template<typename V, typename C>
-Vector<V *> controllersToViews(const C &controllers)
+QVector<V *> controllersToViews(const C &controllers)
 {
-    Vector<V *> views;
+    QVector<V *> views;
     views.reserve(controllers.size());
 
     std::transform(controllers.begin(), controllers.end(), std::back_inserter(views),
@@ -100,15 +100,15 @@ public:
     virtual bool isNull() const;
 
     virtual void setParent(View *) = 0;
-    virtual Size minSize() const = 0;
-    virtual void setMinimumSize(Size) = 0;
+    virtual QSize minSize() const = 0;
+    virtual void setMinimumSize(QSize) = 0;
 
     virtual Qt::FocusPolicy focusPolicy() const = 0;
     virtual bool hasFocus() const = 0;
-    virtual Size maxSizeHint() const = 0;
-    virtual Rect geometry() const = 0;
-    virtual Rect normalGeometry() const = 0;
-    virtual void setGeometry(Rect) = 0;
+    virtual QSize maxSizeHint() const = 0;
+    virtual QRect geometry() const = 0;
+    virtual QRect normalGeometry() const = 0;
+    virtual void setGeometry(QRect) = 0;
     virtual bool isVisible() const = 0;
     virtual bool isExplicitlyHidden() const = 0;
     virtual void setVisible(bool) = 0;
@@ -127,14 +127,14 @@ public:
 
     virtual void activateWindow() = 0;
     virtual bool isRootView() const = 0;
-    virtual Point mapToGlobal(Point) const = 0;
-    virtual Point mapFromGlobal(Point) const = 0;
-    virtual Point mapTo(View *, Point) const = 0;
+    virtual QPoint mapToGlobal(QPoint) const = 0;
+    virtual QPoint mapFromGlobal(QPoint) const = 0;
+    virtual QPoint mapTo(View *, QPoint) const = 0;
     virtual bool close() = 0;
     virtual void setFlag(Qt::WindowType, bool = true) = 0;
     virtual Qt::WindowFlags flags() const = 0;
     virtual void setWindowTitle(const QString &title) = 0;
-    virtual void setWindowIcon(const Icon &) = 0;
+    virtual void setWindowIcon(const QIcon &) = 0;
 
     /// Enable/disable attributes. This is mostly for QtWidget compatibility
     /// Do not use. We don't depend on Qt::WidgetAttribute in a future version.
@@ -150,7 +150,7 @@ public:
     void removeViewEventFilter(EventFilterInterface *);
 
     /// @brief Delivers mouse events and such to event filters
-    bool deliverViewEventToFilters(Event *e);
+    bool deliverViewEventToFilters(QEvent *e);
 
     virtual void showNormal() = 0;
     virtual void showMinimized() = 0;
@@ -159,7 +159,7 @@ public:
     virtual bool isMaximized() const = 0;
 
     virtual void createPlatformWindow();
-    virtual void setMaximumSize(Size sz) = 0;
+    virtual void setMaximumSize(QSize sz) = 0;
     virtual bool isActiveWindow() const = 0;
     virtual void setFixedWidth(int) = 0;
     virtual void setFixedHeight(int) = 0;
@@ -173,9 +173,9 @@ public:
     virtual void setMouseTracking(bool) = 0;
 
     virtual bool onResize(int h, int w);
-    bool onResize(Size);
+    bool onResize(QSize);
 
-    virtual bool onFocusInEvent(FocusEvent *)
+    virtual bool onFocusInEvent(QFocusEvent *)
     {
         return false;
     }
@@ -186,7 +186,7 @@ public:
 
     virtual void render(QPainter *) = 0;
 
-    virtual std::shared_ptr<View> childViewAt(Point localPos) const = 0;
+    virtual std::shared_ptr<View> childViewAt(QPoint localPos) const = 0;
 
     /// @brief Returns the top-level gui element which this view is inside
     /// It's the root view of the window.
@@ -217,7 +217,7 @@ public:
     virtual int zOrder() const;
 
     /// @Returns a list of child views
-    virtual Vector<std::shared_ptr<View>> childViews() const = 0;
+    virtual QVector<std::shared_ptr<View>> childViews() const = 0;
 
     /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor
     /// false, as the implementation of free() is free to delay it (with deleteLater() for example)
@@ -228,9 +228,9 @@ public:
     bool equals(const std::shared_ptr<View> &) const;
     static bool equals(const View *one, const View *two);
 
-    Point pos() const;
-    Size size() const;
-    Rect rect() const;
+    QPoint pos() const;
+    QSize size() const;
+    QRect rect() const;
     int x() const;
     int y() const;
     int height() const;
@@ -243,10 +243,10 @@ public:
     int minimumHeight() const;
 
     /// Returns the size of the screen that this view belongs to
-    Size screenSize() const;
+    QSize screenSize() const;
 
     /// The minimum minimum size a dock widget can have
-    static Size hardcodedMinimumSize();
+    static QSize hardcodedMinimumSize();
 
     /// @brief Returns the controller of the first parent view of the specified type
     /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
@@ -304,7 +304,7 @@ protected:
     // and different bugs. Let's keep both frontends consistent predictable.
 
     // No shared pointers, as lifetime is managed by parent-children relationship (as in QObject)
-    Vector<Core::View *> m_childViews;
+    QVector<Core::View *> m_childViews;
 #endif
 };
 

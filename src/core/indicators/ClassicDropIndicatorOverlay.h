@@ -41,7 +41,7 @@ private:
     friend class KDDockWidgets::Indicator;
     bool rubberBandIsTopLevel() const;
     void raiseIndicators();
-    Rect geometryForRubberband(Rect localRect) const;
+    QRect geometryForRubberband(QRect localRect) const;
     void updateWindowPosition();
 
     View *const m_rubberBand;

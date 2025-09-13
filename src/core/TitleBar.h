@@ -66,8 +66,8 @@ public:
     DockWidget::List dockWidgets() const;
 
     ///@brief the icon
-    Icon icon() const;
-    void setIcon(const Icon &icon);
+    QIcon icon() const;
+    void setIcon(const QIcon &icon);
 
     ///@brief returns whether this title bar supports a floating/docking button
     bool supportsFloatingButton() const;
@@ -176,7 +176,7 @@ private:
 
     Point m_pressPos;
     QString m_title;
-    Icon m_icon;
+    QIcon m_icon;
 
     Core::Group *const m_group;
     FloatingWindow *const m_floatingWindow;

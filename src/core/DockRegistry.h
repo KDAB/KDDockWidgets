@@ -240,15 +240,15 @@ private:
 
     static DockRegistry *self(bool create);
 
-    explicit DockRegistry(Core::Object *parent = nullptr);
-    bool onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *);
+    explicit DockRegistry(QObject *parent = nullptr);
+    bool onDockWidgetPressed(Core::DockWidget *dw, QMouseEvent *);
     void onFocusedViewChanged(std::shared_ptr<Core::View> view);
     void maybeDelete();
     void setFocusedDockWidget(Core::DockWidget *);
 
     // EventFilterInterface:
     bool onExposeEvent(std::shared_ptr<Core::Window>) override;
-    bool onMouseButtonPress(Core::View *, MouseEvent *) override;
+    bool onMouseButtonPress(Core::View *, QMouseEvent *) override;
 
     // To honour Config::Flag_AutoHideAsTabGroups:
     void addSideBarGrouping(const QVector<Core::DockWidget *> &);

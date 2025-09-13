@@ -121,7 +121,7 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
         }
     }
 
-    Rect r = d->m_group->view()->geometry();
+    QRect r = d->m_group->view()->geometry();
 
     const Point globalPoint = view()->mapToGlobal(Point(0, 0));
 

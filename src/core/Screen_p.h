@@ -24,17 +24,17 @@ class DOCKS_EXPORT Screen
 {
 public:
     using Ptr = std::shared_ptr<Screen>;
-    using List = Vector<Ptr>;
+    using List = QVector<Ptr>;
 
     virtual ~Screen();
 
     virtual QString name() const = 0;
 
     /// @brief returns the size of screen in pixels
-    virtual Size size() const = 0;
+    virtual QSize size() const = 0;
 
     /// @brief returns the geometry of screen in pixels
-    virtual Rect geometry() const = 0;
+    virtual QRect geometry() const = 0;
 
     /// @brief returns the ratio between physical pixels and
     /// device-independent pixels for the screen.
@@ -43,18 +43,18 @@ public:
     /// @brief returns the screen's available size in pixels
     /// The available size is the size excluding window manager
     /// reserved areas such as task bars and system menus.
-    virtual Size availableSize() const = 0;
+    virtual QSize availableSize() const = 0;
 
     /// @brief returns the screen's available geometry in pixels
     /// The available geometry is the geometry excluding window manager
     /// reserved areas such as task bars and system menus.
-    virtual Rect availableGeometry() const = 0;
+    virtual QRect availableGeometry() const = 0;
 
     /// @brief returns the pixel size of the virtual desktop corresponding to this screen.
-    virtual Size virtualSize() const = 0;
+    virtual QSize virtualSize() const = 0;
 
     /// @brief returns the pixel geometry of the virtual desktop corresponding to this screen
-    virtual Rect virtualGeometry() const = 0;
+    virtual QRect virtualGeometry() const = 0;
 
     /// @brief Returns whether the two Screen instances refer to the same underlying platform Screen
     virtual bool equals(std::shared_ptr<Screen> other) const = 0;

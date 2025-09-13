@@ -127,7 +127,7 @@ public:
     /**
      * @brief The list of items in this layout.
      */
-    Vector<Core::Item *> items() const;
+    QVector<Core::Item *> items() const;
 
     /**
      * @brief Returns true if this layout contains the specified item.
@@ -168,10 +168,10 @@ public:
     /**
      * @brief Returns this list of Group objects contained in this layout
      */
-    Vector<Core::Group *> groups() const;
+    QVector<Core::Group *> groups() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
-    Vector<Core::DockWidget *> dockWidgets() const;
+    QVector<Core::DockWidget *> dockWidgets() const;
 
     /**
      * @brief Removes an item from this MultiSplitter.
@@ -193,7 +193,7 @@ public:
 
     Core::ItemContainer *rootItem() const;
 
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
 
     LayoutingHost *asLayoutingHost() const;
     static Layout *fromLayoutingHost(LayoutingHost *);
@@ -218,14 +218,14 @@ protected:
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const Vector<Core::Group *> &groupsBeingAdded) const;
+    void unrefOldPlaceholders(const QVector<Core::Group *> &groupsBeingAdded) const;
 
     /**
      * @brief returns the groups contained in @p groupOrMultiSplitter-
      * If groupOrMultiSplitter- is a Group, it returns a list of 1 element, with that group
      * If groupOrMultiSplitter- is a MultiSplitter then it returns a list of all groups it contains
      */
-    Vector<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
+    QVector<Core::Group *> groupsFrom(View *groupOrMultiSplitter) const;
 
 private:
     Private *const d;

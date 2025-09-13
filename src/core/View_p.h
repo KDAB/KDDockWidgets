@@ -38,7 +38,7 @@ public:
     KDBindings::Signal<> beingDestroyed;
 
     /// @brief signal emitted when something tried to close this view
-    KDBindings::Signal<CloseEvent *> closeRequested;
+    KDBindings::Signal<QCloseEvent *> closeRequested;
 
     /// @brief signal emitted when constraints change, for example min/max sizes
     KDBindings::Signal<> layoutInvalidated;
@@ -50,7 +50,7 @@ public:
     std::vector<EventFilterInterface *> m_viewEventFilters;
 
     /// @brief Returns the views's geometry, but always in global space
-    Rect globalGeometry() const;
+    QRect globalGeometry() const;
 
     /// Returns which screen this view is on
     /// In Qt this is QWindow::screen()
@@ -58,7 +58,7 @@ public:
 
     /// Called by the framework when the user tries to close the view
     /// The view can accept or ignore this event
-    void requestClose(CloseEvent *);
+    void requestClose(QCloseEvent *);
 
     /// @brief If true, it means destruction hasn't happen yet but is about to happen.
     /// Useful when a controller is under destructions and wants all related views to stop painting
@@ -90,8 +90,8 @@ public:
     bool freed() const;
 
     void closeRootView();
-    Rect windowGeometry() const;
-    Size parentSize() const;
+    QRect windowGeometry() const;
+    QSize parentSize() const;
 
     /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
     std::weak_ptr<View> m_thisWeakPtr;

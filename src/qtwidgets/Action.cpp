@@ -35,12 +35,12 @@ Action::Action(Core::DockWidget *dw, const char *debugName)
 
 Action::~Action() = default;
 
-void Action::setIcon(const KDDockWidgets::Icon &icon)
+void Action::setIcon(const QIcon &icon)
 {
     QAction::setIcon(icon);
 }
 
-KDDockWidgets::Icon Action::icon() const
+QIcon Action::icon() const
 {
     return QAction::icon();
 }

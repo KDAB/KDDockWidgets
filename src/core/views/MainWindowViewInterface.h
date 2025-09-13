@@ -29,8 +29,8 @@ class DOCKS_EXPORT MainWindowViewInterface
 public:
     explicit MainWindowViewInterface(MainWindow *);
     virtual ~MainWindowViewInterface();
-    virtual Margins centerWidgetMargins() const = 0;
-    virtual Rect centralAreaGeometry() const = 0;
+    virtual QMargins centerWidgetMargins() const = 0;
+    virtual QRect centralAreaGeometry() const = 0;
     virtual void setContentsMargins(int left, int top, int right, int bottom) = 0;
 
     /// @brief Returns the main window controller
@@ -39,8 +39,8 @@ public:
 
     // controllers/MainWindow.h public interface:
     QString uniqueName() const;
-    Vector<QString> affinities() const;
-    void setAffinities(const Vector<QString> &names);
+    QVector<QString> affinities() const;
+    void setAffinities(const QVector<QString> &names);
     MainWindowOptions options() const;
     bool isMDI() const;
     bool closeDockWidgets(bool force = false);

@@ -106,7 +106,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());
     view()->init();
-    view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
 
     // NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
     m_inCtor = false;
@@ -131,7 +131,7 @@ Group::~Group()
     delete d;
 }
 
-void Group::onCloseEvent(CloseEvent *e)
+void Group::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // Accepted by default (will close unless ignored)
     const DockWidget::List docks = dockWidgets();
@@ -173,7 +173,7 @@ void Group::renameTab(int index, const QString &title)
     m_tabBar->renameTab(index, title);
 }
 
-void Group::changeTabIcon(int index, const Icon &icon)
+void Group::changeTabIcon(int index, const QIcon &icon)
 {
     m_tabBar->changeTabIcon(index, icon);
 }
@@ -319,7 +319,7 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
 
     dockWidget->d->saveTabIndex();
 
-    Rect r = dockWidget->geometry();
+    QRect r = dockWidget->geometry();
     removeWidget(dockWidget);
 
     auto newGroup = new Group();
@@ -484,7 +484,7 @@ void Group::updateTitleBarVisibility()
 
 void Group::updateFloatingActions()
 {
-    const Vector<DockWidget *> widgets = dockWidgets();
+    const QVector<DockWidget *> widgets = dockWidgets();
     for (DockWidget *dw : widgets)
         dw->d->updateFloatAction();
 }
@@ -519,7 +519,7 @@ QString Group::title() const
     return m_titleBar->title();
 }
 
-Icon Group::icon() const
+QIcon Group::icon() const
 {
     return m_titleBar->icon();
 }
@@ -675,7 +675,7 @@ bool Group::hasTabsVisible() const
     return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
-Vector<QString> Group::affinities() const
+QVector<QString> Group::affinities() const
 {
     if (isEmpty()) {
         if (auto m = mainWindow())
@@ -869,9 +869,9 @@ Size Group::biggestDockWidgetMaxSize() const
     return size;
 }
 
-Rect Group::dragRect() const
+QRect Group::dragRect() const
 {
-    Rect rect;
+    QRect rect;
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->view()->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));

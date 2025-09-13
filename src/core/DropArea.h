@@ -62,7 +62,7 @@ public:
     DropLocation hover(WindowBeingDragged *draggedWindow, Point globalPos);
     ///@brief Called when a user drops a widget via DND
     bool drop(WindowBeingDragged *droppedWindow, Point globalPos);
-    Vector<Core::Group *> groups() const;
+    QVector<Core::Group *> groups() const;
 
     Core::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const;
@@ -81,7 +81,7 @@ public:
     /// See further explanation in FloatingWindow::hasSingleGroup()
     bool hasSingleGroup() const;
 
-    Vector<QString> affinities() const;
+    QVector<QString> affinities() const;
     void layoutParentContainerEqually(DockWidget *);
 
     /// When DockWidgetOption_MDINestable is used, docked MDI dock widgets will be wrapped inside
@@ -117,13 +117,13 @@ public:
      * Excludes the Separator thickness, result is actually smaller than what needed. In other
      * words, the result will be exactly the same as the geometry the widget will get.
      */
-    Rect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
-                     const Core::Item *relativeTo) const;
+    QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
+                      const Core::Item *relativeTo) const;
 
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
     ///@brief returns the list of separators
-    Vector<Core::LayoutingSeparator *> separators() const;
+    QVector<Core::LayoutingSeparator *> separators() const;
 
     /// @brief See docs for MainWindowBase::layoutEqually()
     void layoutEqually();

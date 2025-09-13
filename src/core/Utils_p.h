@@ -109,18 +109,18 @@ inline bool isNormalWindowState(WindowStates states)
     return !(states & WindowState::Maximized) && !(states & WindowState::FullScreen);
 }
 
-inline MouseEvent *mouseEvent(Event *e)
+inline QMouseEvent *mouseEvent(QEvent *e)
 {
     switch (e->type()) {
-    case Event::MouseButtonPress:
-    case Event::MouseButtonDblClick:
-    case Event::MouseButtonRelease:
-    case Event::MouseMove:
-    case Event::NonClientAreaMouseButtonPress:
-    case Event::NonClientAreaMouseButtonRelease:
-    case Event::NonClientAreaMouseMove:
-    case Event::NonClientAreaMouseButtonDblClick:
-        return static_cast<MouseEvent *>(e);
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseMove:
+    case QEvent::NonClientAreaMouseButtonPress:
+    case QEvent::NonClientAreaMouseButtonRelease:
+    case QEvent::NonClientAreaMouseMove:
+    case QEvent::NonClientAreaMouseButtonDblClick:
+        return static_cast<QMouseEvent *>(e);
     default:
         break;
     }
@@ -128,13 +128,13 @@ inline MouseEvent *mouseEvent(Event *e)
     return nullptr;
 }
 
-inline HoverEvent *hoverEvent(Event *e)
+inline QHoverEvent *hoverEvent(QEvent *e)
 {
     switch (e->type()) {
-    case Event::HoverEnter:
-    case Event::HoverLeave:
-    case Event::HoverMove:
-        return static_cast<HoverEvent *>(e);
+    case QEvent::HoverEnter:
+    case QEvent::HoverLeave:
+    case QEvent::HoverMove:
+        return static_cast<QHoverEvent *>(e);
     default:
         break;
     }
@@ -142,12 +142,12 @@ inline HoverEvent *hoverEvent(Event *e)
     return nullptr;
 }
 
-inline bool isNonClientMouseEvent(const Event *e)
+inline bool isNonClientMouseEvent(const QEvent *e)
 {
     switch (e->type()) {
-    case Event::NonClientAreaMouseButtonPress:
-    case Event::NonClientAreaMouseButtonRelease:
-    case Event::NonClientAreaMouseMove:
+    case QEvent::NonClientAreaMouseButtonPress:
+    case QEvent::NonClientAreaMouseButtonRelease:
+    case QEvent::NonClientAreaMouseMove:
         return true;
     default:
         break;
@@ -156,13 +156,13 @@ inline bool isNonClientMouseEvent(const Event *e)
     return false;
 }
 
-inline bool isDnDEvent(const Event *e)
+inline bool isDnDEvent(const QEvent *e)
 {
     switch (e->type()) {
-    case Event::DragEnter:
-    case Event::DragLeave:
-    case Event::DragMove:
-    case Event::Drop:
+    case QEvent::DragEnter:
+    case QEvent::DragLeave:
+    case QEvent::DragMove:
+    case QEvent::Drop:
         return true;
     default:
         break;

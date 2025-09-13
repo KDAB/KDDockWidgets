@@ -86,11 +86,11 @@ void TestDocks::tst_resizeWindow()
     QFETCH(bool, doASaveRestore);
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(
-        "1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
+        "1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     auto dock2 = createDockWidget(
-        "2", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
+        "2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     ObjectGuard<Core::FloatingWindow> fw1 = dock1->floatingWindow();
     ObjectGuard<Core::FloatingWindow> fw2 = dock2->floatingWindow();
     m->addDockWidget(dock1, Location_OnLeft);
@@ -252,7 +252,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
-    const Rect oldGeo = dock1->geometry();
+    const QRect oldGeo = dock1->geometry();
 
     // 1. Just toggle visibility and check that stuff remained sane
     QVERIFY(dock1->titleBar()->isVisible());

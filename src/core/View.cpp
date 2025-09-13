@@ -133,9 +133,9 @@ Point View::pos() const
     return geometry().topLeft();
 }
 
-Rect View::rect() const
+QRect View::rect() const
 {
-    return Rect(Point(0, 0), size());
+    return QRect(Point(0, 0), size());
 }
 
 int View::x() const
@@ -333,7 +333,7 @@ Size View::Private::parentSize() const
     return {};
 }
 
-Rect View::Private::windowGeometry() const
+QRect View::Private::windowGeometry() const
 {
     if (Core::Window::Ptr window = q->window())
         return window->geometry();
@@ -403,7 +403,7 @@ Controller *View::Private::firstParentOfType(ViewType type) const
     return View::firstParentOfType(const_cast<View *>(q), type);
 }
 
-void View::Private::requestClose(CloseEvent *e)
+void View::Private::requestClose(QCloseEvent *e)
 {
     if (m_emittingClose)
         return;
@@ -413,9 +413,9 @@ void View::Private::requestClose(CloseEvent *e)
     m_emittingClose = false;
 }
 
-Rect View::Private::globalGeometry() const
+QRect View::Private::globalGeometry() const
 {
-    Rect geo = q->geometry();
+    QRect geo = q->geometry();
     if (!q->isRootView())
         geo.moveTopLeft(q->mapToGlobal(Point(0, 0)));
     return geo;
@@ -471,10 +471,10 @@ void View::removeViewEventFilter(EventFilterInterface *filter)
         d->m_viewEventFilters.end());
 }
 
-bool View::deliverViewEventToFilters(Event *ev)
+bool View::deliverViewEventToFilters(QEvent *ev)
 {
     for (Core::EventFilterInterface *filter : std::as_const(d->m_viewEventFilters)) {
-        if (ev->type() == Event::Move) {
+        if (ev->type() == QEvent::Move) {
             if (filter->onMoveEvent(this))
                 return true;
         } else if (auto me = mouseEvent(ev)) {
@@ -482,19 +482,19 @@ bool View::deliverViewEventToFilters(Event *ev)
                 return true;
 
             switch (ev->type()) {
-            case Event::MouseButtonPress:
+            case QEvent::MouseButtonPress:
                 if (filter->onMouseButtonPress(this, me))
                     return true;
                 break;
-            case Event::MouseButtonRelease:
+            case QEvent::MouseButtonRelease:
                 if (filter->onMouseButtonRelease(this, me))
                     return true;
                 break;
-            case Event::MouseMove:
+            case QEvent::MouseMove:
                 if (filter->onMouseButtonMove(this, me))
                     return true;
                 break;
-            case Event::MouseButtonDblClick:
+            case QEvent::MouseButtonDblClick:
                 if (filter->onMouseDoubleClick(this, me))
                     return true;
                 break;

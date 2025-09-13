@@ -41,7 +41,7 @@ void StateDraggingWayland::onEntry()
         std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 
     auto mimeData = new WaylandMimeData();
-    Drag drag(this);
+    QDrag drag(this);
     drag.setMimeData(mimeData);
     drag.setPixmap(q->m_windowBeingDragged->pixmap());
 
@@ -70,7 +70,7 @@ bool StateDraggingWayland::handleMouseMove(QPoint)
     return false;
 }
 
-bool StateDraggingWayland::handleDragEnter(DragMoveEvent *ev, DropArea *dropArea, QPoint globalEventPos)
+bool StateDraggingWayland::handleDragEnter(QDragMoveEvent *ev, DropArea *dropArea, QPoint globalEventPos)
 {
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
     if (!mimeData || !q->m_windowBeingDragged)
@@ -94,7 +94,7 @@ bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
     return true;
 }
 
-bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea, QPoint globalEventPos)
+bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea, QPoint globalEventPos)
 {
     KDDW_DEBUG(Q_FUNC_INFO);
     auto mimeData = object_cast<const WaylandMimeData *>(ev->mimeData());
@@ -113,7 +113,7 @@ bool StateDraggingWayland::handleDrop(DropEvent *ev, DropArea *dropArea, QPoint 
     return true;
 }
 
-bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea, QPoint globalEventPos)
+bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea, QPoint globalEventPos)
 {
     KDDW_DEBUG("StateDraggingWayland::handleDragMove");
 

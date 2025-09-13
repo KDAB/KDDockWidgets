@@ -81,7 +81,7 @@ inline Point dragPointForWidget(Core::Group *group, int index)
         assert(index == 0);
         return group->titleBar()->mapToGlobal(Point(5, 5));
     } else {
-        Rect rect = group->stack()->tabBar()->rectForTab(index);
+        QRect rect = group->stack()->tabBar()->rectForTab(index);
         return group->stack()->tabBar()->view()->mapToGlobal(rect.center());
     }
 }
@@ -240,7 +240,7 @@ inline bool dragFloatingWindowTo(Core::FloatingWindow *fw, Point globalDest,
     Core::View *draggable = draggableFor(fw->view());
     assert(draggable);
     assert(draggable->controller()->isVisible());
-    auto result = drag(draggable, draggable->mapToGlobal(Point(10, 10)), globalDest, buttonActions);
+    auto result = drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
     return result;
 }
 
@@ -254,14 +254,14 @@ inline bool dragFloatingWindowTo(Core::FloatingWindow *fw, Core::DropArea *targe
     assert(draggable);
 
     // First we drag over it, so the drop indicators appear:
-    drag(draggable, draggable->mapToGlobal(Point(10, 10)),
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)),
          target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
     Core::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();
-    const Point dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
+    const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
-    auto result = drag(draggable, Point(), dropPoint, ButtonAction_Release);
+    auto result = drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
     return result;
 }
 
