@@ -45,8 +45,8 @@ public:
     void open();
     void raise();
     void moveToSideBar();
-    void setIcon(const Icon &icon, IconPlaces places = IconPlace::All);
-    Icon icon(IconPlace place = IconPlace::TitleBar) const;
+    void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
+    QIcon icon(IconPlace place = IconPlace::TitleBar) const;
 
     void setAffinities(const Vector<QString> &);
     void setAffinityName(const QString &name);
@@ -68,7 +68,7 @@ public:
 
     /// @brief Sets this dock widgets position to pos within the MDI layout
     /// This only applies if the main window is in MDI mode, which it is not by default
-    void setMDIPosition(Point pos);
+    void setMDIPosition(QPoint pos);
 
     /// @brief like setMDIPosition(), but for the size.
     void setMDISize(Size size);

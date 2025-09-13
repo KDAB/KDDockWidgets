@@ -193,7 +193,7 @@ public:
 
     Core::ItemContainer *rootItem() const;
 
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
 
     LayoutingHost *asLayoutingHost() const;
     static Layout *fromLayoutingHost(LayoutingHost *);

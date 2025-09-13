@@ -166,9 +166,9 @@ public:
 
 private:
     // EventFilterInterface:
-    bool onMouseEvent(Core::View *, MouseEvent *) override;
+    bool onMouseEvent(Core::View *, QMouseEvent *) override;
     void setTarget(Core::View *w);
-    bool mouseMoveEvent(MouseEvent *);
+    bool mouseMoveEvent(QMouseEvent *);
     void updateCursor(CursorPosition);
     void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();

@@ -193,7 +193,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
             onVisibleFrameCountChanged(count);
         });
 
-    view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
 
     view()->d->layoutInvalidated.connect([this] { updateSizeConstraints(); });
 
@@ -544,7 +544,7 @@ Vector<QString> FloatingWindow::affinities() const
 void FloatingWindow::updateTitleAndIcon()
 {
     QString title;
-    Icon icon;
+    QIcon icon;
     if (hasSingleGroup()) {
         const Core::Group *group = groups().constFirst();
         title = group->title();
@@ -561,7 +561,7 @@ void FloatingWindow::updateTitleAndIcon()
     view()->setWindowIcon(icon);
 }
 
-void FloatingWindow::onCloseEvent(CloseEvent *e)
+void FloatingWindow::onCloseEvent(QCloseEvent *e)
 {
     if (e->spontaneous() && anyNonClosable()) {
         // Event from the window system won't close us
@@ -693,7 +693,7 @@ MainWindow *FloatingWindow::mainWindow() const
     return view()->parentView()->asMainWindowController();
 }
 
-Margins FloatingWindow::contentMargins() const
+QMargins FloatingWindow::contentMargins() const
 {
     return { 4, 4, 4, 4 };
 }

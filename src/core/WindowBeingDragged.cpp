@@ -206,7 +206,7 @@ Draggable *WindowBeingDragged::draggable() const
     return m_draggable;
 }
 
-Pixmap WindowBeingDragged::pixmap() const
+QPixmap WindowBeingDragged::pixmap() const
 {
     return {};
 }
@@ -262,7 +262,7 @@ WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
 {
 }
 
-Pixmap WindowBeingDraggedWayland::pixmap() const
+QPixmap WindowBeingDraggedWayland::pixmap() const
 {
 #ifdef KDDW_FRONTEND_QT
     QPixmap pixmap(size());

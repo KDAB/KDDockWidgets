@@ -134,7 +134,7 @@ public:
     virtual void setFlag(Qt::WindowType, bool = true) = 0;
     virtual Qt::WindowFlags flags() const = 0;
     virtual void setWindowTitle(const QString &title) = 0;
-    virtual void setWindowIcon(const Icon &) = 0;
+    virtual void setWindowIcon(const QIcon &) = 0;
 
     /// Enable/disable attributes. This is mostly for QtWidget compatibility
     /// Do not use. We don't depend on Qt::WidgetAttribute in a future version.
@@ -150,7 +150,7 @@ public:
     void removeViewEventFilter(EventFilterInterface *);
 
     /// @brief Delivers mouse events and such to event filters
-    bool deliverViewEventToFilters(Event *e);
+    bool deliverViewEventToFilters(QEvent *e);
 
     virtual void showNormal() = 0;
     virtual void showMinimized() = 0;
@@ -173,9 +173,9 @@ public:
     virtual void setMouseTracking(bool) = 0;
 
     virtual bool onResize(int h, int w);
-    bool onResize(Size);
+    bool onResize(QSize);
 
-    virtual bool onFocusInEvent(FocusEvent *)
+    virtual bool onFocusInEvent(QFocusEvent *)
     {
         return false;
     }

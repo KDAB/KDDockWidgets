@@ -160,7 +160,7 @@ QString TitleBar::title() const
     return m_title;
 }
 
-Icon TitleBar::icon() const
+QIcon TitleBar::icon() const
 {
     return m_icon;
 }
@@ -396,7 +396,7 @@ void TitleBar::setTitle(const QString &title)
     }
 }
 
-void TitleBar::setIcon(const Icon &icon)
+void TitleBar::setIcon(const QIcon &icon)
 {
     m_icon = icon;
     d->iconChanged.emit();

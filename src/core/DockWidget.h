@@ -250,7 +250,7 @@ public:
      *
      * @sa icon()
      */
-    void setIcon(const Icon &icon, IconPlaces places = IconPlace::All);
+    void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
 
     /**
      * @brief Returns the dock widget's titlebar, tabbar, or toggle action icon (depending on the
@@ -260,7 +260,7 @@ public:
      *
      * @sa setIcon()
      */
-    Icon icon(IconPlace place = IconPlace::TitleBar) const;
+    QIcon icon(IconPlace place = IconPlace::TitleBar) const;
 
     /**
      * @brief Like QWidget::close() but the hosted widget won't be asked if we

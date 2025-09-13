@@ -64,7 +64,7 @@ public:
     virtual Size maxSize() const;
 
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
-    virtual Pixmap pixmap() const;
+    virtual QPixmap pixmap() const;
 
     /// @brief Returns the list of dock widgets being dragged
     virtual Vector<DockWidget *> dockWidgets() const;
@@ -103,7 +103,7 @@ public:
     Size size() const override;
     Size minSize() const override;
     Size maxSize() const override;
-    Pixmap pixmap() const override;
+    QPixmap pixmap() const override;
     Vector<QString> affinities() const override;
     Vector<DockWidget *> dockWidgets() const override;
     bool isInWaylandDrag(Group *) const override;

@@ -261,7 +261,7 @@ public:
 
 
     /// @internal
-    Margins centerWidgetMargins() const;
+    QMargins centerWidgetMargins() const;
 
     /// @internal
     void init(const QString &name);

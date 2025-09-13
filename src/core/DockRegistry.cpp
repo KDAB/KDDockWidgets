@@ -696,7 +696,7 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
     }
 }
 
-bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
+bool DockRegistry::onMouseButtonPress(View *view, QMouseEvent *event)
 {
     if (!view)
         return false;
@@ -740,7 +740,7 @@ bool DockRegistry::onMouseButtonPress(View *view, MouseEvent *event)
     return false;
 }
 
-bool DockRegistry::onDockWidgetPressed(Core::DockWidget *dw, MouseEvent *ev)
+bool DockRegistry::onDockWidgetPressed(Core::DockWidget *dw, QMouseEvent *ev)
 {
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.

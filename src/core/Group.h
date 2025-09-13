@@ -103,7 +103,7 @@ public:
     Core::TitleBar *titleBar() const;
     Core::TitleBar *actualTitleBar() const;
     QString title() const;
-    Icon icon() const;
+    QIcon icon() const;
     Vector<DockWidget *> dockWidgets() const;
 
     bool isTheOnlyGroup() const;
@@ -280,7 +280,7 @@ public:
     WidgetResizeHandler *resizeHandler() const;
 
     void renameTab(int index, const QString &);
-    void changeTabIcon(int index, const Icon &);
+    void changeTabIcon(int index, const QIcon &);
     /// @brief Sets the Layout which this group is in
     void setLayout(Layout *);
 
@@ -352,7 +352,7 @@ private:
 
     void scheduleDeleteLater();
     void createMDIResizeHandler();
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
 
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;

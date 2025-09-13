@@ -2633,7 +2633,7 @@ void TestDocks::tst_addToSmallMainWindow2()
 
 
     QVERIFY(dropArea->layoutWidth() > osWindowMinWidth());
-    Margins margins = m->centerWidgetMargins();
+    QMargins margins = m->centerWidgetMargins();
     QCOMPARE(dropArea->layoutWidth(), m->width() - margins.left() - margins.right());
     QVERIFY(m->dropArea()->checkSanity());
 }
@@ -4278,7 +4278,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     dock1->window()->window()->setFramePosition(targetPos);
     QCOMPARE(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
-    WAIT_FOR_EVENT(dock1->window().get(), Event::Move);
+    WAIT_FOR_EVENT(dock1->window().get(), QEvent::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
@@ -4339,7 +4339,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     dock1->guestView()->setFocus(Qt::MouseFocusReason);
 
     QVERIFY(dock1->isFocused()
-            || (WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn)));
+            || (WAIT_FOR_EVENT(dock1->guestView().get(), QEvent::FocusIn)));
     QVERIFY(titleBar1->isFocused());
 
     auto group2 = dock2->dptr()->group();
@@ -5368,7 +5368,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     Item *item2 = layout->itemForGroup(dock2->dptr()->group());
     Item *item3 = layout->itemForGroup(dock3->dptr()->group());
 
-    Margins margins = m->centerWidgetMargins();
+    QMargins margins = m->centerWidgetMargins();
     const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical)
         + 1 * Item::layoutSpacing + margins.top() + margins.bottom();
 

@@ -106,7 +106,7 @@ Group::Group(View *parent, FrameOptions options, int userType)
     setLayout(parent ? parent->asLayout() : nullptr);
     m_stack->setTabBarAutoHide(!alwaysShowsTabs());
     view()->init();
-    view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
 
     // NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
     m_inCtor = false;
@@ -131,7 +131,7 @@ Group::~Group()
     delete d;
 }
 
-void Group::onCloseEvent(CloseEvent *e)
+void Group::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // Accepted by default (will close unless ignored)
     const DockWidget::List docks = dockWidgets();
@@ -173,7 +173,7 @@ void Group::renameTab(int index, const QString &title)
     m_tabBar->renameTab(index, title);
 }
 
-void Group::changeTabIcon(int index, const Icon &icon)
+void Group::changeTabIcon(int index, const QIcon &icon)
 {
     m_tabBar->changeTabIcon(index, icon);
 }
@@ -519,7 +519,7 @@ QString Group::title() const
     return m_titleBar->title();
 }
 
-Icon Group::icon() const
+QIcon Group::icon() const
 {
     return m_titleBar->icon();
 }

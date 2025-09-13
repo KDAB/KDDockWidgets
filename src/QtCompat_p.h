@@ -46,22 +46,22 @@ namespace KDDockWidgets {
 
 #ifdef KDDW_QTGUI_TYPES
 
-using Polygon = QPolygon;
-using Icon = QIcon;
-using Pixmap = QPixmap;
-using Event = QEvent;
-using Drag = QDrag;
-using CloseEvent = QCloseEvent;
-using FocusEvent = QFocusEvent;
-using MouseEvent = QMouseEvent;
-using HoverEvent = QHoverEvent;
-using DropEvent = QDropEvent;
-using DragMoveEvent = QDragMoveEvent;
+// using Polygon = QPolygon;
+// using Icon = QIcon;
+// using Pixmap = QPixmap;
+// using Event = QEvent;
+// using Drag = QDrag;
+// using CloseEvent = QCloseEvent;
+// using FocusEvent = QFocusEvent;
+// using MouseEvent = QMouseEvent;
+// using HoverEvent = QHoverEvent;
+// using DropEvent = QDropEvent;
+// using DragMoveEvent = QDragMoveEvent;
 
 using Point = QT_PREPEND_NAMESPACE(QPoint);
 using Size = QT_PREPEND_NAMESPACE(QSize);
 using Rect = QT_PREPEND_NAMESPACE(QRect);
-using Margins = QT_PREPEND_NAMESPACE(QMargins);
+// using Margins = QT_PREPEND_NAMESPACE(QMargins);
 
 template<typename T>
 using Vector = QVector<T>;

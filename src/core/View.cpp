@@ -403,7 +403,7 @@ Controller *View::Private::firstParentOfType(ViewType type) const
     return View::firstParentOfType(const_cast<View *>(q), type);
 }
 
-void View::Private::requestClose(CloseEvent *e)
+void View::Private::requestClose(QCloseEvent *e)
 {
     if (m_emittingClose)
         return;
@@ -471,10 +471,10 @@ void View::removeViewEventFilter(EventFilterInterface *filter)
         d->m_viewEventFilters.end());
 }
 
-bool View::deliverViewEventToFilters(Event *ev)
+bool View::deliverViewEventToFilters(QEvent *ev)
 {
     for (Core::EventFilterInterface *filter : std::as_const(d->m_viewEventFilters)) {
-        if (ev->type() == Event::Move) {
+        if (ev->type() == QEvent::Move) {
             if (filter->onMoveEvent(this))
                 return true;
         } else if (auto me = mouseEvent(ev)) {
@@ -482,19 +482,19 @@ bool View::deliverViewEventToFilters(Event *ev)
                 return true;
 
             switch (ev->type()) {
-            case Event::MouseButtonPress:
+            case QEvent::MouseButtonPress:
                 if (filter->onMouseButtonPress(this, me))
                     return true;
                 break;
-            case Event::MouseButtonRelease:
+            case QEvent::MouseButtonRelease:
                 if (filter->onMouseButtonRelease(this, me))
                     return true;
                 break;
-            case Event::MouseMove:
+            case QEvent::MouseMove:
                 if (filter->onMouseButtonMove(this, me))
                     return true;
                 break;
-            case Event::MouseButtonDblClick:
+            case QEvent::MouseButtonDblClick:
                 if (filter->onMouseDoubleClick(this, me))
                     return true;
                 break;

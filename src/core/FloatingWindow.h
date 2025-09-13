@@ -152,7 +152,7 @@ public:
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
      * background. Returns global coordinates.
      */
-    Rect dragRect() const;
+    QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
     bool allDockWidgetsHave(DockWidgetOption) const;
@@ -176,7 +176,7 @@ public:
     MainWindow *mainWindow() const;
 
     ///@brief Returns the contents margins
-    Margins contentMargins() const;
+    QMargins contentMargins() const;
 
     // The state reported by QWidget is not always the same as what the
     // window manager thinks, due to the async nature. This method
@@ -217,7 +217,7 @@ private:
     Size maxSizeHint() const;
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
     void updateSizeConstraints();
 
     bool m_disableSetVisible = false;

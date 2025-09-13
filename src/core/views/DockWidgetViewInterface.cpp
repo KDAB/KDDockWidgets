@@ -131,12 +131,12 @@ void DockWidgetViewInterface::setOptions(DockWidgetOptions opts)
     m_dockWidget->setOptions(opts);
 }
 
-void DockWidgetViewInterface::setIcon(const Icon &icon, IconPlaces places)
+void DockWidgetViewInterface::setIcon(const QIcon &icon, IconPlaces places)
 {
     m_dockWidget->setIcon(icon, places);
 }
 
-Icon DockWidgetViewInterface::icon(IconPlace place) const
+QIcon DockWidgetViewInterface::icon(IconPlace place) const
 {
     return m_dockWidget->icon(place);
 }

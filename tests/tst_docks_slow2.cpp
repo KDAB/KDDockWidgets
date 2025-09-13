@@ -72,8 +72,8 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(dock3->titleBar()->isVisible());
     dock2->open();
     dock1->open();
-    WAIT_FOR_EVENT(m.get(), Event::LayoutRequest); // So MainWindow min
-                                                   // size is updated
+    WAIT_FOR_EVENT(m.get(), QEvent::LayoutRequest); // So MainWindow min
+                                                    // size is updated
 
     Item *item1 = layout->itemForGroup(dock1->dptr()->group());
     Item *item3 = layout->itemForGroup(dock3->dptr()->group());
@@ -173,7 +173,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     // QtQuick is a bit more async than QWidgets. Wait for the move.
-    WAIT_FOR_EVENT(fw2->view()->window(), Event::Move);
+    WAIT_FOR_EVENT(fw2->view()->window(), QEvent::Move);
 
     auto da2 = fw2->dropArea();
     const Point dragDestPos = da2->mapToGlobal(da2->rect().center());

@@ -38,7 +38,7 @@ public:
     KDBindings::Signal<> beingDestroyed;
 
     /// @brief signal emitted when something tried to close this view
-    KDBindings::Signal<CloseEvent *> closeRequested;
+    KDBindings::Signal<QCloseEvent *> closeRequested;
 
     /// @brief signal emitted when constraints change, for example min/max sizes
     KDBindings::Signal<> layoutInvalidated;
@@ -58,7 +58,7 @@ public:
 
     /// Called by the framework when the user tries to close the view
     /// The view can accept or ignore this event
-    void requestClose(CloseEvent *);
+    void requestClose(QCloseEvent *);
 
     /// @brief If true, it means destruction hasn't happen yet but is about to happen.
     /// Useful when a controller is under destructions and wants all related views to stop painting

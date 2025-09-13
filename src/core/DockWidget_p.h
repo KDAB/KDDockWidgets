@@ -62,7 +62,7 @@ public:
     void init()
     {
         updateTitle();
-        q->view()->d->closeRequested.connect([this](CloseEvent *ev) { onCloseEvent(ev); });
+        q->view()->d->closeRequested.connect([this](QCloseEvent *ev) { onCloseEvent(ev); });
     }
 
     /**
@@ -125,7 +125,7 @@ public:
     bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
     void onParentChanged();
 
     /**
@@ -268,8 +268,8 @@ private:
 public:
     Vector<QString> affinities;
     QString title;
-    Icon titleBarIcon;
-    Icon tabBarIcon;
+    QIcon titleBarIcon;
+    QIcon tabBarIcon;
     std::shared_ptr<View> guest;
     DockWidget *const q;
     DockWidgetOptions options;

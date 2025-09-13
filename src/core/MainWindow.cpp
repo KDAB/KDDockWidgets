@@ -68,9 +68,9 @@ void MainWindow::init(const QString &name)
 
     d->m_visibleWidgetCountConnection =
         d->m_layout->d_ptr()->visibleWidgetCountChanged.connect([this](int count) { d->groupCountChanged.emit(count); });
-    view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 
-    d->m_resizeConnection = view()->d->resized.connect([this](Size size) {
+    d->m_resizeConnection = view()->d->resized.connect([this](QSize size) {
         d->onResized(size);
     });
 }
@@ -275,7 +275,7 @@ Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation loc
         return {};
 
     const Rect centralAreaGeo = q->centralAreaGeometry();
-    const Margins centerWidgetMargins = q->centerWidgetMargins();
+    const QMargins centerWidgetMargins = q->centerWidgetMargins();
 
     Rect rect;
     const int margin = m_overlayMargin;
@@ -834,7 +834,7 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     v->setContentsMargins(left, top, right, bottom);
 }
 
-Margins MainWindow::centerWidgetMargins() const
+QMargins MainWindow::centerWidgetMargins() const
 {
     auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centerWidgetMargins();

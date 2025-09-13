@@ -73,7 +73,7 @@ public:
     virtual std::shared_ptr<Core::Window> windowAt(Point globalPos) const = 0;
 
     /// @brief Sends the specified event to the specified view
-    virtual void sendEvent(View *, Event *) const = 0;
+    virtual void sendEvent(View *, QEvent *) const = 0;
 
     /// @brief Returns the screen index for the specified view or window.
     /// It's up to the platform to decide how screens are ordered, kddw won't care.
@@ -234,9 +234,9 @@ public:
 
     /// @brief Waits for the specified view to receive the specified event
     /// Returns true if the view received said event until timeout was reached
-    virtual bool tests_waitForEvent(Core::Object *w, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
-    virtual bool tests_waitForEvent(View *, Event::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
-    virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, Event::Type type,
+    virtual bool tests_waitForEvent(Core::Object *w, QEvent::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = DEFAULT_TIMEOUT) const = 0;
+    virtual bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                                     int timeout = DEFAULT_TIMEOUT) const = 0;
 
     virtual void tests_doubleClickOn(Point globalPos, View *receiver) = 0;

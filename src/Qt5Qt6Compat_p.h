@@ -28,17 +28,17 @@ using QEnterEvent = QEnterEvent;
 using qintptr = ::qintptr;
 using qhashtype = size_t;
 
-inline Point eventPos(DropEvent *ev)
+inline Point eventPos(QDropEvent *ev)
 {
     return ev->position().toPoint();
 }
 
-inline Point eventGlobalPos(MouseEvent *ev)
+inline Point eventGlobalPos(QMouseEvent *ev)
 {
     return ev->globalPosition().toPoint();
 }
 
-inline Point eventPos(HoverEvent *ev)
+inline Point eventPos(QHoverEvent *ev)
 {
     return ev->position().toPoint();
 }

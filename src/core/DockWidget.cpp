@@ -381,7 +381,7 @@ int DockWidget::currentTabIndex() const
     return 0;
 }
 
-void DockWidget::setIcon(const Icon &icon, IconPlaces places)
+void DockWidget::setIcon(const QIcon &icon, IconPlaces places)
 {
     if (places & IconPlace::TitleBar)
         d->titleBarIcon = icon;
@@ -395,7 +395,7 @@ void DockWidget::setIcon(const Icon &icon, IconPlaces places)
     d->iconChanged.emit();
 }
 
-Icon DockWidget::icon(IconPlace place) const
+QIcon DockWidget::icon(IconPlace place) const
 {
     if (place == IconPlace::TitleBar)
         return d->titleBarIcon;
@@ -1129,7 +1129,7 @@ void DockWidget::Private::saveLastFloatingGeometry()
     }
 }
 
-void DockWidget::Private::onCloseEvent(CloseEvent *e)
+void DockWidget::Private::onCloseEvent(QCloseEvent *e)
 {
     if (m_inCloseEvent)
         return;

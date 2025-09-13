@@ -79,7 +79,7 @@ public:
         Platform::instance()->removeGlobalEventFilter(this);
     }
 
-    bool onMouseEvent(View *, MouseEvent *me) override
+    bool onMouseEvent(View *, QMouseEvent *me) override
     {
         if (m_reentrancyGuard || !m_guard)
             return false;
@@ -712,7 +712,7 @@ WindowBeingDragged *DragController::windowBeingDragged() const
     return m_windowBeingDragged.get();
 }
 
-bool DragController::onDnDEvent(View *view, Event *e)
+bool DragController::onDnDEvent(View *view, QEvent *e)
 {
     if (!isWayland())
         return false;
@@ -722,23 +722,23 @@ bool DragController::onDnDEvent(View *view, Event *e)
         KDDW_DEBUG("DragController::onDnDEvent: ev={}, dropArea=", int(e->type()), ( void * )view->asDropAreaController());
 
         if (auto dropArea = qobject_cast<Core::DropArea *>(Core::View::firstParentOfType(view, ViewType::DropArea))) {
-            auto dropEvent = static_cast<DropEvent *>(e);
+            auto dropEvent = static_cast<QDropEvent *>(e);
             const QPoint globalEventPosition = view->mapToGlobal(Qt5Qt6Compat::eventPos(dropEvent));
 
             switch (int(e->type())) {
-            case Event::DragEnter:
-                if (activeState()->handleDragEnter(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
+            case QEvent::DragEnter:
+                if (activeState()->handleDragEnter(static_cast<QDragMoveEvent *>(e), dropArea, globalEventPosition))
                     return true;
                 break;
-            case Event::DragLeave:
+            case QEvent::DragLeave:
                 if (activeState()->handleDragLeave(dropArea))
                     return true;
                 break;
-            case Event::DragMove:
-                if (activeState()->handleDragMove(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
+            case QEvent::DragMove:
+                if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea, globalEventPosition))
                     return true;
                 break;
-            case Event::Drop:
+            case QEvent::Drop:
                 if (activeState()->handleDrop(dropEvent, dropArea, globalEventPosition))
                     return true;
                 break;
@@ -746,7 +746,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
                 break;
             }
         }
-    } else if (e->type() == Event::DragEnter && isDragging()) {
+    } else if (e->type() == QEvent::DragEnter && isDragging()) {
         // We're dragging a window. Be sure user code doesn't accept DragEnter events.
         KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.");
         return true;
@@ -769,7 +769,7 @@ bool DragController::onMoveEvent(View *)
     return false;
 }
 
-bool DragController::onMouseEvent(View *w, MouseEvent *me)
+bool DragController::onMouseEvent(View *w, QMouseEvent *me)
 {
     if (!w)
         return false;
@@ -777,7 +777,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
     KDDW_TRACE("DragController::onMouseEvent e={} ; nonClientDrag={}", int(me->type()), m_nonClientDrag);
 
     switch (me->type()) {
-    case Event::NonClientAreaMouseButtonPress: {
+    case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = w->asFloatingWindowController()) {
             if (KDDockWidgets::usesNativeTitleBar()
                 || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
@@ -788,7 +788,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         }
         return false;
     }
-    case Event::MouseButtonPress:
+    case QEvent::MouseButtonPress:
         // We don't care about the secondary button
         if (me->buttons() & Qt::RightButton)
             break;
@@ -803,8 +803,8 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         return activeState()->handleMouseButtonPress(
             draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
 
-    case Event::MouseButtonRelease:
-    case Event::NonClientAreaMouseButtonRelease: {
+    case QEvent::MouseButtonRelease:
+    case QEvent::NonClientAreaMouseButtonRelease: {
         ViewGuard guard(w);
         const bool inProgrammaticDrag = m_inProgrammaticDrag;
         const bool result = activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
@@ -822,11 +822,11 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         return result && !inProgrammaticDrag;
     }
 
-    case Event::NonClientAreaMouseMove:
-    case Event::MouseMove:
+    case QEvent::NonClientAreaMouseMove:
+    case QEvent::MouseMove:
         return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
-    case Event::MouseButtonDblClick:
-    case Event::NonClientAreaMouseButtonDblClick:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::NonClientAreaMouseButtonDblClick:
         return activeState()->handleMouseDoubleClick();
     default:
         break;
@@ -848,7 +848,7 @@ DropLocation DragController::currentDropLocation() const
     return DropLocation_None;
 }
 
-bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset)
+bool DragController::programmaticStartDrag(Draggable *draggable, QPoint globalPos, QPoint offset)
 {
     // Here we manually force state machine states instead of having a 2nd/parallel API.
     // As sharing 99.99% of the code path gives us some comfort.
@@ -933,7 +933,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 
 #endif
 
-static std::shared_ptr<View> qtTopLevelUnderCursor_impl(Point globalPos,
+static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos,
                                                         const Window::List &windows,
                                                         View *rootViewBeingDragged)
 {
@@ -1046,7 +1046,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
-static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, Point globalPos,
+static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, QPoint globalPos,
                                            const Vector<QString> &affinities)
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
