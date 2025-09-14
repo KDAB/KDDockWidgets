@@ -28,7 +28,7 @@ jobs:
 
         preset:
           - name: ci-dev-qt6
-            qt_version: "6.9.0"
+            qt_version: "6.10.0"
           - name: ci-release-qt6
             qt_version: "6.3.*"
           - name: ci-qtwidgets-qt6
