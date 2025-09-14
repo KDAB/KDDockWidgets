@@ -293,7 +293,7 @@ DockWidgetTabIndexOverrideFunc Config::dockWidgetTabIndexOverrideFunc() const
     return d->m_restorePlaceholderTabIndexOverride;
 }
 
-void Config::setAbsoluteWidgetMinSize(Size size)
+void Config::setAbsoluteWidgetMinSize(QSize size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         std::cerr
@@ -304,12 +304,12 @@ void Config::setAbsoluteWidgetMinSize(Size size)
     Item::hardcodedMinimumSize = size;
 }
 
-Size Config::absoluteWidgetMinSize() const
+QSize Config::absoluteWidgetMinSize() const
 {
     return Item::hardcodedMinimumSize;
 }
 
-void Config::setAbsoluteWidgetMaxSize(Size size)
+void Config::setAbsoluteWidgetMaxSize(QSize size)
 {
     if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         std::cerr
@@ -320,7 +320,7 @@ void Config::setAbsoluteWidgetMaxSize(Size size)
     Item::hardcodedMaximumSize = size;
 }
 
-Size Config::absoluteWidgetMaxSize() const
+QSize Config::absoluteWidgetMaxSize() const
 {
     return Item::hardcodedMaximumSize;
 }

@@ -28,17 +28,17 @@ using QEnterEvent = QEnterEvent;
 using qintptr = ::qintptr;
 using qhashtype = size_t;
 
-inline Point eventPos(QDropEvent *ev)
+inline QPoint eventPos(QDropEvent *ev)
 {
     return ev->position().toPoint();
 }
 
-inline Point eventGlobalPos(QMouseEvent *ev)
+inline QPoint eventGlobalPos(QMouseEvent *ev)
 {
     return ev->globalPosition().toPoint();
 }
 
-inline Point eventPos(QHoverEvent *ev)
+inline QPoint eventPos(QHoverEvent *ev)
 {
     return ev->position().toPoint();
 }
@@ -51,17 +51,17 @@ using QEnterEvent = KDDockWidgets::Event;
 using qintptr = long;
 using qhashtype = uint;
 
-inline Point eventPos(DropEvent *ev)
+inline QPoint eventPos(DropEvent *ev)
 {
     return ev->pos();
 }
 
-inline Point eventPos(HoverEvent *ev)
+inline QPoint eventPos(HoverEvent *ev)
 {
     return ev->pos();
 }
 
-inline Point eventGlobalPos(MouseEvent *ev)
+inline QPoint eventGlobalPos(MouseEvent *ev)
 {
     return ev->globalPos();
 }

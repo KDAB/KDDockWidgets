@@ -193,8 +193,8 @@ struct DOCKS_EXPORT InitialOption
 
     InitialOption();
     InitialOption(InitialVisibilityOption v);
-    InitialOption(Size size);
-    InitialOption(InitialVisibilityOption v, Size size);
+    InitialOption(QSize size);
+    InitialOption(InitialVisibilityOption v, QSize size);
 
     bool startsHidden() const
     {
@@ -234,7 +234,7 @@ struct DOCKS_EXPORT InitialOption
      * dock widget to the left then only the preferred width will be taken into account, as the
      * height will simply fill the whole layout.
      */
-    Size preferredSize;
+    QSize preferredSize;
 
     static NeighbourSqueezeStrategy s_defaultNeighbourSqueezeStrategy;
     NeighbourSqueezeStrategy neighbourSqueezeStrategy = s_defaultNeighbourSqueezeStrategy;

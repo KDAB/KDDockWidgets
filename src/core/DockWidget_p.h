@@ -112,7 +112,7 @@ public:
     Positions::Ptr &lastPosition();
 
     void forceClose();
-    Point defaultCenterPosForFloating();
+    QPoint defaultCenterPosForFloating();
 
     void onWindowActivated(std::shared_ptr<View> rootView);
     void onWindowDeactivated(std::shared_ptr<View> rootView);
@@ -291,7 +291,7 @@ public:
     bool m_inCloseEvent = false;
     bool m_removingFromOverlay = false;
     bool m_wasRestored = false;
-    Size m_lastOverlayedSize = Size(0, 0);
+    QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
     int m_willUpdateActions = 0;
     KDBindings::ScopedConnection m_windowActivatedConnection;

@@ -70,13 +70,13 @@ public:
     /// Convenience for calling View::setVisible()
     void setVisible(bool);
 
-    Rect rect() const;
-    Point mapToGlobal(Point) const;
+    QRect rect() const;
+    QPoint mapToGlobal(QPoint) const;
     int height() const;
     int width() const;
-    Size size() const;
-    Point pos() const;
-    Rect geometry() const;
+    QSize size() const;
+    QPoint pos() const;
+    QRect geometry() const;
     int x() const;
     int y() const;
     bool close();
