@@ -163,8 +163,8 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 
     auto windowBeingDragged = DragController::instance()->windowBeingDragged();
 
-    Rect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
-                                        m_dropArea->itemForGroup(relativeToFrame));
+    QRect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
+                                         m_dropArea->itemForGroup(relativeToFrame));
 
     m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);
@@ -176,7 +176,7 @@ void ClassicDropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 
 void ClassicDropIndicatorOverlay::updateWindowPosition()
 {
-    Rect rect = this->rect();
+    QRect rect = this->rect();
     if (m_indicatorWindow->isWindow()) {
         // On all non-wayland platforms it's a top-level.
 
@@ -191,7 +191,7 @@ bool ClassicDropIndicatorOverlay::rubberBandIsTopLevel() const
     return Config::self().internalFlags() & Config::InternalFlag_TopLevelIndicatorRubberBand;
 }
 
-Rect ClassicDropIndicatorOverlay::geometryForRubberband(Rect localRect) const
+QRect ClassicDropIndicatorOverlay::geometryForRubberband(QRect localRect) const
 {
     if (!rubberBandIsTopLevel())
         return localRect;

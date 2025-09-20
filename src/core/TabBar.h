@@ -77,7 +77,7 @@ public:
 
     void moveTabTo(int from, int to);
     QString text(int index) const;
-    Rect rectForTab(int index) const;
+    QRect rectForTab(int index) const;
     ///@brief rename's the tab's text
     void renameTab(int index, const QString &);
 

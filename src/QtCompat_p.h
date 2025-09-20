@@ -58,9 +58,9 @@ namespace KDDockWidgets {
 // using DropEvent = QDropEvent;
 // using DragMoveEvent = QDragMoveEvent;
 
-// using Point = QPoint;
-// using Size = QSize;
-// using Rect = QRect;
+using Point = QPoint;
+using Size = QSize;
+using Rect = QRect;
 // using Margins = QT_PREPEND_NAMESPACE(QMargins);
 
 template<typename T>

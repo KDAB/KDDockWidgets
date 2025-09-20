@@ -268,7 +268,7 @@ public:
 
 protected:
     void setUniqueName(const QString &uniqueName);
-    Rect centralAreaGeometry() const;
+    QRect centralAreaGeometry() const;
 
 private:
     class Private;

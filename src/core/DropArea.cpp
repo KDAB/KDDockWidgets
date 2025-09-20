@@ -702,8 +702,8 @@ Core::ItemBoxContainer *DropArea::rootItem() const
     return d->m_rootItem;
 }
 
-Rect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
-                           const Core::Item *relativeTo) const
+QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
+                            const Core::Item *relativeTo) const
 {
     Core::Item item(nullptr);
     if (!wbd)

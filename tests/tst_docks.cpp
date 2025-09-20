@@ -648,7 +648,7 @@ void TestDocks::tst_sizeAfterRedock()
     Core::DropArea *ms1 = fw1->multiSplitter();
     {
         WindowBeingDragged wbd2(oldFw2);
-        const Rect suggestedDropRect = ms1->rectForDrop(&wbd2, Location_OnBottom, nullptr);
+        const QRect suggestedDropRect = ms1->rectForDrop(&wbd2, Location_OnBottom, nullptr);
         QCOMPARE(suggestedDropRect.height(), height2);
     }
 
@@ -1438,7 +1438,7 @@ void TestDocks::tst_samePositionAfterHideRestore()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
-    Rect geo2 = dock2->dptr()->group()->view()->geometry();
+    QRect geo2 = dock2->dptr()->group()->view()->geometry();
     dock2->setFloating(true);
 
     auto fw2 = dock2->floatingWindow();
@@ -2395,7 +2395,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     // Clear had a bug where it saved the position of all dock widgets being closed
     DockRegistry::self()->clear();
 
-    const Rect suggestedGeo(150, 150, 300, 500);
+    const QRect suggestedGeo(150, 150, 300, 500);
     d1->view()->setGeometry(suggestedGeo);
 
     d1->open();
@@ -2967,8 +2967,8 @@ void TestDocks::tst_restoreNestedAndTabbed()
 {
     // Just a more involved test
 
-    Point oldFW4Pos;
-    Rect oldGeo;
+    QPoint oldFW4Pos;
+    QRect oldGeo;
     {
         EnsureTopLevelsDeleted e;
         auto m =
@@ -3689,14 +3689,14 @@ void TestDocks::tst_setFloatingGeometry()
         "dock1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
 
     QVERIFY(dock1->isVisible());
-    const Rect requestedGeo = Rect(70, 70, 400, 400);
+    const QRect requestedGeo = QRect(70, 70, 400, 400);
     dock1->setFloatingGeometry(requestedGeo);
     QCOMPARE(dock1->window()->geometry(), requestedGeo);
 
     dock1->close();
     QVERIFY(!dock1->isVisible());
 
-    const Rect requestedGeo2 = Rect(80, 80, 400, 400);
+    const QRect requestedGeo2 = QRect(80, 80, 400, 400);
     dock1->setFloatingGeometry(requestedGeo2);
     dock1->open();
 
@@ -4347,8 +4347,8 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     Core::TabBar *tb2 = group2->tabBar();
     QCOMPARE(tb2->currentIndex(), 1); // Was the last to be added
 
-    const Rect rect0 = tb2->rectForTab(0);
-    const Point globalPos = tb2->view()->mapToGlobal(rect0.topLeft()) + Point(5, 5);
+    const QRect rect0 = tb2->rectForTab(0);
+    const QPoint globalPos = tb2->view()->mapToGlobal(rect0.topLeft()) + Point(5, 5);
     Tests::clickOn(globalPos, tb2->view());
 
     QVERIFY(!titleBar1->isFocused());
@@ -6278,7 +6278,7 @@ void TestDocks::tst_size()
 
 void TestDocks::tst_rect()
 {
-    Rect r;
+    QRect r;
 
     QVERIFY(!r.isValid());
     QVERIFY(r.isEmpty());
@@ -6299,7 +6299,7 @@ void TestDocks::tst_rect()
     QCOMPARE(r.bottom(), 50);
     QCOMPARE(r.right(), 99);
     QCOMPARE(r.left(), 0);
-    QCOMPARE(Rect(0, 0, 50, 50).center(), Point(24, 24));
+    QCOMPARE(QRect(0, 0, 50, 50).center(), QPoint(24, 24));
 
     r.moveTop(200);
     r.moveLeft(300);
@@ -6308,12 +6308,12 @@ void TestDocks::tst_rect()
 
     r.moveBottom(200);
     r.moveRight(200);
-    QCOMPARE(r, Rect(101, 151, 100, 50));
+    QCOMPARE(r, QRect(101, 151, 100, 50));
 
     r.moveTo(0, 0);
-    QCOMPARE(r, Rect(0, 0, 100, 50));
+    QCOMPARE(r, QRect(0, 0, 100, 50));
     QCOMPARE(r.center(), Point(49, 24));
-    Point newCenter(50, 50);
+    QPoint newCenter(50, 50);
     r.moveCenter(newCenter);
     QCOMPARE(r.center(), Point(50, 50));
 
@@ -6333,22 +6333,22 @@ void TestDocks::tst_rect()
 
     r = { 100, 100, 100, 100 };
     r = r.marginsAdded({ 1, 2, 3, 4 });
-    QCOMPARE(r, Rect(99, 98, 104, 106));
+    QCOMPARE(r, QRect(99, 98, 104, 106));
 
     r = { 100, 100, 100, 100 };
     const Rect r2 = { 100, 100, 200, 200 };
 
-    QCOMPARE(r.intersected(r2), Rect(100, 100, 100, 100));
+    QCOMPARE(r.intersected(r2), QRect(100, 100, 100, 100));
     QVERIFY(r.intersects(r2));
 
-    QVERIFY(Rect(0, 0, 100, 100).contains({ 99, 99, 1, 1 }));
-    QVERIFY(!Rect(0, 0, 100, 100).contains({ 99, 99, 2, 2 }));
-    QVERIFY(!Rect(0, 0, 100, 100).contains({ 99, 100, 1, 1 }));
+    QVERIFY(QRect(0, 0, 100, 100).contains({ 99, 99, 1, 1 }));
+    QVERIFY(!QRect(0, 0, 100, 100).contains({ 99, 99, 2, 2 }));
+    QVERIFY(!QRect(0, 0, 100, 100).contains({ 99, 100, 1, 1 }));
 
     r = { 0, 0, 100, 100 };
-    QCOMPARE(r.adjusted(1, 2, 3, 4), Rect(1, 2, 102, 102));
+    QCOMPARE(r.adjusted(1, 2, 3, 4), QRect(1, 2, 102, 102));
     r.adjust(1, 2, 3, 4);
-    QCOMPARE(r, Rect(1, 2, 102, 102));
+    QCOMPARE(r, QRect(1, 2, 102, 102));
 
 
     r = { 800, 300, 400, 400 };

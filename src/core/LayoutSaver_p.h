@@ -69,7 +69,7 @@ struct LayoutSaver::Placeholder
 struct DOCKS_EXPORT LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
-    explicit ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo, int screenIndex);
+    explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex);
 
     bool isValid() const
     {
@@ -78,13 +78,13 @@ struct DOCKS_EXPORT LayoutSaver::ScalingInfo
     }
 
     void translatePos(Point &) const;
-    void applyFactorsTo(Point &) const;
-    void applyFactorsTo(Size &) const;
-    void applyFactorsTo(Rect &) const;
+    void applyFactorsTo(QPoint &) const;
+    void applyFactorsTo(QSize &) const;
+    void applyFactorsTo(QRect &) const;
 
     QString mainWindowName;
-    Rect savedMainWindowGeometry;
-    Rect realMainWindowGeometry;
+    QRect savedMainWindowGeometry;
+    QRect realMainWindowGeometry;
     double heightFactor = -1;
     double widthFactor = -1;
     bool mainWindowChangedScreen = false;
@@ -92,11 +92,11 @@ struct DOCKS_EXPORT LayoutSaver::ScalingInfo
 
 struct DOCKS_EXPORT LayoutSaver::Position
 {
-    Rect lastFloatingGeometry;
+    QRect lastFloatingGeometry;
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
-    std::unordered_map<SideBarLocation, Rect> lastOverlayedGeometries;
+    std::unordered_map<SideBarLocation, QRect> lastOverlayedGeometries;
 
     /// Iterates through the layout and patches all absolute sizes. See
     /// RestoreOption_RelativeToMainWindow.
@@ -168,7 +168,7 @@ struct DOCKS_EXPORT LayoutSaver::Group
 
     bool isNull = true;
     QString objectName;
-    Rect geometry;
+    QRect geometry;
     QFlags<FrameOption>::Int options;
     int currentTabIndex;
     QString id; // for coorelation purposes
@@ -209,8 +209,8 @@ struct DOCKS_EXPORT LayoutSaver::FloatingWindow
     LayoutSaver::MultiSplitter multiSplitterLayout;
     Vector<QString> affinities;
     int parentIndex = -1;
-    Rect geometry;
-    Rect normalGeometry;
+    QRect geometry;
+    QRect normalGeometry;
     int screenIndex;
     int flags = -1;
     Size screenSize; // for relative-size restoring
@@ -239,8 +239,8 @@ public:
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;
     Vector<QString> affinities;
-    Rect geometry;
-    Rect normalGeometry;
+    QRect geometry;
+    QRect normalGeometry;
     int screenIndex;
     Size screenSize; // for relative-size restoring
     bool isVisible;
@@ -257,7 +257,7 @@ struct LayoutSaver::ScreenInfo
     typedef Vector<LayoutSaver::ScreenInfo> List;
 
     int index;
-    Rect geometry;
+    QRect geometry;
     QString name;
     double devicePixelRatio;
 };

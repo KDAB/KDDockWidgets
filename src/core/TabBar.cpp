@@ -290,7 +290,7 @@ QString Core::TabBar::text(int index) const
     return {};
 }
 
-Rect Core::TabBar::rectForTab(int index) const
+QRect Core::TabBar::rectForTab(int index) const
 {
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         return tvi->rectForTab(index);

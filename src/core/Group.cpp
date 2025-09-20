@@ -319,7 +319,7 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
 
     dockWidget->d->saveTabIndex();
 
-    Rect r = dockWidget->geometry();
+    QRect r = dockWidget->geometry();
     removeWidget(dockWidget);
 
     auto newGroup = new Group();
@@ -869,9 +869,9 @@ Size Group::biggestDockWidgetMaxSize() const
     return size;
 }
 
-Rect Group::dragRect() const
+QRect Group::dragRect() const
 {
-    Rect rect;
+    QRect rect;
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->view()->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));

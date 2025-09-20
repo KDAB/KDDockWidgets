@@ -51,7 +51,7 @@ public:
     {
         NativeFeatures() = default;
 
-        NativeFeatures(Rect r)
+        NativeFeatures(QRect r)
             : htCaptionRect(r)
         {
         }
@@ -66,7 +66,7 @@ public:
         {
         }
 
-        Rect htCaptionRect; // in global coordinates
+        QRect htCaptionRect; // in global coordinates
         Features features = Feature_All;
         bool hasFeatures() const
         {

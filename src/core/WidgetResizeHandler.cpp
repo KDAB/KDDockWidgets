@@ -179,8 +179,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
             return false;
 
         const int m = widgetResizeHandlerMargin();
-        const Rect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
-        const Point cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
+        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
+        const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
         if (!widgetRect.contains(cursorPoint) || e->button() != Qt::LeftButton)
             return false;
 
@@ -250,10 +250,10 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const Rect oldGeometry = mTarget->d->globalGeometry();
-    Rect newGeometry = oldGeometry;
+    const QRect oldGeometry = mTarget->d->globalGeometry();
+    QRect newGeometry = oldGeometry;
 
-    Rect parentGeometry;
+    QRect parentGeometry;
     if (!mTarget->isRootView()) {
         auto parent = mTarget->parentView();
         parentGeometry = parent->d->globalGeometry();

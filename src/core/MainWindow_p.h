@@ -102,11 +102,11 @@ public:
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
-    Rect rectForOverlay(Core::Group *, SideBarLocation) const;
+    QRect rectForOverlay(Core::Group *, SideBarLocation) const;
     SideBarLocation preferredSideBar(Core::DockWidget *) const;
     void updateOverlayGeometry(Size suggestedSize);
     void clearSideBars();
-    Rect windowGeometry() const;
+    QRect windowGeometry() const;
 
     QString name;
     Vector<QString> affinities;

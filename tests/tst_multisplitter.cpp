@@ -136,7 +136,7 @@ public:
         return m_view->maxSizeHint();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         if (r != geometry()) {
             m_numSetGeometry++;
@@ -149,7 +149,7 @@ public:
         m_view->setVisible(is);
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return m_view->geometry();
     }
@@ -864,10 +864,10 @@ void TestLayouting::tst_suggestedRect()
     Item itemBeingDropped(nullptr);
     itemBeingDropped.setMinSize(minSize);
 
-    Rect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
-    Rect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
-    Rect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
-    Rect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
+    QRect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
+    QRect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
+    QRect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
+    QRect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
 
     // Test relative to root:
     QVERIFY(leftRect.width() >= minSize.width());

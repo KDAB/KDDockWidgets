@@ -39,7 +39,7 @@ public:
     explicit FloatingWindow(
         Rect suggestedGeometry, MainWindow *parent = nullptr,
         FloatingWindowFlags requestedFlags = FloatingWindowFlag::FromGlobalConfig);
-    explicit FloatingWindow(Core::Group *group, Rect suggestedGeometry,
+    explicit FloatingWindow(Core::Group *group, QRect suggestedGeometry,
                             MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
@@ -61,7 +61,7 @@ public:
     /// Tool windows don't usually appear in the task bar
     bool isUtilityWindow() const;
 
-    static void ensureRectIsOnScreen(Rect &geometry);
+    static void ensureRectIsOnScreen(QRect &geometry);
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     void setLastHitTest(int hitTest)
@@ -87,7 +87,7 @@ public:
      * @param preserveCenter, if true, then the center is preserved
      *
      */
-    void setSuggestedGeometry(Rect suggestedRect,
+    void setSuggestedGeometry(QRect suggestedRect,
                               SuggestedGeometryHints = SuggestedGeometryHint_None);
 
     bool anyNonClosable() const;

@@ -78,7 +78,7 @@ public:
 private:
     void onGroupDestroyed();
     void setHoveredGroupRect(Rect);
-    Rect m_hoveredGroupRect;
+    QRect m_hoveredGroupRect;
     DropLocation m_currentDropLocation = DropLocation_None;
     Private *const d;
 

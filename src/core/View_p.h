@@ -50,7 +50,7 @@ public:
     std::vector<EventFilterInterface *> m_viewEventFilters;
 
     /// @brief Returns the views's geometry, but always in global space
-    Rect globalGeometry() const;
+    QRect globalGeometry() const;
 
     /// Returns which screen this view is on
     /// In Qt this is QWindow::screen()
@@ -90,8 +90,8 @@ public:
     bool freed() const;
 
     void closeRootView();
-    Rect windowGeometry() const;
-    Size parentSize() const;
+    QRect windowGeometry() const;
+    QSize parentSize() const;
 
     /// If this view is wrapped in a shared ptr, this weak ptr allows us to promote to shared ptr
     std::weak_ptr<View> m_thisWeakPtr;

@@ -81,7 +81,7 @@ inline Point dragPointForWidget(Core::Group *group, int index)
         assert(index == 0);
         return group->titleBar()->mapToGlobal(Point(5, 5));
     } else {
-        Rect rect = group->stack()->tabBar()->rectForTab(index);
+        QRect rect = group->stack()->tabBar()->rectForTab(index);
         return group->stack()->tabBar()->view()->mapToGlobal(rect.center());
     }
 }

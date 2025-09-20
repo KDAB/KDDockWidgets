@@ -71,7 +71,7 @@ public:
         return q->view()->maxSizeHint();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         q->view()->setGeometry(r);
     }
@@ -81,7 +81,7 @@ public:
         q->view()->setVisible(is);
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return q->view()->geometry();
     }

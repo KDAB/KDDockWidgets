@@ -117,8 +117,8 @@ public:
      * Excludes the Separator thickness, result is actually smaller than what needed. In other
      * words, the result will be exactly the same as the geometry the widget will get.
      */
-    Rect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
-                     const Core::Item *relativeTo) const;
+    QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
+                      const Core::Item *relativeTo) const;
 
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 

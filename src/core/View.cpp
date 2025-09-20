@@ -133,9 +133,9 @@ Point View::pos() const
     return geometry().topLeft();
 }
 
-Rect View::rect() const
+QRect View::rect() const
 {
-    return Rect(Point(0, 0), size());
+    return QRect(Point(0, 0), size());
 }
 
 int View::x() const
@@ -333,7 +333,7 @@ Size View::Private::parentSize() const
     return {};
 }
 
-Rect View::Private::windowGeometry() const
+QRect View::Private::windowGeometry() const
 {
     if (Core::Window::Ptr window = q->window())
         return window->geometry();
@@ -413,9 +413,9 @@ void View::Private::requestClose(QCloseEvent *e)
     m_emittingClose = false;
 }
 
-Rect View::Private::globalGeometry() const
+QRect View::Private::globalGeometry() const
 {
-    Rect geo = q->geometry();
+    QRect geo = q->geometry();
     if (!q->isRootView())
         geo.moveTopLeft(q->mapToGlobal(Point(0, 0)));
     return geo;

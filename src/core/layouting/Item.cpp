@@ -105,7 +105,7 @@ static Qt::Orientation oppositeOrientation(Qt::Orientation o)
     return o == Qt::Vertical ? Qt::Horizontal : Qt::Vertical;
 }
 
-static Rect adjustedRect(Rect r, Qt::Orientation o, int p1, int p2)
+static QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
 {
     if (o == Qt::Vertical) {
         r.adjust(0, p1, 0, p2);
@@ -147,9 +147,9 @@ ItemBoxContainer *Item::root() const
                     : const_cast<ItemBoxContainer *>(object_cast<const ItemBoxContainer *>(this));
 }
 
-Rect Item::mapToRoot(Rect r) const
+QRect Item::mapToRoot(QRect r) const
 {
-    const Point topLeft = mapToRoot(r.topLeft());
+    const QPoint topLeft = mapToRoot(r.topLeft());
     r.moveTopLeft(topLeft);
     return r;
 }
@@ -180,9 +180,9 @@ Point Item::mapFromRoot(Point p) const
     return p;
 }
 
-Rect Item::mapFromRoot(Rect r) const
+QRect Item::mapFromRoot(QRect r) const
 {
-    const Point topLeft = mapFromRoot(r.topLeft());
+    const QPoint topLeft = mapFromRoot(r.topLeft());
     r.moveTopLeft(topLeft);
     return r;
 }
@@ -237,7 +237,7 @@ void Item::setGuest(LayoutingGuest *guest)
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
-            Rect widgetGeo = m_guest->geometry();
+            QRect widgetGeo = m_guest->geometry();
             widgetGeo.setSize(
                 widgetGeo.size().expandedTo(minSize()).expandedTo(Item::hardcodedMinimumSize));
             setGeometry(mapFromRoot(widgetGeo));
@@ -624,9 +624,9 @@ Size Item::maxSizeHint() const
     return m_sizingInfo.maxSizeHint.boundedTo(hardcodedMaximumSize);
 }
 
-void Item::setPos(Point pos)
+void Item::setPos(QPoint pos)
 {
-    Rect geo = m_sizingInfo.geometry;
+    QRect geo = m_sizingInfo.geometry;
     geo.moveTopLeft(pos);
     setGeometry(geo);
 }
@@ -674,7 +674,7 @@ void Item::setSize(Size sz)
 {
     ScopedValueRollback guard(m_inSetSize, true);
 
-    Rect newGeo = m_sizingInfo.geometry;
+    QRect newGeo = m_sizingInfo.geometry;
     newGeo.setSize(sz);
     setGeometry(newGeo);
 }
@@ -743,14 +743,14 @@ Point Item::pos() const
     return m_sizingInfo.geometry.topLeft();
 }
 
-Rect Item::geometry() const
+QRect Item::geometry() const
 {
-    return isBeingInserted() ? Rect() : m_sizingInfo.geometry;
+    return isBeingInserted() ? QRect() : m_sizingInfo.geometry;
 }
 
-Rect Item::rect() const
+QRect Item::rect() const
 {
-    return Rect(0, 0, width(), height());
+    return QRect(0, 0, width(), height());
 }
 
 bool Item::isContainer() const
@@ -818,7 +818,7 @@ void Item::setIsVisible(bool is)
     }
 }
 
-void Item::setGeometry_recursive(Rect rect)
+void Item::setGeometry_recursive(QRect rect)
 {
     // Recursiveness doesn't apply for non-container items
     setGeometry(rect);
@@ -867,12 +867,12 @@ bool Item::inSetSize() const
     return m_inSetSize;
 }
 
-void Item::setGeometry(Rect rect)
+void Item::setGeometry(QRect rect)
 {
-    Rect &m_geometry = m_sizingInfo.geometry;
+    QRect &m_geometry = m_sizingInfo.geometry;
 
     if (rect != m_geometry) {
-        const Rect oldGeo = m_geometry;
+        const QRect oldGeo = m_geometry;
 
         m_geometry = rect;
 
@@ -1345,7 +1345,7 @@ bool ItemBoxContainer::checkSanity()
             KDDW_ERROR("Unexpected separator position, expected={}, separator={}, this={}", separator->position(), expectedSeparatorPos, ( void * )separator, ( void * )this);
             return false;
         }
-        const Rect separatorGeometry = separator->geometry();
+        const QRect separatorGeometry = separator->geometry();
         if (separatorGeometry.size() != expectedSeparatorSize) {
             KDDW_ERROR("Unexpected separator size={}, expected={}, separator={}, this={}", separatorGeometry.size(), expectedSeparatorSize, ( void * )separator, ( void * )this);
             return false;
@@ -1472,7 +1472,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
     }
 }
 
-void ItemBoxContainer::setGeometry_recursive(Rect rect)
+void ItemBoxContainer::setGeometry_recursive(QRect rect)
 {
     setPos(rect.topLeft());
 
@@ -1495,7 +1495,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf, const In
     insertItem(container, index, option);
 
     m_children.removeOne(leaf);
-    container->setGeometry(leaf->isVisible() ? leaf->geometry() : Rect());
+    container->setGeometry(leaf->isVisible() ? leaf->geometry() : QRect());
     if (!leaf->isVisible())
         option.visibility = InitialVisibilityOption::StartHidden;
 
@@ -1585,7 +1585,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         insertItem(item, loc, initialOption);
 
         if (!container->hasVisibleChildren())
-            container->setGeometry(Rect());
+            container->setGeometry(QRect());
     }
 
     d->updateSeparators_recursive();
@@ -1724,15 +1724,15 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo,
-                                                 Location loc) const
+QRect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo,
+                                                  Location loc) const
 {
     const Size minSize = item->minSize();
     const int itemMin = Core::length(minSize, d->m_orientation);
     const int available = availableLength() - Item::layoutSpacing;
     if (relativeTo) {
         int suggestedPos = 0;
-        const Rect relativeToGeo = relativeTo->geometry();
+        const QRect relativeToGeo = relativeTo->geometry();
         const int suggestedLength = relativeTo->length(orientationForLocation(loc)) / 2;
         switch (loc) {
         case Location_OnLeft:
@@ -1763,7 +1763,7 @@ Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *r
         return mapToRoot(rect);
     } else if (isRoot()) {
         // Relative to the window itself
-        Rect rect = this->rect();
+        QRect rect = this->rect();
         const int oneThird = length() / 3;
         const int suggestedLength = std::max(std::min(available, oneThird), itemMin);
 
@@ -3036,8 +3036,8 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         }
 
         // Give half/half to each neighbour
-        Rect &geo1 = childSizes[index1].geometry;
-        Rect &geo2 = childSizes[index2].geometry;
+        QRect &geo1 = childSizes[index1].geometry;
+        QRect &geo2 = childSizes[index2].geometry;
 
         if (isVertical()) {
             const int available = geo2.y() - geo1.bottom() - layoutSpacing;
@@ -3058,7 +3058,7 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         }
 
         // Grow all the way to the right (or bottom if vertical)
-        Rect &geo = childSizes[index1].geometry;
+        QRect &geo = childSizes[index1].geometry;
         if (isVertical()) {
             geo.setBottom(rect().bottom());
         } else {
@@ -3073,7 +3073,7 @@ void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour
         }
 
         // Grow all the way to the left (or top if vertical)
-        Rect &geo = childSizes[index2].geometry;
+        QRect &geo = childSizes[index2].geometry;
         if (isVertical()) {
             geo.setTop(0);
         } else {
@@ -3653,10 +3653,10 @@ bool ItemBoxContainer::test_suggestedRect()
         if (auto c = relativeTo->asBoxContainer()) {
             c->test_suggestedRect();
         } else {
-            std::unordered_map<Location, Rect> rects;
+            std::unordered_map<Location, QRect> rects;
             for (Location loc :
                  { Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom }) {
-                const Rect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
+                const QRect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
                 rects[loc] = rect;
                 if (rect.isEmpty()) {
                     KDDW_ERROR("Empty rect");
@@ -3668,7 +3668,7 @@ bool ItemBoxContainer::test_suggestedRect()
                 }
             }
 
-            auto rectFor = [&rects](Location loc) -> Rect {
+            auto rectFor = [&rects](Location loc) -> QRect {
                 auto it = rects.find(loc);
                 return it == rects.cend() ? Rect() : it->second;
             };
@@ -4252,7 +4252,7 @@ Qt::Orientation LayoutingSeparator::orientation() const
 void LayoutingSeparator::setGeometry(int pos, int pos2, int length)
 {
     pos += offset();
-    Rect newGeo = geometry();
+    QRect newGeo = geometry();
     if (isVertical()) {
         // The separator itself is horizontal
         newGeo.setSize(Size(length, Core::Item::separatorThickness));

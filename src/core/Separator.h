@@ -37,7 +37,7 @@ public:
 
     bool isVertical() const;
     int position() const;
-    void setGeometry(Rect r);
+    void setGeometry(QRect r);
 
     LayoutingSeparator *asLayoutingSeparator() const;
 

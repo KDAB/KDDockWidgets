@@ -252,7 +252,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
-    const Rect oldGeo = dock1->geometry();
+    const QRect oldGeo = dock1->geometry();
 
     // 1. Just toggle visibility and check that stuff remained sane
     QVERIFY(dock1->titleBar()->isVisible());

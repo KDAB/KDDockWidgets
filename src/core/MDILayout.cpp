@@ -68,7 +68,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
     }
 }
 
-void MDILayout::setDockWidgetGeometry(Core::Group *group, Rect geometry)
+void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
 {
     if (!group)
         return;

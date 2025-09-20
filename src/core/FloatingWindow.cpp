@@ -140,7 +140,7 @@ static MainWindow *actualParent(MainWindow *candidate)
         : candidate;
 }
 
-FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
+FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent,
                                FloatingWindowFlags requestedFlags)
     : Controller(ViewType::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(
@@ -204,7 +204,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
     });
 }
 
-FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
+FloatingWindow::FloatingWindow(Core::Group *group, QRect suggestedGeometry,
                                MainWindow *parent)
     : FloatingWindow(suggestedGeometry, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
 {
@@ -361,7 +361,7 @@ Size FloatingWindow::maxSizeHint() const
     return result.boundedTo(Core::Item::hardcodedMaximumSize);
 }
 
-void FloatingWindow::setSuggestedGeometry(Rect suggestedRect, SuggestedGeometryHints hint)
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
 {
     const Size maxSize = maxSizeHint();
     const bool hasMaxSize = maxSize != Core::Item::hardcodedMaximumSize;
@@ -625,9 +625,9 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     return fw;
 }
 
-Rect FloatingWindow::dragRect() const
+QRect FloatingWindow::dragRect() const
 {
-    Rect rect;
+    QRect rect;
     if (m_titleBar->isVisible()) {
         rect = m_titleBar->rect();
         rect.moveTopLeft(m_titleBar->view()->mapToGlobal(Point(0, 0)));
@@ -724,7 +724,7 @@ void FloatingWindow::updateSizeConstraints()
 #endif
 }
 
-void FloatingWindow::ensureRectIsOnScreen(Rect &geometry)
+void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
 {
     const auto screens = Platform::instance()->screens();
     if (screens.empty())
@@ -735,7 +735,7 @@ void FloatingWindow::ensureRectIsOnScreen(Rect &geometry)
 
     const int screenCount = screens.count();
     for (int i = 0; i < screenCount; i++) {
-        const Rect scrGeom = screens[i]->geometry();
+        const QRect scrGeom = screens[i]->geometry();
 
         // If the rectangle is visible at all, we need do nothing
         if (scrGeom.intersects(geometry))

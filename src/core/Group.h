@@ -228,7 +228,7 @@ public:
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
      * background. Returns global coordinates.
      */
-    virtual Rect dragRect() const;
+    virtual QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
     bool allDockWidgetsHave(DockWidgetOption) const;

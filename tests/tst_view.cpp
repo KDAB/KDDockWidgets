@@ -138,7 +138,7 @@ void TestView::tst_viewGeometry()
     auto rootView = createViewAndWindow({});
     rootView->show();
 
-    const auto initialGeo = Rect(200, 201, 500, 501);
+    const auto initialGeo = QRect(200, 201, 500, 501);
     rootView->setGeometry(initialGeo);
     QCOMPARE(rootView->pos(), initialGeo.topLeft());
 
@@ -157,7 +157,7 @@ void TestView::tst_viewGeometry()
     QVERIFY(rootView->isVisible());
     QVERIFY(childView->isVisible());
     QVERIFY(childView->controller()->isVisible());
-    const Rect newChildGeo(1, 2, 300, 301);
+    const QRect newChildGeo(1, 2, 300, 301);
     childView->setGeometry(newChildGeo);
 
     QTest::qWait(500);

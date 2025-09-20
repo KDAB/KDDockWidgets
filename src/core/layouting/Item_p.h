@@ -156,7 +156,7 @@ struct DOCKS_EXPORT SizingInfo
         return geometry.isNull();
     }
 
-    void setGeometry(Rect geo)
+    void setGeometry(QRect geo)
     {
         geometry = geo;
     }
@@ -174,7 +174,7 @@ struct DOCKS_EXPORT SizingInfo
     }
 
     typedef Vector<SizingInfo> List;
-    Rect geometry;
+    QRect geometry;
     Size minSize;
     Size maxSizeHint;
     double percentageWithinParent = 0.0;
@@ -230,8 +230,8 @@ public:
 
     Point pos() const;
     int pos(Qt::Orientation) const;
-    Rect geometry() const;
-    Rect rect() const;
+    QRect geometry() const;
+    QRect rect() const;
     bool isContainer() const;
     ItemContainer *parentContainer() const;
 
