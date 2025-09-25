@@ -10,11 +10,11 @@ on:
   push:
     branches:
       - main
-      - 2.2
+      - 2.3
   pull_request:
     branches:
       - main
-      - 2.2
+      - 2.3
 
 jobs:
   build:
