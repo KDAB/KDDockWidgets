@@ -63,6 +63,7 @@
 #include <QGraphicsScene>
 #include <QLineEdit>
 #include <QGraphicsProxyWidget>
+#include <QMouseEvent>
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
@@ -190,6 +191,7 @@ private Q_SLOTS:
     void tst_overlayCrash();
     void tst_setAsCurrentTab();
     void tst_crash326();
+    void tst_crash661();
     void tst_restoreWithIncompleteFactory();
     void tst_deleteDockWidget();
     void tst_standaloneTitleBar();
@@ -2075,6 +2077,38 @@ void TestQtWidgets::tst_crash326()
 
     dock1->show();
     QVERIFY(originalGroup != dock1->d->group());
+}
+
+void TestQtWidgets::tst_crash661()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto flags = KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible
+        | KDDockWidgets::Config::Flag_AlwaysShowTabs
+        | KDDockWidgets::Config::Flag_TabsHaveCloseButton
+        | KDDockWidgets::Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden;
+    KDDockWidgets::Config::self().setFlags(flags);
+
+    auto m = createMainWindow(QSize(800, 600), MainWindowOption_HasCentralWidget);
+    auto dock1 = createDockWidget("DockWidget1", new QWidget(), {}, {}, false);
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    QVERIFY(dock1->isOpen());
+
+    auto group = dock1->dptr()->group();
+    QWidget *groupWidget = QtCommon::View_qt::asQWidget(group->view());
+    auto buttons = groupWidget->findChildren<QToolButton *>();
+    auto it = std::find_if(buttons.cbegin(), buttons.cend(), [](auto button) {
+        return button->property("KDDW_BUTTON_TYPE").template value<TitleBarButtonType>() == TitleBarButtonType::Float;
+    });
+
+    QVERIFY(it != buttons.cend());
+    QVERIFY((*it)->isVisible());
+
+    QMouseEvent pressEvent(QEvent::MouseButtonPress, QPoint(5, 5), {}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QCoreApplication::sendEvent(*it, &pressEvent);
+
+    QMouseEvent releaseEvent(QEvent::MouseButtonRelease, QPoint(5, 5), {}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QCoreApplication::sendEvent(*it, &releaseEvent);
 }
 
 void TestQtWidgets::tst_restoreWithIncompleteFactory()
