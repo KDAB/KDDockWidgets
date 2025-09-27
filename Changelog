@@ -14,6 +14,7 @@
   - Add MainWindowOption_CentralWidgetGetsAllExtraSpace
   - Internal nlohmann bumped to v3.12
   - QtWidgets::ViewFactory::createTitleBarButton() is now virtual
+  - qtwidgets: Fix crash when undocking (#661)
   - Support window managers without translucency in Qt 6 (#629)
   - Add Config::Flag_DisableDoubleClick
   - Don't steal QStyle ownership from QApplication

@@ -117,6 +117,10 @@ QAbstractButton *ViewFactory::createTitleBarButton(QWidget *parent,
     auto button = new QtWidgets::Button(parent);
     button->setIcon(iconForButtonType(type, parent->devicePixelRatioF()));
 
+#ifdef DOCKS_DEVELOPER_MODE
+    button->setProperty("KDDW_BUTTON_TYPE", QVariant::fromValue<TitleBarButtonType>(type));
+#endif
+
     return button;
 }
 
