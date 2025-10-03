@@ -51,6 +51,9 @@
       "name": "dev",
       "displayName": "dev",
       "binaryDir": "${sourceDir}/build-dev",
+      "cacheVariables": {
+        "KDDockWidgets_QT6": "OFF"
+      },
       "inherits": [
         "dev-base"
       ]
@@ -60,6 +63,9 @@
       "displayName": "dev-asan",
       "description": "An ASAN/UBSAN build",
       "binaryDir": "${sourceDir}/build-dev-asan",
+      "cacheVariables": {
+        "KDDockWidgets_QT6": "OFF"
+      },
       "inherits": [
         "dev-base",
         "asan-base"
