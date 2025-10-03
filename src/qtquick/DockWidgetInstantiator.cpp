@@ -32,6 +32,7 @@ public:
     QString m_title;
     Core::DockWidget *m_dockWidget = nullptr;
     QVector<QString> m_affinities;
+    KDDockWidgets::DockWidgetOptions m_options = KDDockWidgets::DockWidgetOption_None;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QVariantMap m_userData;
     KDBindings::ScopedConnection userDataConnection;
@@ -252,6 +253,22 @@ void DockWidgetInstantiator::setUserData(const QVariantMap &userData)
 }
 #endif
 
+KDDockWidgets::DockWidgetOptions DockWidgetInstantiator::options() const
+{
+    return d->m_dockWidget ? d->m_dockWidget->options() : d->m_options;
+}
+
+void DockWidgetInstantiator::setOptions(KDDockWidgets::DockWidgetOptions options)
+{
+    if (d->m_options != options) {
+        d->m_options = options;
+        if (d->m_dockWidget) {
+            d->m_dockWidget->setOptions(options);
+        }
+        Q_EMIT optionsChanged(options);
+    }
+}
+
 void DockWidgetInstantiator::componentComplete()
 {
     plat()->ensureQmlEngine(this);
@@ -279,7 +296,7 @@ void DockWidgetInstantiator::componentComplete()
     }
 
     d->m_dockWidget = ViewFactory::self()
-                          ->createDockWidget(d->m_uniqueName, qmlEngine(this))
+                          ->createDockWidget(d->m_uniqueName, qmlEngine(this), d->m_options)
                           ->asDockWidgetController();
 
     d->titleConnection = d->m_dockWidget->d->titleChanged.connect([this](const QString &title) { Q_EMIT titleChanged(title); });

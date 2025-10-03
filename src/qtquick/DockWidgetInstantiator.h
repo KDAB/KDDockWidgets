@@ -44,6 +44,7 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
     Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
     Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
+    Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY optionsChanged)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     Q_PROPERTY(QVariantMap userData READ userData WRITE setUserData NOTIFY userDataChanged)
 #endif
@@ -70,6 +71,9 @@ public:
     void setFloating(bool);
     QVector<QString> affinities() const;
     void setAffinities(const QVector<QString> &);
+
+    KDDockWidgets::DockWidgetOptions options() const;
+    void setOptions(KDDockWidgets::DockWidgetOptions);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QVariantMap userData() const;
