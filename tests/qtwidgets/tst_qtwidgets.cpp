@@ -191,7 +191,10 @@ private Q_SLOTS:
     void tst_overlayCrash();
     void tst_setAsCurrentTab();
     void tst_crash326();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    // Qt < 6.7 has a crash. See 97d227acc74c603 in qtbase
     void tst_crash661();
+#endif
     void tst_restoreWithIncompleteFactory();
     void tst_deleteDockWidget();
     void tst_standaloneTitleBar();
@@ -2079,6 +2082,7 @@ void TestQtWidgets::tst_crash326()
     QVERIFY(originalGroup != dock1->d->group());
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
 void TestQtWidgets::tst_crash661()
 {
     EnsureTopLevelsDeleted e;
@@ -2110,6 +2114,7 @@ void TestQtWidgets::tst_crash661()
     QMouseEvent releaseEvent(QEvent::MouseButtonRelease, QPoint(5, 5), {}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     QCoreApplication::sendEvent(*it, &releaseEvent);
 }
+#endif
 
 void TestQtWidgets::tst_restoreWithIncompleteFactory()
 {
