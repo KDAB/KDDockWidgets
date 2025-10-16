@@ -116,8 +116,8 @@ public:
         Flag_TitleBarShowAutoHide = 0x8000, ///< Supports minimizing dock widgets to the side-bar
         Flag_AutoHideSupport =
             Flag_TitleBarShowAutoHide | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the
-                                                 ///< side-bar. This flag also turns off the
-                                                 ///< float button.
+                                                                    ///< side-bar. This flag also turns off the
+                                                                    ///< float button.
         Flag_KeepAboveIfNotUtilityWindow =
             0x10000, ///< Only meaningful if Flag_DontUseUtilityFloatingWindows is set. If floating
                      ///< windows are normal windows, you might still want them to keep above and
