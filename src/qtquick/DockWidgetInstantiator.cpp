@@ -30,7 +30,7 @@ public:
     QString m_uniqueName;
     QString m_sourceFilename;
     QString m_title;
-    Core::DockWidget *m_dockWidget = nullptr;
+    QPointer<Core::DockWidget> m_dockWidget;
     QVector<QString> m_affinities;
     KDDockWidgets::DockWidgetOptions m_options = KDDockWidgets::DockWidgetOption_None;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -213,6 +213,13 @@ void DockWidgetInstantiator::deleteDockWidget()
 {
     delete d->m_dockWidget;
     delete this;
+}
+
+void DockWidgetInstantiator::deleteDockWidgetLater() {
+    if (d->m_dockWidget)
+        deleteLater();
+
+    deleteLater();
 }
 
 void DockWidgetInstantiator::classBegin()

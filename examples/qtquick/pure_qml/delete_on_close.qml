@@ -13,7 +13,11 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 2.0 as KDDW
 
-// Example showing how to pass options to DockWidgets, for example DockWidgetOption_DeleteOnClose
+// Example showing how to delete dock widgets when they're closed
+
+// We present two ways to do so:
+// 1 - Pass DockWidgetOption_DeleteOnClose options to DockWidgets
+// 2 - Listen to the 'closed' signal and call deleteDockWidget() manually
 
 ApplicationWindow {
     visible: true
@@ -27,8 +31,8 @@ ApplicationWindow {
         uniqueName: "MainLayout-1"
 
         KDDW.DockWidget {
-            id: mydockwidget
-            uniqueName: "mydockwidget"
+            id: dock1
+            uniqueName: "dock1"
             options: KDDW.KDDockWidgets.DockWidgetOption_DeleteOnClose
 
             Rectangle {
@@ -38,8 +42,26 @@ ApplicationWindow {
             }
         }
 
+        KDDW.DockWidget {
+            id: dock2
+            uniqueName: "dock2"
+
+            Rectangle {
+                color: "#2E8BC0"
+                anchors.fill: parent
+            }
+
+            onClosed: {
+                if (dock2.lastCloseReason === KDDW.KDDockWidgets.CloseReason.TitleBarCloseButton) {
+                    dock2.deleteDockWidgetLater();
+                    console.log("dock2 deleted on close");
+                }
+            }
+        }
+
         Component.onCompleted: {
-            addDockWidget(mydockwidget, KDDW.KDDockWidgets.Location_OnBottom);
+            addDockWidget(dock1, KDDW.KDDockWidgets.Location_OnBottom);
+            addDockWidget(dock2, KDDW.KDDockWidgets.Location_OnBottom);
         }
     }
 }

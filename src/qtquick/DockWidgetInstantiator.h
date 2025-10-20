@@ -108,6 +108,9 @@ public:
     /// It's more usual to just hide dock widgets though.
     Q_INVOKABLE void deleteDockWidget();
 
+    /// Deletes the dock widget via deleteLater()
+    Q_INVOKABLE void deleteDockWidgetLater();
+
 protected:
     void classBegin() override;
     void componentComplete() override;
