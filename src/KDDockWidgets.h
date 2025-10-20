@@ -396,6 +396,7 @@ enum class CloseReason {
     MovedToSideBar = 4, /// User clicked the pin-button (or programmatically) (auto-hide/sidebar/pin-unpin functionality)
     OverlayCollapse = 8 /// Dock widget went from overlay to sidebar (auto-hide/sidebar/pin-unpin functionality)
 };
+Q_ENUM_NS(CloseReason)
 
 /// @brief Initializes the desired frontend
 /// This function should be called before using any docking.

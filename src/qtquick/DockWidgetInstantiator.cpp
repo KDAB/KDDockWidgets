@@ -269,6 +269,11 @@ void DockWidgetInstantiator::setOptions(KDDockWidgets::DockWidgetOptions options
     }
 }
 
+KDDockWidgets::CloseReason DockWidgetInstantiator::lastCloseReason() const
+{
+    return d->m_dockWidget ? d->m_dockWidget->lastCloseReason() : KDDockWidgets::CloseReason::Unspecified;
+}
+
 void DockWidgetInstantiator::componentComplete()
 {
     plat()->ensureQmlEngine(this);
