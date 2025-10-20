@@ -167,10 +167,31 @@ ApplicationWindow {
         }
     }
 
+    function expect(condition, message) {
+        if (!condition) {
+            // Test has fatal warnings
+            console.warn("EXPECTATION FAILED: " + message);
+        }
+    }
+
+    function tst_closeReason() {
+        // This function tests that the close reason is properly set when closing a dockwidget.
+        expect(dock4.isOpen === true, "dock4 should be open");
+        expect(dock4.lastCloseReason === KDDW.KDDockWidgets.CloseReason.Unspecified, "lastCloseReason should be Unspecified");
+
+        dock4.actualTitleBar.titleBarQmlItem.closeButton.clicked();
+        expect(dock4.isOpen === false, "dock4 should be closed");
+        expect(dock4.lastCloseReason == KDDW.KDDockWidgets.CloseReason.TitleBarCloseButton, "lastCloseReason should be TitleBarCloseButton");
+    }
+
     Timer {
         interval: 4000
         running: true
         repeat: false
-        onTriggered: Qt.quit()
+        onTriggered: {
+            tst_closeReason();
+
+            Qt.quit()
+        }
     }
 }
