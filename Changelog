@@ -1,5 +1,6 @@
 * v2.4.0
   - qtquick: Expose DockWidgetOptions to QML
+  - qtquick: Expose 'DockWidget::lastCloseReason' to QML
 
 * v2.3.0
   - For packagers:
