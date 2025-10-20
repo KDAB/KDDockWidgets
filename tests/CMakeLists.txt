@@ -172,8 +172,8 @@ if(KDDW_FRONTEND_QTQUICK
 )
     add_test(
         NAME tst_qml_standalone
-        COMMAND ${CMAKE_COMMAND} -E env QT_FATAL_WARNINGS=1 qml -I ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/tests/qml_standalone_test.qml
-                -platform offscreen
+        COMMAND ${CMAKE_COMMAND} -E env QT_FATAL_WARNINGS=1 qml -I ${CMAKE_BINARY_DIR}
+                ${CMAKE_SOURCE_DIR}/tests/qml_standalone_test.qml -platform offscreen
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
 endif()

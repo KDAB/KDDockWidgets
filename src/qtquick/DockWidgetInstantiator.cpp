@@ -215,7 +215,8 @@ void DockWidgetInstantiator::deleteDockWidget()
     delete this;
 }
 
-void DockWidgetInstantiator::deleteDockWidgetLater() {
+void DockWidgetInstantiator::deleteDockWidgetLater()
+{
     if (d->m_dockWidget)
         deleteLater();
 
