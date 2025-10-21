@@ -16,6 +16,9 @@ import com.kdab.dockwidgets 2.0 as KDDW
 // File copied from another examples, but added timer to quit
 // This is just to test that KDDW can run under qml.exe without C++
 
+// You can run with:
+// qml -I build-dev6-qml-module tests/qml_standalone_test.qml -platform xcb
+
 ApplicationWindow {
     visible: true
     width: 1000
@@ -184,14 +187,25 @@ ApplicationWindow {
         expect(dock4.lastCloseReason == KDDW.KDDockWidgets.CloseReason.TitleBarCloseButton, "lastCloseReason should be TitleBarCloseButton");
     }
 
+    function tst_deleteLater() {
+        dock4.deleteDockWidgetLater();
+        expect(KDDW.Singletons.dockRegistry.containsDockWidget("dock4") === true, "dock4 should only be removed later");
+        Qt.callLater(function() {
+            expect(KDDW.Singletons.dockRegistry.containsDockWidget("dock4") === false, "dock4 should not exist anymore");
+        });
+    }
+
+
     Timer {
         interval: 4000
         running: true
         repeat: false
         onTriggered: {
             tst_closeReason();
-
-            Qt.quit()
+            tst_deleteLater();
+            Qt.callLater(function() {
+                Qt.quit()
+            });
         }
     }
 }
