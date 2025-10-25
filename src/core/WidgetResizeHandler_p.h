@@ -51,7 +51,7 @@ public:
     {
         NativeFeatures() = default;
 
-        NativeFeatures(Rect r)
+        NativeFeatures(QRect r)
             : htCaptionRect(r)
         {
         }
@@ -66,7 +66,7 @@ public:
         {
         }
 
-        Rect htCaptionRect; // in global coordinates
+        QRect htCaptionRect; // in global coordinates
         Features features = Feature_All;
         bool hasFeatures() const
         {
@@ -166,9 +166,9 @@ public:
 
 private:
     // EventFilterInterface:
-    bool onMouseEvent(Core::View *, MouseEvent *) override;
+    bool onMouseEvent(Core::View *, QMouseEvent *) override;
     void setTarget(Core::View *w);
-    bool mouseMoveEvent(MouseEvent *);
+    bool mouseMoveEvent(QMouseEvent *);
     void updateCursor(CursorPosition);
     void setMouseCursor(Qt::CursorShape);
     void restoreMouseCursor();

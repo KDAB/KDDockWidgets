@@ -49,8 +49,8 @@ public:
 
     virtual void raise() = 0;
     virtual void setVisible(bool) = 0;
-    virtual void resize(Size) = 0;
-    virtual void setGeometry(Rect) = 0;
+    virtual void resize(QSize) = 0;
+    virtual void setGeometry(QRect) = 0;
     virtual bool isWindow() const = 0;
     virtual void updateIndicatorVisibility() = 0;
 

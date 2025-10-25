@@ -36,12 +36,12 @@ public:
     {
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return QWidget::geometry();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         QWidget::setGeometry(r);
     }
@@ -129,7 +129,7 @@ public:
         return QWidget::maximumSize();
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         QWidget::setGeometry(r);
     }
@@ -139,7 +139,7 @@ public:
         QWidget::setVisible(is);
     }
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return QWidget::geometry();
     }

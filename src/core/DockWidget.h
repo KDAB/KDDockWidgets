@@ -60,7 +60,7 @@ class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
 public:
-    typedef Vector<DockWidget *> List;
+    typedef QVector<DockWidget *> List;
 
     /**
      * @brief constructs a new DockWidget
@@ -186,7 +186,7 @@ public:
      * The position of the rect is in layout coordinates. 0,0 is the top-left of the layout
      * holding the widgets.
      */
-    Rect groupGeometry() const;
+    QRect groupGeometry() const;
 
     /**
      * @brief Returns the dock widget's options which control behaviour.
@@ -250,7 +250,7 @@ public:
      *
      * @sa icon()
      */
-    void setIcon(const Icon &icon, IconPlaces places = IconPlace::All);
+    void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
 
     /**
      * @brief Returns the dock widget's titlebar, tabbar, or toggle action icon (depending on the
@@ -260,7 +260,7 @@ public:
      *
      * @sa setIcon()
      */
-    Icon icon(IconPlace place = IconPlace::TitleBar) const;
+    QIcon icon(IconPlace place = IconPlace::TitleBar) const;
 
     /**
      * @brief Like QWidget::close() but the hosted widget won't be asked if we
@@ -300,7 +300,7 @@ public:
      *
      * @p names the affinity names
      */
-    void setAffinities(const Vector<QString> &);
+    void setAffinities(const QVector<QString> &);
 
     /// @deprecated @overload
     /// @param name the affinity name
@@ -309,7 +309,7 @@ public:
     /**
      * @brief Returns the affinity name. Empty by default.
      */
-    Vector<QString> affinities() const;
+    QVector<QString> affinities() const;
 
     /// @brief Opens this dock widget.
     /// Does nothing if already open.
@@ -401,13 +401,13 @@ public:
 
     /// @brief returns the last size the widget has when overlayed
     /// Empty otherwise
-    Size lastOverlayedSize() const;
+    QSize lastOverlayedSize() const;
 
     /// Returns the size this dockwidget occupies inside the layout
     /// This is slightly bigger than DockWidget::size() due to margins from the tab widget
     /// This is convenience for calling Group::size(), as Group is private API
     /// @sa resizeInLayout()
-    Size sizeInLayout() const;
+    QSize sizeInLayout() const;
 
     /// Resizes the dock widget to the requested size.
     /// The new sizing is expressed by how much the margins should shift, similar to how QRect::adjust() works.
@@ -447,7 +447,7 @@ public:
     ///
     /// This is just convenience, equivalent to calling window()->setGeometry(rect), with the
     /// added bonus of remembering the requested geometry in case it's still hidden.
-    void setFloatingGeometry(Rect geo);
+    void setFloatingGeometry(QRect geo);
 
     ///@brief Allows the user to set a type on this dock widget
     /// The type is opaque and will not be interpreted by KDDockWidgets.
@@ -468,9 +468,9 @@ public:
 
     /// @brief Sets this dock widgets position to pos within the MDI layout
     /// This only applies if the main window is in MDI mode, which it is not by default
-    void setMDIPosition(Point pos);
+    void setMDIPosition(QPoint pos);
     /// @brief like setMDIPosition(), but for the size.
-    void setMDISize(Size size);
+    void setMDISize(QSize size);
     /// @brief like setMDIPosition(), but for the Z
     /// only implemented for QtQuick
     void setMDIZ(int z);
@@ -485,7 +485,7 @@ public:
     /// This only applies when using MainWindowOption_HasCentralWidget
     bool isPersistentCentralDockWidget() const;
 
-    void onResize(Size newSize);
+    void onResize(QSize newSize);
 
     /// @brief Sets the desired floating window flags, in case the defaults aren't desired.
     /// By default KDDW will use the flags specified in KDDockWidgets::Config to influence

@@ -35,25 +35,25 @@ public:
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonPress(View *, MouseEvent *)
+    virtual bool onMouseButtonPress(View *, QMouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonRelease(View *, MouseEvent *)
+    virtual bool onMouseButtonRelease(View *, QMouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse press event
-    virtual bool onMouseButtonMove(View *, MouseEvent *)
+    virtual bool onMouseButtonMove(View *, QMouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle when a view receives a mouse double click event
-    virtual bool onMouseDoubleClick(View *, MouseEvent *)
+    virtual bool onMouseDoubleClick(View *, QMouseEvent *)
     {
         return false;
     }
@@ -62,13 +62,13 @@ public:
     /// receives all mouse event types, if you return true here then the specialized counterparts
     /// won't be called Example, if true is returned here for a mouse press, then
     /// onMouseButtonPress() won't be called
-    virtual bool onMouseEvent(View *, MouseEvent *)
+    virtual bool onMouseEvent(View *, QMouseEvent *)
     {
         return false;
     }
 
     /// @brief Override to handle drag enter, drag leave, drag move and drop events
-    virtual bool onDnDEvent(View *, Event *)
+    virtual bool onDnDEvent(View *, QEvent *)
     {
         return false;
     }

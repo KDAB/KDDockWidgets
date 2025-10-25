@@ -34,7 +34,7 @@ private Q_SLOTS:
 
 void TestDocks::tst_28NestedWidgets()
 {
-    auto func = [](Vector<DockDescriptor> docksToCreate, Vector<int> docksToHide) {
+    auto func = [](QVector<DockDescriptor> docksToCreate, QVector<int> docksToHide) {
         // Tests a case that used to cause negative anchor position when turning into placeholder
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -99,7 +99,7 @@ void TestDocks::tst_28NestedWidgets()
         }
     };
 
-    Vector<DockDescriptor> docks = {
+    QVector<DockDescriptor> docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
@@ -131,7 +131,7 @@ void TestDocks::tst_28NestedWidgets()
     };
 
     if (Platform::instance()->isQtWidgets()) {
-        func(docks, Vector<int> { 11, 0 });
+        func(docks, QVector<int> { 11, 0 });
     }
 
     docks = {
@@ -142,7 +142,7 @@ void TestDocks::tst_28NestedWidgets()
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 
-    Vector<int> docksToHide;
+    QVector<int> docksToHide;
     for (int i = 0; i < docks.size(); ++i) {
         docksToHide.push_back(i);
     }

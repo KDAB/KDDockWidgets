@@ -48,12 +48,12 @@ using namespace KDDockWidgets::Core;
 
 namespace KDDockWidgets::Core {
 ///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
-class FallbackMouseGrabber : public Core::Object, /// clazy:exclude=missing-qobject-macro
+class FallbackMouseGrabber : public QObject, /// clazy:exclude=missing-qobject-macro
                              public EventFilterInterface /// clazy:exclude=missing-qobject-macro
 {
 public:
-    explicit FallbackMouseGrabber(Core::Object *parent)
-        : Core::Object(parent)
+    explicit FallbackMouseGrabber(QObject *parent)
+        : QObject(parent)
     {
     }
 
@@ -79,7 +79,7 @@ public:
         Platform::instance()->removeGlobalEventFilter(this);
     }
 
-    bool onMouseEvent(View *, MouseEvent *me) override
+    bool onMouseEvent(View *, QMouseEvent *me) override
     {
         if (m_reentrancyGuard || !m_guard)
             return false;
@@ -102,7 +102,7 @@ FallbackMouseGrabber::~FallbackMouseGrabber()
 }
 
 State::State(MinimalStateMachine *parent)
-    : Core::Object(parent)
+    : QObject(parent)
     , m_machine(parent)
 {
 }
@@ -114,8 +114,8 @@ bool State::isCurrentState() const
     return m_machine->currentState() == this;
 }
 
-MinimalStateMachine::MinimalStateMachine(Core::Object *parent)
-    : Core::Object(parent)
+MinimalStateMachine::MinimalStateMachine(QObject *parent)
+    : QObject(parent)
 {
 }
 
@@ -170,8 +170,8 @@ StateNone::StateNone(DragController *parent)
 void StateNone::onEntry()
 {
     KDDW_DEBUG("StateNone entered");
-    q->m_pressPos = Point();
-    q->m_offset = Point();
+    q->m_pressPos = QPoint();
+    q->m_offset = QPoint();
     q->m_draggable = nullptr;
     q->m_draggableGuard.clear();
     q->m_windowBeingDragged.reset();
@@ -192,7 +192,7 @@ void StateNone::onEntry()
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-bool StateNone::handleMouseButtonPress(Draggable *draggable, Point globalPos, Point pos)
+bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
     KDDW_DEBUG("StateNone::handleMouseButtonPress: draggable={} ; globalPos={}", ( void * )draggable,
                globalPos);
@@ -230,7 +230,7 @@ void StatePreDrag::onEntry()
     WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
 }
 
-bool StatePreDrag::handleMouseMove(Point globalPos)
+bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
     if (!q->m_draggableGuard) {
         KDDW_ERROR("Draggable was destroyed, canceling the drag");
@@ -254,7 +254,7 @@ bool StatePreDrag::handleMouseMove(Point globalPos)
     return true;
 }
 
-bool StatePreDrag::handleMouseButtonRelease(Point)
+bool StatePreDrag::handleMouseButtonRelease(QPoint)
 {
     q->dragCanceled.emit();
     return false;
@@ -328,7 +328,7 @@ void StateDragging::onEntry()
             if (needsUndocking) {
                 // Position the window before the drag start, otherwise if you move mouse too fast
                 // there will be an offset Only required when we've undocked/detached a window.
-                const Point cursorPos = Platform::instance()->cursorPos();
+                const QPoint cursorPos = Platform::instance()->cursorPos();
                 window->setPosition(cursorPos - q->m_offset);
             }
 
@@ -347,7 +347,7 @@ void StateDragging::onEntry()
             // When dragging a maximized window on linux we need to restore its normal size
             // On Windows this works already. On macOS I don't see this feature at all
 
-            const Rect normalGeometry = fw->view()->normalGeometry();
+            const QRect normalGeometry = fw->view()->normalGeometry();
 
             // distance to the left edge of the window:
             const int leftOffset = q->m_offset.x();
@@ -404,7 +404,7 @@ void StateDragging::onExit()
     }
 }
 
-bool StateDragging::handleMouseButtonRelease(Point globalPos)
+bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
 {
     KDDW_DEBUG("StateDragging: handleMouseButtonRelease");
 
@@ -436,7 +436,7 @@ bool StateDragging::handleMouseButtonRelease(Point globalPos)
     return true;
 }
 
-bool StateDragging::handleMouseMove(Point globalPos)
+bool StateDragging::handleMouseMove(QPoint globalPos)
 {
     FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
     if (!fw) {
@@ -528,13 +528,13 @@ void StateInternalMDIDragging::onEntry()
     q->isDraggingChanged.emit();
 }
 
-bool StateInternalMDIDragging::handleMouseButtonRelease(Point)
+bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint)
 {
     q->dragCanceled.emit();
     return false;
 }
 
-bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
+bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
 {
     if (!q->m_draggableGuard) {
         KDDW_ERROR("Draggable was destroyed, canceling the drag");
@@ -558,14 +558,14 @@ bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
         return false;
     }
 
-    const Size parentSize = group->view()->d->parentSize();
-    const Point oldPos = group->mapToGlobal(Point(0, 0));
-    const Point delta = globalPos - oldPos;
-    const Point newLocalPos = group->pos() + delta - q->m_offset;
+    const QSize parentSize = group->view()->d->parentSize();
+    const QPoint oldPos = group->mapToGlobal(QPoint(0, 0));
+    const QPoint delta = globalPos - oldPos;
+    const QPoint newLocalPos = group->pos() + delta - q->m_offset;
 
     // Let's not allow the MDI window to go outside of its parent
 
-    Point newLocalPosBounded = { std::max(0, newLocalPos.x()), std::max(0, newLocalPos.y()) };
+    QPoint newLocalPosBounded = { std::max(0, newLocalPos.x()), std::max(0, newLocalPos.y()) };
     newLocalPosBounded.setX(std::min(newLocalPosBounded.x(), parentSize.width() - group->width()));
     newLocalPosBounded.setY(std::min(newLocalPosBounded.y(), parentSize.height() - group->height()));
 
@@ -577,7 +577,7 @@ bool StateInternalMDIDragging::handleMouseMove(Point globalPos)
     // If we drag the window against an edge, and move behind the edge some threshold, we float it
     const int threshold = Config::self().mdiPopupThreshold();
     if (threshold != -1) {
-        const Point overflow = newLocalPosBounded - newLocalPos;
+        const QPoint overflow = newLocalPosBounded - newLocalPos;
         if (std::abs(overflow.x()) > threshold || std::abs(overflow.y()) > threshold)
             q->mdiPopOut.emit();
     }
@@ -604,7 +604,7 @@ StateDragging *createDraggingState(DragController *parent)
 
 }
 
-DragController::DragController(Core::Object *parent)
+DragController::DragController(QObject *parent)
     : MinimalStateMachine(parent)
     , m_stateNone(new StateNone(this))
     , m_statePreDrag(new StatePreDrag(this))
@@ -712,7 +712,7 @@ WindowBeingDragged *DragController::windowBeingDragged() const
     return m_windowBeingDragged.get();
 }
 
-bool DragController::onDnDEvent(View *view, Event *e)
+bool DragController::onDnDEvent(View *view, QEvent *e)
 {
     if (!isWayland())
         return false;
@@ -722,23 +722,23 @@ bool DragController::onDnDEvent(View *view, Event *e)
         KDDW_DEBUG("DragController::onDnDEvent: ev={}, dropArea=", int(e->type()), ( void * )view->asDropAreaController());
 
         if (auto dropArea = qobject_cast<Core::DropArea *>(Core::View::firstParentOfType(view, ViewType::DropArea))) {
-            auto dropEvent = static_cast<DropEvent *>(e);
+            auto dropEvent = static_cast<QDropEvent *>(e);
             const QPoint globalEventPosition = view->mapToGlobal(Qt5Qt6Compat::eventPos(dropEvent));
 
             switch (int(e->type())) {
-            case Event::DragEnter:
-                if (activeState()->handleDragEnter(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
+            case QEvent::DragEnter:
+                if (activeState()->handleDragEnter(static_cast<QDragMoveEvent *>(e), dropArea, globalEventPosition))
                     return true;
                 break;
-            case Event::DragLeave:
+            case QEvent::DragLeave:
                 if (activeState()->handleDragLeave(dropArea))
                     return true;
                 break;
-            case Event::DragMove:
-                if (activeState()->handleDragMove(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
+            case QEvent::DragMove:
+                if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea, globalEventPosition))
                     return true;
                 break;
-            case Event::Drop:
+            case QEvent::Drop:
                 if (activeState()->handleDrop(dropEvent, dropArea, globalEventPosition))
                     return true;
                 break;
@@ -746,7 +746,7 @@ bool DragController::onDnDEvent(View *view, Event *e)
                 break;
             }
         }
-    } else if (e->type() == Event::DragEnter && isDragging()) {
+    } else if (e->type() == QEvent::DragEnter && isDragging()) {
         // We're dragging a window. Be sure user code doesn't accept DragEnter events.
         KDDW_DEBUG("DragController::onDnDEvent: Eating DragEnter.");
         return true;
@@ -769,7 +769,7 @@ bool DragController::onMoveEvent(View *)
     return false;
 }
 
-bool DragController::onMouseEvent(View *w, MouseEvent *me)
+bool DragController::onMouseEvent(View *w, QMouseEvent *me)
 {
     if (!w)
         return false;
@@ -777,7 +777,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
     KDDW_TRACE("DragController::onMouseEvent e={} ; nonClientDrag={}", int(me->type()), m_nonClientDrag);
 
     switch (me->type()) {
-    case Event::NonClientAreaMouseButtonPress: {
+    case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = w->asFloatingWindowController()) {
             if (KDDockWidgets::usesNativeTitleBar()
                 || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
@@ -788,7 +788,7 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         }
         return false;
     }
-    case Event::MouseButtonPress:
+    case QEvent::MouseButtonPress:
         // We don't care about the secondary button
         if (me->buttons() & Qt::RightButton)
             break;
@@ -803,8 +803,8 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         return activeState()->handleMouseButtonPress(
             draggableForView(w), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
 
-    case Event::MouseButtonRelease:
-    case Event::NonClientAreaMouseButtonRelease: {
+    case QEvent::MouseButtonRelease:
+    case QEvent::NonClientAreaMouseButtonRelease: {
         ViewGuard guard(w);
         const bool inProgrammaticDrag = m_inProgrammaticDrag;
         const bool result = activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
@@ -822,11 +822,11 @@ bool DragController::onMouseEvent(View *w, MouseEvent *me)
         return result && !inProgrammaticDrag;
     }
 
-    case Event::NonClientAreaMouseMove:
-    case Event::MouseMove:
+    case QEvent::NonClientAreaMouseMove:
+    case QEvent::MouseMove:
         return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
-    case Event::MouseButtonDblClick:
-    case Event::NonClientAreaMouseButtonDblClick:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::NonClientAreaMouseButtonDblClick:
         return activeState()->handleMouseDoubleClick();
     default:
         break;
@@ -848,7 +848,7 @@ DropLocation DragController::currentDropLocation() const
     return DropLocation_None;
 }
 
-bool DragController::programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset)
+bool DragController::programmaticStartDrag(Draggable *draggable, QPoint globalPos, QPoint offset)
 {
     // Here we manually force state machine states instead of having a 2nd/parallel API.
     // As sharing 99.99% of the code path gives us some comfort.
@@ -933,7 +933,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
 
 #endif
 
-static std::shared_ptr<View> qtTopLevelUnderCursor_impl(Point globalPos,
+static std::shared_ptr<View> qtTopLevelUnderCursor_impl(QPoint globalPos,
                                                         const Window::List &windows,
                                                         View *rootViewBeingDragged)
 {
@@ -958,7 +958,7 @@ static std::shared_ptr<View> qtTopLevelUnderCursor_impl(Point globalPos,
 
 std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
 {
-    Point globalPos = Platform::instance()->cursorPos();
+    QPoint globalPos = Platform::instance()->cursorPos();
 
     if (KDDockWidgets::isWindows()) { // So -platform offscreen on Windows doesn't use this
 #if defined(KDDW_FRONTEND_QT_WINDOWS)
@@ -1046,8 +1046,8 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
-static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, Point globalPos,
-                                           const Vector<QString> &affinities)
+static DropArea *deepestDropAreaInTopLevel(std::shared_ptr<View> topLevel, QPoint globalPos,
+                                           const QVector<QString> &affinities)
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
     auto view = topLevel->childViewAt(localPos);
@@ -1074,7 +1074,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         return nullptr;
     }
 
-    const Vector<QString> affinities = m_windowBeingDragged->floatingWindow()->affinities();
+    const QVector<QString> affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
     if (auto fw = topLevel->asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {

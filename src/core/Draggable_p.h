@@ -40,7 +40,7 @@ class View;
 class DOCKS_EXPORT Draggable
 {
 public:
-    typedef Vector<Draggable *> List;
+    typedef QVector<Draggable *> List;
 
     explicit Draggable(View *thisView, bool enabled = true);
     virtual ~Draggable();

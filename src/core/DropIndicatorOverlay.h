@@ -51,7 +51,7 @@ public:
 
     void setHoveredGroup(Group *);
     void setWindowBeingDragged(bool);
-    Rect hoveredGroupRect() const;
+    QRect hoveredGroupRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
     Group *hoveredGroup() const;
@@ -77,8 +77,8 @@ public:
 
 private:
     void onGroupDestroyed();
-    void setHoveredGroupRect(Rect);
-    Rect m_hoveredGroupRect;
+    void setHoveredGroupRect(QRect);
+    QRect m_hoveredGroupRect;
     DropLocation m_currentDropLocation = DropLocation_None;
     Private *const d;
 

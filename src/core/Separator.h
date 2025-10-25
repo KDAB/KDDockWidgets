@@ -28,7 +28,7 @@ class DOCKS_EXPORT Separator : public Controller
 {
     Q_OBJECT
 public:
-    typedef Vector<Separator *> List;
+    typedef QVector<Separator *> List;
 
     /// constructs a separator
     /// @param host the host where this separator is in. Usually a DropArea.
@@ -37,7 +37,7 @@ public:
 
     bool isVertical() const;
     int position() const;
-    void setGeometry(Rect r);
+    void setGeometry(QRect r);
 
     LayoutingSeparator *asLayoutingSeparator() const;
 

@@ -52,8 +52,8 @@ typedef int (*DockWidgetTabIndexOverrideFunc)(Core::DockWidget *dw, Core::Group 
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
-                                         const Vector<Core::DockWidget *> &source,
-                                         const Vector<Core::DockWidget *> &target,
+                                         const QVector<Core::DockWidget *> &source,
+                                         const QVector<Core::DockWidget *> &target,
                                          Core::DropArea *dropArea);
 
 /**
@@ -363,14 +363,14 @@ public:
     ///@brief Sets the minimum size a dock widget can have.
     /// Widgets can still provide their own min-size and it will be respected, however it can never
     /// be smaller than this one.
-    void setAbsoluteWidgetMinSize(Size size);
-    Size absoluteWidgetMinSize() const;
+    void setAbsoluteWidgetMinSize(QSize size);
+    QSize absoluteWidgetMinSize() const;
 
     ///@brief Sets the maximum size a dock widget can have.
     /// Widgets can still provide their own max-size and it will be respected, however it can never
     /// be bigger than this one.
-    void setAbsoluteWidgetMaxSize(Size size);
-    Size absoluteWidgetMaxSize() const;
+    void setAbsoluteWidgetMaxSize(QSize size);
+    QSize absoluteWidgetMaxSize() const;
 
     /// Shows tabs at the bottom of the tab view instead of top
     /// defaults to false. Call this at start of application only.

@@ -40,7 +40,7 @@ SegmentedDropIndicatorOverlay::SegmentedDropIndicatorOverlay(Core::DropArea *dro
 
 SegmentedDropIndicatorOverlay::~SegmentedDropIndicatorOverlay() = default;
 
-DropLocation SegmentedDropIndicatorOverlay::hover_impl(Point pt)
+DropLocation SegmentedDropIndicatorOverlay::hover_impl(QPoint pt)
 {
     m_hoveredPt = view()->mapFromGlobal(pt);
     updateSegments();
@@ -49,7 +49,7 @@ DropLocation SegmentedDropIndicatorOverlay::hover_impl(Point pt)
     return currentDropLocation();
 }
 
-DropLocation SegmentedDropIndicatorOverlay::dropLocationForPos(Point pos) const
+DropLocation SegmentedDropIndicatorOverlay::dropLocationForPos(QPoint pos) const
 {
     for (const auto &m_segment : m_segments) {
         if (m_segment.second.containsPoint(pos, Qt::OddEvenFill)) {
@@ -60,8 +60,8 @@ DropLocation SegmentedDropIndicatorOverlay::dropLocationForPos(Point pos) const
     return DropLocation_None;
 }
 
-std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segmentsForRect(Rect r, bool inner,
-                                                                                         bool useOffset) const
+std::unordered_map<DropLocation, QPolygon> SegmentedDropIndicatorOverlay::segmentsForRect(QRect r, bool inner,
+                                                                                          bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -70,29 +70,29 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
     const int left = (r.x() == 0 && useOffset) ? l : r.x();
     const int right = (rect().right() == r.right() && useOffset) ? r.right() - l : r.right();
     const int bottom = (rect().bottom() == r.bottom() && useOffset) ? r.bottom() - l : r.bottom();
-    const Point topLeft = { left + halfPenWidth, top + halfPenWidth };
-    const Point topRight = { right, top + halfPenWidth };
-    const Point bottomLeft = { left + halfPenWidth, bottom };
-    const Point bottomRight = { right, bottom };
+    const QPoint topLeft = { left + halfPenWidth, top + halfPenWidth };
+    const QPoint topRight = { right, top + halfPenWidth };
+    const QPoint bottomLeft = { left + halfPenWidth, bottom };
+    const QPoint bottomRight = { right, bottom };
 
-    const Vector<Point> leftPoints = { topLeft, bottomLeft, Point(left, bottom) + Point(l, -l),
-                                       topLeft + Point(l, l), topLeft };
+    const QVector<QPoint> leftPoints = { topLeft, bottomLeft, QPoint(left, bottom) + QPoint(l, -l),
+                                         topLeft + QPoint(l, l), topLeft };
 
-    const Vector<Point> rightPoints = { topRight, bottomRight, bottomRight + Point(-l, -l),
-                                        topRight + Point(-l, l) };
+    const QVector<QPoint> rightPoints = { topRight, bottomRight, bottomRight + QPoint(-l, -l),
+                                          topRight + QPoint(-l, l) };
 
-    const Vector<Point> topPoints = { topLeft, topRight, topRight + Point(-l, l),
-                                      topLeft + Point(l, l) };
+    const QVector<QPoint> topPoints = { topLeft, topRight, topRight + QPoint(-l, l),
+                                        topLeft + QPoint(l, l) };
 
-    const Vector<Point> bottomPoints = { bottomLeft, bottomRight, bottomRight + Point(-l, -l),
-                                         bottomLeft + Point(l, -l) };
+    const QVector<QPoint> bottomPoints = { bottomLeft, bottomRight, bottomRight + QPoint(-l, -l),
+                                           bottomLeft + QPoint(l, -l) };
 
     if (inner) {
-        Polygon bounds =
-            Vector<Point> { topLeft + Point(l, l), topRight + Point(-l, l),
-                            bottomRight + Point(-l, -l), bottomLeft + Point(l, -l) };
+        QPolygon bounds =
+            QVector<QPoint> { topLeft + QPoint(l, l), topRight + QPoint(-l, l),
+                              bottomRight + QPoint(-l, -l), bottomLeft + QPoint(l, -l) };
         const int maxWidth = bounds.boundingRect().width();
-        const Point centerPos = bounds.boundingRect().center();
+        const QPoint centerPos = bounds.boundingRect().center();
 
         // Build the center
         const int indicatorWidth = std::min(s_centralIndicatorMaxWidth, maxWidth - 100);
@@ -105,7 +105,7 @@ std::unordered_map<DropLocation, Polygon> SegmentedDropIndicatorOverlay::segment
         const int centerRectTop = centerPos.y() - (indicatorHeight / 2);
 
 
-        const auto center = Vector<Point> {
+        const auto center = QVector<QPoint> {
             { centerRectLeft, centerRectTop },
             { centerRectLeft + tabWidth, centerRectTop },
             { centerRectLeft + tabWidth, centerRectTop + tabHeight },
@@ -137,7 +137,7 @@ void SegmentedDropIndicatorOverlay::updateSegments()
                             DropLocation_OutterTop, DropLocation_OutterBottom }) {
         if (dropIndicatorVisible(indicator)) {
             auto it = outterSegments.find(indicator);
-            const Polygon segment = it == outterSegments.cend() ? Polygon() : it->second;
+            const QPolygon segment = it == outterSegments.cend() ? QPolygon() : it->second;
             m_segments[indicator] = segment;
         }
     }
@@ -150,7 +150,7 @@ void SegmentedDropIndicatorOverlay::updateSegments()
                             DropLocation_Bottom, DropLocation_Center }) {
         if (dropIndicatorVisible(indicator)) {
             auto it = innerSegments.find(indicator);
-            const Polygon segment = it == innerSegments.cend() ? Polygon() : it->second;
+            const QPolygon segment = it == innerSegments.cend() ? QPolygon() : it->second;
             m_segments[indicator] = segment;
         }
     }
@@ -169,7 +169,7 @@ Point SegmentedDropIndicatorOverlay::hoveredPt() const
     return m_hoveredPt;
 }
 
-const std::unordered_map<DropLocation, Polygon> &SegmentedDropIndicatorOverlay::segments() const
+const std::unordered_map<DropLocation, QPolygon> &SegmentedDropIndicatorOverlay::segments() const
 {
     return m_segments;
 }
