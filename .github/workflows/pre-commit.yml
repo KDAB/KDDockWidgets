@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - main
-      - 2.3
+      - 2.4
 
 jobs:
   pre-commit:

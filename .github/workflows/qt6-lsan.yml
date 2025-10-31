@@ -8,11 +8,11 @@ on:
   push:
     branches:
       - main
-      - 2.3
+      - 2.4
   pull_request:
     branches:
       - main
-      - 2.3
+      - 2.4
   workflow_dispatch:
 
 jobs:
