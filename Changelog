@@ -2,6 +2,7 @@
   - qtquick: Expose DockWidgetOptions to QML
   - qtquick: Expose 'DockWidget::lastCloseReason' to QML
   - qtquick: Add DockWidgetInstantiator::deleteDockWidgetLater
+  - qtwidgets: Support tabs in south location
 
 * v2.3.0
   - For packagers:
