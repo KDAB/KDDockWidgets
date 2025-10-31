@@ -46,22 +46,10 @@ namespace KDDockWidgets {
 
 #ifdef KDDW_QTGUI_TYPES
 
-using Polygon = QPolygon;
-using Icon = QIcon;
-using Pixmap = QPixmap;
-using Event = QEvent;
-using Drag = QDrag;
-using CloseEvent = QCloseEvent;
-using FocusEvent = QFocusEvent;
-using MouseEvent = QMouseEvent;
-using HoverEvent = QHoverEvent;
-using DropEvent = QDropEvent;
-using DragMoveEvent = QDragMoveEvent;
 
-using Point = QT_PREPEND_NAMESPACE(QPoint);
-using Size = QT_PREPEND_NAMESPACE(QSize);
-using Rect = QT_PREPEND_NAMESPACE(QRect);
-using Margins = QT_PREPEND_NAMESPACE(QMargins);
+using Point = QPoint;
+using Size = QSize;
+using Rect = QRect;
 
 template<typename T>
 using Vector = QVector<T>;
@@ -164,7 +152,7 @@ class HoverEvent : public Event
 public:
     using Event::Event;
 
-    Point pos() const
+    QPoint pos() const
     {
         return {};
     }
@@ -173,8 +161,8 @@ public:
 class MouseEvent : public Event
 {
 public:
-    explicit MouseEvent(Type type, Point localPos, Point /*windowPos*/,
-                        Point globalPos, Qt::MouseButtons buttons, Qt::MouseButtons, Qt::KeyboardModifiers)
+    explicit MouseEvent(Type type, QPoint localPos, QPoint /*windowPos*/,
+                        QPoint globalPos, Qt::MouseButtons buttons, Qt::MouseButtons, Qt::KeyboardModifiers)
         : Event(type)
         , m_localPos(localPos)
         , m_globalPos(globalPos)
@@ -182,12 +170,12 @@ public:
     {
     }
 
-    Point pos() const
+    QPoint pos() const
     {
         return m_localPos;
     }
 
-    Point globalPos() const
+    QPoint globalPos() const
     {
         return m_globalPos;
     }
@@ -206,8 +194,8 @@ public:
         return m_buttons;
     }
 
-    Point m_localPos;
-    Point m_globalPos;
+    QPoint m_localPos;
+    QPoint m_globalPos;
     Qt::MouseButtons m_buttons;
 };
 
@@ -216,7 +204,7 @@ class DropEvent : public Event
 public:
     using Event::Event;
 
-    Point position() const
+    QPoint position() const
     {
         return {};
     }
@@ -265,20 +253,20 @@ public:
 };
 
 // Used by segmented indicators controller. Not implemented yet.
-class Polygon : public Vector<Point>
+class Polygon : public Vector<QPoint>
 {
 public:
     Polygon() = default;
-    Polygon(Vector<Point>)
+    Polygon(Vector<QPoint>)
     {
     }
 
-    Rect boundingRect() const
+    QRect boundingRect() const
     {
-        return Rect();
+        return QRect();
     }
 
-    bool containsPoint(Point, Qt::FillRule) const
+    bool containsPoint(QPoint, Qt::FillRule) const
     {
         return false;
     }
@@ -312,7 +300,7 @@ using quintptr = unsigned long long int;
 using qint64 = int64_t;
 
 namespace Qt5Qt6Compat {
-inline KDDockWidgets::Point eventGlobalPos(KDDockWidgets::MouseEvent *ev)
+inline KDDockWidgets::QPoint eventGlobalPos(KDDockWidgets::MouseEvent *ev)
 {
     return ev->globalPos();
 }

@@ -63,12 +63,12 @@ void TestDocks::tst_dragByTabBar()
 
         auto dropArea = m->dropArea();
         auto dock1 = createDockWidget(
-            "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
+            "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
 
         auto dock2 = createDockWidget(
-            "dock2", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
+            "dock2", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
         auto dock3 = createDockWidget(
-            "dock3", Platform::instance()->tests_createView({ true, {}, Size(400, 400) }));
+            "dock3", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
         m->addDockWidgetAsTab(dock1);
         m->view()->resize(Size(osWindowMinWidth(), 200));
 
@@ -99,11 +99,11 @@ void TestDocks::tst_negativeAnchorPosition()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(1002, 806));
 
-    auto w1 = Platform::instance()->tests_createView({ true, {}, Size(104, 104) });
+    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(104, 104) });
     w1->resize(994, 718);
-    auto w2 = Platform::instance()->tests_createView({ true, {}, Size(133, 343) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(133, 343) });
     w2->resize(392, 362);
-    auto w3 = Platform::instance()->tests_createView({ true, {}, Size(133, 343) });
+    auto w3 = Platform::instance()->tests_createView({ true, {}, QSize(133, 343) });
     w3->resize(392, 362);
 
     Core::DropArea *layout = m->multiSplitter();
@@ -269,10 +269,10 @@ void TestDocks::tst_negativeAnchorPosition6()
 
     auto layout = m->multiSplitter();
 
-    auto w1 = Platform::instance()->tests_createView({ true, {}, Size(400, 100) });
-    auto w2 = Platform::instance()->tests_createView({ true, {}, Size(400, 100) });
-    auto w3 = Platform::instance()->tests_createView({ true, {}, Size(400, 100) });
-    auto w4 = Platform::instance()->tests_createView({ true, {}, Size(400, 900) });
+    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 100) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 100) });
+    auto w3 = Platform::instance()->tests_createView({ true, {}, QSize(400, 100) });
+    auto w4 = Platform::instance()->tests_createView({ true, {}, QSize(400, 900) });
 
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
@@ -300,15 +300,15 @@ void TestDocks::tst_negativeAnchorPosition7()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     m->show();
-    auto w1 = Platform::instance()->tests_createView({ true, {}, Size(400, 400) });
-    auto w2 = Platform::instance()->tests_createView({ true, {}, Size(400, 400) });
+    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
 
     auto d1 = newDockWidget("1");
     d1->setGuestView(w1->asWrapper());
     auto d2 = newDockWidget("2");
     d2->setGuestView(w2->asWrapper());
 
-    auto w3 = Platform::instance()->tests_createView({ true, {}, Size(100, 100) });
+    auto w3 = Platform::instance()->tests_createView({ true, {}, QSize(100, 100) });
     auto d3 = newDockWidget("3");
     d3->setGuestView(w3->asWrapper());
 

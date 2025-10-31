@@ -86,7 +86,7 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 
     QVERIFY(fw1->view()->isActiveWindow());
     dragFloatingWindowTo(fw2, fw1->dropArea(), DropLocation_Left);
-    WAIT_FOR_EVENT(fw1, Event::WindowActivate);
+    WAIT_FOR_EVENT(fw1, QEvent::WindowActivate);
 
     /// We dropped into floating window 1, it should still be active
     QVERIFY(fw1->view()->isActiveWindow());
@@ -223,7 +223,7 @@ void TestDocks::tst_close()
 
     rightDock->close();
     QTest::qWait(250);
-    Margins margins = mainwindow->centerWidgetMargins();
+    QMargins margins = mainwindow->centerWidgetMargins();
     QCOMPARE(centralDock->dptr()->group()->view()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());
     delete leftDock;

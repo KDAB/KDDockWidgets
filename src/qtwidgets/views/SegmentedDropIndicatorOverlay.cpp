@@ -45,7 +45,7 @@ void SegmentedDropIndicatorOverlay::drawSegments(QPainter *p)
            DropLocation_Center, DropLocation_OutterLeft, DropLocation_OutterTop,
            DropLocation_OutterRight, DropLocation_OutterBottom }) {
         auto it = segments.find(loc);
-        const Polygon segment = it == segments.cend() ? Polygon() : it->second;
+        const QPolygon segment = it == segments.cend() ? QPolygon() : it->second;
         drawSegment(p, segment);
     }
 }

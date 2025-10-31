@@ -129,7 +129,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
     f.id = jsonValue(json, "id", QString());
     f.isNull = jsonValue(json, "isNull", true);
     f.objectName = jsonValue(json, "objectName", QString());
-    f.geometry = jsonValue(json, "geometry", Rect());
+    f.geometry = jsonValue(json, "geometry", QRect());
     f.options = jsonValue(json, "options", QFlags<FrameOption>::Int {});
     f.currentTabIndex = jsonValue(json, "currentTabIndex", 0);
     f.mainWindowUniqueName = jsonValue(json, "mainWindowUniqueName", QString());
@@ -193,7 +193,7 @@ static void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
                                  SideBarLocation::West, SideBarLocation::South }) {
-        const Vector<QString> dockWidgets = mw.dockWidgetsForSideBar(loc);
+        const QVector<QString> dockWidgets = mw.dockWidgetsForSideBar(loc);
         if (!dockWidgets.isEmpty()) {
             std::string key = std::string("sidebar-") + std::to_string(( int )loc);
             json[key] = dockWidgets;
@@ -206,12 +206,12 @@ static void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     mw.options = static_cast<decltype(mw.options)>(jsonValue(json, "options", 0));
     mw.multiSplitterLayout = jsonValue(json, "multiSplitterLayout", LayoutSaver::MultiSplitter());
     mw.uniqueName = jsonValue(json, "uniqueName", QString());
-    mw.geometry = jsonValue(json, "geometry", Rect());
-    mw.normalGeometry = jsonValue(json, "normalGeometry", Rect());
+    mw.geometry = jsonValue(json, "geometry", QRect());
+    mw.normalGeometry = jsonValue(json, "normalGeometry", QRect());
     mw.screenIndex = jsonValue(json, "screenIndex", 0);
-    mw.screenSize = jsonValue(json, "screenSize", Size(800, 600));
+    mw.screenSize = jsonValue(json, "screenSize", QSize(800, 600));
     mw.isVisible = jsonValue(json, "isVisible", false);
-    mw.affinities = jsonValue(json, "affinities", Vector<QString>());
+    mw.affinities = jsonValue(json, "affinities", QVector<QString>());
     mw.windowState = ( WindowState )jsonValue(json, "windowState", 0);
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
@@ -231,7 +231,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
             continue;
         auto &val = *it;
         if (val.is_array() && !val.empty()) {
-            mw.dockWidgetsPerSideBar[loc] = val.get<Vector<QString>>();
+            mw.dockWidgetsPerSideBar[loc] = val.get<QVector<QString>>();
         }
     }
 }
@@ -257,14 +257,14 @@ static void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &w
 {
     window.multiSplitterLayout = jsonValue(json, "multiSplitterLayout", LayoutSaver::MultiSplitter());
     window.parentIndex = jsonValue(json, "parentIndex", -1);
-    window.geometry = jsonValue(json, "geometry", Rect());
-    window.normalGeometry = jsonValue(json, "normalGeometry", Rect());
+    window.geometry = jsonValue(json, "geometry", QRect());
+    window.normalGeometry = jsonValue(json, "normalGeometry", QRect());
     window.screenIndex = jsonValue(json, "screenIndex", 0);
-    window.screenSize = jsonValue(json, "screenSize", Size(800, 600));
+    window.screenSize = jsonValue(json, "screenSize", QSize(800, 600));
     window.isVisible = jsonValue(json, "isVisible", false);
     window.flags = jsonValue(json, "flags", int(FloatingWindowFlag::FromGlobalConfig));
     window.windowState = ( WindowState )jsonValue(json, "windowState", 0);
-    window.affinities = jsonValue(json, "affinities", Vector<QString>());
+    window.affinities = jsonValue(json, "affinities", QVector<QString>());
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities"
     // list:
@@ -285,7 +285,7 @@ static void to_json(nlohmann::json &json, const LayoutSaver::ScreenInfo &screenI
 static void from_json(const nlohmann::json &j, LayoutSaver::ScreenInfo &screenInfo)
 {
     screenInfo.index = j.value("index", 0);
-    screenInfo.geometry = j.value("geometry", Rect());
+    screenInfo.geometry = j.value("geometry", QRect());
     screenInfo.name = j.value("name", QString());
     screenInfo.devicePixelRatio = j.value("devicePixelRatio", 1.0);
 }
@@ -319,8 +319,8 @@ static void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 
 static void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
 {
-    pos.lastFloatingGeometry = jsonValue(json, "lastFloatingGeometry", Rect());
-    pos.lastOverlayedGeometries = jsonValue(json, "lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, Rect>());
+    pos.lastFloatingGeometry = jsonValue(json, "lastFloatingGeometry", QRect());
+    pos.lastOverlayedGeometries = jsonValue(json, "lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, QRect>());
     pos.tabIndex = jsonValue(json, "tabIndex", 0);
     pos.wasFloating = jsonValue(json, "wasFloating", false);
     pos.placeholders = jsonValue(json, "placeholders", LayoutSaver::Placeholder::List());
@@ -343,7 +343,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 {
     auto it = json.find("affinities");
     if (it != json.end())
-        dw.affinities = it->get<Vector<QString>>();
+        dw.affinities = it->get<QVector<QString>>();
 
     dw.uniqueName = jsonValue(json, "uniqueName", QString());
     if (dw.uniqueName.isEmpty())
@@ -444,7 +444,7 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const Vector<Core::FloatingWindow *> floatingWindows =
+    const QVector<Core::FloatingWindow *> floatingWindows =
         d->m_dockRegistry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
     layout.floatingWindows.reserve(floatingWindows.size());
     for (Core::FloatingWindow *floatingWindow : floatingWindows) {
@@ -609,7 +609,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     return true;
 }
 
-void LayoutSaver::setAffinityNames(const Vector<QString> &affinityNames)
+void LayoutSaver::setAffinityNames(const QVector<QString> &affinityNames)
 {
     d->m_affinityNames = affinityNames;
     if (affinityNames.contains(QString())) {
@@ -650,7 +650,7 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, Window::Ptr
     // Not simply calling QWidget::setGeometry() here.
     // For QtQuick we need to modify the QWindow's geometry.
 
-    Rect geometry = saved.geometry;
+    QRect geometry = saved.geometry;
     if (!isNormalWindowState(saved.windowState)) {
         // The window will be maximized. We first set its geometry to normal
         // Later it's maximized and will remember this value
@@ -704,13 +704,13 @@ void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
     }
 }
 
-bool LayoutSaver::Private::matchesAffinity(const Vector<QString> &affinities) const
+bool LayoutSaver::Private::matchesAffinity(const QVector<QString> &affinities) const
 {
     return m_affinityNames.isEmpty() || affinities.isEmpty()
         || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
 }
 
-void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames)
+void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QVector<QString> &mainWindowNames)
 {
     // Widgets with the LayoutSaverOptions::Skip flag skip restore completely.
     // If they were visible before they need to remain visible now.
@@ -794,7 +794,7 @@ bool LayoutSaver::Layout::isValid() const
     return true;
 }
 
-Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilename)
+QVector<QString> LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilename)
 {
     bool ok = false;
     const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
@@ -805,13 +805,13 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilena
     return openedDockWidgetsInLayout(data);
 }
 
-Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &serialized)
+QVector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &serialized)
 {
     LayoutSaver::Layout layout;
     if (!layout.fromJson(serialized))
         return {};
 
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
     for (const auto &dock : std::as_const(layout.allDockWidgets)) {
@@ -827,7 +827,7 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &seriali
     return names;
 }
 
-Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QString &jsonFilename)
+QVector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QString &jsonFilename)
 {
     bool ok = false;
     const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
@@ -838,13 +838,13 @@ Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QString &jsonFilen
     return sideBarDockWidgetsInLayout(data);
 }
 
-Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QByteArray &serialized)
+QVector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QByteArray &serialized)
 {
     LayoutSaver::Layout layout;
     if (!layout.fromJson(serialized))
         return {};
 
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
 
     for (const auto &mainWindow : std::as_const(layout.mainWindows)) {
@@ -876,7 +876,7 @@ static void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 
     layout.closedDockWidgets.clear();
 
-    const auto closedDockWidgets = j.value("closedDockWidgets", Vector<QString>());
+    const auto closedDockWidgets = j.value("closedDockWidgets", QVector<QString>());
     for (const QString &name : closedDockWidgets) {
         layout.closedDockWidgets.push_back(
             LayoutSaver::DockWidget::dockWidgetForName(name));
@@ -972,9 +972,9 @@ LayoutSaver::FloatingWindow LayoutSaver::Layout::floatingWindowForIndex(int inde
     return floatingWindows.at(index);
 }
 
-Vector<QString> LayoutSaver::Layout::mainWindowNames() const
+QVector<QString> LayoutSaver::Layout::mainWindowNames() const
 {
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(mainWindows.size());
     for (const auto &mw : mainWindows) {
         names.push_back(mw.uniqueName);
@@ -983,9 +983,9 @@ Vector<QString> LayoutSaver::Layout::mainWindowNames() const
     return names;
 }
 
-Vector<QString> LayoutSaver::Layout::dockWidgetNames() const
+QVector<QString> LayoutSaver::Layout::dockWidgetNames() const
 {
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(allDockWidgets.size());
     for (const auto &dw : allDockWidgets) {
         names.push_back(dw->uniqueName);
@@ -994,12 +994,12 @@ Vector<QString> LayoutSaver::Layout::dockWidgetNames() const
     return names;
 }
 
-Vector<QString> LayoutSaver::Layout::dockWidgetsToClose() const
+QVector<QString> LayoutSaver::Layout::dockWidgetsToClose() const
 {
     // Before restoring a layout we close all dock widgets, unless they're a floating window with
     // the DontCloseBeforeRestore flag
 
-    Vector<QString> names;
+    QVector<QString> names;
     names.reserve(allDockWidgets.size());
     auto registry = DockRegistry::self();
     for (const auto &dw : allDockWidgets) {
@@ -1146,10 +1146,10 @@ bool LayoutSaver::MainWindow::isValid() const
     return multiSplitterLayout.isValid();
 }
 
-Vector<QString> LayoutSaver::MainWindow::dockWidgetsForSideBar(SideBarLocation loc) const
+QVector<QString> LayoutSaver::MainWindow::dockWidgetsForSideBar(SideBarLocation loc) const
 {
     auto it = dockWidgetsPerSideBar.find(loc);
-    return it == dockWidgetsPerSideBar.cend() ? Vector<QString>() : it->second;
+    return it == dockWidgetsPerSideBar.cend() ? QVector<QString>() : it->second;
 }
 
 void LayoutSaver::MainWindow::scaleSizes()
@@ -1202,7 +1202,7 @@ Core::Screen::Ptr screenForMainWindow(Core::MainWindow *mw)
 
 }
 
-LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo,
+LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo,
                                       int screenIndex)
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
@@ -1233,7 +1233,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, Rect savedMai
     mainWindowChangedScreen = currentScreenIndex != screenIndex;
 }
 
-void LayoutSaver::ScalingInfo::translatePos(Point &pt) const
+void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
 {
     const int deltaX = pt.x() - savedMainWindowGeometry.x();
     const int deltaY = pt.y() - savedMainWindowGeometry.y();
@@ -1245,24 +1245,24 @@ void LayoutSaver::ScalingInfo::translatePos(Point &pt) const
     pt.setY(int(std::ceil(savedMainWindowGeometry.y() + newDeltaY)));
 }
 
-void LayoutSaver::ScalingInfo::applyFactorsTo(Point &pt) const
+void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
 {
     translatePos(pt);
 }
 
-void LayoutSaver::ScalingInfo::applyFactorsTo(Size &sz) const
+void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
 {
     sz.setWidth(int(widthFactor * sz.width()));
     sz.setHeight(int(heightFactor * sz.height()));
 }
 
-void LayoutSaver::ScalingInfo::applyFactorsTo(Rect &rect) const
+void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
 {
     if (rect.isEmpty())
         return;
 
-    Point pos = rect.topLeft();
-    Size size = rect.size();
+    QPoint pos = rect.topLeft();
+    QSize size = rect.size();
 
     applyFactorsTo(/*by-ref*/ size);
 

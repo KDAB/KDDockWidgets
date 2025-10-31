@@ -52,22 +52,22 @@ public:
     bool contains(Layout *) const;
 
     ///@brief returns the affinities of the window being dragged
-    virtual Vector<QString> affinities() const;
+    virtual QVector<QString> affinities() const;
 
     ///@brief size of the window being dragged contents
-    virtual Size size() const;
+    virtual QSize size() const;
 
     /// @brief returns the min-size of the window being dragged contents
-    virtual Size minSize() const;
+    virtual QSize minSize() const;
 
     /// @brief returns the max-size of the window being dragged contents
-    virtual Size maxSize() const;
+    virtual QSize maxSize() const;
 
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
-    virtual Pixmap pixmap() const;
+    virtual QPixmap pixmap() const;
 
     /// @brief Returns the list of dock widgets being dragged
-    virtual Vector<DockWidget *> dockWidgets() const;
+    virtual QVector<DockWidget *> dockWidgets() const;
 
     /// @brief Returns whether the specified Group is being dragged (and on Wayland)
     /// In Wayland we use QDrag. If the group is being dragged then true is returned.
@@ -103,9 +103,9 @@ public:
     Size size() const override;
     Size minSize() const override;
     Size maxSize() const override;
-    Pixmap pixmap() const override;
-    Vector<QString> affinities() const override;
-    Vector<DockWidget *> dockWidgets() const override;
+    QPixmap pixmap() const override;
+    QVector<QString> affinities() const override;
+    QVector<DockWidget *> dockWidgets() const override;
     bool isInWaylandDrag(Group *) const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no

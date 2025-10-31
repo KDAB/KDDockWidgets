@@ -21,24 +21,20 @@ namespace Qt5Qt6Compat {
 
 #define QQUICKITEMgeometryChanged geometryChange
 
-#ifdef KDDW_FRONTEND_QTWIDGETS
-using QEnterEvent = QEnterEvent;
-#endif
-
 using qintptr = ::qintptr;
 using qhashtype = size_t;
 
-inline Point eventPos(DropEvent *ev)
+inline QPoint eventPos(QDropEvent *ev)
 {
     return ev->position().toPoint();
 }
 
-inline Point eventGlobalPos(MouseEvent *ev)
+inline QPoint eventGlobalPos(QMouseEvent *ev)
 {
     return ev->globalPosition().toPoint();
 }
 
-inline Point eventPos(HoverEvent *ev)
+inline QPoint eventPos(QHoverEvent *ev)
 {
     return ev->position().toPoint();
 }
@@ -47,21 +43,20 @@ inline Point eventPos(HoverEvent *ev)
 
 #define QQUICKITEMgeometryChanged geometryChanged
 
-using QEnterEvent = KDDockWidgets::Event;
 using qintptr = long;
 using qhashtype = uint;
 
-inline Point eventPos(DropEvent *ev)
+inline QPoint eventPos(QDropEvent *ev)
 {
     return ev->pos();
 }
 
-inline Point eventPos(HoverEvent *ev)
+inline QPoint eventPos(QHoverEvent *ev)
 {
     return ev->pos();
 }
 
-inline Point eventGlobalPos(MouseEvent *ev)
+inline QPoint eventGlobalPos(QMouseEvent *ev)
 {
     return ev->globalPos();
 }

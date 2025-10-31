@@ -107,7 +107,7 @@ void TestWindow::tst_geometry()
 {
     auto window = Platform::instance()->tests_createWindow();
 
-    const auto geo = KDDockWidgets::Rect(100, 100, 1000, 1000);
+    const auto geo = QRect(100, 100, 1000, 1000);
     window->setGeometry(geo);
 
     QTest::qWait(100);

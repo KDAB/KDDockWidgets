@@ -270,7 +270,7 @@ bool DropArea::hasSingleGroup() const
     return visibleCount() == 1;
 }
 
-Vector<QString> DropArea::affinities() const
+QVector<QString> DropArea::affinities() const
 {
     if (auto mw = mainWindow()) {
         return mw->affinities();
@@ -656,7 +656,7 @@ void DropArea::addMultiSplitter(Core::DropArea *sourceMultiSplitter, Location lo
     updateFloatingActions();
 }
 
-Vector<Core::LayoutingSeparator *> DropArea::separators() const
+QVector<Core::LayoutingSeparator *> DropArea::separators() const
 {
     return d->m_rootItem->separators_recursive();
 }
@@ -702,8 +702,8 @@ Core::ItemBoxContainer *DropArea::rootItem() const
     return d->m_rootItem;
 }
 
-Rect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
-                           const Core::Item *relativeTo) const
+QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
+                            const Core::Item *relativeTo) const
 {
     Core::Item item(nullptr);
     if (!wbd)

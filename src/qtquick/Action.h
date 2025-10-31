@@ -24,8 +24,8 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     ~Action() override;
 
-    void setIcon(const KDDockWidgets::Icon &) override;
-    KDDockWidgets::Icon icon() const override;
+    void setIcon(const QIcon &) override;
+    QIcon icon() const override;
 
     void setText(const QString &text) override
     {

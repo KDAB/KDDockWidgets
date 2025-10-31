@@ -55,7 +55,7 @@ public:
     void resizeDockWidget(Core::Group *group, Size size);
 
     /// @brief sets the size and position of the dock widget @p group
-    void setDockWidgetGeometry(Core::Group *group, Rect);
+    void setDockWidgetGeometry(Core::Group *group, QRect);
 
 private:
     Core::ItemFreeContainer *const m_rootItem;

@@ -65,12 +65,12 @@ InitialOption::InitialOption(InitialVisibilityOption v)
 {
 }
 
-InitialOption::InitialOption(Size size)
+InitialOption::InitialOption(QSize size)
     : preferredSize(size)
 {
 }
 
-InitialOption::InitialOption(InitialVisibilityOption v, Size size)
+InitialOption::InitialOption(InitialVisibilityOption v, QSize size)
     : visibility(v)
     , preferredSize(size)
 {

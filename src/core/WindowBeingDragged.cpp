@@ -147,9 +147,9 @@ void WindowBeingDragged::grabMouse(bool grab)
         DragController::instance()->releaseMouse(m_draggableView);
 }
 
-Vector<QString> WindowBeingDragged::affinities() const
+QVector<QString> WindowBeingDragged::affinities() const
 {
-    return m_floatingWindow ? m_floatingWindow->affinities() : Vector<QString>();
+    return m_floatingWindow ? m_floatingWindow->affinities() : QVector<QString>();
 }
 
 Size WindowBeingDragged::size() const
@@ -193,7 +193,7 @@ bool WindowBeingDragged::contains(Layout *layout) const
     return false;
 }
 
-Vector<DockWidget *> WindowBeingDragged::dockWidgets() const
+QVector<DockWidget *> WindowBeingDragged::dockWidgets() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->dockWidgets();
@@ -206,7 +206,7 @@ Draggable *WindowBeingDragged::draggable() const
     return m_draggable;
 }
 
-Pixmap WindowBeingDragged::pixmap() const
+QPixmap WindowBeingDragged::pixmap() const
 {
     return {};
 }
@@ -262,7 +262,7 @@ WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
 {
 }
 
-Pixmap WindowBeingDraggedWayland::pixmap() const
+QPixmap WindowBeingDraggedWayland::pixmap() const
 {
 #ifdef KDDW_FRONTEND_QT
     QPixmap pixmap(size());
@@ -285,7 +285,7 @@ Pixmap WindowBeingDraggedWayland::pixmap() const
 #endif
 }
 
-Vector<QString> WindowBeingDraggedWayland::affinities() const
+QVector<QString> WindowBeingDraggedWayland::affinities() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::affinities();
@@ -297,7 +297,7 @@ Vector<QString> WindowBeingDraggedWayland::affinities() const
     return {};
 }
 
-Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
+QVector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::dockWidgets();

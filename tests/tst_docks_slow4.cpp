@@ -53,7 +53,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     auto dock1 = createDockWidget("doc1");
     auto fw1 = dock1->floatingWindow();
-    fw1->view()->setGeometry(Rect(500, 500, 400, 400));
+    fw1->view()->setGeometry(QRect(500, 500, 400, 400));
     QVERIFY(dock1);
     ObjectGuard<Core::Group> group1 = dock1->dptr()->group();
 
@@ -128,7 +128,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     {
         auto m = createMainWindow();
         m->show();
-        m->view()->setGeometry(Rect(500, 300, 300, 300));
+        m->view()->setGeometry(QRect(500, 300, 300, 300));
         QVERIFY(!dock3->isFloating());
         auto fw3 = dock3->floatingWindow();
         drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(Point(10, 10)),

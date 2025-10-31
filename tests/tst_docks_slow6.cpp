@@ -60,7 +60,7 @@ void TestDocks::tst_isFocused()
         // 2. Raise dock1 and focus its line edit
         dock1->raise();
         dock1->guestView()->setFocus(Qt::OtherFocusReason);
-        WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock1->guestView().get(), QEvent::FocusIn);
 
         QVERIFY(dock1->isFocused());
         QVERIFY(!dock2->isFocused());
@@ -68,10 +68,10 @@ void TestDocks::tst_isFocused()
         // 3. Raise dock2 and focus its line edit
         dock2->view()->raiseAndActivate();
         if (!dock2->window()->window()->isActive())
-            WAIT_FOR_EVENT(dock2->view()->window(), Event::WindowActivate);
+            WAIT_FOR_EVENT(dock2->view()->window(), QEvent::WindowActivate);
 
         dock2->guestView()->setFocus(Qt::OtherFocusReason);
-        WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock1->guestView().get(), QEvent::FocusIn);
 
         QVERIFY(!dock1->isFocused());
         QVERIFY(dock2->guestView()->hasFocus());
@@ -94,7 +94,7 @@ void TestDocks::tst_isFocused()
         auto oldFw3 = dock3->window();
         dock3->raise();
         dock3->guestView()->setFocus(Qt::OtherFocusReason);
-        WAIT_FOR_EVENT(dock1->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock1->guestView().get(), QEvent::FocusIn);
         QVERIFY(!dock1->isFocused());
         QVERIFY(!dock2->isFocused());
         QVERIFY(dock3->isFocused());
@@ -103,7 +103,7 @@ void TestDocks::tst_isFocused()
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
         dock2->raise();
         dock2->guestView()->setFocus(Qt::OtherFocusReason);
-        WAIT_FOR_EVENT(dock2->guestView().get(), Event::FocusIn);
+        WAIT_FOR_EVENT(dock2->guestView().get(), QEvent::FocusIn);
         QVERIFY(!dock1->isFocused());
         QVERIFY(dock2->isFocused());
         QVERIFY(!dock3->isFocused());

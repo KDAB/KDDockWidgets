@@ -42,7 +42,7 @@ class MinimalStateMachine;
 class DropArea;
 class Draggable;
 
-class State : public Core::Object
+class State : public QObject
 {
     Q_OBJECT
 public:
@@ -63,11 +63,11 @@ private:
     MinimalStateMachine *const m_machine;
 };
 
-class MinimalStateMachine : public Core::Object
+class MinimalStateMachine : public QObject
 {
     Q_OBJECT
 public:
-    explicit MinimalStateMachine(Core::Object *parent = nullptr);
+    explicit MinimalStateMachine(QObject *parent = nullptr);
 
     State *currentState() const;
     void setCurrentState(State *);
@@ -131,7 +131,7 @@ public:
     /// Do not rely on it. We're still trying to understand the touch use case.
     /// @internal
     /// @param draggable The draggable we want to move (a title-bar, tab-bar or floating window)
-    bool programmaticStartDrag(Draggable *draggable, Point globalPos, Point offset);
+    bool programmaticStartDrag(Draggable *draggable, QPoint globalPos, QPoint offset);
     void programmaticStopDrag();
 
     KDBindings::Signal<> mousePressed;
@@ -155,17 +155,17 @@ private:
     friend class StateDraggingWayland;
     friend class ::TestQtWidgets;
 
-    explicit DragController(Core::Object * = nullptr);
+    explicit DragController(QObject * = nullptr);
     std::shared_ptr<Core::View> qtTopLevelUnderCursor() const;
     Core::Draggable *draggableForView(Core::View *) const;
-    bool onDnDEvent(Core::View *, Event *) override;
+    bool onDnDEvent(Core::View *, QEvent *) override;
     bool onMoveEvent(Core::View *) override;
-    bool onMouseEvent(Core::View *, MouseEvent *) override;
+    bool onMouseEvent(Core::View *, QMouseEvent *) override;
 
-    Point m_pressPos;
-    Point m_offset;
+    QPoint m_pressPos;
+    QPoint m_offset;
 
-    Vector<Core::Draggable *> m_draggables;
+    QVector<Core::Draggable *> m_draggables;
     Core::Draggable *m_draggable = nullptr;
     Core::ViewGuard m_draggableGuard =
         nullptr; // Just so we know if the draggable was destroyed for some reason
@@ -189,16 +189,16 @@ public:
     ~StateBase();
 
     // Not using QEvent here, to abstract platform differences regarding production of such events
-    virtual bool handleMouseButtonPress(Core::Draggable * /*receiver*/, Point /*globalPos*/,
-                                        Point /*pos*/)
+    virtual bool handleMouseButtonPress(Core::Draggable * /*receiver*/, QPoint /*globalPos*/,
+                                        QPoint /*pos*/)
     {
         return false;
     }
-    virtual bool handleMouseMove(Point /*globalPos*/)
+    virtual bool handleMouseMove(QPoint /*globalPos*/)
     {
         return false;
     }
-    virtual bool handleMouseButtonRelease(Point /*globalPos*/)
+    virtual bool handleMouseButtonRelease(QPoint /*globalPos*/)
     {
         return false;
     }
@@ -208,7 +208,7 @@ public:
     }
 
     // Only interesting for Wayland
-    virtual bool handleDragEnter(DragMoveEvent *, DropArea *, QPoint)
+    virtual bool handleDragEnter(QDragMoveEvent *, DropArea *, QPoint)
     {
         return false;
     }
@@ -216,11 +216,11 @@ public:
     {
         return false;
     }
-    virtual bool handleDragMove(DragMoveEvent *, DropArea *, QPoint)
+    virtual bool handleDragMove(QDragMoveEvent *, DropArea *, QPoint)
     {
         return false;
     }
-    virtual bool handleDrop(DropEvent *, DropArea *, QPoint)
+    virtual bool handleDrop(QDropEvent *, DropArea *, QPoint)
     {
         return false;
     }
@@ -238,7 +238,7 @@ public:
     explicit StateNone(DragController *parent);
     ~StateNone() override;
     void onEntry() override;
-    bool handleMouseButtonPress(Draggable *draggable, Point globalPos, Point pos) override;
+    bool handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos) override;
 };
 
 class StatePreDrag : public StateBase
@@ -248,8 +248,8 @@ public:
     explicit StatePreDrag(DragController *parent);
     ~StatePreDrag() override;
     void onEntry() override;
-    bool handleMouseMove(Point globalPos) override;
-    bool handleMouseButtonRelease(Point) override;
+    bool handleMouseMove(QPoint globalPos) override;
+    bool handleMouseButtonRelease(QPoint) override;
     bool handleMouseDoubleClick() override;
 };
 
@@ -262,8 +262,8 @@ public:
     ~StateDragging() override;
     void onEntry() override;
     void onExit() override;
-    bool handleMouseButtonRelease(Point globalPos) override;
-    bool handleMouseMove(Point globalPos) override;
+    bool handleMouseButtonRelease(QPoint globalPos) override;
+    bool handleMouseMove(QPoint globalPos) override;
     bool handleMouseDoubleClick() override;
 
 #if defined(KDDW_FRONTEND_QT_WINDOWS)
@@ -282,8 +282,8 @@ public:
     explicit StateInternalMDIDragging(DragController *parent);
     ~StateInternalMDIDragging() override;
     void onEntry() override;
-    bool handleMouseButtonRelease(Point globalPos) override;
-    bool handleMouseMove(Point globalPos) override;
+    bool handleMouseButtonRelease(QPoint globalPos) override;
+    bool handleMouseMove(QPoint globalPos) override;
     bool handleMouseDoubleClick() override;
 };
 

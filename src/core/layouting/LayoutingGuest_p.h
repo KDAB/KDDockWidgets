@@ -41,9 +41,9 @@ public:
     virtual ~LayoutingGuest();
     virtual Size minSize() const = 0;
     virtual Size maxSizeHint() const = 0;
-    virtual void setGeometry(Rect r) = 0;
+    virtual void setGeometry(QRect r) = 0;
     virtual void setVisible(bool is) = 0;
-    virtual Rect geometry() const = 0;
+    virtual QRect geometry() const = 0;
     virtual void setHost(LayoutingHost *parent) = 0;
     virtual LayoutingHost *host() const = 0;
     virtual QString id() const = 0;

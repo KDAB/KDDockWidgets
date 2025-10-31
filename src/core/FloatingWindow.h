@@ -37,9 +37,9 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
     Q_OBJECT
 public:
     explicit FloatingWindow(
-        Rect suggestedGeometry, MainWindow *parent = nullptr,
+        QRect suggestedGeometry, MainWindow *parent = nullptr,
         FloatingWindowFlags requestedFlags = FloatingWindowFlag::FromGlobalConfig);
-    explicit FloatingWindow(Core::Group *group, Rect suggestedGeometry,
+    explicit FloatingWindow(Core::Group *group, QRect suggestedGeometry,
                             MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
@@ -51,7 +51,7 @@ public:
     Core::DockWidget *singleDockWidget() const final;
     bool isWindow() const override;
 
-    Vector<DockWidget *> dockWidgets() const;
+    QVector<DockWidget *> dockWidgets() const;
     Core::Group::List groups() const;
     DropArea *dropArea() const;
 
@@ -61,7 +61,7 @@ public:
     /// Tool windows don't usually appear in the task bar
     bool isUtilityWindow() const;
 
-    static void ensureRectIsOnScreen(Rect &geometry);
+    static void ensureRectIsOnScreen(QRect &geometry);
 
 #ifdef KDDW_FRONTEND_QT_WINDOWS
     void setLastHitTest(int hitTest)
@@ -87,7 +87,7 @@ public:
      * @param preserveCenter, if true, then the center is preserved
      *
      */
-    void setSuggestedGeometry(Rect suggestedRect,
+    void setSuggestedGeometry(QRect suggestedRect,
                               SuggestedGeometryHints = SuggestedGeometryHint_None);
 
     bool anyNonClosable() const;
@@ -145,14 +145,14 @@ public:
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
 
-    Vector<QString> affinities() const;
+    QVector<QString> affinities() const;
 
     /**
      * Returns the drag rect in global coordinates. This is usually the title bar rect.
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
      * background. Returns global coordinates.
      */
-    Rect dragRect() const;
+    QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
     bool allDockWidgetsHave(DockWidgetOption) const;
@@ -176,7 +176,7 @@ public:
     MainWindow *mainWindow() const;
 
     ///@brief Returns the contents margins
-    Margins contentMargins() const;
+    QMargins contentMargins() const;
 
     // The state reported by QWidget is not always the same as what the
     // window manager thinks, due to the async nature. This method
@@ -217,7 +217,7 @@ private:
     Size maxSizeHint() const;
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
     void updateSizeConstraints();
 
     bool m_disableSetVisible = false;

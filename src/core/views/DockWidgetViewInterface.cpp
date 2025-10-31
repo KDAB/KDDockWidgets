@@ -131,17 +131,17 @@ void DockWidgetViewInterface::setOptions(DockWidgetOptions opts)
     m_dockWidget->setOptions(opts);
 }
 
-void DockWidgetViewInterface::setIcon(const Icon &icon, IconPlaces places)
+void DockWidgetViewInterface::setIcon(const QIcon &icon, IconPlaces places)
 {
     m_dockWidget->setIcon(icon, places);
 }
 
-Icon DockWidgetViewInterface::icon(IconPlace place) const
+QIcon DockWidgetViewInterface::icon(IconPlace place) const
 {
     return m_dockWidget->icon(place);
 }
 
-void DockWidgetViewInterface::setAffinities(const Vector<QString> &affinities)
+void DockWidgetViewInterface::setAffinities(const QVector<QString> &affinities)
 {
     m_dockWidget->setAffinities(affinities);
 }
@@ -151,7 +151,7 @@ void DockWidgetViewInterface::setAffinityName(const QString &name)
     m_dockWidget->setAffinityName(name);
 }
 
-Vector<QString> DockWidgetViewInterface::affinities() const
+QVector<QString> DockWidgetViewInterface::affinities() const
 {
     return m_dockWidget->affinities();
 }
