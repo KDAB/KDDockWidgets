@@ -3,6 +3,7 @@
   - qtquick: Expose 'DockWidget::lastCloseReason' to QML
   - qtquick: Add DockWidgetInstantiator::deleteDockWidgetLater
   - qtwidgets: Support tabs in south location
+  - cmake: Add -DKDDockWidgets_ENABLE_HARDENED (default OFF). Follows Qt and adds -fhardened on supported compilers.
 
 * v2.3.0
   - For packagers:
