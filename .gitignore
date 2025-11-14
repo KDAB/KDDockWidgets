@@ -12,7 +12,6 @@ CMakeCache.txt
 /examples/example
 tst_docks
 CMakeLists.txt.user*
-/build
 /examples/dockwidgets/build/
 moc_*
 *.moc
@@ -42,8 +41,7 @@ libkddockwidgets.so*
 kddockwidgets_basic_quick
 /src/KDDockWidgetsConfig.cmake
 /src/KDDockWidgetsConfigVersion.cmake
-build-*
-/build*
+/build-*
 /examples/dockwidgets/kddockwidgets_example
 .cmake
 CTestTestfile.cmake
