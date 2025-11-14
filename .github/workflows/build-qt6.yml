@@ -29,7 +29,7 @@ jobs:
         preset:
           - name: ci-dev-qt6
             qt_version: "6.10.0"
-          - name: ci-hardened
+          - name: ci-dev-hardened
             qt_version: "6.10.0"
           - name: ci-release-qt6
             qt_version: "6.3.*"

@@ -566,12 +566,12 @@
       }
     },
     {
-      "name": "ci-hardened",
+      "name": "ci-dev-hardened",
       "inherits": [
         "ci-release-qt6"
       ],
       "description": "gcc fhardened build",
-      "binaryDir": "${sourceDir}/build-ci-hardened",
+      "binaryDir": "${sourceDir}/build-ci-dev-hardened",
       "cacheVariables": {
         "KDDockWidgets_ENABLE_HARDENED": "ON",
         "KDDockWidgets_DEVELOPER_MODE": "ON"
