@@ -420,7 +420,7 @@ macro(set_compiler_flags targetName)
         )
 
         if(NOT WIN32 AND NOT APPLE)
-            target_compile_options(${targetName} PRIVATE -Wall -Wextra -Woverloaded-virtual)
+            target_compile_options(${targetName} PRIVATE -Wall -Wextra -Woverloaded-virtual -Wmissing-include-dirs)
             if(KDDockWidgets_USE_LLD)
                 target_link_options(${targetName} PRIVATE -fuse-ld=lld)
             endif()
