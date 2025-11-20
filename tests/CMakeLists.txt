@@ -21,7 +21,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 include_directories(..)
 include_directories(../src)
-include_directories(../src/private)
 add_definitions(-DQT_NO_KEYWORDS)
 
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
