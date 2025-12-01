@@ -281,9 +281,7 @@ if(KDDW_FRONTEND_QTWIDGETS)
 endif()
 
 if(KDDW_FRONTEND_QTQUICK)
-    target_include_directories(
-        kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtquick>
-    )
+    target_include_directories(kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtquick>)
 endif()
 
 if(KDDW_FRONTEND_FLUTTER)
