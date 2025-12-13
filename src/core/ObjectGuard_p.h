@@ -102,7 +102,7 @@ private:
         clear();
         obj = o;
 
-        if (auto object = dynamic_cast<Core::Object *>(o)) {
+        if (auto object = dynamic_cast<QObject *>(o)) {
             conn = object->aboutToBeDeleted.connect([this] {
                 obj = nullptr;
             });

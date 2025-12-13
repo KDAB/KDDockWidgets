@@ -46,7 +46,7 @@ enum class ViewType {
     LAST = RubberBand // Keep last
 };
 
-class DOCKS_EXPORT Controller : public Object
+class DOCKS_EXPORT Controller : public QObject
 {
     Q_OBJECT
 public:
@@ -70,13 +70,13 @@ public:
     /// Convenience for calling View::setVisible()
     void setVisible(bool);
 
-    Rect rect() const;
-    Point mapToGlobal(Point) const;
+    QRect rect() const;
+    QPoint mapToGlobal(QPoint) const;
     int height() const;
     int width() const;
-    Size size() const;
-    Point pos() const;
-    Rect geometry() const;
+    QSize size() const;
+    QPoint pos() const;
+    QRect geometry() const;
     int x() const;
     int y() const;
     bool close();

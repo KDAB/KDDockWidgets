@@ -42,7 +42,7 @@ class DOCKS_EXPORT Group : public Controller, public FocusScope
 {
     Q_OBJECT
 public:
-    typedef Vector<Group *> List;
+    typedef QVector<Group *> List;
 
     explicit Group(View *parent = nullptr, FrameOptions = FrameOption_None,
                    int userType = 0);
@@ -103,8 +103,8 @@ public:
     Core::TitleBar *titleBar() const;
     Core::TitleBar *actualTitleBar() const;
     QString title() const;
-    Icon icon() const;
-    Vector<DockWidget *> dockWidgets() const;
+    QIcon icon() const;
+    QVector<DockWidget *> dockWidgets() const;
 
     bool isTheOnlyGroup() const;
 
@@ -218,7 +218,7 @@ public:
      **/
     bool hasTabsVisible() const;
 
-    Vector<QString> affinities() const;
+    QVector<QString> affinities() const;
 
     ///@brief sets the layout item that either contains this Group in the layout or is a placeholder
     void setLayoutItem(Core::Item *item);
@@ -228,7 +228,7 @@ public:
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar
      * background. Returns global coordinates.
      */
-    virtual Rect dragRect() const;
+    virtual QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
     bool allDockWidgetsHave(DockWidgetOption) const;
@@ -280,7 +280,7 @@ public:
     WidgetResizeHandler *resizeHandler() const;
 
     void renameTab(int index, const QString &);
-    void changeTabIcon(int index, const Icon &);
+    void changeTabIcon(int index, const QIcon &);
     /// @brief Sets the Layout which this group is in
     void setLayout(Layout *);
 
@@ -352,7 +352,7 @@ private:
 
     void scheduleDeleteLater();
     void createMDIResizeHandler();
-    void onCloseEvent(CloseEvent *);
+    void onCloseEvent(QCloseEvent *);
 
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;

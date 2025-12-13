@@ -68,9 +68,9 @@ void MainWindow::init(const QString &name)
 
     d->m_visibleWidgetCountConnection =
         d->m_layout->d_ptr()->visibleWidgetCountChanged.connect([this](int count) { d->groupCountChanged.emit(count); });
-    view()->d->closeRequested.connect([this](CloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
+    view()->d->closeRequested.connect([this](QCloseEvent *ev) { d->m_layout->onCloseEvent(ev); });
 
-    d->m_resizeConnection = view()->d->resized.connect([this](Size size) {
+    d->m_resizeConnection = view()->d->resized.connect([this](QSize size) {
         d->onResized(size);
     });
 }
@@ -214,9 +214,9 @@ MDILayout *MainWindow::mdiLayout() const
     return d->m_layout->asMDILayout();
 }
 
-void MainWindow::setAffinities(const Vector<QString> &affinityNames)
+void MainWindow::setAffinities(const QVector<QString> &affinityNames)
 {
-    Vector<QString> affinities = affinityNames;
+    QVector<QString> affinities = affinityNames;
     affinities.removeAll(QString());
 
     if (d->affinities == affinities)
@@ -231,7 +231,7 @@ void MainWindow::setAffinities(const Vector<QString> &affinityNames)
     d->affinities = affinities;
 }
 
-Vector<QString> MainWindow::affinities() const
+QVector<QString> MainWindow::affinities() const
 {
     return d->affinities;
 }
@@ -268,16 +268,16 @@ CursorPositions MainWindow::Private::allowedResizeSides(SideBarLocation loc) con
     return CursorPosition_Undefined;
 }
 
-Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation location) const
+QRect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation location) const
 {
     Core::SideBar *sb = q->sideBar(location);
     if (!sb)
         return {};
 
-    const Rect centralAreaGeo = q->centralAreaGeometry();
-    const Margins centerWidgetMargins = q->centerWidgetMargins();
+    const QRect centralAreaGeo = q->centralAreaGeometry();
+    const QMargins centerWidgetMargins = q->centerWidgetMargins();
 
-    Rect rect;
+    QRect rect;
     const int margin = m_overlayMargin;
     switch (location) {
     case SideBarLocation::North:
@@ -311,7 +311,7 @@ Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation loc
         rect.setWidth(( std::max )(300, group->view()->minSize().width()));
         rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight
                        - centerWidgetMargins.top() - centerWidgetMargins.bottom());
-        rect.moveTop(sb->view()->mapTo(q->view(), Point(0, 0)).y() + topSideBarHeight - 1);
+        rect.moveTop(sb->view()->mapTo(q->view(), QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
             rect.moveLeft(centralAreaGeo.x() + centralAreaGeo.width() - rect.width() - sb->width()
                           - centerWidgetMargins.right() - margin);
@@ -454,8 +454,8 @@ void MainWindow::Private::updateOverlayGeometry(Size suggestedSize)
         return;
     }
 
-    const Rect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->group(), sb->location());
-    Rect newGeometry = defaultGeometry;
+    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->group(), sb->location());
+    QRect newGeometry = defaultGeometry;
 
     Core::Group *group = m_overlayedDockWidget->d->group();
 
@@ -505,7 +505,7 @@ void MainWindow::Private::clearSideBars()
     }
 }
 
-Rect MainWindow::Private::windowGeometry() const
+QRect MainWindow::Private::windowGeometry() const
 {
     /// @brief Returns the window geometry
     /// This is usually the same as the view's geometry()
@@ -753,7 +753,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         if (!sb)
             continue;
 
-        const Vector<QString> dockWidgets = mw.dockWidgetsForSideBar(loc);
+        const QVector<QString> dockWidgets = mw.dockWidgetsForSideBar(loc);
         for (const QString &uniqueName : dockWidgets) {
 
             Core::DockWidget *dw = DockRegistry::self()->dockByName(
@@ -796,7 +796,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East,
                                  SideBarLocation::West, SideBarLocation::South }) {
         if (Core::SideBar *sb = sideBar(loc)) {
-            const Vector<QString> dockwidgets = sb->serialize();
+            const QVector<QString> dockwidgets = sb->serialize();
             if (!dockwidgets.isEmpty())
                 m.dockWidgetsPerSideBar[loc] = dockwidgets;
         }
@@ -834,7 +834,7 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
     v->setContentsMargins(left, top, right, bottom);
 }
 
-Margins MainWindow::centerWidgetMargins() const
+QMargins MainWindow::centerWidgetMargins() const
 {
     auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centerWidgetMargins();
@@ -846,7 +846,7 @@ Core::SideBar *MainWindow::sideBar(SideBarLocation loc) const
     return it == d->m_sideBars.cend() ? nullptr : it->second;
 }
 
-Rect MainWindow::centralAreaGeometry() const
+QRect MainWindow::centralAreaGeometry() const
 {
     auto v = dynamic_cast<Core::MainWindowViewInterface *>(view());
     return v->centralAreaGeometry();

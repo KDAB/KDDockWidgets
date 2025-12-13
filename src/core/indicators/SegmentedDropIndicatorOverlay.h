@@ -28,9 +28,9 @@ public:
     ~SegmentedDropIndicatorOverlay() override;
     DropLocation hover_impl(Point globalPos) override;
 
-    DropLocation dropLocationForPos(Point pos) const;
-    Point hoveredPt() const;
-    const std::unordered_map<DropLocation, Polygon> &segments() const;
+    DropLocation dropLocationForPos(QPoint pos) const;
+    QPoint hoveredPt() const;
+    const std::unordered_map<DropLocation, QPolygon> &segments() const;
 
     static int s_segmentGirth;
     static int s_segmentPenWidth;
@@ -42,10 +42,10 @@ protected:
     Point posForIndicator(DropLocation) const override;
 
 private:
-    std::unordered_map<DropLocation, Polygon> segmentsForRect(Rect, bool inner, bool useOffset = false) const;
+    std::unordered_map<DropLocation, QPolygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
     void updateSegments();
-    Point m_hoveredPt = {};
-    std::unordered_map<DropLocation, Polygon> m_segments;
+    QPoint m_hoveredPt = {};
+    std::unordered_map<DropLocation, QPolygon> m_segments;
 };
 
 }

@@ -138,7 +138,7 @@ void TabBar::removeDockWidget(Core::DockWidget *dw)
     group()->onDockWidgetCountChanged();
 }
 
-void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
+void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
                               const QString &title)
 {
     if (auto oldGroup = dw->dptr()->group()) {
@@ -290,7 +290,7 @@ QString Core::TabBar::text(int index) const
     return {};
 }
 
-Rect Core::TabBar::rectForTab(int index) const
+QRect Core::TabBar::rectForTab(int index) const
 {
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         return tvi->rectForTab(index);
@@ -350,7 +350,7 @@ void TabBar::renameTab(int index, const QString &text)
         tvi->renameTab(index, text);
 }
 
-void TabBar::changeTabIcon(int index, const Icon &icon)
+void TabBar::changeTabIcon(int index, const QIcon &icon)
 {
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         tvi->changeTabIcon(index, icon);

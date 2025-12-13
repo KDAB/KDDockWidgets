@@ -68,9 +68,9 @@ Size Window::size() const
     return geometry().size();
 }
 
-void Window::setPosition(Point pos)
+void Window::setPosition(QPoint pos)
 {
-    Rect geo = geometry();
+    QRect geo = geometry();
     geo.moveTopLeft(pos);
     setGeometry(geo);
 }

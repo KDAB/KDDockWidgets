@@ -432,12 +432,12 @@ void TestQtQuick::tst_mdiFixedSize()
 
     EnsureTopLevelsDeleted e;
 
-    auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
     const int fixedWidth = 201;
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, Size(fixedWidth, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(fixedWidth, 400) }));
     dock0->view()->setFixedWidth(fixedWidth);
-    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
+    m->layout()->asMDILayout()->addDockWidget(dock0, QPoint(0, 0), {});
     m->view()->resize(1000, 1000);
 
     QCOMPARE(dock0->view()->minimumWidth(), fixedWidth);

@@ -26,12 +26,12 @@ Action::Action(Core::DockWidget *dw, const char *debugName)
 
 Action::~Action() = default;
 
-void Action::setIcon(const KDDockWidgets::Icon &)
+void Action::setIcon(const QIcon &)
 {
     KDDW_ERROR("Not implemented for QtQuick");
 }
 
-KDDockWidgets::Icon Action::icon() const
+QIcon Action::icon() const
 {
     KDDW_ERROR("Not implemented for QtQuick");
     return {};

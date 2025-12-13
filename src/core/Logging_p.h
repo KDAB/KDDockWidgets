@@ -109,7 +109,7 @@ std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> 
 }
 
 template<typename CharT, typename Traits>
-std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, KDDockWidgets::Rect rect)
+std::basic_ostream<CharT, Traits> &operator<<(std::basic_ostream<CharT, Traits> &os, QRect rect)
 {
     os << "Rect(" << rect.x() << "," << rect.y() << " " << rect.width() << "x" << rect.height() << ")";
     return os;

@@ -80,7 +80,7 @@ public:
     static bool isGammaray();
     explicit Platform_qt(QCoreApplication *);
     bool tests_waitForWindowActive(std::shared_ptr<Core::Window>, int timeout = 5000) const override;
-    bool tests_waitForEvent(Core::Object *w, QEvent::Type type, int timeout = 5000) const override;
+    bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(Core::View *, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(std::shared_ptr<Core::Window>, QEvent::Type type,
                             int timeout = 5000) const override;

@@ -26,7 +26,7 @@ class ItemBoxContainer;
 class DOCKS_EXPORT LayoutingSeparator
 {
 public:
-    typedef Vector<LayoutingSeparator *> List;
+    typedef QVector<LayoutingSeparator *> List;
 
     explicit LayoutingSeparator(LayoutingHost *, Qt::Orientation, Core::ItemBoxContainer *container);
     virtual ~LayoutingSeparator();

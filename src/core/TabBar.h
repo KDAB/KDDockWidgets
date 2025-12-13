@@ -49,7 +49,7 @@ public:
     /// @brief Returns the tab index of the specified dock widget
     int indexOfDockWidget(const Core::DockWidget *dw) const;
     void removeDockWidget(Core::DockWidget *dw);
-    void insertDockWidget(int index, Core::DockWidget *dw, const Icon &icon,
+    void insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon,
                           const QString &title);
 
     // Draggable
@@ -77,12 +77,12 @@ public:
 
     void moveTabTo(int from, int to);
     QString text(int index) const;
-    Rect rectForTab(int index) const;
+    QRect rectForTab(int index) const;
     ///@brief rename's the tab's text
     void renameTab(int index, const QString &);
 
     ///@brief change the tab's icon
-    void changeTabIcon(int index, const Icon &);
+    void changeTabIcon(int index, const QIcon &);
 
     /// Returns whether we're inside Core::TabBar::moveTab()
     bool isMovingTab() const;

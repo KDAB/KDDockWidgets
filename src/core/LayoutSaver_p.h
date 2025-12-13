@@ -56,7 +56,7 @@ Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
 
 struct LayoutSaver::Placeholder
 {
-    typedef Vector<LayoutSaver::Placeholder> List;
+    typedef QVector<LayoutSaver::Placeholder> List;
 
     bool isFloatingWindow;
     int indexOfFloatingWindow;
@@ -69,7 +69,7 @@ struct LayoutSaver::Placeholder
 struct DOCKS_EXPORT LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
-    explicit ScalingInfo(const QString &mainWindowId, Rect savedMainWindowGeo, int screenIndex);
+    explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex);
 
     bool isValid() const
     {
@@ -78,13 +78,13 @@ struct DOCKS_EXPORT LayoutSaver::ScalingInfo
     }
 
     void translatePos(Point &) const;
-    void applyFactorsTo(Point &) const;
-    void applyFactorsTo(Size &) const;
-    void applyFactorsTo(Rect &) const;
+    void applyFactorsTo(QPoint &) const;
+    void applyFactorsTo(QSize &) const;
+    void applyFactorsTo(QRect &) const;
 
     QString mainWindowName;
-    Rect savedMainWindowGeometry;
-    Rect realMainWindowGeometry;
+    QRect savedMainWindowGeometry;
+    QRect realMainWindowGeometry;
     double heightFactor = -1;
     double widthFactor = -1;
     bool mainWindowChangedScreen = false;
@@ -92,11 +92,11 @@ struct DOCKS_EXPORT LayoutSaver::ScalingInfo
 
 struct DOCKS_EXPORT LayoutSaver::Position
 {
-    Rect lastFloatingGeometry;
+    QRect lastFloatingGeometry;
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
-    std::unordered_map<SideBarLocation, Rect> lastOverlayedGeometries;
+    std::unordered_map<SideBarLocation, QRect> lastOverlayedGeometries;
 
     /// Iterates through the layout and patches all absolute sizes. See
     /// RestoreOption_RelativeToMainWindow.
@@ -107,7 +107,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 {
     // Using shared ptr, as we need to modify shared instances
     typedef std::shared_ptr<LayoutSaver::DockWidget> Ptr;
-    typedef Vector<Ptr> List;
+    typedef QVector<Ptr> List;
     static std::map<QString, Ptr> s_dockWidgets;
 
     bool isValid() const;
@@ -133,7 +133,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     bool skipsRestore() const;
 
     QString uniqueName;
-    Vector<QString> affinities;
+    QVector<QString> affinities;
     LayoutSaver::Position lastPosition;
     CloseReason lastCloseReason;
 #if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -146,9 +146,9 @@ private:
     }
 };
 
-inline Vector<QString> dockWidgetNames(const LayoutSaver::DockWidget::List &list)
+inline QVector<QString> dockWidgetNames(const LayoutSaver::DockWidget::List &list)
 {
-    Vector<QString> result;
+    QVector<QString> result;
     result.reserve(list.size());
     for (auto &dw : list)
         result.push_back(dw->uniqueName);
@@ -168,7 +168,7 @@ struct DOCKS_EXPORT LayoutSaver::Group
 
     bool isNull = true;
     QString objectName;
-    Rect geometry;
+    QRect geometry;
     QFlags<FrameOption>::Int options;
     int currentTabIndex;
     QString id; // for coorelation purposes
@@ -194,7 +194,7 @@ struct DOCKS_EXPORT LayoutSaver::MultiSplitter
 
 struct DOCKS_EXPORT LayoutSaver::FloatingWindow
 {
-    typedef Vector<LayoutSaver::FloatingWindow> List;
+    typedef QVector<LayoutSaver::FloatingWindow> List;
 
     bool isValid() const;
 
@@ -207,10 +207,10 @@ struct DOCKS_EXPORT LayoutSaver::FloatingWindow
     void scaleSizes(const ScalingInfo &);
 
     LayoutSaver::MultiSplitter multiSplitterLayout;
-    Vector<QString> affinities;
+    QVector<QString> affinities;
     int parentIndex = -1;
-    Rect geometry;
-    Rect normalGeometry;
+    QRect geometry;
+    QRect normalGeometry;
     int screenIndex;
     int flags = -1;
     Size screenSize; // for relative-size restoring
@@ -224,7 +224,7 @@ struct DOCKS_EXPORT LayoutSaver::FloatingWindow
 struct DOCKS_EXPORT LayoutSaver::MainWindow
 {
 public:
-    typedef Vector<LayoutSaver::MainWindow> List;
+    typedef QVector<LayoutSaver::MainWindow> List;
 
     bool isValid() const;
 
@@ -232,15 +232,15 @@ public:
     /// RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
-    Vector<QString> dockWidgetsForSideBar(SideBarLocation) const;
+    QVector<QString> dockWidgetsForSideBar(SideBarLocation) const;
 
-    std::unordered_map<SideBarLocation, Vector<QString>> dockWidgetsPerSideBar;
+    std::unordered_map<SideBarLocation, QVector<QString>> dockWidgetsPerSideBar;
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;
-    Vector<QString> affinities;
-    Rect geometry;
-    Rect normalGeometry;
+    QVector<QString> affinities;
+    QRect geometry;
+    QRect normalGeometry;
     int screenIndex;
     Size screenSize; // for relative-size restoring
     bool isVisible;
@@ -254,10 +254,10 @@ public:
 /// Not used currently, but nice to have in the json already
 struct LayoutSaver::ScreenInfo
 {
-    typedef Vector<LayoutSaver::ScreenInfo> List;
+    typedef QVector<LayoutSaver::ScreenInfo> List;
 
     int index;
-    Rect geometry;
+    QRect geometry;
     QString name;
     double devicePixelRatio;
 };
@@ -302,9 +302,9 @@ public:
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
     LayoutSaver::FloatingWindow floatingWindowForIndex(int index) const;
 
-    Vector<QString> mainWindowNames() const;
-    Vector<QString> dockWidgetNames() const;
-    Vector<QString> dockWidgetsToClose() const;
+    QVector<QString> mainWindowNames() const;
+    QVector<QString> dockWidgetNames() const;
+    QVector<QString> dockWidgetsToClose() const;
     bool containsDockWidget(const QString &uniqueName) const;
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
@@ -332,8 +332,8 @@ public:
 
     static void restorePendingPositions(Core::DockWidget *);
 
-    bool matchesAffinity(const Vector<QString> &affinities) const;
-    void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);
+    bool matchesAffinity(const QVector<QString> &affinities) const;
+    void floatWidgetsWhichSkipRestore(const QVector<QString> &mainWindowNames);
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 
     template<typename T>
@@ -343,7 +343,7 @@ public:
 
     DockRegistry *const m_dockRegistry;
     InternalRestoreOptions m_restoreOptions = {};
-    Vector<QString> m_affinityNames;
+    QVector<QString> m_affinityNames;
 
     /// If a layout is restored but the dock widget doesn't exist, we store its last position here
     /// so when we create the dock widget we can finally restore

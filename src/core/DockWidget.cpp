@@ -304,7 +304,7 @@ void DockWidget::setTitle(const QString &title)
     }
 }
 
-Rect DockWidget::groupGeometry() const
+QRect DockWidget::groupGeometry() const
 {
     if (Core::Group *f = d->group())
         return f->view()->geometry();
@@ -381,7 +381,7 @@ int DockWidget::currentTabIndex() const
     return 0;
 }
 
-void DockWidget::setIcon(const Icon &icon, IconPlaces places)
+void DockWidget::setIcon(const QIcon &icon, IconPlaces places)
 {
     if (places & IconPlace::TitleBar)
         d->titleBarIcon = icon;
@@ -395,7 +395,7 @@ void DockWidget::setIcon(const Icon &icon, IconPlaces places)
     d->iconChanged.emit();
 }
 
-Icon DockWidget::icon(IconPlace place) const
+QIcon DockWidget::icon(IconPlace place) const
 {
     if (place == IconPlace::TitleBar)
         return d->titleBarIcon;
@@ -427,7 +427,7 @@ bool DockWidget::isOpen() const
     return d->m_isOpen;
 }
 
-Vector<QString> DockWidget::affinities() const
+QVector<QString> DockWidget::affinities() const
 {
     return d->affinities;
 }
@@ -492,9 +492,9 @@ void DockWidget::setAffinityName(const QString &affinity)
     setAffinities({ affinity });
 }
 
-void DockWidget::setAffinities(const Vector<QString> &affinityNames)
+void DockWidget::setAffinities(const QVector<QString> &affinityNames)
 {
-    Vector<QString> affinities = affinityNames;
+    QVector<QString> affinities = affinityNames;
     affinities.removeAll(QString());
 
     if (d->affinities == affinities)
@@ -552,7 +552,7 @@ bool DockWidget::hasPreviousDockedLocation() const
     return d->m_lastPositions->lastItem(this);
 }
 
-Size DockWidget::lastOverlayedSize() const
+QSize DockWidget::lastOverlayedSize() const
 {
     return d->m_lastOverlayedSize;
 }
@@ -582,7 +582,7 @@ CloseReason DockWidget::lastCloseReason() const
     return d->m_lastCloseReason;
 }
 
-void DockWidget::setFloatingGeometry(Rect geometry)
+void DockWidget::setFloatingGeometry(QRect geometry)
 {
     if (isOpen() && isFloating()) {
         view()->rootView()->setGeometry(geometry);
@@ -605,14 +605,14 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         return fw; // Nothing to do
 
     if (q->view()->isRootView()) {
-        Rect geo = m_lastPositions->lastFloatingGeometry();
+        QRect geo = m_lastPositions->lastFloatingGeometry();
         if (geo.isNull()) {
             geo = q->geometry();
 
             if (!q->view()->hasAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it,
                                                                      // we don't
                 // interfere
-                const Point center = defaultCenterPosForFloating();
+                const QPoint center = defaultCenterPosForFloating();
                 if (!center.isNull())
                     geo.moveCenter(center);
             }
@@ -715,7 +715,7 @@ DockWidget::Private::~Private()
     delete floatAction;
 }
 
-Point DockWidget::Private::defaultCenterPosForFloating()
+QPoint DockWidget::Private::defaultCenterPosForFloating()
 {
     MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
     // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more
@@ -919,7 +919,7 @@ void DockWidget::Private::onParentChanged()
     actualTitleBarChanged.emit();
 }
 
-void DockWidget::onResize(Size)
+void DockWidget::onResize(QSize)
 {
     if (isOverlayed()) {
         if (auto group = d->group()) {
@@ -982,7 +982,7 @@ QVariantMap DockWidget::userData() const
 }
 #endif
 
-void DockWidget::setMDIPosition(Point pos)
+void DockWidget::setMDIPosition(QPoint pos)
 {
     if (MDILayout *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
@@ -994,7 +994,7 @@ void DockWidget::setMDIPosition(Point pos)
     }
 }
 
-void DockWidget::setMDISize(Size size)
+void DockWidget::setMDISize(QSize size)
 {
     if (MDILayout *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
@@ -1129,7 +1129,7 @@ void DockWidget::Private::saveLastFloatingGeometry()
     }
 }
 
-void DockWidget::Private::onCloseEvent(CloseEvent *e)
+void DockWidget::Private::onCloseEvent(QCloseEvent *e)
 {
     if (m_inCloseEvent)
         return;
@@ -1219,7 +1219,7 @@ KDDockWidgets::FloatingWindowFlags DockWidget::floatingWindowFlags() const
     return d->m_flags;
 }
 
-Size DockWidget::sizeInLayout() const
+QSize DockWidget::sizeInLayout() const
 {
     if (auto group = d->group())
         return group->size();
@@ -1280,10 +1280,10 @@ bool DockWidget::startDragging(bool singleTab)
         tabBar->dptr()->m_lastPressedDockWidget = this;
     }
 
-    const Point globalPos = Platform::instance()->cursorPos();
+    const QPoint globalPos = Platform::instance()->cursorPos();
 
     View *draggedView = draggable->asView();
-    const Point offset = draggedView->mapFromGlobal(globalPos);
+    const QPoint offset = draggedView->mapFromGlobal(globalPos);
 
     return dc->programmaticStartDrag(draggable, globalPos, offset);
 }

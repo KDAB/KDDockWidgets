@@ -105,13 +105,13 @@ int WidgetResizeHandler::widgetResizeHandlerMargin()
     return 4; // pixels
 }
 
-bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
+bool WidgetResizeHandler::onMouseEvent(View *widget, QMouseEvent *e)
 {
     if (s_disableAllHandlers || !widget || !mTargetGuard)
         return false;
 
-    if (e->type() != Event::MouseButtonPress && e->type() != Event::MouseButtonRelease
-        && e->type() != Event::MouseMove)
+    if (e->type() != QEvent::MouseButtonPress && e->type() != QEvent::MouseButtonRelease
+        && e->type() != QEvent::MouseMove)
         return false;
 
     auto me = mouseEvent(e);
@@ -169,7 +169,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
     }
 
     switch (e->type()) {
-    case Event::MouseButtonPress: {
+    case QEvent::MouseButtonPress: {
         if (mTarget->isMaximized())
             break;
 
@@ -179,8 +179,8 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
             return false;
 
         const int m = widgetResizeHandlerMargin();
-        const Rect widgetRect = mTarget->rect().marginsAdded(Margins(m, m, m, m));
-        const Point cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
+        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
+        const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(e));
         if (!widgetRect.contains(cursorPoint) || e->button() != Qt::LeftButton)
             return false;
 
@@ -192,7 +192,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
         return true;
     }
-    case Event::MouseButtonRelease: {
+    case QEvent::MouseButtonRelease: {
         m_resizingInProgress = false;
         if (isMDI()) {
             DockRegistry::self()->dptr()->groupInMDIResizeChanged.emit();
@@ -217,7 +217,7 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
 
         break;
     }
-    case Event::MouseMove: {
+    case QEvent::MouseMove: {
         if (mTarget->isMaximized())
             break;
 
@@ -241,19 +241,19 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
     return false;
 }
 
-bool WidgetResizeHandler::mouseMoveEvent(MouseEvent *e)
+bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 {
-    const Point globalPos = Qt5Qt6Compat::eventGlobalPos(e);
+    const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
     if (!m_resizingInProgress) {
         const CursorPosition pos = cursorPosition(globalPos);
         updateCursor(pos);
         return pos != CursorPosition_Undefined;
     }
 
-    const Rect oldGeometry = mTarget->d->globalGeometry();
-    Rect newGeometry = oldGeometry;
+    const QRect oldGeometry = mTarget->d->globalGeometry();
+    QRect newGeometry = oldGeometry;
 
-    Rect parentGeometry;
+    QRect parentGeometry;
     if (!mTarget->isRootView()) {
         auto parent = mTarget->parentView();
         parentGeometry = parent->d->globalGeometry();

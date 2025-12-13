@@ -99,7 +99,7 @@ public:
         m_wasFloating = isFloating;
     }
 
-    void setLastFloatingGeometry(Rect geo)
+    void setLastFloatingGeometry(QRect geo)
     {
         m_lastFloatingGeometry = geo;
     }
@@ -109,7 +109,7 @@ public:
         return m_wasFloating;
     }
 
-    Rect lastFloatingGeometry() const
+    QRect lastFloatingGeometry() const
     {
         return m_lastFloatingGeometry;
     }
@@ -127,13 +127,13 @@ public:
         return m_tabIndex;
     }
 
-    Rect lastOverlayedGeometry(SideBarLocation loc) const
+    QRect lastOverlayedGeometry(SideBarLocation loc) const
     {
         auto it = m_lastOverlayedGeometries.find(loc);
-        return it == m_lastOverlayedGeometries.cend() ? Rect() : it->second;
+        return it == m_lastOverlayedGeometries.cend() ? QRect() : it->second;
     }
 
-    void setLastOverlayedGeometry(SideBarLocation loc, Rect rect)
+    void setLastOverlayedGeometry(SideBarLocation loc, QRect rect)
     {
         m_lastOverlayedGeometries[loc] = rect;
     }
@@ -159,8 +159,8 @@ private:
     // The last places where this dock widget was (or is), so it can be restored when
     // setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
-    Rect m_lastFloatingGeometry;
-    std::unordered_map<SideBarLocation, Rect> m_lastOverlayedGeometries;
+    QRect m_lastFloatingGeometry;
+    std::unordered_map<SideBarLocation, QRect> m_lastOverlayedGeometries;
     bool m_clearing = false; // to prevent re-entrancy
 };
 

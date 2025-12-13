@@ -68,7 +68,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
     }
 }
 
-void MDILayout::setDockWidgetGeometry(Core::Group *group, Rect geometry)
+void MDILayout::setDockWidgetGeometry(Core::Group *group, QRect geometry)
 {
     if (!group)
         return;
@@ -98,7 +98,7 @@ void MDILayout::moveDockWidget(Core::Group *group, Point pos)
         return;
     }
 
-    Rect geo = item->geometry();
+    QRect geo = item->geometry();
     geo.moveTopLeft(pos);
     item->setGeometry(geo);
 }

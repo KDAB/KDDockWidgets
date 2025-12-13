@@ -41,16 +41,16 @@ public:
     /// This is only used by tests, to make sure your tab's text is correct
     virtual QString text(int index) const = 0;
 
-    virtual int tabAt(Point localPt) const = 0;
+    virtual int tabAt(QPoint localPt) const = 0;
     virtual void moveTabTo(int from, int to) = 0;
-    virtual Rect rectForTab(int index) const = 0;
+    virtual QRect rectForTab(int index) const = 0;
     virtual void setCurrentIndex(int index) = 0;
 
     virtual void renameTab(int index, const QString &) = 0;
-    virtual void changeTabIcon(int index, const Icon &icon) = 0;
+    virtual void changeTabIcon(int index, const QIcon &icon) = 0;
 
     virtual void removeDockWidget(DockWidget *dw) = 0;
-    virtual void insertDockWidget(int index, DockWidget *dw, const Icon &icon,
+    virtual void insertDockWidget(int index, DockWidget *dw, const QIcon &icon,
                                   const QString &title) = 0;
 
 protected:

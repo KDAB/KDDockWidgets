@@ -38,7 +38,7 @@ public:
     /// @brief the rect that should start a drag.
     /// Only relevant if the title bar isn't visible. For normal KDDW usage this method doesn't
     /// need to be reimplemented.
-    virtual Rect dragRect() const;
+    virtual QRect dragRect() const;
 
     bool isMDI() const;
     Group *group() const;

@@ -55,12 +55,12 @@ struct Separator::Private : public LayoutingSeparator
 
     ~Private() override;
 
-    Rect geometry() const override
+    QRect geometry() const override
     {
         return m_geometry;
     }
 
-    void setGeometry(Rect r) override
+    void setGeometry(QRect r) override
     {
         q->setGeometry(r);
     }
@@ -82,7 +82,7 @@ struct Separator::Private : public LayoutingSeparator
     }
 
     Core::Separator *const q;
-    Rect m_geometry;
+    QRect m_geometry;
     int lazyPosition = 0;
     View *lazyResizeRubberBand = nullptr;
     const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
@@ -126,7 +126,7 @@ int Separator::position() const
     return d->position();
 }
 
-void Separator::setGeometry(Rect r)
+void Separator::setGeometry(QRect r)
 {
     if (r == d->m_geometry)
         return;
@@ -149,7 +149,7 @@ void Separator::setLazyPosition(int pos)
 
     d->lazyPosition = pos;
 
-    Rect geo = v->geometry();
+    QRect geo = v->geometry();
     if (isVertical()) {
         geo.moveTop(pos);
     } else {

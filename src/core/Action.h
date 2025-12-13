@@ -27,8 +27,8 @@ public:
     explicit Action(Core::DockWidget *, const char *debugName = "");
     virtual ~Action();
 
-    virtual void setIcon(const KDDockWidgets::Icon &) = 0;
-    virtual KDDockWidgets::Icon icon() const = 0;
+    virtual void setIcon(const QIcon &) = 0;
+    virtual QIcon icon() const = 0;
 
     virtual void setText(const QString &text) = 0;
 

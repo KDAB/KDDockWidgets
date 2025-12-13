@@ -57,7 +57,11 @@ void Separator::paintEvent(QPaintEvent *ev)
     QWidget::parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
 }
 
-void Separator::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void Separator::enterEvent(QEnterEvent *)
+#else
+void Separator::enterEvent(QEvent *)
+#endif
 {
     if (d->freed())
         return;

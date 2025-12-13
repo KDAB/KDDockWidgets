@@ -137,7 +137,7 @@ public:
 
     /// @brief Returns the icon to be used with the specified @p type
     /// @param dpr the device pixel ratio of the button
-    virtual Icon iconForButtonType(TitleBarButtonType type, double dpr) const = 0;
+    virtual QIcon iconForButtonType(TitleBarButtonType type, double dpr) const = 0;
 
     /// @brief The path to a folder containing the classic_indicator png files
     virtual QString classicIndicatorsPath() const;
