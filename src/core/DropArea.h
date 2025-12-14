@@ -140,6 +140,9 @@ public:
     /// Returns the current drop location
     /// The user needs to be dragging a window and be over a drop indicator, otherwise DropLocation_None is returned
     DropLocation currentDropLocation() const;
+
+    Core::Group *centralGroup() const;
+
 #if defined(DOCKS_DEVELOPER_MODE) || defined(KDDW_FRONTEND_FLUTTER)
 public:
 #else
@@ -178,7 +181,6 @@ private:
     bool drop(View *droppedwindow, KDDockWidgets::Location location,
               Core::Group *relativeTo);
     Core::Group *groupContainingPos(Point globalPos) const;
-    Core::Group *centralGroup() const;
     void updateFloatingActions();
 
     class Private;
