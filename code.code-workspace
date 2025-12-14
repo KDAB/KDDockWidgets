@@ -58,6 +58,22 @@
         "env": {}
       },
       {
+        "name": "Current Target (GDB)",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${command:cmake.launchTargetPath}",
+        "args": [],
+        "cwd": "${command:cmake.buildDirectory}",
+        "MIMode": "gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ]
+      },
+      {
         "name": "Example via Wayland",
         "type": "lldb",
         "request": "launch",
