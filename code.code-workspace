@@ -11,31 +11,40 @@
       "llvm-vs-code-extensions.vscode-clangd",
       "mhutchie.git-graph",
       "theqtcompany.qt-qml",
-      "ms-vscode.cmake-tools"
+      "ms-vscode.cmake-tools",
+      "KDAB.qttests"
     ]
   },
   "settings": {
     "files.trimTrailingWhitespace": true,
     "editor.formatOnSave": true,
-    "C_Cpp.autocompleteAddParentheses": true,
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.autocomplete": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.formatting": "disabled",
     "clangd.arguments": [
       "-header-insertion=never",
       "--clang-tidy=false"
     ],
-    "todo-tree.tree.scanMode": "workspace only",
-    "todo-tree.tree.disableCompactFolders": false,
-    "todo-tree.tree.showBadges": true,
-    "todo-tree.general.tags": [
-      "TODO"
-    ],
-    "testMate.cpp.test.executables": "{build-dev}/**/*{tst}*",
-    "todo-tree.filtering.excludeGlobs": [
-      "**/ECM",
-      "**/3rdparty"
-    ],
     "cmake.copyCompileCommands": "${workspaceFolder:kddockwidgets}/compile_commands.json",
     "cmake.automaticReconfigure": false,
     "files.insertFinalNewline": true,
+    "cmake.showSystemKits": false,
+    "cmake.enableAutomaticKitScan": false,
+    "cmake.options.statusBarVisibility": "hidden",
+    "cmake.options.advanced": {
+      "configurePreset": {
+        "statusBarVisibility": "visible"
+      },
+      "buildTarget": {
+        "statusBarVisibility": "visible"
+      },
+      "launchTarget": {
+        "statusBarVisibility": "visible",
+        "inheritDefault": "visible"
+      },
+    },
+    "git.blame.ignoreWhitespace": true,
     "files.associations": {
       "*.code-workspace.template": "json"
     },
@@ -102,46 +111,22 @@
         }
       },
       {
-        "name": "Flutter attach",
-        "request": "attach",
-        "type": "dart",
-        "packages": "tests/flutter_tests_embedder/.dart_tool/package_config.json",
-        "vmServiceUri": "${command:dart.promptForVmService}"
-      },
-      {
-        "name": "Flutter test (dart)",
+        "name": "Current Target (GDB Linux)",
+        "type": "cppdbg",
         "request": "launch",
-        "type": "dart",
-        "flutterMode": "debug",
-        "cwd": "${workspaceFolder:kddockwidgets}/tests/flutter_tests_embedder/",
-        "deviceId": "kddw_test_gltf_embedder",
-        "args": [
-          "-v"
-        ]
-      },
-      {
-        "name": "Flutter example (dart)",
-        "request": "launch",
-        "type": "dart",
-        "flutterMode": "debug",
-        "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter",
-        "deviceId": "linux"
-      },
-      {
-        "name": "Flutter example (native)",
-        "request": "launch",
-        "type": "lldb",
-        "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
-        "cwd": "${workspaceFolder:kddockwidgets}"
-      },
-      {
-        "name": "Flutter example (native,wait)",
-        "request": "launch",
-        "type": "lldb",
-        "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
-        "cwd": "${workspaceFolder:kddockwidgets}",
-        "args": [
-          "--wait"
+        "program": "${command:cmake.launchTargetPath}",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${command:cmake.buildDirectory}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
         ]
       }
     ]
