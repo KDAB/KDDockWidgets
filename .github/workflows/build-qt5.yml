@@ -24,7 +24,7 @@ jobs:
         os:
           - ubuntu-24.04
           - windows-latest
-          - macos-13
+          - macos-latest
 
         preset:
           - name: ci-dev-qt5
