@@ -39,8 +39,9 @@ Window::Window(QWidget *topLevel)
     setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidget *>(topLevel));
 }
 
-std::shared_ptr<Core::View> Window::rootView() const
+std::shared_ptr<Core::View> Window::rootView(bool v1Workaround) const
 {
+    Q_UNUSED(v1Workaround);
     if (!m_window)
         return {};
 
