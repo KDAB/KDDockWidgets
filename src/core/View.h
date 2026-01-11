@@ -186,6 +186,7 @@ public:
 
     virtual void render(QPainter *) = 0;
 
+    /// @brief Returns the child view at the specified local position, recursively
     virtual std::shared_ptr<View> childViewAt(Point localPos) const = 0;
 
     /// @brief Returns the top-level gui element which this view is inside

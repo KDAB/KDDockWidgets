@@ -125,6 +125,7 @@ public:
 
     std::shared_ptr<Core::Window> window() const override;
     std::shared_ptr<Core::View> childViewAt(QPoint p) const override;
+    static std::shared_ptr<Core::View> childViewAt(QQuickItem *parent, QPoint localPos);
     std::shared_ptr<Core::View> rootView() const override;
     std::shared_ptr<Core::View> parentView() const override;
 

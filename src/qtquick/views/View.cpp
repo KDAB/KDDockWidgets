@@ -730,9 +730,39 @@ std::shared_ptr<Core::Window> View::window() const
     return {};
 }
 
-std::shared_ptr<Core::View> View::childViewAt(QPoint p) const
+std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const
 {
-    auto child = QQuickItem::childAt(p.x(), p.y());
+    return childViewAt(const_cast<View *>(this), localPos);
+}
+
+/*static*/
+std::shared_ptr<Core::View> View::childViewAt(QQuickItem *parent, QPoint localPos)
+{
+    std::function<QQuickItem *(QQuickItem *, QPointF)> findDeepestChild =
+        [&](QQuickItem *item, QPointF itemPos) -> QQuickItem * {
+        if (!item)
+            return nullptr;
+
+        const auto children = item->childItems();
+        QQuickItem *deepest = nullptr;
+
+        for (auto child : children) {
+            if (!child->isVisible())
+                continue;
+
+            const QPointF childPos = child->mapFromItem(item, itemPos);
+            if (child->contains(childPos)) {
+                if (auto deeper = findDeepestChild(child, childPos))
+                    deepest = deeper;
+                else
+                    deepest = child;
+            }
+        }
+
+        return deepest;
+    };
+
+    auto child = findDeepestChild(parent, localPos);
     return child ? asQQuickWrapper(child) : nullptr;
 }
 

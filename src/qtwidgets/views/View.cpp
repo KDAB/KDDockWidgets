@@ -123,6 +123,7 @@ void View<T>::setMinimumSize(QSize sz)
 template<class T>
 std::shared_ptr<Core::View> View<T>::childViewAt(QPoint localPos) const
 {
+    // QWidget::childAt is recursive
     if (QWidget *child = QWidget::childAt(localPos))
         return ViewWrapper::create(child);
 
