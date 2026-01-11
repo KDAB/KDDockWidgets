@@ -1,3 +1,6 @@
+* v2.5.0
+  - qtquick: Fixed support for one window with multiple docking areas
+
 * v2.4.0
   - qtquick: Expose DockWidgetOptions to QML
   - qtquick: Expose 'DockWidget::lastCloseReason' to QML
