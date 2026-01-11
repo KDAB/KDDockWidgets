@@ -75,9 +75,10 @@ public:
     virtual bool isActive() const = 0;
 
     /// @brief Returns the root view of this window
-    /// For example, for QtWidgets, this would be the top-level QWidget
-    /// represented by this QWindow
-    virtual std::shared_ptr<View> rootView() const = 0;
+    /// For example, for QtWidgets, this would be the top-level QWidget represented by this QWindow
+    /// For QtQuick, this would be the contentItem of the QQuickWindow
+    /// Call this with v1Workaround=false unless you know what you're doing
+    virtual std::shared_ptr<View> rootView(bool v1Workaround = true) const = 0;
 
     /// @brief Returns the window state
     virtual WindowState windowState() const = 0;

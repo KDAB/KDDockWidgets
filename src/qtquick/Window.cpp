@@ -40,18 +40,17 @@ static Core::View *topMostKDDWView(QQuickItem *parent)
     return nullptr;
 }
 
-std::shared_ptr<Core::View> Window::rootView() const
+std::shared_ptr<Core::View> Window::rootView(bool v1Workaround) const
 {
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();
-        if (Core::View *view = topMostKDDWView(contentItem)) {
+        if (v1Workaround) {
             // This block is for retrocompatibility with 1.x. For QtQuick the topmost "widget" is a
             // KDDW known widget and not any arbitrary user QtQuickItem.
-            return view->asWrapper();
+            if (Core::View *view = topMostKDDWView(contentItem))
+                return view->asWrapper();
         } else {
-            const auto children = contentItem->childItems();
-            Q_ASSERT(!children.isEmpty());
-            return QtQuick::View::asQQuickWrapper(children.first());
+            return QtQuick::View::asQQuickWrapper(contentItem);
         }
     } else {
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";

@@ -24,7 +24,7 @@ public:
 
     explicit Window(QWidget *topLevel);
     ~Window() override;
-    std::shared_ptr<Core::View> rootView() const override;
+    std::shared_ptr<Core::View> rootView(bool v1Workaround = true) const override;
     Window::Ptr transientParent() const override;
     void setGeometry(QRect) override;
     void setVisible(bool) override;
