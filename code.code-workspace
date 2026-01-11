@@ -13,6 +13,9 @@
       "theqtcompany.qt-qml",
       "ms-vscode.cmake-tools",
       "KDAB.qttests"
+    ],
+    "unwantedRecommendations": [
+      "ms-azuretools.vscode-docker"
     ]
   },
   "settings": {
