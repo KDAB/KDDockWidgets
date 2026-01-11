@@ -654,7 +654,8 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     for (Core::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
             if (Core::Window::Ptr window = m->view()->window()) {
-                windows.push_back(window);
+                if (!windows.contains(window)) // A QtQuick window can host multiple MainWindows
+                    windows.push_back(window);
             } else {
                 KDDW_ERROR("MainWindow doesn't have QWindow");
             }
