@@ -28,9 +28,9 @@ jobs:
 
         preset:
           - name: ci-dev-qt6
-            qt_version: "6.10.1"
+            qt_version: "6.11.0" # Bump to latest freely
           - name: ci-dev-hardened
-            qt_version: "6.10.0"
+            qt_version: "6.11.0" # Bump to latest freely
           - name: ci-release-qt6
             qt_version: "6.3.*"
           - name: ci-qtwidgets-qt6
