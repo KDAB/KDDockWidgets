@@ -36,7 +36,6 @@ path = [
     "docs/book/**",
     "docs/developer/**.md",
     "book.toml",
-    ".github/actions/qt6-asan/README.md",
     ".github/actions/qt6-lsan/README.md",
     ".github/ISSUE_TEMPLATE/bug_report.md",
     ".github/ISSUE_TEMPLATE/config.yml",
