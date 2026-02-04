@@ -50,4 +50,3 @@ jobs:
         run: ctest --test-dir ./build-dev-asan6 --verbose -j 4
         env:
           QT_QUICK_BACKEND: software
-          LSAN_OPTIONS: detect_leaks=0
