@@ -4,7 +4,6 @@
 ![Build Status](https://github.com/KDAB/KDDockWidgets/actions/workflows/build-qt6.yml/badge.svg)
 ![Build Status](https://github.com/KDAB/KDDockWidgets/actions/workflows/valgrind-leakcheck.yml/badge.svg)
 ![Build Status](https://github.com/KDAB/KDDockWidgets/actions/workflows/qt6-asan.yml/badge.svg)
-![Build Status](https://github.com/KDAB/KDDockWidgets/actions/workflows/qt6-lsan.yml/badge.svg)
 
 ![KDDockWidgetsLogo](https://github.com/KDAB/KDDockWidgets/blob/2.0/images/kddockwidgets.png?raw=true)
 
