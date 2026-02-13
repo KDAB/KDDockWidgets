@@ -58,7 +58,7 @@ public:
     ~Positions();
 
     void deserialize(const LayoutSaver::Position &);
-    LayoutSaver::Position serialize() const;
+    LayoutSaver::Position serialize(const Vector<QString> &affinityNames = {}) const;
 
     ///@brief The tab index in case the dock widget was in a TabWidget, -1 otherwise.
     int m_tabIndex = -1;
