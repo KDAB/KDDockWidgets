@@ -673,8 +673,14 @@ void DockRegistry::clear(const QVector<QString> &affinities)
 
 void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
                          const Core::MainWindow::List &mainWindows,
-                         const QVector<QString> &affinities)
+                         const QVector<QString> &affinities, bool documentsOnly)
 {
+    if (documentsOnly) {
+        // Handle special case, "document mode" restore
+        clearDocuments(dockWidgets, mainWindows.first());
+        return;
+    }
+
     for (auto dw : std::as_const(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
             dw->forceClose();
@@ -685,6 +691,31 @@ void DockRegistry::clear(const Core::DockWidget::List &dockWidgets,
     for (auto mw : std::as_const(mainWindows)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, mw->affinities())) {
             mw->layout()->clearLayout();
+        }
+    }
+}
+
+/// Special case when restoring project documents. Do not touch non-document widgets.
+void DockRegistry::clearDocuments(const QVector<Core::DockWidget *> &dockWidgets,
+                                  Core::MainWindow *mainWindow)
+{
+    const QString documentAffinity = mainWindow->documentAffinity();
+
+    // Clear tabbed documents:
+    Core::Group *centralGroup = mainWindow->dropArea()->centralGroup();
+    Vector<DockWidget *> dws = centralGroup->dockWidgets();
+    for (Core::DockWidget *dw : dws) {
+        if (dw->affinities().contains(documentAffinity)) {
+            dw->forceClose();
+            dw->d->lastPosition()->removePlaceholders();
+        }
+    }
+
+    // Clear floating documents:
+    for (auto dw : std::as_const(dockWidgets)) {
+        if (dw->isFloating() && dw->affinities().contains(documentAffinity)) {
+            dw->forceClose();
+            dw->d->lastPosition()->removePlaceholders();
         }
     }
 }

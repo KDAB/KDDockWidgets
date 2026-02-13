@@ -231,6 +231,16 @@ void MainWindow::setAffinities(const Vector<QString> &affinityNames)
     d->affinities = affinities;
 }
 
+void MainWindow::setDocumentAffinity(const QString &affinity)
+{
+    d->m_documentAffinity = affinity;
+}
+
+QString MainWindow::documentAffinity() const
+{
+    return d->m_documentAffinity;
+}
+
 Vector<QString> MainWindow::affinities() const
 {
     return d->affinities;
