@@ -244,6 +244,7 @@ private Q_SLOTS:
     void tst_complex();
     void tst_restoreFloatingMaximizedState();
     void tst_findAncestor();
+    void tst_affinityFloatingWindowIndexMismatch();
 #if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     void tst_userData();
 #endif
@@ -3134,6 +3135,34 @@ void TestQtWidgets::tst_controllerToView()
 
     QCOMPARE(dw->view(), dwView);
     QCOMPARE(dws[0]->view(), dwView);
+}
+
+void TestQtWidgets::tst_affinityFloatingWindowIndexMismatch()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(QSize(1000, 800), {}, "mw1");
+
+    auto floatA = new QtWidgets::DockWidget("floatA");
+    floatA->asDockWidgetController()->setAffinities({ "a1" });
+    floatA->asDockWidgetController()->open();
+
+    auto floatB = new QtWidgets::DockWidget("floatB");
+    floatB->asDockWidgetController()->setAffinities({ "a2" });
+    floatB->asDockWidgetController()->open();
+
+    auto floatC = new QtWidgets::DockWidget("floatC");
+    floatC->asDockWidgetController()->setAffinities({ "a1" });
+    floatC->asDockWidgetController()->open();
+
+    QCOMPARE(DockRegistry::self()->floatingWindows().size(), 3);
+
+    LayoutSaver saver;
+    saver.setAffinityNames({ "a2" });
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    QVERIFY(saver.restoreLayout(saved));
 }
 
 int main(int argc, char *argv[])
