@@ -856,7 +856,7 @@ Vector<FloatingWindow *>
 KDDockWidgets::Core::floatingWindowsForAffinity(const Vector<QString> &affinityNames)
 {
     auto registry = DockRegistry::self();
-    const auto allFw = registry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
+    auto allFw = registry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
     if (affinityNames.isEmpty())
         return allFw;
 

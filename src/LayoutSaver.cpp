@@ -466,7 +466,7 @@ QByteArray LayoutSaver::serializeLayout() const
     for (Core::DockWidget *dockWidget : dockWidgets) {
         if (!dockWidget->skipsRestore() && d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
-            dw->lastPosition = dockWidget->d->lastPosition()->serialize();
+            dw->lastPosition = dockWidget->d->lastPosition()->serialize(d->m_affinityNames);
             layout.allDockWidgets.push_back(dw);
         }
     }
