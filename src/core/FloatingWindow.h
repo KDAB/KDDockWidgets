@@ -231,4 +231,7 @@ private:
 #endif
 };
 
+DOCKS_EXPORT Vector<FloatingWindow *>
+floatingWindowsForAffinity(const Vector<QString> &affinityNames);
+
 }

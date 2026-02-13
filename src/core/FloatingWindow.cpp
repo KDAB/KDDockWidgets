@@ -851,3 +851,22 @@ FloatingWindow::Private::Private(FloatingWindowFlags requestedFlags, FloatingWin
     , m_dropArea(new DropArea(q->view(), MainWindowOption_None))
 {
 }
+
+Vector<FloatingWindow *>
+KDDockWidgets::Core::floatingWindowsForAffinity(const Vector<QString> &affinityNames)
+{
+    auto registry = DockRegistry::self();
+    const auto allFw = registry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
+    if (affinityNames.isEmpty())
+        return allFw;
+
+    Vector<FloatingWindow *> result;
+    result.reserve(allFw.size());
+    for (auto fw : allFw) {
+        if (fw->affinities().isEmpty()
+            || registry->affinitiesMatch(affinityNames, fw->affinities())) {
+            result.push_back(fw);
+        }
+    }
+    return result;
+}
