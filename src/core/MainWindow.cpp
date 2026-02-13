@@ -873,7 +873,7 @@ bool MainWindow::isInDockWidget() const
         return false;
 
     if (auto p = v->parentView())
-        return p->firstParentOfType(p.get(), ViewType::DockWidget) != nullptr;
+        return View::firstParentOfType(p.get(), ViewType::DockWidget) != nullptr;
 
     return false;
 }

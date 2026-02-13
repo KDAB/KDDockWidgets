@@ -61,7 +61,7 @@ Size Core::Item::hardcodedMaximumSize = Size(16777215, 16777215);
 bool Core::ItemBoxContainer::s_inhibitSimplify = false;
 LayoutingSeparator *LayoutingSeparator::s_separatorBeingDragged = nullptr;
 
-
+namespace {
 template<typename Signal, typename... Args>
 void safeEmitSignal(Signal &sig, Args &&...args)
 {
@@ -73,6 +73,7 @@ void safeEmitSignal(Signal &sig, Args &&...args)
     } catch (...) {
         KDDW_ERROR("Got exception in signal emit!");
     }
+}
 }
 
 static bool locationIsVertical(Location loc)
