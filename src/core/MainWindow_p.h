@@ -110,6 +110,7 @@ public:
 
     QString name;
     Vector<QString> affinities;
+    QString m_documentAffinity;
     const MainWindowOptions m_options;
     MainWindow *const q;
     ObjectGuard<Core::DockWidget> m_overlayedDockWidget;

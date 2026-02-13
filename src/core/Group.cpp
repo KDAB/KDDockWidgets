@@ -260,7 +260,7 @@ void Group::insertWidget(DockWidget *dockWidget, int index, const InitialOption 
     assert(dockWidget);
     if (containsDockWidget(dockWidget)) {
         if (!dockWidget->isPersistentCentralDockWidget())
-            KDDW_ERROR("Group::addTab dockWidget already exists. this={} ; dockWidget={}", ( void * )this, ( void * )dockWidget);
+            KDDW_ERROR("Group::addTab dockWidget already exists. this={} ; dockWidget={} ; name={}", ( void * )this, ( void * )dockWidget, dockWidget->uniqueName());
         return;
     }
     if (d->m_layoutItem)

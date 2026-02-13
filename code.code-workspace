@@ -65,7 +65,9 @@
         "type": "lldb",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [],
+        "args": [
+          "tst_affinityWithPersistentCentralGroup"
+        ],
         "cwd": "${command:cmake.buildDirectory}",
         "env": {}
       },
@@ -74,7 +76,9 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [],
+        "args": [
+          "tst_affinityWithPersistentCentralGroup"
+        ],
         "cwd": "${command:cmake.buildDirectory}",
         "MIMode": "gdb",
         "setupCommands": [
@@ -104,7 +108,9 @@
         "type": "cppvsdbg",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [],
+        "args": [
+          "tst_affinityWithPersistentCentralGroup"
+        ],
         "cwd": "${command:cmake.buildDirectory}",
         "sourceFileMap": {
           "C:/work/build/qt5_workdir/w/s": "${QTDIR}/../Src",
