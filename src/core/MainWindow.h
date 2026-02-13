@@ -153,6 +153,19 @@ public:
     void setAffinities(const Vector<QString> &names);
 
     /**
+     * @brief Sets the "document affinity".
+     *
+     * Some projects have the concept of "document". For example, in an IDE, each tab in the central area might be a document.
+     * It's common that when loading a layout you want to restor everything except the documents, which are project specific.
+     * Conversely, you might want to save/restore the documents but not the rest of the layout.
+     *
+     * Use this in conjuection with LayoutSaver::setAffinityNames() to specify that the "document affinity" should be included or excluded from save/restore.
+     * Set the dockwidget's affinity to the same value via Core::DockWidget::setAffinities() to have it included in the "document affinity" and tab those to center.
+     */
+    void setDocumentAffinity(const QString &affinity);
+    QString documentAffinity() const;
+
+    /**
      * @brief Returns the list of affinity names. Empty by default.
      */
     Vector<QString> affinities() const;

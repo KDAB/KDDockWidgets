@@ -474,6 +474,35 @@ QByteArray LayoutSaver::serializeLayout() const
     return layout.toJson();
 }
 
+namespace {
+bool isRestoringDocuments(const Core::MainWindow::List &mainWindows,
+                          const QVector<QString> &affinities)
+{
+    if (mainWindows.size() != 1) {
+        // more than 1 window not supported (yet, until someone needs it ?)
+        return false;
+    }
+
+    if (affinities.size() != 1) {
+        // Not supported
+        return false;
+    }
+
+    auto mainWindow = mainWindows.first();
+    const QString &documentAffinity = mainWindow->documentAffinity();
+    if (documentAffinity.isEmpty()) {
+        return false;
+    }
+
+    if ((mainWindow->options() & MainWindowOption_HasCentralGroup) == 0) {
+        // we need to be in document mode
+        return false;
+    }
+
+    return affinities.first() == documentAffinity;
+}
+}
+
 bool LayoutSaver::restoreLayout(const QByteArray &data)
 {
     LayoutSaver::DockWidget::s_dockWidgets.clear();
@@ -520,9 +549,12 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     // Hide all dockwidgets and unparent them from any layout before starting restore
     // We only close the stuff that the loaded JSON knows about. Unknown widgets might be newer.
 
-    d->m_dockRegistry->clear(d->m_dockRegistry->dockWidgets(layout.dockWidgetsToClose()),
-                             d->m_dockRegistry->mainWindows(layout.mainWindowNames()),
-                             d->m_affinityNames);
+    auto dockWidgetsToClose = d->m_dockRegistry->dockWidgets(layout.dockWidgetsToClose());
+    auto mainWindowsToConsider = d->m_dockRegistry->mainWindows(layout.mainWindowNames());
+    const bool isRestoringDocuments = ::isRestoringDocuments(mainWindowsToConsider, d->m_affinityNames);
+    d->m_dockRegistry->clear(dockWidgetsToClose,
+                             mainWindowsToConsider,
+                             d->m_affinityNames, isRestoringDocuments);
 
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : std::as_const(layout.mainWindows)) {
@@ -539,20 +571,33 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(mainWindow->affinities()))
             continue;
 
-        if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry) && !mainWindow->isInDockWidget()) {
-            Window::Ptr window = mainWindow->view()->window();
-            if (window->windowState() == WindowState::Maximized) {
-                // Restoring geometry needs to be done in normal state.
-                // Qt doesn't support restoring normal geometry on maximized windows.
-                window->setWindowState(WindowState::None);
+        if (isRestoringDocuments) {
+            // In 'document mode' we only restore the central tabs
+            if (const auto centralGroup = mw.multiSplitterLayout.centralGroup(); !centralGroup.isNull) {
+                for (const auto &savedDock : centralGroup.dockWidgets) {
+                    Core::DockWidget *dw = d->m_dockRegistry->dockByName(
+                        savedDock->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
+                    qDebug() << "is open?" << dw->uniqueName() << " ; " << dw->isOpen();
+                    if (dw)
+                        mainWindow->addDockWidgetAsTab(dw);
+                }
+            }
+        } else {
+            if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry) && !mainWindow->isInDockWidget()) {
+                Window::Ptr window = mainWindow->view()->window();
+                if (window->windowState() == WindowState::Maximized) {
+                    // Restoring geometry needs to be done in normal state.
+                    // Qt doesn't support restoring normal geometry on maximized windows.
+                    window->setWindowState(WindowState::None);
+                }
+
+                d->deserializeWindowGeometry(mw, window);
+                window->setWindowState(mw.windowState);
             }
 
-            d->deserializeWindowGeometry(mw, window);
-            window->setWindowState(mw.windowState);
+            if (!mainWindow->deserialize(mw))
+                return false;
         }
-
-        if (!mainWindow->deserialize(mw))
-            return false;
     }
 
     // 2. Restore FloatingWindows
@@ -1184,6 +1229,15 @@ bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
     return std::all_of(groups.cbegin(), groups.cend(),
                        [](auto it) { return it.second.skipsRestore(); });
+}
+
+LayoutSaver::Group LayoutSaver::MultiSplitter::centralGroup() const
+{
+    for (const auto &[id, group] : groups) {
+        if (group.options & FrameOption_IsCentralFrame)
+            return group;
+    }
+    return {};
 }
 
 void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)

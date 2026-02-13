@@ -187,6 +187,7 @@ struct DOCKS_EXPORT LayoutSaver::MultiSplitter
     bool hasSingleDockWidget() const;
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
     bool skipsRestore() const;
+    LayoutSaver::Group centralGroup() const;
 
     nlohmann::json layout;
     std::unordered_map<QString, LayoutSaver::Group> groups;
