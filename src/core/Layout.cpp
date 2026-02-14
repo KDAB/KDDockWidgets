@@ -329,7 +329,7 @@ bool Layout::onResize(Size newSize)
     return false; // So QWidget::resizeEvent is called
 }
 
-LayoutSaver::MultiSplitter Layout::serialize() const
+LayoutSaver::MultiSplitter Layout::serialize(const Vector<QString> &affinityNames) const
 {
     LayoutSaver::MultiSplitter l;
     d->m_rootItem->to_json(l.layout);
@@ -338,7 +338,7 @@ LayoutSaver::MultiSplitter Layout::serialize() const
     for (Core::Item *item : items) {
         if (!item->isContainer()) {
             if (auto group = Group::fromItem(item)) {
-                l.groups[group->view()->d->id()] = group->serialize();
+                l.groups[group->view()->d->id()] = group->serialize(affinityNames);
             }
         }
     }

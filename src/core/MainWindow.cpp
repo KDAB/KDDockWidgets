@@ -786,7 +786,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
     return success;
 }
 
-LayoutSaver::MainWindow MainWindow::serialize() const
+LayoutSaver::MainWindow MainWindow::serialize(const Vector<QString> &affinityNames) const
 {
     LayoutSaver::MainWindow m;
 
@@ -799,7 +799,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.uniqueName = uniqueName();
     m.screenIndex = Platform::instance()->screenNumberForView(view());
     m.screenSize = Platform::instance()->screenSizeFor(view());
-    m.multiSplitterLayout = layout()->serialize();
+    m.multiSplitterLayout = layout()->serialize(affinityNames);
     m.affinities = d->affinities;
     m.windowState = window ? window->windowState() : WindowState::None;
 

@@ -441,13 +441,13 @@ QByteArray LayoutSaver::serializeLayout() const
     layout.mainWindows.reserve(mainWindows.size());
     for (auto mainWindow : mainWindows) {
         if (d->matchesAffinity(mainWindow->affinities()))
-            layout.mainWindows.push_back(mainWindow->serialize());
+            layout.mainWindows.push_back(mainWindow->serialize(d->m_affinityNames));
     }
 
     const auto floatingWindows = Core::floatingWindowsForAffinity(d->m_affinityNames);
     layout.floatingWindows.reserve(floatingWindows.size());
     for (Core::FloatingWindow *floatingWindow : floatingWindows) {
-        layout.floatingWindows.push_back(floatingWindow->serialize());
+        layout.floatingWindows.push_back(floatingWindow->serialize(d->m_affinityNames));
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
@@ -475,8 +475,9 @@ QByteArray LayoutSaver::serializeLayout() const
 }
 
 namespace {
-bool isRestoringDocuments(const Core::MainWindow::List &mainWindows,
-                          const QVector<QString> &affinities)
+
+bool isDocumentMode(const Core::MainWindow::List &mainWindows,
+                    const QVector<QString> &affinities)
 {
     if (mainWindows.size() != 1) {
         // more than 1 window not supported (yet, until someone needs it ?)
@@ -499,8 +500,21 @@ bool isRestoringDocuments(const Core::MainWindow::List &mainWindows,
         return false;
     }
 
-    return affinities.first() == documentAffinity;
+    return true;
 }
+
+bool isRestoringDocuments(const Core::MainWindow::List &mainWindows,
+                          const QVector<QString> &affinities)
+{
+    return isDocumentMode(mainWindows, affinities) && affinities.first() == mainWindows.first()->documentAffinity();
+}
+
+// bool isRestoringNonDocuments(const Core::MainWindow::List &mainWindows,
+//                              const QVector<QString> &affinities)
+// {
+//     return isDocumentMode(mainWindows, affinities) && affinities.first() != mainWindows.first()->documentAffinity();
+// }
+
 }
 
 bool LayoutSaver::restoreLayout(const QByteArray &data)
