@@ -298,7 +298,7 @@ private:
     friend class ::TestDocks;
     friend class KDDockWidgets::LayoutSaver;
     bool deserialize(const LayoutSaver::MainWindow &);
-    LayoutSaver::MainWindow serialize() const;
+    LayoutSaver::MainWindow serialize(const Vector<QString> &affinityNames) const;
 };
 }
 }

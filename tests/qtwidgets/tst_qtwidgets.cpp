@@ -3178,6 +3178,7 @@ void TestQtWidgets::tst_affinityWithPersistentCentralGroup()
 
     const auto &projectLayout = projectSaver.serializeLayout();
     const auto &globalLayout = globalSaver.serializeLayout();
+    QVERIFY(globalSaver.saveToFile("/pub_data/a.json"));
 
     // Make changes to the global state and to the project state
     projectDock2->close();
@@ -3193,7 +3194,7 @@ void TestQtWidgets::tst_affinityWithPersistentCentralGroup()
     QVERIFY(!floatingGlobal->isOpen());
 
     projectDock2->close(); // close it again
-    // QVERIFY(globalSaver.restoreLayout(globalLayout));
+    QVERIFY(globalSaver.restoreLayout(globalLayout));
 
     // verify that the global layout was restored, and the project layout is unaffected
     // QVERIFY(dockedGlobal->isOpen());

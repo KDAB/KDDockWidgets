@@ -772,7 +772,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
     return group;
 }
 
-LayoutSaver::Group Group::serialize() const
+LayoutSaver::Group Group::serialize(const Vector<QString> &affinityNames) const
 {
     LayoutSaver::Group group;
     group.isNull = false;
@@ -789,10 +789,12 @@ LayoutSaver::Group Group::serialize() const
         group.mainWindowUniqueName = mw->uniqueName();
     }
 
-    for (DockWidget *dock : docks)
-        group.dockWidgets.push_back(dock->d->serialize());
+    for (DockWidget *dock : docks) {
+        if (affinityNames.isEmpty() || DockRegistry::self()->affinitiesMatch(affinityNames, dock->affinities()))
+            group.dockWidgets.push_back(dock->d->serialize());
+    }
 
-    if (group.currentTabIndex == -1 && !docks.isEmpty()) {
+    if (group.currentTabIndex == -1 && !group.dockWidgets.isEmpty()) {
         KDDW_ERROR("Group::serialize: Current index shouldn't be -1. Setting to 0 instead.");
         group.currentTabIndex = 0;
     }

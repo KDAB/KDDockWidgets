@@ -603,14 +603,14 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
     return false;
 }
 
-LayoutSaver::FloatingWindow FloatingWindow::serialize() const
+LayoutSaver::FloatingWindow FloatingWindow::serialize(const Vector<QString> &affinityNames) const
 {
     LayoutSaver::FloatingWindow fw;
 
     fw.geometry = geometry();
     fw.normalGeometry = view()->normalGeometry();
     fw.isVisible = isVisible();
-    fw.multiSplitterLayout = dropArea()->serialize();
+    fw.multiSplitterLayout = dropArea()->serialize(affinityNames);
     fw.screenIndex = Platform::instance()->screenNumberForView(view());
     fw.screenSize = Platform::instance()->screenSizeFor(view());
     fw.affinities = affinities();
