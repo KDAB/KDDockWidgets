@@ -18,6 +18,7 @@
 
 #include "LayoutSaver.h"
 #include "Config.h"
+#include "core/DropArea.h"
 #include "core/ViewFactory.h"
 #include "core/LayoutSaver_p.h"
 #include "core/Logging_p.h"
@@ -39,6 +40,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <qtestsupport_core.h>
 #include <utility>
 
 /**
@@ -556,7 +558,6 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     layout.scaleSizes(d->m_restoreOptions);
 
     d->floatWidgetsWhichSkipRestore(layout.mainWindowNames());
-    d->floatUnknownWidgets(layout);
 
     Private::RAIIIsRestoring isRestoring;
 
@@ -566,11 +567,16 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     auto dockWidgetsToClose = d->m_dockRegistry->dockWidgets(layout.dockWidgetsToClose());
     auto mainWindowsToConsider = d->m_dockRegistry->mainWindows(layout.mainWindowNames());
     const bool isRestoringDocuments = ::isRestoringDocuments(mainWindowsToConsider, d->m_affinityNames);
+
+    if (!isDocumentMode(mainWindowsToConsider, d->m_affinityNames))
+        d->floatUnknownWidgets(layout);
+
     d->m_dockRegistry->clear(dockWidgetsToClose,
                              mainWindowsToConsider,
                              d->m_affinityNames, isRestoringDocuments);
 
     // 1. Restore main windows
+
     for (const LayoutSaver::MainWindow &mw : std::as_const(layout.mainWindows)) {
         auto mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
         if (!mainWindow) {
@@ -591,7 +597,6 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
                 for (const auto &savedDock : centralGroup.dockWidgets) {
                     Core::DockWidget *dw = d->m_dockRegistry->dockByName(
                         savedDock->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
-                    qDebug() << "is open?" << dw->uniqueName() << " ; " << dw->isOpen();
                     if (dw)
                         mainWindow->addDockWidgetAsTab(dw);
                 }
