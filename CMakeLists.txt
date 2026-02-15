@@ -592,9 +592,11 @@ if(KDDockWidgets_EXAMPLES)
         add_subdirectory(examples/minimal)
         add_subdirectory(examples/mdi)
         add_subdirectory(examples/mdi_with_docking)
+        add_subdirectory(examples/misc)
         set_compiler_flags(qtwidgets_dockwidgets)
         set_compiler_flags(qtwidgets_minimal)
         set_compiler_flags(qtwidgets_mdi_with_docking)
+        set_compiler_flags(qtwidgets_documents)
 
         # Standalone layouting example
         add_subdirectory(src/core/layouting/examples/qtwidgets/)
