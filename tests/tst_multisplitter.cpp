@@ -21,7 +21,6 @@
 
 #include <QTest>
 
-#include <memory.h>
 #include <cstdlib>
 #include <utility>
 
