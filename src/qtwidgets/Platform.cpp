@@ -25,8 +25,6 @@
 #include <QAbstractButton>
 #include <QStyleFactory>
 
-#include <memory.h>
-
 #if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
 static void initResources()
 {
