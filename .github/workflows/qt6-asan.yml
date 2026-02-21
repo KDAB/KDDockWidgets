@@ -24,8 +24,7 @@ jobs:
         os:
           - ubuntu-24.04
         qt-flavor:
-          - asan
-          - ubsan
+          - asan_ubsan
 
     steps:
       - name: Checkout sources
