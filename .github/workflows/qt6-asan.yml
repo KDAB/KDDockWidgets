@@ -25,6 +25,7 @@ jobs:
           - ubuntu-24.04
         qt-flavor:
           - asan
+          - ubsan
 
     steps:
       - name: Checkout sources
@@ -40,6 +41,7 @@ jobs:
           qt-tag: "v6.11.0-beta2"
           qt-flavor: "${{ matrix.qt-flavor }}"
 
+      # kddw asan build already has ubsan, while Qt has dedicated
       - name: Configure project
         run: cmake -S . -B ./build-dev-asan6 --preset dev-asan6
 
