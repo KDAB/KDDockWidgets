@@ -74,22 +74,22 @@ if(DEFINED CMAKE_INSTALL_PREFIX)
     endif()
 endif()
 
+file(STRINGS version.txt KDDW_VERSION_FILE)
+list(GET KDDW_VERSION_FILE 0 KDDockWidgets_VERSION)
+
 project(
     KDDockWidgets
     DESCRIPTION "An advanced docking system for Qt"
     HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
     LANGUAGES CXX C
+    VERSION ${KDDockWidgets_VERSION} # PROJECT_VERSION is needed by some ECM modules
 )
 
-file(STRINGS version.txt KDDW_VERSION_FILE)
-list(GET KDDW_VERSION_FILE 0 KDDockWidgets_VERSION)
+set(KDDockWidgets_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(KDDockWidgets_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(KDDockWidgets_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 
-string(REPLACE "." ";" KDDW_VERSION_LIST "${KDDockWidgets_VERSION}")
-list(GET KDDW_VERSION_LIST 0 KDDockWidgets_VERSION_MAJOR)
-list(GET KDDW_VERSION_LIST 1 KDDockWidgets_VERSION_MINOR)
-list(GET KDDW_VERSION_LIST 2 KDDockWidgets_VERSION_PATCH)
-
-set(PROJECT_VERSION ${KDDockWidgets_VERSION}) # PROJECT_VERSION is needed by some ECM modules
+# set(PROJECT_VERSION ${KDDockWidgets_VERSION})
 set(KDDockWidgets_SOVERSION "3")
 
 include(FeatureSummary)
@@ -667,3 +667,5 @@ add_custom_target(
 if(KDDockWidgets_IS_ROOT_PROJECT)
     feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 endif()
+
+include(CPackConfig)
