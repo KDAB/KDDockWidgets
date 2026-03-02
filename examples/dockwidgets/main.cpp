@@ -402,7 +402,7 @@ int main(int argc, char **argv)
     KDDockWidgets::Config::self().setFlags(flags);
 
 
-    MyMainWindow::ExampleOptions exampleOptions = {};
+    MyMainWindow::ExampleOptions exampleOptions = { };
 
     if (parser.isSet(ctrlTogglesDropIndicators))
         exampleOptions |= MyMainWindow::ExampleOption::CtrlKeyFiltersDropIndicators;
@@ -491,7 +491,7 @@ int main(int argc, char **argv)
             new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
-        MyMainWindow::ExampleOptions exampleOptions2 = {};
+        MyMainWindow::ExampleOptions exampleOptions2 = { };
         if (parser.isSet(relativeRestore))
             exampleOptions2 |= MyMainWindow::ExampleOption::RestoreIsRelative;
         auto dockableMainWindow =

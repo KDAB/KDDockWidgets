@@ -160,7 +160,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setInternalFlags(KDDockWidgets::Config::InternalFlag_NoAeroSnap);
-    KDDockWidgets::Config::self().setFlags({});
+    KDDockWidgets::Config::self().setFlags({ });
 
     auto m = createMainWindow();
     auto fw = createFloatingWindow();

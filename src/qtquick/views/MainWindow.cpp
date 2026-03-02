@@ -117,13 +117,13 @@ QSize MainWindow::maxSizeHint() const
 QMargins MainWindow::centerWidgetMargins() const
 {
     qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
-    return {};
+    return { };
 }
 
 QRect MainWindow::centralAreaGeometry() const
 {
     qFatal("Not implemented");
-    return {};
+    return { };
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
