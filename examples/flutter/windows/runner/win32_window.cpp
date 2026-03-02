@@ -101,7 +101,7 @@ WindowClassRegistrar *WindowClassRegistrar::instance_ = nullptr;
 const wchar_t *WindowClassRegistrar::GetWindowClass()
 {
     if (!class_registered_) {
-        WNDCLASS window_class {};
+        WNDCLASS window_class { };
         window_class.hCursor = LoadCursor(nullptr, IDC_ARROW);
         window_class.lpszClassName = kWindowClassName;
         window_class.style = CS_HREDRAW | CS_VREDRAW;

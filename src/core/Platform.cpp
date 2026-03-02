@@ -291,7 +291,7 @@ QByteArray Platform::readFile(const QString &fileName, bool &ok) const
     if (!file.is_open()) {
         KDDW_ERROR("Failed to open {}", fileName);
         ok = false;
-        return {};
+        return { };
     }
 
     QByteArray data;

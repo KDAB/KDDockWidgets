@@ -44,7 +44,7 @@ public:
     QVector<QString> affinities() const;
 
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, QPoint localPos,
-                                   const KDDockWidgets::InitialOption &addingOption = {});
+                                   const KDDockWidgets::InitialOption &addingOption = { });
 
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 

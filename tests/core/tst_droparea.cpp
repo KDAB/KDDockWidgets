@@ -34,13 +34,13 @@ private Q_SLOTS:
 void TestDropArea::tst_dropAreaCtor()
 {
     // Tests that ctor runs and doesn't leak
-    Core::DropArea da(nullptr, {});
+    Core::DropArea da(nullptr, { });
 }
 
 void TestDropArea::tst_addWidget()
 {
     auto group = new Core::Group();
-    Core::DropArea da(nullptr, {});
+    Core::DropArea da(nullptr, { });
     da.addWidget(group->view(), KDDockWidgets::Location_OnLeft);
 }
 
@@ -49,7 +49,7 @@ void TestDropArea::tst_addWidgetHidden()
     // Test adding a widget that starts hidden
 
     auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
-    Core::DropArea da(nullptr, {});
+    Core::DropArea da(nullptr, { });
     da.addDockWidget(dw, KDDockWidgets::Location_OnLeft, nullptr,
                      InitialVisibilityOption::StartHidden);
 

@@ -329,7 +329,7 @@ FloatingWindow *Group::detachTab(DockWidget *dockWidget)
     // We're potentially already dead at this point, as groups with 0 tabs auto-destruct. Don't
     // access members from this point.
 
-    auto floatingWindow = new FloatingWindow(newGroup, {});
+    auto floatingWindow = new FloatingWindow(newGroup, { });
     r.moveTopLeft(globalPoint);
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
@@ -527,7 +527,7 @@ Icon Group::icon() const
 Core::DockWidget::List Group::dockWidgets() const
 {
     if (m_inCtor || m_inDtor)
-        return {};
+        return { };
 
     DockWidget::List dockWidgets;
     const int count = dockWidgetCount();
@@ -680,7 +680,7 @@ Vector<QString> Group::affinities() const
     if (isEmpty()) {
         if (auto m = mainWindow())
             return m->affinities();
-        return {};
+        return { };
     } else {
         return dockWidgetAt(0)->affinities();
     }
@@ -885,7 +885,7 @@ Rect Group::dragRect() const
     if (auto gvi = dynamic_cast<Core::GroupViewInterface *>(view()))
         return gvi->dragRect();
 
-    return {};
+    return { };
 }
 
 MainWindow *Group::mainWindow() const

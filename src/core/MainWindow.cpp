@@ -282,7 +282,7 @@ Rect MainWindow::Private::rectForOverlay(Core::Group *group, SideBarLocation loc
 {
     Core::SideBar *sb = q->sideBar(location);
     if (!sb)
-        return {};
+        return { };
 
     const Rect centralAreaGeo = q->centralAreaGeometry();
     const Margins centerWidgetMargins = q->centerWidgetMargins();
@@ -835,7 +835,7 @@ std::shared_ptr<View> MainWindow::persistentCentralView() const
     if (auto dw = d->m_persistentCentralDockWidget)
         return dw->guestView();
 
-    return {};
+    return { };
 }
 
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)

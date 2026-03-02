@@ -70,7 +70,7 @@ static Window::List orderedWindows(bool &ok)
     ok = true;
     Window::List windows = DockRegistry::self()->topLevels();
     if (windows.isEmpty())
-        return {};
+        return { };
 
     Window::List orderedResult;
     Display *disp = reinterpret_cast<Display *>(x11Display());
@@ -90,7 +90,7 @@ static Core::Window::List orderedWindows(bool &ok)
 {
     KDDW_UNUSED(ok);
     Q_UNREACHABLE();
-    return {};
+    return { };
 }
 }
 

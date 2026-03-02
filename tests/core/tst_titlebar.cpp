@@ -26,7 +26,7 @@ private Q_SLOTS:
 
 void TestTitleBar::tst_titleBarCtor()
 {
-    auto group = new Core::Group(nullptr, {});
+    auto group = new Core::Group(nullptr, { });
     auto tb = new Core::TitleBar(group);
     QVERIFY(tb->view()->is(Core::ViewType::TitleBar));
     QVERIFY(tb->view()->asWrapper()->is(Core::ViewType::TitleBar));

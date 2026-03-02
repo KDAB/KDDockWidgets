@@ -93,7 +93,7 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
 Core::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, LayoutSaverOptions layoutSaverOptions)
 {
     return createDockWidget(name,
-                            Platform::instance()->tests_createView({ true, {}, { 100, 100 } }), {}, layoutSaverOptions);
+                            Platform::instance()->tests_createView({ true, { }, { 100, 100 } }), { }, layoutSaverOptions);
 }
 
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<DockDescriptor> &docks)
@@ -114,9 +114,9 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<D
 
     int i = 0;
     for (DockDescriptor &desc : docks) {
-        auto guest = Platform::instance()->tests_createView({ true, {}, { 100, 100 } });
+        auto guest = Platform::instance()->tests_createView({ true, { }, { 100, 100 } });
         desc.createdDock =
-            createDockWidget((QString::number(i) + QString::number(count)), guest, {}, {}, false);
+            createDockWidget((QString::number(i) + QString::number(count)), guest, { }, { }, false);
         Core::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;

@@ -35,7 +35,7 @@ class DOCKS_EXPORT FloatingWindow : public View<QWidget>
 public:
     explicit FloatingWindow(Core::FloatingWindow *controller,
                             QMainWindow *parent = nullptr,
-                            Qt::WindowFlags windowFlags = {});
+                            Qt::WindowFlags windowFlags = { });
 
     ~FloatingWindow() override;
 
