@@ -34,7 +34,7 @@ jobs:
           brew install KDBindings
 
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # deleting 3rdparty is an easy way to make sure external worked
       - name: Delete internal 3rdparty

@@ -26,7 +26,7 @@ jobs:
           - macos-15
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install ninja (Windows / Linux)
         if: ${{ runner.os != 'macOS' }}

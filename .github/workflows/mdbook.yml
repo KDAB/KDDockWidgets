@@ -32,7 +32,7 @@ jobs:
           toolchain: stable
           override: true
           profile: minimal
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install mdBook
         run: |
           cargo install --version ${MDBOOK_VERSION} mdbook

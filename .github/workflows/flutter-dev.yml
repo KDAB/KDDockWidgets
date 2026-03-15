@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: true
           token: ${{ secrets.PAT_KDDW_REFERENCE_SCREENSHOTS }}
