@@ -49,7 +49,7 @@ jobs:
           sudo apt install lld -y
 
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install ninja
         uses: turtlesec-no/get-ninja@main
