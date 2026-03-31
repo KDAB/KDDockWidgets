@@ -20,17 +20,17 @@ jobs:
           sudo apt install rsync -y
 
       - name: Checkout KDDW
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout KDBindings
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: KDAB/KDBindings
           path: KDBindings
           ref: main
 
       - name: Checkout ci-release-tools
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: KDABLabs/ci-release-tools
           path: ci-release-tools

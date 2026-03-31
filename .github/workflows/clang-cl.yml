@@ -39,7 +39,7 @@ jobs:
         uses: turtlesec-no/get-ninja@main
 
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Make sure MSVC is found when Ninja generator is in use
         if: ${{ runner.os == 'Windows' }}
