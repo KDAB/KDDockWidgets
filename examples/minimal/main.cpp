@@ -13,6 +13,8 @@
 
 #include <kddockwidgets/MainWindow.h>
 #include <kddockwidgets/DockWidget.h>
+#include <kddockwidgets/Config.h>
+#include <kddockwidgets/core/ViewFactory.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -32,6 +34,14 @@ int main(int argc, char **argv)
     QCoreApplication::setApplicationName(QStringLiteral("Test app"));
 
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
+
+    KDDockWidgets::Core::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
+    KDDockWidgets::Config::self().setFlags(
+    KDDockWidgets::Config::self().flags() |
+    KDDockWidgets::Config::Flag_AutoHideSupport |
+    KDDockWidgets::Config::Flag_AllowReorderTabs |
+    KDDockWidgets::Config::Flag_TabsHaveCloseButton |
+    KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
 
     // Fusion looks better in general, but feel free to change
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
