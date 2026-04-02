@@ -623,6 +623,13 @@ bool Group::anyNonDockable() const
     return false;
 }
 
+bool Group::anyNoDrops() const
+{
+    if (!hasSingleDockWidget())
+        return false;
+    return dockWidgetAt(0)->options() & DockWidgetOption_NoDrops;
+}
+
 void Group::Private::setLayoutItem_impl(Item *item)
 {
     m_layoutItem = item;

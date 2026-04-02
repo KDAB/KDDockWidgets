@@ -996,6 +996,10 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
                         if (QLatin1String(topLevel->metaObject()->className())
                             == QLatin1String("QWinWidget")) {
                             if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
+                                if (auto *fw = DockRegistry::self()->floatingWindowForHandle(WId(hwnd))) {
+                                    if (fw->anyNoDrops())
+                                        continue;
+                                }
                                 if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos))
                                     && topLevel->objectName()
                                         != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
@@ -1034,7 +1038,7 @@ std::shared_ptr<View> DragController::qtTopLevelUnderCursor() const
         FloatingWindow *floatingWindow = m_windowBeingDragged->floatingWindow();
         if (floatingWindow) {
             if (auto tl = qtTopLevelUnderCursor_impl(
-                    globalPos, DockRegistry::self()->floatingQWindows(), floatingWindow->view()))
+                    globalPos, DockRegistry::self()->floatingQWindows(/*excludeNoDrops=*/true), floatingWindow->view()))
                 return tl;
 
             return qtTopLevelUnderCursor_impl(
