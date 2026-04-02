@@ -27,6 +27,7 @@ public:
         Dock0BlocksCloseEvent = 32,
         ProgrammaticDragEvent = 64,
         CtrlKeyFiltersDropIndicators = 128,
+        NoDropsDockWidget0 = 256,
     };
     Q_DECLARE_FLAGS(ExampleOptions, ExampleOption)
 

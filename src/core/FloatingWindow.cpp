@@ -437,6 +437,13 @@ bool FloatingWindow::anyNonDockable() const
     return false;
 }
 
+bool FloatingWindow::anyNoDrops() const
+{
+    if (!hasSingleGroup())
+        return false;
+    return singleFrame()->anyNoDrops();
+}
+
 bool FloatingWindow::hasSingleGroup() const
 {
     return d->m_dropArea->hasSingleGroup();

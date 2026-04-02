@@ -577,12 +577,14 @@ QVector<Core::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingD
     return result;
 }
 
-Window::List DockRegistry::floatingQWindows() const
+Window::List DockRegistry::floatingQWindows(bool excludeNoDrops) const
 {
     Window::List windows;
     windows.reserve(m_floatingWindows.size());
     for (Core::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
+            if (excludeNoDrops && fw->anyNoDrops())
+                continue;
             if (Core::Window::Ptr window = fw->view()->window()) {
                 windows.push_back(window);
             } else {

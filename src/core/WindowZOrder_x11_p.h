@@ -16,6 +16,7 @@
 #ifdef KDDockWidgets_XLIB
 
 #include "DockRegistry.h"
+#include "FloatingWindow.h"
 
 #include <QtGui/qpa/qplatformnativeinterface.h>
 
@@ -71,6 +72,13 @@ static Window::List orderedWindows(bool &ok)
     Window::List windows = DockRegistry::self()->topLevels();
     if (windows.isEmpty())
         return {};
+
+    for (Core::FloatingWindow *fw : DockRegistry::self()->floatingWindows()) {
+        if (fw->anyNoDrops()) {
+            if (Core::Window::Ptr window = fw->view()->window())
+                windows.erase(std::remove(windows.begin(), windows.end(), window), windows.end());
+        }
+    }
 
     Window::List orderedResult;
     Display *disp = reinterpret_cast<Display *>(x11Display());

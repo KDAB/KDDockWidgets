@@ -185,6 +185,7 @@ public:
     FrameOptions options() const;
     bool anyNonClosable() const;
     bool anyNonDockable() const;
+    bool anyNoDrops() const;
 
     ///@brief returns whether there's 0 dock widgets. If not persistent then the Frame will delete
     /// itself.

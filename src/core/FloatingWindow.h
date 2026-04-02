@@ -92,6 +92,7 @@ public:
 
     bool anyNonClosable() const;
     bool anyNonDockable() const;
+    bool anyNoDrops() const;
 
     /**
      * @brief checks if this FloatingWindow only has one group.

@@ -114,6 +114,11 @@ int main(int argc, char **argv)
         "d", QCoreApplication::translate("main", "DockWidget #9 will be non-dockable"));
     parser.addOption(nonDockable);
 
+    QCommandLineOption noDrops(
+        "no-drops",
+        QCoreApplication::translate("main", "DockWidget #0 will have DockWidgetOption_NoDrops: other dock widgets can't be dropped onto it"));
+    parser.addOption(noDrops);
+
     QCommandLineOption maximizeButtonOption(
         "b",
         QCoreApplication::translate(
@@ -412,6 +417,8 @@ int main(int argc, char **argv)
         exampleOptions |= MyMainWindow::ExampleOption::RestoreIsRelative;
     if (parser.isSet(nonDockable))
         exampleOptions |= MyMainWindow::ExampleOption::NonDockableDockWidget9;
+    if (parser.isSet(noDrops))
+        exampleOptions |= MyMainWindow::ExampleOption::NoDropsDockWidget0;
     if (parser.isSet(maxSizeOption))
         exampleOptions |= MyMainWindow::ExampleOption::MaxSizeForDockWidget8;
     if (parser.isSet(dontCloseBeforeRestore))

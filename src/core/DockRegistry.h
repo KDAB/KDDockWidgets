@@ -128,7 +128,7 @@ public:
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both
     /// QtWidgets and QtQuick
-    QVector<std::shared_ptr<Core::Window>> floatingQWindows() const;
+    QVector<std::shared_ptr<Core::Window>> floatingQWindows(bool excludeNoDrops = false) const;
 
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;
