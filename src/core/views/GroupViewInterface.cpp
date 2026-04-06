@@ -35,7 +35,7 @@ Group *GroupViewInterface::group() const
 
 Rect GroupViewInterface::dragRect() const
 {
-    return {};
+    return { };
 }
 
 void GroupViewInterface::removeDockWidget(DockWidget *dw)

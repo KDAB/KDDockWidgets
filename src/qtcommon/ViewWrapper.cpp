@@ -40,13 +40,13 @@ void ViewWrapper::setMinimumSize(QSize)
 QSize ViewWrapper::maxSizeHint() const
 {
     qFatal("Not implemented");
-    return {};
+    return { };
 }
 
 QRect ViewWrapper::normalGeometry() const
 {
     qFatal("Not implemented");
-    return {};
+    return { };
 }
 
 void ViewWrapper::setWidth(int)
@@ -97,7 +97,7 @@ void ViewWrapper::enableAttribute(Qt::WidgetAttribute, bool)
 Qt::WindowFlags ViewWrapper::flags() const
 {
     qFatal("Not implemented");
-    return {};
+    return { };
 }
 
 void ViewWrapper::setWindowIcon(const QIcon &)
@@ -140,7 +140,7 @@ void ViewWrapper::setMaximumSize(QSize)
 bool ViewWrapper::isActiveWindow() const
 {
     qFatal("Not implemented");
-    return {};
+    return { };
 }
 
 void ViewWrapper::setFixedWidth(int)
@@ -179,5 +179,5 @@ std::shared_ptr<Core::View> ViewWrapper::asWrapper()
         return sharedptr;
 
     qFatal("No shared ptr. Shouldn't happen.");
-    return {};
+    return { };
 }

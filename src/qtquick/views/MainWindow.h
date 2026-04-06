@@ -47,8 +47,8 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent Visual parent item.
     ///@param flags Window flags to pass to top-level window, in case we're constructing it too
-    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = {},
-                        QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
+    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = { },
+                        QQuickItem *parent = nullptr, Qt::WindowFlags flags = { });
 
     ~MainWindow() override;
 
@@ -77,8 +77,8 @@ public:
     Q_INVOKABLE void layoutParentContainerEqually(const QString &dockId);
     Q_INVOKABLE void addDockWidgetAsTab(const QString &dockId);
     Q_INVOKABLE void addDockWidget(const QString &dockId, KDDockWidgets::Location,
-                                   const QString &relativeToDockId = {},
-                                   KDDockWidgets::InitialOption = {});
+                                   const QString &relativeToDockId = { },
+                                   KDDockWidgets::InitialOption = { });
 
 #endif
 

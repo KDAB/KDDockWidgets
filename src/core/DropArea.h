@@ -67,7 +67,7 @@ public:
     Core::Item *centralFrame() const;
     DropIndicatorOverlay *dropIndicatorOverlay() const;
     void addDockWidget(DockWidget *dw, KDDockWidgets::Location location, DockWidget *relativeTo,
-                       const InitialOption &initialOption = {});
+                       const InitialOption &initialOption = { });
     void _addDockWidget(DockWidget *dw, KDDockWidgets::Location location, Item *relativeTo,
                         const InitialOption &initialOption);
 

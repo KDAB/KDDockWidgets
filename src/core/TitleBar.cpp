@@ -579,7 +579,7 @@ bool TitleBar::closeButtonEnabled() const
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
     if (m_isStandalone)
-        return {}; // not applicable
+        return { }; // not applicable
 
     if (!isVisible() && view()->rootView()->controller()->isVisible()
         && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
@@ -595,7 +595,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         }
 
         assert(false);
-        return {};
+        return { };
     }
 
     if (m_floatingWindow) {
@@ -614,7 +614,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     Rect r = m_group->view()->geometry();
     r.moveTopLeft(m_group->mapToGlobal(Point(0, 0)));
 
-    auto floatingWindow = new Core::FloatingWindow(m_group, {});
+    auto floatingWindow = new Core::FloatingWindow(m_group, { });
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();
 
@@ -643,10 +643,10 @@ Core::DockWidget::List TitleBar::dockWidgets() const
         return m_group->dockWidgets();
 
     if (m_isStandalone)
-        return {}; // not applicable
+        return { }; // not applicable
 
     KDDW_ERROR("TitleBar::dockWidget: shouldn't happen");
-    return {};
+    return { };
 }
 
 Core::DockWidget *TitleBar::singleDockWidget() const

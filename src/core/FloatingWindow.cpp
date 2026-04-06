@@ -63,7 +63,7 @@ static FloatingWindowFlags floatingWindowFlagsForGroup(Group *group)
 }
 
 /** static */
-Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
+Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = { };
 
 static Qt::WindowFlags windowFlagsToUse(FloatingWindowFlags requestedFlags)
 {
@@ -257,7 +257,7 @@ FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
         // The problem with setVisible(true) will forget about or requested geometry and place the
         // window at 0,0 So disable the setVisible(true) call while in the ctor.
-        d->m_dropArea->addWidget(group->view(), KDDockWidgets::Location_OnTop, {});
+        d->m_dropArea->addWidget(group->view(), KDDockWidgets::Location_OnTop, { });
     }
 
     if (!suggestedGeometry.isNull())
@@ -823,7 +823,7 @@ static FloatingWindowFlags flagsForFloatingWindow(FloatingWindowFlags requestedF
 
     // Use from KDDockWidgets::Config instead. This is app-wide and not per window.
 
-    FloatingWindowFlags flags = {};
+    FloatingWindowFlags flags = { };
 
     if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton)
         == Config::Flag_TitleBarHasMinimizeButton)

@@ -26,8 +26,8 @@ private Q_SLOTS:
 
 void TestStack::tst_stackCtor()
 {
-    Core::Group group(nullptr, {});
-    Core::Stack stack(&group, {});
+    Core::Group group(nullptr, { });
+    Core::Stack stack(&group, { });
     QVERIFY(stack.view()->is(Core::ViewType::Stack));
     QVERIFY(stack.view()->asWrapper()->is(Core::ViewType::Stack));
 }
