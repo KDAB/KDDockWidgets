@@ -383,7 +383,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
         return ret;
     } else if (msg->message == WM_NCLBUTTONDBLCLK) {
         if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes)) {
-            return handleWindowsNativeEvent(fw->view()->window(), msg, result, {});
+            return handleWindowsNativeEvent(fw->view()->window(), msg, result, { });
         } else {
             // Let the title bar handle it. It will re-dock the window.
             if (Core::TitleBar *titleBar = fw->titleBar()) {
@@ -396,7 +396,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(Core::FloatingWindow *fw,
         }
     }
 
-    return handleWindowsNativeEvent(fw->view()->window(), msg, result, {});
+    return handleWindowsNativeEvent(fw->view()->window(), msg, result, { });
 }
 
 bool WidgetResizeHandler::handleWindowsNativeEvent(Core::Window::Ptr w, MSG *msg,

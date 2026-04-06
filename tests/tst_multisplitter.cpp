@@ -207,7 +207,7 @@ static std::unique_ptr<ItemBoxContainer> createRoot()
     return std::unique_ptr<ItemBoxContainer>(root);
 }
 
-static Item *createItem(Size minSz = {}, Size maxSz = {})
+static Item *createItem(Size minSz = { }, Size maxSz = { })
 {
     static int count = 0;
     count++;
@@ -1691,7 +1691,7 @@ void TestLayouting::tst_separatorMoveHonoursMax()
     const int maxWidth = 250;
     auto root = createRoot();
     auto item1 = createItem();
-    auto item2 = createItem({}, Size(maxWidth, 250));
+    auto item2 = createItem({ }, Size(maxWidth, 250));
     auto item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);

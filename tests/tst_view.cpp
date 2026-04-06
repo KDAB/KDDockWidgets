@@ -46,12 +46,12 @@ private Q_SLOTS:
 
 void TestView::tst_viewSetParent()
 {
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     QVERIFY(rootView);
     QVERIFY(!rootView->isNull());
     QVERIFY(rootView->childViews().isEmpty());
 
-    auto childView = createViewAndWindow({}, rootView);
+    auto childView = createViewAndWindow({ }, rootView);
 
     QVERIFY(!rootView->parentView());
     QVERIFY(childView);
@@ -62,7 +62,7 @@ void TestView::tst_viewSetParent()
     QCOMPARE(children.size(), 1);
     QVERIFY(children[0]->equals(childView));
 
-    auto rootView2 = createViewAndWindow({});
+    auto rootView2 = createViewAndWindow({ });
     childView->setParent(rootView2);
     QVERIFY(childView->parentView()->equals(rootView2));
     QVERIFY(rootView->childViews().isEmpty());
@@ -78,7 +78,7 @@ void TestView::tst_viewSetParent()
 
 void TestView::tst_viewRoot()
 {
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     auto childView = createViewAndWindow({ true }, rootView);
 
     auto window = rootView->window();
@@ -103,14 +103,14 @@ void TestView::tst_viewRoot()
 
 void TestView::tst_viewIsVisible()
 {
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     QVERIFY(!rootView->controller()->isVisible());
 
     rootView->controller()->setVisible(true);
     QVERIFY(rootView->controller()->isVisible());
 
     // Hiding the parent should hide the children
-    auto view2 = createViewAndWindow({});
+    auto view2 = createViewAndWindow({ });
     view2->setParent(rootView);
     view2->controller()->setVisible(true);
     QVERIFY(view2->controller()->isVisible());
@@ -135,7 +135,7 @@ void TestView::tst_viewIsVisible()
 void TestView::tst_viewGeometry()
 {
     // Test with a top-level view first
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     rootView->show();
 
     const auto initialGeo = Rect(200, 201, 500, 501);
@@ -170,7 +170,7 @@ void TestView::tst_viewGeometry()
 
 void TestView::tst_viewMinSize()
 {
-    const Size sizeHint = {};
+    const Size sizeHint = { };
     const Size minSize = { 201, 202 };
     auto rootView = createViewAndWindow({ true, sizeHint, minSize });
     QCOMPARE(rootView->minSize(), minSize);
@@ -182,7 +182,7 @@ void TestView::tst_viewMinSize()
 
 void TestView::tst_viewMaxSize()
 {
-    const Size sizeHint = {};
+    const Size sizeHint = { };
     const Size minSize = { 201, 202 };
     const Size maxSize = { 500, 501 };
     auto rootView = createViewAndWindow({ true, sizeHint, minSize, maxSize });
@@ -195,7 +195,7 @@ void TestView::tst_viewMaxSize()
 
 void TestView::tst_viewObjectName()
 {
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
 
     QCOMPARE(rootView->viewName(), QString());
     const QString newName = QStringLiteral("name1");
@@ -207,7 +207,7 @@ void TestView::tst_viewCloseRequested()
 {
     // Tests that the closeRequested signal is emitted
 
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     bool signalArrived = false;
     KDBindings::ScopedConnection connection =
         rootView->d->closeRequested.connect([&signalArrived](CloseEvent *ev) {
@@ -222,13 +222,13 @@ void TestView::tst_viewCloseRequested()
 
 void TestView::tst_viewFocusPolicy()
 {
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     QCOMPARE(rootView->focusPolicy(), Qt::NoFocus);
 }
 
 void TestView::tst_hasFocus()
 {
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     rootView->show();
     rootView->activateWindow();
 
@@ -241,7 +241,7 @@ void TestView::tst_hasFocus()
     QVERIFY(rootView->hasFocus());
     QVERIFY(rootView->equals(Platform::instance()->focusedView()));
 
-    auto child1 = createViewAndWindow({}, rootView);
+    auto child1 = createViewAndWindow({ }, rootView);
     QVERIFY(rootView->hasFocus());
     QVERIFY(rootView->equals(Platform::instance()->focusedView()));
     child1->controller()->setVisible(true);
@@ -255,12 +255,12 @@ void TestView::tst_parentDeletesChildViews()
 {
     // Tests that deleting a parent view also deletes its children
 
-    auto rootView = createViewAndWindow({});
+    auto rootView = createViewAndWindow({ });
     rootView->show();
     rootView->activateWindow();
     QVERIFY(rootView->controller()->isVisible());
     QTest::qWait(0);
-    auto child = createViewAndWindow({}, rootView);
+    auto child = createViewAndWindow({ }, rootView);
     child->show();
     QVERIFY(child->isVisible());
     QVERIFY(child->controller());

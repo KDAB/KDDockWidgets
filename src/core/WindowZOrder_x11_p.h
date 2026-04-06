@@ -71,7 +71,7 @@ static Window::List orderedWindows(bool &ok)
     ok = true;
     Window::List windows = DockRegistry::self()->topLevels();
     if (windows.isEmpty())
-        return {};
+        return { };
 
     for (Core::FloatingWindow *fw : DockRegistry::self()->floatingWindows()) {
         if (fw->anyNoDrops()) {
@@ -98,7 +98,7 @@ static Core::Window::List orderedWindows(bool &ok)
 {
     KDDW_UNUSED(ok);
     Q_UNREACHABLE();
-    return {};
+    return { };
 }
 }
 
