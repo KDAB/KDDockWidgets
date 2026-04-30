@@ -28,5 +28,31 @@ when running on Wayland:
 - Kwin specific:
   - The pixmap that's shown during a drag can't be bigger than 250x250. Might be a bug.
 
+## Experimental: xdg-toplevel-drag
+
+With `Config::Flag_WaylandToplevelDrag`, KDDockWidgets uses the
+[xdg-toplevel-drag](https://wayland.app/protocols/xdg-toplevel-drag-v1) protocol. The window itself
+moves with the pointer while dragging, instead of a pixmap, like on other platforms:
+
+- Dragging a tab or a docked title bar detaches it into a floating window right away, which then
+  follows the pointer.
+- Floating windows have only KDDockWidgets' title bar, which both moves them and docks them.
+
+It needs:
+
+- Qt >= 6.8, and Qt6WaylandClientPrivate when building KDDockWidgets, as Qt has no public API to
+  know whether the compositor supports the protocol.
+- A compositor which supports xdg-toplevel-drag.
+
+Otherwise the flag is ignored, with a warning, and the limitations above apply.
+
+Known limitations:
+
+- Resizing floating windows doesn't work properly. Without the native title bar they have no
+  native decorations, so KDDockWidgets resizes them itself, and it moves the window when resizing
+  from the left or top edges, which Wayland doesn't allow. The window then grows instead.
+- A maximized floating window isn't restored to its normal size before being dragged, like it is
+  on other platforms.
+
 All in all it's pretty decent and usable. Any further improvements should be done at the server or
 protocol level now.

@@ -1,4 +1,8 @@
 * v2.6.0
+  - Wayland: New experimental Config::Flag_WaylandToplevelDrag, which uses xdg-toplevel-drag to drag
+    the actual window instead of a pixmap. Needs Qt >= 6.8, Qt6WaylandClientPrivate at build time
+    and compositor support, it's ignored otherwise. See the Wayland chapter of the manual for its
+    limitations
   - qtquick: New DockingArea.persistentCentralItemComponent, to declare the persistent central item
     inline in QML instead of in a separate file
   - qtquick: Fix leak when replacing DockingArea.persistentCentralItemFileName at runtime

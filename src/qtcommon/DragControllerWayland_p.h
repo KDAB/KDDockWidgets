@@ -44,5 +44,14 @@ class WaylandMimeData : public QMimeData
 public:
 };
 
+class StateDraggingWaylandToplevel : public StateDraggingWayland
+{
+    Q_OBJECT
+public:
+    explicit StateDraggingWaylandToplevel(DragController *parent);
+    ~StateDraggingWaylandToplevel() override;
+    void onEntry() override;
+};
+
 }
 }

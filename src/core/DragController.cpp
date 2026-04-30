@@ -598,7 +598,13 @@ namespace {
 
 StateDragging *createDraggingState(DragController *parent)
 {
-    return isWayland() ? new StateDraggingWayland(parent) : new StateDragging(parent);
+    if (isWayland()) {
+        if (Config::self().flags() & Config::Flag_WaylandToplevelDrag)
+            return new StateDraggingWaylandToplevel(parent);
+        return new StateDraggingWayland(parent);
+    }
+
+    return new StateDragging(parent);
 }
 
 }

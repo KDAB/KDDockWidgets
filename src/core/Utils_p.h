@@ -58,7 +58,7 @@ inline bool usesNativeTitleBar()
 inline bool usesClientTitleBar()
 {
     if (isWayland()) {
-        // Wayland has both client and native title bars, due to limitations.
+        // Wayland always has the client title-bar, since the native one doesn't emit events when moved
         return true;
     }
 
