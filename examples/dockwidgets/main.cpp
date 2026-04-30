@@ -244,6 +244,13 @@ int main(int argc, char **argv)
             "LayoutSaver::addWindowToSave()"));
     parser.addOption(testPartialSaveRestore);
 
+#ifdef Q_OS_LINUX
+    QCommandLineOption waylandToplevelDrag(
+        "wayland-toplevel-drag",
+        QCoreApplication::translate("main", "Use xdg-toplevel-drag on Wayland so the actual window drags instead of a pixmap"));
+    parser.addOption(waylandToplevelDrag);
+#endif
+
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
 
@@ -376,6 +383,11 @@ int main(int argc, char **argv)
 
     if (parser.isSet(doubleClickMaximize))
         flags |= KDDockWidgets::Config::Flag_DoubleClickMaximizes;
+
+#ifdef Q_OS_LINUX
+    if (parser.isSet(waylandToplevelDrag))
+        flags |= KDDockWidgets::Config::Flag_WaylandToplevelDrag;
+#endif
 
     if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
         qWarning() << "Error: Argument -i requires -m";
