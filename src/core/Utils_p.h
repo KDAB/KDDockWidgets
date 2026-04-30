@@ -30,6 +30,16 @@ inline bool isWayland()
     return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::Wayland;
 }
 
+inline bool isWaylandXDGTopLevelDrag()
+{
+    return isWayland() && (Config::self().flags() & Config::Flag_WaylandToplevelDrag);
+}
+
+inline bool isWaylandNonXDGTopLevelDrag()
+{
+    return isWayland() && !isWaylandXDGTopLevelDrag();
+}
+
 inline bool isOffscreen()
 {
     return Core::Platform::instance()->displayType() == Core::Platform::DisplayType::QtOffscreen;
@@ -58,7 +68,7 @@ inline bool usesNativeTitleBar()
 inline bool usesClientTitleBar()
 {
     if (isWayland()) {
-        // Wayland has both client and native title bars, due to limitations.
+        // Wayland always has the client title-bar, since the native one doesn't emit events when moved
         return true;
     }
 

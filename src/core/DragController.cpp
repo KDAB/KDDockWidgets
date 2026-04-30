@@ -596,10 +596,13 @@ namespace {
 StateDragging *createDraggingState(DragController *parent)
 {
 #ifdef KDDW_FRONTEND_QT
-    return isWayland() ? new StateDraggingWayland(parent) : new StateDragging(parent);
-#else
-    return new StateDragging(parent);
+    if (isWayland()) {
+        if (Config::self().flags() & Config::Flag_WaylandToplevelDrag)
+            return new StateDraggingWaylandToplevel(parent);
+        return new StateDraggingWayland(parent);
+    }
 #endif
+    return new StateDragging(parent);
 }
 
 }

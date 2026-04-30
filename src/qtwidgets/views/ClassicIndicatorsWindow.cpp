@@ -152,7 +152,6 @@ QString Indicator::iconFileName(bool active) const
 static QWidget *parentForIndicatorWindow(ClassicDropIndicatorOverlay *classicIndicators_)
 {
     // On Wayland it can't be a top-level, as we have no way of positioning it
-
     return isWayland() ? QtCommon::View_qt::asQWidget(classicIndicators_->view()) : nullptr;
 }
 
