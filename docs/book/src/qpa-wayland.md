@@ -55,6 +55,9 @@ Known limitations:
   from the left or top edges, which Wayland doesn't allow. The window then grows instead.
 - A maximized floating window isn't restored to its normal size before being dragged, like it is
   on other platforms.
+- While dragging, the cursor shows "forbidden" wherever nothing accepts the drop, like over empty
+  space or the desktop, although releasing there is fine. The compositor picks that cursor. Try fixing it
+  upstream, see [QTBUG-152325](https://qt-project.atlassian.net/browse/QTBUG-152325).
 
 All in all it's pretty decent and usable. Any further improvements should be done at the server or
 protocol level now.
