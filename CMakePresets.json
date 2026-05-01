@@ -99,23 +99,6 @@
       }
     },
     {
-      "name": "flutter-base",
-      "hidden": true,
-      "generator": "Ninja",
-      "cacheVariables": {
-        "KDDockWidgets_FRONTENDS": "flutter"
-      },
-      "inherits": [
-        "base"
-      ],
-      "warnings": {
-        "uninitialized": false
-      },
-      "errors": {
-        "dev": false
-      }
-    },
-    {
       "name": "dev-lcov",
       "displayName": "dev-lcov",
       "binaryDir": "${sourceDir}/build-dev-lcov",
@@ -154,44 +137,6 @@
         "KDDockWidgets_FRONTENDS": "none",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
-    },
-    {
-      "name": "dev-flutter-asan",
-      "description": "Builds the flutter frontend (ASAN)",
-      "binaryDir": "${sourceDir}/build-dev-flutter-asan",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "KDDockWidgets_WERROR": "ON",
-        "KDDockWidgets_USE_LINKER": "mold",
-        "KDDockWidgets_DEVELOPER_MODE": "ON"
-      },
-      "inherits": [
-        "flutter-base",
-        "asan-base"
-      ]
-    },
-    {
-      "name": "dev-flutter",
-      "description": "Builds the flutter frontend",
-      "binaryDir": "${sourceDir}/build-dev-flutter",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "KDDockWidgets_WERROR": "ON",
-        "KDDockWidgets_USE_LINKER": "mold",
-        "KDDockWidgets_DEVELOPER_MODE": "ON"
-      },
-      "inherits": "flutter-base"
-    },
-    {
-      "name": "release-flutter",
-      "description": "Builds the KDDW layouting for usage with flutter",
-      "binaryDir": "${sourceDir}/build-release-flutter",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      },
-      "inherits": [
-        "flutter-base"
-      ]
     },
     {
       "name": "clazy",
