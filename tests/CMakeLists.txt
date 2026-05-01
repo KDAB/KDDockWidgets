@@ -141,29 +141,6 @@ if(KDDW_FRONTEND_QT)
 
 endif()
 
-if(KDDW_FRONTEND_FLUTTER)
-    if(UNIX AND NOT APPLE)
-        set(FLUTTER_DEVICE linux)
-        set(TEST_RUNNER "xvfb-run")
-    elseif(WIN32)
-        set(FLUTTER_DEVICE windows)
-    elseif(APPLE)
-        set(FLUTTER_DEVICE macos)
-    endif()
-
-    add_test(
-        NAME tst_flutter_unittests
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/src/flutter/dart/
-        COMMAND flutter test
-    )
-
-    add_test(
-        NAME tst_flutter_integrationtests
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests/flutter/
-        COMMAND ${TEST_RUNNER} flutter test integration_test -d ${FLUTTER_DEVICE}
-    )
-endif()
-
 # qml.exe standalone test
 if(KDDW_FRONTEND_QTQUICK
    AND KDDockWidgets_QML_MODULE

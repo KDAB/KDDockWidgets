@@ -30,9 +30,9 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v6
 
-      - name: Install spdlog
+      - name: Install dependencies
         run: |
-          sudo apt install lld libspdlog-dev ninja-build -y
+          sudo apt install mold libspdlog-dev ninja-build -y
 
       - name: Setup Sanitized Qt
         uses: KDABLabs/sanitized-qt-action@v1

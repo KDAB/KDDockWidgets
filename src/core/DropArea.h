@@ -143,7 +143,7 @@ public:
 
     Core::Group *centralGroup() const;
 
-#if defined(DOCKS_DEVELOPER_MODE) || defined(KDDW_FRONTEND_FLUTTER)
+#if defined(DOCKS_DEVELOPER_MODE)
 public:
 #else
 private:

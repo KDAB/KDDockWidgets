@@ -1,7 +1,3 @@
-/examples/flutter/windows/flutter/ephemeral/
-/tests/flutter_tests_embedder/flutter_tests_embedder.iml
-/tests/flutter_tests_embedder/linux/flutter/ephemeral/
-/tests/flutter_tests_embedder/.metadata
 /default/
 docks.qbs.user
 /release/
@@ -76,8 +72,6 @@ pubspec.lock
 .dart_tool
 mjb_rejected_*
 mjb_rejected_classes.log
-/examples/flutter/linux/flutter/ephemeral/
-/examples/flutter/build/
 .qt
 /examples/qtquick/customtabbar/qtquick_customtabbar
 /examples/qtquick/customtitlebar/qtquick_customtitlebar
@@ -87,31 +81,12 @@ mjb_rejected_classes.log
 /examples/mdi_with_docking/qtwidgets_mdi_with_docking
 /examples/minimal/qtwidgets_minimal
 /.vs
-/tests/flutter_tests_embedder/build/
-examples/flutter/savedLayout.json
-/examples/flutter/layout_tst_*
 .idea
 kddockwidgets_example.iml
-/tests/flutter_tests_embedder/layout_*
-/src/flutter/dart/build/flutter_assets/
-/src/flutter/dart/layout_*
 /CMakeUserPresets.json
 /src/core/layouting/build/
 
-# Flutter auto generated files
-generated_plugin_registrant.cc
-generated_plugin_registrant.h
-generated_plugins.cmake
-.flutter-plugins
-.flutter-plugins-dependencies
-.metadata
-/tests/flutter/build/
-/tests/flutter/macos/Podfile
-/tests/flutter/macos/Podfile.lock
-
 /docs/book/book/
 /book/
-/src/flutter/dart/build/
-/tests/flutter/linux/flutter/ephemeral
 /src/.qmlls.ini
 /.qmlls.ini

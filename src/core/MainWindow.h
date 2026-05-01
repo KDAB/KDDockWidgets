@@ -37,10 +37,6 @@ namespace QtQuick {
 class MainWindow;
 }
 
-namespace flutter {
-class MainWindow;
-}
-
 namespace Core {
 
 class MainWindowViewInterface;
@@ -292,7 +288,6 @@ private:
 
     friend class KDDockWidgets::QtWidgets::MainWindow;
     friend class KDDockWidgets::QtQuick::MainWindow;
-    friend class KDDockWidgets::flutter::MainWindow;
 
     friend class KDDockWidgets::Core::MainWindowViewInterface;
     friend class ::TestDocks;

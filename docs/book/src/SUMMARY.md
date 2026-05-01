@@ -21,7 +21,6 @@
 - [Supported KDDW frontends]()
   - [QtWidgets](qtwidgets.md)
   - [QtQuick/QML](qtquick.md)
-  - [Flutter](flutter.md)
 - [Supported Qt backends]()
   - [Windows](qpa-windows.md)
   - [macOS](qpa-cocoa.md)

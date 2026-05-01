@@ -68,14 +68,6 @@ View::~View()
         delete m_controller;
     }
 
-#ifdef KDDW_FRONTEND_FLUTTER
-    const auto children = m_childViews;
-    for (auto child : children)
-        delete child;
-
-    m_childViews.clear();
-#endif
-
     delete d;
 }
 
