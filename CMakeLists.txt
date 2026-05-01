@@ -122,7 +122,10 @@ option(KDDockWidgets_X11EXTRAS
 option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
-set(KDDockWidgets_USE_LINKER "" CACHE STRING "Specify the linker to use (lld, mold, ...)")
+set(KDDockWidgets_USE_LINKER
+    ""
+    CACHE STRING "Specify the linker to use (lld, mold, ...)"
+)
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
 option(KDDockWidgets_QML_MODULE "The QtQuick support will be built as a QML module" OFF)
 option(KDDockWidgets_ENABLE_HARDENED "Enable -fhardened equivalent for GCC" OFF)
