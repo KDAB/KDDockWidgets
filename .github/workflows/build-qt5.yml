@@ -45,10 +45,10 @@ jobs:
           version: ${{ matrix.preset.qt_version }}
           cache: true
 
-      - name: Install spdlog on Ubuntu
+      - name: Install dependencies on Ubuntu
         if: ${{ runner.os == 'Linux' }}
         run: |
-          sudo apt install libspdlog-dev -y
+          sudo apt install libspdlog-dev mold -y
 
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main

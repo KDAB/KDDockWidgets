@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies on Ubuntu
         run: |
           sudo apt update -qq
-          sudo apt install rsync -y
+          sudo apt install rsync mold -y
 
       - name: Checkout KDDW
         uses: actions/checkout@v6

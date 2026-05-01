@@ -51,8 +51,6 @@ namespace KDDockWidgets::QtWidgets {
 }
 namespace KDDockWidgets::QtCommon {
 }
-namespace KDDockWidgets::Flutter {
-}
 
 namespace KDDockWidgets {
 QT_DOCKS_EXPORT

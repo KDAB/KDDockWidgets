@@ -44,6 +44,7 @@ RUN apt update -qq && apt install build-essential software-properties-common lld
     libxcb-shape0 \
     libxcb-render-util0 \
     spdlog-dev \
+    mold \
     -y
 
 RUN ln -s /usr/bin/python3 /usr/bin/python

@@ -172,10 +172,6 @@ set(KDDW_FRONTEND_QTQUICK_VIEW_HEADERS
 
 set(KDDW_FRONTEND_QTCOMPAT_SRCS qtcompat/Object.cpp)
 
-set(KDDW_FRONTEND_FLUTTER_SRCS flutter/kddw_bindings.cpp)
-
-set(KDDW_FRONTEND_FLUTTER_SRCS ${KDDW_FRONTEND_FLUTTER_SRCS} ${KDDW_FRONTEND_QTCOMPAT_SRCS})
-
 if(KDDockWidgets_DEVELOPER_MODE)
     set(KDDW_FRONTEND_QTQUICK_SRCS ${KDDW_FRONTEND_QTQUICK_SRCS} qtquick/TestHelpers.cpp)
     set(KDDW_FRONTEND_QTWIDGETS_SRCS ${KDDW_FRONTEND_QTWIDGETS_SRCS} qtwidgets/TestHelpers.cpp)
@@ -241,10 +237,6 @@ if(KDDW_FRONTEND_QT)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_BACKEND_SRCS} ${KDDW_QTCOMMON_SRCS})
 endif()
 
-if(KDDW_FRONTEND_FLUTTER)
-    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_FLUTTER_SRCS})
-endif()
-
 if(KDDW_FRONTEND_NONE)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} qtcompat/Object.cpp)
 endif()
@@ -282,36 +274,6 @@ endif()
 
 if(KDDW_FRONTEND_QTQUICK)
     target_include_directories(kddockwidgets PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtquick>)
-endif()
-
-if(KDDW_FRONTEND_FLUTTER)
-    target_include_directories(
-        kddockwidgets
-        PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qtcompat>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/layouting>
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-                $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
-    )
-
-    # So bindings are exported
-    target_compile_definitions(kddockwidgets PRIVATE BUILDING_KDDockWidgets)
-
-    if(MSVC)
-        set(FLUTTER_ENGINE_LIBRARY flutter_engine.dll.lib)
-    else()
-        if(KDDockWidgets_FLUTTER_TESTS_AOT)
-            set(FLUTTER_ENGINE_LIBRARY rel/libflutter_engine.so)
-        else()
-            set(FLUTTER_ENGINE_LIBRARY dbg/libflutter_engine.so)
-        endif()
-
-        set_source_files_properties(
-            ${KDDW_FRONTEND_DARTBINDINGS_SRCS}
-            PROPERTIES COMPILE_FLAGS "-Wno-unused-function -Wno-unused-variable -Wno-format-security \
-                -Wno-unused-parameter -Wno-shadow -Wno-sign-conversion"
-        )
-    endif()
 endif()
 
 if(KDDW_FRONTEND_NONE)
@@ -400,10 +362,6 @@ if(NOT KDDW_FRONTEND_QT)
     generate_export_header(
         kddockwidgets EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/kddockwidgets_export.h" EXPORT_MACRO_NAME DOCKS_EXPORT
     )
-endif()
-
-if(KDDW_FRONTEND_FLUTTER)
-    target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_FLUTTER)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)

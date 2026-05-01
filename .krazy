@@ -14,7 +14,6 @@ EXCLUDE spelling
 EXCLUDE style
 
 SKIP /fwd_headers/
-SKIP /flutter/generated/
 SKIP Doxyfile.cmake
 SKIP .markdownlint.json
 SKIP book/searchindex.json

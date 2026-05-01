@@ -42,11 +42,11 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Install lld linker
+      - name: Install mold linker
         if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt update -qq
-          sudo apt install lld -y
+          sudo apt install mold -y
 
       - name: Checkout sources
         uses: actions/checkout@v6

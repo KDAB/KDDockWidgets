@@ -18,7 +18,6 @@ path = [
     "README.md",
     "README-porting.md",
     "README-QtQuick.md",
-    "README-Flutter.md",
     "README-WASM.md",
     "README-Wayland.md",
     "README-troubleshooting",
@@ -92,8 +91,6 @@ path = [
     "docs/api/**.png",
     "examples/dockwidgets/assets/**.png",
     "src/img/classic_indicators/**.png",
-    "examples/flutter/assets/**.png",
-    "src/flutter/dart/assets/classic_indicators/**.png",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"
@@ -123,44 +120,6 @@ path = "docs/api/doxygen-awesome.css"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2021 - 2023 jothepro"
 SPDX-License-Identifier = "MIT"
-
-# Flutter
-[[annotations]]
-path = [
-    "examples/flutter/assets/**",
-    "examples/flutter/macos/Runner/Configs/AppInfo.xcconfig",
-    "examples/flutter/.metadata",
-    "examples/flutter/macos/Runner/Assets.xcassets/**",
-    "examples/flutter/macos/Runner.xcodeproj/**",
-    "examples/flutter/macos/Flutter/**",
-    "examples/flutter/macos/Runner.xcworkspace/**",
-    "examples/flutter/macos/.gitignore",
-    "examples/flutter/macos/Runner/Configs/**.xcconfig",
-    "examples/flutter/macos/Runner/Base.lproj/MainMenu.xib",
-    "examples/flutter/macos/Runner/DebugProfile.entitlements",
-    "examples/flutter/macos/Runner/Info.plist",
-    "examples/flutter/macos/Runner/Release.entitlements",
-    "examples/flutter/windows/runner/resources/app_icon.ico",
-    "examples/flutter/windows/runner/runner.exe.manifest",
-    "tests/flutter/assets/**",
-    "tests/flutter/macos/Runner/Configs/AppInfo.xcconfig",
-    "tests/flutter/.metadata",
-    "tests/flutter/macos/Runner/Assets.xcassets/**",
-    "tests/flutter/macos/Runner.xcodeproj/**",
-    "tests/flutter/macos/Flutter/**",
-    "tests/flutter/macos/Runner.xcworkspace/**",
-    "tests/flutter/macos/.gitignore",
-    "tests/flutter/macos/Runner/Configs/**.xcconfig",
-    "tests/flutter/macos/Runner/Base.lproj/MainMenu.xib",
-    "tests/flutter/macos/Runner/DebugProfile.entitlements",
-    "tests/flutter/macos/Runner/Info.plist",
-    "tests/flutter/macos/Runner/Release.entitlements",
-    "tests/flutter/windows/runner/resources/app_icon.ico",
-    "tests/flutter/windows/runner/runner.exe.manifest",
-]
-precedence = "aggregate"
-SPDX-FileCopyrightText = "Copyright 2013-2014 The Flutter Authors"
-SPDX-License-Identifier = "LicenseRef-FlutterBSD"
 
 # Slint
 [[annotations]]

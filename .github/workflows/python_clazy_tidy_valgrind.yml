@@ -56,7 +56,7 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt update -qq
-          sudo apt install libspdlog-dev lld valgrind clazy llvm -y
+          sudo apt install libspdlog-dev lld valgrind clazy llvm mold -y
 
       - uses: actions/checkout@v6
 

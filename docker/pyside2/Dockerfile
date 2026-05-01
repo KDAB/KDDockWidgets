@@ -34,7 +34,7 @@ ENV PYTHONPATH=/KDDockWidgets/build-python/python/
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt update
-RUN apt install build-essential software-properties-common git ninja-build libssl-dev mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig libxkbcommon-x11-0 libdbus-1-3 cmake pip libxslt1-dev llvm-dev clang libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libxcb-xinerama0  libxcb-shape0 libxcb-render-util0 -y
+RUN apt install build-essential software-properties-common git ninja-build libssl-dev mesa-common-dev libglu1-mesa-dev libglib2.0-dev libfontconfig libxkbcommon-x11-0 libdbus-1-3 cmake pip libxslt1-dev llvm-dev clang libxcb-keysyms1 libxcb-image0 libxcb-icccm4 libxcb-xinerama0  libxcb-shape0 libxcb-render-util0 mold -y
 RUN pip3 install --index-url=http://download.qt.io/official_releases/QtForPython/ --trusted-host download.qt.io shiboken2 pyside2 shiboken2_generator
 
 WORKDIR /

@@ -176,11 +176,6 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 #ifdef KDDW_FRONTEND_QTWIDGETS
     types.push_back(FrontendType::QtWidgets);
 #endif
-
-#ifdef KDDW_FRONTEND_FLUTTER
-    types.push_back(FrontendType::Flutter);
-#endif
-
     return types;
 }
 
@@ -224,9 +219,6 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         KDDW_UNUSED(argc);
         KDDW_UNUSED(argv);
         KDDW_UNUSED(defaultToOffscreenQPA);
-#ifdef KDDW_FRONTEND_FLUTTER
-        platform = nullptr;
-#endif
         break;
     }
 

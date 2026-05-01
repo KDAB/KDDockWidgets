@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update -qq
-          sudo apt install lld ninja-build libspdlog-dev valgrind -y
+          sudo apt install mold ninja-build libspdlog-dev valgrind -y
 
       - name: Checkout sources
         uses: actions/checkout@v6

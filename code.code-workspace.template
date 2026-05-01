@@ -9,8 +9,6 @@
     "recommendations": [
       "vadimcn.vscode-lldb",
       "llvm-vs-code-extensions.vscode-clangd",
-      "Dart-Code.dart-code",
-      "Dart-Code.flutter",
       "mhutchie.git-graph",
       "Gruntfuggly.todo-tree",
       "bbenoist.QML",
@@ -106,54 +104,6 @@
           "C:/Users/qt/work/install": "${QT_INSTALL}/../Src",
           "C:/Users/qt/work/qt": "${QT_INSTALL}/../Src"
         }
-      },
-      {
-        "name": "Flutter attach",
-        "request": "attach",
-        "type": "dart",
-        "packages": "tests/flutter_tests_embedder/.dart_tool/package_config.json",
-        "vmServiceUri": "${command:dart.promptForVmService}",
-        "gen.os": "linux"
-      },
-      {
-        "name": "Flutter test (dart)",
-        "request": "launch",
-        "type": "dart",
-        "flutterMode": "debug",
-        "cwd": "${workspaceFolder:kddockwidgets}/tests/flutter_tests_embedder/",
-        "deviceId": "kddw_test_gltf_embedder",
-        "args": [
-          "-v"
-        ],
-        "gen.os": "linux"
-      },
-      {
-        "name": "Flutter example (dart)",
-        "request": "launch",
-        "type": "dart",
-        "flutterMode": "debug",
-        "cwd": "${workspaceFolder:kddockwidgets}/examples/flutter",
-        "deviceId": "linux",
-        "gen.os": "linux"
-      },
-      {
-        "name": "Flutter example (native)",
-        "request": "launch",
-        "type": "lldb",
-        "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
-        "cwd": "${workspaceFolder:kddockwidgets}",
-        "gen.os": "linux"
-      },
-      {
-        "name": "Flutter example (native,wait)",
-        "request": "launch",
-        "type": "lldb",
-        "program": "${workspaceFolder:kddockwidgets}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example",
-        "cwd": "${workspaceFolder:kddockwidgets}",
-        "args": [
-          "--wait"
-        ],
-        "gen.os": "linux"
       }
     ]
   },

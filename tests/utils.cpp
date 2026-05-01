@@ -73,14 +73,9 @@ KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest, DockWid
         assert(dock->floatingWindow() || dock->isInMainWindow());
         dock->view()->activateWindow();
         assert(dock->view()->window());
-#if defined(KDDW_FRONTEND_FLUTTER)
-        // Wait for window activation once we have flutter multi window
-        return dock;
-#else
         if (Platform::instance()->tests_waitForWindowActive(dock->view()->window(), 1000)) {
             return dock;
         }
-#endif
 
         KDDW_INFO("KDDockWidgets::Tests::createDockWidget: Couldn't activate window");
         assert(false);

@@ -41,7 +41,7 @@ jobs:
       - name: Install spdlog on Ubuntu
         if: ${{ runner.os == 'Linux' }}
         run: |
-          sudo apt install libspdlog-dev -y
+          sudo apt install libspdlog-dev mold -y
 
       - name: Install ninja (Windows / Linux)
         if: ${{ runner.os != 'macOS' }}

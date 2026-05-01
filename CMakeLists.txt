@@ -121,7 +121,6 @@ option(KDDockWidgets_X11EXTRAS
 )
 option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
-option(KDDockWidgets_FLUTTER_TESTS_AOT "Flutter tests will be built in AOT mode" OFF)
 option(KDDockWidgets_NO_SPDLOG "Don't use spdlog, even if it is found." OFF)
 set(KDDockWidgets_USE_LINKER "" CACHE STRING "Specify the linker to use (lld, mold, ...)")
 option(KDDockWidgets_USE_VALGRIND "Runs the tests under valgrind" OFF)
@@ -188,10 +187,9 @@ endif()
 
 set(KDDW_FRONTEND_QTWIDGETS OFF)
 set(KDDW_FRONTEND_QTQUICK OFF)
-set(KDDW_FRONTEND_FLUTTER OFF)
 
 if(KDDockWidgets_FRONTENDS)
-    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;flutter;none")
+    set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick;none")
 
     foreach(frontend ${KDDockWidgets_FRONTENDS})
         if(NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
@@ -218,11 +216,6 @@ if(KDDockWidgets_FRONTENDS)
             find_package(Qt6 ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS QuickPrivate)
         endif()
         set(KDDW_FRONTEND_QTQUICK ON)
-    endif()
-
-    if("flutter" IN_LIST KDDockWidgets_FRONTENDS)
-        set(KDDW_FRONTEND_FLUTTER ON)
-
     endif()
 
     if("none" IN_LIST KDDockWidgets_FRONTENDS)
@@ -288,13 +281,7 @@ if(KDDockWidgets_QML_MODULE AND (NOT KDDW_FRONTEND_QTQUICK OR NOT KDDockWidgets_
     message(WARNING "KDDockWidgets_QML_MODULE=ON ignored. Only available for QtQuick on Qt6.")
 endif()
 
-if(KDDW_FRONTEND_FLUTTER)
-    if(KDDW_FRONTEND_QT)
-        message(FATAL_ERROR "The flutter frontend is not compatible with the Qt frontends. Chose a single one.")
-    endif()
-endif()
-
-if(KDDW_FRONTEND_NONE AND (KDDW_FRONTEND_QT OR KDDW_FRONTEND_FLUTTER))
+if(KDDW_FRONTEND_NONE AND KDDW_FRONTEND_QT)
     message(FATAL_ERROR "Frontend value \"none\" needs to be specified alone")
 endif()
 
@@ -441,13 +428,6 @@ macro(set_compiler_flags targetName)
 
         if(MSVC)
             target_compile_options(${targetName} PRIVATE /W4)
-        endif()
-    else()
-        if(KDDW_FRONTEND_FLUTTER)
-            # Our Dart bindings are auto-generated and they include methods guarded with DOCKS_TESTING_METHODS
-            # Since we won't generate 2 sets of bindings, we need to enable the macro in release as well
-            # It won't have much side-effects besides making the bindings compile.
-            target_compile_definitions(${targetName} PUBLIC DOCKS_TESTING_METHODS)
         endif()
     endif()
 
@@ -602,32 +582,6 @@ if(KDDockWidgets_EXAMPLES)
 
         # Standalone layouting example
         add_subdirectory(src/core/layouting/examples/qtwidgets/)
-    endif()
-
-    if(KDDW_FRONTEND_FLUTTER)
-        add_custom_target(
-            kddw-flutter-example ALL
-            DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example
-            COMMENT "Building flutter example"
-        )
-
-        if(MSVC)
-            set(FLUTTER_PLATFORM "windows")
-        elseif(APPLE)
-            set(FLUTTER_PLATFORM "macos")
-        else()
-            set(FLUTTER_PLATFORM "linux")
-        endif()
-
-        add_custom_command(
-            OUTPUT ${CMAKE_SOURCE_DIR}/examples/flutter/build/linux/x64/debug/bundle/kddockwidgets_flutter_example
-            COMMAND flutter build ${FLUTTER_PLATFORM} --debug
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/examples/flutter
-            DEPENDS ${CMAKE_SOURCE_DIR}/examples/flutter/lib/main.dart
-                    ${CMAKE_SOURCE_DIR}/examples/flutter/lib/MyWidget.dart
-                    ${CMAKE_SOURCE_DIR}/examples/flutter/lib/MyMenuBar.dart
-            COMMENT "Building flutter example"
-        )
     endif()
 
     if(KDDockWidgets_SLINT_LAYOUTING_EXAMPLE)

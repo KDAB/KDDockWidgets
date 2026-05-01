@@ -46,10 +46,3 @@ Template to generate documentation.
 
 [code](docs/api/doxygen-awesome.css)<br>
 [MIT licensed](LICENSES/MIT.txt)
-
-### Flutter embedder and generated files
-
-Only used for a flutter build and only during tests.
-
-[code](tests/flutter_tests_embedder) and [code](examples/flutter)<br>
-[BSD licensed](LICENSES/BSD-3-Clause.txt)
