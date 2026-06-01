@@ -140,7 +140,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
         return Core::Window::Ptr(window);
     }
 
-    return {};
+    return { };
 }
 
 int Platform::screenNumberForView(Core::View *view) const
@@ -161,7 +161,7 @@ QSize Platform::screenSizeFor(Core::View *view) const
         }
     }
 
-    return {};
+    return { };
 }
 
 int Platform::startDragDistance_impl() const

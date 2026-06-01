@@ -30,18 +30,18 @@ public:
     ~NullDropIndicatorOverlay() override;
     DropLocation hover_impl(Point) override
     {
-        return {};
+        return { };
     }
 
     DropLocation dropLocationForPos(Point) const
     {
-        return {};
+        return { };
     }
 
 protected:
     Point posForIndicator(DropLocation) const override
     {
-        return {};
+        return { };
     }
 };
 
