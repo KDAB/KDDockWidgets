@@ -57,7 +57,7 @@ public:
     Core::MainWindow *
     createMainWindow(const QString &uniqueName, Core::CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralGroup,
-                     Core::View *parent = nullptr, Qt::WindowFlags = {}) const override;
+                     Core::View *parent = nullptr, Qt::WindowFlags = { }) const override;
 #endif
 protected:
     void init();

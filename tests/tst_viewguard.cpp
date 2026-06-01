@@ -32,7 +32,7 @@ void TestGuards::tst_viewGuard()
     QVERIFY(g.isNull());
 
     {
-        auto view = Platform::instance()->tests_createView({});
+        auto view = Platform::instance()->tests_createView({ });
         g = view;
         QVERIFY(!g.isNull());
         delete view;
@@ -42,7 +42,7 @@ void TestGuards::tst_viewGuard()
 
     // Test when ViewGuard is destroyed before view
     // May not crash without ASAN
-    auto view = Platform::instance()->tests_createView({});
+    auto view = Platform::instance()->tests_createView({ });
     {
         ViewGuard gg(view);
         QVERIFY(!gg.isNull());

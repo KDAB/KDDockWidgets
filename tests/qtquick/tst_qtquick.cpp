@@ -128,11 +128,11 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
     m->window()->window()->setFramePosition(QPoint(500, 800));
 
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
 
     auto floatingDockWidget =
         createDockWidget("floatingDockWidget",
-                         Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+                         Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
 
     m->addDockWidget(dock0, Location_OnLeft);
 
@@ -152,7 +152,7 @@ void TestQtQuick::tst_titlebarNumDockWidgetsChanged()
     QQmlApplicationEngine engine(":/main2.qml");
 
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
     const auto mainWindows = DockRegistry::self()->mainwindows();
     MainWindow *m = mainWindows.first();
     m->window()->window()->setFramePosition(QPoint(500, 800));
@@ -166,7 +166,7 @@ void TestQtQuick::tst_titlebarNumDockWidgetsChanged()
             [&numSignalEmittions] { numSignalEmittions++; });
 
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock1", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
 
     dock0->addDockWidgetAsTab(dock1);
 
@@ -435,9 +435,9 @@ void TestQtQuick::tst_mdiFixedSize()
     auto m = createMainWindow(Size(800, 500), MainWindowOption_MDI);
     const int fixedWidth = 201;
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, Size(fixedWidth, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, { }, Size(fixedWidth, 400) }));
     dock0->view()->setFixedWidth(fixedWidth);
-    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), {});
+    m->layout()->asMDILayout()->addDockWidget(dock0, Point(0, 0), { });
     m->view()->resize(1000, 1000);
 
     QCOMPARE(dock0->view()->minimumWidth(), fixedWidth);
@@ -480,7 +480,7 @@ void TestQtQuick::tst_deleteDockWidget()
     QQmlApplicationEngine engine(":/main465.qml"); // or any other main.qml
 
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({}));
+        "dock0", Platform::instance()->tests_createView({ }));
 
     dock0->show();
     delete dock0->view();
@@ -550,7 +550,7 @@ void TestQtQuick::tst_quickWindowCreationCallback()
     QtQuick::FloatingWindow::setQuickWindowCreationCallback(onWindowCreated);
 
     auto dock0 = createDockWidget(
-        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+        "dock0", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
     dock0->setFloating(true);
 
     QCOMPARE(callCount, 1);

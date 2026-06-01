@@ -84,13 +84,13 @@ public:
 #endif
 
     Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
-                                        KDDockWidgets::InitialVisibilityOption = {});
+                                        KDDockWidgets::InitialVisibilityOption = { });
 
     Q_INVOKABLE void addDockWidgetToContainingWindow(QQuickItem *other,
                                                      KDDockWidgets::Location location,
                                                      QQuickItem *relativeTo = nullptr,
-                                                     QSize initialSize = {},
-                                                     KDDockWidgets::InitialVisibilityOption = {});
+                                                     QSize initialSize = { },
+                                                     KDDockWidgets::InitialVisibilityOption = { });
 
     Q_INVOKABLE void setAsCurrentTab();
     Q_INVOKABLE void forceClose();

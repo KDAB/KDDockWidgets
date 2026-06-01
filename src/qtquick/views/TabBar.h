@@ -90,7 +90,7 @@ public:
     int hoveredTabIndex() const;
 
     Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *other,
-                                        KDDockWidgets::InitialVisibilityOption = {});
+                                        KDDockWidgets::InitialVisibilityOption = { });
 
 Q_SIGNALS:
     void tabBarQmlItemChanged();
