@@ -106,7 +106,7 @@ Separator::Separator(LayoutingHost *host, Qt::Orientation orientation, Core::Ite
     view()->show();
     view()->init();
     d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(
-                                                      rubberBandIsTopLevel() ? nullptr : view())
+                                                      rubberBandIsTopLevel() ? nullptr : viewForLayoutingHost(host))
                                                 : nullptr;
     setVisible(true);
 }
@@ -156,8 +156,10 @@ void Separator::setLazyPosition(int pos)
         geo.moveLeft(pos);
     }
 
-    if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
-        geo.translate(view()->mapToGlobal(Point(0, 0)));
+    if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets()) {
+        if (auto parent = view()->parentView())
+            geo.translate(parent->mapToGlobal(Point(0, 0)));
+    }
     d->lazyResizeRubberBand->setGeometry(geo);
 }
 
@@ -175,7 +177,7 @@ void Separator::onMousePress()
     if (d->lazyResizeRubberBand) {
         setLazyPosition(position());
         d->lazyResizeRubberBand->show();
-        if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
+        if (Platform::instance()->isQtWidgets())
             d->lazyResizeRubberBand->raise();
     }
 }
