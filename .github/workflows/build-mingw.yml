@@ -41,7 +41,7 @@ jobs:
           tools: tools_llvm_mingw1706 tools_ninja
 
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Add MinGW to PATH
         run: |
