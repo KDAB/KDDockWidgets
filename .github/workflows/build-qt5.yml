@@ -59,6 +59,8 @@ jobs:
       - name: Make sure MSVC is found when Ninja generator is in use
         if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.4 # newer MSVC doesn't build Qt5 (qvector.h(960): error C2653: 'stdext': is not a class or namespace name)
 
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }}
