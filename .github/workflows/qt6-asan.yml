@@ -32,7 +32,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt install mold libspdlog-dev ninja-build pkg-config libwayland-dev wayland-protocols -y
+          sudo apt install mold libspdlog-dev ninja-build pkg-config libwayland-dev wayland-protocols g++-14 -y && \
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100 && \
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
 
       - name: Setup Sanitized Qt
         uses: KDABLabs/sanitized-qt-action@v1
