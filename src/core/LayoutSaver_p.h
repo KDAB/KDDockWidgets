@@ -343,7 +343,7 @@ public:
     void clearRestoredProperty();
 
     DockRegistry *const m_dockRegistry;
-    InternalRestoreOptions m_restoreOptions = {};
+    InternalRestoreOptions m_restoreOptions = { };
     Vector<QString> m_affinityNames;
 
     /// If a layout is restored but the dock widget doesn't exist, we store its last position here

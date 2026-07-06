@@ -72,8 +72,8 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget(View *view, const QString &uniqueName, DockWidgetOptions options = {},
-                        LayoutSaverOptions layoutSaverOptions = {});
+    explicit DockWidget(View *view, const QString &uniqueName, DockWidgetOptions options = { },
+                        LayoutSaverOptions layoutSaverOptions = { });
 
     ///@brief destructor
     ~DockWidget() override;
@@ -89,7 +89,7 @@ public:
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
     void addDockWidgetAsTab(KDDockWidgets::Core::DockWidget *other,
-                            const KDDockWidgets::InitialOption &initialOption = {});
+                            const KDDockWidgets::InitialOption &initialOption = { });
 
     /**
      * @brief docks @p other widget into the window that contains this one.
@@ -108,7 +108,7 @@ public:
     addDockWidgetToContainingWindow(KDDockWidgets::Core::DockWidget *other,
                                     KDDockWidgets::Location location,
                                     KDDockWidgets::Core::DockWidget *relativeTo = nullptr,
-                                    const KDDockWidgets::InitialOption &initialOption = {});
+                                    const KDDockWidgets::InitialOption &initialOption = { });
 
     /**
      * @brief sets the widget which this dock widget hosts.

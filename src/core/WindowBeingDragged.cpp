@@ -165,7 +165,7 @@ Size WindowBeingDragged::minSize() const
     if (m_floatingWindow)
         return m_floatingWindow->layout()->layoutMinimumSize();
 
-    return {};
+    return { };
 }
 
 Size WindowBeingDragged::maxSize() const
@@ -173,7 +173,7 @@ Size WindowBeingDragged::maxSize() const
     if (m_floatingWindow)
         return m_floatingWindow->layout()->layoutMaximumSizeHint();
 
-    return {};
+    return { };
 }
 
 bool WindowBeingDragged::contains(Layout *layout) const
@@ -198,7 +198,7 @@ Vector<DockWidget *> WindowBeingDragged::dockWidgets() const
     if (m_floatingWindow)
         return m_floatingWindow->dockWidgets();
 
-    return {};
+    return { };
 }
 
 Draggable *WindowBeingDragged::draggable() const
@@ -208,7 +208,7 @@ Draggable *WindowBeingDragged::draggable() const
 
 Pixmap WindowBeingDragged::pixmap() const
 {
-    return {};
+    return { };
 }
 
 FloatingWindow *WindowBeingDragged::floatingWindow() const
@@ -281,7 +281,7 @@ Pixmap WindowBeingDraggedWayland::pixmap() const
     return pixmap;
 #else
     // Wayland not support on our flutter frontend yet
-    return {};
+    return { };
 #endif
 }
 
@@ -294,7 +294,7 @@ Vector<QString> WindowBeingDraggedWayland::affinities() const
     else if (m_dockWidget)
         return { m_dockWidget->affinities() };
 
-    return {};
+    return { };
 }
 
 Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
@@ -306,7 +306,7 @@ Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
     else if (m_dockWidget)
         return { m_dockWidget };
 
-    return {};
+    return { };
 }
 
 bool WindowBeingDraggedWayland::isInWaylandDrag(Group *group) const
@@ -341,7 +341,7 @@ Size WindowBeingDraggedWayland::minSize() const
     }
 
     KDDW_ERROR("Unknown minSize, shouldn't happen");
-    return {};
+    return { };
 }
 
 Size WindowBeingDraggedWayland::maxSize() const
@@ -355,5 +355,5 @@ Size WindowBeingDraggedWayland::maxSize() const
     }
 
     KDDW_ERROR("Unknown maxSize, shouldn't happen");
-    return {};
+    return { };
 }
