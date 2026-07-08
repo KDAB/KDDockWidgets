@@ -83,6 +83,13 @@ public:
 #endif
 
 protected:
+    /// The main window view is an item inside an application-owned QWindow.
+    /// Filters that window's QEvent::Close into KDDW (mirroring the QtWidgets
+    /// frontend, where MainWindow is itself the top-level widget and receives
+    /// closeEvent() directly), so the layout closes its dock widgets or vetoes.
+    bool eventFilter(QObject *watched, QEvent *ev) override;
+    void itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data) override;
+
     QMargins centerWidgetMargins() const override;
     QRect centralAreaGeometry() const override;
     void setContentsMargins(int left, int top, int right, int bottom) override;
