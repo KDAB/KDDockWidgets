@@ -64,7 +64,17 @@ public:
 
     bool event(QEvent *ev) override
     {
-        if (ev->type() == QEvent::FocusAboutToChange) {
+        if (ev->type() == QEvent::Close) {
+            // Mirror the QtWidgets frontend (View<T>::closeEvent()): route the
+            // native window close (Alt+F4, taskbar, QWindow::close()) into
+            // KDDW, so the contained dock widgets are closed -- honouring
+            // e.g. DockWidgetOption_DeleteOnClose -- or the close is vetoed.
+            // Without this the window merely hides, leaving the dock widgets
+            // and their guest items alive.
+            m_view->Core::View::d->requestClose(static_cast<QCloseEvent *>(ev));
+            if (!ev->isAccepted())
+                return true; // vetoed (e.g. a non-closable dock widget)
+        } else if (ev->type() == QEvent::FocusAboutToChange) {
             // qquickwindow.cpp::event(FocusAboutToChange) removes the item grabber. Inibit that
             return true;
         } else if (ev->type() == QEvent::Resize) {

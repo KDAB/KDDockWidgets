@@ -32,6 +32,7 @@
 #include "../fatal_logger.h"
 #endif
 
+#include <QPointer>
 #include <QtTest/QTest>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -67,6 +68,15 @@ private Q_SLOTS:
     void tst_affinities();
 
     void tst_deleteDockWidget();
+
+    /// A native close of a floating window's QWindow (Alt+F4, taskbar,
+    /// QWindow::close()) must close the contained dock widgets, honouring
+    /// DockWidgetOption_DeleteOnClose, instead of just hiding the window.
+    void tst_floatingWindowNativeClose();
+
+    /// Same as tst_floatingWindowNativeClose, but for the application-owned
+    /// window hosting a MainWindow: closing it must close the docked widgets.
+    void tst_mainWindowNativeClose();
     void tst_setViewFactory();
     void tst_quickWindowCreationCallback();
 };
@@ -487,6 +497,55 @@ void TestQtQuick::tst_deleteDockWidget()
 
     // 1 event loop iteration so we don't have memory leaks
     QTest::qWait(1);
+}
+
+void TestQtQuick::tst_floatingWindowNativeClose()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main465.qml"); // or any other main.qml
+
+    QPointer<Core::DockWidget> dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+        DockWidgetOption_DeleteOnClose);
+    QVERIFY(dock0->isFloating());
+
+    Core::FloatingWindow *fw = dock0->floatingWindow();
+    QVERIFY(fw);
+
+    QWindow *window = QtCommon::View_qt::asQQuickItem(fw->view())->window();
+    QVERIFY(window);
+
+    // Close the QWindow directly, like the window system would, rather than
+    // going through KDDW's title bar.
+    window->close();
+
+    // DockWidgetOption_DeleteOnClose deletes via deleteLater().
+    QTRY_VERIFY(dock0.isNull());
+}
+
+void TestQtQuick::tst_mainWindowNativeClose()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+
+    const auto mainWindows = DockRegistry::self()->mainwindows();
+    QCOMPARE(mainWindows.size(), 1);
+    MainWindow *m = mainWindows.first();
+
+    QPointer<Core::DockWidget> dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+        DockWidgetOption_DeleteOnClose);
+    m->addDockWidget(dock0, Location_OnLeft);
+    QVERIFY(!dock0->isFloating());
+
+    QWindow *window = QtCommon::View_qt::asQQuickItem(m->view())->window();
+    QVERIFY(window);
+
+    // Close the host QWindow directly, like the window system would.
+    window->close();
+
+    // DockWidgetOption_DeleteOnClose deletes via deleteLater().
+    QTRY_VERIFY(dock0.isNull());
 }
 
 void TestQtQuick::tst_effectiveVisibilityBug()

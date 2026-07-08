@@ -12,6 +12,7 @@
 #include "MainWindow.h"
 #include "core/Layout.h"
 #include "core/MainWindow.h"
+#include "core/View_p.h"
 #include "core/Window_p.h"
 #include "core/Logging_p.h"
 #include "core/DockRegistry.h"
@@ -21,6 +22,8 @@
 #include "kddockwidgets/qtquick/views/View.h"
 
 #include <QQuickItem>
+#include <QQuickWindow>
+#include <QPointer>
 #include <QDebug>
 #include <QTimer>
 
@@ -51,6 +54,9 @@ public:
 
     MainWindow *const q;
     QMetaObject::Connection layoutGeometryChangedConnection;
+
+    /// The host QWindow currently being filtered for close events.
+    QPointer<QQuickWindow> closeFilterTarget;
 };
 }
 
@@ -64,6 +70,15 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 {
     m_mainWindow->init(uniqueName);
     makeItemFillParent(this);
+
+    // If we were constructed with a parent that is already in a scene, the
+    // ItemSceneChange notification happened during the base QQuickItem
+    // constructor and never reached our itemChange() override; seed the
+    // close filter here. Later scene changes are handled by itemChange().
+    if (QQuickWindow *w = QQuickItem::window()) {
+        d->closeFilterTarget = w;
+        w->installEventFilter(this);
+    }
 
     Core::Layout *lw = m_mainWindow->layout();
     auto layoutView = asView_qtquick(lw->view());
@@ -87,6 +102,40 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
         Core::Item::s_silenceSanityChecks = true;
         timer->callOnTimeout([] { Core::Item::s_silenceSanityChecks = false; });
     }
+}
+
+void MainWindow::itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data)
+{
+    // Follow the host window so eventFilter() sees its close events. Unlike
+    // the QtWidgets frontend, the main window view is not itself the
+    // top-level, so it doesn't receive close events directly. (itemChange is
+    // used rather than the windowChanged signal because it is not delivered
+    // to this subclass during destruction.)
+    if (change == QQuickItem::ItemSceneChange) {
+        // QQuickItem::window() is already updated at this point and equals
+        // ItemChangeData::window; using it avoids accessing the union.
+        if (d->closeFilterTarget)
+            d->closeFilterTarget->removeEventFilter(this);
+        d->closeFilterTarget = QQuickItem::window();
+        if (d->closeFilterTarget)
+            d->closeFilterTarget->installEventFilter(this);
+    }
+
+    View::itemChange(change, data);
+}
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *ev)
+{
+    if (watched == d->closeFilterTarget && ev->type() == QEvent::Close) {
+        // Route the host window's native close (Alt+F4, taskbar,
+        // QWindow::close()) into KDDW so the layout can close its dock
+        // widgets -- honouring DockWidgetOption_DeleteOnClose -- or veto.
+        Core::View::d->requestClose(static_cast<QCloseEvent *>(ev));
+        if (!ev->isAccepted())
+            return true; // vetoed (e.g. a non-closable dock widget)
+    }
+
+    return View::eventFilter(watched, ev);
 }
 
 MainWindow::~MainWindow()
