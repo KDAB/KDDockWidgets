@@ -1,5 +1,6 @@
 * v2.5.0
   - qtquick: Fixed support for one window with multiple docking areas
+  - qtquick: Fixed tab views not being deleted on window close (Ollie Dawes)
   - qtwidgets: Fixed separator position when using lazy separators
 
 * v2.4.0
