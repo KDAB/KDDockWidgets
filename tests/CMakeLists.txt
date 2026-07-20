@@ -80,6 +80,14 @@ if(KDDW_FRONTEND_QTQUICK)
     kddw_add_nlohmann(tst_qtquick)
     set_compiler_flags(tst_qtquick)
     _add_test(tst_qtquick)
+
+    if(KDDockWidgets_QML_MODULE AND KDDockWidgets_QT6)
+        # qml_loader: CI helper that loads an arbitrary .qml file
+        # on macOS "qml" is signed by TQC so can't load our own plugins
+        add_executable(qml_loader qml_loader/main.cpp)
+        target_link_libraries(qml_loader PRIVATE Qt6::Gui Qt6::Qml)
+        set_compiler_flags(qml_loader)
+    endif()
 endif()
 
 #-----------------------------------------------------------------------------
@@ -146,9 +154,16 @@ if(KDDW_FRONTEND_QTQUICK
    AND KDDockWidgets_QML_MODULE
    AND NOT KDDockWidgets_STATIC
 )
+    if(APPLE)
+        # On macOS qml is signed by TQC so can't load our own plugins, use qml_loader instead
+        set(QML_COMMAND ${CMAKE_BINARY_DIR}/bin/qml_loader)
+    else()
+        set(QML_COMMAND qml)
+    endif()
+
     add_test(
         NAME tst_qml_standalone
-        COMMAND ${CMAKE_COMMAND} -E env QT_FATAL_WARNINGS=1 qml -I ${CMAKE_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E env QT_FATAL_WARNINGS=1 ${QML_COMMAND} -I ${CMAKE_BINARY_DIR}
                 ${CMAKE_SOURCE_DIR}/tests/qml_standalone_test.qml -platform offscreen
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
