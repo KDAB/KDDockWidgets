@@ -1,3 +1,5 @@
+* v2.5.0
+
 * v2.4.1
   - qtquick: Fixed support for one window with multiple docking areas
   - qtquick: Fixed tab views not being deleted on window close (Ollie Dawes)
