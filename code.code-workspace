@@ -66,10 +66,14 @@
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
         "args": [
-          "tst_affinityWithPersistentCentralGroup"
+          "--wayland-toplevel-drag",
+          "-platform",
+          "wayland"
         ],
         "cwd": "${command:cmake.buildDirectory}",
-        "env": {}
+        "env": {
+          "XDG_RUNTIME_DIR": "/run/user/1000"
+        }
       },
       {
         "name": "Current Target (GDB)",
@@ -77,8 +81,13 @@
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
         "args": [
-          "tst_affinityWithPersistentCentralGroup"
+          "--wayland-toplevel-drag",
+          "-platform",
+          "wayland"
         ],
+        "env": {
+          "XDG_RUNTIME_DIR": "/run/user/1000"
+        },
         "cwd": "${command:cmake.buildDirectory}",
         "MIMode": "gdb",
         "setupCommands": [

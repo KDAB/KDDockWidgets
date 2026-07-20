@@ -361,7 +361,7 @@ void Config::Private::fixFlags()
     }
 
 #if defined(Q_OS_LINUX)
-    if (KDDockWidgets::isWayland()) {
+    if (KDDockWidgets::isWayland() && !(m_flags & Config::Flag_WaylandToplevelDrag)) {
         // Native title bar is forced on Wayland. Needed for moving the window.
         // The inner KDDW title bar is used for DnD.
         m_flags |= Flag_NativeTitleBar;
