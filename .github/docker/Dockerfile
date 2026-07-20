@@ -23,7 +23,6 @@ ENV TZ=Europe/Berlin
 ENV LC_CTYPE=C.UTF-8
 ENV PATH=/home/ubuntu/.local/bin:$PATH
 
-ENV IS_SELFHOSTED=1
 ENV CTEST_PARALLEL_LEVEL=12
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

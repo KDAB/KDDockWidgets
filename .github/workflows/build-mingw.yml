@@ -28,12 +28,8 @@ jobs:
             qt_version: "6.8.*"
 
     steps:
-      - name: Export IS_SELFHOSTED
-        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
-
       - name: Install Qt ${{ matrix.preset.qt_version }}
         uses: jurplel/install-qt-action@v4
-        if: env.IS_SELFHOSTED != 1
         with:
           version: ${{ matrix.preset.qt_version }}
           cache: true
