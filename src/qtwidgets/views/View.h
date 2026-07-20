@@ -51,7 +51,7 @@ public:
     using Core::View::y;
 
     explicit View(Core::Controller *controller, Core::ViewType type,
-                  QWidget *parent = nullptr, Qt::WindowFlags windowFlags = {});
+                  QWidget *parent = nullptr, Qt::WindowFlags windowFlags = { });
 
     ~View() override = default;
 

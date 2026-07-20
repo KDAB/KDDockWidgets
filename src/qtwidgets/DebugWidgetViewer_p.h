@@ -170,7 +170,7 @@ public:
 
         if (widget) {
             const QPoint offset = widget->mapTo(rootWidget, QPoint(0, 0));
-            widget->render(&m_previewPx, offset, {}, DrawWindowBackground);
+            widget->render(&m_previewPx, offset, { }, DrawWindowBackground);
         }
 
         const int count = node->rowCount();
@@ -182,7 +182,7 @@ public:
     QPixmap pixmapForWidget(QWidget *w)
     {
         QPixmap px(w->size());
-        w->render(&px, {}, {}, DrawWindowBackground);
+        w->render(&px, { }, { }, DrawWindowBackground);
         return px;
     }
 
@@ -230,7 +230,7 @@ public:
             auto widget = index.data(WidgetRole).value<QWidget *>();
             Q_ASSERT(widget);
             QPixmap px(widget->size());
-            widget->render(&px, {}, {}, DrawWindowBackground);
+            widget->render(&px, { }, { }, DrawWindowBackground);
             px.save(QStringLiteral("widget.png"));
         });
         menu.exec(m_tree.mapToGlobal(pos));

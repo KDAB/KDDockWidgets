@@ -65,9 +65,9 @@ public:
 
     /// @brief Creates a dock widget. This is only used by MainWindow's persistent widget feature.
     /// In all other cases users will instantiate DockWidget directly
-    virtual View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = {},
-                                   LayoutSaverOptions layoutSaverOptions = {},
-                                   Qt::WindowFlags windowFlags = {}) const = 0;
+    virtual View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = { },
+                                   LayoutSaverOptions layoutSaverOptions = { },
+                                   Qt::WindowFlags windowFlags = { }) const = 0;
 
 
     ///@brief Called by the framework to create a Frame view
@@ -103,7 +103,7 @@ public:
     ///@param parent Just forward to FloatingWindow's constructor.
     virtual View *createFloatingWindow(Core::FloatingWindow *controller,
                                        Core::MainWindow *parent = nullptr,
-                                       Qt::WindowFlags windowFlags = {}) const = 0;
+                                       Qt::WindowFlags windowFlags = { }) const = 0;
 
 
     /// @brief Creates the window that will show the actual drop indicators. They need a higher

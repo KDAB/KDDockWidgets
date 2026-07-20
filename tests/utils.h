@@ -131,23 +131,23 @@ struct EnsureTopLevelsDeleted
     const int m_originalSeparatorThickness;
 };
 
-bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
+bool shouldBlacklistWarning(const QString &msg, const QString &category = { });
 
 std::unique_ptr<Core::MainWindow>
 createMainWindow(Size sz = { 1000, 1000 },
                  KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralGroup,
-                 const QString &name = {}, bool show = true);
+                 const QString &name = { }, bool show = true);
 
 
 
 std::unique_ptr<Core::MainWindow> createMainWindow(std::vector<DockDescriptor> &docks);
 
 Core::DockWidget *createDockWidget(const QString &name, Core::View *guest,
-                                   DockWidgetOptions options = {},
-                                   LayoutSaverOptions layoutSaverOptions = {},
-                                   bool show = true, const QString &affinityName = {});
+                                   DockWidgetOptions options = { },
+                                   LayoutSaverOptions layoutSaverOptions = { },
+                                   bool show = true, const QString &affinityName = { });
 
-Core::DockWidget *createDockWidget(const QString &name, LayoutSaverOptions layoutSaverOptions = {});
+Core::DockWidget *createDockWidget(const QString &name, LayoutSaverOptions layoutSaverOptions = { });
 
 void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
                     Core::Group *relativeTo, KDDockWidgets::Location location);
@@ -276,8 +276,8 @@ inline int osWindowMinWidth()
 
 /// Helper function so we don't write such a big line everywhere
 inline Core::DockWidget *newDockWidget(const QString &uniqueName,
-                                       DockWidgetOptions opts = {},
-                                       LayoutSaverOptions layoutSaverOptions = {})
+                                       DockWidgetOptions opts = { },
+                                       LayoutSaverOptions layoutSaverOptions = { })
 {
     return Config::self()
         .viewFactory()

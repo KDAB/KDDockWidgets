@@ -29,7 +29,7 @@ private Q_SLOTS:
 
 void TestGroup::tst_groupCtor()
 {
-    auto group = new Core::Group(nullptr, {});
+    auto group = new Core::Group(nullptr, { });
     QVERIFY(group->view()->is(Core::ViewType::Group));
     QVERIFY(group->view()->asWrapper()->is(Core::ViewType::Group));
     delete group;
@@ -37,7 +37,7 @@ void TestGroup::tst_groupCtor()
 
 void TestGroup::tst_dragRect()
 {
-    auto group = new Core::Group(nullptr, {});
+    auto group = new Core::Group(nullptr, { });
     // This used to crash. Test that it doesn't.
     group->dragRect();
     delete group;
