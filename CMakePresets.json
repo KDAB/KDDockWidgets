@@ -72,20 +72,6 @@
       ]
     },
     {
-      "name": "dev-valgrind",
-      "displayName": "dev-valgrind",
-      "description": "A Qt5 dev preset which runs tests under valgrind",
-      "binaryDir": "${sourceDir}/build-dev-valgrind",
-      "inherits": [
-        "dev"
-      ],
-      "cacheVariables": {
-        "KDDockWidgets_USE_VALGRIND": "ON",
-        "KDDockWidgets_QT6": "OFF",
-        "KDDockWidgets_NO_SPDLOG": "ON"
-      }
-    },
-    {
       "name": "dev-valgrind6",
       "displayName": "dev-valgrind6",
       "description": "A Qt6 dev preset which runs tests under valgrind",
@@ -586,19 +572,6 @@
         "KDDockWidgets_FRONTENDS": "qtquick",
         "KDDockWidgets_QML_MODULE": "ON",
         "KDDockWidgets_STATIC": "ON"
-      }
-    },
-    {
-      "name": "ci-dev-valgrind-qt5",
-      "displayName": "ci-dev-valgrind-qt5",
-      "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
-      "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt5",
-      "inherits": [
-        "dev-valgrind"
-      ],
-      "cacheVariables": {
-        "KDDockWidgets_QT6": "OFF",
-        "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
     },
     {
