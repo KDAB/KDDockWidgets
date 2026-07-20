@@ -28,12 +28,8 @@ jobs:
           - release6
           - ci-release-static-qt6
     steps:
-      - name: Export IS_SELFHOSTED
-        run: echo "IS_SELFHOSTED=$IS_SELFHOSTED" >> $GITHUB_ENV
-
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
-        if: env.IS_SELFHOSTED != 1
         with:
           version: 6.6
           cache: true
