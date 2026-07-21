@@ -22,7 +22,7 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-22.04 # 24.04 would trigger self-hosted which has Qt 6.6, which doesn't have has_include in QML type registion
+          - ubuntu-24.04
         preset:
           - ci-qtquick-module-qt6
           - ci-static-qtquick-module-qt6
