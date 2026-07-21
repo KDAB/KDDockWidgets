@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
+    if: "!contains(github.event.head_commit.message, '[only-') || contains(github.event.head_commit.message, '[only-layouting]')"
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
