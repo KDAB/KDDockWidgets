@@ -23,6 +23,7 @@ jobs:
       matrix:
         os:
           - ubuntu-24.04
+          - macos-15
         preset:
           - ci-qtquick-module-qt6
           - ci-static-qtquick-module-qt6
@@ -31,7 +32,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: 6.8.1
+          version: 6.10.*
           cache: true
 
       - name: Install spdlog on Ubuntu
