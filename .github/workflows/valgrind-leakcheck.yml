@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-valgrind-leakcheck]')"
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: true
