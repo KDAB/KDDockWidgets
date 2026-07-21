@@ -72,7 +72,7 @@ Item {
         x: root.overlayWindow ? (root.overlayWindow.hoveredGroupRect.x + (root.overlayWindow.hoveredGroupRect.width / 2)) : 0
         y: root.overlayWindow ? (root.overlayWindow.hoveredGroupRect.y + (root.overlayWindow.hoveredGroupRect.height / 2)) : 0
 
-        width: (centerIndicator * 3) + (2 * innerMargin)
+        width: (centerIndicator * 3) + (2 * root.innerMargin)
         height: width
         visible: root.overlayWindow && (root.overlayWindow.innerLeftIndicatorVisible || root.overlayWindow.innerRightIndicatorVisible || root.overlayWindow.innerTopIndicatorVisible || root.overlayWindow.innerBottomIndicatorVisible || root.overlayWindow.tabIndicatorVisible)
 
