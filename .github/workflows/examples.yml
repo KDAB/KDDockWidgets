@@ -67,16 +67,27 @@ jobs:
           cmake -G Ninja -S mdi/ -B mdi/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S minimal/ -B minimal/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S mdi_with_docking/ -B mdi_with_docking/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake -G Ninja -S misc/documents/ -B misc/documents/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/dockwidgets/ -B qtquick/dockwidgets/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake -G Ninja -S qtquick/cpp/ -B qtquick/cpp/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake -G Ninja -S qtquick/customplayground/ -B qtquick/customplayground/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/customseparator/ -B qtquick/customseparator/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/customtabbar/ -B qtquick/customtabbar/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/customtitlebar/ -B qtquick/customtitlebar/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake -G Ninja -S qtquick/fixed_central_widget/ -B qtquick/fixed_central_widget/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake -G Ninja -S qtquick/mdi/ -B qtquick/mdi/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake -G Ninja -S qtquick/mdi_with_docking/ -B qtquick/mdi_with_docking/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
           cmake --build dockwidgets/b
           cmake --build mdi/b
           cmake --build minimal/b
           cmake --build mdi_with_docking/b
+          cmake --build misc/documents/b
           cmake --build qtquick/dockwidgets/b
+          cmake --build qtquick/cpp/b
+          cmake --build qtquick/customplayground/b
           cmake --build qtquick/customseparator/b
           cmake --build qtquick/customtabbar/b
+          cmake --build qtquick/customtitlebar/b
+          cmake --build qtquick/fixed_central_widget/b
           cmake --build qtquick/mdi/b
+          cmake --build qtquick/mdi_with_docking/b
