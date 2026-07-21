@@ -154,8 +154,9 @@ if(KDDW_FRONTEND_QTQUICK
    AND KDDockWidgets_QML_MODULE
    AND NOT KDDockWidgets_STATIC
 )
-    if(APPLE)
+    if(APPLE OR MSVC)
         # On macOS qml is signed by TQC so can't load our own plugins, use qml_loader instead
+        # On Windows qml.exe can't load a debug plugin since it's built in release mode
         set(QML_COMMAND ${CMAKE_BINARY_DIR}/bin/qml_loader)
     else()
         set(QML_COMMAND qml)
