@@ -25,6 +25,9 @@ static void fatalMessageHandler(QtMsgType type, const QMessageLogContext &contex
     if (s_oldMessageHandler)
         s_oldMessageHandler(type, context, msg);
 
+    if (type == QtDebugMsg || type == QtInfoMsg)
+        return;
+
     if (context.category && QString::fromLatin1(context.category).startsWith(QLatin1String("qt.qpa")))
         return;
 
