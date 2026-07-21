@@ -28,6 +28,9 @@ static void fatalMessageHandler(QtMsgType type, const QMessageLogContext &contex
     if (type == QtDebugMsg || type == QtInfoMsg)
         return;
 
+    if (msg.startsWith(QLatin1String("QFontDatabase:")))
+        return;
+
     if (context.category && QString::fromLatin1(context.category).startsWith(QLatin1String("qt.qpa")))
         return;
 
