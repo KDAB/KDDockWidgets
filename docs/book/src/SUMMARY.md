@@ -11,6 +11,7 @@
     - [mdi with docking](examples_qtwidgets_mdi_with_docking.md)
   - [QtQuick]()
     - [full example](examples_qtquick_full.md)
+    - [cpp](examples_qtquick_cpp.md)
     - [customtabbar](examples_qtquick_customtabbar.md)
     - [customtitlebar](examples_qtquick_customtitlebar.md)
     - [customseparator](examples_qtquick_customseparator.md)
