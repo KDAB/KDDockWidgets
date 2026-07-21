@@ -9,6 +9,7 @@
 #
 
 add_subdirectory(dockwidgets)
+add_subdirectory(cpp)
 add_subdirectory(mdi)
 add_subdirectory(customtitlebar)
 add_subdirectory(customtabbar)
