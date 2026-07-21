@@ -66,6 +66,11 @@ jobs:
         run: ninja -C ./build all_qmllint
 
       - name: Run tests on Linux
-        run: ctest --test-dir ./build --verbose -j 4
+        if: ${{ runner.os == 'Linux' }}
+        run: ctest --test-dir ./build --verbose --output-on-failure -j 4
         env:
           QT_QUICK_BACKEND: software
+
+      - name: Run tests on Window/macOS
+        if: ${{ runner.os != 'Linux' }}
+        run: ctest --test-dir ./build --verbose --output-on-failure -j 4
