@@ -367,7 +367,7 @@ static QtMessageHandler s_original = nullptr;
 
 static bool shouldBlacklistWarning(const QString &msg, const QString &category)
 {
-    if (category == QLatin1String("qt.qpa.xcb") || category == QLatin1String("qt.qpa.fonts"))
+    if (category == QLatin1String("qt.qpa.xcb"))
         return true;
 
 #ifdef Q_OS_WIN

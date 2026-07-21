@@ -127,7 +127,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(std::vector<D
 
 bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QString &category)
 {
-    if (category == QLatin1String("qt.qpa.xcb") || category == QLatin1String("qt.qpa.fonts"))
+    if (category == QLatin1String("qt.qpa.xcb"))
         return true;
 
     return msg.contains(QLatin1String("QSocketNotifier: Invalid socket"))

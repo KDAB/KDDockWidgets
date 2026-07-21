@@ -16,8 +16,25 @@
 #include <QQmlApplicationEngine>
 #include <QTextStream>
 
+#include <cstdlib>
+
+static QtMessageHandler s_oldMessageHandler = nullptr;
+
+static void fatalMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    if (s_oldMessageHandler)
+        s_oldMessageHandler(type, context, msg);
+
+    if (context.category && QString::fromLatin1(context.category).startsWith(QLatin1String("qt.qpa")))
+        return;
+
+    std::abort();
+}
+
 int main(int argc, char **argv)
 {
+    s_oldMessageHandler = qInstallMessageHandler(fatalMessageHandler);
+
     QGuiApplication app(argc, argv);
 
     QCommandLineParser parser;
