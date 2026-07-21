@@ -17,7 +17,7 @@ on:
 
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[only-') || contains(github.event.head_commit.message, '[only-build-qt6]')"
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-build-qt6]')"
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true

@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[only-') || contains(github.event.head_commit.message, '[only-clang-cl]')"
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-clang-cl]')"
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true

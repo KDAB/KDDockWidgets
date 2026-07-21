@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   create_release:
-    if: "!contains(github.event.head_commit.message, '[only-') || contains(github.event.head_commit.message, '[only-create_release]')"
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-create_release]')"
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout sources
