@@ -40,6 +40,7 @@
 #ifdef KDDW_FRONTEND_QT
 #include <QTimer>
 #ifdef Q_OS_WIN
+#include <QAbstractNativeEventFilter>
 #include <QGuiApplication>
 #include <Windows.h>
 #endif
