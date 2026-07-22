@@ -1,4 +1,6 @@
 * v2.5.0
+  - Fix MDI not honouring initial size property
+  - qtquick: Support setting floating window flags from QML
 
 * v2.4.1
   - qtquick: Fixed support for one window with multiple docking areas

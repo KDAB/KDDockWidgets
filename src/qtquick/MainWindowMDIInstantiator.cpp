@@ -46,14 +46,15 @@ QVector<QString> MainWindowMDIInstantiator::affinities() const
 }
 
 void MainWindowMDIInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,
-                                              const InitialOption &addingOption)
+                                              QSize initialSize,
+                                              InitialVisibilityOption visibilityOption)
 {
     if (!dockWidget || !m_mainWindow)
         return;
 
     Core::DockWidget *dw = QtQuick::Platform::dockWidgetForItem(dockWidget);
 
-    m_mainWindow->mdiLayout()->addDockWidget(dw, localPos, addingOption);
+    m_mainWindow->mdiLayout()->addDockWidget(dw, localPos, InitialOption(visibilityOption, initialSize));
 }
 
 bool MainWindowMDIInstantiator::closeDockWidgets(bool force)
