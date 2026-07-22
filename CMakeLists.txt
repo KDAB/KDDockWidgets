@@ -570,6 +570,7 @@ endif()
 if(KDDockWidgets_EXAMPLES)
     if(KDDW_FRONTEND_QTQUICK)
         add_subdirectory(examples/qtquick)
+        add_subdirectory(kddwtest)
     endif()
 
     if(KDDW_FRONTEND_QTWIDGETS)
