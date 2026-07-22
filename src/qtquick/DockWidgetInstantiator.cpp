@@ -33,6 +33,7 @@ public:
     QPointer<Core::DockWidget> m_dockWidget;
     QVector<QString> m_affinities;
     KDDockWidgets::DockWidgetOptions m_options = KDDockWidgets::DockWidgetOption_None;
+    KDDockWidgets::FloatingWindowFlags m_floatingWindowFlags = KDDockWidgets::FloatingWindowFlag::FromGlobalConfig;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QVariantMap m_userData;
     KDBindings::ScopedConnection userDataConnection;
@@ -277,6 +278,22 @@ void DockWidgetInstantiator::setOptions(KDDockWidgets::DockWidgetOptions options
     }
 }
 
+KDDockWidgets::FloatingWindowFlags DockWidgetInstantiator::floatingWindowFlags() const
+{
+    return d->m_dockWidget ? d->m_dockWidget->floatingWindowFlags() : d->m_floatingWindowFlags;
+}
+
+void DockWidgetInstantiator::setFloatingWindowFlags(KDDockWidgets::FloatingWindowFlags flags)
+{
+    if (d->m_floatingWindowFlags != flags) {
+        d->m_floatingWindowFlags = flags;
+        if (d->m_dockWidget) {
+            d->m_dockWidget->setFloatingWindowFlags(flags);
+        }
+        Q_EMIT floatingWindowFlagsChanged(flags);
+    }
+}
+
 KDDockWidgets::CloseReason DockWidgetInstantiator::lastCloseReason() const
 {
     return d->m_dockWidget ? d->m_dockWidget->lastCloseReason() : KDDockWidgets::CloseReason::Unspecified;
@@ -342,6 +359,7 @@ void DockWidgetInstantiator::componentComplete()
         d->m_dockWidget->setFloating(d->m_isFloating.value());
 
     d->m_dockWidget->setAffinities(d->m_affinities);
+    d->m_dockWidget->setFloatingWindowFlags(d->m_floatingWindowFlags);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     d->m_dockWidget->setUserData(d->m_userData);

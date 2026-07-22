@@ -45,6 +45,8 @@ class DockWidgetInstantiator : public QQuickItem
     Q_PROPERTY(bool isOpen READ isOpen NOTIFY isOpenChanged)
     Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
     Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY optionsChanged)
+    Q_PROPERTY(KDDockWidgets::FloatingWindowFlags floatingWindowFlags READ floatingWindowFlags WRITE
+                   setFloatingWindowFlags NOTIFY floatingWindowFlagsChanged)
     Q_PROPERTY(KDDockWidgets::CloseReason lastCloseReason READ lastCloseReason NOTIFY lastCloseReasonChanged)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     Q_PROPERTY(QVariantMap userData READ userData WRITE setUserData NOTIFY userDataChanged)
@@ -75,6 +77,9 @@ public:
 
     KDDockWidgets::DockWidgetOptions options() const;
     void setOptions(KDDockWidgets::DockWidgetOptions);
+
+    KDDockWidgets::FloatingWindowFlags floatingWindowFlags() const;
+    void setFloatingWindowFlags(KDDockWidgets::FloatingWindowFlags);
 
     KDDockWidgets::CloseReason lastCloseReason() const;
 
@@ -125,6 +130,7 @@ Q_SIGNALS:
     void closed();
     void guestViewChanged(QQuickItem *);
     void optionsChanged(KDDockWidgets::DockWidgetOptions);
+    void floatingWindowFlagsChanged(KDDockWidgets::FloatingWindowFlags);
     void isFocusedChanged(bool);
     void isOverlayedChanged(bool);
     void isFloatingChanged(bool);

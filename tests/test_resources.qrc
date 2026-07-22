@@ -23,5 +23,6 @@
         <file>MyRectangle.qml</file>
 	    <file>main_tst_focusBetweenTabs.qml</file>
         <file>MyRectangle2.qml</file>
+        <file>main_titleBarHasMinimizeButton.qml</file>
 </qresource>
 </RCC>
