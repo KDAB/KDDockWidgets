@@ -21,6 +21,7 @@
 #include "qtquick/views/MainWindow.h"
 #include "qtquick/views/FloatingWindow.h"
 #include "core/MDILayout.h"
+#include "core/layouting/Item_p.h"
 #include "core/views/MainWindowViewInterface.h"
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
@@ -65,6 +66,7 @@ private Q_SLOTS:
     void tst_setPersistentCentralView();
 
     void tst_mdiFixedSize();
+    void tst_mdiInitialSizeFromQml();
     void tst_affinities();
 
     void tst_deleteDockWidget();
@@ -464,6 +466,29 @@ void TestQtQuick::tst_mdiFixedSize()
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
     Platform::instance()
         ->tests_wait(1);
+}
+
+void TestQtQuick::tst_mdiInitialSizeFromQml()
+{
+    // Tests that MDIDockingArea.addDockWidget() can be given an initial size from QML,
+    // without needing the workaround of setting dockWidget.width/height before adding it.
+
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_mdiInitialSize.qml");
+
+    auto mainWindow = DockRegistry::self()->mainWindowByName("mdiInitialSizeMainWindow");
+    QVERIFY(mainWindow);
+
+    auto dock1 = DockRegistry::self()->dockByName("mdiInitialSizeDock");
+    QVERIFY(dock1);
+
+    Core::Group *group = dock1->dptr()->group();
+    QVERIFY(group);
+    QVERIFY(group->isMDI());
+
+    Core::Item *item = mainWindow->layout()->itemForGroup(group);
+    QVERIFY(item);
+    QCOMPARE(item->size(), Size(520, 800));
 }
 
 void TestQtQuick::tst_affinities()

@@ -39,7 +39,7 @@ void MDILayout::addDockWidget(Core::DockWidget *dw, Point localPt,
         return;
     }
 
-    const Size dwSize = dw->size();
+    const Size dwSize = addingOption.preferredSize.isEmpty() ? dw->size() : addingOption.preferredSize;
 
     auto group = object_cast<Core::Group *>(dw->d->group());
     if (itemForGroup(group) != nullptr) {
