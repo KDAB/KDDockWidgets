@@ -361,9 +361,9 @@ enum StackOption {
 Q_DECLARE_FLAGS(StackOptions, StackOption)
 Q_ENUM_NS(StackOptions)
 
-/// @internal
+/// @brief Per-dock-widget flags controlling the floating window's title bar buttons and behaviour
 enum class FloatingWindowFlag {
-    None = 0,
+    NoFlags = 0,
     FromGlobalConfig = 1, // KDDockWidgets::Config is used instead
     TitleBarHasMinimizeButton = 2,
     TitleBarHasMaximizeButton = 4,
@@ -377,6 +377,7 @@ enum class FloatingWindowFlag {
     StartsMinimized = 1024
 };
 Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag)
+Q_ENUM_NS(FloatingWindowFlags)
 
 /// @internal
 enum class WindowState {

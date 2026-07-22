@@ -79,6 +79,10 @@ private Q_SLOTS:
     void tst_mainWindowNativeClose();
     void tst_setViewFactory();
     void tst_quickWindowCreationCallback();
+
+    /// Tests that DockWidget.floatingWindowFlags set from QML is honoured, using
+    /// FloatingWindowFlag_TitleBarHasMinimizeButton as the observable case.
+    void tst_floatingWindowFlagsFromQml();
 };
 
 
@@ -614,6 +618,23 @@ void TestQtQuick::tst_quickWindowCreationCallback()
 
     QCOMPARE(callCount, 1);
     QtQuick::FloatingWindow::setQuickWindowCreationCallback(nullptr);
+}
+
+void TestQtQuick::tst_floatingWindowFlagsFromQml()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_titleBarHasMinimizeButton.qml");
+
+    auto dock1 = DockRegistry::self()->dockByName("dock1");
+    QVERIFY(dock1);
+
+    QVERIFY(dock1->floatingWindowFlags() & FloatingWindowFlag::TitleBarHasMinimizeButton);
+
+    QVERIFY(dock1->isFloating());
+    auto fw = dock1->floatingWindow();
+    QVERIFY(fw);
+
+    QVERIFY(fw->titleBar()->supportsMinimizeButton());
 }
 
 int main(int argc, char *argv[])
