@@ -28,7 +28,7 @@ Rectangle {
 
     anchors.fill: parent
 
-    color: "transparent"
+    color: systemPalette.window
     border {
         color: systemPalette.dark
         width: 1
