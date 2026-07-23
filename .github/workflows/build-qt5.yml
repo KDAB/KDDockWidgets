@@ -30,8 +30,6 @@ jobs:
         preset:
           - name: ci-dev-qt5
             qt_version: "5.15"
-          - name: ci-dev-static-qt5
-            qt_version: "5.15"
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
