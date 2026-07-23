@@ -29,12 +29,16 @@ Rectangle {
     readonly property bool isFixedWidth: groupCpp && groupCpp.isFixedWidth
     readonly property bool tabsAtTop: !groupCpp || !groupCpp.tabsAtBottom
 
+    SystemPalette {
+        id: systemPalette
+    }
+
     anchors.fill: parent
 
     radius: 2
     color: "transparent"
     border {
-        color: "#b8b8b8"
+        color: systemPalette.mid
         width: 1
     }
 

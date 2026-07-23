@@ -25,7 +25,11 @@ TitleBarBase {
     readonly property QtObject floatButton: floatButton
     readonly property QtObject closeButton: closeButton
 
-    color: "#eff0f1"
+    SystemPalette {
+        id: systemPalette
+    }
+
+    color: systemPalette.window
     heightWhenVisible: 30
 
     function dpiSuffix(): string {
@@ -48,6 +52,7 @@ TitleBarBase {
     Text {
         id: title
         text: root.title
+        color: systemPalette.windowText
         anchors {
             left: parent ? parent.left : undefined
             leftMargin: 5

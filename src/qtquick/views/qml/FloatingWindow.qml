@@ -22,11 +22,15 @@ Rectangle {
     readonly property int titleBarHeight: titleBar.heightWhenVisible
     property int margins: 4
 
+    SystemPalette {
+        id: systemPalette
+    }
+
     anchors.fill: parent
 
     color: "transparent"
     border {
-        color: "#666666"
+        color: systemPalette.dark
         width: 1
     }
 

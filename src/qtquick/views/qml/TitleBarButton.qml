@@ -17,13 +17,17 @@ Rectangle {
     signal clicked()
     property alias imageSource: image.source
 
+    SystemPalette {
+        id: systemPalette
+    }
+
     color: "transparent"
     height: image.implicitHeight + 5
     width: image.implicitWidth + 5
 
     radius: 3
     border {
-        color: "#666666"
+        color: systemPalette.dark
         width: mouseArea.containsMouse ? 1 : 0
     }
 
