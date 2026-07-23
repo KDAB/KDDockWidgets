@@ -52,7 +52,8 @@
       "displayName": "dev",
       "binaryDir": "${sourceDir}/build-dev",
       "cacheVariables": {
-        "KDDockWidgets_QT6": "OFF"
+        "KDDockWidgets_QT6": "OFF",
+        "KDDockWidgets_FRONTENDS": "qtwidgets"
       },
       "inherits": [
         "dev-base"
@@ -64,7 +65,8 @@
       "description": "An ASAN/UBSAN build",
       "binaryDir": "${sourceDir}/build-dev-asan",
       "cacheVariables": {
-        "KDDockWidgets_QT6": "OFF"
+        "KDDockWidgets_QT6": "OFF",
+        "KDDockWidgets_FRONTENDS": "qtwidgets"
       },
       "inherits": [
         "dev-base",
@@ -161,7 +163,7 @@
         "CMAKE_BUILD_TYPE": "Release",
         "KDDockWidgets_QT6": "OFF",
         "CMAKE_UNITY_BUILD": "OFF",
-        "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+        "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
     },
     {
@@ -174,7 +176,7 @@
         "KDDockWidgets_QT6": "OFF",
         "CMAKE_UNITY_BUILD": "OFF",
         "KDDockWidgets_X11EXTRAS": "OFF",
-        "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+        "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
     },
     {
@@ -186,18 +188,6 @@
         "KDDockWidgets_PYTHON_BINDINGS": "ON",
         "CMAKE_UNITY_BUILD": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
-      }
-    },
-    {
-      "name": "python",
-      "displayName": "Qt5 python bindings",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-python",
-      "inherits": [
-        "python-base"
-      ],
-      "cacheVariables": {
-        "KDDockWidgets_QT6": "OFF"
       }
     },
     {
@@ -441,7 +431,7 @@
         "KDDockWidgets_DEVELOPER_MODE": "ON",
         "KDDockWidgets_QT6": "OFF",
         "CMAKE_BUILD_TYPE": "Debug",
-        "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
+        "KDDockWidgets_FRONTENDS": "qtwidgets"
       }
     },
     {
@@ -454,33 +444,7 @@
         "KDDockWidgets_DEVELOPER_MODE": "OFF",
         "KDDockWidgets_QT6": "OFF",
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
-      }
-    },
-    {
-      "name": "ci-qtwidgets-qt5",
-      "displayName": "ci-qtwidgets-qt5",
-      "description": "Qt5 build which excludes QtQuick",
-      "binaryDir": "${sourceDir}/build-ci-qtwidgets-qt5",
-      "generator": "Ninja",
-      "cacheVariables": {
-        "KDDockWidgets_DEVELOPER_MODE": "OFF",
-        "KDDockWidgets_QT6": "OFF",
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
-      }
-    },
-    {
-      "name": "ci-qtquick-qt5",
-      "displayName": "ci-qtquick-qt5",
-      "description": "Qt5 build which excludes QtWidgets",
-      "binaryDir": "${sourceDir}/build-ci-qtquick-qt5",
-      "generator": "Ninja",
-      "cacheVariables": {
-        "KDDockWidgets_DEVELOPER_MODE": "OFF",
-        "KDDockWidgets_QT6": "OFF",
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "KDDockWidgets_FRONTENDS": "qtquick"
       }
     },
     {
