@@ -100,6 +100,24 @@ ApplicationWindow {
 
             MenuSeparator {}
             Action {
+                // Some systems don't support dark mode, depends on platform theme and style
+                enabled: Application.styleHints.colorScheme !== 0
+
+                text: qsTr("Toggle Dark mode")
+                onTriggered: {
+                    var current = Application.styleHints.colorScheme;
+                    console.log("Old color scheme: " + current);
+                    if (current == Qt.Dark) {
+                        Application.styleHints.colorScheme = Qt.Light;
+                    } else {
+                        Application.styleHints.colorScheme = Qt.Dark;
+                    }
+                    console.log("New color scheme: " + Application.styleHints.colorScheme);
+                }
+            }
+
+            MenuSeparator {}
+            Action {
                 text: qsTr("&Quit")
                 onTriggered: {
                     Qt.quit();
