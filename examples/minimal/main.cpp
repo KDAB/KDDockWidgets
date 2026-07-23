@@ -1,87 +1,57 @@
-/*
-  This file is part of KDDockWidgets.
-
-  SPDX-FileCopyrightText: 2019 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-  Author: Sérgio Martins <sergio.martins@kdab.com>
-
-  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
-
-  Contact KDAB at <info@kdab.com> for commercial licensing options.
-*/
-
-#include "MyWidget.h"
+// main.cpp
 
 #include <kddockwidgets/MainWindow.h>
 #include <kddockwidgets/DockWidget.h>
+#include <kddockwidgets/LayoutSaver.h>
 
-#include <QStyleFactory>
 #include <QApplication>
+#include <QToolBar>
 
-// clazy:excludeall=qstring-allocations
 
 using namespace KDDockWidgets;
 
 int main(int argc, char **argv)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-#endif
     QApplication app(argc, argv);
-    QCoreApplication::setOrganizationName(QStringLiteral("KDAB"));
-    QCoreApplication::setApplicationName(QStringLiteral("Test app"));
-
     KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 
-    // Fusion looks better in general, but feel free to change
-    qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
-
-    // # 1. Create our main window
-
     KDDockWidgets::QtWidgets::MainWindow mainWindow(QStringLiteral("MyMainWindow"));
-    mainWindow.setWindowTitle("Main Window");
-    mainWindow.resize(1200, 1200);
-    mainWindow.show();
+    mainWindow.setAffinities({ "Main-Window-Affinity" });
+    mainWindow.resize(300, 300);
 
-    // # 2. Create a dock widget, it needs a unique name
     auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
-    auto widget1 = new MyWidget();
-    dock1->setWidget(widget1);
+    dock1->setAffinities({ "Main-Window-Affinity", dock1->uniqueName() });
 
     auto dock2 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock2"));
-    auto widget2 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock2->setWidget(widget2);
+    dock2->setAffinities({ "Main-Window-Affinity", dock2->uniqueName() });
 
-    auto dock3 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock3"));
-    auto widget3 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock3->setWidget(widget3);
-
-    auto dock4 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock4"));
-    auto widget4 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock4->setWidget(widget4);
-
-    auto dock5 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock5"));
-    auto widget5 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
-    dock5->setWidget(widget5);
-
-    // 3. Add them to the main window
+    mainWindow.show();
     mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnTop);
 
-    // 4. Add dock3 to the right of dock2
-    mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
-
-    // 5. dock4 is docked at the bottom, with 200px height
-    const QSize preferredSize(QSize(/*ignored*/ 0, 200));
-    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
+    auto toolbar = new QToolBar();
+    mainWindow.addToolBar(toolbar);
+    auto action = toolbar->addAction("Close all except Dock 1");
+    action->setCheckable(true);
 
 
-    // 5. dock5 will be its own top level (floating window)
-    dock5->open();
+    QObject::connect(action, &QAction::toggled, [&](bool checked) {
+        if (!checked) // restore
+        {
+            printf("restore\n");
+            auto layoutSaver = LayoutSaver(RestoreOption::RestoreOption_RelativeToMainWindow);
+            layoutSaver.restoreFromFile("maximize_using_layout_saver.json");
+            action->setText("Close all except Dock 1");
+        } else // maximize
+        {
+            printf("maximize\n");
+            auto layoutSaver = LayoutSaver();
+            layoutSaver.setAffinityNames({ dock1->uniqueName(), dock2->uniqueName() });
+            layoutSaver.saveToFile("maximize_using_layout_saver.json");
 
+            dock2->close();
+            action->setText("Restore");
+        }
+    });
     return app.exec();
 }
