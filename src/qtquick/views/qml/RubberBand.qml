@@ -13,11 +13,16 @@ import QtQuick 2.9
 
 Rectangle {
     id: root
-    color: "#555ca1c5"
+
+    SystemPalette {
+        id: systemPalette
+    }
+
+    color: Qt.rgba(systemPalette.highlight.r, systemPalette.highlight.g, systemPalette.highlight.b, 0.33)
 
     radius: 1
     border {
-        color: "#5ca1c5"
+        color: systemPalette.highlight
         width: 1
     }
 

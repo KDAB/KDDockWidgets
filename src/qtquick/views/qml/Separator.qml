@@ -15,7 +15,12 @@ import com.kdab.dockwidgets 2.0
 Rectangle {
     id: root
     anchors.fill: parent
-    color: "#eff0f1"
+
+    SystemPalette {
+        id: systemPalette
+    }
+
+    color: systemPalette.window
 
     readonly property SeparatorView kddwSeparator: parent // qmllint disable incompatible-type
 
