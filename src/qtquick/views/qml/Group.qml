@@ -56,6 +56,13 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
 
+        // Claims hover for the whole Group, so Qt Quick's occlusion-aware
+        // hit-testing stops here instead of walking through to whatever is rendered behind
+        // this Group in MDI mode (e.g. a splitter belonging to an overlapping, unrelated
+        // dock widget)
+        hoverEnabled: true
+        cursorShape: Qt.ArrowCursor
+
         MDIResizeHandlerHelper {
             anchors {
                 left: parent ? parent.left : undefined
