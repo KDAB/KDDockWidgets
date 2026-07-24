@@ -364,16 +364,16 @@ Q_ENUM_NS(StackOptions)
 /// @brief Per-dock-widget flags controlling the floating window's title bar buttons and behaviour
 enum class FloatingWindowFlag {
     NoFlags = 0,
-    FromGlobalConfig = 1, // KDDockWidgets::Config is used instead
-    TitleBarHasMinimizeButton = 2,
+    FromGlobalConfig = 1, ///> KDDockWidgets::Config is used instead
+    TitleBarHasMinimizeButton = 2, ///> Only supported if you also set UseQtWindow and DontUseParentForFloatingWindows. Otherwise window manager won't allow it.
     TitleBarHasMaximizeButton = 4,
     KeepAboveIfNotUtilityWindow = 8,
     NativeTitleBar = 16,
     HideTitleBarWhenTabsVisible = 32,
     AlwaysTitleBarWhenFloating = 64,
     DontUseParentForFloatingWindows = 128,
-    UseQtWindow = 256,
-    UseQtTool = 512,
+    UseQtWindow = 256, ///> Uses Qt::Window instead of Qt::Tool
+    UseQtTool = 512, ///> Uses Qt::Tool instead of Qt::Window
     StartsMinimized = 1024
 };
 Q_DECLARE_FLAGS(FloatingWindowFlags, FloatingWindowFlag)
