@@ -792,8 +792,17 @@ bool FloatingWindow::supportsMaximizeButton() const
 
 bool FloatingWindow::isUtilityWindow() const
 {
-    const bool dontUse = (d->m_flags & FloatingWindowFlag::DontUseParentForFloatingWindows) && (d->m_flags & FloatingWindowFlag::UseQtWindow);
-    return !dontUse;
+    // Utility windows don't appear in taskbar or alt-tab and are always on top.
+
+    // If we don't have Qt::Window then it's an utility window
+    if (!(d->m_flags & FloatingWindowFlag::UseQtWindow))
+        return true;
+
+    // If floating windows have parents then they're not an utility window
+    if (!(d->m_flags & FloatingWindowFlag::DontUseParentForFloatingWindows))
+        return true;
+
+    return false;
 }
 
 FloatingWindowFlags FloatingWindow::floatingWindowFlags() const
