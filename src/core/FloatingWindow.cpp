@@ -177,6 +177,13 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
 
     DockRegistry::self()->registerFloatingWindow(this);
 
+    if (supportsMinimizeButton() && isUtilityWindow()) {
+        KDDW_WARN("FloatingWindowFlag::TitleBarHasMinimizeButton was requested, but this floating "
+                  "window is a utility window, so the minimize button won't do anything when "
+                  "clicked. Also set FloatingWindowFlag::UseQtWindow and "
+                  "FloatingWindowFlag::DontUseParentForFloatingWindows to make it minimizable.");
+    }
+
     if (d->m_flags & FloatingWindowFlag::KeepAboveIfNotUtilityWindow)
         view()->setFlag(Qt::WindowStaysOnTopHint, true);
 
