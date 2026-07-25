@@ -616,7 +616,7 @@ Core::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
             }
         }
 
-        auto group = new Core::Group();
+        auto group = new Core::Group(nullptr, FrameOption_None, q->userType());
         group->addTab(q);
         geo.setSize(geo.size().boundedTo(group->view()->maxSizeHint()));
         geo.setSize(geo.size().expandedTo(group->view()->minSize()));

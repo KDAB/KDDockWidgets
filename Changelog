@@ -3,6 +3,26 @@
   - qtquick: Support setting floating window flags from QML
   - qtquick: Support dark mode
   - qtquick: In MDI, fix random splitters getting highlighted
+  - ViewFactory: createGroup()/createTitleBar()/createTabBar()/createFloatingWindow() now have
+    new overloads which also receive the userType() of the DockWidget that's initially covered
+    by the created view (see DockWidget::setUserType()). Override these instead of the existing
+    ones if you want to pick a different Group/TitleBar/TabBar/FloatingWindow sub-class
+    depending on the dock widget's userType.
+    - Potential source break: if your own ViewFactory subclass already overrides
+      createGroup()/createTitleBar()/createTabBar()/createFloatingWindow() and you build with
+      -Woverloaded-virtual (or -Wall -Wextra, which some compilers include it in), you'll now
+      get a "hidden virtual function" warning/error, since your existing override hides the new
+      overload. Workaround: add a using-declaration for the affected function(s) to your
+      ViewFactory subclass, for example:
+          class MyViewFactory : public KDDockWidgets::QtWidgets::ViewFactory
+          {
+          public:
+              using KDDockWidgets::QtWidgets::ViewFactory::createTitleBar; // add this line
+              Core::View *createTitleBar(Core::TitleBar *, Core::View *parent) const override;
+              ...
+          };
+      This is a compile-time-only concern; code that doesn't enable -Woverloaded-virtual (or
+      doesn't treat warnings as errors) is unaffected and needs no changes.
 
 * v2.4.1
   - qtquick: Fixed support for one window with multiple docking areas
