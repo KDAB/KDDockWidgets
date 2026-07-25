@@ -246,7 +246,7 @@ private Q_SLOTS:
     void tst_findAncestor();
     void tst_affinityWithPersistentCentralGroup();
     void tst_affinityFloatingWindowIndexMismatch();
-#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     void tst_userData();
 #endif
 };
@@ -2185,7 +2185,7 @@ void TestQtWidgets::tst_findAncestor()
     QCOMPARE(mainWindow, KDDockWidgets::findAncestor<QMainWindow>(dockWidget));
 }
 
-#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 void TestQtWidgets::tst_userData()
 {
     QByteArray saved;

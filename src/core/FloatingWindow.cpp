@@ -37,13 +37,11 @@
 
 #include "kdbindings/signal.h"
 
-#ifdef KDDW_FRONTEND_QT
 #include <QTimer>
 #ifdef Q_OS_WIN
 #include <QAbstractNativeEventFilter>
 #include <QGuiApplication>
 #include <Windows.h>
-#endif
 #endif
 
 #include <limits>
@@ -720,7 +718,6 @@ int FloatingWindow::userType() const
 
 void FloatingWindow::updateSizeConstraints()
 {
-#ifdef KDDW_FRONTEND_QT
     // Doing a delayed call to make sure the layout has completed any ongoing operation.
     QTimer::singleShot(0, this, [this] {
         // Not simply using layout's max-size support because
@@ -729,7 +726,6 @@ void FloatingWindow::updateSizeConstraints()
         // Doing it manually instead.
         view()->setMaximumSize(maxSizeHint());
     });
-#endif
 }
 
 void FloatingWindow::ensureRectIsOnScreen(Rect &geometry)
