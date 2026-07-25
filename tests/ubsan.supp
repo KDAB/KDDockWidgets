@@ -1,0 +1,24 @@
+# This file is part of KDDockWidgets.
+#
+# SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Sergio Martins <sergio.martins@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
+
+# UBSan runtime suppressions for known-benign issues in third-party code
+# (not KDDockWidgets). Used via UBSAN_OPTIONS=suppressions=<this file>.
+
+
+# Qt's glyph rasterizer (qtbase/src/gui/text/qdistancefield.cpp) left-shifts
+# negative fixed-point coordinate deltas as part of its standard slope
+# computation idiom, e.g.:
+#   int dx = ((v2->x() - v1->x()) << 8) / (v2->y() - v1->y());
+# The operand is legitimately negative for glyph outline edges that slope
+# right-to-left. This is undefined behavior only in the formal pre-C++20
+# sense (left shift of a negative signed value); every real compiler/target
+# lowers it to a plain arithmetic shift equivalent to multiplying by 256,
+# and the values never overflow int, so the result is exactly as intended.
+shift-base:qdistancefield.cpp
