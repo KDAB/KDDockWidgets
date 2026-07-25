@@ -38,9 +38,7 @@
 #include "core/ViewFactory.h"
 #include "core/ScopedValueRollback_p.h"
 
-#ifdef KDDW_FRONTEND_QT
 #include <QTimer>
-#endif
 
 /**
  * @file
@@ -942,7 +940,7 @@ Core::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &sa
         if (auto guest = dw->guestView())
             guest->setVisible(true);
         dw->d->m_wasRestored = true;
-#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         dw->setUserData(saved->userData);
 #endif
 
@@ -967,7 +965,7 @@ int DockWidget::userType() const
     return d->m_userType;
 }
 
-#if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 void DockWidget::setUserData(const QVariantMap &userData)
 {
     if (d->m_userData != userData) {
@@ -1169,10 +1167,8 @@ void DockWidget::Private::setIsOpen(bool is)
     if (is && !LayoutSaver::restoreInProgress()) {
         maybeRestoreToPreviousPosition();
 
-#ifdef KDDW_FRONTEND_QT
         // Transform into a FloatingWindow if this will be a regular floating dock widget.
         QTimer::singleShot(0, q, [this] { maybeMorphIntoFloatingWindow(); });
-#endif
     }
 
     updateToggleAction();
