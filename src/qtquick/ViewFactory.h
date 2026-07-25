@@ -63,6 +63,10 @@ public:
                                          DockWidgetOptions options = {},
                                          LayoutSaverOptions layoutSaverOptions = {},
                                          Qt::WindowFlags windowFlags = {}) const;
+    using Core::ViewFactory::createFloatingWindow;
+    using Core::ViewFactory::createGroup;
+    using Core::ViewFactory::createTabBar;
+    using Core::ViewFactory::createTitleBar;
     Core::View *createGroup(Core::Group *, Core::View *parent) const override;
     Core::View *createTitleBar(Core::TitleBar *, Core::View *parent) const override;
     Core::View *createStack(Core::Stack *, Core::View *parent) const override;

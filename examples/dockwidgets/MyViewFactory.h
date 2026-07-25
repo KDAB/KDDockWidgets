@@ -19,6 +19,8 @@ class CustomWidgetFactory : public KDDockWidgets::QtWidgets::ViewFactory
 {
     Q_OBJECT
 public:
+    using KDDockWidgets::QtWidgets::ViewFactory::createGroup;
+    using KDDockWidgets::QtWidgets::ViewFactory::createTitleBar;
     KDDockWidgets::Core::View *createTitleBar(KDDockWidgets::Core::TitleBar *,
                                               KDDockWidgets::Core::View *parent) const override;
     KDDockWidgets::Core::View *createSeparator(KDDockWidgets::Core::Separator *,

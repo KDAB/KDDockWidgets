@@ -140,10 +140,10 @@ static MainWindow *actualParent(MainWindow *candidate)
 }
 
 FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
-                               FloatingWindowFlags requestedFlags)
+                               FloatingWindowFlags requestedFlags, int userType)
     : Controller(ViewType::FloatingWindow,
                  Config::self().viewFactory()->createFloatingWindow(
-                     this, actualParent(parent), windowFlagsToUse(requestedFlags)))
+                     this, actualParent(parent), windowFlagsToUse(requestedFlags), userType))
     , Draggable(view(),
                 KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable
                                                                 // when using a native title bar.
@@ -151,7 +151,7 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
                                                                 // KDDockWidgets::TitleBar is the
                                                                 // draggable
     , d(new Private(requestedFlags, this))
-    , m_titleBar(new Core::TitleBar(this))
+    , m_titleBar(new Core::TitleBar(this, userType))
 {
     view()->init();
     if (!suggestedGeometry.isNull())
@@ -205,7 +205,8 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
 
 FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
                                MainWindow *parent)
-    : FloatingWindow(suggestedGeometry, hackFindParentHarder(group, parent), floatingWindowFlagsForGroup(group))
+    : FloatingWindow(suggestedGeometry, hackFindParentHarder(group, parent),
+                     floatingWindowFlagsForGroup(group), group->userType())
 {
     ScopedValueRollback guard(m_disableSetVisible, true);
 

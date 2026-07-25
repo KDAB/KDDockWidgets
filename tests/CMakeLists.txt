@@ -48,6 +48,12 @@ function(_add_test test)
     else()
         add_test(NAME ${test} COMMAND ${test})
     endif()
+    if(NOT MSVC)
+        set_tests_properties(
+            ${test} PROPERTIES ENVIRONMENT
+                               "UBSAN_OPTIONS=halt_on_error=1:suppressions=${CMAKE_CURRENT_SOURCE_DIR}/ubsan.supp"
+        )
+    endif()
 endfunction()
 
 # tst_qtwidgets
