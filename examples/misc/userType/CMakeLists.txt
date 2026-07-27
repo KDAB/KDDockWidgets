@@ -9,7 +9,7 @@
 #
 
 cmake_minimum_required(VERSION 3.15)
-project(qtwidgets_userdata)
+project(qtwidgets_usertype)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -26,6 +26,6 @@ if(NOT TARGET kddockwidgets)
     endif()
 endif()
 
-add_executable(qtwidgets_userdata main.cpp MyViewFactory.cpp)
+add_executable(qtwidgets_usertype main.cpp MyViewFactory.cpp)
 
-target_link_libraries(qtwidgets_userdata PRIVATE KDAB::kddockwidgets)
+target_link_libraries(qtwidgets_usertype PRIVATE KDAB::kddockwidgets)

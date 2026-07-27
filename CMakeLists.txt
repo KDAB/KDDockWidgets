@@ -582,7 +582,7 @@ if(KDDockWidgets_EXAMPLES)
         set_compiler_flags(qtwidgets_minimal)
         set_compiler_flags(qtwidgets_mdi_with_docking)
         set_compiler_flags(qtwidgets_documents)
-        set_compiler_flags(qtwidgets_userdata)
+        set_compiler_flags(qtwidgets_usertype)
 
         # Standalone layouting example
         add_subdirectory(src/core/layouting/examples/qtwidgets/)
