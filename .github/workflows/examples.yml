@@ -8,11 +8,9 @@ on:
   push:
     branches:
       - main
-      - 2.4
   pull_request:
     branches:
       - main
-      - 2.4
 
 jobs:
   build:
@@ -24,7 +22,8 @@ jobs:
         os:
           - ubuntu-26.04
           - windows-2022
-          - macos-14
+          - macos-26
+          - macos-15
         preset:
           - release
           - ci-release-static-qt6
@@ -32,7 +31,8 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: 6.6
+          # Qt 6.6 links AGL, which the macOS 26 SDK no longer ships
+          version: ${{ matrix.os == 'macos-26' && '6.10.*' || '6.6' }}
           cache: true
 
       - name: Make sure MSVC is found when Ninja generator is in use
