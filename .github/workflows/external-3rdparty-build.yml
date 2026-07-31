@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-external-3rdparty-build]')"
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Install Qt 6.7.2
         uses: jurplel/install-qt-action@v4
