@@ -51,7 +51,7 @@ Let's start by building an example:
 cd path/to/kddockwidgets/examples/dockwidgets/
 cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/to/install
 cmake --build .
-./bin/qtwidgets_dockwidgets
+./qtwidgets_dockwidgets
 ```
 
 ## Linking your own app to KDDockWidgets
