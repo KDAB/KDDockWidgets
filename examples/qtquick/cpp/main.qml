@@ -30,6 +30,11 @@ ApplicationWindow {
                 onTriggered: dockWidgetFactory.newDockWidget()
             }
 
+            Action {
+                text: qsTr("S&wap component of C++ Dock #1")
+                onTriggered: dockWidgetFactory.swapGuest()
+            }
+
             MenuSeparator {}
 
             Action {
