@@ -46,6 +46,9 @@
         "statusBarVisibility": "visible",
         "inheritDefault": "visible"
       },
+      "debug": {
+        "statusBarVisibility": "hidden"
+      },
     },
     "git.blame.ignoreWhitespace": true,
     "files.associations": {
