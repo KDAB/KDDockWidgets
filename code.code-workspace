@@ -64,33 +64,22 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Current Target (LLDB)",
-        "type": "lldb",
+        "name": "Current Target (kdap)",
+        "type": "kdap",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [
-          "tst_affinityWithPersistentCentralGroup"
-        ],
+        "args": [],
         "cwd": "${command:cmake.buildDirectory}",
         "env": {}
       },
       {
-        "name": "Current Target (GDB)",
-        "type": "cppdbg",
+        "name": "Current Target (LLDB)",
+        "type": "lldb",
         "request": "launch",
         "program": "${command:cmake.launchTargetPath}",
-        "args": [
-          "tst_affinityWithPersistentCentralGroup"
-        ],
+        "args": [],
         "cwd": "${command:cmake.buildDirectory}",
-        "MIMode": "gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ]
+        "env": {}
       },
       {
         "name": "Example via Wayland",
@@ -121,25 +110,6 @@
           "C:/Users/qt/work/install": "${QTDIR}/../Src",
           "C:/Users/qt/work/qt": "${QTDIR}/../Src"
         }
-      },
-      {
-        "name": "Current Target (GDB Linux)",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${command:cmake.launchTargetPath}",
-        "args": [],
-        "stopAtEntry": false,
-        "cwd": "${command:cmake.buildDirectory}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ]
       }
     ]
   },
