@@ -161,7 +161,7 @@ QIcon ViewFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
     }
 
     if (iconName.isEmpty())
-        return {};
+        return { };
 
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
     if (!scalingFactorIsSupported(dpr)) {

@@ -83,7 +83,8 @@ enum MainWindowOption {
     MainWindowOption_MDI = 2, ///> The layout will be MDI. DockWidgets can have arbitrary positions,
                               /// not restricted by any layout
     MainWindowOption_HasCentralWidget =
-        4 | MainWindowOption_HasCentralGroup, ///> Similar to MainWindowOption_HasCentralGroup but
+            4
+        | MainWindowOption_HasCentralGroup, ///> Similar to MainWindowOption_HasCentralGroup but
     ///> you'll have a central widget which can't be detached (Similar to regular QMainWindow). @sa
     /// MainWindowBase::setPersistentCentralWidget()
     MainWindowOption_QDockWidgets = 8, ///> Allows the user to use QDockWidget instead of KDDW DockWidget, while using the KDDW MainWindow
@@ -312,13 +313,16 @@ enum DropLocation {
     DropLocation_OutterRight = 128,
     DropLocation_OutterBottom = 256,
     DropLocation_Inner =
-        DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
+            DropLocation_Left
+        | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
     DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight
         | DropLocation_OutterTop | DropLocation_OutterBottom,
     DropLocation_Horizontal =
-        DropLocation_Left | DropLocation_Right | DropLocation_OutterLeft | DropLocation_OutterRight,
+            DropLocation_Left
+        | DropLocation_Right | DropLocation_OutterLeft | DropLocation_OutterRight,
     DropLocation_Vertical =
-        DropLocation_Top | DropLocation_Bottom | DropLocation_OutterTop | DropLocation_OutterBottom
+            DropLocation_Top
+        | DropLocation_Bottom | DropLocation_OutterTop | DropLocation_OutterBottom
 };
 Q_ENUM_NS(DropLocation)
 
@@ -336,7 +340,8 @@ enum CursorPosition {
     CursorPosition_Horizontal = CursorPosition_Right | CursorPosition_Left,
     CursorPosition_Vertical = CursorPosition_Top | CursorPosition_Bottom,
     CursorPosition_All =
-        CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
+            CursorPosition_Left
+        | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
 };
 Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
 Q_ENUM_NS(CursorPosition)

@@ -291,7 +291,7 @@ public:
     virtual Core::MainWindow *
     createMainWindow(const QString &uniqueName, CreateViewOptions,
                      MainWindowOptions options = MainWindowOption_HasCentralGroup,
-                     View *parent = nullptr, Qt::WindowFlags = {}) const = 0;
+                     View *parent = nullptr, Qt::WindowFlags = { }) const = 0;
 
     virtual void pauseForDebugger();
 
@@ -351,7 +351,7 @@ struct SetExpectedWarning
 struct CreateViewOptions
 {
     bool isVisible = false;
-    Size sizeHint = {};
+    Size sizeHint = { };
     Size minSize = { 0, 0 };
     Size maxSize = Size(16777215, 16777215);
     Size size = { 1000, 1000 };

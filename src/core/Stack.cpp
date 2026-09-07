@@ -125,7 +125,7 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
 
     const Point globalPoint = view()->mapToGlobal(Point(0, 0));
 
-    auto floatingWindow = new FloatingWindow(d->m_group, {});
+    auto floatingWindow = new FloatingWindow(d->m_group, { });
     r.moveTopLeft(globalPoint);
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->view()->show();

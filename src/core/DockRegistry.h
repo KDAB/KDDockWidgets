@@ -92,7 +92,7 @@ public:
     Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
     Q_INVOKABLE KDDockWidgets::Core::DockWidget *
-    dockByName(const QString &, KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
+    dockByName(const QString &, KDDockWidgets::DockRegistry::DockByNameFlags = { }) const;
     Q_INVOKABLE KDDockWidgets::Core::MainWindow *mainWindowByName(const QString &) const;
 
     bool isSane() const;
@@ -162,7 +162,7 @@ public:
      * @param affinities if specified only closes dock widgets and main windows with the specified
      * affinities
      */
-    Q_INVOKABLE void clear(const QVector<QString> &affinities = {});
+    Q_INVOKABLE void clear(const QVector<QString> &affinities = { });
 
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.

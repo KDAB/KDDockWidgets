@@ -88,9 +88,9 @@ void TestDocks::tst_resizeWindow()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(
-        "1", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
+        "1", Platform::instance()->tests_createView({ true, { }, Size(100, 100) }));
     auto dock2 = createDockWidget(
-        "2", Platform::instance()->tests_createView({ true, {}, Size(100, 100) }));
+        "2", Platform::instance()->tests_createView({ true, { }, Size(100, 100) }));
     ObjectGuard<Core::FloatingWindow> fw1 = dock1->floatingWindow();
     ObjectGuard<Core::FloatingWindow> fw2 = dock2->floatingWindow();
     m->addDockWidget(dock1, Location_OnLeft);
@@ -174,7 +174,7 @@ void TestDocks::tst_tabTitleUpdatesWhenUnFloating()
     // setTitle() is changing title bar title but not tabbar
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(500, 500), {}, "tst_marginsAfterRestore");
+    auto m = createMainWindow(Size(500, 500), { }, "tst_marginsAfterRestore");
     auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
 

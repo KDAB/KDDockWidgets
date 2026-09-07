@@ -438,7 +438,7 @@ void Item::setParentContainer(ItemContainer *parent)
         if (ceasingToBeRoot && !c->hasVisibleChildren()) {
             // Was root but is not root anymore. So, if empty, then it has an empty rect too.
             // Only root can have a non-empty rect without having children
-            c->setGeometry({});
+            c->setGeometry({ });
         }
     }
 
@@ -1580,7 +1580,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         m_children.clear();
         setOrientation(oppositeOrientation(d->m_orientation));
 
-        insertItem(container, 0, {});
+        insertItem(container, 0, { });
 
         // Now we have the correct orientation, we can insert
         insertItem(item, loc, initialOption);
@@ -1664,22 +1664,22 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
 
     if (relativeTo && !relativeTo->parentContainer()) {
         KDDW_ERROR("No parent container");
-        return {};
+        return { };
     }
 
     if (relativeTo && relativeTo->parentContainer() != this) {
         KDDW_ERROR("Called on the wrong container");
-        return {};
+        return { };
     }
 
     if (relativeTo && !relativeTo->isVisible()) {
         KDDW_ERROR("relative to isn't visible");
-        return {};
+        return { };
     }
 
     if (loc == Location_None) {
         KDDW_ERROR("Invalid location");
-        return {};
+        return { };
     }
 
     const Size availableSize = root()->availableSize();
@@ -1697,7 +1697,7 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
     root()->to_json(rootSerialized);
 
     ItemBoxContainer rootCopy(nullptr);
-    rootCopy.fillFromJson(rootSerialized, {});
+    rootCopy.fillFromJson(rootSerialized, { });
 
     if (relativeTo)
         relativeTo = rootCopy.d->itemFromPath(relativeTo->pathFromRoot());
@@ -1705,7 +1705,7 @@ Rect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeT
     nlohmann::json itemSerialized;
     item->to_json(itemSerialized);
     auto itemCopy = new Item(nullptr);
-    itemCopy->fillFromJson(itemSerialized, {});
+    itemCopy->fillFromJson(itemSerialized, { });
 
     const InitialOption opt = DefaultSizeMode::FairButFloor;
     if (relativeTo) {
@@ -1782,7 +1782,7 @@ Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *r
             rect.adjust(0, rect.bottom() - suggestedLength, 0, 0);
             break;
         case Location_None:
-            return {};
+            return { };
         }
 
         return rect;
@@ -1791,7 +1791,7 @@ Rect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *r
         KDDW_ERROR("Shouldn't happen");
     }
 
-    return {};
+    return { };
 }
 
 void ItemBoxContainer::positionItems()
@@ -2837,11 +2837,11 @@ LengthOnSide ItemBoxContainer::lengthOnSide(const SizingInfo::List &sizes, int f
                                             Qt::Orientation o) const
 {
     if (fromIndex < 0)
-        return {};
+        return { };
 
     const auto count = sizes.count();
     if (fromIndex >= count)
-        return {};
+        return { };
 
     int start = 0;
     int end = -1;
@@ -3270,7 +3270,7 @@ Vector<int> ItemBoxContainer::calculateSqueezes(
             if (numDonors == 0) {
                 root()->dumpLayout();
                 assert(false);
-                return {};
+                return { };
             }
 
             int toTake = missing / numDonors;
@@ -3606,10 +3606,10 @@ void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
     ScopedValueRollback deserializing(d->m_isDeserializing, true);
     Item::fillFromJson(j, widgets);
 
-    d->m_orientation = Qt::Orientation(j.value<Qt::Orientation>("orientation", {}));
+    d->m_orientation = Qt::Orientation(j.value<Qt::Orientation>("orientation", { }));
 
     for (const auto &child : j.value("children", nlohmann::json::array())) {
-        const bool isContainer = child.value<bool>("isContainer", {});
+        const bool isContainer = child.value<bool>("isContainer", { });
         Item *childItem =
             isContainer ? new ItemBoxContainer(host(), this) : new Item(host(), this);
         childItem->fillFromJson(child, widgets);
@@ -3984,7 +3984,7 @@ void Core::from_json(const nlohmann::json &j, SizingInfo &info)
     info.geometry = j.value("geometry", Rect());
     info.minSize = j.value("minSize", Size());
     info.maxSizeHint = j.value("maxSizeHint", Size());
-    info.percentageWithinParent = j.value<double>("percentageWithinParent", {});
+    info.percentageWithinParent = j.value<double>("percentageWithinParent", { });
 }
 
 void Core::to_json(nlohmann::json &j, Item *item)

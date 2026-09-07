@@ -138,7 +138,7 @@ Core::Window::Ptr Platform::windowAt(QPoint globalPos) const
         return Core::Window::Ptr(window);
     }
 
-    return {};
+    return { };
 }
 
 int Platform::screenNumberForView(Core::View *view) const
@@ -159,7 +159,7 @@ QSize Platform::screenSizeFor(Core::View *view) const
                 return screen->size();
     }
 
-    return {};
+    return { };
 }
 
 QQmlEngine *Platform::qmlEngine(bool silent) const

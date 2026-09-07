@@ -66,7 +66,7 @@ public:
 
     virtual std::string toDebugString() const
     {
-        return {};
+        return { };
     }
 
     KDBindings::Signal<LayoutingHost *> hostChanged;

@@ -38,7 +38,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
-QuickWindowCreationCallback KDDockWidgets::QtQuick::FloatingWindow::s_quickWindowCreationCallback = {};
+QuickWindowCreationCallback KDDockWidgets::QtQuick::FloatingWindow::s_quickWindowCreationCallback = { };
 
 namespace KDDockWidgets {
 

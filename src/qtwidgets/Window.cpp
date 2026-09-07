@@ -43,7 +43,7 @@ std::shared_ptr<Core::View> Window::rootView(bool v1Workaround) const
 {
     Q_UNUSED(v1Workaround);
     if (!m_window)
-        return {};
+        return { };
 
     if (auto widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
         return QtWidgets::ViewWrapper::create(widget);

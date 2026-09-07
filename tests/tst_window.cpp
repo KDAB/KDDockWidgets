@@ -97,7 +97,7 @@ void TestWindow::tst_equals()
 
     QVERIFY(window1->equals(window1));
     QVERIFY(!window1->equals(window2));
-    QVERIFY(!window1->equals({}));
+    QVERIFY(!window1->equals({ }));
 
     window1->destroy();
     window2->destroy();

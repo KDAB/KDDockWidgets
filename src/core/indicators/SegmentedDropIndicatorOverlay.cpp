@@ -161,7 +161,7 @@ void SegmentedDropIndicatorOverlay::updateSegments()
 Point SegmentedDropIndicatorOverlay::posForIndicator(DropLocation) const
 {
     /// Doesn't apply to segmented indicators, completely different concept
-    return {};
+    return { };
 }
 
 Point SegmentedDropIndicatorOverlay::hoveredPt() const

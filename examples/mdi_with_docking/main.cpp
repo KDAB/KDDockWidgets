@@ -72,7 +72,7 @@ int main(int argc, char **argv)
     mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnBottom, nullptr,
                              KDDockWidgets::InitialOption(QSize(0, 300)));
 
-    KDDockWidgets::DockWidgetOptions options = {};
+    KDDockWidgets::DockWidgetOptions options = { };
     if (parser.isSet(nestedDocking)) {
         options |= KDDockWidgets::DockWidgetOption_MDINestable;
     }

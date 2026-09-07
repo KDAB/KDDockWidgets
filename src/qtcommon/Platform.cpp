@@ -333,7 +333,7 @@ QByteArray Platform_qt::readFile(const QString &fileName, bool &ok) const
     ok = f.open(QIODevice::ReadOnly);
     if (!ok) {
         KDDW_ERROR("Failed to open {}, error={}", fileName, f.errorString());
-        return {};
+        return { };
     }
 
     return f.readAll();

@@ -118,7 +118,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     }
 
     if (d->m_centralGroup)
-        addWidget(d->m_centralGroup->view(), KDDockWidgets::Location_OnTop, {});
+        addWidget(d->m_centralGroup->view(), KDDockWidgets::Location_OnTop, { });
 }
 
 DropArea::~DropArea()
@@ -278,7 +278,7 @@ Vector<QString> DropArea::affinities() const
         return fw->affinities();
     }
 
-    return {};
+    return { };
 }
 
 void DropArea::layoutParentContainerEqually(Core::DockWidget *dw)
@@ -707,7 +707,7 @@ Rect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
 {
     Core::Item item(nullptr);
     if (!wbd)
-        return {};
+        return { };
 
     item.setSize(wbd->size().boundedTo(wbd->maxSize()));
     item.setMinSize(wbd->minSize());

@@ -83,7 +83,7 @@ std::shared_ptr<Core::Window> View<T>::window() const
         }
     }
 
-    return {};
+    return { };
 }
 
 template<class T>
@@ -127,7 +127,7 @@ std::shared_ptr<Core::View> View<T>::childViewAt(QPoint localPos) const
     if (QWidget *child = QWidget::childAt(localPos))
         return ViewWrapper::create(child);
 
-    return {};
+    return { };
 }
 
 template<class T>
@@ -137,7 +137,7 @@ std::shared_ptr<Core::View> View<T>::rootView() const
         return ViewWrapper::create(w);
     }
 
-    return {};
+    return { };
 }
 
 template<class T>
@@ -147,7 +147,7 @@ std::shared_ptr<Core::View> View<T>::parentView() const
         return ViewWrapper::create(p);
     }
 
-    return {};
+    return { };
 }
 
 template<class T>

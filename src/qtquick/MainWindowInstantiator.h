@@ -67,8 +67,8 @@ public:
 
     /// @brief See KDDockWidgets::Core::MainWindow::addDockWidget()
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, KDDockWidgets::Location location,
-                                   QQuickItem *relativeTo = nullptr, QSize initialSize = {},
-                                   KDDockWidgets::InitialVisibilityOption = {});
+                                   QQuickItem *relativeTo = nullptr, QSize initialSize = { },
+                                   KDDockWidgets::InitialVisibilityOption = { });
 
     /// @brief See KDDockWidgets::Core::MainWindow::addDockWidgetAsTab()
     Q_INVOKABLE void addDockWidgetAsTab(QQuickItem *dockWidget);

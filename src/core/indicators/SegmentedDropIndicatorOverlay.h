@@ -44,7 +44,7 @@ protected:
 private:
     std::unordered_map<DropLocation, Polygon> segmentsForRect(Rect, bool inner, bool useOffset = false) const;
     void updateSegments();
-    Point m_hoveredPt = {};
+    Point m_hoveredPt = { };
     std::unordered_map<DropLocation, Polygon> m_segments;
 };
 

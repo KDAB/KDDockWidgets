@@ -44,7 +44,7 @@ void TestDocks::tst_28NestedWidgets()
         int i = 0;
         for (DockDescriptor &desc : docksToCreate) {
             desc.createdDock = createDockWidget(
-                QString::number(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
+                QString::number(i), Platform::instance()->tests_createView({ true }), { }, { }, false);
 
             Core::DockWidget *relativeTo = nullptr;
             if (desc.relativeToIndex != -1)
@@ -161,7 +161,7 @@ void TestDocks::tst_28NestedWidgets()
     };
     if (Platform::instance()->isQtWidgets()) {
         // 2. Produced valgrind invalid reads while adding
-        func(docks, {});
+        func(docks, { });
     }
 
     docks = {
@@ -172,7 +172,7 @@ void TestDocks::tst_28NestedWidgets()
     };
 
     if (Platform::instance()->isQtWidgets()) {
-        func(docks, {});
+        func(docks, { });
     }
 
     docks = {
@@ -185,7 +185,7 @@ void TestDocks::tst_28NestedWidgets()
     if (Platform::instance()->isQtWidgets()) {
         // Tests for void KDDockWidgets::Anchor::setPosition(int,
         // KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
-        func(docks, {});
+        func(docks, { });
     }
 
     docks = {

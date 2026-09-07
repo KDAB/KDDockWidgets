@@ -52,14 +52,14 @@ public:
     LayoutSaver::Group serialize(const Vector<QString> &affinityNames) const;
 
     ///@brief Adds a widget into the Group's Stack
-    void addTab(DockWidget *, const InitialOption & = {});
+    void addTab(DockWidget *, const InitialOption & = { });
     ///@overload
-    void addTab(Group *, const InitialOption & = {});
+    void addTab(Group *, const InitialOption & = { });
     ///@overload
-    void addTab(FloatingWindow *floatingWindow, const InitialOption & = {});
+    void addTab(FloatingWindow *floatingWindow, const InitialOption & = { });
 
     ///@brief Inserts a widget into the Group's TabWidget at @p index
-    void insertWidget(DockWidget *, int index, const InitialOption & = {});
+    void insertWidget(DockWidget *, int index, const InitialOption & = { });
 
     ///@brief removes a dockwidget from the group
     void removeWidget(DockWidget *);

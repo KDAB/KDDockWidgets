@@ -33,8 +33,8 @@ public:
 
     explicit MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                           ExampleOptions exampleOptions,
-                          const QString &affinityName = {}, // Usually not needed. Just here to show
-                                                            // the feature.
+                          const QString &affinityName = { }, // Usually not needed. Just here to show
+                                                             // the feature.
                           QWidget *parent = nullptr);
     ~MyMainWindow() override;
 
