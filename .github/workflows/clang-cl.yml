@@ -24,6 +24,9 @@ jobs:
           - windows-latest
         preset:
           - name: dev-clangcl6
+        with_spdlog:
+          - true
+          - false
 
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
@@ -42,8 +45,40 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
 
+      # Regression test for https://github.com/KDAB/KDDockWidgets/issues/733
+      # (spdlog's Windows sink drags in <windows.h>, which clashes with our own
+      # Core::HANDLE typedef when built with clang-cl).
+      - name: Install spdlog via vcpkg
+        if: ${{ matrix.with_spdlog }}
+        shell: pwsh
+        run: vcpkg install spdlog:x64-windows fmt:x64-windows
+
       - name: Configure
-        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install
+        shell: pwsh
+        run: |
+          $extraArgs = @()
+          if ("${{ matrix.with_spdlog }}" -eq "true") {
+            $extraArgs += "-DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          } else {
+            $extraArgs += "-DKDDockWidgets_NO_SPDLOG=ON"
+          }
+          cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install @extraArgs
+
+      # Make sure the spdlog code path was actually exercised (or actually skipped),
+      # so this job can't silently pass without ever compiling the code that
+      # triggered issue #733.
+      - name: Verify spdlog was actually enabled/disabled as expected
+        shell: pwsh
+        run: |
+          $found = Select-String -Path ./build-${{ matrix.preset.name }}/compile_commands.json -Pattern "KDDW_HAS_SPDLOG" -Quiet
+          if ("${{ matrix.with_spdlog }}" -eq "true" -and -not $found) {
+            Write-Error "spdlog was expected to be enabled but KDDW_HAS_SPDLOG is not set"
+            exit 1
+          }
+          if ("${{ matrix.with_spdlog }}" -eq "false" -and $found) {
+            Write-Error "spdlog was expected to be disabled but KDDW_HAS_SPDLOG is set"
+            exit 1
+          }
 
       - name: Build
         run: cmake --build ./build-${{ matrix.preset.name }}
