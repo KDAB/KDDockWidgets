@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include "docks_export.h"
-
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
@@ -21,7 +19,7 @@
 
 namespace KDDockWidgets {
 
-class DOCKS_EXPORT FatalLogger : public spdlog::sinks::stdout_color_sink_mt
+class FatalLogger : public spdlog::sinks::stdout_color_sink_mt
 {
 public:
     ~FatalLogger() override;
