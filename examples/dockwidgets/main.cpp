@@ -236,6 +236,14 @@ int main(int argc, char **argv)
         QCoreApplication::translate("main", "Ctrl key toggles drop indicators"));
     parser.addOption(ctrlTogglesDropIndicators);
 
+    QCommandLineOption testPartialSaveRestore(
+        "test-partial-save-restore",
+        QCoreApplication::translate(
+            "main",
+            "Adds a menu to create additional main windows and to play with "
+            "LayoutSaver::addWindowToSave()"));
+    parser.addOption(testPartialSaveRestore);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
 
@@ -419,6 +427,8 @@ int main(int argc, char **argv)
         exampleOptions |= MyMainWindow::ExampleOption::NonDockableDockWidget9;
     if (parser.isSet(noDrops))
         exampleOptions |= MyMainWindow::ExampleOption::NoDropsDockWidget0;
+    if (parser.isSet(testPartialSaveRestore))
+        exampleOptions |= MyMainWindow::ExampleOption::TestPartialSaveRestore;
     if (parser.isSet(maxSizeOption))
         exampleOptions |= MyMainWindow::ExampleOption::MaxSizeForDockWidget8;
     if (parser.isSet(dontCloseBeforeRestore))

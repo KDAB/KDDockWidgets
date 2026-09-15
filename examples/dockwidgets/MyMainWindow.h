@@ -28,6 +28,7 @@ public:
         ProgrammaticDragEvent = 64,
         CtrlKeyFiltersDropIndicators = 128,
         NoDropsDockWidget0 = 256,
+        TestPartialSaveRestore = 512,
     };
     Q_DECLARE_FLAGS(ExampleOptions, ExampleOption)
 

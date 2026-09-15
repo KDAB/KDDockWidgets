@@ -17,11 +17,13 @@
 #include <kddockwidgets/LayoutSaver.h>
 
 #include <kddockwidgets/core/DockWidget.h>
+#include <kddockwidgets/core/DockRegistry.h>
 #include <kddockwidgets/core/MainWindow.h>
 #include <kddockwidgets/core/Layout.h>
 
 #include <QMenu>
 #include <QMenuBar>
+#include <QFileDialog>
 #include <QEvent>
 #include <QDebug>
 #include <QString>
@@ -36,6 +38,15 @@
 #include <utility>
 
 // clazy:excludeall=qstring-allocations,ctor-missing-parent-argument,detaching-member
+
+// The LayoutSaver used by the "Partial Save/Restore" menu. Shared across all MyMainWindow
+// instances, so "Add DockWidget #4 to Save Selection" and "Save Current Main Window" can be
+// clicked on different windows and still build up a single selection.
+static KDDockWidgets::LayoutSaver &partialSaveSelection()
+{
+    static KDDockWidgets::LayoutSaver saver;
+    return saver;
+}
 
 static MyWidget *newMyWidget()
 {
@@ -123,6 +134,65 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     connect(dumpLayout, &QAction::triggered, this, [this] {
         mainWindow()->layout()->dumpLayout();
     });
+
+    if (m_exampleOptions & ExampleOption::TestPartialSaveRestore) {
+        auto partialMenu = new QMenu(QStringLiteral("Partial Save/Restore"), this);
+        menubar->addMenu(partialMenu);
+
+        auto newMainWindowAction = partialMenu->addAction(QStringLiteral("Create 2nd Main Window"));
+        connect(newMainWindowAction, &QAction::triggered, this, [this] {
+            static int count = 2;
+            const QString name = QStringLiteral("MyMainWindow-%1").arg(count++);
+            auto mw = new MyMainWindow(name, KDDockWidgets::MainWindowOption_None, m_exampleOptions);
+            mw->setWindowTitle(QStringLiteral("Main Window %1").arg(name));
+            mw->resize(1200, 1200);
+            mw->show();
+        });
+
+        auto saveCurrentAction =
+            partialMenu->addAction(QStringLiteral("Save Current Main Window"));
+        connect(saveCurrentAction, &QAction::triggered, this, [this] {
+            KDDockWidgets::LayoutSaver &saver = partialSaveSelection();
+            saver.addWindowToSave(mainWindow());
+            const QString filename = QStringLiteral("%1_layout.json").arg(this->uniqueName());
+            const bool result = saver.saveToFile(filename);
+            qDebug() << "Saving partial layout to" << filename << ". Result=" << result;
+            saver.clearWindowsToSave();
+        });
+
+        auto restoreFromFileAction =
+            partialMenu->addAction(QStringLiteral("Restore from File..."));
+        connect(restoreFromFileAction, &QAction::triggered, this, [this] {
+            const QString filename = QFileDialog::getOpenFileName(
+                this, QStringLiteral("Restore Layout"), QString(), QStringLiteral("*.json"));
+            if (filename.isEmpty())
+                return;
+
+            KDDockWidgets::RestoreOptions options = KDDockWidgets::RestoreOption_None;
+            if (m_exampleOptions & ExampleOption::RestoreIsRelative)
+                options |= KDDockWidgets::RestoreOption_RelativeToMainWindow;
+
+            KDDockWidgets::LayoutSaver saver(options);
+            const bool result = saver.restoreFromFile(filename);
+            qDebug() << "Restoring layout from" << filename << ". Result=" << result;
+        });
+
+        auto saveDock4WindowAction =
+            partialMenu->addAction(QStringLiteral("Save window containing dock #4"));
+        connect(saveDock4WindowAction, &QAction::triggered, this, [] {
+            auto dw = KDDockWidgets::DockRegistry::self()->dockByName(
+                QStringLiteral("DockWidget #4"));
+            if (!dw) {
+                qWarning() << "DockWidget #4 doesn't exist";
+                return;
+            }
+
+            KDDockWidgets::LayoutSaver saver;
+            saver.addWindowToSave(dw);
+            const bool result = saver.saveToFile(QStringLiteral("dock4.json"));
+            qDebug() << "Saving window containing dock #4 to dock4.json. Result=" << result;
+        });
+    }
 
     setAffinities({ affinityName });
     createDockWidgets();
