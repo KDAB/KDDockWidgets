@@ -21,10 +21,6 @@
   "settings": {
     "files.trimTrailingWhitespace": true,
     "editor.formatOnSave": true,
-    "C_Cpp.intelliSenseEngine": "disabled",
-    "C_Cpp.autocomplete": "disabled",
-    "C_Cpp.errorSquiggles": "disabled",
-    "C_Cpp.formatting": "disabled",
     "clangd.arguments": [
       "-header-insertion=never",
       "--clang-tidy=false"
