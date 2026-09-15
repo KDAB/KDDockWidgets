@@ -169,7 +169,7 @@ int Positions::placeholderCount() const
     return int(m_placeholders.size());
 }
 
-void Positions::deserialize(const LayoutSaver::Position &lp)
+void Positions::deserialize(const LayoutSaver::Position &lp, const QString &dockWidgetName)
 {
     m_lastFloatingGeometry = lp.lastFloatingGeometry;
     m_lastOverlayedGeometries = lp.lastOverlayedGeometries;
@@ -198,13 +198,23 @@ void Positions::deserialize(const LayoutSaver::Position &lp)
                         continue;
                     }
                 } else {
-                    KDDW_ERROR("Invalid floating window position to restore. index={}", index);
+                    KDDW_ERROR(
+                        "Dock widget {} references floating window #{}, which is not part of the "
+                        "layout being restored. Skipping its previous position.",
+                        dockWidgetName, index);
                     continue;
                 }
             }
         } else {
             Core::MainWindow *mainWindow =
                 DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
+            if (!mainWindow) {
+                KDDW_ERROR(
+                    "Dock widget {} references main window {}, which doesn't exist. Skipping its "
+                    "previous position.",
+                    dockWidgetName, placeholder.mainWindowUniqueName);
+                continue;
+            }
             layout = mainWindow->layout();
         }
 
@@ -212,9 +222,14 @@ void Positions::deserialize(const LayoutSaver::Position &lp)
         if (itemIndex >= 0 && itemIndex < items.size()) {
             Core::Item *item = items.at(itemIndex);
             addPlaceholderItem(item);
+        } else if (placeholder.isFloatingWindow) {
+            KDDW_ERROR("Dock widget {} references item #{} of floating window #{}, which only has "
+                       "{} item(s). The layout was probably saved without that window.",
+                       dockWidgetName, itemIndex, placeholder.indexOfFloatingWindow, items.size());
         } else {
-            // Shouldn't happen, maybe even assert
-            KDDW_ERROR("Couldn't find item index {}", itemIndex);
+            KDDW_ERROR("Dock widget {} references item #{} of main window {}, which only has {} "
+                       "item(s). The layout was probably saved without that window.",
+                       dockWidgetName, itemIndex, placeholder.mainWindowUniqueName, items.size());
         }
     }
 
