@@ -102,6 +102,10 @@ private Q_SLOTS:
     void tst_restoreSideBySide();
     void tst_restoreGroupOptions();
     void tst_restoreWithAffinity();
+    void tst_saveSingleMainWindow();
+    void tst_saveSingleFloatingWindow();
+    void tst_saveMainWindowWithClosedDockWidget();
+    void tst_saveWindowWithDockWidgetThatMovedAway();
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
     void tst_restoreWithDockFactory();
@@ -3395,6 +3399,161 @@ void TestDocks::tst_restoreWithAffinity()
     QVERIFY(dock1->isVisible());
     QVERIFY(!dock1->isFloating());
     QVERIFY(dock1->window()->equals(m1->view()));
+}
+
+static LayoutSaver::MainWindow::List savedMainWindows(const QByteArray &serialized)
+{
+    LayoutSaver::Layout layout;
+    layout.fromJson(serialized);
+    return layout.mainWindows;
+}
+
+static Vector<QString> savedDockWidgetNames(const QByteArray &serialized)
+{
+    LayoutSaver::Layout layout;
+    layout.fromJson(serialized);
+    return layout.dockWidgetNames();
+}
+
+void TestDocks::tst_saveSingleMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m1 = createMainWindow(Size(500, 500), MainWindowOption_None, "mw1");
+    auto m2 = createMainWindow(Size(500, 500), MainWindowOption_None, "mw2");
+
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    m1->addDockWidget(dock1, Location_OnLeft);
+    m2->addDockWidget(dock2, Location_OnLeft);
+
+    LayoutSaver saver;
+    saver.addWindowToSave(m1.get());
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    // Only mw1 and what's inside it got saved
+    const auto mainWindows = savedMainWindows(saved);
+    QCOMPARE(mainWindows.size(), 1);
+    QCOMPARE(mainWindows.constFirst().uniqueName, QStringLiteral("mw1"));
+    QCOMPARE(savedDockWidgetNames(saved), Vector<QString> { QStringLiteral("1") });
+
+    dock1->close();
+    QVERIFY(!dock1->isVisible());
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    // dock1 is back, and mw2 was never touched
+    QVERIFY(dock1->isVisible());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(dock1->mainWindow(), m1.get());
+    QVERIFY(dock2->isVisible());
+    QCOMPARE(dock2->mainWindow(), m2.get());
+    QVERIFY(m1->layout()->checkSanity());
+    QVERIFY(m2->layout()->checkSanity());
+}
+
+void TestDocks::tst_saveSingleFloatingWindow()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_None, "mw1");
+    auto docked = createDockWidget("docked", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(docked, Location_OnLeft);
+
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
+
+    auto other = createDockWidget("other", Platform::instance()->tests_createView({ true }));
+    QVERIFY(other->isFloating());
+
+    Core::FloatingWindow *fw = dock1->floatingWindow();
+    QVERIFY(fw);
+
+    LayoutSaver saver;
+    saver.addWindowToSave(fw);
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    // No main window, and neither "docked" nor "other" are in there
+    QVERIFY(savedMainWindows(saved).isEmpty());
+    Vector<QString> names = savedDockWidgetNames(saved);
+    std::sort(names.begin(), names.end());
+    QCOMPARE(names, (Vector<QString> { QStringLiteral("1"), QStringLiteral("2") }));
+
+    dock2->close();
+    QVERIFY(saver.restoreLayout(saved));
+
+    QVERIFY(dock1->isVisible());
+    QVERIFY(dock2->isVisible());
+    QVERIFY(!dock1->mainWindow());
+    QCOMPARE(dock1->floatingWindow(), dock2->floatingWindow());
+
+    // The windows we didn't save are untouched
+    QVERIFY(docked->isVisible());
+    QCOMPARE(docked->mainWindow(), m.get());
+    QVERIFY(other->isVisible());
+    QVERIFY(other->isFloating());
+}
+
+void TestDocks::tst_saveMainWindowWithClosedDockWidget()
+{
+    // The case from issue #723: save a main window, close one of its dock widgets, restore.
+    // Any dangling placeholder would make the FatalLogger abort this test.
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_None, "mw1");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnTop);
+
+    LayoutSaver saver;
+    saver.addWindowToSave(m.get());
+    const QByteArray saved = saver.serializeLayout();
+
+    dock2->close();
+    QVERIFY(!dock2->isVisible());
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    QVERIFY(dock1->isVisible());
+    QVERIFY(dock2->isVisible());
+    QCOMPARE(dock1->mainWindow(), m.get());
+    QCOMPARE(dock2->mainWindow(), m.get());
+    QVERIFY(m->layout()->checkSanity());
+}
+
+void TestDocks::tst_saveWindowWithDockWidgetThatMovedAway()
+{
+    // Floating window has 1+2 when saved. By restore time it has 1+3.
+    // Expected: a floating window with 1+2 comes back, and 3 is left on its own.
+    EnsureTopLevelsDeleted e;
+
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
+    dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
+
+    LayoutSaver saver;
+    saver.addWindowToSave(dock1);
+    const QByteArray saved = saver.serializeLayout();
+
+    dock2->close();
+    dock1->addDockWidgetToContainingWindow(dock3, Location_OnRight);
+    QCOMPARE(dock1->floatingWindow(), dock3->floatingWindow());
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    QVERIFY(dock1->isVisible());
+    QVERIFY(dock2->isVisible());
+    QCOMPARE(dock1->floatingWindow(), dock2->floatingWindow());
+
+    // 3 wasn't part of the saved layout, so it stays open, on its own
+    QVERIFY(dock3->isVisible());
+    QVERIFY(dock3->isFloating());
+    QVERIFY(dock3->floatingWindow() != dock1->floatingWindow());
 }
 
 void TestDocks::tst_marginsAfterRestore()
