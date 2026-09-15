@@ -33,6 +33,16 @@ bool LayoutSaverInstantiator::restoreFromFile(const QString &jsonFilename)
     return LayoutSaver::restoreFromFile(jsonFilename);
 }
 
+void LayoutSaverInstantiator::addMainWindowToSave(const QString &uniqueName)
+{
+    LayoutSaver::addMainWindowToSave(uniqueName);
+}
+
+void LayoutSaverInstantiator::clearWindowsToSave()
+{
+    LayoutSaver::clearWindowsToSave();
+}
+
 QVector<QString> LayoutSaverInstantiator::affinities() const
 {
     return dptr()->m_scope.affinities;
