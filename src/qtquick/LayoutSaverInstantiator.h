@@ -44,6 +44,8 @@ public:
 
     Q_INVOKABLE bool saveToFile(const QString &jsonFilename);
     Q_INVOKABLE bool restoreFromFile(const QString &jsonFilename);
+    Q_INVOKABLE void addMainWindowToSave(const QString &uniqueName);
+    Q_INVOKABLE void clearWindowsToSave();
 Q_SIGNALS:
     void affinitiesChanged();
 };

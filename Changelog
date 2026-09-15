@@ -1,4 +1,19 @@
 * v2.5.0
+  - LayoutSaver: New LayoutSaver::addWindowToSave(), to save and restore individual windows.
+    Call it once per window, passing a main window, a floating window, or a dock widget to mean
+    whichever window it currently sits in. Not calling it saves everything, as before.
+    Restoring needs no counterpart call: a layout saved this way describes only the windows you
+    picked, so it leaves every other window alone.
+    Use this instead of affinities when you want to save one top-level window. Affinities filter
+    dock widgets, and a main window's layout is saved whole or not at all, so an affinity set
+    that cuts through a main window produces a layout that cannot be restored (issue #723).
+    Such a save is now refused, with an error message naming both sides, rather than silently
+    writing a broken file.
+  - LayoutSaver: New RestoreOption_CloseUnknownDockWidgets. A dock widget docked in a main
+    window being restored, but absent from the saved layout, is closed instead of floated.
+  - LayoutSaver: A dock widget with no affinities is no longer dropped from its group when
+    saving with an affinity filter. setAffinityNames() always documented that anything with an
+    empty affinity is saved regardless of the filter, and every other code path honoured it.
   - Fix MDI not honouring initial size property
   - qtquick: Support setting floating window flags from QML
   - qtquick: Support dark mode
