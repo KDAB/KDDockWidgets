@@ -35,6 +35,7 @@ namespace KDDockWidgets {
 
 namespace Core {
 class FloatingWindow;
+class MainWindow;
 class View;
 }
 
@@ -209,6 +210,8 @@ struct DOCKS_EXPORT LayoutSaver::FloatingWindow
 
     LayoutSaver::MultiSplitter multiSplitterLayout;
     Vector<QString> affinities;
+    QString parentMainWindowName;
+    /// Superseded by parentMainWindowName. Still written, and read, for layouts saved by <= v2.5
     int parentIndex = -1;
     Rect geometry;
     Rect normalGeometry;
@@ -301,6 +304,8 @@ public:
     static LayoutSaver::Layout *s_currentLayoutBeingRestored;
 
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
+    LayoutSaver::MainWindow mainWindowForName(const QString &) const;
+    LayoutSaver::MainWindow parentMainWindowOf(const LayoutSaver::FloatingWindow &) const;
     LayoutSaver::FloatingWindow floatingWindowForIndex(int index) const;
 
     Vector<QString> mainWindowNames() const;
@@ -334,6 +339,7 @@ public:
     static void restorePendingPositions(Core::DockWidget *);
 
     bool matchesAffinity(const Vector<QString> &affinities) const;
+    Core::MainWindow *resolveParentMainWindow(const LayoutSaver::FloatingWindow &) const;
     void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 

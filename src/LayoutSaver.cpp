@@ -242,6 +242,7 @@ static void to_json(nlohmann::json &json, const LayoutSaver::FloatingWindow &win
 {
     json["multiSplitterLayout"] = window.multiSplitterLayout;
     json["parentIndex"] = window.parentIndex;
+    json["parentMainWindowName"] = window.parentMainWindowName;
     json["geometry"] = window.geometry;
     json["normalGeometry"] = window.normalGeometry;
     json["screenIndex"] = window.screenIndex;
@@ -259,6 +260,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &w
 {
     window.multiSplitterLayout = jsonValue(json, "multiSplitterLayout", LayoutSaver::MultiSplitter());
     window.parentIndex = jsonValue(json, "parentIndex", -1);
+    window.parentMainWindowName = jsonValue(json, "parentMainWindowName", QString());
     window.geometry = jsonValue(json, "geometry", Rect());
     window.normalGeometry = jsonValue(json, "normalGeometry", Rect());
     window.screenIndex = jsonValue(json, "screenIndex", 0);
@@ -624,8 +626,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(fw.affinities) || fw.skipsRestore())
             continue;
 
-        auto parent =
-            fw.parentIndex == -1 ? nullptr : DockRegistry::self()->mainwindows().at(fw.parentIndex);
+        Core::MainWindow *parent = d->resolveParentMainWindow(fw);
 
         auto flags = static_cast<FloatingWindowFlags>(fw.flags);
         flags.setFlag(FloatingWindowFlag::StartsMinimized, int(fw.windowState) & int(WindowState::Minimized));
@@ -764,6 +765,34 @@ void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
             s_unrestoredProperties.erase(it);
         }
     }
+}
+
+Core::MainWindow *
+LayoutSaver::Private::resolveParentMainWindow(const LayoutSaver::FloatingWindow &fw) const
+{
+    if (!fw.parentMainWindowName.isEmpty()) {
+        if (auto mw = m_dockRegistry->mainWindowByName(fw.parentMainWindowName))
+            return mw;
+
+        KDDW_WARN("Floating window references main window {}, which doesn't exist. Restoring it "
+                  "without a parent.",
+                  fw.parentMainWindowName);
+        return nullptr;
+    }
+
+    // Layouts saved by <= v2.5 only have an index into the registry
+    if (fw.parentIndex < 0)
+        return nullptr;
+
+    const auto mainWindows = m_dockRegistry->mainwindows();
+    if (fw.parentIndex >= mainWindows.size()) {
+        KDDW_WARN("Floating window references main window #{}, but only {} exist. Restoring it "
+                  "without a parent.",
+                  fw.parentIndex, mainWindows.size());
+        return nullptr;
+    }
+
+    return mainWindows.at(fw.parentIndex);
 }
 
 bool LayoutSaver::Private::matchesAffinity(const Vector<QString> &affinities) const
@@ -1001,7 +1030,7 @@ void LayoutSaver::Layout::scaleSizes(InternalRestoreOptions options)
 
     if (useRelativeSizesForFloatingWidgets) {
         for (auto &fw : floatingWindows) {
-            LayoutSaver::MainWindow mw = mainWindowForIndex(fw.parentIndex);
+            LayoutSaver::MainWindow mw = parentMainWindowOf(fw);
             if (mw.scalingInfo.isValid())
                 fw.scaleSizes(mw.scalingInfo);
         }
@@ -1024,6 +1053,25 @@ LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForIndex(int index) const
         return {};
 
     return mainWindows.at(index);
+}
+
+LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForName(const QString &uniqueName) const
+{
+    for (const auto &mw : mainWindows) {
+        if (mw.uniqueName == uniqueName)
+            return mw;
+    }
+
+    return {};
+}
+
+LayoutSaver::MainWindow
+LayoutSaver::Layout::parentMainWindowOf(const LayoutSaver::FloatingWindow &fw) const
+{
+    if (!fw.parentMainWindowName.isEmpty())
+        return mainWindowForName(fw.parentMainWindowName);
+
+    return mainWindowForIndex(fw.parentIndex);
 }
 
 LayoutSaver::FloatingWindow LayoutSaver::Layout::floatingWindowForIndex(int index) const

@@ -350,6 +350,9 @@
                     "type": "integer",
                     "minimum": -1
                 },
+                "parentMainWindowName": {
+                    "type": "string"
+                },
                 "screenIndex": {
                     "type": "integer",
                     "minimum": -1
