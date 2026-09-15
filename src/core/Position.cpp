@@ -246,6 +246,13 @@ LayoutSaver::Position Positions::serialize(const LayoutSaver::SaveScope &scope) 
 
         Core::Item *item = itemRef->item;
         Core::Layout *layout = DockRegistry::self()->layoutForItem(item);
+
+        // A placeholder is an index into a layout. If that layout isn't part of this save then
+        // the index means nothing on restore, and would land on whatever item happens to sit
+        // there. Drop it instead.
+        if (!scope.includesLayout(layout))
+            continue;
+
         const auto itemIndex = layout->items().indexOf(item);
 
         auto fw = layout->floatingWindow();
@@ -254,7 +261,7 @@ LayoutSaver::Position Positions::serialize(const LayoutSaver::SaveScope &scope) 
         p.isFloatingWindow = fw;
 
         if (p.isFloatingWindow) {
-            p.indexOfFloatingWindow = fw->beingDeleted() ? -1 : scope.indexOfFloatingWindow(fw);
+            p.indexOfFloatingWindow = scope.indexOfFloatingWindow(fw);
         } else {
             p.mainWindowUniqueName = mainWindow->uniqueName();
             assert(!p.mainWindowUniqueName.isEmpty());

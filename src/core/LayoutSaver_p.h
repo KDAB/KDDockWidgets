@@ -35,6 +35,7 @@ namespace KDDockWidgets {
 
 namespace Core {
 class FloatingWindow;
+class Layout;
 class MainWindow;
 class View;
 }
@@ -66,6 +67,9 @@ struct DOCKS_EXPORT LayoutSaver::SaveScope
     /// Placeholders reference floating windows by index into this list.
     Vector<Core::FloatingWindow *> floatingWindows;
 
+    /// The unique names of the main windows being saved
+    Vector<QString> mainWindowNames;
+
     /// Returns whether something with @p affinities is in scope.
     /// Something with no affinities of its own is always in scope.
     bool matchesAffinity(const Vector<QString> &candidate) const;
@@ -76,6 +80,9 @@ struct DOCKS_EXPORT LayoutSaver::SaveScope
 
     /// Index of @p fw in floatingWindows, or -1 if it's not being saved
     int indexOfFloatingWindow(const Core::FloatingWindow *fw) const;
+
+    /// Returns whether the window owning @p layout is being saved
+    bool includesLayout(Core::Layout *) const;
 };
 
 struct LayoutSaver::Placeholder

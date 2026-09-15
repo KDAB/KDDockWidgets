@@ -447,11 +447,18 @@ QByteArray LayoutSaver::serializeLayout() const
     scope.floatingWindows = Core::floatingWindowsForAffinity(scope.affinities);
 
     const auto mainWindows = d->m_dockRegistry->mainwindows();
-    layout.mainWindows.reserve(mainWindows.size());
+    Core::MainWindow::List mainWindowsToSave;
+    mainWindowsToSave.reserve(mainWindows.size());
     for (auto mainWindow : mainWindows) {
-        if (scope.matchesAffinity(mainWindow->affinities()))
-            layout.mainWindows.push_back(mainWindow->serialize(scope));
+        if (scope.matchesAffinity(mainWindow->affinities())) {
+            mainWindowsToSave.push_back(mainWindow);
+            scope.mainWindowNames.push_back(mainWindow->uniqueName());
+        }
     }
+
+    layout.mainWindows.reserve(mainWindowsToSave.size());
+    for (auto mainWindow : std::as_const(mainWindowsToSave))
+        layout.mainWindows.push_back(mainWindow->serialize(scope));
 
     layout.floatingWindows.reserve(scope.floatingWindows.size());
     for (Core::FloatingWindow *floatingWindow : scope.floatingWindows) {
@@ -813,6 +820,20 @@ bool LayoutSaver::SaveScope::matchesAffinityStrictly(const Vector<QString> &cand
 int LayoutSaver::SaveScope::indexOfFloatingWindow(const Core::FloatingWindow *fw) const
 {
     return floatingWindows.indexOf(const_cast<Core::FloatingWindow *>(fw));
+}
+
+bool LayoutSaver::SaveScope::includesLayout(Core::Layout *layout) const
+{
+    if (!layout)
+        return false;
+
+    if (auto fw = layout->floatingWindow())
+        return floatingWindows.contains(fw);
+
+    if (auto mw = layout->mainWindow(/*honourNesting=*/true))
+        return mainWindowNames.contains(mw->uniqueName());
+
+    return false;
 }
 
 bool LayoutSaver::Private::matchesAffinity(const Vector<QString> &affinities) const
