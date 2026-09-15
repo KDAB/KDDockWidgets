@@ -625,9 +625,10 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize(const Vector<QString> &aff
     fw.flags = d->m_flags;
 
     Window::Ptr transientParentWindow = view()->d->transientWindow();
-    auto transientMainWindow = DockRegistry::self()->mainWindowForHandle(transientParentWindow);
-    fw.parentIndex =
-        transientMainWindow ? DockRegistry::self()->mainwindows().indexOf(transientMainWindow) : -1;
+    if (auto transientMainWindow = DockRegistry::self()->mainWindowForHandle(transientParentWindow)) {
+        fw.parentMainWindowName = transientMainWindow->uniqueName();
+        fw.parentIndex = DockRegistry::self()->mainwindows().indexOf(transientMainWindow);
+    }
 
     return fw;
 }
