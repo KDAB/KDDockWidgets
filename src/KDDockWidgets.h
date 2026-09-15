@@ -255,6 +255,9 @@ enum RestoreOption {
            ///< relative sizing. Loading layouts won't change the main window geometry and just use
            ///< whatever the user has at the moment.
     RestoreOption_AbsoluteFloatingDockWindows = 2, ///< Skips scaling of floating dock windows relative to the main window.
+    RestoreOption_CloseUnknownDockWidgets =
+        4, ///< Closes dock widgets that are docked in a main window being restored but aren't
+           ///< part of the saved layout. By default they are floated instead.
 };
 Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
 Q_ENUM_NS(RestoreOptions)

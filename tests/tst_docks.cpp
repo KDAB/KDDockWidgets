@@ -106,6 +106,7 @@ private Q_SLOTS:
     void tst_saveSingleFloatingWindow();
     void tst_saveMainWindowWithClosedDockWidget();
     void tst_saveWindowWithDockWidgetThatMovedAway();
+    void tst_restoreClosesUnknownDockWidgets();
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
     void tst_restoreWithDockFactory();
@@ -3554,6 +3555,36 @@ void TestDocks::tst_saveWindowWithDockWidgetThatMovedAway()
     QVERIFY(dock3->isVisible());
     QVERIFY(dock3->isFloating());
     QVERIFY(dock3->floatingWindow() != dock1->floatingWindow());
+}
+
+void TestDocks::tst_restoreClosesUnknownDockWidgets()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_None, "mw1");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    LayoutSaver saver;
+    saver.addWindowToSave(m.get());
+    const QByteArray saved = saver.serializeLayout();
+
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock2, Location_OnRight);
+
+    // By default a dock widget the layout doesn't know about gets floated
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(dock2->isVisible());
+    QVERIFY(dock2->isFloating());
+
+    m->addDockWidget(dock2, Location_OnRight);
+    QVERIFY(!dock2->isFloating());
+
+    LayoutSaver closingSaver(RestoreOption_CloseUnknownDockWidgets);
+    QVERIFY(closingSaver.restoreLayout(saved));
+    QVERIFY(!dock2->isVisible());
+    QVERIFY(dock1->isVisible());
+    QVERIFY(m->layout()->checkSanity());
 }
 
 void TestDocks::tst_marginsAfterRestore()
