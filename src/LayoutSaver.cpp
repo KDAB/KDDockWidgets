@@ -562,9 +562,16 @@ QByteArray LayoutSaver::serializeLayout() const
             // Placeholders are already filtered down to the selected windows, so a dock widget
             // with none of them left has nothing to do with this save. Sidebar dock widgets are
             // the exception, hence also checking the windows themselves.
+            //
+            // A dock widget currently open in a window we didn't select is out of scope too,
+            // even if it also left a stale placeholder behind in a selected one: restoring must
+            // leave it alone, not close it.
+            const bool inSavedWindow = namesInSavedWindows.contains(dockWidget->uniqueName());
+            if (!inSavedWindow && dockWidget->isOpen())
+                continue;
+
             auto lastPosition = dockWidget->d->lastPosition()->serialize(scope);
-            if (lastPosition.placeholders.isEmpty()
-                && !namesInSavedWindows.contains(dockWidget->uniqueName()))
+            if (!inSavedWindow && lastPosition.placeholders.isEmpty())
                 continue;
 
             auto dw = dockWidget->d->serialize();
