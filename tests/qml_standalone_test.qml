@@ -17,7 +17,7 @@ import com.kdab.dockwidgets 2.0 as KDDW
 // This is just to test that KDDW can run under qml.exe without C++
 
 // You can run with:
-// qml -I build-dev6-qml-module tests/qml_standalone_test.qml -platform xcb
+// qml -I build-dev-qml-module tests/qml_standalone_test.qml -platform xcb
 
 ApplicationWindow {
     visible: true
