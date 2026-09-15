@@ -108,6 +108,7 @@ private Q_SLOTS:
     void tst_saveWindowWithDockWidgetThatMovedAway();
     void tst_restoreClosesUnknownDockWidgets();
     void tst_refuseToSavePartialMainWindow();
+    void tst_saveWindowDoesntCloseDockWidgetOpenElsewhere();
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
     void tst_restoreWithDockFactory();
@@ -3616,6 +3617,36 @@ void TestDocks::tst_refuseToSavePartialMainWindow()
     LayoutSaver windowSaver;
     windowSaver.addWindowToSave(m.get());
     QVERIFY(!windowSaver.serializeLayout().isEmpty());
+}
+
+void TestDocks::tst_saveWindowDoesntCloseDockWidgetOpenElsewhere()
+{
+    // dock1 used to be docked in mw1, leaving behind a placeholder pointing at its old spot,
+    // then was floated out. Saving mw1 alone must leave dock1's floating window alone: dock1 is
+    // currently open elsewhere, not part of the window being saved.
+    EnsureTopLevelsDeleted e;
+
+    auto m1 = createMainWindow(Size(500, 500), MainWindowOption_None, "mw1");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    m1->addDockWidget(dock1, Location_OnLeft);
+    m1->addDockWidget(dock2, Location_OnTop);
+
+    dock1->setFloating(true);
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock1->isVisible());
+
+    LayoutSaver saver;
+    saver.addWindowToSave(m1.get());
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    // dock1 was never part of mw1's save, and is open in its own window; restoring mw1 mustn't
+    // touch it
+    QVERIFY(dock1->isVisible());
+    QVERIFY(dock1->isFloating());
 }
 
 void TestDocks::tst_marginsAfterRestore()
