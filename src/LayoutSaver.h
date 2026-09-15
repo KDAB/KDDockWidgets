@@ -33,6 +33,8 @@ namespace KDDockWidgets {
 
 namespace Core {
 class DockWidget;
+class FloatingWindow;
+class MainWindow;
 }
 
 /**
@@ -117,6 +119,41 @@ public:
      * affinityNames.
      */
     void setAffinityNames(const Vector<QString> &affinityNames);
+
+    /**
+     * @brief Restricts saving to the specified window.
+     *
+     * Call it once per window you want to save. Not calling it at all, which is the default,
+     * saves every window.
+     *
+     * Use this to save and restore a single top-level window, for example the layout of
+     * whatever is currently docked into one main window, or the contents of one floating
+     * window. A window is always saved in full; saving only some of the dock widgets inside a
+     * window is not supported.
+     *
+     * Restoring needs no counterpart call. A layout saved this way only describes the windows
+     * you selected, so restoring it only touches those, and leaves every other window alone.
+     * Dock widgets that were saved but have since moved elsewhere are moved back.
+     *
+     * Only affects saving. Has no effect on restoring.
+     */
+    void addWindowToSave(Core::MainWindow *);
+    void addWindowToSave(Core::FloatingWindow *);
+
+    /**
+     * @brief Overload that saves the top-level window @p dockWidget is currently in.
+     * Does nothing if the dock widget is closed, as it's then in no window.
+     */
+    void addWindowToSave(Core::DockWidget *dockWidget);
+
+    /**
+     * @brief Overload that takes a main window's unique name.
+     * The main window doesn't need to exist yet when this is called, only when saving.
+     */
+    void addMainWindowToSave(const QString &uniqueName);
+
+    /// @brief Undoes any addWindowToSave() call, going back to saving every window
+    void clearWindowsToSave();
 
     /**
      * @brief Returns the list of opened dock widgets in the specified layout
