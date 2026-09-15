@@ -658,11 +658,11 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         if (Core::DockWidget *dockWidget = d->m_dockRegistry->dockByName(
                 dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
-            dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
+            dockWidget->d->lastPosition()->deserialize(dw->lastPosition, dw->uniqueName);
         } else {
             KDDW_INFO("Couldn't find dock widget {}", dw->uniqueName);
             auto pos = std::make_shared<KDDockWidgets::Positions>();
-            pos->deserialize(dw->lastPosition);
+            pos->deserialize(dw->lastPosition, dw->uniqueName);
             LayoutSaver::Private::s_unrestoredPositions[dw->uniqueName] = pos;
             LayoutSaver::Private::s_unrestoredProperties[dw->uniqueName] = dw->lastCloseReason;
         }
