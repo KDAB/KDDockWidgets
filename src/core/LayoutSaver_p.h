@@ -373,6 +373,7 @@ public:
 
     bool matchesAffinity(const Vector<QString> &affinities) const;
     LayoutSaver::SaveScope resolveScope() const;
+    bool checkScopeIsRestorable(const LayoutSaver::SaveScope &) const;
     void addNestedMainWindows(LayoutSaver::SaveScope &) const;
     Core::MainWindow *resolveParentMainWindow(const LayoutSaver::FloatingWindow &) const;
     void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);

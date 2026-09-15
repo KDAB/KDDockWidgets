@@ -82,6 +82,10 @@ public:
 
     /**
      * @brief saves the layout into a byte array
+     *
+     * Returns an empty array if the layout can't be saved, which currently means an affinity
+     * filter that covers only part of a main window. Use addWindowToSave() to save a single
+     * window instead.
      */
     QByteArray serializeLayout() const;
 

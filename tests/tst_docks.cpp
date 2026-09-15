@@ -107,6 +107,7 @@ private Q_SLOTS:
     void tst_saveMainWindowWithClosedDockWidget();
     void tst_saveWindowWithDockWidgetThatMovedAway();
     void tst_restoreClosesUnknownDockWidgets();
+    void tst_refuseToSavePartialMainWindow();
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
     void tst_restoreWithDockFactory();
@@ -3585,6 +3586,36 @@ void TestDocks::tst_restoreClosesUnknownDockWidgets()
     QVERIFY(!dock2->isVisible());
     QVERIFY(dock1->isVisible());
     QVERIFY(m->layout()->checkSanity());
+}
+
+void TestDocks::tst_refuseToSavePartialMainWindow()
+{
+    // The configuration from issue #723: each dock widget carries its own name as an affinity,
+    // and the saver filters on those, leaving the main window out.
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(Size(500, 500), MainWindowOption_None, "mw1");
+    m->setAffinities({ "mainWindowAffinity" });
+
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    dock1->setAffinities({ "mainWindowAffinity", dock1->uniqueName() });
+    dock2->setAffinities({ "mainWindowAffinity", dock2->uniqueName() });
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnTop);
+
+    LayoutSaver saver;
+    saver.setAffinityNames({ dock1->uniqueName(), dock2->uniqueName() });
+
+    {
+        SetExpectedWarning expected("Refusing to save");
+        QVERIFY(saver.serializeLayout().isEmpty());
+    }
+
+    // Selecting the window instead is the supported way to do this
+    LayoutSaver windowSaver;
+    windowSaver.addWindowToSave(m.get());
+    QVERIFY(!windowSaver.serializeLayout().isEmpty());
 }
 
 void TestDocks::tst_marginsAfterRestore()
