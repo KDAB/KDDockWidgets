@@ -207,6 +207,7 @@ private Q_SLOTS:
     void tst_nestedMainWindowFloatButton();
     void tst_nestedMainWindowSaveRestore_data();
     void tst_nestedMainWindowSaveRestore();
+    void tst_saveWindowWithNestedMainWindow();
     void tst_focusBetweenTabs();
     void addDockWidgetToSide();
     void addDockWidgetToSide2();
@@ -2428,6 +2429,49 @@ void TestQtWidgets::tst_nestedMainWindowSaveRestore()
     LayoutSaver saver;
     QVERIFY(saver.restoreLayout(saver.serializeLayout()));
     QVERIFY(mainWindow->isVisible());
+}
+
+void TestQtWidgets::tst_saveWindowWithNestedMainWindow()
+{
+    // Selecting a main window for saving has to pull in main windows nested inside it,
+    // otherwise their dock widgets aren't restored.
+    EnsureTopLevelsDeleted e;
+
+    auto mainWindow = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto nestedMainWindow = createMainWindow(QSize(500, 500), MainWindowOption_None, "MW1.1");
+
+    auto containerDock =
+        new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("nested mainwindow container"));
+    auto nestedMainWindowQWidget =
+        static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
+    containerDock->setWidget(nestedMainWindowQWidget);
+    mainWindow->addDockWidget(containerDock->asDockWidgetController(), Location_OnRight);
+
+    auto nestedDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("nested dock"));
+    nestedMainWindow->addDockWidget(nestedDock->asDockWidgetController(), Location_OnBottom);
+
+    LayoutSaver saver;
+    saver.addWindowToSave(mainWindow.get());
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    {
+        LayoutSaver::Layout layout;
+        QVERIFY(layout.fromJson(saved));
+        Vector<QString> names = layout.mainWindowNames();
+        std::sort(names.begin(), names.end());
+        QCOMPARE(names,
+                 (Vector<QString> { QStringLiteral("MW1"), QStringLiteral("MW1.1") }));
+    }
+
+    nestedDock->close();
+    QVERIFY(!nestedDock->isOpen());
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    QVERIFY(mainWindow->isVisible());
+    QVERIFY(nestedDock->isOpen());
+    QCOMPARE(nestedDock->asDockWidgetController()->mainWindow(), nestedMainWindow.get());
 }
 
 void TestQtWidgets::tst_nestedMainWindowFloatButton()
