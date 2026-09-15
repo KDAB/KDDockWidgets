@@ -397,6 +397,39 @@ static void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidg
 
 namespace {
 
+bool isDocumentMode(const Core::MainWindow::List &mainWindows,
+                    const QVector<QString> &affinities)
+{
+    if (mainWindows.size() != 1) {
+        // more than 1 window not supported (yet, until someone needs it ?)
+        return false;
+    }
+
+    if (affinities.size() != 1) {
+        // Not supported
+        return false;
+    }
+
+    auto mainWindow = mainWindows.first();
+    const QString &documentAffinity = mainWindow->documentAffinity();
+    if (documentAffinity.isEmpty()) {
+        return false;
+    }
+
+    if ((mainWindow->options() & MainWindowOption_HasCentralGroup) == 0) {
+        // we need to be in document mode
+        return false;
+    }
+
+    return true;
+}
+
+bool isRestoringDocuments(const Core::MainWindow::List &mainWindows,
+                          const QVector<QString> &affinities)
+{
+    return isDocumentMode(mainWindows, affinities) && affinities.first() == mainWindows.first()->documentAffinity();
+}
+
 /// The dock widget @p mainWindow is nested in, if it's a nested main window
 Core::DockWidget *hostDockWidget(Core::MainWindow *mainWindow)
 {
@@ -457,6 +490,10 @@ LayoutSaver::~LayoutSaver()
 bool LayoutSaver::saveToFile(const QString &jsonFilename)
 {
     const QByteArray data = serializeLayout();
+    if (data.isEmpty()) {
+        // Refused to serialize. Don't leave an empty file behind.
+        return false;
+    }
 
     std::ofstream file(jsonFilename.toStdString(), std::ios::binary);
     if (!file.is_open()) {
@@ -495,6 +532,9 @@ QByteArray LayoutSaver::serializeLayout() const
     // Resolve the scope once. Placeholders reference floating windows by index into it,
     // so it has to be stable for the whole serialization.
     const SaveScope scope = d->resolveScope();
+
+    if (!d->checkScopeIsRestorable(scope))
+        return {};
 
     const auto mainWindows = d->m_dockRegistry->mainWindows(scope.mainWindowNames);
     layout.mainWindows.reserve(mainWindows.size());
@@ -550,49 +590,6 @@ QByteArray LayoutSaver::serializeLayout() const
     }
 
     return layout.toJson();
-}
-
-namespace {
-
-bool isDocumentMode(const Core::MainWindow::List &mainWindows,
-                    const QVector<QString> &affinities)
-{
-    if (mainWindows.size() != 1) {
-        // more than 1 window not supported (yet, until someone needs it ?)
-        return false;
-    }
-
-    if (affinities.size() != 1) {
-        // Not supported
-        return false;
-    }
-
-    auto mainWindow = mainWindows.first();
-    const QString &documentAffinity = mainWindow->documentAffinity();
-    if (documentAffinity.isEmpty()) {
-        return false;
-    }
-
-    if ((mainWindow->options() & MainWindowOption_HasCentralGroup) == 0) {
-        // we need to be in document mode
-        return false;
-    }
-
-    return true;
-}
-
-bool isRestoringDocuments(const Core::MainWindow::List &mainWindows,
-                          const QVector<QString> &affinities)
-{
-    return isDocumentMode(mainWindows, affinities) && affinities.first() == mainWindows.first()->documentAffinity();
-}
-
-// bool isRestoringNonDocuments(const Core::MainWindow::List &mainWindows,
-//                              const QVector<QString> &affinities)
-// {
-//     return isDocumentMode(mainWindows, affinities) && affinities.first() != mainWindows.first()->documentAffinity();
-// }
-
 }
 
 bool LayoutSaver::restoreLayout(const QByteArray &data)
@@ -928,6 +925,40 @@ void LayoutSaver::Private::addNestedMainWindows(SaveScope &scope) const
             }
         }
     }
+}
+
+bool LayoutSaver::Private::checkScopeIsRestorable(const SaveScope &scope) const
+{
+    if (scope.hasWindowSelection || scope.affinities.isEmpty())
+        return true;
+
+    const auto mainWindows = m_dockRegistry->mainwindows();
+
+    // Document mode deliberately saves only the central group of its main window
+    if (isDocumentMode(mainWindows, scope.affinities))
+        return true;
+
+    bool restorable = true;
+    for (auto mainWindow : mainWindows) {
+        const bool mainWindowMatches = scope.mainWindowNames.contains(mainWindow->uniqueName());
+        const Core::DockWidget::List docks = mainWindow->layout()->dockWidgets();
+        for (auto dw : docks) {
+            if (dw->isPersistentCentralDockWidget())
+                continue;
+
+            if (scope.matchesAffinity(dw->affinities()) == mainWindowMatches)
+                continue;
+
+            KDDW_ERROR("Refusing to save: the affinity filter covers {} but not {}. A main "
+                       "window's layout is saved whole or not at all. To save one window, use "
+                       "LayoutSaver::addWindowToSave() instead of affinities.",
+                       mainWindowMatches ? mainWindow->uniqueName() : dw->uniqueName(),
+                       mainWindowMatches ? dw->uniqueName() : mainWindow->uniqueName());
+            restorable = false;
+        }
+    }
+
+    return restorable;
 }
 
 LayoutSaver::SaveScope LayoutSaver::Private::resolveScope() const
