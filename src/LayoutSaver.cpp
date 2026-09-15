@@ -1004,11 +1004,6 @@ bool LayoutSaver::SaveScope::matchesAffinity(const Vector<QString> &candidate) c
         || DockRegistry::self()->affinitiesMatch(affinities, candidate);
 }
 
-bool LayoutSaver::SaveScope::matchesAffinityStrictly(const Vector<QString> &candidate) const
-{
-    return affinities.isEmpty() || DockRegistry::self()->affinitiesMatch(affinities, candidate);
-}
-
 int LayoutSaver::SaveScope::indexOfFloatingWindow(const Core::FloatingWindow *fw) const
 {
     return floatingWindows.indexOf(const_cast<Core::FloatingWindow *>(fw));

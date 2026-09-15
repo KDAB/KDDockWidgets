@@ -80,9 +80,6 @@ struct DOCKS_EXPORT LayoutSaver::SaveScope
     /// Something with no affinities of its own is always in scope.
     bool matchesAffinity(const Vector<QString> &candidate) const;
 
-    /// Like matchesAffinity(), except that having no affinities doesn't grant a match
-    /// while an affinity filter is set.
-    bool matchesAffinityStrictly(const Vector<QString> &candidate) const;
 
     /// Index of @p fw in floatingWindows, or -1 if it's not being saved
     int indexOfFloatingWindow(const Core::FloatingWindow *fw) const;
