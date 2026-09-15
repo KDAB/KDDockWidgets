@@ -70,6 +70,10 @@ struct DOCKS_EXPORT LayoutSaver::SaveScope
     /// The unique names of the main windows being saved
     Vector<QString> mainWindowNames;
 
+    /// Whether the user picked the windows explicitly, via LayoutSaver::addWindowToSave().
+    /// When false, mainWindowNames and floatingWindows are derived from the affinity filter.
+    bool hasWindowSelection = false;
+
     /// Returns whether something with @p affinities is in scope.
     /// Something with no affinities of its own is always in scope.
     bool matchesAffinity(const Vector<QString> &candidate) const;
@@ -369,6 +373,7 @@ public:
     static void restorePendingPositions(Core::DockWidget *);
 
     bool matchesAffinity(const Vector<QString> &affinities) const;
+    LayoutSaver::SaveScope resolveScope() const;
     Core::MainWindow *resolveParentMainWindow(const LayoutSaver::FloatingWindow &) const;
     void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);

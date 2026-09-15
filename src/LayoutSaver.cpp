@@ -391,6 +391,36 @@ static void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidg
 
 }
 
+namespace {
+
+/// The dock widgets that appear inside the already-serialized windows of @p layout
+Vector<QString> dockWidgetNamesIn(const LayoutSaver::Layout &layout)
+{
+    Vector<QString> names;
+
+    auto addGroups = [&names](const LayoutSaver::MultiSplitter &multiSplitter) {
+        for (const auto &it : multiSplitter.groups) {
+            for (const auto &dw : it.second.dockWidgets)
+                names.push_back(dw->uniqueName);
+        }
+    };
+
+    for (const auto &mw : layout.mainWindows) {
+        addGroups(mw.multiSplitterLayout);
+        for (const auto &it : mw.dockWidgetsPerSideBar) {
+            for (const QString &name : it.second)
+                names.push_back(name);
+        }
+    }
+
+    for (const auto &fw : layout.floatingWindows)
+        addGroups(fw.multiSplitterLayout);
+
+    return names;
+}
+
+}
+
 LayoutSaver::LayoutSaver(RestoreOptions options)
     : d(new Private(options))
 {
@@ -443,21 +473,11 @@ QByteArray LayoutSaver::serializeLayout() const
 
     // Resolve the scope once. Placeholders reference floating windows by index into it,
     // so it has to be stable for the whole serialization.
-    SaveScope scope = d->m_scope;
-    scope.floatingWindows = Core::floatingWindowsForAffinity(scope.affinities);
+    const SaveScope scope = d->resolveScope();
 
-    const auto mainWindows = d->m_dockRegistry->mainwindows();
-    Core::MainWindow::List mainWindowsToSave;
-    mainWindowsToSave.reserve(mainWindows.size());
-    for (auto mainWindow : mainWindows) {
-        if (scope.matchesAffinity(mainWindow->affinities())) {
-            mainWindowsToSave.push_back(mainWindow);
-            scope.mainWindowNames.push_back(mainWindow->uniqueName());
-        }
-    }
-
-    layout.mainWindows.reserve(mainWindowsToSave.size());
-    for (auto mainWindow : std::as_const(mainWindowsToSave))
+    const auto mainWindows = d->m_dockRegistry->mainWindows(scope.mainWindowNames);
+    layout.mainWindows.reserve(mainWindows.size());
+    for (auto mainWindow : mainWindows)
         layout.mainWindows.push_back(mainWindow->serialize(scope));
 
     layout.floatingWindows.reserve(scope.floatingWindows.size());
@@ -465,25 +485,47 @@ QByteArray LayoutSaver::serializeLayout() const
         layout.floatingWindows.push_back(floatingWindow->serialize(scope));
     }
 
-    // Closed dock widgets also have interesting things to save, like geometry and placeholder info
-    const Core::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets(/*honourSkipped=*/true);
-    layout.closedDockWidgets.reserve(closedDockWidgets.size());
-    for (Core::DockWidget *dockWidget : closedDockWidgets) {
-        if (scope.matchesAffinity(dockWidget->affinities()))
-            layout.closedDockWidgets.push_back(dockWidget->d->serialize());
-    }
-
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items
     // to be created before restoring the placeholders
+
+    const Vector<QString> namesInSavedWindows =
+        scope.hasWindowSelection ? dockWidgetNamesIn(layout) : Vector<QString>();
 
     const Core::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (Core::DockWidget *dockWidget : dockWidgets) {
-        if (!dockWidget->skipsRestore() && scope.matchesAffinity(dockWidget->affinities())) {
+        if (dockWidget->skipsRestore())
+            continue;
+
+        if (scope.hasWindowSelection) {
+            // Placeholders are already filtered down to the selected windows, so a dock widget
+            // with none of them left has nothing to do with this save. Sidebar dock widgets are
+            // the exception, hence also checking the windows themselves.
+            auto lastPosition = dockWidget->d->lastPosition()->serialize(scope);
+            if (lastPosition.placeholders.isEmpty()
+                && !namesInSavedWindows.contains(dockWidget->uniqueName()))
+                continue;
+
+            auto dw = dockWidget->d->serialize();
+            dw->lastPosition = lastPosition;
+            layout.allDockWidgets.push_back(dw);
+        } else if (scope.matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
             dw->lastPosition = dockWidget->d->lastPosition()->serialize(scope);
             layout.allDockWidgets.push_back(dw);
         }
+    }
+
+    // Closed dock widgets also have interesting things to save, like geometry and placeholder info
+    const Vector<QString> savedNames = layout.dockWidgetNames();
+    const Core::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets(/*honourSkipped=*/true);
+    layout.closedDockWidgets.reserve(closedDockWidgets.size());
+    for (Core::DockWidget *dockWidget : closedDockWidgets) {
+        const bool inScope = scope.hasWindowSelection
+            ? savedNames.contains(dockWidget->uniqueName())
+            : scope.matchesAffinity(dockWidget->affinities());
+        if (inScope)
+            layout.closedDockWidgets.push_back(dockWidget->d->serialize());
     }
 
     return layout.toJson();
@@ -683,6 +725,64 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     return true;
 }
 
+void LayoutSaver::addWindowToSave(Core::MainWindow *mainWindow)
+{
+    if (!mainWindow) {
+        KDDW_ERROR("LayoutSaver::addWindowToSave: null main window");
+        return;
+    }
+
+    addMainWindowToSave(mainWindow->uniqueName());
+}
+
+void LayoutSaver::addMainWindowToSave(const QString &uniqueName)
+{
+    if (uniqueName.isEmpty()) {
+        KDDW_ERROR("LayoutSaver::addMainWindowToSave: empty name");
+        return;
+    }
+
+    d->m_scope.hasWindowSelection = true;
+    if (!d->m_scope.mainWindowNames.contains(uniqueName))
+        d->m_scope.mainWindowNames.push_back(uniqueName);
+}
+
+void LayoutSaver::addWindowToSave(Core::FloatingWindow *floatingWindow)
+{
+    if (!floatingWindow) {
+        KDDW_ERROR("LayoutSaver::addWindowToSave: null floating window");
+        return;
+    }
+
+    d->m_scope.hasWindowSelection = true;
+    if (!d->m_scope.floatingWindows.contains(floatingWindow))
+        d->m_scope.floatingWindows.push_back(floatingWindow);
+}
+
+void LayoutSaver::addWindowToSave(Core::DockWidget *dockWidget)
+{
+    if (!dockWidget) {
+        KDDW_ERROR("LayoutSaver::addWindowToSave: null dock widget");
+        return;
+    }
+
+    if (auto fw = dockWidget->floatingWindow()) {
+        addWindowToSave(fw);
+    } else if (auto mw = dockWidget->mainWindow()) {
+        addWindowToSave(mw);
+    } else {
+        KDDW_ERROR("LayoutSaver::addWindowToSave: dock widget {} is in no window",
+                   dockWidget->uniqueName());
+    }
+}
+
+void LayoutSaver::clearWindowsToSave()
+{
+    d->m_scope.hasWindowSelection = false;
+    d->m_scope.mainWindowNames.clear();
+    d->m_scope.floatingWindows.clear();
+}
+
 void LayoutSaver::setAffinityNames(const Vector<QString> &affinityNames)
 {
     d->m_scope.affinities = affinityNames;
@@ -776,6 +876,45 @@ void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
             s_unrestoredProperties.erase(it);
         }
     }
+}
+
+LayoutSaver::SaveScope LayoutSaver::Private::resolveScope() const
+{
+    SaveScope scope = m_scope;
+
+    if (scope.hasWindowSelection) {
+        // Drop selected windows that are gone, or were never there. Comparing against the
+        // registry also means we never dereference a stale floating window pointer.
+        const auto liveFloatingWindows =
+            m_dockRegistry->floatingWindows(/*includeBeingDeleted=*/false, /*honourSkipped=*/true);
+        scope.floatingWindows.clear();
+        for (auto fw : std::as_const(m_scope.floatingWindows)) {
+            if (liveFloatingWindows.contains(fw))
+                scope.floatingWindows.push_back(fw);
+        }
+
+        scope.mainWindowNames.clear();
+        for (const QString &name : std::as_const(m_scope.mainWindowNames)) {
+            if (m_dockRegistry->mainWindowByName(name)) {
+                scope.mainWindowNames.push_back(name);
+            } else {
+                KDDW_WARN("LayoutSaver: main window {} doesn't exist, not saving it", name);
+            }
+        }
+
+        return scope;
+    }
+
+    scope.floatingWindows = Core::floatingWindowsForAffinity(scope.affinities);
+
+    const auto mainWindows = m_dockRegistry->mainwindows();
+    scope.mainWindowNames.reserve(mainWindows.size());
+    for (auto mainWindow : mainWindows) {
+        if (scope.matchesAffinity(mainWindow->affinities()))
+            scope.mainWindowNames.push_back(mainWindow->uniqueName());
+    }
+
+    return scope;
 }
 
 Core::MainWindow *

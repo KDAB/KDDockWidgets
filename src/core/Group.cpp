@@ -798,7 +798,8 @@ LayoutSaver::Group Group::serialize(const LayoutSaver::SaveScope &scope) const
     }
 
     for (DockWidget *dock : docks) {
-        if (scope.matchesAffinityStrictly(dock->affinities()))
+        // A selected window is saved whole, the affinity filter doesn't narrow it further
+        if (scope.hasWindowSelection || scope.matchesAffinityStrictly(dock->affinities()))
             group.dockWidgets.push_back(dock->d->serialize());
     }
 
