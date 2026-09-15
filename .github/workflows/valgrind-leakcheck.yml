@@ -36,10 +36,10 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Configure
-        run: cmake --preset=dev6 -DKDDockWidgets_EXAMPLES=OFF
+        run: cmake --preset=dev -DKDDockWidgets_EXAMPLES=OFF
 
       - name: Build
-        run: cmake --build build-dev6 --parallel
+        run: cmake --build build-dev --parallel
 
       - name: Run valgrind
-        run: valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all --error-exitcode=1 --exit-on-first-error=yes --suppressions=./valgrind.sup ./build-dev6/bin/qtwidgets_leak_test -platform offscreen
+        run: valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all --error-exitcode=1 --exit-on-first-error=yes --suppressions=./valgrind.sup ./build-dev/bin/qtwidgets_leak_test -platform offscreen

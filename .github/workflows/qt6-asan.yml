@@ -43,12 +43,12 @@ jobs:
 
       # kddw asan build already has ubsan, while Qt has dedicated
       - name: Configure project
-        run: cmake -S . -B ./build-dev-asan6 --preset dev-asan6
+        run: cmake -S . -B ./build-dev-asan --preset dev-asan
 
       - name: Build Project
-        run: cmake --build ./build-dev-asan6 ${{ matrix.preset.build_preset_arg }}
+        run: cmake --build ./build-dev-asan ${{ matrix.preset.build_preset_arg }}
 
       - name: Run tests
-        run: ctest --test-dir ./build-dev-asan6 --verbose -j 4
+        run: ctest --test-dir ./build-dev-asan --verbose -j 4
         env:
           QT_QUICK_BACKEND: software

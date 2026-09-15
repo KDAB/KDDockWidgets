@@ -23,7 +23,7 @@ jobs:
         os:
           - windows-latest
         preset:
-          - name: dev-clangcl6
+          - name: dev-clangcl
         with_spdlog:
           - true
           - false

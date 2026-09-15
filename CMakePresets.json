@@ -48,9 +48,9 @@
       }
     },
     {
-      "name": "dev",
-      "displayName": "dev",
-      "binaryDir": "${sourceDir}/build-dev",
+      "name": "dev5",
+      "displayName": "dev5",
+      "binaryDir": "${sourceDir}/build-dev5",
       "cacheVariables": {
         "KDDockWidgets_QT6": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
@@ -60,10 +60,10 @@
       ]
     },
     {
-      "name": "dev-asan",
-      "displayName": "dev-asan",
+      "name": "dev-asan5",
+      "displayName": "dev-asan5",
       "description": "An ASAN/UBSAN build",
-      "binaryDir": "${sourceDir}/build-dev-asan",
+      "binaryDir": "${sourceDir}/build-dev-asan5",
       "cacheVariables": {
         "KDDockWidgets_QT6": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets"
@@ -74,12 +74,12 @@
       ]
     },
     {
-      "name": "dev-valgrind6",
-      "displayName": "dev-valgrind6",
+      "name": "dev-valgrind",
+      "displayName": "dev-valgrind",
       "description": "A Qt6 dev preset which runs tests under valgrind",
-      "binaryDir": "${sourceDir}/build-dev-valgrind6",
+      "binaryDir": "${sourceDir}/build-dev-valgrind",
       "inherits": [
-        "dev6"
+        "dev"
       ],
       "cacheVariables": {
         "KDDockWidgets_USE_VALGRIND": "ON",
@@ -155,10 +155,10 @@
       }
     },
     {
-      "name": "release",
-      "displayName": "release",
+      "name": "release5",
+      "displayName": "release5",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-release",
+      "binaryDir": "${sourceDir}/build-release5",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "KDDockWidgets_QT6": "OFF",
@@ -167,10 +167,10 @@
       }
     },
     {
-      "name": "release-no-x11extras",
-      "displayName": "release-no-x11extras",
+      "name": "release-no-x11extras5",
+      "displayName": "release-no-x11extras5",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-release-no-x11extras",
+      "binaryDir": "${sourceDir}/build-release-no-x11extras5",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "KDDockWidgets_QT6": "OFF",
@@ -191,10 +191,10 @@
       }
     },
     {
-      "name": "python6",
+      "name": "python",
       "displayName": "Qt6 python bindings",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-python6",
+      "binaryDir": "${sourceDir}/build-python",
       "inherits": [
         "python-base"
       ],
@@ -206,29 +206,29 @@
       "name": "ci-python-qt6",
       "displayName": "CI Qt6 python bindings",
       "inherits": [
-        "python6"
+        "python"
       ],
       "cacheVariables": {
         "Python3_FIND_VIRTUALENV": "ONLY"
       }
     },
     {
-      "name": "homebrew-python6",
+      "name": "homebrew-python",
       "displayName": "Qt6 python bindings on macOS via homebrew",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-homebrew-python6",
+      "binaryDir": "${sourceDir}/build-homebrew-python",
       "inherits": [
-        "python6"
+        "python"
       ],
       "cacheVariables": {
         "Python3_EXECUTABLE": "/opt/homebrew/bin/python3.10"
       }
     },
     {
-      "name": "release6",
-      "displayName": "release6",
+      "name": "release",
+      "displayName": "release",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-release6",
+      "binaryDir": "${sourceDir}/build-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KDDockWidgets_QT6": "ON",
@@ -238,26 +238,26 @@
       }
     },
     {
-      "name": "release6-qml-module",
-      "inherits": "release6",
-      "binaryDir": "${sourceDir}/build-release6-qml-module",
+      "name": "release-qml-module",
+      "inherits": "release",
+      "binaryDir": "${sourceDir}/build-release-qml-module",
       "cacheVariables": {
         "KDDockWidgets_QML_MODULE": "ON"
       }
     },
     {
-      "name": "release6-static-qml-module",
-      "inherits": "release6",
-      "binaryDir": "${sourceDir}/build-release6-static-qml-module",
+      "name": "release-static-qml-module",
+      "inherits": "release",
+      "binaryDir": "${sourceDir}/build-release-static-qml-module",
       "cacheVariables": {
         "KDDockWidgets_QML_MODULE": "ON",
         "KDDockWidgets_STATIC": "ON"
       }
     },
     {
-      "name": "dev6",
-      "displayName": "dev6",
-      "binaryDir": "${sourceDir}/build-dev6",
+      "name": "dev",
+      "displayName": "dev",
+      "binaryDir": "${sourceDir}/build-dev",
       "cacheVariables": {
         "KDDockWidgets_QT6": "ON",
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
@@ -267,17 +267,17 @@
       ]
     },
     {
-      "name": "dev6-qml-module",
-      "inherits": "dev6",
-      "binaryDir": "${sourceDir}/build-dev6-qml-module",
+      "name": "dev-qml-module",
+      "inherits": "dev",
+      "binaryDir": "${sourceDir}/build-dev-qml-module",
       "cacheVariables": {
         "KDDockWidgets_QML_MODULE": "ON"
       }
     },
     {
-      "name": "dev-asan6",
-      "displayName": "dev-asan6",
-      "binaryDir": "${sourceDir}/build-dev-asan6",
+      "name": "dev-asan",
+      "displayName": "dev-asan",
+      "binaryDir": "${sourceDir}/build-dev-asan",
       "cacheVariables": {
         "KDDockWidgets_QT6": "ON",
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
@@ -288,12 +288,13 @@
       ]
     },
     {
-      "name": "dev-clangcl",
-      "displayName": "dev-clangcl",
-      "binaryDir": "${sourceDir}/build-dev-clangcl",
+      "name": "dev-clangcl5",
+      "displayName": "dev-clangcl5",
+      "binaryDir": "${sourceDir}/build-dev-clangcl5",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KDDockWidgets_DEVELOPER_MODE": "ON",
+        "KDDockWidgets_QT6": "OFF",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
       },
       "inherits": [
@@ -305,9 +306,9 @@
       }
     },
     {
-      "name": "dev-clangcl6",
-      "displayName": "dev-clangcl6",
-      "binaryDir": "${sourceDir}/build-dev-clangcl6",
+      "name": "dev-clangcl",
+      "displayName": "dev-clangcl",
+      "binaryDir": "${sourceDir}/build-dev-clangcl",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -324,11 +325,11 @@
       }
     },
     {
-      "name": "dev-clangcl-asan6",
+      "name": "dev-clangcl-asan",
       "description": "this preset is not working, patches accepted",
-      "binaryDir": "${sourceDir}/build-dev-clangcl-asan6",
+      "binaryDir": "${sourceDir}/build-dev-clangcl-asan",
       "inherits": [
-        "dev-clangcl6",
+        "dev-clangcl",
         "asan-base"
       ],
       "cacheVariables": {
@@ -338,12 +339,13 @@
       }
     },
     {
-      "name": "dev-time-trace",
-      "displayName": "dev-time-trace",
-      "binaryDir": "${sourceDir}/build-dev-time-trace",
+      "name": "dev-time-trace5",
+      "displayName": "dev-time-trace5",
+      "binaryDir": "${sourceDir}/build-dev-time-trace5",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KDDockWidgets_DEVELOPER_MODE": "ON",
+        "KDDockWidgets_QT6": "OFF",
         "CMAKE_C_FLAGS_INIT": "-ftime-trace",
         "CMAKE_CXX_FLAGS_INIT": "-ftime-trace",
         "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
@@ -358,9 +360,9 @@
       }
     },
     {
-      "name": "dev6-time-trace",
-      "displayName": "dev6-time-trace",
-      "binaryDir": "${sourceDir}/build-dev6-time-trace",
+      "name": "dev-time-trace",
+      "displayName": "dev-time-trace",
+      "binaryDir": "${sourceDir}/build-dev-time-trace",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -379,10 +381,10 @@
       }
     },
     {
-      "name": "dev-no-spdlog",
-      "binaryDir": "${sourceDir}/build-dev-no-spdlog",
+      "name": "dev-no-spdlog5",
+      "binaryDir": "${sourceDir}/build-dev-no-spdlog5",
       "inherits": [
-        "dev"
+        "dev5"
       ],
       "cacheVariables": {
         "KDDockWidgets_NO_SPDLOG": "ON"
@@ -544,7 +546,7 @@
       "description": "A dev preset which runs tests under valgrind. QtWidgets only, since QtQuick is very slow in CI.",
       "binaryDir": "${sourceDir}/build-ci-dev-valgrind-qt6",
       "inherits": [
-        "dev-valgrind6"
+        "dev-valgrind"
       ],
       "cacheVariables": {
         "KDDockWidgets_FRONTENDS": "qtwidgets"
@@ -556,7 +558,7 @@
       "description": "An ASAN/UBSAN build",
       "binaryDir": "${sourceDir}/build-ci-dev-asan-qt6",
       "inherits": [
-        "dev-asan6"
+        "dev-asan"
       ]
     },
     {
@@ -569,7 +571,7 @@
         "KDDockWidgets_NO_SPDLOG": "ON"
       },
       "inherits": [
-        "dev-asan6"
+        "dev-asan"
       ]
     },
     {
@@ -582,7 +584,7 @@
         "KDDockWidgets_NO_SPDLOG": "ON"
       },
       "inherits": [
-        "dev-asan6"
+        "dev-asan"
       ]
     },
     {
@@ -618,10 +620,10 @@
       ]
     },
     {
-      "name": "debug-qtwidgets6",
+      "name": "debug-qtwidgets",
       "description": "Preset to debug qtwidgets onlk",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build-debug-qtwidgets6",
+      "binaryDir": "${sourceDir}/build-debug-qtwidgets",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "KDDockWidgets_DEVELOPER_MODE": "OFF",

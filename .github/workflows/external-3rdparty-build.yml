@@ -45,10 +45,10 @@ jobs:
           rm -rf src/3rdparty/kdbindings/
 
       - name: Configure
-        run: cmake -S . --preset dev6 -DKDDockWidgets_WERROR=OFF
+        run: cmake -S . --preset dev -DKDDockWidgets_WERROR=OFF
 
       - name: Build
-        run: cmake --build ./build-dev6
+        run: cmake --build ./build-dev
 
       - name: Run tests on macOS
-        run: ctest --test-dir ./build-dev6 --verbose -j 4
+        run: ctest --test-dir ./build-dev --verbose -j 4
