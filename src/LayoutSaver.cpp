@@ -441,24 +441,28 @@ QByteArray LayoutSaver::serializeLayout() const
     // Just a simplification. One less type of windows to handle.
     d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
 
+    // Resolve the scope once. Placeholders reference floating windows by index into it,
+    // so it has to be stable for the whole serialization.
+    SaveScope scope = d->m_scope;
+    scope.floatingWindows = Core::floatingWindowsForAffinity(scope.affinities);
+
     const auto mainWindows = d->m_dockRegistry->mainwindows();
     layout.mainWindows.reserve(mainWindows.size());
     for (auto mainWindow : mainWindows) {
-        if (d->matchesAffinity(mainWindow->affinities()))
-            layout.mainWindows.push_back(mainWindow->serialize(d->m_affinityNames));
+        if (scope.matchesAffinity(mainWindow->affinities()))
+            layout.mainWindows.push_back(mainWindow->serialize(scope));
     }
 
-    const auto floatingWindows = Core::floatingWindowsForAffinity(d->m_affinityNames);
-    layout.floatingWindows.reserve(floatingWindows.size());
-    for (Core::FloatingWindow *floatingWindow : floatingWindows) {
-        layout.floatingWindows.push_back(floatingWindow->serialize(d->m_affinityNames));
+    layout.floatingWindows.reserve(scope.floatingWindows.size());
+    for (Core::FloatingWindow *floatingWindow : scope.floatingWindows) {
+        layout.floatingWindows.push_back(floatingWindow->serialize(scope));
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
     const Core::DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets(/*honourSkipped=*/true);
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (Core::DockWidget *dockWidget : closedDockWidgets) {
-        if (d->matchesAffinity(dockWidget->affinities()))
+        if (scope.matchesAffinity(dockWidget->affinities()))
             layout.closedDockWidgets.push_back(dockWidget->d->serialize());
     }
 
@@ -468,9 +472,9 @@ QByteArray LayoutSaver::serializeLayout() const
     const Core::DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (Core::DockWidget *dockWidget : dockWidgets) {
-        if (!dockWidget->skipsRestore() && d->matchesAffinity(dockWidget->affinities())) {
+        if (!dockWidget->skipsRestore() && scope.matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
-            dw->lastPosition = dockWidget->d->lastPosition()->serialize(d->m_affinityNames);
+            dw->lastPosition = dockWidget->d->lastPosition()->serialize(scope);
             layout.allDockWidgets.push_back(dw);
         }
     }
@@ -568,14 +572,14 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     auto dockWidgetsToClose = d->m_dockRegistry->dockWidgets(layout.dockWidgetsToClose());
     auto mainWindowsToConsider = d->m_dockRegistry->mainWindows(layout.mainWindowNames());
-    const bool isRestoringDocuments = ::isRestoringDocuments(mainWindowsToConsider, d->m_affinityNames);
+    const bool isRestoringDocuments = ::isRestoringDocuments(mainWindowsToConsider, d->m_scope.affinities);
 
-    if (!isDocumentMode(mainWindowsToConsider, d->m_affinityNames))
+    if (!isDocumentMode(mainWindowsToConsider, d->m_scope.affinities))
         d->floatUnknownWidgets(layout);
 
     d->m_dockRegistry->clear(dockWidgetsToClose,
                              mainWindowsToConsider,
-                             d->m_affinityNames, isRestoringDocuments);
+                             d->m_scope.affinities, isRestoringDocuments);
 
     // 1. Restore main windows
 
@@ -674,10 +678,10 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
 void LayoutSaver::setAffinityNames(const Vector<QString> &affinityNames)
 {
-    d->m_affinityNames = affinityNames;
+    d->m_scope.affinities = affinityNames;
     if (affinityNames.contains(QString())) {
         // Any window with empty affinity will also be subject to save/restore
-        d->m_affinityNames.push_back(QString());
+        d->m_scope.affinities.push_back(QString());
     }
 }
 
@@ -795,10 +799,25 @@ LayoutSaver::Private::resolveParentMainWindow(const LayoutSaver::FloatingWindow 
     return mainWindows.at(fw.parentIndex);
 }
 
+bool LayoutSaver::SaveScope::matchesAffinity(const Vector<QString> &candidate) const
+{
+    return affinities.isEmpty() || candidate.isEmpty()
+        || DockRegistry::self()->affinitiesMatch(affinities, candidate);
+}
+
+bool LayoutSaver::SaveScope::matchesAffinityStrictly(const Vector<QString> &candidate) const
+{
+    return affinities.isEmpty() || DockRegistry::self()->affinitiesMatch(affinities, candidate);
+}
+
+int LayoutSaver::SaveScope::indexOfFloatingWindow(const Core::FloatingWindow *fw) const
+{
+    return floatingWindows.indexOf(const_cast<Core::FloatingWindow *>(fw));
+}
+
 bool LayoutSaver::Private::matchesAffinity(const Vector<QString> &affinities) const
 {
-    return m_affinityNames.isEmpty() || affinities.isEmpty()
-        || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
+    return m_scope.matchesAffinity(affinities);
 }
 
 void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames)

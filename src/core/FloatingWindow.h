@@ -45,7 +45,7 @@ public:
     virtual ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);
-    LayoutSaver::FloatingWindow serialize(const Vector<QString> &affinityNames) const;
+    LayoutSaver::FloatingWindow serialize(const LayoutSaver::SaveScope &) const;
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;

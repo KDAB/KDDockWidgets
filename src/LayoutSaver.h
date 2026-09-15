@@ -134,6 +134,7 @@ public:
     Private *dptr() const;
 
     struct Layout;
+    struct SaveScope;
     struct MainWindow;
     struct FloatingWindow;
     struct DockWidget;
