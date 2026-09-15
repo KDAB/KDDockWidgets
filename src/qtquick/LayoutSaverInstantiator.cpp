@@ -35,7 +35,7 @@ bool LayoutSaverInstantiator::restoreFromFile(const QString &jsonFilename)
 
 QVector<QString> LayoutSaverInstantiator::affinities() const
 {
-    return dptr()->m_affinityNames;
+    return dptr()->m_scope.affinities;
 }
 
 void LayoutSaverInstantiator::setAffinities(const QVector<QString> &affinities)

@@ -237,7 +237,7 @@ void Positions::deserialize(const LayoutSaver::Position &lp, const QString &dock
     m_wasFloating = lp.wasFloating;
 }
 
-LayoutSaver::Position Positions::serialize(const Vector<QString> &affinityNames) const
+LayoutSaver::Position Positions::serialize(const LayoutSaver::SaveScope &scope) const
 {
     LayoutSaver::Position l;
 
@@ -254,9 +254,7 @@ LayoutSaver::Position Positions::serialize(const Vector<QString> &affinityNames)
         p.isFloatingWindow = fw;
 
         if (p.isFloatingWindow) {
-            p.indexOfFloatingWindow = fw->beingDeleted()
-                ? -1
-                : Core::floatingWindowsForAffinity(affinityNames).indexOf(fw);
+            p.indexOfFloatingWindow = fw->beingDeleted() ? -1 : scope.indexOfFloatingWindow(fw);
         } else {
             p.mainWindowUniqueName = mainWindow->uniqueName();
             assert(!p.mainWindowUniqueName.isEmpty());

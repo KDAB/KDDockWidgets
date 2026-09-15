@@ -49,7 +49,7 @@ public:
     ~Group() override;
 
     static Group *deserialize(const LayoutSaver::Group &);
-    LayoutSaver::Group serialize(const Vector<QString> &affinityNames) const;
+    LayoutSaver::Group serialize(const LayoutSaver::SaveScope &) const;
 
     ///@brief Adds a widget into the Group's Stack
     void addTab(DockWidget *, const InitialOption & = {});

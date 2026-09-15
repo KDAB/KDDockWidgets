@@ -55,6 +55,29 @@ enum class InternalRestoreOption {
 Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
 
 
+/// @internal
+/// Describes what a save should include.
+/// Passed down to the serialize() methods of the various controllers.
+struct DOCKS_EXPORT LayoutSaver::SaveScope
+{
+    Vector<QString> affinities;
+
+    /// The floating windows being saved, in the order they're serialized in.
+    /// Placeholders reference floating windows by index into this list.
+    Vector<Core::FloatingWindow *> floatingWindows;
+
+    /// Returns whether something with @p affinities is in scope.
+    /// Something with no affinities of its own is always in scope.
+    bool matchesAffinity(const Vector<QString> &candidate) const;
+
+    /// Like matchesAffinity(), except that having no affinities doesn't grant a match
+    /// while an affinity filter is set.
+    bool matchesAffinityStrictly(const Vector<QString> &candidate) const;
+
+    /// Index of @p fw in floatingWindows, or -1 if it's not being saved
+    int indexOfFloatingWindow(const Core::FloatingWindow *fw) const;
+};
+
 struct LayoutSaver::Placeholder
 {
     typedef Vector<LayoutSaver::Placeholder> List;
@@ -350,7 +373,7 @@ public:
 
     DockRegistry *const m_dockRegistry;
     InternalRestoreOptions m_restoreOptions = {};
-    Vector<QString> m_affinityNames;
+    LayoutSaver::SaveScope m_scope;
 
     /// If a layout is restored but the dock widget doesn't exist, we store its last position here
     /// so when we create the dock widget we can finally restore

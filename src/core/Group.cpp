@@ -780,7 +780,7 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
     return group;
 }
 
-LayoutSaver::Group Group::serialize(const Vector<QString> &affinityNames) const
+LayoutSaver::Group Group::serialize(const LayoutSaver::SaveScope &scope) const
 {
     LayoutSaver::Group group;
     group.isNull = false;
@@ -798,7 +798,7 @@ LayoutSaver::Group Group::serialize(const Vector<QString> &affinityNames) const
     }
 
     for (DockWidget *dock : docks) {
-        if (affinityNames.isEmpty() || DockRegistry::self()->affinitiesMatch(affinityNames, dock->affinities()))
+        if (scope.matchesAffinityStrictly(dock->affinities()))
             group.dockWidgets.push_back(dock->d->serialize());
     }
 

@@ -59,7 +59,7 @@ public:
 
     /// @p dockWidgetName is only used for diagnostics
     void deserialize(const LayoutSaver::Position &, const QString &dockWidgetName);
-    LayoutSaver::Position serialize(const Vector<QString> &affinityNames = {}) const;
+    LayoutSaver::Position serialize(const LayoutSaver::SaveScope &) const;
 
     ///@brief The tab index in case the dock widget was in a TabWidget, -1 otherwise.
     int m_tabIndex = -1;
