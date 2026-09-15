@@ -83,6 +83,10 @@ static InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
         ret.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry, false);
         options.setFlag(RestoreOption_AbsoluteFloatingDockWindows, false);
     }
+    if (options.testFlag(RestoreOption_CloseUnknownDockWidgets)) {
+        ret.setFlag(InternalRestoreOption::CloseUnknownDockWidgets);
+        options.setFlag(RestoreOption_CloseUnknownDockWidgets, false);
+    }
 
     if (options != RestoreOption_None) {
         KDDW_ERROR("Unknown options={}", int(options));
@@ -1049,16 +1053,22 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const Vector<QString> &m
 
 void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout)
 {
-    // An old *.json layout file might have not know about existing dock widgets
-    // When restoring such a file, we need to float any visible dock widgets which it doesn't know
-    // about so we can restore the MainWindow layout properly
+    // The layout being restored might not know about every dock widget currently in the main
+    // windows it covers, either because it's an old *.json file or because it was saved with a
+    // selection of windows. Either way the main window layout is about to be cleared, so get
+    // those dock widgets out of it first.
+
+    const bool close = m_restoreOptions & InternalRestoreOption::CloseUnknownDockWidgets;
 
     const auto mainWindows = DockRegistry::self()->mainWindows(layout.mainWindowNames());
     for (auto mw : mainWindows) {
         const Core::DockWidget::List docks = mw->layout()->dockWidgets();
         for (Core::DockWidget *dw : docks) {
             if (!layout.containsDockWidget(dw->uniqueName())) {
-                dw->setFloating(true);
+                if (close)
+                    dw->forceClose();
+                else
+                    dw->setFloating(true);
             }
         }
     }

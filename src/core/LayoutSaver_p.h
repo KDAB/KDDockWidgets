@@ -51,7 +51,9 @@ enum class InternalRestoreOption {
     None = 0,
     SkipMainWindowGeometry = 1, ///< Don't reposition the main window's geometry when restoring.
     RelativeFloatingWindowGeometry =
-        2 ///< FloatingWindow's are repositioned relatively to the new MainWindow's size
+        2, ///< FloatingWindow's are repositioned relatively to the new MainWindow's size
+    CloseUnknownDockWidgets =
+        4 ///< Close, rather than float, dock widgets the layout being restored doesn't know about
 };
 Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
 
