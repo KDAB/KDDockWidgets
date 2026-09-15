@@ -23,6 +23,7 @@
           };
       This is a compile-time-only concern; code that doesn't enable -Woverloaded-virtual (or
       doesn't treat warnings as errors) is unaffected and needs no changes.
+  -  windows: ignore WM_NCHITTEST if dock widget is a native window
 
 * v2.4.1
   - qtquick: Fixed support for one window with multiple docking areas
