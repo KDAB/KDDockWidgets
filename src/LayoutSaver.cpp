@@ -393,6 +393,23 @@ static void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidg
 
 namespace {
 
+/// The dock widget @p mainWindow is nested in, if it's a nested main window
+Core::DockWidget *hostDockWidget(Core::MainWindow *mainWindow)
+{
+    auto view = mainWindow->view();
+    if (!view)
+        return nullptr;
+
+    auto parent = view->parentView();
+    if (!parent)
+        return nullptr;
+
+    if (auto c = Core::View::firstParentOfType(parent.get(), ViewType::DockWidget))
+        return static_cast<Core::DockWidget *>(c);
+
+    return nullptr;
+}
+
 /// The dock widgets that appear inside the already-serialized windows of @p layout
 Vector<QString> dockWidgetNamesIn(const LayoutSaver::Layout &layout)
 {
@@ -878,6 +895,37 @@ void LayoutSaver::Private::restorePendingPositions(Core::DockWidget *dw)
     }
 }
 
+void LayoutSaver::Private::addNestedMainWindows(SaveScope &scope) const
+{
+    // A main window nested in a dock widget is part of that dock widget's window, but is a
+    // separate entry in the layout. Selecting the outer window has to pull it in, otherwise its
+    // dock widgets come back unrestored. Loop until nothing new shows up, since nesting can go
+    // deeper than one level.
+
+    const auto mainWindows = m_dockRegistry->mainwindows();
+    bool addedOne = true;
+    while (addedOne) {
+        addedOne = false;
+        for (auto mainWindow : mainWindows) {
+            if (scope.mainWindowNames.contains(mainWindow->uniqueName()))
+                continue;
+
+            auto host = hostDockWidget(mainWindow);
+            if (!host)
+                continue;
+
+            const bool hostIsInScope = scope.floatingWindows.contains(host->floatingWindow())
+                || (host->mainWindow()
+                    && scope.mainWindowNames.contains(host->mainWindow()->uniqueName()));
+
+            if (hostIsInScope) {
+                scope.mainWindowNames.push_back(mainWindow->uniqueName());
+                addedOne = true;
+            }
+        }
+    }
+}
+
 LayoutSaver::SaveScope LayoutSaver::Private::resolveScope() const
 {
     SaveScope scope = m_scope;
@@ -902,6 +950,7 @@ LayoutSaver::SaveScope LayoutSaver::Private::resolveScope() const
             }
         }
 
+        addNestedMainWindows(scope);
         return scope;
     }
 

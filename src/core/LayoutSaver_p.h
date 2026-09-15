@@ -374,6 +374,7 @@ public:
 
     bool matchesAffinity(const Vector<QString> &affinities) const;
     LayoutSaver::SaveScope resolveScope() const;
+    void addNestedMainWindows(LayoutSaver::SaveScope &) const;
     Core::MainWindow *resolveParentMainWindow(const LayoutSaver::FloatingWindow &) const;
     void floatWidgetsWhichSkipRestore(const Vector<QString> &mainWindowNames);
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
