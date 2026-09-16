@@ -625,7 +625,8 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize(const LayoutSaver::SaveSco
     fw.flags = d->m_flags;
 
     Window::Ptr transientParentWindow = view()->d->transientWindow();
-    if (auto transientMainWindow = DockRegistry::self()->mainWindowForHandle(transientParentWindow)) {
+    if (auto transientMainWindow =
+            DockRegistry::self()->mainWindowForHandle(std::move(transientParentWindow))) {
         fw.parentMainWindowName = transientMainWindow->uniqueName();
         fw.parentIndex = DockRegistry::self()->mainwindows().indexOf(transientMainWindow);
     }

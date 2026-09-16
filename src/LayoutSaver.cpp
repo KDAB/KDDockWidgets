@@ -575,7 +575,7 @@ QByteArray LayoutSaver::serializeLayout() const
                 continue;
 
             auto dw = dockWidget->d->serialize();
-            dw->lastPosition = lastPosition;
+            dw->lastPosition = std::move(lastPosition);
             layout.allDockWidgets.push_back(dw);
         } else if (scope.matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
