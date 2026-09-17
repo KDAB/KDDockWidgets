@@ -8,11 +8,9 @@ on:
   push:
     branches:
       - main
-      - 2.4
   pull_request:
     branches:
       - main
-      - 2.4
   workflow_dispatch:
 
 jobs:
@@ -38,7 +36,7 @@ jobs:
       - name: Setup Sanitized Qt
         uses: KDABLabs/sanitized-qt-action@v1
         with:
-          qt-tag: "v6.11.0-beta2"
+          qt-tag: "v6.12.0-beta4"
           qt-flavor: "${{ matrix.qt-flavor }}"
 
       # kddw asan build already has ubsan, while Qt has dedicated
