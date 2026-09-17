@@ -219,6 +219,10 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 {
     EnsureTopLevelsDeleted e;
 
+    // A crash in Qt 6.12 with QtQuick. To be retested with 6.13
+    if (Platform::instance()->isQtQuick() && QT_VERSION >= QT_VERSION_CHECK(6, 12, 0) && QT_VERSION < QT_VERSION_CHECK(6, 13, 0))
+        QSKIP("Skipping for Qt 6.12.x with QtQuick");
+
     auto fw = createFloatingWindow();
     QTest::qWait(1000);
     fw->view()->move(200, 200);
