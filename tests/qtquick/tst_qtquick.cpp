@@ -52,6 +52,11 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_restoreRestoresMainWindowPosition();
+
+    /// The MainWindow view must track its host QWindow's normalGeometry, otherwise
+    /// a layout saved while maximized/fullscreen restores the window to 0x0.
+    void tst_mainWindowNormalGeometry();
+
     void tst_hoverShowsDropIndicators();
     void tst_titlebarNumDockWidgetsChanged();
     void tst_effectiveVisibilityBug();
@@ -127,6 +132,46 @@ void TestQtQuick::tst_restoreRestoresMainWindowPosition()
     QCOMPARE(window->framePosition(), originalPos);
 
     delete mainWindow;
+}
+
+void TestQtQuick::tst_mainWindowNormalGeometry()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+
+    const auto mainWindows = DockRegistry::self()->mainwindows();
+    QCOMPARE(mainWindows.size(), 1);
+    MainWindow *m = mainWindows.first();
+
+    Window::Ptr window = m->view()->window();
+    QVERIFY(window);
+
+    const QRect normalGeometry(200, 200, 600, 500);
+    window->setGeometry(normalGeometry);
+    QCOMPARE(window->geometry(), normalGeometry);
+
+    // The host QWindow's resize/move events must reach View::eventFilter(), which is
+    // what caches normalGeometry. The MainWindow view is an item inside an
+    // application-owned QWindow, so it only sees them if it filters that window.
+    QTRY_COMPARE(m->view()->normalGeometry(), normalGeometry);
+
+    window->setWindowState(WindowState::Maximized);
+    QTRY_COMPARE(window->windowState(), WindowState::Maximized);
+    QCOMPARE(m->view()->normalGeometry(), normalGeometry);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    window->setWindowState(WindowState::None);
+    QTRY_COMPARE(window->windowState(), WindowState::None);
+    window->setGeometry(QRect(50, 50, 300, 300));
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    // Restoring a non-normal window state restores saved.normalGeometry, not
+    // saved.geometry. An uncached normalGeometry restores the window to 0x0.
+    QTRY_COMPARE(window->windowState(), WindowState::Maximized);
+    QCOMPARE(m->view()->normalGeometry(), normalGeometry);
 }
 
 void TestQtQuick::tst_hoverShowsDropIndicators()
