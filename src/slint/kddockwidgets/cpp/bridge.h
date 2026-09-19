@@ -68,6 +68,17 @@ public:
     // Changes the minimum size of an existing Group. No-op if not found.
     void setGroupMinSize(std::int32_t id, std::int32_t minWidth, std::int32_t minHeight);
 
+    // Interactive dragging of the Separator with the given id (as reported
+    // by SeparatorGeometry::id). No-op if not found.
+    //
+    // `separatorMouseMove`'s dx/dy are deltas from the separator's last
+    // reported position, not absolute coordinates: see the comment on
+    // Separator's TouchArea in ui/separator.slint for why a `moved` event's
+    // mouse position doubles as such a delta.
+    void separatorMousePress(std::int32_t id);
+    void separatorMouseRelease(std::int32_t id);
+    void separatorMouseMove(std::int32_t id, std::int32_t dx, std::int32_t dy);
+
     rust::Vec<GroupGeometry> groups() const;
     rust::Vec<SeparatorGeometry> separators() const;
 

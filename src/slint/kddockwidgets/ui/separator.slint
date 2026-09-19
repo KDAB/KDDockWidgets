@@ -7,10 +7,37 @@
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
 // Separates two Groups in a DropArea. Geometry (x/y/width/height) is set by
-// the caller, straight from KDDockWidgets' layouting engine. No mouse
-// handling yet: it's not draggable and there's no resize cursor.
+// the caller, straight from KDDockWidgets' layouting engine.
+//
+// Dragging is a pure pass-through to Rust/C++: this component doesn't move
+// itself. A `moved` event's mouse-x/y are relative to this element's own,
+// not-yet-updated position, so as long as the caller updates `x`/`y` (from
+// Docking.separators) before the next `moved` event, that position doubles
+// as the delta since the last one. See DockingEngine::separatorMouseMove in
+// cpp/bridge.cpp, which relies on exactly that.
 export component Separator inherits Rectangle {
     in property <bool> is-vertical: true;
+    in property <int> id;
+
+    callback pressed(id: int);
+    callback released(id: int);
+    callback moved(id: int, dx: length, dy: length);
 
     background: #555555;
+
+    TouchArea {
+        mouse-cursor: root.is-vertical ? row-resize : col-resize;
+
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down) {
+                root.pressed(root.id);
+            } else if (event.kind == PointerEventKind.up) {
+                root.released(root.id);
+            }
+        }
+
+        moved => {
+            root.moved(root.id, self.mouse-x, self.mouse-y);
+        }
+    }
 }

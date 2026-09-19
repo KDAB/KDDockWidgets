@@ -85,6 +85,24 @@ impl DockingLayout {
         self.engine.pin_mut().setGroupMinSize(id, min_width, min_height);
     }
 
+    /// Starts an interactive drag of the Separator with the given id. No-op
+    /// if not found.
+    pub fn separator_press(&mut self, id: i32) {
+        self.engine.pin_mut().separatorMousePress(id);
+    }
+
+    /// Ends an interactive drag started by [`separator_press`](Self::separator_press).
+    pub fn separator_release(&mut self, id: i32) {
+        self.engine.pin_mut().separatorMouseRelease(id);
+    }
+
+    /// Moves the Separator with the given id by `(dx, dy)` from its last
+    /// reported position. No-op if not found or not currently being dragged
+    /// (see [`separator_press`](Self::separator_press)).
+    pub fn separator_move(&mut self, id: i32, dx: i32, dy: i32) {
+        self.engine.pin_mut().separatorMouseMove(id, dx, dy);
+    }
+
     /// Current geometry of every Group, in no particular order.
     pub fn groups(&self) -> Vec<GroupGeometry> {
         self.engine.groups()

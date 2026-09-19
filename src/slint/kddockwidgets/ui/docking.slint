@@ -31,5 +31,9 @@ export global Docking {
     callback current-changed(unique-name: string);
     callback resized(width: length, height: length);
 
+    callback separator-pressed(id: int);
+    callback separator-released(id: int);
+    callback separator-moved(id: int, dx: length, dy: length);
+
     pure callback dock-state(unique-name: string, revision: int) -> DockState;
 }

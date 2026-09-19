@@ -158,6 +158,23 @@ impl DockManager {
         }
     }
 
+    /// Starts an interactive drag of the Separator with the given id.
+    pub fn separator_press(&mut self, id: i32) {
+        self.layout.separator_press(id);
+    }
+
+    /// Ends an interactive drag of the Separator with the given id.
+    pub fn separator_release(&mut self, id: i32) {
+        self.layout.separator_release(id);
+    }
+
+    /// Moves the Separator with the given id by `(dx, dy)` from its last
+    /// reported position, and refreshes Group geometries accordingly.
+    pub fn separator_move(&mut self, id: i32, dx: i32, dy: i32) {
+        self.layout.separator_move(id, dx, dy);
+        self.update_geometries();
+    }
+
     /// Makes `name` the current tab of its Group.
     pub fn set_current(&mut self, name: &str) {
         let Some(id) = self.group_of.get(name) else {

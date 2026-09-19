@@ -63,6 +63,10 @@ pub mod ffi {
         fn removeGroup(self: Pin<&mut DockingEngine>, id: i32);
         fn setGroupMinSize(self: Pin<&mut DockingEngine>, id: i32, min_width: i32, min_height: i32);
 
+        fn separatorMousePress(self: Pin<&mut DockingEngine>, id: i32);
+        fn separatorMouseRelease(self: Pin<&mut DockingEngine>, id: i32);
+        fn separatorMouseMove(self: Pin<&mut DockingEngine>, id: i32, dx: i32, dy: i32);
+
         fn groups(self: &DockingEngine) -> Vec<GroupGeometry>;
         fn separators(self: &DockingEngine) -> Vec<SeparatorGeometry>;
     }

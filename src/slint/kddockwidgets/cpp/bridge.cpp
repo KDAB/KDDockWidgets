@@ -165,6 +165,20 @@ private:
 
 std::int32_t Separator::s_counter = 0;
 
+namespace {
+
+Separator *separatorById(Core::ItemBoxContainer *box, std::int32_t id)
+{
+    for (auto *sep : box->separators_recursive()) {
+        auto *s = static_cast<Separator *>(sep);
+        if (s->m_id == id)
+            return s;
+    }
+    return nullptr;
+}
+
+}
+
 struct DockingEngine::Impl : public Core::LayoutingHost
 {
     Impl()
@@ -238,6 +252,38 @@ void DockingEngine::setGroupMinSize(std::int32_t id, std::int32_t minWidth, std:
     auto it = d->guests.find(id);
     if (it != d->guests.end())
         it->second->setMinSize(Size(minWidth, minHeight));
+}
+
+void DockingEngine::separatorMousePress(std::int32_t id)
+{
+    auto *box = static_cast<Core::ItemBoxContainer *>(d->m_rootItem);
+    if (auto *sep = separatorById(box, id))
+        sep->onMousePress();
+}
+
+void DockingEngine::separatorMouseRelease(std::int32_t id)
+{
+    auto *box = static_cast<Core::ItemBoxContainer *>(d->m_rootItem);
+    if (auto *sep = separatorById(box, id))
+        sep->onMouseRelease();
+}
+
+void DockingEngine::separatorMouseMove(std::int32_t id, std::int32_t dx, std::int32_t dy)
+{
+    auto *box = static_cast<Core::ItemBoxContainer *>(d->m_rootItem);
+    auto *sep = separatorById(box, id);
+    if (!sep)
+        return;
+
+    // The separator's own axis (position()/onMouseMove()) is the opposite of
+    // what one might expect: isVertical() means the *split* is vertical
+    // (Groups stacked top/bottom), so the separator itself is a horizontal
+    // line whose position is a y-coordinate, moved by vertical dragging.
+    const int oldPos = sep->position();
+    if (sep->isVertical())
+        sep->onMouseMove({ 0, oldPos + dy });
+    else
+        sep->onMouseMove({ oldPos + dx, 0 });
 }
 
 rust::Vec<GroupGeometry> DockingEngine::groups() const
