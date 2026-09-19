@@ -6,7 +6,7 @@
 
 [workspace]
 resolver = "3"
-members = ["kddockwidgets", "app"]
+members = ["kddockwidgets", "slint_example"]
 
 [workspace.package]
 edition = "2021"
