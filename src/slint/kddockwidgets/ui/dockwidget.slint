@@ -6,16 +6,51 @@
 //
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
-// The dock widget's own content. For now it's just a colored rectangle;
-// arbitrary user content is a later step.
-export component DockWidget inherits Rectangle {
+import { Docking } from "docking.slint";
+import { DockState, GroupMetrics } from "types.slint";
+
+// Hosts user content. Declared by the app as a direct child of DropArea:
+//
+//   DropArea {
+//       DockWidget { unique-name: "editor"; title: "Editor"; TextEdit { } }
+//   }
+//
+// Slint can't reparent elements, so unlike the QtQuick frontend the content
+// never moves into a Group: it stays where it was declared, and only gets
+// positioned over the content area of whichever Group the layouting engine
+// put it in. Placement itself is decided from Rust, by unique-name.
+export component DockWidget {
+    in property <string> unique-name;
     in property <string> title;
-    in property <color> dock-color: #808080;
+    out property <bool> is-open: state.is-open;
 
-    // Hardcoded for now, per the current milestone. This is also the
-    // minimum width the Rust side reports to the layouting engine for the
-    // Group hosting this dock widget, so a Group is never squeezed below it.
-    width: 100px;
+    property <DockState> state: Docking.dock-state(root.unique-name, Docking.revision);
 
-    background: dock-color;
+    x: state.x + GroupMetrics.border-width;
+    y: state.y + GroupMetrics.header-height;
+    width: max(0px, state.width - 2 * GroupMetrics.border-width);
+    height: max(0px, state.height - GroupMetrics.header-height - GroupMetrics.border-width);
+    visible: state.is-open && state.is-current;
+
+    changed title => {
+        Docking.title-changed(root.unique-name, root.title);
+    }
+
+    content := VerticalLayout {
+        @children
+    }
+
+    // Not a plain `init =>` on the root: for statically declared elements
+    // that runs inside the window's constructor, before Rust had a chance to
+    // install Docking's callbacks. An `if` is only instantiated once its
+    // condition holds, i.e. after Rust sets Docking.ready.
+    if Docking.ready: Rectangle {
+        init => {
+            Docking.register(
+                root.unique-name,
+                root.title,
+                content.min-width + 2 * GroupMetrics.border-width,
+                content.min-height + GroupMetrics.header-height + GroupMetrics.border-width);
+        }
+    }
 }

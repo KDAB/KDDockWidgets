@@ -124,7 +124,7 @@ SPDX-License-Identifier = "MIT"
 
 # Slint
 [[annotations]]
-path = "src/core/layouting/examples/slint/slint-logo-full-dark-large.png"
+path = ["src/core/layouting/examples/slint/slint-logo-full-dark-large.png", "src/slint/slint_example/ui/slint-logo-full-dark-large.png"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Copyright SixtyFPS GmbH <info@slint.dev>"
 SPDX-License-Identifier = "GPL-3.0-only"

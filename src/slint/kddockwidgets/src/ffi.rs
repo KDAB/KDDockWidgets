@@ -61,6 +61,7 @@ pub mod ffi {
             relative_to_id: i32,
         );
         fn removeGroup(self: Pin<&mut DockingEngine>, id: i32);
+        fn setGroupMinSize(self: Pin<&mut DockingEngine>, id: i32, min_width: i32, min_height: i32);
 
         fn groups(self: &DockingEngine) -> Vec<GroupGeometry>;
         fn separators(self: &DockingEngine) -> Vec<SeparatorGeometry>;

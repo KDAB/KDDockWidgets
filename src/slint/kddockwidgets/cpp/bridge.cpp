@@ -73,6 +73,15 @@ public:
         return m_minSize;
     }
 
+    void setMinSize(Size size)
+    {
+        if (size == m_minSize)
+            return;
+        m_minSize = size;
+        // Item reacts to this by re-reading minSize()
+        layoutInvalidated.emit();
+    }
+
     Size maxSizeHint() const override
     {
         return { 10000, 10000 };
@@ -114,7 +123,7 @@ public:
     }
 
     const std::int32_t m_id;
-    const Size m_minSize;
+    Size m_minSize;
     Core::LayoutingHost *m_host = nullptr;
     Rect m_geometry;
     bool m_visible = false;
@@ -222,6 +231,13 @@ void DockingEngine::addGroupRelativeTo(std::int32_t id, std::int32_t minWidth, s
 void DockingEngine::removeGroup(std::int32_t id)
 {
     d->guests.erase(id);
+}
+
+void DockingEngine::setGroupMinSize(std::int32_t id, std::int32_t minWidth, std::int32_t minHeight)
+{
+    auto it = d->guests.find(id);
+    if (it != d->guests.end())
+        it->second->setMinSize(Size(minWidth, minHeight));
 }
 
 rust::Vec<GroupGeometry> DockingEngine::groups() const

@@ -10,9 +10,10 @@
 // comes from KDDockWidgets' C++ layouting engine; everything else (titles,
 // colors, which tab is current) is owned by the app.
 
+// One tab in a Group's tab bar.
 export struct DockWidgetData {
+    unique-name: string,
     title: string,
-    color: color,
 }
 
 export struct GroupData {
@@ -31,4 +32,24 @@ export struct SeparatorData {
     width: length,
     height: length,
     is-vertical: bool,
+}
+
+// Where a DockWidget is, see Docking.dock-state().
+export struct DockState {
+    is-open: bool,
+    is-current: bool,
+    // Geometry of the hosting Group, including its title and tab bars
+    x: length,
+    y: length,
+    width: length,
+    height: length,
+}
+
+// Sizes of a Group's chrome. Shared by Group, which draws it, and
+// DockWidget, which positions its content below it.
+export global GroupMetrics {
+    out property <length> border-width: 1px;
+    out property <length> title-bar-height: 24px;
+    out property <length> tab-bar-height: 22px;
+    out property <length> header-height: border-width + title-bar-height + tab-bar-height;
 }

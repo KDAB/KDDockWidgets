@@ -7,42 +7,44 @@
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
 import { TitleBar } from "titlebar.slint";
-import { DockWidget } from "dockwidget.slint";
-import { GroupData } from "types.slint";
+import { GroupData, GroupMetrics } from "types.slint";
 
-// A Group: a TitleBar on top, a row of tabs below it, and the content of
-// whichever tab is current. Each tab is one DockWidget.
+// A Group: a TitleBar on top and a row of tabs below it. Each tab is one
+// DockWidget. This only draws the chrome: the DockWidgets' content isn't
+// inside the Group, it positions itself over the Group's content area (see
+// dockwidget.slint).
 //
 // This maps to a KDDockWidgets::Core::Item on the C++ side: `data`'s
 // geometry (x/y/width/height/visible) comes straight from the layouting
 // engine, computed relative to the enclosing DropArea. Everything else
-// (titles, colors, which tab is current) is owned by the app.
+// (titles, which tab is current) is tracked on the Rust side.
 export component Group inherits Rectangle {
     in property <GroupData> data;
 
-    // index of the tab that was closed, within data.dockwidgets
-    callback close-requested(index: int);
-    // index of the tab that was clicked, within data.dockwidgets
-    callback current-changed(index: int);
+    callback close-requested(unique-name: string);
+    callback current-changed(unique-name: string);
 
     background: #2b2b2b;
-    border-width: 1px;
+    border-width: GroupMetrics.border-width;
     border-color: #444444;
 
     VerticalLayout {
+        padding: GroupMetrics.border-width;
+
         TitleBar {
+            height: GroupMetrics.title-bar-height;
             title: data.dockwidgets[data.current-index].title;
-            close-clicked => { root.close-requested(data.current-index); }
+            close-clicked => { root.close-requested(data.dockwidgets[data.current-index].unique-name); }
         }
 
         Rectangle {
             // tab bar
-            height: 22px;
+            height: GroupMetrics.tab-bar-height;
             background: #1c1c1c;
 
             HorizontalLayout {
                 for dw[i] in data.dockwidgets: TouchArea {
-                    clicked => { root.current-changed(i); }
+                    clicked => { root.current-changed(dw.unique-name); }
 
                     Rectangle {
                         background: i == data.current-index ? #3a3a3a : transparent;
@@ -58,19 +60,7 @@ export component Group inherits Rectangle {
             }
         }
 
-        Rectangle {
-            // tab content: every dock widget is instantiated, only the
-            // current one is shown. Simpler than tearing down/rebuilding on
-            // every tab switch, and there's no per-tab state to worry about
-            // losing yet.
-            for dw[i] in data.dockwidgets: DockWidget {
-                x: 0;
-                y: 0;
-                height: 100%;
-                visible: i == data.current-index;
-                title: dw.title;
-                dock-color: dw.color;
-            }
-        }
+        // content area, covered by the current DockWidget
+        Rectangle { }
     }
 }

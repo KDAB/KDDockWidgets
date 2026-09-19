@@ -8,45 +8,34 @@
 
 import { Group } from "group.slint";
 import { Separator } from "separator.slint";
-import { GroupData, SeparatorData } from "types.slint";
+import { Docking } from "docking.slint";
 
-// Hosts every Group side by side, plus the Separators between them. This
-// component doesn't compute any layout itself: it's a "dumb" renderer for
-// whatever geometry KDDockWidgets' C++ layouting engine has already worked
-// out. `groups` and `separators` are expected to be rebuilt by Rust after
-// every call that can change the layout (resizing, adding/removing a Group).
-//
-// The list of Groups isn't hardcoded: this `for` loop instantiates however
-// many the model holds, so the app can add/remove Groups at runtime.
+// Hosts every Group, the app's DockWidgets (as children), and the
+// Separators between Groups. This component doesn't compute any layout
+// itself: it's a "dumb" renderer for whatever geometry KDDockWidgets' C++
+// layouting engine has worked out, which Rust pushes into Docking.groups and
+// Docking.separators after every change.
 export component DropArea inherits Rectangle {
-    in property <[GroupData]> groups;
-    in property <[SeparatorData]> separators;
-
-    // Forwarded from close-requested/current-changed on whichever Group was
-    // interacted with, with its index in `groups` prepended.
-    callback close-requested(group-index: int, dockwidget-index: int);
-    callback current-changed(group-index: int, dockwidget-index: int);
-    // Fired whenever this DropArea's own size changes, so the caller can
-    // tell the layouting engine to recompute geometry.
-    callback resized(width: length, height: length);
-
     background: white;
 
-    changed width => { root.resized(root.width, root.height); }
-    changed height => { root.resized(root.width, root.height); }
+    changed width => { Docking.resized(root.width, root.height); }
+    changed height => { Docking.resized(root.width, root.height); }
 
-    for g[gi] in groups: Group {
+    for g in Docking.groups: Group {
         x: g.x;
         y: g.y;
         width: g.width;
         height: g.height;
         visible: g.visible;
         data: g;
-        close-requested(index) => { root.close-requested(gi, index); }
-        current-changed(index) => { root.current-changed(gi, index); }
+        close-requested(name) => { Docking.close-requested(name); }
+        current-changed(name) => { Docking.current-changed(name); }
     }
 
-    for s in separators: Separator {
+    // DockWidgets, drawn over their Group
+    @children
+
+    for s in Docking.separators: Separator {
         x: s.x;
         y: s.y;
         width: s.width;
