@@ -1,0 +1,34 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+import { DropArea, GroupData, SeparatorData } from "@kddockwidgets";
+
+export component AppWindow inherits Window {
+    title: "KDDockWidgets - Slint prototype";
+    preferred-width: 900px;
+    preferred-height: 600px;
+
+    in property <[GroupData]> groups;
+    in property <[SeparatorData]> separators;
+
+    // group-index is this group's position in `groups`; dockwidget-index is
+    // the tab's position within that group's own dockwidgets list.
+    callback close-requested(group-index: int, dockwidget-index: int);
+    callback current-changed(group-index: int, dockwidget-index: int);
+    callback resized(width: length, height: length);
+
+    DropArea {
+        width: 100%;
+        height: 100%;
+        groups: root.groups;
+        separators: root.separators;
+        close-requested(group-index, dockwidget-index) => { root.close-requested(group-index, dockwidget-index); }
+        current-changed(group-index, dockwidget-index) => { root.current-changed(group-index, dockwidget-index); }
+        resized(width, height) => { root.resized(width, height); }
+    }
+}
