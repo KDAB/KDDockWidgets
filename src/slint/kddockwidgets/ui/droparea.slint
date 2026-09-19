@@ -41,5 +41,9 @@ export component DropArea inherits Rectangle {
         width: s.width;
         height: s.height;
         is-vertical: s.is-vertical;
+        id: s.id;
+        pressed(id) => { Docking.separator-pressed(id); }
+        released(id) => { Docking.separator-released(id); }
+        moved(id, dx, dy) => { Docking.separator-moved(id, dx, dy); }
     }
 }

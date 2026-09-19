@@ -9,12 +9,52 @@
 slint::include_modules!();
 
 use kddockwidgets::{DockManager, Location};
-use slint::{ComponentHandle, ModelRc, VecModel};
+use slint::{ComponentHandle, Model, ModelRc, VecModel};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+/// Backing storage for `Docking.groups`/`.separators`, kept alive for the
+/// whole run and mutated in place. This matters: a `for` loop's `Repeater`
+/// compares the *identity* of the `ModelRc` it's bound to on every access,
+/// and replaces its whole set of row elements (destroying and recreating
+/// them) whenever that identity changes -- even if the new model has the
+/// exact same content. Handing it a fresh `ModelRc::new(VecModel::from(...))`
+/// on every refresh, as this used to do, tore down every Group/Separator on
+/// every single callback; mid-drag, that included the Separator whose
+/// TouchArea was actively capturing the mouse, silently ending the drag
+/// before the first `moved` event. `sync_by_id` below updates existing rows
+/// in place (`set_row_data`) instead, which only rebinds that row's
+/// properties and leaves its element alone.
+#[derive(Clone)]
+struct UiModels {
+    groups: Rc<VecModel<GroupData>>,
+    separators: Rc<VecModel<SeparatorData>>,
+}
+
+/// Reconciles `model`'s rows with `desired`, matched by `id_of`: existing
+/// ids are updated in place, new ones appended, stale ones dropped. Order
+/// isn't preserved -- nothing here depends on Group/Separator draw order --
+/// only identity, which is what keeps a row's element (and any interactive
+/// state, like a Separator being dragged) alive across refreshes.
+fn sync_by_id<T: Clone + 'static>(model: &VecModel<T>, desired: Vec<T>, id_of: impl Fn(&T) -> i32) {
+    let mut desired_ids = Vec::with_capacity(desired.len());
+    for item in desired {
+        let id = id_of(&item);
+        desired_ids.push(id);
+        match (0..model.row_count()).find(|&i| model.row_data(i).is_some_and(|r| id_of(&r) == id)) {
+            Some(i) => model.set_row_data(i, item),
+            None => model.push(item),
+        }
+    }
+    for i in (0..model.row_count()).rev() {
+        if model.row_data(i).is_some_and(|r| !desired_ids.contains(&id_of(&r))) {
+            model.remove(i);
+        }
+    }
+}
+
 /// Pushes the manager's current state into the `Docking` global.
-fn refresh(ui: &AppWindow, manager: &DockManager) {
+fn refresh(ui: &AppWindow, manager: &DockManager, models: &UiModels) {
     let groups = manager
         .groups()
         .into_iter()
@@ -25,6 +65,7 @@ fn refresh(ui: &AppWindow, manager: &DockManager) {
                 .map(|(name, title)| DockWidgetData { unique_name: name.into(), title: title.into() })
                 .collect();
             GroupData {
+                id: g.geometry.id,
                 visible: g.geometry.visible,
                 x: g.geometry.x as f32,
                 y: g.geometry.y as f32,
@@ -40,6 +81,7 @@ fn refresh(ui: &AppWindow, manager: &DockManager) {
         .separators()
         .into_iter()
         .map(|s| SeparatorData {
+            id: s.id,
             x: s.x as f32,
             y: s.y as f32,
             width: s.width as f32,
@@ -48,9 +90,10 @@ fn refresh(ui: &AppWindow, manager: &DockManager) {
         })
         .collect::<Vec<_>>();
 
+    sync_by_id(&models.groups, groups, |g| g.id);
+    sync_by_id(&models.separators, separators, |s| s.id);
+
     let docking = ui.global::<Docking>();
-    docking.set_groups(ModelRc::new(VecModel::from(groups)));
-    docking.set_separators(ModelRc::new(VecModel::from(separators)));
     docking.set_revision(docking.get_revision() + 1);
 }
 
@@ -60,14 +103,22 @@ fn refresh(ui: &AppWindow, manager: &DockManager) {
 fn connect(ui: &AppWindow, manager: Rc<RefCell<DockManager>>) {
     let docking = ui.global::<Docking>();
 
+    let models = UiModels {
+        groups: Rc::new(VecModel::from(Vec::<GroupData>::new())),
+        separators: Rc::new(VecModel::from(Vec::<SeparatorData>::new())),
+    };
+    docking.set_groups(ModelRc::from(models.groups.clone()));
+    docking.set_separators(ModelRc::from(models.separators.clone()));
+
     // Runs `f` on the manager, then refreshes the UI
     let mutate = {
         let ui_weak = ui.as_weak();
         let manager = manager.clone();
+        let models = models.clone();
         move |f: &dyn Fn(&mut DockManager)| {
             f(&mut manager.borrow_mut());
             if let Some(ui) = ui_weak.upgrade() {
-                refresh(&ui, &manager.borrow());
+                refresh(&ui, &manager.borrow(), &models);
             }
         }
     };
@@ -96,6 +147,19 @@ fn connect(ui: &AppWindow, manager: Rc<RefCell<DockManager>>) {
         move |width, height| mutate(&|m| m.resize(width as i32, height as i32))
     });
 
+    docking.on_separator_pressed({
+        let mutate = mutate.clone();
+        move |id| mutate(&|m| m.separator_press(id))
+    });
+    docking.on_separator_released({
+        let mutate = mutate.clone();
+        move |id| mutate(&|m| m.separator_release(id))
+    });
+    docking.on_separator_moved({
+        let mutate = mutate.clone();
+        move |id, dx, dy| mutate(&|m| m.separator_move(id, dx as i32, dy as i32))
+    });
+
     docking.on_dock_state({
         let manager = manager.clone();
         move |name, _revision| {
@@ -114,7 +178,7 @@ fn connect(ui: &AppWindow, manager: Rc<RefCell<DockManager>>) {
         }
     });
 
-    refresh(ui, &manager.borrow());
+    refresh(ui, &manager.borrow(), &models);
     docking.set_ready(true);
 }
 

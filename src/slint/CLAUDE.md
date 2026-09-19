@@ -60,6 +60,16 @@ Two things worth knowing if you touch this code:
   by iterating a `std::unordered_map`). `DockManager` re-sorts by `(y, x, id)`
   before handing them out, so the UI's models are stable. UI callbacks carry
   a dock widget's `unique-name`, never an index, so nothing maps indexes back.
+- Separator dragging (`separatorMousePress`/`Release`/`Move`) reuses
+  `Core::LayoutingSeparator`'s own press/release/move API, the same one the
+  Qt frontends use — the bridge doesn't reimplement any drag math. The one
+  wrinkle is that `onMouseMove`'s `Point` is an absolute target position, not
+  a delta, but Slint only hands us a delta (see the next section); the
+  bridge reconstructs an absolute position as `sep->position() + delta`,
+  which only works if `sep->position()` reflects the last move *before* the
+  next delta arrives — true here because `separatorMouseMove` calls
+  `LayoutingSeparator::setGeometry` synchronously, and `DockManager`
+  refreshes `Docking.separators` before returning to the event loop.
 
 ## How user content works (DockWidget)
 
@@ -109,6 +119,14 @@ Group it's in. Group only draws chrome (title bar + tab bar).
   `insertItemRelativeTo`. `slint_example/src/main.rs` uses this for its
   Files/Search/Git group, nested below Editor/Console rather than being a
   third column.
+- `Separator` (`ui/separator.slint`) drags itself via a trick borrowed from
+  the old `src/core/layouting/examples/slint` prototype: it never moves
+  itself, so a `TouchArea`'s `moved` event fires with `mouse-x`/`mouse-y`
+  relative to the separator's *last-set* `x`/`y` — which, as long as Rust
+  updates those from `Docking.separators` before the next mouse-move event
+  arrives, doubles as the delta since the last move. `DropArea` forwards
+  `pressed`/`released`/`moved` straight to `Docking`, which `main.rs` forwards
+  to `DockManager::separator_press/release/move`.
 - `slint_example/build.rs` maps the `@kddockwidgets` library import to
   `kddockwidgets/ui/lib.slint`. Since only the `slint_example` crate ever runs
   the Slint compiler, structs declared in the framework's `.slint` files (e.g.
@@ -118,7 +136,8 @@ Group it's in. Group only draws chrome (title bar + tab bar).
 
 ## Known gaps (intentional, for now)
 
-- No separator dragging, no drag-and-drop.
+- No drag-and-drop (dropping a DockWidget onto another to redock it).
+  Separator dragging (resizing) does work.
 - No way to reopen a closed DockWidget from the UI (Rust can, via
   `add_dock_widget`).
 - Not multi-window. With the no-reparenting design above, content can't
