@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+[package]
+name = "app"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+slint.workspace = true
+kddockwidgets = { path = "../kddockwidgets" }
+
+[build-dependencies]
+slint-build.workspace = true
