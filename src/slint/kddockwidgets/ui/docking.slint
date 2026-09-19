@@ -1,0 +1,35 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+import { DockState, GroupData, SeparatorData } from "types.slint";
+
+// The single channel between the Slint components and the Rust side
+// (kddockwidgets::DockManager). The app has to re-export this from its main
+// .slint file so that Rust can reach it, and forward its callbacks.
+export global Docking {
+    // Set by Rust once it has installed the callbacks below. DockWidgets
+    // only register themselves after that, see DockWidget.
+    in property <bool> ready;
+
+    // Bumped by Rust after every layout change. It's passed to dock-state()
+    // purely so that its callers re-evaluate: Slint doesn't track
+    // dependencies through callbacks.
+    in property <int> revision;
+
+    in property <[GroupData]> groups;
+    in property <[SeparatorData]> separators;
+
+    // min-width/min-height include the Group's chrome.
+    callback register(unique-name: string, title: string, min-width: length, min-height: length);
+    callback title-changed(unique-name: string, title: string);
+    callback close-requested(unique-name: string);
+    callback current-changed(unique-name: string);
+    callback resized(width: length, height: length);
+
+    pure callback dock-state(unique-name: string, revision: int) -> DockState;
+}

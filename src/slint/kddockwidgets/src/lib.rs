@@ -8,18 +8,26 @@
 
 //! Rust side of the KDDockWidgets Slint prototype.
 //!
-//! This crate currently ships two things:
+//! This crate currently ships three things:
 //! - the `ui/` Slint components (TitleBar, DockWidget, Group, Separator,
-//!   DropArea), consumed by the `slint_example` crate through Slint's
-//!   library import syntax (`import { DropArea } from "@kddockwidgets";`);
+//!   DropArea) and the `Docking` global they talk to Rust through, consumed
+//!   by the app through Slint's library import syntax
+//!   (`import { DropArea } from "@kddockwidgets";`);
 //! - [`DockingLayout`], a safe wrapper around KDDockWidgets' own C++
 //!   layouting engine (see `cpp/bridge.h`), which computes where every
-//!   Group and Separator goes. This crate deliberately knows nothing about
-//!   tabs, titles or colors — see the `slint_example` crate for that.
+//!   Group and Separator goes, keyed by integer Group ids;
+//! - [`DockManager`], on top of it, which maps dock widgets (by their
+//!   `unique-name`) to Groups and tabs.
+//!
+//! Since only the app crate runs the Slint compiler, the Slint-generated
+//! types (the `Docking` global, `GroupData`, ...) only exist there, so the
+//! app still has to forward `Docking`'s callbacks to [`DockManager`].
 
 mod ffi;
+mod manager;
 
 pub use ffi::ffi::{GroupGeometry, Location, SeparatorGeometry};
+pub use manager::{DockManager, DockWidgetState, GroupView};
 
 use cxx::UniquePtr;
 
@@ -70,6 +78,11 @@ impl DockingLayout {
     /// Removes the Group with the given id. No-op if not found.
     pub fn remove_group(&mut self, id: i32) {
         self.engine.pin_mut().removeGroup(id);
+    }
+
+    /// Changes the minimum size of an existing Group. No-op if not found.
+    pub fn set_group_min_size(&mut self, id: i32, min_width: i32, min_height: i32) {
+        self.engine.pin_mut().setGroupMinSize(id, min_width, min_height);
     }
 
     /// Current geometry of every Group, in no particular order.

@@ -6,29 +6,69 @@
 //
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
-import { DropArea, GroupData, SeparatorData } from "@kddockwidgets";
+import { DropArea, DockWidget } from "@kddockwidgets";
+
+// Rust needs to reach the framework's global to forward its callbacks
+export { Docking } from "@kddockwidgets";
+
+// Sample user content
+component Logo inherits Rectangle {
+    in property <color> logo-color: white;
+
+    Image {
+        x: 20px;
+        y: 20px;
+        width: max(0px, parent.width - 40px);
+        height: max(0px, parent.height - 40px);
+        source: @image-url("slint-logo-full-dark-large.png");
+        image-fit: contain;
+        colorize: root.logo-color;
+    }
+}
 
 export component AppWindow inherits Window {
     title: "KDDockWidgets - Slint prototype";
     preferred-width: 900px;
     preferred-height: 600px;
 
-    in property <[GroupData]> groups;
-    in property <[SeparatorData]> separators;
-
-    // group-index is this group's position in `groups`; dockwidget-index is
-    // the tab's position within that group's own dockwidgets list.
-    callback close-requested(group-index: int, dockwidget-index: int);
-    callback current-changed(group-index: int, dockwidget-index: int);
-    callback resized(width: length, height: length);
-
     DropArea {
         width: 100%;
         height: 100%;
-        groups: root.groups;
-        separators: root.separators;
-        close-requested(group-index, dockwidget-index) => { root.close-requested(group-index, dockwidget-index); }
-        current-changed(group-index, dockwidget-index) => { root.current-changed(group-index, dockwidget-index); }
-        resized(width, height) => { root.resized(width, height); }
+
+        DockWidget {
+            unique-name: "output";
+            title: "Output";
+            Logo { background: #818fb4; }
+        }
+
+        DockWidget {
+            unique-name: "editor";
+            title: "Editor";
+            Logo { background: #435585; }
+        }
+
+        DockWidget {
+            unique-name: "console";
+            title: "Console";
+            Logo { background: #2f3b5c; }
+        }
+
+        DockWidget {
+            unique-name: "files";
+            title: "Files";
+            Logo { background: #f5e8c7; logo-color: #2379f4; }
+        }
+
+        DockWidget {
+            unique-name: "search";
+            title: "Search";
+            Logo { background: #d8c99a; logo-color: #2379f4; }
+        }
+
+        DockWidget {
+            unique-name: "git";
+            title: "Git";
+            Logo { background: #b8a877; logo-color: #2379f4; }
+        }
     }
 }

@@ -65,6 +65,9 @@ public:
     // Removes the Group with the given id. No-op if not found.
     void removeGroup(std::int32_t id);
 
+    // Changes the minimum size of an existing Group. No-op if not found.
+    void setGroupMinSize(std::int32_t id, std::int32_t minWidth, std::int32_t minHeight);
+
     rust::Vec<GroupGeometry> groups() const;
     rust::Vec<SeparatorGeometry> separators() const;
 

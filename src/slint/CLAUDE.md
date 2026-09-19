@@ -12,10 +12,12 @@ cargo run -p slint_example
 ## Layout
 
 - `kddockwidgets/` — the framework crate. Ships Slint components
-  (`ui/*.slint`) plus a Rust wrapper (`DockingLayout`, in `src/lib.rs`) around
-  KDDockWidgets' own C++ layouting engine.
-- `slint_example/` — a sample app: owns tab/title/color data and wires it to
-  the framework's `DropArea`.
+  (`ui/*.slint`), a Rust wrapper (`DockingLayout`, in `src/lib.rs`) around
+  KDDockWidgets' own C++ layouting engine, and `DockManager`
+  (`src/manager.rs`) on top of it, which maps dock widgets by `unique-name`
+  to Groups/tabs.
+- `slint_example/` — a sample app: declares its DockWidgets (with the Slint
+  logo as content) in `ui/app.slint`, places them from Rust by name.
 
 ## Why this reaches outside `src/slint`
 
@@ -55,11 +57,43 @@ Two things worth knowing if you touch this code:
   is a real bug we hit once (`std::abort()` inside
   `ItemBoxContainer::Private::Private`, immediately on startup).
 - `groups()`/`separators()` come back in **unspecified order** (they're built
-  by iterating a `std::unordered_map`). The Rust side always re-sorts by
-  `(y, x, id)` before building anything the UI reads or before mapping a UI
-  callback's index back to an id — see `sorted_groups`/`sorted_separators` in
-  `slint_example/src/main.rs`. Don't zip the raw output against another list by
-  position.
+  by iterating a `std::unordered_map`). `DockManager` re-sorts by `(y, x, id)`
+  before handing them out, so the UI's models are stable. UI callbacks carry
+  a dock widget's `unique-name`, never an index, so nothing maps indexes back.
+
+## How user content works (DockWidget)
+
+Slint can't reparent elements, so unlike the QtQuick frontend a
+`DockWidget`'s content never moves into its Group. The app declares
+DockWidgets (with arbitrary content as children) directly inside `DropArea`,
+where they stay; each one positions itself over the content area of whatever
+Group it's in. Group only draws chrome (title bar + tab bar).
+
+- Everything goes through the `Docking` global (`ui/docking.slint`). The app
+  must re-export it from its main `.slint` file, and forward its callbacks to
+  `DockManager` — see `connect()` in `slint_example/src/main.rs`. That glue
+  can't live in the framework crate, because the Slint-generated types only
+  exist in the crate running the Slint compiler.
+- A DockWidget reads its geometry through `pure callback dock-state(name,
+  revision)`. `revision` is a dummy arg that Rust bumps after every change:
+  Slint doesn't track dependencies through callbacks, so without it the
+  bindings would never re-evaluate.
+- DockWidgets **register** (title + min size from their content's layout)
+  from an `if Docking.ready: ... init =>` child, not a plain `init`: `init` of
+  statically declared elements runs inside `AppWindow::new()`, before Rust can
+  install handlers, and would be silently lost. This means registration
+  happens *after* Rust's initial `add_dock_widget` calls, which is why
+  `DockManager` accepts both in either order and updates the Group's min size
+  in the C++ engine afterwards (`setGroupMinSize`).
+- Placement is decided from Rust by name (`add_dock_widget`,
+  `add_dock_widget_as_tab`). A DockWidget that was never added, or was closed
+  (X button → `DockManager::close`, which removes its Group from the C++
+  layout once empty), has `is-open: false` and is hidden, but stays alive.
+- Slint has no "destroyed" callback, so a DockWidget removed from a `for`
+  model isn't unregistered automatically; the app would need to call
+  `DockManager::close` itself.
+- `GroupMetrics` (in `types.slint`) holds the chrome sizes shared by Group
+  (which draws them) and DockWidget (which offsets its content by them).
 
 ## Slint side
 
@@ -67,11 +101,11 @@ Two things worth knowing if you touch this code:
   ("dynamic tabs are currently not supported"), so `Group` has its own
   hand-rolled tab bar instead, built with `for`.
 - `DropArea` does no layout math itself — it just places whatever
-  `GroupData`/`SeparatorData` it's given at their given x/y/width/height. All
-  positioning comes from the C++ engine.
-- The layout isn't a single flat row: `DockingLayout::add_group_relative_to`
-  nests a Group under an existing one (splitting just that Group's own
-  space) rather than the whole layout, via KDDockWidgets'
+  `GroupData`/`SeparatorData` Rust put in `Docking.groups`/`.separators` at
+  their given x/y/width/height. All positioning comes from the C++ engine.
+- The layout isn't a single flat row: `add_dock_widget(name, loc,
+  Some(other))` nests a Group under an existing one (splitting just that
+  Group's own space) rather than the whole layout, via KDDockWidgets'
   `insertItemRelativeTo`. `slint_example/src/main.rs` uses this for its
   Files/Search/Git group, nested below Editor/Console rather than being a
   third column.
@@ -84,10 +118,11 @@ Two things worth knowing if you touch this code:
 
 ## Known gaps (intentional, for now)
 
-- `DockWidget` content is just a colored rectangle — no way to embed real
-  user content yet. This is the next open design question.
 - No separator dragging, no drag-and-drop.
-- Not multi-window.
+- No way to reopen a closed DockWidget from the UI (Rust can, via
+  `add_dock_widget`).
+- Not multi-window. With the no-reparenting design above, content can't
+  move between windows either; floating windows will need a different idea.
 
 ## CI
 
