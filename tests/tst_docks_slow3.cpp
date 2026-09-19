@@ -123,6 +123,10 @@ void TestDocks::tst_close()
 {
     EnsureTopLevelsDeleted e;
 
+    // A crash in Qt 6.12 with QtQuick. To be retested with 6.13
+    if (Platform::instance()->isQtQuick() && QT_VERSION >= QT_VERSION_CHECK(6, 12, 0) && QT_VERSION < QT_VERSION_CHECK(6, 13, 0))
+        QSKIP("Skipping for Qt 6.12.x with QtQuick");
+
     // 1.0 Call QWidget::close() on QDockWidget
     auto dock1 = createDockWidget("doc1");
     auto toggleAction = dock1->toggleAction();
