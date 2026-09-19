@@ -1,0 +1,21 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+// The dock widget's own content. For now it's just a colored rectangle;
+// arbitrary user content is a later step.
+export component DockWidget inherits Rectangle {
+    in property <string> title;
+    in property <color> dock-color: #808080;
+
+    // Hardcoded for now, per the current milestone. This is also the
+    // minimum width the Rust side reports to the layouting engine for the
+    // Group hosting this dock widget, so a Group is never squeezed below it.
+    width: 100px;
+
+    background: dock-color;
+}

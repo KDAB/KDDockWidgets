@@ -1,0 +1,57 @@
+# SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Slint prototype
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-slint]')"
+    # Only built and verified on Linux so far. Extend the matrix (e.g.
+    # windows-2022, macos-15, like the other workflows here) once someone
+    # has confirmed the C++ engine and the cxx bridge build there too.
+    runs-on: ubuntu-26.04
+    env:
+      # src/slint/kddockwidgets/build.rs builds KDDockWidgets' own CMake
+      # project for the layouting engine; Ninja isn't installed by default
+      # on the runner otherwise.
+      CMAKE_GENERATOR: Ninja
+    defaults:
+      run:
+        working-directory: src/slint
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v7
+
+      - name: Install fontconfig
+        # Slint's renderer (via fontdb) links against the system fontconfig
+        # through pkg-config; the runner has the runtime lib but not the
+        # -dev package (fontconfig.pc), which the build needs.
+        run: |
+          sudo apt update -qq
+          sudo apt install -y libfontconfig1-dev
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install ninja
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Cache cargo registry and build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src/slint
+
+      - name: Build
+        run: cargo build --workspace --locked
+
+      - name: Test
+        run: cargo test --workspace --locked
