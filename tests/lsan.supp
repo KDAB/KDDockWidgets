@@ -1,0 +1,17 @@
+# This file is part of KDDockWidgets.
+#
+# SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Sergio Martins <sergio.martins@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
+
+# LSan runtime suppressions for known-benign issues in third-party code
+# (not KDDockWidgets). Used via LSAN_OPTIONS=suppressions=<this file>.
+
+# fontconfig builds a process-lifetime cache of font-family aliases the first
+# time Qt Quick Controls' Material style initializes its theme. The cache is
+# intentionally kept alive for the life of the process, not actually leaked.
+leak:QFontconfigDatabase::resolveFontFamilyAlias
