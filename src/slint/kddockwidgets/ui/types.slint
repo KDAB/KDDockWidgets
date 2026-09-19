@@ -1,0 +1,34 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+// Shared data types passed from Rust into the UI. Geometry (x/y/width/height)
+// comes from KDDockWidgets' C++ layouting engine; everything else (titles,
+// colors, which tab is current) is owned by the app.
+
+export struct DockWidgetData {
+    title: string,
+    color: color,
+}
+
+export struct GroupData {
+    visible: bool,
+    x: length,
+    y: length,
+    width: length,
+    height: length,
+    dockwidgets: [DockWidgetData],
+    current-index: int,
+}
+
+export struct SeparatorData {
+    x: length,
+    y: length,
+    width: length,
+    height: length,
+    is-vertical: bool,
+}

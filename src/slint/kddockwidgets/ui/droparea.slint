@@ -1,0 +1,56 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+import { Group } from "group.slint";
+import { Separator } from "separator.slint";
+import { GroupData, SeparatorData } from "types.slint";
+
+// Hosts every Group side by side, plus the Separators between them. This
+// component doesn't compute any layout itself: it's a "dumb" renderer for
+// whatever geometry KDDockWidgets' C++ layouting engine has already worked
+// out. `groups` and `separators` are expected to be rebuilt by Rust after
+// every call that can change the layout (resizing, adding/removing a Group).
+//
+// The list of Groups isn't hardcoded: this `for` loop instantiates however
+// many the model holds, so the app can add/remove Groups at runtime.
+export component DropArea inherits Rectangle {
+    in property <[GroupData]> groups;
+    in property <[SeparatorData]> separators;
+
+    // Forwarded from close-requested/current-changed on whichever Group was
+    // interacted with, with its index in `groups` prepended.
+    callback close-requested(group-index: int, dockwidget-index: int);
+    callback current-changed(group-index: int, dockwidget-index: int);
+    // Fired whenever this DropArea's own size changes, so the caller can
+    // tell the layouting engine to recompute geometry.
+    callback resized(width: length, height: length);
+
+    background: white;
+
+    changed width => { root.resized(root.width, root.height); }
+    changed height => { root.resized(root.width, root.height); }
+
+    for g[gi] in groups: Group {
+        x: g.x;
+        y: g.y;
+        width: g.width;
+        height: g.height;
+        visible: g.visible;
+        data: g;
+        close-requested(index) => { root.close-requested(gi, index); }
+        current-changed(index) => { root.current-changed(gi, index); }
+    }
+
+    for s in separators: Separator {
+        x: s.x;
+        y: s.y;
+        width: s.width;
+        height: s.height;
+        is-vertical: s.is-vertical;
+    }
+}

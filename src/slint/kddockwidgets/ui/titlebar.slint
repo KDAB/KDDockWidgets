@@ -1,0 +1,45 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+export component TitleBar inherits Rectangle {
+    in property <string> title;
+    callback close-clicked();
+
+    height: 24px;
+    background: #3a3a3a;
+
+    HorizontalLayout {
+        padding-left: 6px;
+        padding-right: 4px;
+        spacing: 4px;
+
+        Text {
+            text: root.title;
+            color: white;
+            vertical-alignment: center;
+            horizontal-stretch: 1;
+            overflow: elide;
+        }
+
+        close-area := TouchArea {
+            width: 18px;
+            clicked => { root.close-clicked(); }
+
+            Rectangle {
+                background: close-area.has-hover ? #a33333 : transparent;
+
+                Text {
+                    text: "x";
+                    color: white;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+            }
+        }
+    }
+}
