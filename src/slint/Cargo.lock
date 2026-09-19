@@ -212,15 +212,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "940b3a0ca603d1eade50a4846a2afffd5ef57a9feac2c0e2ec2e14f9ead76000"
 
 [[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "kddockwidgets",
- "slint",
- "slint-build",
-]
-
-[[package]]
 name = "arboard"
 version = "3.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4139,6 +4130,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "spin_on",
+]
+
+[[package]]
+name = "slint_example"
+version = "0.1.0"
+dependencies = [
+ "kddockwidgets",
+ "slint",
+ "slint-build",
 ]
 
 [[package]]

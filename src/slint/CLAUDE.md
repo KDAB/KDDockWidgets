@@ -6,7 +6,7 @@ this directory:
 
 ```
 cargo build
-cargo run -p app
+cargo run -p slint_example
 ```
 
 ## Layout
@@ -14,8 +14,8 @@ cargo run -p app
 - `kddockwidgets/` — the framework crate. Ships Slint components
   (`ui/*.slint`) plus a Rust wrapper (`DockingLayout`, in `src/lib.rs`) around
   KDDockWidgets' own C++ layouting engine.
-- `app/` — a sample app: owns tab/title/color data and wires it to the
-  framework's `DropArea`.
+- `slint_example/` — a sample app: owns tab/title/color data and wires it to
+  the framework's `DropArea`.
 
 ## Why this reaches outside `src/slint`
 
@@ -58,7 +58,7 @@ Two things worth knowing if you touch this code:
   by iterating a `std::unordered_map`). The Rust side always re-sorts by
   `(y, x, id)` before building anything the UI reads or before mapping a UI
   callback's index back to an id — see `sorted_groups`/`sorted_separators` in
-  `app/src/main.rs`. Don't zip the raw output against another list by
+  `slint_example/src/main.rs`. Don't zip the raw output against another list by
   position.
 
 ## Slint side
@@ -72,14 +72,15 @@ Two things worth knowing if you touch this code:
 - The layout isn't a single flat row: `DockingLayout::add_group_relative_to`
   nests a Group under an existing one (splitting just that Group's own
   space) rather than the whole layout, via KDDockWidgets'
-  `insertItemRelativeTo`. `app/src/main.rs` uses this for its Files/Search/Git
-  group, nested below Editor/Console rather than being a third column.
-- `app/build.rs` maps the `@kddockwidgets` library import to
-  `kddockwidgets/ui/lib.slint`. Since only the `app` crate ever runs the Slint
-  compiler, structs declared in the framework's `.slint` files (e.g.
-  `GroupData`) get their Rust bindings generated directly in `app` — no need
-  to share Slint-generated Rust types across crates (which would need Slint's
-  experimental `experimental-module-builds` feature).
+  `insertItemRelativeTo`. `slint_example/src/main.rs` uses this for its
+  Files/Search/Git group, nested below Editor/Console rather than being a
+  third column.
+- `slint_example/build.rs` maps the `@kddockwidgets` library import to
+  `kddockwidgets/ui/lib.slint`. Since only the `slint_example` crate ever runs
+  the Slint compiler, structs declared in the framework's `.slint` files (e.g.
+  `GroupData`) get their Rust bindings generated directly in `slint_example`
+  — no need to share Slint-generated Rust types across crates (which would
+  need Slint's experimental `experimental-module-builds` feature).
 
 ## Known gaps (intentional, for now)
 
