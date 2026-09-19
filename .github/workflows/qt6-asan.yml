@@ -21,7 +21,7 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
         qt-flavor:
           - asan_ubsan
 
