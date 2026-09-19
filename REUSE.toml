@@ -127,3 +127,10 @@ path = "src/core/layouting/examples/slint/slint-logo-full-dark-large.png"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Copyright SixtyFPS GmbH <info@slint.dev>"
 SPDX-License-Identifier = "GPL-3.0-only"
+
+# Cargo-generated lockfile, not hand-maintained
+[[annotations]]
+path = "src/slint/Cargo.lock"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"
+SPDX-License-Identifier = "GPL-2.0-only OR GPL-3.0-only"
