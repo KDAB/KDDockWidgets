@@ -24,7 +24,7 @@ jobs:
       matrix:
         os:
           - windows-latest
-          - ubuntu-24.04
+          - ubuntu-26.04
           - macos-15
         preset:
           - ci-qtquick-module-qt6

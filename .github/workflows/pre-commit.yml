@@ -14,7 +14,7 @@ on:
 jobs:
   pre-commit:
     if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-pre-commit]')"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

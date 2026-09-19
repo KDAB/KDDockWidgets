@@ -23,7 +23,7 @@ jobs:
   # Build job
   build:
     if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-mdbook]')"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     env:
       MDBOOK_VERSION: 0.4.21
     steps:
@@ -52,7 +52,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: build
     steps:
       - name: Deploy to GitHub Pages
