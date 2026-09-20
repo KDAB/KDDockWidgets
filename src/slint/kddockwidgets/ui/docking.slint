@@ -9,8 +9,10 @@
 import { DockState, GroupData, SeparatorData } from "types.slint";
 
 // The single channel between the Slint components and the Rust side
-// (kddockwidgets::DockManager). The app has to re-export this from its main
-// .slint file so that Rust can reach it, and forward its callbacks.
+// (kddockwidgets::DockingArea). Internal: an app only has to re-export it
+// from its main .slint file, `export { Docking } from "@kddockwidgets";`, so
+// that Slint generates Rust for it; kddockwidgets::install!() then fills in
+// everything below.
 export global Docking {
     // Set by Rust once it has installed the callbacks below. DockWidgets
     // only register themselves after that, see DockWidget.

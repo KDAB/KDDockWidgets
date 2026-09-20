@@ -44,7 +44,9 @@ struct Group {
 }
 
 /// Name-keyed layer on top of [`DockingLayout`]: tracks which dock widget
-/// lives in which Group, tab order, titles and minimum sizes.
+/// lives in which Group, tab order, titles and minimum sizes. This is the
+/// state behind [`DockingArea`](crate::DockingArea), which is what apps
+/// actually talk to.
 ///
 /// Dock widgets themselves are declared in Slint and identified by their
 /// `unique-name`. There are two independent inputs, which can come in any
@@ -54,7 +56,7 @@ struct Group {
 /// - [`add_dock_widget`](Self::add_dock_widget) and friends, called by the
 ///   app, decide where it goes. A dock widget that was never added (or was
 ///   closed) isn't open, and isn't shown.
-pub struct DockManager {
+pub(crate) struct DockManager {
     layout: DockingLayout,
     dock_widgets: HashMap<String, DockWidgetInfo>,
     groups: HashMap<i32, Group>,

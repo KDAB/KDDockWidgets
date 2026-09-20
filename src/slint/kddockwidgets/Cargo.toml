@@ -15,6 +15,7 @@ path = "src/lib.rs"
 
 [dependencies]
 cxx.workspace = true
+slint.workspace = true
 
 [build-dependencies]
 cxx-build.workspace = true

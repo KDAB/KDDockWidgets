@@ -9,7 +9,7 @@
 //! In-process GUI tests, run headless via `i-slint-backend-testing` (no
 //! display needed, works in CI). They drive the same app the binary shows
 //! (`slint_example::create_app()`, see src/lib.rs) and inspect its rendered
-//! element tree rather than `DockManager`'s Rust-side state directly, so
+//! element tree rather than the Rust-side layout state directly, so
 //! they also catch breakage in the .slint side of things (e.g. a binding
 //! that stops a tab or title from actually being drawn).
 //!
@@ -21,6 +21,7 @@
 
 use i_slint_backend_testing::ElementHandle;
 use slint::platform::PointerEventButton;
+use slint::ComponentHandle;
 use slint_example::AppWindow;
 
 /// Creates the app and runs one throwaway full-tree query over it.
@@ -82,6 +83,28 @@ fn dock_widgets_and_tabs_are_visible() {
 }
 
 #[test]
+fn groups_cover_the_whole_drop_area() {
+    i_slint_backend_testing::init_no_event_loop();
+    let ui = new_app();
+
+    // The layouting engine only ever learns how big the area is from DropArea
+    // reporting its own size (kddockwidgets/ui/droparea.slint). If that report
+    // stops arriving, every Group collapses to 0x0 while still being there --
+    // which the other tests, counting elements, would happily pass.
+    let (mut right, mut bottom) = (0.0f32, 0.0f32);
+    for group in ElementHandle::find_by_element_type_name(&ui, "Group") {
+        let (position, size) = (group.absolute_position(), group.size());
+        assert!(size.width > 0.0 && size.height > 0.0, "collapsed group at {position:?}");
+        right = right.max(position.x + size.width);
+        bottom = bottom.max(position.y + size.height);
+    }
+
+    let window = ui.window().size().to_logical(ui.window().scale_factor());
+    assert!(right >= window.width - 1.0, "groups reach {right}, window is {} wide", window.width);
+    assert!(bottom >= window.height - 1.0, "groups reach {bottom}, window is {} tall", window.height);
+}
+
+#[test]
 fn clicking_a_tab_switches_the_current_dock_widget() {
     i_slint_backend_testing::init_no_event_loop();
     let ui = new_app();
@@ -103,7 +126,7 @@ fn closing_a_dock_widget_removes_its_group_once_empty() {
 
     // Output is alone in its Group, so closing it (via its title bar's
     // close button) should remove that Group entirely rather than leaving
-    // an empty one -- see DockManager::close in kddockwidgets/src/manager.rs.
+    // an empty one -- see DockingArea::close in kddockwidgets/src/area.rs.
     let close_output = ElementHandle::find_by_accessible_label(&ui, "Close Output")
         .next()
         .expect("Output's close button not found");
