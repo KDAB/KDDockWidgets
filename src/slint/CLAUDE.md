@@ -143,6 +143,18 @@ Group it's in. Group only draws chrome (title bar + tab bar).
   `DockingArea::close` itself.
 - `GroupMetrics` (in `types.slint`) holds the chrome sizes shared by Group
   (which draws them) and DockWidget (which offsets its content by them).
+- A Group with only one tab hides its tab bar entirely (`group.slint`,
+  `data.dockwidgets.length > 1`) -- nothing to switch between. DockWidget
+  can't just keep using `GroupMetrics.header-height` for its own content
+  offset then: it computes a local `header-height` from `DockState.tab-count`
+  instead (set in `DockManager::dock_widget_state`), leaving out the tab bar's
+  share whenever there's only one. Registration's own min-size report
+  (`Docking.register`, on `if Docking.ready: ... init =>`) is the one place
+  that still uses the constant, unconditionally: at that point the dock
+  widget doesn't know its eventual Group's tab count yet, and reporting the
+  larger (tab-bar-included) size is a safe overestimate either way -- it
+  just means a lone dock widget's Group ends up very slightly roomier than
+  strictly necessary, never too cramped.
 
 ## Slint side
 

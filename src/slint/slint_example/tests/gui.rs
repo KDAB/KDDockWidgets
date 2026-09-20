@@ -69,8 +69,9 @@ fn dock_widgets_and_tabs_are_visible() {
         2
     );
 
-    // Every dock widget's title is drawn somewhere: as its tab, and -- if
-    // it's the current tab of its group -- in the title bar too.
+    // Every dock widget's title is drawn somewhere: as its tab (unless
+    // it's alone in its Group, see below), and -- if it's the current tab
+    // of its group -- in the title bar too.
     for title in ["Output", "Editor", "Console", "Files", "Search", "Git"] {
         assert!(
             label_count(&ui, title) >= 1,
@@ -82,6 +83,11 @@ fn dock_widgets_and_tabs_are_visible() {
     // (see Group::current_index in kddockwidgets/src/manager.rs), so only
     // Output, Editor and Files have their content actually on screen.
     assert_eq!(open_dock_widget_count(&ui), 3);
+    assert_eq!(
+        label_count(&ui, "Output"),
+        1,
+        "alone in its Group: tab bar is hidden (see group.slint), title bar only"
+    );
     assert_eq!(
         label_count(&ui, "Editor"),
         2,
@@ -168,6 +174,46 @@ fn closing_a_dock_widget_removes_its_group_once_empty() {
     assert_eq!(label_count(&ui, "Output"), 0);
     assert_eq!(group_count(&ui), 2);
     assert_eq!(open_dock_widget_count(&ui), 2);
+}
+
+#[test]
+fn the_tab_bar_disappears_once_a_group_is_down_to_one_tab() {
+    i_slint_backend_testing::init_no_event_loop();
+    let ui = new_app();
+
+    // Editor's Group starts with two tabs (Editor, Console): tab bar
+    // shown, so Editor's label is duplicated (tab bar + title bar, it's
+    // current). Making Console current, then closing it, leaves Editor
+    // alone in its Group -- group.slint should hide the tab bar entirely
+    // at that point, the same as Output's Group (see
+    // dock_widgets_and_tabs_are_visible above), not just remove Console's
+    // own tab from it.
+    assert_eq!(
+        label_count(&ui, "Editor"),
+        2,
+        "tab bar + title bar, still two tabs"
+    );
+
+    ElementHandle::find_by_accessible_label(&ui, "Console")
+        .next()
+        .expect("Console's tab not found")
+        .mock_single_click(PointerEventButton::Left);
+    ElementHandle::find_by_accessible_label(&ui, "Close Console")
+        .next()
+        .expect("Console's close button not found")
+        .mock_single_click(PointerEventButton::Left);
+
+    assert_eq!(label_count(&ui, "Console"), 0);
+    assert_eq!(
+        label_count(&ui, "Editor"),
+        1,
+        "tab bar should now be hidden: title bar only, alone in its Group"
+    );
+    assert_eq!(
+        group_count(&ui),
+        3,
+        "Editor's Group itself should survive, just down to one tab"
+    );
 }
 
 /// The center of `element`, in window-absolute logical pixels.

@@ -44,6 +44,11 @@ pub struct DockWidgetState {
     pub group_geometry: GroupGeometry,
     /// Whether it's the current tab in its Group.
     pub is_current: bool,
+    /// How many tabs its Group has. With just one, `ui/group.slint` skips
+    /// the tab bar entirely (nothing to switch between), and
+    /// `ui/dockwidget.slint` uses this to grow its content into the freed
+    /// space instead of leaving it blank.
+    pub tab_count: usize,
 }
 
 /// A Group, as displayed: its geometry plus its tabs.
@@ -439,6 +444,7 @@ impl DockManager {
         Some(DockWidgetState {
             group_geometry: *self.geometries.get(id)?,
             is_current: group.dock_widgets[group.current_index] == name,
+            tab_count: group.dock_widgets.len(),
         })
     }
 

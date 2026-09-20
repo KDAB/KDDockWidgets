@@ -26,10 +26,19 @@ export component DockWidget {
 
     property <DockState> state: Docking.dock-state(root.unique-name, Docking.revision);
 
+    // Mirrors group.slint's own tab-bar visibility (`data.dockwidgets.length
+    // > 1`, `state.tab-count` here): with only one tab there's nothing to
+    // switch between, so the Group skips the tab bar entirely, and the
+    // content area has to grow into that freed space to match -- using the
+    // constant GroupMetrics.header-height here regardless of tab-count would
+    // leave a blank gap the size of a tab bar that isn't actually drawn.
+    property <length> header-height: GroupMetrics.border-width + GroupMetrics.title-bar-height
+        + (state.tab-count > 1 ? GroupMetrics.tab-bar-height : 0px);
+
     x: state.x + GroupMetrics.border-width;
-    y: state.y + GroupMetrics.header-height;
+    y: state.y + header-height;
     width: max(0px, state.width - 2 * GroupMetrics.border-width);
-    height: max(0px, state.height - GroupMetrics.header-height - GroupMetrics.border-width);
+    height: max(0px, state.height - header-height - GroupMetrics.border-width);
     visible: state.is-open && state.is-current;
 
     changed title => {
