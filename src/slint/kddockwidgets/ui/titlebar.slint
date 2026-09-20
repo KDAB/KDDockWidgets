@@ -10,8 +10,51 @@ export component TitleBar inherits Rectangle {
     in property <string> title;
     callback close-clicked();
 
+    // (x, y) are window-absolute (self.absolute-position + mouse-x/y):
+    // TitleBar doesn't know where the enclosing DropArea is, only
+    // ui/droparea.slint does, so it's the one that converts these before
+    // forwarding to Docking. See docking.slint's drag-started for why.
+    callback drag-started(x: length, y: length);
+    callback drag-moved(x: length, y: length);
+    callback drag-ended(x: length, y: length);
+
     height: 24px;
     background: #3a3a3a;
+
+    // Drags the whole Group. Declared before (i.e. below, z-order-wise) the
+    // HorizontalLayout so close-area, part of that layout, still gets
+    // clicks within its own smaller bounds.
+    drag-area := TouchArea {
+        // Not yet known to be a drag: could still turn out to be a plain
+        // click, which -- unlike a tab's TouchArea -- there's currently
+        // nothing to do with, so no threshold-crossing check is skipped
+        // here for "did we move enough", only to avoid firing drag-started
+        // (and the snapshot it triggers, see DockingArea::drag_started) on
+        // every accidental sub-pixel jitter of what was meant as a click.
+        property <bool> is-dragging: false;
+        property <length> press-x;
+        property <length> press-y;
+
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down) {
+                self.is-dragging = false;
+                self.press-x = self.mouse-x;
+                self.press-y = self.mouse-y;
+            } else if (event.kind == PointerEventKind.up && self.is-dragging) {
+                root.drag-ended(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+            }
+        }
+
+        moved => {
+            if (!self.is-dragging && (abs(self.mouse-x - self.press-x) > 4px || abs(self.mouse-y - self.press-y) > 4px)) {
+                self.is-dragging = true;
+                root.drag-started(self.absolute-position.x + self.press-x, self.absolute-position.y + self.press-y);
+            }
+            if (self.is-dragging) {
+                root.drag-moved(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+            }
+        }
+    }
 
     HorizontalLayout {
         padding-left: 6px;

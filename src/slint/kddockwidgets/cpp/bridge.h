@@ -34,6 +34,7 @@ namespace kddw_slint {
 // being-processed version of it. Forward declarations avoid that entirely.)
 struct GroupGeometry;
 struct SeparatorGeometry;
+struct DropRect;
 enum class Location : std::uint8_t;
 
 // Owns one KDDockWidgets layouting tree. There is one DockingEngine per
@@ -67,6 +68,25 @@ public:
 
     // Changes the minimum size of an existing Group. No-op if not found.
     void setGroupMinSize(std::int32_t id, std::int32_t minWidth, std::int32_t minHeight);
+
+    // Moves an existing Group elsewhere in the layout: removes it and
+    // re-inserts a Group with the same id at `location`, relative to
+    // `relativeToId` (0 for the whole layout) if given and known, otherwise
+    // to the whole layout. No-op if `id` isn't found. `id == relativeToId`
+    // is also a no-op (moving a Group relative to itself is meaningless).
+    //
+    // Implemented as remove-then-insert -- the same two steps an app would
+    // take by calling removeGroup() then addGroup()/addGroupRelativeTo()
+    // itself -- but done as one call, so callers (and tests) never observe
+    // the layout with the Group briefly missing.
+    void moveGroup(std::int32_t id, std::int32_t minWidth, std::int32_t minHeight, Location location,
+                   std::int32_t relativeToId);
+
+    // The rect a Group with `draggedId`'s current size would land in if
+    // dropped at `location` relative to `relativeToId` (0 for the whole
+    // layout), without moving anything. Drives the drag-and-drop preview
+    // rubber band. Returns a zeroed rect if either id isn't found.
+    DropRect dropRect(std::int32_t draggedId, Location location, std::int32_t relativeToId) const;
 
     // Interactive dragging of the Separator with the given id (as reported
     // by SeparatorGeometry::id). No-op if not found.

@@ -88,6 +88,14 @@ Two things worth knowing if you touch this code:
   next delta arrives — true here because `separatorMouseMove` calls
   `LayoutingSeparator::setGeometry` synchronously, and `DockingArea`
   refreshes `Docking.separators` before returning to the event loop.
+- `moveGroup` (repositioning a Group for drag-and-drop, see below) is
+  implemented as erase-then-`addGroup`/`addGroupRelativeTo` under the same
+  id, in one call — the same two steps `DockManager` already takes to open a
+  new one, just without exposing the moment in between where the Group is
+  briefly gone. `dropRect` mirrors `Core::DropArea::rectForDrop`: a
+  throwaway stack `Core::Item`, sized like the Group actually being dragged,
+  fed to `ItemBoxContainer::suggestedDropRect` — the same call the Qt
+  frontends' own rubber band uses.
 
 ## How user content works (DockWidget)
 
@@ -165,14 +173,135 @@ Group it's in. Group only draws chrome (title bar + tab bar).
   — no need to share Slint-generated Rust types across crates (which would
   need Slint's experimental `experimental-module-builds` feature).
 
+## Drag-and-drop
+
+Dragging a Group's titlebar, or one of its tabs, to redock it elsewhere. Like
+separator dragging, this is computed in Rust (`DockManager` in
+`src/manager.rs`) and only rendered by Slint (`ui/dropindicators.slint`).
+
+- **No detaching, by design** (see "Not multi-window" below): the dragged
+  Group never leaves the layout mid-drag, and there's no floating preview
+  window. Instead `DockManager::drag_started`/`_moved`/`_ended`/`_cancelled`
+  track an in-progress drag purely as state (which Group/dock widget, the
+  pointer's current position, which indicator -- if any -- it's over), and
+  the actual move only happens once, in `DockManager::apply_drop`, when the
+  drag ends over a valid indicator. Releasing over empty space is a no-op
+  cancel, not an error case.
+- **Indicator geometry and hit-testing are computed in Rust**
+  (`DockManager::visible_locations`/`update_drag`), the same way Group and
+  Separator geometry are -- `ui/dropindicators.slint` just draws whatever
+  `Docking.indicators`/`.drag` say, with no `TouchArea` of its own. This
+  isn't just consistency with the rest of the crate: it's forced. The
+  `TouchArea` that started the drag holds the pointer grab for its whole
+  duration (see below), so an indicator's own `TouchArea` would never
+  receive events even if one existed.
+- **Simplification vs. the QtQuick frontend's indicator rules**
+  (`Core::DropIndicatorOverlay::dropIndicatorVisible`): inner indicators and
+  Center are hidden entirely while hovering the dragged Group's *own* Group,
+  rather than being shown and rejected case by case. Every such drop would
+  either be a no-op (dropping a Group back where it came from) or worse (try
+  to nest a Group's Item inside itself), so there's nothing a real drop there
+  could mean under this prototype's simplified rules. Outer indicators follow
+  upstream's own rule as-is: hidden only while hovering the sole Group in the
+  whole layout.
+- **The drop matrix** (`DockManager::apply_drop`/`drop_at`/`drop_center`): a
+  titlebar drag always moves the *whole* Group (kept under its same id, via
+  `DockingEngine::moveGroup` -- destroy-then-recreate the C++ `Guest`, see
+  the bridge section below). A tab drag out of a Group with only that one tab
+  behaves identically (detaching it would just leave an empty Group behind
+  to immediately remove). Otherwise, a tab drag detaches just that one dock
+  widget into a brand-new Group (inner/outer indicators) or merges it into
+  the target's tab bar (Center) -- the source Group keeps its remaining tabs
+  and its id.
+- **No cursor pixmap.** Slint's `mouse-cursor` only takes a handful of
+  built-in shapes (see `i-slint-common::BuiltInMouseCursor`), nothing custom
+  -- and since nothing detaches, there's no floating window to give a real
+  drag pixmap anyway. The substitute (`DockingArea::drag_started`, drawn by
+  `dropindicators.slint`'s ghost `Image`) is a snapshot taken via
+  `slint::Window::take_snapshot()` and redrawn following the pointer at 55%
+  opacity, inside the DropArea. This silently produces no ghost (the drag
+  still works) wherever `take_snapshot()` isn't implemented -- notably the
+  headless testing backend the GUI tests run under
+  (`i-slint-backend-testing`'s `TestingWindow` has no override for it, so it
+  hits `Renderer::take_snapshot`'s default `Err`).
+  - The snapshot is cropped differently depending on what's being dragged
+    (`DockManager::ghost_source_rect`): the whole Group (chrome included)
+    for a titlebar drag, but just the dragged dock widget's own content area
+    for a tab drag -- the same rect `DockWidget` itself positions by in
+    `ui/dockwidget.slint` (`GroupMetrics`' border/header sizes, mirrored as
+    plain constants in `manager.rs` since Rust has no access to that Slint
+    global). A whole-Group screenshot would be wrong there: it'd show
+    whichever tab is *currently* current, title/tab bars and all, not the
+    dock widget actually being picked up.
+  - That's also why `DockingArea::drag_started` makes a tab drag's dock
+    widget current *before* anything else: `DockWidget`'s own `visible`
+    binding gates on `is-current` (`dockwidget.slint`), so a background
+    tab's content isn't being rendered at all at the moment the drag starts
+    -- there'd be nothing correct to crop out otherwise. `set_current()`'s
+    `refresh()` call updates Slint's property graph synchronously, and
+    `take_snapshot()` re-renders from whatever the current values are when
+    it's called (not from whatever was last painted on screen), so this
+    ordering is enough on its own -- no explicit "wait for a repaint" step
+    needed. This is a real, user-visible side effect (the tab becomes
+    current for good, not just for the snapshot), not just an implementation
+    detail: it also happens to be the more natural "you're now holding this
+    one" behavior. `starting_a_tab_drag_makes_it_current_even_if_the_drag_is_then_cancelled`
+    in `tests/gui.rs` covers it.
+- **Drop indicator artwork** (`src/indicators.rs`) is decoded from the same
+  PNGs the QtQuick frontend uses (`src/img/classic_indicators/`, copied to
+  `ui/img/` -- renamed `outter_*` → `outer_*`, see "Pre-commit hooks" below),
+  but *not* via Slint's `@image-url()`: that macro needs a literal path at
+  compile time, so unlike `ClassicIndicator.qml` (which builds a
+  `"qrc:/img/...").png"` path string at runtime) it can't pick one of the
+  eighteen files by a runtime-computed name. `slint::Image::load_from_data()`
+  can, so the indicator images are decoded directly in Rust and handed to
+  Slint as plain `image`-typed struct fields (`IndicatorData`/`DragData` in
+  `types.slint`) -- one more thing, alongside the ghost, that doesn't need
+  `install!` at all, since `slint::Image` is an ordinary published type, not
+  one Slint only generates inside the app's own compiled `.slint`. Decoded
+  images are cached in a `thread_local!`, not a `static`: `slint::Image`
+  isn't `Sync`.
+- **A drag threshold, not a plain click handler.** Both `TitleBar`'s own
+  `TouchArea` (`ui/titlebar.slint`) and each tab's (`ui/group.slint`'s `for`
+  loop) use `pointer-event` (down/up) plus `moved` together, exactly the
+  pattern `ui/separator.slint` already used for resizing: `down` records the
+  press position, `moved` compares against it and only fires `drag-started`
+  past a 4px threshold, `up` fires either `drag-ended` (if that threshold was
+  crossed) or, for a tab, `current-changed` (a plain click). Coordinates
+  passed up (`self.absolute-position.x + self.mouse-x`, etc.) are
+  window-absolute -- neither component knows where the enclosing `DropArea`
+  is, only `ui/droparea.slint` does, so that's the one place that converts to
+  DropArea-local (subtracting its own `absolute-position`) before forwarding
+  to `Docking`.
+- **A second, one-level-down `sync_rows` trap.** `GroupData`'s own
+  `dockwidgets` field is itself a `ModelRc`; naively rebuilding it fresh on
+  every refresh (as the original code did, since nothing needed it to
+  survive a refresh yet) tears down a tab's `TouchArea` exactly like handing
+  `Docking.groups` a fresh model on every refresh would (see `sync_rows`'s
+  doc comment) -- invisible for a `clicked`-only tab (a single, synchronous
+  event has no state to lose), but fatal for a drag: `drag_started()`
+  refreshes synchronously, mid-gesture, destroying the very `TouchArea`
+  holding the pointer grab before its first `moved` event, exactly the
+  failure mode the doc comment already describes for Separators. Hit this
+  for real while adding the GUI drag tests below: the drag would start (its
+  ghost snapshot got taken) but a subsequent release never reached
+  `drag_ended`. Fixed by giving `sync_rows` a generic (not just `i32`) key
+  type and caching one tab-list `VecModel` per Group id in `install!`
+  (`dockwidget_models`), synced the same way `groups`/`separators` are.
+- **No Escape-to-cancel.** `Docking.drag-cancelled()`/
+  `DockingArea::drag_cancelled` exist and work (nothing currently calls
+  them), for whenever keyboard handling during a drag gets wired up.
+  Releasing over empty space already cancels a drag today.
+
 ## Known gaps (intentional, for now)
 
-- No drag-and-drop (dropping a DockWidget onto another to redock it).
-  Separator dragging (resizing) does work.
 - No way to reopen a closed DockWidget from the UI (Rust can, via
   `add_dock_widget`).
-- Not multi-window. With the no-reparenting design above, content can't
-  move between windows either; floating windows will need a different idea.
+- Not multi-window: dragging redocks within the one window, but never
+  detaches into a floating one. With the no-reparenting design above,
+  content can't move between windows either; floating windows will need a
+  different idea.
+- No Escape-to-cancel for an in-progress drag (see "Drag-and-drop" above).
 
 ## GUI tests (`slint_example/tests/gui.rs`)
 
@@ -214,6 +343,22 @@ drawn, not just a Rust-side logic bug.
   and only bites for a title that exists *only* inside the tab bar (e.g.
   "Console", not current) — that lookup silently returns nothing. `new_app()`
   in `tests/gui.rs` does this once so every test gets it for free.
+- The drag-and-drop tests drive real `slint::platform::WindowEvent`s
+  (`PointerPressed`/`Moved`/`Released` via `ui.window().dispatch_event`, see
+  `drag()`) rather than calling `DockingArea` directly, specifically to
+  exercise the `.slint`-side `TouchArea` wiring -- that's how the
+  per-Group-tab-list `sync_rows` bug (see "Drag-and-drop" above) got caught.
+  A single `PointerMoved` straight to the target both crosses the 4px drag
+  threshold and places the drop, since `DockManager::update_drag` only looks
+  at the pointer's current position, never the path it took. Dropping dead
+  center on a Group's own bounds reliably hits its Center indicator without
+  the test needing to know `INDICATOR_SIZE`/margins itself, since Center is
+  positioned exactly at the hovered Group's own centroid (`group_showing`'s
+  companion `center_of` helper relies on this). Groups aren't otherwise
+  identifiable from the element tree (ids are internal, and elements carry no
+  `unique-name`), so `group_showing(ui, label)` -- "the Group currently
+  showing this dock widget" -- is how these tests pick one out, before *and*
+  after a drop.
 
 ## CI
 

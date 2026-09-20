@@ -47,6 +47,36 @@ export struct DockState {
     height: length,
 }
 
+// One drop indicator icon: already positioned, and already carrying the
+// right artwork for its location and whether it's the one the pointer is
+// currently over (see kddockwidgets::indicator_image, used by install!()
+// to build these -- Slint's @image-url can't pick a file by a
+// runtime-computed name, so the Rust side decodes the right one itself
+// instead of this side choosing between several).
+export struct IndicatorData {
+    x: length,
+    y: length,
+    image: image,
+}
+
+// Geometry -- and, for the ghost, image -- for an in-progress drag.
+// `active` being false means no drag is in progress; every other field is
+// then meaningless and DropIndicators (ui/dropindicators.slint) draws
+// nothing.
+export struct DragData {
+    active: bool,
+    ghost-x: length,
+    ghost-y: length,
+    ghost-width: length,
+    ghost-height: length,
+    ghost-image: image,
+    rubber-band-visible: bool,
+    rubber-band-x: length,
+    rubber-band-y: length,
+    rubber-band-width: length,
+    rubber-band-height: length,
+}
+
 // Sizes of a Group's chrome. Shared by Group, which draws it, and
 // DockWidget, which positions its content below it.
 export global GroupMetrics {

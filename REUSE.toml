@@ -92,6 +92,7 @@ path = [
     "docs/api/**.png",
     "examples/dockwidgets/assets/**.png",
     "src/img/classic_indicators/**.png",
+    "src/slint/kddockwidgets/ui/img/**.png",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>"

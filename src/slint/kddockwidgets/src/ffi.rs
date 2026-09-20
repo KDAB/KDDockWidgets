@@ -43,6 +43,16 @@ pub mod ffi {
         is_vertical: bool,
     }
 
+    /// A plain rectangle, used for the drag-and-drop preview (see
+    /// `DockingEngine::dropRect`).
+    #[derive(Debug, Clone, Copy, PartialEq)]
+    struct DropRect {
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+    }
+
     unsafe extern "C++" {
         include!("kddockwidgets/cpp/bridge.h");
 
@@ -51,7 +61,13 @@ pub mod ffi {
         fn new_docking_engine() -> UniquePtr<DockingEngine>;
 
         fn resize(self: Pin<&mut DockingEngine>, width: i32, height: i32);
-        fn addGroup(self: Pin<&mut DockingEngine>, id: i32, min_width: i32, min_height: i32, location: Location);
+        fn addGroup(
+            self: Pin<&mut DockingEngine>,
+            id: i32,
+            min_width: i32,
+            min_height: i32,
+            location: Location,
+        );
         fn addGroupRelativeTo(
             self: Pin<&mut DockingEngine>,
             id: i32,
@@ -62,6 +78,31 @@ pub mod ffi {
         );
         fn removeGroup(self: Pin<&mut DockingEngine>, id: i32);
         fn setGroupMinSize(self: Pin<&mut DockingEngine>, id: i32, min_width: i32, min_height: i32);
+
+        // Moves an existing Group elsewhere in the layout: same as removing
+        // it and calling addGroup/addGroupRelativeTo again with a fresh id,
+        // except it keeps the id (and thus what the Rust side has correlated
+        // with it) stable. `relative_to_id` of 0 means relative to the whole
+        // layout, like addGroup.
+        fn moveGroup(
+            self: Pin<&mut DockingEngine>,
+            id: i32,
+            min_width: i32,
+            min_height: i32,
+            location: Location,
+            relative_to_id: i32,
+        );
+
+        // The rect a Group with `dragged_id`'s current size would land in if
+        // dropped at `location` relative to `relative_to_id` (0 for the whole
+        // layout), without actually moving anything. Drives the drop-preview
+        // rubber band. Returns a zeroed rect if either id isn't found.
+        fn dropRect(
+            self: &DockingEngine,
+            dragged_id: i32,
+            location: Location,
+            relative_to_id: i32,
+        ) -> DropRect;
 
         fn separatorMousePress(self: Pin<&mut DockingEngine>, id: i32);
         fn separatorMouseRelease(self: Pin<&mut DockingEngine>, id: i32);

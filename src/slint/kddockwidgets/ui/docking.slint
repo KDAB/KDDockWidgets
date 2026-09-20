@@ -6,7 +6,7 @@
 //
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
-import { DockState, GroupData, SeparatorData } from "types.slint";
+import { DockState, DragData, GroupData, IndicatorData, SeparatorData } from "types.slint";
 
 // The single channel between the Slint components and the Rust side
 // (kddockwidgets::DockingArea). Internal: an app only has to re-export it
@@ -26,6 +26,14 @@ export global Docking {
     in property <[GroupData]> groups;
     in property <[SeparatorData]> separators;
 
+    // Drop indicators and drag preview (ghost + rubber band) for the
+    // in-progress drag, if any -- see ui/dropindicators.slint, which is all
+    // that ever reads these. Rebuilt on every drag-moved, so (unlike
+    // groups/separators) there's no need to preserve row identity: nothing
+    // interactive is anchored to one of these rows.
+    in property <[IndicatorData]> indicators;
+    in property <DragData> drag;
+
     // min-width/min-height include the Group's chrome.
     callback register(unique-name: string, title: string, min-width: length, min-height: length);
     callback title-changed(unique-name: string, title: string);
@@ -36,6 +44,14 @@ export global Docking {
     callback separator-pressed(id: int);
     callback separator-released(id: int);
     callback separator-moved(id: int, dx: length, dy: length);
+
+    // (x, y) are DropArea-local, converted from window-absolute by
+    // ui/droparea.slint -- the only place that both forwards these and
+    // knows its own absolute-position, see the comment there.
+    callback drag-started(unique-name: string, whole-group: bool, x: length, y: length);
+    callback drag-moved(x: length, y: length);
+    callback drag-ended(x: length, y: length);
+    callback drag-cancelled();
 
     pure callback dock-state(unique-name: string, revision: int) -> DockState;
 }

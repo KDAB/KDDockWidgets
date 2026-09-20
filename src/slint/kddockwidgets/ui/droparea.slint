@@ -8,6 +8,7 @@
 
 import { Group } from "group.slint";
 import { Separator } from "separator.slint";
+import { DropIndicators } from "dropindicators.slint";
 import { Docking } from "docking.slint";
 
 // Hosts every Group, the app's DockWidgets (as children), and the
@@ -39,6 +40,21 @@ export component DropArea inherits Rectangle {
         data: g;
         close-requested(name) => { Docking.close-requested(name); }
         current-changed(name) => { Docking.current-changed(name); }
+
+        // Group/TitleBar report window-absolute positions (they don't know
+        // where the enclosing DropArea is); this is the one place that both
+        // forwards them and knows root.absolute-position, so it converts
+        // to DropArea-local before handing them to Docking -- the same
+        // space GroupData/SeparatorData geometry (above) is already in.
+        drag-started(name, whole, x, y) => {
+            Docking.drag-started(name, whole, x - root.absolute-position.x, y - root.absolute-position.y);
+        }
+        drag-moved(x, y) => {
+            Docking.drag-moved(x - root.absolute-position.x, y - root.absolute-position.y);
+        }
+        drag-ended(x, y) => {
+            Docking.drag-ended(x - root.absolute-position.x, y - root.absolute-position.y);
+        }
     }
 
     // DockWidgets, drawn over their Group
@@ -55,4 +71,7 @@ export component DropArea inherits Rectangle {
         released(id) => { Docking.separator-released(id); }
         moved(id, dx, dy) => { Docking.separator-moved(id, dx, dy); }
     }
+
+    // On top of everything: indicators, rubber band, ghost image.
+    DropIndicators { }
 }
