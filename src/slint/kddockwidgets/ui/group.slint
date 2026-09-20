@@ -24,6 +24,11 @@ export component Group inherits Rectangle {
     callback close-requested(unique-name: string);
     callback current-changed(unique-name: string);
 
+    // (x, y) are window-absolute, see TitleBar's drag-started doc comment.
+    callback drag-started(unique-name: string, whole-group: bool, x: length, y: length);
+    callback drag-moved(x: length, y: length);
+    callback drag-ended(x: length, y: length);
+
     background: #2b2b2b;
     border-width: GroupMetrics.border-width;
     border-color: #444444;
@@ -35,6 +40,9 @@ export component Group inherits Rectangle {
             height: GroupMetrics.title-bar-height;
             title: data.dockwidgets[data.current-index].title;
             close-clicked => { root.close-requested(data.dockwidgets[data.current-index].unique-name); }
+            drag-started(x, y) => { root.drag-started(data.dockwidgets[data.current-index].unique-name, true, x, y); }
+            drag-moved(x, y) => { root.drag-moved(x, y); }
+            drag-ended(x, y) => { root.drag-ended(x, y); }
         }
 
         Rectangle {
@@ -44,7 +52,37 @@ export component Group inherits Rectangle {
 
             HorizontalLayout {
                 for dw[i] in data.dockwidgets: TouchArea {
-                    clicked => { root.current-changed(dw.unique-name); }
+                    // A tab drag can turn into a plain click (switching the
+                    // current tab) if the pointer never crosses the
+                    // threshold below -- unlike TitleBar, which has no
+                    // click behavior of its own to fall back to.
+                    property <bool> is-dragging: false;
+                    property <length> press-x;
+                    property <length> press-y;
+
+                    pointer-event(event) => {
+                        if (event.kind == PointerEventKind.down) {
+                            self.is-dragging = false;
+                            self.press-x = self.mouse-x;
+                            self.press-y = self.mouse-y;
+                        } else if (event.kind == PointerEventKind.up) {
+                            if (self.is-dragging) {
+                                root.drag-ended(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+                            } else {
+                                root.current-changed(dw.unique-name);
+                            }
+                        }
+                    }
+
+                    moved => {
+                        if (!self.is-dragging && (abs(self.mouse-x - self.press-x) > 4px || abs(self.mouse-y - self.press-y) > 4px)) {
+                            self.is-dragging = true;
+                            root.drag-started(dw.unique-name, false, self.absolute-position.x + self.press-x, self.absolute-position.y + self.press-y);
+                        }
+                        if (self.is-dragging) {
+                            root.drag-moved(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+                        }
+                    }
 
                     Rectangle {
                         background: i == data.current-index ? #3a3a3a : transparent;

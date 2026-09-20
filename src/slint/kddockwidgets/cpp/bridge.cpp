@@ -254,6 +254,57 @@ void DockingEngine::setGroupMinSize(std::int32_t id, std::int32_t minWidth, std:
         it->second->setMinSize(Size(minWidth, minHeight));
 }
 
+void DockingEngine::moveGroup(std::int32_t id, std::int32_t minWidth, std::int32_t minHeight, Location location,
+                              std::int32_t relativeToId)
+{
+    if (id == relativeToId || d->guests.find(id) == d->guests.end())
+        return;
+
+    // Destroying the old Guest makes its Item remove itself from the tree
+    // (see ~Guest), freeing up its space, exactly as removeGroup() does.
+    // We then insert a fresh Guest under the same id, the same way
+    // addGroup()/addGroupRelativeTo() do.
+    d->guests.erase(id);
+
+    auto guest = std::make_unique<Guest>(d.get(), id, Size(minWidth, minHeight));
+    auto it = relativeToId != 0 ? d->guests.find(relativeToId) : d->guests.end();
+    if (it == d->guests.end()) {
+        d->insertItem(guest.get(), toKddwLocation(location));
+    } else {
+        d->insertItemRelativeTo(guest.get(), it->second.get(), toKddwLocation(location));
+    }
+    d->guests.emplace(id, std::move(guest));
+}
+
+DropRect DockingEngine::dropRect(std::int32_t draggedId, Location location, std::int32_t relativeToId) const
+{
+    auto draggedIt = d->guests.find(draggedId);
+    if (draggedIt == d->guests.end())
+        return { 0, 0, 0, 0 };
+    Guest *dragged = draggedIt->second.get();
+
+    // Mirrors Core::DropArea::rectForDrop: a throwaway Item, sized like the
+    // Group being dragged, fed to the same suggestedDropRect() the Qt
+    // frontends use for their own rubber band.
+    Core::Item item(nullptr);
+    item.setSize(dragged->geometry().size());
+    item.setMinSize(dragged->minSize());
+    item.setMaxSizeHint(dragged->maxSizeHint());
+
+    Core::Item *relativeTo = nullptr;
+    auto *container = static_cast<Core::ItemBoxContainer *>(d->m_rootItem);
+    if (relativeToId != 0) {
+        auto relativeToIt = d->guests.find(relativeToId);
+        if (relativeToIt == d->guests.end())
+            return { 0, 0, 0, 0 };
+        relativeTo = relativeToIt->second->layoutItem();
+        container = relativeTo->parentBoxContainer();
+    }
+
+    const Rect r = container->suggestedDropRect(&item, relativeTo, toKddwLocation(location));
+    return { r.x(), r.y(), r.width(), r.height() };
+}
+
 void DockingEngine::separatorMousePress(std::int32_t id)
 {
     auto *box = static_cast<Core::ItemBoxContainer *>(d->m_rootItem);

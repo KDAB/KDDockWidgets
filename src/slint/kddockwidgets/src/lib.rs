@@ -35,15 +35,18 @@
 
 mod area;
 mod ffi;
+mod indicators;
 mod install;
 mod manager;
 
 pub use area::DockingArea;
-pub use ffi::ffi::{GroupGeometry, Location, SeparatorGeometry};
-pub use manager::{DockWidgetState, GroupView};
+pub use ffi::ffi::{DropRect, GroupGeometry, Location, SeparatorGeometry};
+pub use manager::{DockWidgetState, DragState, DropLocation, GroupView, IndicatorView};
 
 #[doc(hidden)]
 pub use area::sync_rows;
+#[doc(hidden)]
+pub use indicators::indicator_image;
 
 /// Re-exported for [`install!`], whose expansion needs to name Slint's own
 /// types in a crate that may well call its `slint` dependency something else.
@@ -66,7 +69,9 @@ pub struct DockingLayout {
 
 impl DockingLayout {
     pub fn new() -> Self {
-        Self { engine: ffi::ffi::new_docking_engine() }
+        Self {
+            engine: ffi::ffi::new_docking_engine(),
+        }
     }
 
     /// Resizes the whole layout. Call this whenever the DropArea is resized.
@@ -77,7 +82,9 @@ impl DockingLayout {
     /// Adds a new Group with the given minimum content size and the given
     /// id, chosen by the caller. Ids must be unique and non-zero.
     pub fn add_group(&mut self, id: i32, min_width: i32, min_height: i32, location: Location) {
-        self.engine.pin_mut().addGroup(id, min_width, min_height, location);
+        self.engine
+            .pin_mut()
+            .addGroup(id, min_width, min_height, location);
     }
 
     /// Like [`add_group`](Self::add_group), but `location` is relative to
@@ -93,7 +100,13 @@ impl DockingLayout {
         location: Location,
         relative_to_id: i32,
     ) {
-        self.engine.pin_mut().addGroupRelativeTo(id, min_width, min_height, location, relative_to_id);
+        self.engine.pin_mut().addGroupRelativeTo(
+            id,
+            min_width,
+            min_height,
+            location,
+            relative_to_id,
+        );
     }
 
     /// Removes the Group with the given id. No-op if not found.
@@ -103,7 +116,43 @@ impl DockingLayout {
 
     /// Changes the minimum size of an existing Group. No-op if not found.
     pub fn set_group_min_size(&mut self, id: i32, min_width: i32, min_height: i32) {
-        self.engine.pin_mut().setGroupMinSize(id, min_width, min_height);
+        self.engine
+            .pin_mut()
+            .setGroupMinSize(id, min_width, min_height);
+    }
+
+    /// Moves an existing Group elsewhere in the layout, keeping its id.
+    /// `relative_to_id` of `None` means relative to the whole layout. No-op
+    /// if `id` isn't found, or equals `relative_to_id`.
+    pub fn move_group(
+        &mut self,
+        id: i32,
+        min_width: i32,
+        min_height: i32,
+        location: Location,
+        relative_to_id: Option<i32>,
+    ) {
+        self.engine.pin_mut().moveGroup(
+            id,
+            min_width,
+            min_height,
+            location,
+            relative_to_id.unwrap_or(0),
+        );
+    }
+
+    /// The rect a Group with `dragged_id`'s current size would land in if
+    /// dropped at `location` relative to `relative_to_id` (`None` for the
+    /// whole layout), without moving anything. Used for the drag-and-drop
+    /// preview rubber band.
+    pub fn drop_rect(
+        &self,
+        dragged_id: i32,
+        location: Location,
+        relative_to_id: Option<i32>,
+    ) -> DropRect {
+        self.engine
+            .dropRect(dragged_id, location, relative_to_id.unwrap_or(0))
     }
 
     /// Starts an interactive drag of the Separator with the given id. No-op

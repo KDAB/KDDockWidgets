@@ -7,10 +7,15 @@
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
 use crate::manager::DockManager;
-use crate::{DockWidgetState, GroupView, Location, SeparatorGeometry};
-use slint::{Model, VecModel};
+use crate::{DockWidgetState, DragState, GroupView, IndicatorView, Location, SeparatorGeometry};
+use slint::{Image, Model, Rgba8Pixel, SharedPixelBuffer, VecModel};
 use std::cell::RefCell;
 use std::rc::Rc;
+
+/// What [`DockingArea::new`]'s snapshot hook returns: a snapshot of the
+/// whole window, in physical pixels, plus the scale factor needed to map
+/// [`DockingArea`]'s own logical-pixel geometry into it.
+type WindowSnapshot = (SharedPixelBuffer<Rgba8Pixel>, f32);
 
 /// The app's handle on one docking area, and the whole API an app needs:
 /// it decides where dock widgets go, and everything else (Group geometry,
@@ -40,6 +45,14 @@ use std::rc::Rc;
 pub struct DockingArea {
     manager: Rc<RefCell<DockManager>>,
     sync_ui: Rc<dyn Fn(&DockingArea)>,
+    snapshot: Rc<dyn Fn() -> Option<WindowSnapshot>>,
+    /// The dragged Group's content, captured once at drag start (see
+    /// [`drag_started`](Self::drag_started)) and redrawn following the
+    /// pointer for the rest of the drag. `None` while not dragging, or if
+    /// the platform's renderer doesn't support [`slint::Window::take_snapshot`]
+    /// (e.g. the headless testing backend used by `slint_example`'s GUI
+    /// tests) -- the drag still works, just without the ghost image.
+    ghost_image: Rc<RefCell<Option<Image>>>,
 }
 
 impl DockingArea {
@@ -98,6 +111,25 @@ impl DockingArea {
         self.manager.borrow().separators()
     }
 
+    /// Every drop indicator currently shown (empty if no drag is in
+    /// progress). See [`drag_started`](Self::drag_started).
+    pub fn indicators(&self) -> Vec<IndicatorView> {
+        self.manager.borrow().indicators()
+    }
+
+    /// Ghost and rubber band geometry for the in-progress drag, or `None` if
+    /// there isn't one.
+    pub fn drag_state(&self) -> Option<DragState> {
+        self.manager.borrow().drag_state()
+    }
+
+    /// The dragged Group's snapshot, captured at drag start. `None` while
+    /// not dragging, or if the platform couldn't produce one (see
+    /// [`ghost_image`](Self::ghost_image)'s doc comment).
+    pub fn drag_ghost_image(&self) -> Option<Image> {
+        self.ghost_image.borrow().clone()
+    }
+
     fn mutate(&self, f: impl FnOnce(&mut DockManager)) {
         f(&mut self.manager.borrow_mut());
         self.refresh();
@@ -108,8 +140,20 @@ impl DockingArea {
 /// called by apps: it's the UI side of the area talking back to it.
 #[doc(hidden)]
 impl DockingArea {
-    pub fn new(sync_ui: impl Fn(&DockingArea) + 'static) -> Self {
-        Self { manager: Rc::new(RefCell::new(DockManager::new())), sync_ui: Rc::new(sync_ui) }
+    /// `snapshot` grabs the whole window (physical pixels) plus its scale
+    /// factor, for cropping out the ghost image at the start of a drag. It
+    /// can only be built where the generated `AppWindow` type is in scope,
+    /// which is why [`install!`](crate::install) is the one passing it.
+    pub fn new(
+        sync_ui: impl Fn(&DockingArea) + 'static,
+        snapshot: impl Fn() -> Option<WindowSnapshot> + 'static,
+    ) -> Self {
+        Self {
+            manager: Rc::new(RefCell::new(DockManager::new())),
+            sync_ui: Rc::new(sync_ui),
+            snapshot: Rc::new(snapshot),
+            ghost_image: Rc::new(RefCell::new(None)),
+        }
     }
 
     /// Pushes the current layout back into the Slint side.
@@ -120,7 +164,14 @@ impl DockingArea {
     /// A `DockWidget` reporting the title and minimum size it was declared
     /// with. Lengths come in as Slint's `length`, i.e. logical pixels.
     pub fn register(&self, name: &str, title: &str, min_width: f32, min_height: f32) {
-        self.mutate(|m| m.register(name, title, min_width.ceil() as i32, min_height.ceil() as i32));
+        self.mutate(|m| {
+            m.register(
+                name,
+                title,
+                min_width.ceil() as i32,
+                min_height.ceil() as i32,
+            )
+        });
     }
 
     /// The `DropArea` reporting its own size. Sizes of zero (which is what a
@@ -145,12 +196,112 @@ impl DockingArea {
     pub fn separator_moved(&self, id: i32, dx: f32, dy: f32) {
         self.mutate(|m| m.separator_move(id, dx as i32, dy as i32));
     }
+
+    /// A titlebar (`whole_group: true`) or tab (`false`) reporting that a
+    /// drag started. `(x, y)` is the pointer's position, in DropArea-local
+    /// coordinates (`ui/droparea.slint` converts from window-absolute
+    /// before forwarding here, since that's the only coordinate space every
+    /// nested TouchArea that can start a drag shares without threading a
+    /// DropArea reference down to each of them).
+    ///
+    /// Takes the ghost snapshot synchronously, before the first `refresh()`,
+    /// so the very first frame the UI draws the ghost already has it.
+    pub fn drag_started(&self, name: &str, whole_group: bool, x: f32, y: f32) {
+        if !whole_group {
+            // Picking up a tab makes it current first: partly "you're now
+            // holding this one" semantics, partly necessity -- a
+            // DockWidget only renders while it's the current tab of its
+            // Group (see ui/dockwidget.slint), so without this there'd be
+            // nothing but a stale or blank frame for the snapshot below to
+            // capture. set_current()'s own refresh() updates Slint's
+            // property graph synchronously; take_snapshot() re-renders
+            // on demand from whatever the current values are when it's
+            // called, not from whatever was last drawn on screen, so by
+            // the time capture_ghost() runs the newly current tab's
+            // content is what it actually sees.
+            self.set_current(name);
+        }
+
+        self.manager
+            .borrow_mut()
+            .drag_started(name, whole_group, x as i32, y as i32);
+        let ghost_rect = self.manager.borrow().drag_state();
+        *self.ghost_image.borrow_mut() = ghost_rect
+            .and_then(|r| self.capture_ghost(r.ghost_x, r.ghost_y, r.ghost_width, r.ghost_height));
+        self.refresh();
+    }
+
+    pub fn drag_moved(&self, x: f32, y: f32) {
+        self.mutate(|m| m.drag_moved(x as i32, y as i32));
+    }
+
+    pub fn drag_ended(&self, x: f32, y: f32) {
+        self.mutate(|m| m.drag_ended(x as i32, y as i32));
+        *self.ghost_image.borrow_mut() = None;
+    }
+
+    pub fn drag_cancelled(&self) {
+        self.mutate(|m| m.drag_cancelled());
+        *self.ghost_image.borrow_mut() = None;
+    }
+
+    /// Crops `(x, y, width, height)` (DropArea-local, logical pixels) out of
+    /// a fresh window snapshot. `None` if the platform can't produce one
+    /// (see [`ghost_image`](Self)'s doc comment) or the rect is empty.
+    fn capture_ghost(&self, x: i32, y: i32, width: i32, height: i32) -> Option<Image> {
+        if width <= 0 || height <= 0 {
+            return None;
+        }
+        let (buffer, scale_factor) = (self.snapshot)()?;
+        crop_snapshot(&buffer, scale_factor, x, y, width, height)
+    }
+}
+
+/// Crops `(x, y, width, height)` -- in the same logical-pixel space as the
+/// rest of this crate's geometry -- out of `buffer`, a window snapshot in
+/// *physical* pixels (hence `scale_factor`). Clamped to `buffer`'s own
+/// bounds: rounding a logical rect that's flush against the window's edge
+/// can otherwise land a pixel outside it.
+fn crop_snapshot(
+    buffer: &SharedPixelBuffer<Rgba8Pixel>,
+    scale_factor: f32,
+    x: i32,
+    y: i32,
+    width: i32,
+    height: i32,
+) -> Option<Image> {
+    let (src_width, src_height) = (buffer.width() as i32, buffer.height() as i32);
+    if src_width <= 0 || src_height <= 0 {
+        return None;
+    }
+
+    let sx = ((x as f32) * scale_factor).round() as i32;
+    let sy = ((y as f32) * scale_factor).round() as i32;
+    let sx = sx.clamp(0, src_width - 1);
+    let sy = sy.clamp(0, src_height - 1);
+    let sw = (((width as f32) * scale_factor).round() as i32).clamp(1, src_width - sx);
+    let sh = (((height as f32) * scale_factor).round() as i32).clamp(1, src_height - sy);
+
+    const BPP: usize = 4; // Rgba8Pixel
+    let src_bytes = buffer.as_bytes();
+    let mut cropped = SharedPixelBuffer::<Rgba8Pixel>::new(sw as u32, sh as u32);
+    let dst_bytes = cropped.make_mut_bytes();
+    let row_bytes = sw as usize * BPP;
+    for row in 0..sh {
+        let src_offset = (((sy + row) * src_width + sx) as usize) * BPP;
+        let dst_offset = row as usize * row_bytes;
+        dst_bytes[dst_offset..dst_offset + row_bytes]
+            .copy_from_slice(&src_bytes[src_offset..src_offset + row_bytes]);
+    }
+    Some(Image::from_rgba8(cropped))
 }
 
 /// Reconciles `model`'s rows with `desired`, matched by `id_of`: existing
 /// ids are updated in place, new ones appended, stale ones dropped. Order
 /// isn't preserved -- nothing depends on Group/Separator draw order -- only
-/// identity.
+/// identity. `id_of` can return any `PartialEq` key, not just an integer id
+/// -- e.g. a dock widget's `unique-name` for a Group's own tab list, see
+/// `install!`.
 ///
 /// Identity is the whole point: a `for` loop's `Repeater` throws away and
 /// rebuilds all of its elements whenever the `ModelRc` it is bound to
@@ -161,19 +312,34 @@ impl DockingArea {
 /// `moved` event. Updating rows in place (`set_row_data`) only rebinds that
 /// row's properties and leaves its element -- and its interactive state --
 /// alone.
+///
+/// The same trap exists one level down: a Group's tab list (`GroupData`'s
+/// own `dockwidgets` field) is *itself* a `ModelRc`, so rebuilding it fresh
+/// on every refresh tears down the tab bar's `TouchArea`s just the same, even
+/// while `groups` itself is being synced through this very function. That's
+/// exactly what silently killed a tab drag before it could reach its first
+/// `moved` event: `drag_started()` refreshes synchronously, and until
+/// `install!` started caching one `dockwidgets` model per Group id and
+/// syncing *its* rows too (instead of rebuilding it on every `GroupData`),
+/// that refresh tore down the very tab bar row whose `TouchArea` was mid-drag.
 #[doc(hidden)]
-pub fn sync_rows<T: Clone + 'static>(model: &VecModel<T>, desired: Vec<T>, id_of: impl Fn(&T) -> i32) {
-    let mut desired_ids = Vec::with_capacity(desired.len());
-    for item in desired {
-        let id = id_of(&item);
-        desired_ids.push(id);
+pub fn sync_rows<T: Clone + 'static, K: PartialEq>(
+    model: &VecModel<T>,
+    desired: Vec<T>,
+    id_of: impl Fn(&T) -> K,
+) {
+    for item in &desired {
+        let id = id_of(item);
         match (0..model.row_count()).find(|&i| model.row_data(i).is_some_and(|r| id_of(&r) == id)) {
-            Some(i) => model.set_row_data(i, item),
-            None => model.push(item),
+            Some(i) => model.set_row_data(i, item.clone()),
+            None => model.push(item.clone()),
         }
     }
     for i in (0..model.row_count()).rev() {
-        if model.row_data(i).is_some_and(|r| !desired_ids.contains(&id_of(&r))) {
+        if model
+            .row_data(i)
+            .is_some_and(|r| !desired.iter().any(|d| id_of(d) == id_of(&r)))
+        {
             model.remove(i);
         }
     }

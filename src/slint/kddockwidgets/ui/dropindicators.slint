@@ -1,0 +1,64 @@
+// This file is part of KDDockWidgets.
+//
+// SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+//
+// Contact KDAB at <info@kdab.com> for commercial licensing options.
+
+import { Docking } from "docking.slint";
+
+// The drag-and-drop overlay: drop indicator icons, the rubber band showing
+// where a drop would land, and a ghost image of the dragged Group following
+// the pointer. A "dumb" renderer, like DropArea itself: Rust decides which
+// indicators exist, where they go, and which artwork they use (see
+// ui/types.slint's IndicatorData/DragData and kddockwidgets::indicator_image
+// in src/indicators.rs), this only draws whatever it's handed.
+//
+// No TouchArea anywhere in here: an indicator has to let the drag that's
+// hovering it keep receiving pointer events (the TouchArea that started the
+// drag holds the implicit grab for its whole duration, see group.slint and
+// titlebar.slint), so this is only ever hit-tested against from Rust, in
+// DockManager::update_drag -- never by Slint itself.
+export component DropIndicators inherits Rectangle {
+    visible: Docking.drag.active;
+
+    // Where the drop would land, shown once the pointer is over an
+    // indicator (DockManager::drag_state leaves this empty otherwise).
+    Rectangle {
+        visible: Docking.drag.rubber-band-visible;
+        x: Docking.drag.rubber-band-x;
+        y: Docking.drag.rubber-band-y;
+        width: Docking.drag.rubber-band-width;
+        height: Docking.drag.rubber-band-height;
+        background: #2379f4.with-alpha(0.35);
+        border-width: 2px;
+        border-color: #2379f4;
+    }
+
+    // 32px, not the source artwork's native 128x128 (or the QtQuick
+    // frontend's 64px) -- must match manager.rs's INDICATOR_SIZE, see the
+    // comment there for why.
+    for indicator in Docking.indicators: Image {
+        x: indicator.x;
+        y: indicator.y;
+        width: 32px;
+        height: 32px;
+        source: indicator.image;
+    }
+
+    // Since this prototype never detaches (no multi-window, see
+    // src/slint/CLAUDE.md), there's no cursor to put a drag pixmap on --
+    // Slint's mouse-cursor only takes a handful of built-in shapes, nothing
+    // custom. This is the substitute: a snapshot of the dragged Group,
+    // captured once at drag start (DockingArea::drag_started), drawn right
+    // here and moved to follow the pointer instead.
+    Image {
+        x: Docking.drag.ghost-x;
+        y: Docking.drag.ghost-y;
+        width: Docking.drag.ghost-width;
+        height: Docking.drag.ghost-height;
+        source: Docking.drag.ghost-image;
+        opacity: 0.55;
+    }
+}
