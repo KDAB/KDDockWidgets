@@ -45,6 +45,11 @@ export struct DockState {
     y: length,
     width: length,
     height: length,
+    // How many tabs the hosting Group has. DockWidget uses this (not
+    // GroupMetrics.header-height directly) to know whether its Group is
+    // currently showing a tab bar -- see group.slint, which hides it with
+    // only one tab -- so its content offset matches what's actually drawn.
+    tab-count: int,
 }
 
 // One drop indicator icon: already positioned, and already carrying the

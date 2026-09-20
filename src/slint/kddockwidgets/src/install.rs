@@ -242,6 +242,7 @@ macro_rules! install {
                     y: state.group_geometry.y as f32,
                     width: state.group_geometry.width as f32,
                     height: state.group_geometry.height as f32,
+                    tab_count: state.tab_count as i32,
                 },
                 None => DockState::default(),
             }

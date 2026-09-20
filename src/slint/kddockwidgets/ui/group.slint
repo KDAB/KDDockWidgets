@@ -46,8 +46,12 @@ export component Group inherits Rectangle {
         }
 
         Rectangle {
-            // tab bar
-            height: GroupMetrics.tab-bar-height;
+            // tab bar -- skipped entirely with only one tab, there's
+            // nothing to switch between. dockwidget.slint computes its own
+            // content offset the same way (data.dockwidgets.length there is
+            // DockState.tab-count), so the freed space isn't left blank.
+            visible: data.dockwidgets.length > 1;
+            height: data.dockwidgets.length > 1 ? GroupMetrics.tab-bar-height : 0px;
             background: #1c1c1c;
 
             HorizontalLayout {
