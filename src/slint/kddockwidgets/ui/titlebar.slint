@@ -28,6 +28,9 @@ export component TitleBar inherits Rectangle {
 
         close-area := TouchArea {
             width: 18px;
+            accessible-role: button;
+            accessible-label: "Close " + root.title;
+            accessible-action-default => { root.close-clicked(); }
             clicked => { root.close-clicked(); }
 
             Rectangle {

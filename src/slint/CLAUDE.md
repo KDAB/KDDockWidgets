@@ -143,6 +143,47 @@ Group it's in. Group only draws chrome (title bar + tab bar).
 - Not multi-window. With the no-reparenting design above, content can't
   move between windows either; floating windows will need a different idea.
 
+## GUI tests (`slint_example/tests/gui.rs`)
+
+In-process tests using `i-slint-backend-testing` (pinned with `=`, matching
+`slint`'s exact resolved version in `Cargo.lock`), run headless by
+`cargo test` — no display needed, so they run in CI as-is. They drive
+`slint_example::create_app()` (`slint_example/src/lib.rs`; `main.rs` is now
+just a one-line call into it, so tests can reach the same app the binary
+runs) and inspect the rendered element tree via `ElementHandle`, rather than
+asserting on `DockManager`'s Rust-side state directly — that way they also
+catch a `.slint`-side binding that stops something from actually being
+drawn, not just a Rust-side logic bug.
+
+- `slint_example/build.rs` passes `.with_debug_info(true)` to
+  `CompilerConfiguration`, which the `ElementHandle` API requires (element
+  type names, ids, and descendant traversal are silently unavailable
+  without it — see `MISSING_DEBUG_INFO_MESSAGE` in the `i-slint-backend-testing`
+  source if this ever regresses).
+- Lookups mostly go through `ElementHandle::find_by_accessible_label`, not
+  `find_by_element_id`: `Text` elements get an implicit
+  `accessible-label: text` (mirroring their own `text` property) for free,
+  so a dock widget's title is findable with no `.slint` changes. The one
+  addition made for testability, `titlebar.slint`'s close button, needed an
+  explicit `accessible-role: button` before `accessible-label` was legal to
+  set at all (the compiler rejects `accessible-label` without a role).
+- An element with `visible: false` — and everything nested inside it — is
+  invisible to every `ElementHandle` query, not just to rendering. This is
+  exactly the mechanism the tests lean on to check "is this dock widget's
+  content actually the one on screen", since `DockWidget`'s own `visible`
+  binding gates on `is-current` (see `dockwidget.slint`).
+- **Call `create_app()` and then throw away one full-tree `ElementHandle`
+  query before asserting anything.** The tab-bar `for` repeater inside
+  `Group` (`group.slint`) isn't materialized yet when `create_app()`
+  returns — nothing has driven a layout/update pass, since tests never call
+  `ui.run()`. The first traversal after creation is what triggers that, but
+  doesn't see the new rows within that same call; a second traversal does.
+  Skipping this warm-up is invisible for titles that also appear
+  unrepeated in a Group's title bar (e.g. "Editor", current by default),
+  and only bites for a title that exists *only* inside the tab bar (e.g.
+  "Console", not current) — that lookup silently returns nothing. `new_app()`
+  in `tests/gui.rs` does this once so every test gets it for free.
+
 ## CI
 
 `.github/workflows/slint.yml` builds/tests this workspace, **Linux only**.

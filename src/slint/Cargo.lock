@@ -4136,6 +4136,7 @@ dependencies = [
 name = "slint_example"
 version = "0.1.0"
 dependencies = [
+ "i-slint-backend-testing",
  "kddockwidgets",
  "slint",
  "slint-build",
