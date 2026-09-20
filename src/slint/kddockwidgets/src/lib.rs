@@ -8,26 +8,47 @@
 
 //! Rust side of the KDDockWidgets Slint prototype.
 //!
-//! This crate currently ships three things:
-//! - the `ui/` Slint components (TitleBar, DockWidget, Group, Separator,
-//!   DropArea) and the `Docking` global they talk to Rust through, consumed
-//!   by the app through Slint's library import syntax
-//!   (`import { DropArea } from "@kddockwidgets";`);
+//! An app needs two things from this crate: the `ui/` Slint components,
+//! imported as a Slint library (`import { DropArea, DockWidget } from
+//! "@kddockwidgets";`), and [`DockingArea`], the Rust handle on one of those
+//! `DropArea`s:
+//!
+//! ```ignore
+//! slint::include_modules!();
+//! use kddockwidgets::Location;
+//!
+//! let ui = AppWindow::new()?;
+//! let docking = kddockwidgets::install!(&ui);
+//!
+//! docking.add_dock_widget("editor", Location::OnLeft, None);
+//! docking.add_dock_widget_as_tab("console", "editor");
+//! ```
+//!
+//! [`install!`] wires the two sides together; everything below it is
+//! internal, but public for apps that want a layout without a UI:
 //! - [`DockingLayout`], a safe wrapper around KDDockWidgets' own C++
 //!   layouting engine (see `cpp/bridge.h`), which computes where every
 //!   Group and Separator goes, keyed by integer Group ids;
-//! - [`DockManager`], on top of it, which maps dock widgets (by their
-//!   `unique-name`) to Groups and tabs.
-//!
-//! Since only the app crate runs the Slint compiler, the Slint-generated
-//! types (the `Docking` global, `GroupData`, ...) only exist there, so the
-//! app still has to forward `Docking`'s callbacks to [`DockManager`].
+//! - on top of it, a name-keyed layer mapping dock widgets (by their
+//!   `unique-name`) to Groups and tabs, which is what [`DockingArea`] hands
+//!   out as [`GroupView`]s and [`DockWidgetState`]s.
 
+mod area;
 mod ffi;
+mod install;
 mod manager;
 
+pub use area::DockingArea;
 pub use ffi::ffi::{GroupGeometry, Location, SeparatorGeometry};
-pub use manager::{DockManager, DockWidgetState, GroupView};
+pub use manager::{DockWidgetState, GroupView};
+
+#[doc(hidden)]
+pub use area::sync_rows;
+
+/// Re-exported for [`install!`], whose expansion needs to name Slint's own
+/// types in a crate that may well call its `slint` dependency something else.
+#[doc(hidden)]
+pub use slint;
 
 use cxx::UniquePtr;
 

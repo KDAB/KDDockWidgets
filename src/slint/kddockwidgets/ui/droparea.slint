@@ -21,6 +21,15 @@ export component DropArea inherits Rectangle {
     changed width => { Docking.resized(root.width, root.height); }
     changed height => { Docking.resized(root.width, root.height); }
 
+    // Reports the size Rust missed: the callbacks above only fire on later
+    // changes, and a plain `init` would run before Rust installed them (same
+    // reason as DockWidget's registration, see dockwidget.slint).
+    if Docking.ready: Rectangle {
+        width: 0px;
+        height: 0px;
+        init => { Docking.resized(root.width, root.height); }
+    }
+
     for g in Docking.groups: Group {
         x: g.x;
         y: g.y;

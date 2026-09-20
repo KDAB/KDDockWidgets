@@ -2464,6 +2464,7 @@ dependencies = [
  "cmake",
  "cxx",
  "cxx-build",
+ "slint",
 ]
 
 [[package]]

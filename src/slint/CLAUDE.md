@@ -12,12 +12,30 @@ cargo run -p slint_example
 ## Layout
 
 - `kddockwidgets/` — the framework crate. Ships Slint components
-  (`ui/*.slint`), a Rust wrapper (`DockingLayout`, in `src/lib.rs`) around
-  KDDockWidgets' own C++ layouting engine, and `DockManager`
-  (`src/manager.rs`) on top of it, which maps dock widgets by `unique-name`
-  to Groups/tabs.
+  (`ui/*.slint`) and, in layers:
+  - `DockingLayout` (`src/lib.rs`), a Rust wrapper around KDDockWidgets' own
+    C++ layouting engine, keyed by integer Group ids;
+  - `DockManager` (`src/manager.rs`), crate-internal, which maps dock widgets
+    by `unique-name` to Groups/tabs on top of it;
+  - `DockingArea` (`src/area.rs`) — **the app-facing API**, a cheap-to-clone
+    handle bound to one Slint `DropArea` — and `install!` (`src/install.rs`),
+    which creates one and wires up every `Docking` callback.
 - `slint_example/` — a sample app: declares its DockWidgets (with the Slint
   logo as content) in `ui/app.slint`, places them from Rust by name.
+
+The whole Rust side of an app is:
+
+```rust
+slint::include_modules!();
+
+let ui = AppWindow::new()?;
+let docking = kddockwidgets::install!(&ui);
+docking.add_dock_widget("editor", Location::OnLeft, None);
+docking.add_dock_widget_as_tab("console", "editor");
+```
+
+Groups, separators, tab bars, registration and resizing never show up in app
+code; `DockingArea` only talks about dock widgets, by name.
 
 ## Why this reaches outside `src/slint`
 
@@ -68,7 +86,7 @@ Two things worth knowing if you touch this code:
   bridge reconstructs an absolute position as `sep->position() + delta`,
   which only works if `sep->position()` reflects the last move *before* the
   next delta arrives — true here because `separatorMouseMove` calls
-  `LayoutingSeparator::setGeometry` synchronously, and `DockManager`
+  `LayoutingSeparator::setGeometry` synchronously, and `DockingArea`
   refreshes `Docking.separators` before returning to the event loop.
 
 ## How user content works (DockWidget)
@@ -79,11 +97,19 @@ DockWidgets (with arbitrary content as children) directly inside `DropArea`,
 where they stay; each one positions itself over the content area of whatever
 Group it's in. Group only draws chrome (title bar + tab bar).
 
-- Everything goes through the `Docking` global (`ui/docking.slint`). The app
-  must re-export it from its main `.slint` file, and forward its callbacks to
-  `DockManager` — see `connect()` in `slint_example/src/main.rs`. That glue
-  can't live in the framework crate, because the Slint-generated types only
-  exist in the crate running the Slint compiler.
+- Everything goes through the `Docking` global (`ui/docking.slint`), but no
+  app ever touches it: `kddockwidgets::install!(&ui)` fills in every callback
+  and hands back a `DockingArea`. The one thing an app must still do itself is
+  re-export the global from its main `.slint` file (`export { Docking } from
+  "@kddockwidgets";`), since Slint only generates Rust for globals exported
+  from the file it compiles.
+- `install!` is a macro because it has to be: Slint generates its Rust types
+  (the `Docking` global, `GroupData`, ...) in whichever crate runs the Slint
+  compiler, i.e. the app's, so framework code can only name them by being
+  expanded there. Everything that *doesn't* need those types (`sync_rows`, the
+  geometry bookkeeping, all the callback bodies) stays in ordinary Rust in
+  `src/area.rs`, so the macro body is just type plumbing. It therefore has to
+  be invoked where `slint::include_modules!()`'s types are in scope.
 - A DockWidget reads its geometry through `pure callback dock-state(name,
   revision)`. `revision` is a dummy arg that Rust bumps after every change:
   Slint doesn't track dependencies through callbacks, so without it the
@@ -95,13 +121,18 @@ Group it's in. Group only draws chrome (title bar + tab bar).
   happens *after* Rust's initial `add_dock_widget` calls, which is why
   `DockManager` accepts both in either order and updates the Group's min size
   in the C++ engine afterwards (`setGroupMinSize`).
+- `DropArea` uses the same `if Docking.ready` trick to report its initial
+  size, so apps don't have to tell the layout how big it is; `changed
+  width`/`height` take over from there. `DockingArea::resize` ignores
+  zero-sized reports, which is what a `DropArea` says before the window has
+  been laid out once.
 - Placement is decided from Rust by name (`add_dock_widget`,
   `add_dock_widget_as_tab`). A DockWidget that was never added, or was closed
-  (X button → `DockManager::close`, which removes its Group from the C++
+  (X button → `DockingArea::close`, which removes its Group from the C++
   layout once empty), has `is-open: false` and is hidden, but stays alive.
 - Slint has no "destroyed" callback, so a DockWidget removed from a `for`
   model isn't unregistered automatically; the app would need to call
-  `DockManager::close` itself.
+  `DockingArea::close` itself.
 - `GroupMetrics` (in `types.slint`) holds the chrome sizes shared by Group
   (which draws them) and DockWidget (which offsets its content by them).
 
@@ -116,7 +147,7 @@ Group it's in. Group only draws chrome (title bar + tab bar).
 - The layout isn't a single flat row: `add_dock_widget(name, loc,
   Some(other))` nests a Group under an existing one (splitting just that
   Group's own space) rather than the whole layout, via KDDockWidgets'
-  `insertItemRelativeTo`. `slint_example/src/main.rs` uses this for its
+  `insertItemRelativeTo`. `slint_example/src/lib.rs` uses this for its
   Files/Search/Git group, nested below Editor/Console rather than being a
   third column.
 - `Separator` (`ui/separator.slint`) drags itself via a trick borrowed from
@@ -125,8 +156,8 @@ Group it's in. Group only draws chrome (title bar + tab bar).
   relative to the separator's *last-set* `x`/`y` — which, as long as Rust
   updates those from `Docking.separators` before the next mouse-move event
   arrives, doubles as the delta since the last move. `DropArea` forwards
-  `pressed`/`released`/`moved` straight to `Docking`, which `main.rs` forwards
-  to `DockManager::separator_press/release/move`.
+  `pressed`/`released`/`moved` straight to `Docking`, which `install!` forwards
+  to `DockingArea::separator_pressed/released/moved`.
 - `slint_example/build.rs` maps the `@kddockwidgets` library import to
   `kddockwidgets/ui/lib.slint`. Since only the `slint_example` crate ever runs
   the Slint compiler, structs declared in the framework's `.slint` files (e.g.
@@ -151,7 +182,7 @@ In-process tests using `i-slint-backend-testing` (pinned with `=`, matching
 `slint_example::create_app()` (`slint_example/src/lib.rs`; `main.rs` is now
 just a one-line call into it, so tests can reach the same app the binary
 runs) and inspect the rendered element tree via `ElementHandle`, rather than
-asserting on `DockManager`'s Rust-side state directly — that way they also
+asserting on the Rust-side layout state directly — that way they also
 catch a `.slint`-side binding that stops something from actually being
 drawn, not just a Rust-side logic bug.
 
