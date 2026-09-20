@@ -16,3 +16,6 @@ kddockwidgets = { path = "../kddockwidgets" }
 
 [build-dependencies]
 slint-build.workspace = true
+
+[dev-dependencies]
+i-slint-backend-testing = "=1.18.0"

@@ -15,6 +15,10 @@ fn main() {
     let library_paths =
         HashMap::from([("kddockwidgets".to_string(), PathBuf::from("../kddockwidgets/ui/lib.slint"))]);
 
-    let config = slint_build::CompilerConfiguration::new().with_library_paths(library_paths);
+    // Needed for the GUI tests in tests/gui.rs, which locate elements via
+    // i-slint-backend-testing's ElementHandle API.
+    let config = slint_build::CompilerConfiguration::new()
+        .with_library_paths(library_paths)
+        .with_debug_info(true);
     slint_build::compile_with_config("ui/app.slint", config).unwrap();
 }
