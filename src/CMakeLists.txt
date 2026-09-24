@@ -653,6 +653,13 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
 
 endif()
 
+# Static builds export their private Qt dependencies, which are separate packages since Qt 6.10
+if(KDDockWidgets_STATIC AND Qt6Core_VERSION VERSION_GREATER_EQUAL "6.10.0")
+    set(KDDW_FIND_QT_PRIVATE_DEPS ON)
+else()
+    set(KDDW_FIND_QT_PRIVATE_DEPS OFF)
+endif()
+
 configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
