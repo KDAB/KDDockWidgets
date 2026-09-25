@@ -21,7 +21,7 @@ type WindowSnapshot = (SharedPixelBuffer<Rgba8Pixel>, f32);
 /// it decides where dock widgets go, and everything else (Group geometry,
 /// tabs, separator dragging, resizing) happens on its own.
 ///
-/// Create one with [`install!`](crate::install), which binds it to the
+/// Create one with [`install!`](macro@crate::install), which binds it to the
 /// `DropArea` of a window:
 ///
 /// ```ignore
@@ -124,8 +124,8 @@ impl DockingArea {
     }
 
     /// The dragged Group's snapshot, captured at drag start. `None` while
-    /// not dragging, or if the platform couldn't produce one (see
-    /// [`ghost_image`](Self::ghost_image)'s doc comment).
+    /// not dragging, or if the platform can't take window snapshots (e.g.
+    /// Slint's headless testing backend).
     pub fn drag_ghost_image(&self) -> Option<Image> {
         self.ghost_image.borrow().clone()
     }
@@ -136,14 +136,14 @@ impl DockingArea {
     }
 }
 
-/// Plumbing for [`install!`](crate::install). None of this is meant to be
+/// Plumbing for [`install!`](macro@crate::install). None of this is meant to be
 /// called by apps: it's the UI side of the area talking back to it.
 #[doc(hidden)]
 impl DockingArea {
     /// `snapshot` grabs the whole window (physical pixels) plus its scale
     /// factor, for cropping out the ghost image at the start of a drag. It
     /// can only be built where the generated `AppWindow` type is in scope,
-    /// which is why [`install!`](crate::install) is the one passing it.
+    /// which is why [`install!`](macro@crate::install) is the one passing it.
     pub fn new(
         sync_ui: impl Fn(&DockingArea) + 'static,
         snapshot: impl Fn() -> Option<WindowSnapshot> + 'static,
@@ -247,7 +247,7 @@ impl DockingArea {
 
     /// Crops `(x, y, width, height)` (DropArea-local, logical pixels) out of
     /// a fresh window snapshot. `None` if the platform can't produce one
-    /// (see [`ghost_image`](Self)'s doc comment) or the rect is empty.
+    /// (see the `ghost_image` field) or the rect is empty.
     fn capture_ghost(&self, x: i32, y: i32, width: i32, height: i32) -> Option<Image> {
         if width <= 0 || height <= 0 {
             return None;

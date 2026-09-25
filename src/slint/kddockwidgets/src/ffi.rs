@@ -7,10 +7,10 @@
 // Contact KDAB at <info@kdab.com> for commercial licensing options.
 
 //! Raw cxx bindings to `cpp/bridge.h`. Nothing here understands Slint; see
-//! [`crate::layout`] for the safe, Slint-facing wrapper.
+//! [`DockingLayout`](crate::DockingLayout) for the safe wrapper.
 
 #[cxx::bridge(namespace = "kddw_slint")]
-pub mod ffi {
+pub mod bridge {
 
     /// Mirrors `KDDockWidgets::Location`, see `cpp/bridge.h`.
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
