@@ -130,14 +130,15 @@ public:
 };
 
 // A Separator, from the engine's point of view. Created and destroyed by the
-// engine itself (via Item::setCreateSeparatorFunc). Doesn't handle mouse
-// events; that comes later.
+// engine itself (via Item::setCreateSeparatorFunc). `id` is unique per
+// DockingEngine, see its constructor.
 class Separator : public Core::LayoutingSeparator
 {
 public:
-    explicit Separator(Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container)
+    explicit Separator(Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container,
+                       std::int32_t id)
         : Core::LayoutingSeparator(host, orientation, container)
-        , m_id(++s_counter)
+        , m_id(id)
     {
     }
 
@@ -158,12 +159,7 @@ public:
 
     const std::int32_t m_id;
     Rect m_geometry;
-
-private:
-    static std::int32_t s_counter;
 };
-
-std::int32_t Separator::s_counter = 0;
 
 namespace {
 
@@ -192,21 +188,25 @@ struct DockingEngine::Impl : public Core::LayoutingHost
     }
 
     std::unordered_map<std::int32_t, std::unique_ptr<Guest>> guests;
+    std::int32_t lastSeparatorId = 0;
 };
 
 DockingEngine::DockingEngine()
 {
     // KDDockWidgets only lets us install one global factory function (it's
     // a plain function pointer, not a std::function), so it can't capture
-    // per-instance state. That's fine: Separator doesn't need to know which
-    // DockingEngine it belongs to, only how to report its own geometry.
+    // per-instance state. It doesn't need to: the host it's handed is always
+    // our Impl (the only LayoutingHost we create), which is where the
+    // per-engine id counter lives. A global counter would be shared by
+    // engines on different threads, e.g. Rust tests running in parallel.
     //
     // This has to happen before constructing Impl below: ItemBoxContainer's
     // constructor asserts that a factory is already installed.
     static const bool separatorFactoryInstalled = [] {
         Core::Item::setCreateSeparatorFunc(
             [](Core::LayoutingHost *host, Qt::Orientation orientation, Core::ItemBoxContainer *container) -> Core::LayoutingSeparator * {
-                return new Separator(host, orientation, container);
+                auto *impl = static_cast<DockingEngine::Impl *>(host);
+                return new Separator(host, orientation, container, ++impl->lastSeparatorId);
             });
         return true;
     }();
