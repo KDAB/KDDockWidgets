@@ -40,7 +40,7 @@ mod install;
 mod manager;
 
 pub use area::DockingArea;
-pub use ffi::ffi::{DropRect, GroupGeometry, Location, SeparatorGeometry};
+pub use ffi::bridge::{DropRect, GroupGeometry, Location, SeparatorGeometry};
 pub use manager::{DockWidgetState, DragState, DropLocation, GroupView, IndicatorView};
 
 #[doc(hidden)]
@@ -64,13 +64,13 @@ use cxx::UniquePtr;
 /// [`groups`](Self::groups)/[`separators`](Self::separators) after every
 /// mutating call to refresh whatever it displays.
 pub struct DockingLayout {
-    engine: UniquePtr<ffi::ffi::DockingEngine>,
+    engine: UniquePtr<ffi::bridge::DockingEngine>,
 }
 
 impl DockingLayout {
     pub fn new() -> Self {
         Self {
-            engine: ffi::ffi::new_docking_engine(),
+            engine: ffi::bridge::new_docking_engine(),
         }
     }
 

@@ -73,7 +73,7 @@ fn image_index(location: DropLocation, active: bool) -> usize {
     base + usize::from(active)
 }
 
-/// The artwork for one drop indicator. Used by [`install!`](crate::install)
+/// The artwork for one drop indicator. Used by [`install!`](macro@crate::install)
 /// to build `IndicatorData` rows; not meant to be called by apps directly.
 #[doc(hidden)]
 pub fn indicator_image(location: DropLocation, active: bool) -> Image {
