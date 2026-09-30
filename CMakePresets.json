@@ -29,6 +29,14 @@
       ]
     },
     {
+      "name": "dev-clang",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
       "name": "asan-base",
       "hidden": true,
       "cacheVariables": {
@@ -85,20 +93,6 @@
         "KDDockWidgets_USE_VALGRIND": "ON",
         "KDDockWidgets_NO_SPDLOG": "ON"
       }
-    },
-    {
-      "name": "dev-lcov",
-      "displayName": "dev-lcov",
-      "binaryDir": "${sourceDir}/build-dev-lcov",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "KDDockWidgets_DEVELOPER_MODE": "ON",
-        "KDDockWidgets_CODE_COVERAGE": "ON",
-        "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
-      },
-      "inherits": [
-        "base"
-      ]
     },
     {
       "name": "dev-none",
@@ -265,6 +259,20 @@
       "inherits": [
         "dev-base"
       ]
+    },
+    {
+      "name": "dev-cov",
+      "displayName": "dev-cov",
+      "description": "A Qt6 clang build with code coverage, see tests/coverage.sh",
+      "binaryDir": "${sourceDir}/build-dev-cov",
+      "inherits": [
+        "dev",
+        "dev-clang"
+      ],
+      "cacheVariables": {
+        "KDDockWidgets_CODE_COVERAGE": "ON",
+        "KDDockWidgets_EXAMPLES": "OFF"
+      }
     },
     {
       "name": "dev-qml-module",

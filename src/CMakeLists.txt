@@ -320,18 +320,16 @@ endif()
 # BEGIN coverage
 add_library(kddw_coverage_options INTERFACE)
 
-if(KDDockWidgets_CODE_COVERAGE
-   AND (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
-   AND NOT MSVC
-)
-    if(KDDockWidgets_DEVELOPER_MODE)
-        # Add required flags (GCC & LLVM/Clang)
+if(KDDockWidgets_CODE_COVERAGE AND KDDockWidgets_DEVELOPER_MODE)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        # LLVM source-based coverage, see tests/coverage.sh
+        target_compile_options(kddw_coverage_options INTERFACE -fprofile-instr-generate -fcoverage-mapping)
+        target_link_options(kddw_coverage_options INTERFACE -fprofile-instr-generate)
+    elseif(CMAKE_COMPILER_IS_GNUCXX)
         target_compile_options(kddw_coverage_options INTERFACE --coverage)
-        if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
-            target_link_options(kddw_coverage_options INTERFACE --coverage)
-        else()
-            target_link_libraries(kddw_coverage_options INTERFACE --coverage)
-        endif()
+        target_link_options(kddw_coverage_options INTERFACE --coverage)
+    else()
+        message(WARNING "KDDockWidgets_CODE_COVERAGE is only supported with GCC and Clang")
     endif()
 endif()
 # END coverage
@@ -365,7 +363,7 @@ if(NOT KDDW_FRONTEND_QT)
 endif()
 
 if(KDDockWidgets_CODE_COVERAGE)
-    target_link_libraries(kddockwidgets PUBLIC kddw_coverage_options)
+    target_link_libraries(kddockwidgets PUBLIC $<BUILD_INTERFACE:kddw_coverage_options>)
 endif()
 
 kddw_link_to_kdbindings(kddockwidgets)

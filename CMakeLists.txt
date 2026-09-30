@@ -51,7 +51,8 @@
 # KDDockWidgets_DEVELOPER_MODE=True Default=true
 #
 # -DKDDockWidgets_CODE_COVERAGE=[true|false] Enable coverage reporting. Ignored
-# unless KDDockWidgets_DEVELOPER_MODE=True Default=false
+# unless KDDockWidgets_DEVELOPER_MODE=True. Clang builds use LLVM source-based
+# coverage, see tests/coverage.sh. Default=false
 
 cmake_minimum_required(VERSION 3.15)
 
