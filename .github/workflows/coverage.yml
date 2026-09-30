@@ -1,0 +1,65 @@
+# SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+name: Code coverage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-coverage]')"
+    runs-on: ubuntu-26.04
+
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.10.1"
+          cache: true
+
+      - name: Install dependencies
+        run: |
+          sudo apt update -qq
+          sudo apt install -y clang llvm mold libspdlog-dev ninja-build
+
+      - name: Checkout sources
+        uses: actions/checkout@v7
+
+      - name: Configure project
+        run: cmake --preset dev-cov
+
+      - name: Build Project
+        run: cmake --build ./build-dev-cov
+
+      # Test failures are reported by the other workflows, here we just want the report
+      - name: Run tests and generate coverage
+        continue-on-error: true
+        run: ./tests/coverage.sh ./build-dev-cov --verbose -j 4
+        env:
+          QT_QUICK_BACKEND: software
+
+      - name: Summary
+        if: always()
+        run: |
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          head -n 1 ./build-dev-cov/coverage/summary.txt >> $GITHUB_STEP_SUMMARY
+          tail -n 1 ./build-dev-cov/coverage/summary.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            ./build-dev-cov/coverage/html
+            ./build-dev-cov/coverage/summary.txt
+            ./build-dev-cov/coverage/coverage.lcov
