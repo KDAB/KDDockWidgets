@@ -905,7 +905,7 @@ static std::shared_ptr<View> qtTopLevelForHWND(HWND hwnd)
                 // Case not supported for QtQuick.
                 const QWidgetList widgets = qApp->topLevelWidgets();
                 for (QWidget *widget : widgets) {
-                    if (!widget->window()) {
+                    if (!widget->windowHandle()) {
                         // Don't call winId on windows that don't have it, as that will force all
                         // its children to have it, and that's not very stable. a top level might
                         // not have one because it's being destroyed, or because it's a top-level
