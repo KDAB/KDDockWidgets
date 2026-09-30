@@ -21,11 +21,11 @@ BUILD_DIR=$(realpath "${1:-build-dev-cov}")
 shift || true
 
 if [ "$(uname)" = "Darwin" ]; then
-    LLVM_PROFDATA="xcrun llvm-profdata"
-    LLVM_COV="xcrun llvm-cov"
+  LLVM_PROFDATA="xcrun llvm-profdata"
+  LLVM_COV="xcrun llvm-cov"
 else
-    LLVM_PROFDATA="llvm-profdata${LLVM_SUFFIX}"
-    LLVM_COV="llvm-cov${LLVM_SUFFIX}"
+  LLVM_PROFDATA="llvm-profdata${LLVM_SUFFIX}"
+  LLVM_COV="llvm-cov${LLVM_SUFFIX}"
 fi
 
 OUT_DIR="$BUILD_DIR/coverage"
@@ -46,18 +46,18 @@ $LLVM_PROFDATA merge -sparse "$PROFRAW_DIR"/*.profraw -o "$PROFDATA"
 LIBRARY=$(find "$BUILD_DIR/lib" -type f \( -name 'libkddockwidgets*.so*' -o -name 'libkddockwidgets*.dylib' \) | head -n 1)
 OBJECTS=()
 for test in "$BUILD_DIR"/bin/tst_*; do
-    [ -f "$test" ] && [ -x "$test" ] && OBJECTS+=(-object "$test")
+  [ -f "$test" ] && [ -x "$test" ] && OBJECTS+=(-object "$test")
 done
 
 COV_ARGS=(
-    "$LIBRARY" "${OBJECTS[@]}"
-    -instr-profile="$PROFDATA"
-    -ignore-filename-regex='(/tests/|/examples/|/3rdparty/|/build-[^/]*/|/usr/|/Qt/|\.framework/)'
+  "$LIBRARY" "${OBJECTS[@]}"
+  -instr-profile="$PROFDATA"
+  -ignore-filename-regex='(/tests/|/examples/|/3rdparty/|/build-[^/]*/|/usr/|/Qt/|\.framework/)'
 )
 
 $LLVM_COV report "${COV_ARGS[@]}" | tee "$OUT_DIR/summary.txt"
 $LLVM_COV show "${COV_ARGS[@]}" -format=html -show-instantiations=false -output-dir="$OUT_DIR/html"
-$LLVM_COV export "${COV_ARGS[@]}" -format=lcov > "$OUT_DIR/coverage.lcov"
+$LLVM_COV export "${COV_ARGS[@]}" -format=lcov >"$OUT_DIR/coverage.lcov"
 
 echo "HTML report: $OUT_DIR/html/index.html"
 
