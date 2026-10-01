@@ -13,6 +13,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-coverage]')"
@@ -63,3 +66,24 @@ jobs:
             ./build-dev-cov/coverage/html
             ./build-dev-cov/coverage/summary.txt
             ./build-dev-cov/coverage/coverage.lcov
+
+      - name: Upload report for GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./build-dev-cov/coverage/html
+
+  deploy-pages:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
