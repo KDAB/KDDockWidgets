@@ -4,12 +4,19 @@ on:
   push:
     branches: ["main"]
 
+  # Redeploy when new coverage is available, so /coverage/ stays current
+  workflow_run:
+    workflows: ["Code coverage"]
+    types: [completed]
+    branches: ["main"]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -22,7 +29,7 @@ concurrency:
 jobs:
   # Build job
   build:
-    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-mdbook]')"
+    if: "(github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') && (!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-mdbook]'))"
     runs-on: ubuntu-26.04
     env:
       MDBOOK_VERSION: 0.4.21
@@ -42,6 +49,16 @@ jobs:
         uses: actions/configure-pages@v6
       - name: Build with mdBook
         run: mdbook build
+      # Pages is one site per repo, so the coverage report is published as a subpath of the docs
+      - name: Add coverage report
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_id=$(gh run list --workflow coverage.yml --branch main --status success --limit 1 --json databaseId --jq '.[0].databaseId')
+          gh run download "$run_id" --name coverage-report --dir coverage-report
+          mkdir -p book/coverage
+          cp -r coverage-report/html/. book/coverage/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
