@@ -142,6 +142,7 @@ if(KDDW_FRONTEND_QT)
     add_kddw_test(tst_separator core/tst_separator.cpp)
     add_kddw_test(tst_floatingwindow core/tst_floatingwindow.cpp)
     add_kddw_test(tst_dockwidget core/tst_dockwidget.cpp)
+    add_kddw_test(tst_config core/tst_config.cpp)
 
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp)
     add_kddw_test(tst_native_qpa tst_native_qpa.cpp)
