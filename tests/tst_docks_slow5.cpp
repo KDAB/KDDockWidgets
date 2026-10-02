@@ -29,8 +29,20 @@ class TestDocks : public QObject
 {
     Q_OBJECT
 private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
     void tst_28NestedWidgets();
 };
+
+void TestDocks::initTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
+}
+
+void TestDocks::cleanupTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
+}
 
 void TestDocks::tst_28NestedWidgets()
 {

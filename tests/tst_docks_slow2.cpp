@@ -37,6 +37,8 @@ class TestDocks : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
     void tst_invalidLayoutAfterRestore();
     void tst_setFloatingWhenSideBySide();
     void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
@@ -44,6 +46,16 @@ private Q_SLOTS:
     void tst_dockWindowWithTwoSideBySideFramesIntoLeft();
     void tst_keepLast();
 };
+
+void TestDocks::initTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
+}
+
+void TestDocks::cleanupTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
+}
 
 void TestDocks::tst_invalidLayoutAfterRestore()
 {

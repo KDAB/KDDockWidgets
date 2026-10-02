@@ -38,11 +38,23 @@ class TestDocks : public QObject
 {
     Q_OBJECT
 private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
     void tst_dock2FloatingWidgetsTabbed();
     void tst_restoreSimple();
     void tst_restoreSimplest();
     void tst_keepLast();
 };
+
+void TestDocks::initTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
+}
+
+void TestDocks::cleanupTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
+}
 
 void TestDocks::tst_dock2FloatingWidgetsTabbed()
 {
