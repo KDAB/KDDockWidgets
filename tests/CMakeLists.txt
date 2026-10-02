@@ -146,6 +146,8 @@ if(KDDW_FRONTEND_QT)
     add_kddw_test(tst_viewinterfaces core/tst_viewinterfaces.cpp)
 
     add_kddw_test(tst_docks_slow8 tst_docks_slow8.cpp)
+    add_kddw_test(tst_docks_slow9 tst_docks_slow9.cpp)
+    add_kddw_test(tst_docks_slow10 tst_docks_slow10.cpp)
     add_kddw_test(tst_native_qpa tst_native_qpa.cpp)
 
     # Check if includes are installed
