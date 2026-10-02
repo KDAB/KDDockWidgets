@@ -36,6 +36,8 @@ class TestDocks : public QObject
 {
     Q_OBJECT
 private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
     void tst_dragByTabBar();
     void tst_negativeAnchorPosition();
     void tst_negativeAnchorPosition2();
@@ -47,6 +49,16 @@ private Q_SLOTS:
     void tst_crash2();
     void tst_keepLast();
 };
+
+void TestDocks::initTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
+}
+
+void TestDocks::cleanupTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
+}
 
 void TestDocks::tst_dragByTabBar()
 {

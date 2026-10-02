@@ -74,6 +74,8 @@ class TestDocks : public QObject
 public:
     Q_OBJECT
 private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
     void tst_simple1();
     void tst_simple2();
     void tst_resizeWindow2();
@@ -247,6 +249,16 @@ private Q_SLOTS:
     void tst_minimizeRestoreBug();
     void tst_keepLast();
 };
+
+void TestDocks::initTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
+}
+
+void TestDocks::cleanupTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
+}
 
 void TestDocks::tst_simple1()
 {

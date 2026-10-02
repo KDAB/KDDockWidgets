@@ -25,6 +25,7 @@
 #include "core/TabBar.h"
 #include "core/Stack.h"
 #include "core/SideBar.h"
+#include "core/Platform.h"
 
 #include <QTest>
 
@@ -36,12 +37,24 @@ class TestDocks : public QObject
 {
     Q_OBJECT
 private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
     void tst_invalidPlaceholderPosition();
     void tst_startHidden();
     void tst_startHidden2();
     void tst_invalidJSON();
     void tst_keepLast();
 };
+
+void TestDocks::initTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->installMessageHandler();
+}
+
+void TestDocks::cleanupTestCase()
+{
+    KDDockWidgets::Core::Platform::instance()->uninstallMessageHandler();
+}
 
 void TestDocks::tst_invalidPlaceholderPosition()
 {
