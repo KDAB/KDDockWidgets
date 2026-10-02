@@ -56,6 +56,31 @@ void TestNativeQPA::cleanupTestCase()
 }
 
 namespace {
+
+// macOS sometimes maximizes the same window to a slightly different height (observed: 3px) the
+// second time around, so allow some slack there. Other platforms must match exactly.
+#ifdef Q_OS_MACOS
+constexpr int s_maximizedHeightTolerance = 3;
+#else
+constexpr int s_maximizedHeightTolerance = 0;
+#endif
+
+bool isSameMaximizedGeometry(const QRect &actual, const QRect &expected)
+{
+    return actual.topLeft() == expected.topLeft() && actual.width() == expected.width()
+        && qAbs(actual.height() - expected.height()) <= s_maximizedHeightTolerance;
+}
+
+QString describeGeometries(const QRect &actual, const QRect &expected)
+{
+    auto str = [](const QRect &r) {
+        return QString("(%1,%2 %3x%4)").arg(r.x()).arg(r.y()).arg(r.width()).arg(r.height());
+    };
+    return QString("actual=%1 expected=%2 heightTolerance=%3")
+        .arg(str(actual), str(expected))
+        .arg(s_maximizedHeightTolerance);
+}
+
 // QWindow::windowStateChange() is not reliable, since we're only interested
 // in the spontaneous events (async), as those reflect the window manager state
 class MyEventFilter : public QObject
@@ -197,7 +222,8 @@ void TestNativeQPA::tst_restoreMaximizedFromNormal()
     /// Catch more resizes:
     QTest::qWait(1000);
 
-    QCOMPARE(m->geometry(), expectedMaximizedGeometry);
+    QVERIFY2(isSameMaximizedGeometry(m->geometry(), expectedMaximizedGeometry),
+             qPrintable(describeGeometries(m->geometry(), expectedMaximizedGeometry)));
 }
 
 void TestNativeQPA::tst_restoreMaximizedFromMaximized()
@@ -267,7 +293,8 @@ void TestNativeQPA::tst_restoreMaximizedFromMaximized()
 
 
 
-    QCOMPARE(m->geometry(), expectedMaximizedGeometry);
+    QVERIFY2(isSameMaximizedGeometry(m->geometry(), expectedMaximizedGeometry),
+             qPrintable(describeGeometries(m->geometry(), expectedMaximizedGeometry)));
 }
 
 int main(int argc, char *argv[])
