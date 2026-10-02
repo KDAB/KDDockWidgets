@@ -52,7 +52,7 @@ done
 COV_ARGS=(
   "$LIBRARY" "${OBJECTS[@]}"
   -instr-profile="$PROFDATA"
-  -ignore-filename-regex='(/tests/|/examples/|/3rdparty/|/build-[^/]*/|/usr/|/Qt/|\.framework/)'
+  -ignore-filename-regex='(/tests/|/examples/|/3rdparty/|/build-[^/]*/|/usr/|/Qt/|\.framework/|/DragControllerWayland_p\.cpp)'
 )
 
 $LLVM_COV report "${COV_ARGS[@]}" | tee "$OUT_DIR/summary.txt"
