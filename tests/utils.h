@@ -152,6 +152,9 @@ Core::DockWidget *createDockWidget(const QString &name, LayoutSaverOptions layou
 void nestDockWidget(Core::DockWidget *dock, Core::DropArea *dropArea,
                     Core::Group *relativeTo, KDDockWidgets::Location location);
 
+// Closes 2 of 3 stacked dock widgets and restores them, in either order
+void checkInvalidPlaceholderPosition(bool restore1First);
+
 
 void doubleClickOn(Point globalPos, std::shared_ptr<Core::Window> receiver);
 void pressOn(Point globalPos, Core::View *receiver);

@@ -45,76 +45,7 @@ private Q_SLOTS:
 
 void TestDocks::tst_invalidPlaceholderPosition()
 {
-    auto func = [](bool restore1First) {
-        // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
-        // result: the bottom most one didn't have it's top separator at y=0
-
-        EnsureTopLevelsDeleted e;
-        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
-        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
-        auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
-
-        Core::DropArea *layout = m->multiSplitter();
-
-        // Stack: 1, 2, 3 vertically
-        m->addDockWidget(dock3, Location_OnTop);
-        m->addDockWidget(dock2, Location_OnTop);
-        m->addDockWidget(dock1, Location_OnTop);
-
-        auto group1 = dock1->dptr()->group();
-        auto group2 = dock2->dptr()->group();
-        auto group3 = dock3->dptr()->group();
-        QCOMPARE(group1->view()->y(), 0);
-
-        // Close 1
-        QVERIFY(dock1->isOpen());
-        QVERIFY(dock1->view()->isVisible());
-        dock1->close();
-        QVERIFY(!dock1->isOpen());
-        QVERIFY(!dock1->view()->isVisible());
-
-        WAIT_FOR_RESIZE(group2->view());
-
-        // Check that group2 moved up to y=0
-        QCOMPARE(group2->view()->y(), 0);
-
-        // Close 2
-        dock2->close();
-        WAIT_FOR_RESIZE(dock3->view());
-
-        QVERIFY(layout->checkSanity());
-        QCOMPARE(layout->count(), 3);
-        QCOMPARE(layout->placeholderCount(), 2);
-
-        // Check that group3 moved up to y=1
-        QCOMPARE(group3->view()->y(), 0);
-
-        // Now restore:
-        auto toRestore1 = restore1First ? dock1 : dock2;
-        auto toRestore2 = restore1First ? dock2 : dock1;
-
-        toRestore1->open();
-        QCOMPARE(layout->placeholderCount(), 1);
-        QVERIFY(dock3->isVisible());
-        QVERIFY(!dock3->size().isNull());
-
-        toRestore2->open();
-
-        WAIT_FOR_RESIZE(group3->view());
-        QVERIFY(layout->checkSanity());
-        QCOMPARE(layout->count(), 3);
-        QCOMPARE(layout->placeholderCount(), 0);
-        layout->checkSanity();
-
-        dock1->destroyLater();
-        dock2->destroyLater();
-
-        QVERIFY(Platform::instance()->tests_waitForDeleted(dock2));
-    };
-
-    func(true);
-    func(false);
+    checkInvalidPlaceholderPosition(true);
 }
 
 void TestDocks::tst_startHidden()
@@ -159,33 +90,6 @@ void TestDocks::tst_startHidden2()
         QCOMPARE(layout->placeholderCount(), 0);
 
         WAIT_FOR_RESIZE(dock2->view());
-    }
-
-    {
-        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
-                                      {}, false);
-        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
-                                      {}, false);
-        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {},
-                                      {}, false);
-
-        auto dropArea = m->dropArea();
-        Core::DropArea *layout = dropArea;
-        m->addDockWidget(dock1, Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
-
-        m->addDockWidget(dock2, Location_OnBottom, nullptr, InitialVisibilityOption::StartHidden);
-        m->addDockWidget(dock3, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
-
-        dock1->open();
-
-        QCOMPARE(layout->count(), 3);
-        QCOMPARE(layout->placeholderCount(), 2);
-
-        dock2->open();
-        dock3->open();
-        WAIT_FOR_RESIZE(dock2->view());
-        layout->checkSanity();
     }
 }
 

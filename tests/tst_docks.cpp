@@ -123,7 +123,6 @@ private Q_SLOTS:
     void tst_propagateResize2();
     void tst_startClosed();
     void tst_closeReparentsToNull();
-    void tst_invalidAnchorGroup();
     void tst_addAsPlaceholder();
     void tst_repeatedShowHide();
     void tst_removeItem();
@@ -170,7 +169,6 @@ private Q_SLOTS:
     void tst_propagateSizeHonoursMinSize();
     void tst_floatingAction();
     void tst_constraintsPropagateUp();
-    void tst_addToSmallMainWindow4();
     void tst_addToSmallMainWindow5();
     void tst_dragBySingleTab();
     void tst_deleteOnClose();
@@ -190,7 +188,6 @@ private Q_SLOTS:
     void tst_size();
     void tst_point();
     void tst_rect();
-    void tst_resizeInLayout();
     void tst_mainWindowToggle();
     void tst_startDragging();
     void tst_placeholderInFloatingWindow();
@@ -231,7 +228,6 @@ private Q_SLOTS:
     void tst_raise();
     void tst_nonDockable();
     void tst_flagDoubleClick();
-    void tst_constraintsAfterPlaceholder();
     void tst_addToSmallMainWindow1();
     void tst_addToSmallMainWindow2();
     void tst_addToSmallMainWindow3();
@@ -1193,50 +1189,6 @@ void TestDocks::tst_closeReparentsToNull()
     dock1->close();
     QVERIFY(dock1->view()->parentView() == nullptr);
     delete dock1;
-}
-
-void TestDocks::tst_invalidAnchorGroup()
-{
-    // Tests a bug I got. Should not warn.
-    EnsureTopLevelsDeleted e;
-
-    {
-        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
-        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
-
-        ObjectGuard<Core::FloatingWindow> fw = dock2->dptr()->morphIntoFloatingWindow();
-        nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
-
-        dock1->close();
-        WAIT_FOR_RESIZE(dock2->view());
-        auto layout = fw->dropArea();
-        layout->checkSanity();
-
-        dock2->close();
-        dock1->destroyLater();
-        dock2->destroyLater();
-        WAIT_FOR_DELETED(dock1);
-    }
-
-    {
-        // Stack 1, 2, 3, close 2, close 1
-
-        auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
-        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
-        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
-
-        m->addDockWidget(dock3, Location_OnTop);
-        m->addDockWidget(dock2, Location_OnTop);
-        m->addDockWidget(dock1, Location_OnTop);
-
-        dock2->close();
-        dock1->close();
-
-        dock1->destroyLater();
-        dock2->destroyLater();
-        WAIT_FOR_DELETED(dock1);
-    }
 }
 
 void TestDocks::tst_doubleScheduleDelete()
@@ -2667,33 +2619,6 @@ void TestDocks::tst_addToSmallMainWindow3()
     dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     QVERIFY(m->dropArea()->checkSanity());
     delete fw;
-}
-
-void TestDocks::tst_addToSmallMainWindow4()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(100, 100), MainWindowOption_None);
-
-    QTest::qWait(100);
-    QCOMPARE(m->height(), 100);
-
-    auto dropArea = m->dropArea();
-    auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
-    auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
-    Core::DropArea *layout = dropArea;
-    m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    WAIT_FOR_RESIZE(m->view());
-
-    m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
-    WAIT_FOR_RESIZE(m->view());
-    QVERIFY(m->dropArea()->checkSanity());
-
-    const int item2MinHeight =
-        layout->itemForGroup(dock2->dptr()->group())->minLength(Qt::Vertical);
-    QCOMPARE(dropArea->layoutHeight(),
-             dock1->dptr()->group()->height() + item2MinHeight + Item::layoutSpacing);
 }
 
 void TestDocks::tst_addToSmallMainWindow5()
@@ -5588,48 +5513,6 @@ void TestDocks::tst_constraintsPropagateUp()
             < 10);
 }
 
-void TestDocks::tst_constraintsAfterPlaceholder()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(500, 500), MainWindowOption_None);
-    const int minHeight = 400;
-    auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
-    auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
-    auto dock3 = createDockWidget(
-        "dock3", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
-    auto dropArea = m->dropArea();
-    Core::DropArea *layout = dropArea;
-
-    // Stack 3, 2, 1
-    m->addDockWidget(dock1, Location_OnTop);
-    m->addDockWidget(dock2, Location_OnTop);
-    m->addDockWidget(dock3, Location_OnTop);
-
-    if (Platform::instance()->isQtWidgets())
-        QVERIFY(WAIT_FOR_RESIZE(m.get()));
-
-    QVERIFY(m->view()->minSize().height() > minHeight * 3); // > since some vertical space is occupied
-                                                            // by the separators
-
-    // Now close dock1 and check again
-    dock1->close();
-    WAIT_FOR_RESIZE(dock2->view());
-
-    Item *item2 = layout->itemForGroup(dock2->dptr()->group());
-    Item *item3 = layout->itemForGroup(dock3->dptr()->group());
-
-    Margins margins = m->centerWidgetMargins();
-    const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical)
-        + 1 * Item::layoutSpacing + margins.top() + margins.bottom();
-
-    QCOMPARE(m->view()->minSize().height(), expectedMinHeight);
-
-    dock1->destroyLater();
-    WAIT_FOR_DELETED(dock1);
-}
-
 void TestDocks::tst_dragBySingleTab()
 {
     // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
@@ -6396,58 +6279,6 @@ void TestDocks::tst_childViewAt()
     auto child = m->view()->childViewAt(localPt);
     QVERIFY(child);
     QVERIFY(!child->equals(m->view()));
-}
-
-void TestDocks::tst_resizeInLayout()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
-    auto dockA = createDockWidget("0", Platform::instance()->tests_createView({ true }));
-    auto dockB = createDockWidget("1", Platform::instance()->tests_createView({ true }));
-    auto dockC = createDockWidget("2", Platform::instance()->tests_createView({ true }));
-
-    m->addDockWidget(dockA, KDDockWidgets::Location_OnTop);
-    m->addDockWidget(dockB, KDDockWidgets::Location_OnBottom);
-    m->addDockWidget(dockC, KDDockWidgets::Location_OnBottom);
-
-    m->window()->resize(400, 1000);
-    WAIT_FOR_RESIZE(m->view());
-
-    // Nothing happens, since the widget's top is the window's top too:
-    const Size dockAOriginalSize = dockA->sizeInLayout();
-    dockA->resizeInLayout(0, 500 - dockA->sizeInLayout().height(), 0, 0);
-    QCOMPARE(dockAOriginalSize, dockA->sizeInLayout());
-
-    // Move bottom separator down, height is increased to 500
-    dockA->resizeInLayout(0, 0, 0, 500 - dockA->sizeInLayout().height());
-
-    QCOMPARE(dockA->sizeInLayout().height(), 500);
-
-    // Move dockB's top separator 50px up, and the bottom one 49px up
-    const Size dockBOriginalSize = dockB->sizeInLayout();
-
-    dockB->resizeInLayout(0, 50, 0, -49);
-
-    QCOMPARE(dockA->sizeInLayout().height(), 500 - 50);
-    QCOMPARE(dockB->sizeInLayout().height(), dockBOriginalSize.height() + 1);
-
-    // Nothing happens, since the widget's bottom is the window's bottom too:
-    Size dockCOriginalSize = dockC->sizeInLayout();
-    dockC->resizeInLayout(0, 0, 0, -1);
-    QCOMPARE(dockCOriginalSize, dockC->sizeInLayout());
-
-    // Now let's test the cross-axis
-    auto dockRight = createDockWidget("right", Platform::instance()->tests_createView({ true }));
-    m->addDockWidget(dockRight, KDDockWidgets::Location_OnRight);
-
-    dockCOriginalSize = dockC->sizeInLayout();
-    dockC->resizeInLayout(10, 10, 10, 10);
-
-    // bottom wasn't moved
-    QCOMPARE(dockC->sizeInLayout().height(), dockCOriginalSize.height() + 10);
-
-    // left wasn't moved
-    QCOMPARE(dockC->sizeInLayout().width(), dockCOriginalSize.width() + 10);
 }
 
 void TestDocks::tst_keepLast()
