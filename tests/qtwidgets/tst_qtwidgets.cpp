@@ -58,6 +58,8 @@
 #include <QPushButton>
 #include <QDockWidget>
 #include <QMenuBar>
+#include <QMenu>
+#include <QTimer>
 #include <QTabBar>
 #include <QTabWidget>
 #include <QVBoxLayout>
@@ -256,6 +258,9 @@ private Q_SLOTS:
     void tst_mainWindowMargins();
     void tst_persistentCentralWidget();
     void tst_manualInit();
+    void tst_stackSwitchTabsViaMenu();
+    void tst_stackTabCloseRequested();
+    void tst_stackButtons();
 
 private:
     void separatorMouse(bool lazy);
@@ -3454,6 +3459,140 @@ void TestQtWidgets::tst_manualInit()
     mw.manualInit();
     QVERIFY(mw.centralWidget());
     QVERIFY(mw.internalLayout());
+}
+
+static QtWidgets::Stack *stackOf(Core::DockWidget *dw)
+{
+    return qobject_cast<QtWidgets::Stack *>(QtCommon::View_qt::asQWidget(dw->d->group()->stack()->view()));
+}
+
+void TestQtWidgets::tst_stackSwitchTabsViaMenu()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::self().flags() | Config::Flag_AllowSwitchingTabsViaMenu);
+
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
+    auto dock1 = createDockWidget("dock1");
+    auto dock2 = createDockWidget("dock2");
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+
+    auto stack = stackOf(dock1);
+    QVERIFY(stack);
+    stack->show();
+    QTabBar *tabBar = stack->tabBar();
+    QCOMPARE(tabBar->count(), 2);
+    QCOMPARE(stack->currentIndex(), 1);
+
+    // On the tab bar's empty area, to the right of the tabs
+    const QPoint emptyPos(stack->width() - 5, tabBar->height() / 2);
+    QVERIFY(tabBar->tabAt(emptyPos) < 0);
+
+    // The menu blocks in exec(), so pick an entry from a timer
+    int numMenus = 0;
+    QTimer::singleShot(0, [&numMenus] {
+        auto menu = qobject_cast<QMenu *>(QApplication::activePopupWidget());
+        QVERIFY(menu);
+        numMenus++;
+        QCOMPARE(menu->actions().size(), 2);
+        QVERIFY(!menu->actions().at(1)->isEnabled()); // The current tab
+        menu->actions().at(0)->trigger();
+        menu->close();
+    });
+    Q_EMIT stack->customContextMenuRequested(emptyPos);
+    QCOMPARE(numMenus, 1);
+    QCOMPARE(stack->currentIndex(), 0);
+
+    // Clicking on a tab doesn't show a menu, and neither does clicking outside of the tab area
+    Q_EMIT stack->customContextMenuRequested(tabBar->tabRect(0).center());
+    Q_EMIT stack->customContextMenuRequested(QPoint(emptyPos.x(), stack->height() - 1));
+
+    // Neither with a single tab
+    dock2->close();
+    QCOMPARE(tabBar->count(), 1);
+    Q_EMIT stack->customContextMenuRequested(emptyPos);
+
+    delete dock1;
+    delete dock2;
+}
+
+void TestQtWidgets::tst_stackTabCloseRequested()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
+    auto dock1 = createDockWidget("dock1");
+    auto dock2 = createDockWidget("dock2");
+    auto dock3 = createDockWidget("dock3");
+    dock3->setOptions(DockWidgetOption_NotClosable);
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+    dock1->addDockWidgetAsTab(dock3);
+
+    auto stack = stackOf(dock1);
+    QVERIFY(stack);
+    QCOMPARE(stack->count(), 3);
+
+    // Closes the dock widget
+    Q_EMIT stack->tabCloseRequested(1);
+    QVERIFY(!dock2->isOpen());
+    QCOMPARE(stack->count(), 2);
+
+    // Refuses to close a NotClosable dock widget
+    {
+        SetExpectedWarning ignoreWarning("Refusing to close dock widget with");
+        Q_EMIT stack->tabCloseRequested(1);
+    }
+    QVERIFY(dock3->isOpen());
+
+    // Invalid index
+    {
+        SetExpectedWarning ignoreWarning("Couldn't find dock widget for index");
+        Q_EMIT stack->tabCloseRequested(42);
+    }
+
+    delete dock1;
+    delete dock2;
+    delete dock3;
+}
+
+void TestQtWidgets::tst_stackButtons()
+{
+    EnsureTopLevelsDeleted e;
+
+    {
+        // No buttons by default
+        auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
+        auto dock1 = createDockWidget("dock1");
+        m->addDockWidget(dock1, Location_OnLeft);
+        auto stack = stackOf(dock1);
+        QVERIFY(stack);
+        QVERIFY(!stack->button(TitleBarButtonType::Close));
+        QVERIFY(!stack->button(TitleBarButtonType::Float));
+        delete dock1;
+    }
+
+    Config::self().setFlags(Config::self().flags() | Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "mw2");
+    auto dock1 = createDockWidget("dock1");
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto stack = stackOf(dock1);
+    QVERIFY(stack);
+
+    QVERIFY(stack->button(TitleBarButtonType::Close));
+    QVERIFY(stack->button(TitleBarButtonType::Float));
+    QVERIFY(!stack->button(TitleBarButtonType::Minimize));
+    QVERIFY(!stack->button(TitleBarButtonType::Maximize));
+    QVERIFY(!stack->button(TitleBarButtonType::Normal));
+    QVERIFY(!stack->button(TitleBarButtonType::AutoHide));
+    QVERIFY(!stack->button(TitleBarButtonType::UnautoHide));
+    QVERIFY(!stack->button(TitleBarButtonType::AllTitleBarButtonTypes));
+
+    // The float button floats the dock widget
+    QVERIFY(!dock1->isFloating());
+    stack->button(TitleBarButtonType::Float)->click();
+    QVERIFY(dock1->isFloating());
+
+    delete dock1;
 }
 
 int main(int argc, char *argv[])
