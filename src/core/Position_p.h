@@ -77,9 +77,6 @@ public:
     ///@brief Removes the placeholders that belong to this multisplitter
     void removePlaceholders(const Core::LayoutingHost *);
 
-    ///@brief Removes the placeholders that reference a FloatingWindow
-    void removeNonMainWindowPlaceholders();
-
     ///@brief Removes the placeholders that reference a MainWindow
     void removeMainWindowPlaceholders();
 
