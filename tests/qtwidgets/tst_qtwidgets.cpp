@@ -64,6 +64,7 @@
 #include <QLineEdit>
 #include <QGraphicsProxyWidget>
 #include <QMouseEvent>
+#include <QWindow>
 #include <QtTest/QTest>
 
 using namespace KDDockWidgets;
@@ -247,6 +248,11 @@ private Q_SLOTS:
     void tst_findAncestor();
     void tst_affinityWithPersistentCentralGroup();
     void tst_affinityFloatingWindowIndexMismatch();
+    void tst_separatorMouse();
+    void tst_separatorMouseLazy();
+
+private:
+    void separatorMouse(bool lazy);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     void tst_userData();
 #endif
@@ -3280,6 +3286,81 @@ void TestQtWidgets::tst_affinityFloatingWindowIndexMismatch()
     QVERIFY(!saved.isEmpty());
 
     QVERIFY(saver.restoreLayout(saved));
+}
+
+void TestQtWidgets::separatorMouse(bool lazy)
+{
+#if QT_VERSION_MAJOR < 6
+    Q_UNUSED(lazy);
+    QSKIP("Synthetic mouse moves while pressed are unreliable in Qt5, only tested with Qt6");
+#elif defined(Q_OS_WIN)
+    Q_UNUSED(lazy);
+    QSKIP("Separator asks GetKeyState(VK_LBUTTON) on Windows, which synthetic events don't change");
+#else
+    EnsureTopLevelsDeleted e;
+    if (lazy)
+        Config::self().setFlags(Config::self().flags() | Config::Flag_LazyResize);
+
+    auto m = createMainWindow();
+    auto dw1 = createDockWidget("dw1");
+    auto dw2 = createDockWidget("dw2");
+    m->addDockWidget(dw1, Location_OnLeft);
+    m->addDockWidget(dw2, Location_OnRight);
+
+    auto dropAreaWidget = QtCommon::View_qt::asQWidget(m->dropArea()->view());
+    QWidget *separatorWidget = nullptr;
+    Core::Separator *separator = nullptr;
+    for (auto child : dropAreaWidget->findChildren<QWidget *>()) {
+        auto view = dynamic_cast<Core::View *>(dynamic_cast<QtCommon::View_qt *>(child));
+        if (view && view->is(Core::ViewType::Separator)) {
+            separatorWidget = child;
+            separator = static_cast<Core::Separator *>(view->controller());
+            break;
+        }
+    }
+
+    QVERIFY(separator);
+    QVERIFY(separatorWidget);
+    QVERIFY(!Core::Separator::isResizing());
+
+    const int originalPosition = separator->position();
+
+    // Real mouse events, as Separator ignores mouse moves when the left button isn't down.
+    // The QWindow overloads are used since QTest::mouseMove(QWidget*) only moves the cursor in Qt5
+    QWindow *window = separatorWidget->window()->windowHandle();
+    QVERIFY(window);
+    const QPoint center = separatorWidget->mapTo(separatorWidget->window(), separatorWidget->rect().center());
+    QTest::mousePress(window, Qt::LeftButton, Qt::NoModifier, center);
+    QVERIFY(Core::Separator::isResizing());
+    QTest::mouseMove(window, center + QPoint(20, 0));
+    QTest::mouseMove(window, center + QPoint(60, 0));
+    if (lazy) {
+        // Only the rubber band moved so far
+        QCOMPARE(separator->position(), originalPosition);
+    }
+
+    QTest::mouseRelease(window, Qt::LeftButton, Qt::NoModifier, center + QPoint(60, 0));
+    QVERIFY(!Core::Separator::isResizing());
+    QVERIFY(separator->position() > originalPosition);
+
+    // Moving without having pressed is ignored
+    const int positionAfterDrag = separator->position();
+    separator->onMouseMove(Point(0, 0));
+    QCOMPARE(separator->position(), positionAfterDrag);
+
+    delete dw1;
+    delete dw2;
+#endif
+}
+
+void TestQtWidgets::tst_separatorMouse()
+{
+    separatorMouse(/*lazy=*/false);
+}
+
+void TestQtWidgets::tst_separatorMouseLazy()
+{
+    separatorMouse(/*lazy=*/true);
 }
 
 int main(int argc, char *argv[])
