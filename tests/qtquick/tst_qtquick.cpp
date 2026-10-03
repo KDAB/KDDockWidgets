@@ -28,6 +28,8 @@
 #include "core/Platform.h"
 #include "core/DockWidget.h"
 #include "qtquick/MainWindowInstantiator.h"
+#include "LayoutSaver.h"
+#include "core/DockRegistry.h"
 
 #include "../utils.h"
 
@@ -95,6 +97,9 @@ private Q_SLOTS:
 
     /// Calls the API of the DockWidget and DockingArea QML types
     void tst_instantiators();
+
+    /// Tests Config.dockWidgetFactoryFunc, as used from QML
+    void tst_dockWidgetFactoryFunc();
 };
 
 
@@ -819,6 +824,72 @@ void TestQtQuick::tst_instantiators()
     QVERIFY(dockInvoke(dockC, "deleteDockWidget"));
     QVERIFY(dockInvoke(dockB, "deleteDockWidgetLater"));
     QTest::qWait(10);
+}
+
+void TestQtQuick::tst_dockWidgetFactoryFunc()
+{
+#ifndef KDDW_QML_MODULE
+    QSKIP("The Config QML singleton is only registered when building as a QML module");
+#endif
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_dockWidgetFactoryFunc.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    QObject *root = engine.rootObjects().constFirst();
+    auto mainWindow = DockRegistry::self()->mainWindowByName("factory-mw");
+    QVERIFY(mainWindow);
+
+    // Create a layout with two dock widgets, then delete them. The layout still references them.
+    auto dock1 = createDockWidget("factoryDock1");
+    auto dock2 = createDockWidget("factoryDock2");
+    mainWindow->addDockWidget(dock1, Location_OnLeft);
+    mainWindow->addDockWidget(dock2, Location_OnRight);
+
+    LayoutSaver saver;
+    const QByteArray serialized = saver.serializeLayout();
+    delete dock1;
+    delete dock2;
+    QVERIFY(!DockRegistry::self()->containsDockWidget("factoryDock1"));
+
+    auto requested = [root] { return root->property("requested").toStringList(); };
+
+    // The factory creates the dock widgets
+    QVERIFY(saver.restoreLayout(serialized));
+    QVERIFY(requested().contains("factoryDock1"));
+    QVERIFY(requested().contains("factoryDock2"));
+    QVERIFY(DockRegistry::self()->dockByName("factoryDock1"));
+    QVERIFY(DockRegistry::self()->dockByName("factoryDock2")->isOpen());
+
+    // The factory returns null, restore doesn't create anything
+    delete DockRegistry::self()->dockByName("factoryDock1");
+    delete DockRegistry::self()->dockByName("factoryDock2");
+    root->setProperty("mode", "null");
+    root->setProperty("requested", QStringList());
+    {
+        SetExpectedWarning ignoreWarning("Couldn't find dock widget");
+        saver.restoreLayout(serialized);
+    }
+    QVERIFY(requested().contains("factoryDock1"));
+    QVERIFY(!DockRegistry::self()->containsDockWidget("factoryDock1"));
+
+    // The factory returns something that isn't a DockWidget
+    root->setProperty("mode", "wrongType");
+    root->setProperty("requested", QStringList());
+    {
+        SetExpectedWarning ignoreWarning("did not return a valid DockWidgetInstantiator");
+        saver.restoreLayout(serialized);
+    }
+    QVERIFY(requested().contains("factoryDock1"));
+    QVERIFY(!DockRegistry::self()->containsDockWidget("factoryDock1"));
+
+    // With no factory, nothing is requested
+    root->setProperty("requested", QStringList());
+    QVERIFY(QMetaObject::invokeMethod(root, "removeFactory"));
+    QVERIFY(Config::self().dockWidgetFactoryFunc() == nullptr);
+    {
+        SetExpectedWarning ignoreWarning("Couldn't find dock widget");
+        saver.restoreLayout(serialized);
+    }
+    QVERIFY(requested().isEmpty());
 }
 
 int main(int argc, char *argv[])
