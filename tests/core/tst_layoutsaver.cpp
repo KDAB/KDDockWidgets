@@ -33,6 +33,9 @@ private Q_SLOTS:
     void tst_unknownMainWindow();
     void tst_scopeArguments();
     void tst_dockWidgetsInLayout();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    void tst_userData();
+#endif
 };
 
 void TestLayoutSaver::tst_fileErrors()
@@ -195,6 +198,64 @@ void TestLayoutSaver::tst_dockWidgetsInLayout()
     delete dw1;
     delete dw2;
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void TestLayoutSaver::tst_userData()
+{
+    Tests::EnsureTopLevelsDeleted e;
+    auto m = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
+    auto dw1 = Tests::createDockWidget("dw1");
+    auto dw2 = Tests::createDockWidget("dw2");
+    m->addDockWidget(dw1, Location_OnLeft);
+    m->addDockWidget(dw2, Location_OnRight);
+
+    QVariantMap userData;
+    userData["string"] = QStringLiteral("hello");
+    userData["bool"] = true;
+    userData["int"] = 42;
+    userData["double"] = 3.5;
+    userData["stringList"] = QStringList({ "a", "b" });
+    userData["map"] = QVariantMap({ { "nested", 1 }, { "nestedString", "x" } });
+    userData["list"] = QVariantList({ 1, "two", false });
+    userData["null"] = QVariant();
+    dw1->setUserData(userData);
+
+    LayoutSaver saver;
+    const QByteArray serialized = saver.serializeLayout();
+
+    dw1->setUserData({});
+    QVERIFY(dw1->userData().isEmpty());
+    QVERIFY(saver.restoreLayout(serialized));
+
+    const QVariantMap restored = dw1->userData();
+    QCOMPARE(restored.size(), userData.size());
+    QCOMPARE(restored["string"].toString(), QString("hello"));
+    QCOMPARE(restored["bool"].typeId(), QMetaType::Bool);
+    QVERIFY(restored["bool"].toBool());
+    QCOMPARE(restored["int"].typeId(), QMetaType::Int);
+    QCOMPARE(restored["int"].toInt(), 42);
+    QCOMPARE(restored["double"].typeId(), QMetaType::Double);
+    QCOMPARE(restored["double"].toDouble(), 3.5);
+    // A QStringList is saved as a JSON array, so it comes back as a QVariantList
+    QCOMPARE(restored["stringList"].toStringList(), QStringList({ "a", "b" }));
+    QCOMPARE(restored["map"].toMap().size(), 2);
+    QCOMPARE(restored["map"].toMap()["nested"].toInt(), 1);
+    QCOMPARE(restored["map"].toMap()["nestedString"].toString(), QString("x"));
+    const QVariantList list = restored["list"].toList();
+    QCOMPARE(list.size(), 3);
+    QCOMPARE(list[0].toInt(), 1);
+    QCOMPARE(list[1].toString(), QString("two"));
+    QCOMPARE(list[2].typeId(), QMetaType::Bool);
+    QVERIFY(restored.contains("null"));
+    QVERIFY(restored["null"].isNull());
+
+    // No user data means nothing is saved, and nothing is restored
+    QVERIFY(dw2->userData().isEmpty());
+
+    delete dw1;
+    delete dw2;
+}
+#endif
 
 #define KDDW_TEST_NAME TestLayoutSaver
 #include "../test_main_qt.h"
