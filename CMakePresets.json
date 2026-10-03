@@ -271,6 +271,7 @@
       ],
       "cacheVariables": {
         "KDDockWidgets_CODE_COVERAGE": "ON",
+        "KDDockWidgets_QML_MODULE": "ON",
         "KDDockWidgets_EXAMPLES": "OFF"
       }
     },
