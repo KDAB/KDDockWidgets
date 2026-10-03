@@ -33,8 +33,10 @@ static KDDockWidgets::Core::DockWidget *dockWidgetFactoryCallback(const QString 
         return nullptr;
 
     auto dwInstantiator = qobject_cast<KDDockWidgets::DockWidgetInstantiator *>(result.toQObject());
-    if (!dwInstantiator)
+    if (!dwInstantiator) {
         qWarning() << "QmlConfig: Factory function did not return a valid DockWidgetInstantiator for" << name;
+        return nullptr;
+    }
 
     auto dw = dwInstantiator->controller();
     if (!dw)
