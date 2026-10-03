@@ -103,6 +103,9 @@ private Q_SLOTS:
 
     /// Calls the side bar and tab forwarders of the DockingArea QML type
     void tst_mainWindowInstantiatorForwarders();
+
+    /// Calls the DockWidget QML type's source, options, title bar and side bar API
+    void tst_dockWidgetInstantiatorExtras();
     void tst_persistentCentralItemFileName();
 };
 
@@ -972,6 +975,46 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     // Same value is a no-op
     area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
     QVERIFY(mainWindow->persistentCentralView() == view);
+}
+
+void TestQtQuick::tst_dockWidgetInstantiatorExtras()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_instantiators.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    QObject *root = engine.rootObjects().constFirst();
+    auto area = root->findChild<MainWindowInstantiator *>("area");
+    auto dockA = root->findChild<QObject *>("dockA");
+    QVERIFY(area);
+    QVERIFY(dockA);
+
+    auto dw = DockRegistry::self()->dockByName("dockA");
+    QVERIFY(dw);
+
+    QtQuick::DockWidget *item = nullptr;
+    QVERIFY(QMetaObject::invokeMethod(dockA, "dockWidget", Q_RETURN_ARG(KDDockWidgets::QtQuick::DockWidget *, item)));
+    QCOMPARE(item, static_cast<QtQuick::DockWidget *>(dw->view()));
+
+    // The source is only used at creation, but the property is still readable and writable
+    QVERIFY(dockA->property("source").toString().isEmpty());
+    QVERIFY(dockA->setProperty("source", ":/MyRectangle2.qml"));
+    QCOMPARE(dockA->property("source").toString(), QString(":/MyRectangle2.qml"));
+
+    // Options
+    QVERIFY(dockA->setProperty("options", QVariant::fromValue(DockWidgetOptions(DockWidgetOption_NotClosable))));
+    QCOMPARE(dw->options(), DockWidgetOptions(DockWidgetOption_NotClosable));
+    QCOMPARE(dockA->property("options").value<DockWidgetOptions>(), DockWidgetOptions(DockWidgetOption_NotClosable));
+
+    // The title bar is only available once docked
+    area->addDockWidget(item, Location_OnLeft);
+    QVERIFY(dockA->property("actualTitleBar").value<QObject *>());
+
+    // QtQuick doesn't support side bars, so this is the error path of the forwarder
+    {
+        SetExpectedWarning ignoreWarning("Minimization supported");
+        QVERIFY(QMetaObject::invokeMethod(dockA, "moveToSideBar"));
+    }
+    QVERIFY(!dw->isInSideBar());
 }
 
 int main(int argc, char *argv[])
