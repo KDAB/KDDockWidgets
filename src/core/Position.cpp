@@ -128,18 +128,6 @@ void Positions::removePlaceholders(const Core::LayoutingHost *host)
                          m_placeholders.end());
 }
 
-void Positions::removeNonMainWindowPlaceholders()
-{
-    auto it = m_placeholders.begin();
-    while (it != m_placeholders.end()) {
-        ItemRef *itemref = it->get();
-        if (!itemref->isInMainWindow())
-            it = m_placeholders.erase(it);
-        else
-            ++it;
-    }
-}
-
 void Positions::removeMainWindowPlaceholders()
 {
     auto it = m_placeholders.begin();
