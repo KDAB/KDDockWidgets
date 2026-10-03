@@ -16,6 +16,7 @@
 #include "LayoutingSeparator_p.h"
 
 #include "core/Logging_p.h"
+#include "core/CoverageExclusion_p.h"
 #include "core/ObjectGuard_p.h"
 #include "core/ScopedValueRollback_p.h"
 #include "core/nlohmann_helpers_p.h"
@@ -825,7 +826,7 @@ void Item::setGeometry_recursive(Rect rect)
     setGeometry(rect);
 }
 
-bool Item::checkSanity()
+KDDW_NO_COVERAGE bool Item::checkSanity()
 {
     if (!root())
         return true;
@@ -1211,7 +1212,7 @@ bool ItemBoxContainer::percentagesAreSane() const
     return true;
 }
 
-bool ItemBoxContainer::checkSanity()
+KDDW_NO_COVERAGE bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
 
