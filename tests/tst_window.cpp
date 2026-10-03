@@ -34,6 +34,7 @@ private Q_SLOTS:
     void tst_activate();
     void tst_equals();
     void tst_geometry();
+    void tst_sizeAndCoordinates();
 };
 
 void TestWindow::tst_windowCtor()
@@ -112,6 +113,41 @@ void TestWindow::tst_geometry()
 
     QTest::qWait(100);
     QCOMPARE(window->geometry(), geo);
+
+    window->destroy();
+}
+
+void TestWindow::tst_sizeAndCoordinates()
+{
+    auto window = Platform::instance()->tests_createWindow();
+
+    // Unconstrained by default
+    QCOMPARE(window->minWidth(), window->minSize().width());
+    QCOMPARE(window->minHeight(), window->minSize().height());
+    QCOMPARE(window->maxWidth(), window->maxSize().width());
+    QCOMPARE(window->maxHeight(), window->maxSize().height());
+    QVERIFY(window->maxWidth() >= window->minWidth());
+    QVERIFY(window->maxHeight() >= window->minHeight());
+
+    QVERIFY(!window->isFullScreen());
+
+    window->setPosition(KDDockWidgets::Point(120, 130));
+    QTest::qWait(100);
+    QCOMPARE(window->geometry().topLeft(), KDDockWidgets::Point(120, 130));
+
+    const KDDockWidgets::Point local(10, 20);
+    QCOMPARE(window->mapFromGlobal(window->mapToGlobal(local)), local);
+    QCOMPARE(window->fromNativePixels(KDDockWidgets::Point(0, 0)), KDDockWidgets::Point(0, 0));
+
+    QVERIFY(!window->hasBeenMinimizedDirectlyFromRestore());
+    window->setHasBeenMinimizedDirectlyFromRestore(true);
+    QVERIFY(window->hasBeenMinimizedDirectlyFromRestore());
+
+    QVERIFY(window->screenIndex() >= 0);
+    QVERIFY(window->screen());
+
+    auto rootView = window->rootView();
+    QVERIFY(rootView);
 
     window->destroy();
 }
