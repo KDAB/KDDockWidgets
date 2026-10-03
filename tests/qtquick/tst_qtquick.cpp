@@ -100,6 +100,10 @@ private Q_SLOTS:
 
     /// Tests Config.dockWidgetFactoryFunc, as used from QML
     void tst_dockWidgetFactoryFunc();
+
+    /// Calls the side bar and tab forwarders of the DockingArea QML type
+    void tst_mainWindowInstantiatorForwarders();
+    void tst_persistentCentralItemFileName();
 };
 
 
@@ -890,6 +894,84 @@ void TestQtQuick::tst_dockWidgetFactoryFunc()
         saver.restoreLayout(serialized);
     }
     QVERIFY(requested().isEmpty());
+}
+
+void TestQtQuick::tst_mainWindowInstantiatorForwarders()
+{
+    EnsureTopLevelsDeleted e;
+
+    QQmlApplicationEngine engine(":/main_instantiatorsCentralGroup.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    QObject *root = engine.rootObjects().constFirst();
+    auto area = root->findChild<MainWindowInstantiator *>("area");
+    auto dockA = root->findChild<QObject *>("dockA");
+    auto dockB = root->findChild<QObject *>("dockB");
+    QVERIFY(area);
+    QVERIFY(dockA);
+    QVERIFY(dockB);
+
+    auto dockItem = [](QObject *dock) {
+        QtQuick::DockWidget *item = nullptr;
+        QMetaObject::invokeMethod(dock, "dockWidget", Q_RETURN_ARG(KDDockWidgets::QtQuick::DockWidget *, item));
+        return item;
+    };
+
+    auto dwA = DockRegistry::self()->dockByName("dockA");
+    auto dwB = DockRegistry::self()->dockByName("dockB");
+    QVERIFY(dwA && dwB);
+
+    area->addDockWidget(dockItem(dockA), Location_OnLeft);
+    area->addDockWidgetAsTab(dockItem(dockB));
+    QVERIFY(dwA->isOpen());
+    QVERIFY(dwB->isOpen());
+
+    // QtQuick has no side bar view (Flag_AutoHideSupport crashes), so the
+    // forwarders can only be exercised in their error paths
+    QVERIFY(!area->sideBarIsVisible(SideBarLocation::West));
+    {
+        SetExpectedWarning ignoreWarning("Minimization supported");
+        area->moveToSideBar(dockItem(dockA));
+        area->moveToSideBar(dockItem(dockA), SideBarLocation::South);
+    }
+    QVERIFY(!dwA->isInSideBar());
+    QVERIFY(dwA->isOpen());
+
+    {
+        SetExpectedWarning ignoreWarning("isn't in any sidebar");
+        area->restoreFromSideBar(dockItem(dockA));
+    }
+
+    {
+        SetExpectedWarning ignoreWarning("You need to add the dock widget to the sidebar");
+        area->overlayOnSideBar(dockItem(dockA));
+        area->toggleOverlayOnSideBar(dockItem(dockA));
+    }
+    area->clearSideBarOverlay();
+    area->clearSideBarOverlay(/*deleteFrame=*/false);
+    QVERIFY(!area->sideBarIsVisible(SideBarLocation::South));
+}
+
+void TestQtQuick::tst_persistentCentralItemFileName()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_persistentCentralWidget.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    auto area = engine.rootObjects().constFirst()->findChild<MainWindowInstantiator *>();
+    QVERIFY(area);
+    auto mainWindow = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+    QVERIFY(mainWindow);
+
+    // Setting it after the main window was created
+    QVERIFY(area->persistentCentralItemFileName().isEmpty());
+    QVERIFY(!mainWindow->persistentCentralView());
+    area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
+    QCOMPARE(area->persistentCentralItemFileName(), QString(":/MyRectangle2.qml"));
+    QVERIFY(mainWindow->persistentCentralView());
+    auto view = mainWindow->persistentCentralView();
+
+    // Same value is a no-op
+    area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
+    QVERIFY(mainWindow->persistentCentralView() == view);
 }
 
 int main(int argc, char *argv[])

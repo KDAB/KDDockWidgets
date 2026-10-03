@@ -26,6 +26,7 @@
         <file>main_titleBarHasMinimizeButton.qml</file>
         <file>main_mdiInitialSize.qml</file>
         <file>main_instantiators.qml</file>
+        <file>main_instantiatorsCentralGroup.qml</file>
         <file>main_dockWidgetFactoryFunc.qml</file>
 </qresource>
 </RCC>
