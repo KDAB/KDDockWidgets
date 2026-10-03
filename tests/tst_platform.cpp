@@ -13,6 +13,10 @@
 #include "core/ViewFactory.h"
 #include "core/Platform.h"
 #include "Config.h"
+#include "core/DockRegistry.h"
+#include "core/FloatingWindow.h"
+#include "core/Window_p.h"
+#include "utils.h"
 
 #include <QTest>
 #include <string>
@@ -28,6 +32,9 @@ private Q_SLOTS:
     void tst_name();
     void tst_createDefaultViewFactory();
     void tst_startDragDistance();
+    void tst_windows();
+    void tst_mouseCursor();
+    void tst_floatingWindowForHandle();
 };
 
 void TestPlatform::tst_platform()
@@ -60,6 +67,52 @@ void TestPlatform::tst_startDragDistance()
     const int newDistance = defaultDistance + 1;
     KDDockWidgets::Config::self().setStartDragDistance(newDistance);
     QCOMPARE(plat->startDragDistance(), newDistance);
+}
+
+void TestPlatform::tst_windows()
+{
+    auto plat = Platform::instance();
+    QVERIFY(plat->primaryScreen());
+    QVERIFY(!plat->hasActivePopup());
+
+    auto window = plat->tests_createWindow();
+    bool found = false;
+    for (const auto &w : plat->windows()) {
+        if (w->equals(window))
+            found = true;
+    }
+    QVERIFY(found);
+    QVERIFY(plat->screenNumberForWindow(window) >= 0);
+
+    window->destroy();
+}
+
+void TestPlatform::tst_mouseCursor()
+{
+    // Just checks that it doesn't crash, and that the stack is balanced
+    auto plat = Platform::instance();
+    plat->setMouseCursor(Qt::SizeHorCursor);
+    plat->setMouseCursor(Qt::SizeVerCursor, /*discardLast=*/true);
+    plat->restoreMouseCursor();
+    plat->restoreMouseCursor();
+}
+
+void TestPlatform::tst_floatingWindowForHandle()
+{
+    Tests::EnsureTopLevelsDeleted e;
+    auto fw = Tests::createFloatingWindow();
+    auto window = fw->view()->window();
+    QVERIFY(window);
+
+    auto registry = DockRegistry::self();
+    QCOMPARE(registry->floatingWindowForHandle(window), fw);
+    QCOMPARE(registry->floatingWindowForHandle(window->handle()), fw);
+
+    auto other = Platform::instance()->tests_createWindow();
+    QVERIFY(!registry->floatingWindowForHandle(other));
+    other->destroy();
+
+    delete fw;
 }
 
 #define KDDW_TEST_NAME TestPlatform
