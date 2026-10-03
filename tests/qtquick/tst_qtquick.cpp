@@ -26,6 +26,8 @@
 #include "core/MainWindow.h"
 #include "core/Window_p.h"
 #include "core/Platform.h"
+#include "core/DockWidget.h"
+#include "qtquick/MainWindowInstantiator.h"
 
 #include "../utils.h"
 
@@ -90,6 +92,9 @@ private Q_SLOTS:
     /// Tests that DockWidget.floatingWindowFlags set from QML is honoured, using
     /// FloatingWindowFlag_TitleBarHasMinimizeButton as the observable case.
     void tst_floatingWindowFlagsFromQml();
+
+    /// Calls the API of the DockWidget and DockingArea QML types
+    void tst_instantiators();
 };
 
 
@@ -705,6 +710,115 @@ void TestQtQuick::tst_floatingWindowFlagsFromQml()
     QVERIFY(fw);
 
     QVERIFY(fw->titleBar()->supportsMinimizeButton());
+}
+
+void TestQtQuick::tst_instantiators()
+{
+    // DockWidgetInstantiator isn't exported, so go through the meta object, as QML does
+    auto dockInvoke = [](QObject *dock, const char *method) {
+        return QMetaObject::invokeMethod(dock, method);
+    };
+
+    auto dockClose = [](QObject *dock) {
+        bool result = false;
+        QMetaObject::invokeMethod(dock, "close", Q_RETURN_ARG(bool, result));
+        return result;
+    };
+
+    auto dockItem = [](QObject *dock) {
+        QtQuick::DockWidget *item = nullptr;
+        QMetaObject::invokeMethod(dock, "dockWidget", Q_RETURN_ARG(KDDockWidgets::QtQuick::DockWidget *, item));
+        return item;
+    };
+
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_instantiators.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    QObject *root = engine.rootObjects().constFirst();
+
+    auto area = root->findChild<MainWindowInstantiator *>("area");
+    auto dockA = root->findChild<QObject *>("dockA");
+    auto dockB = root->findChild<QObject *>("dockB");
+    auto dockC = root->findChild<QObject *>("dockC");
+    QVERIFY(area);
+    QVERIFY(dockA);
+    QVERIFY(dockB);
+    QVERIFY(dockC);
+
+    // Main window getters
+    QCOMPARE(area->uniqueName(), QString("instantiators-mw"));
+    QVERIFY(!area->isMDI());
+    QVERIFY(area->persistentCentralItemFileName().isEmpty());
+    QVERIFY(area->affinities().isEmpty());
+    QCOMPARE(area->options(), MainWindowOptions(MainWindowOption_None));
+
+    // Dock widget getters
+    QCOMPARE(dockA->property("uniqueName").toString(), QString("dockA"));
+    QCOMPARE(dockA->property("title").toString(), QString("Dock A"));
+    QVERIFY(dockItem(dockA));
+    QVERIFY(dockA->property("affinities").value<QVector<QString>>().isEmpty());
+    QVERIFY(!dockA->property("isOpen").toBool());
+    QVERIFY(!dockA->property("isFocused").toBool());
+    QVERIFY(dockA->property("lastCloseReason").isValid());
+    QVERIFY(dockA->property("options").isValid());
+
+    QVERIFY(dockA->setProperty("title", "New title"));
+    QCOMPARE(dockA->property("title").toString(), QString("New title"));
+
+    const QVariantMap userData = { { "key", 42 } };
+    QVERIFY(dockA->setProperty("userData", userData));
+    QCOMPARE(dockA->property("userData").toMap(), userData);
+
+    QVERIFY(dockA->setProperty("floatingWindowFlags", QVariant::fromValue(FloatingWindowFlags(FloatingWindowFlag::TitleBarHasMinimizeButton))));
+    QVERIFY(dockA->property("floatingWindowFlags").value<FloatingWindowFlags>() & FloatingWindowFlag::TitleBarHasMinimizeButton);
+
+    // Docking
+    area->addDockWidget(dockItem(dockA), Location_OnLeft);
+    area->addDockWidget(dockItem(dockB), Location_OnRight, dockItem(dockA));
+    QVERIFY(QMetaObject::invokeMethod(dockA, "addDockWidgetAsTab", Q_ARG(QQuickItem *, dockItem(dockC))));
+    QVERIFY(dockA->property("isOpen").toBool());
+    QVERIFY(dockB->property("isOpen").toBool());
+    QVERIFY(dockC->property("isOpen").toBool());
+    QVERIFY(!dockA->property("isFloating").toBool());
+
+    QVERIFY(dockInvoke(dockA, "setAsCurrentTab"));
+    QVERIFY(dockInvoke(dockC, "setAsCurrentTab"));
+    QVERIFY(dockInvoke(dockA, "raise"));
+    area->layoutEqually();
+    area->layoutParentContainerEqually(dockItem(dockB));
+
+    // Floating
+    QVERIFY(dockB->setProperty("isFloating", true));
+    QVERIFY(dockB->property("isFloating").toBool());
+    QVERIFY(dockB->setProperty("isFloating", false));
+    QVERIFY(!dockB->property("isFloating").toBool());
+
+    // Closing and opening
+    QVERIFY(dockClose(dockB));
+    QVERIFY(!dockB->property("isOpen").toBool());
+    QVERIFY(dockInvoke(dockB, "open"));
+    QVERIFY(dockB->property("isOpen").toBool());
+    QVERIFY(dockInvoke(dockB, "forceClose"));
+    QVERIFY(!dockB->property("isOpen").toBool());
+    QVERIFY(dockInvoke(dockB, "show"));
+    QVERIFY(dockB->property("isOpen").toBool());
+
+    // Docking into the window containing a dock widget
+    QVERIFY(dockClose(dockB));
+    QVERIFY(QMetaObject::invokeMethod(dockA, "addDockWidgetToContainingWindow",
+                                      Q_ARG(QQuickItem *, dockItem(dockB)),
+                                      Q_ARG(KDDockWidgets::Location, Location_OnBottom)));
+    QVERIFY(dockB->property("isOpen").toBool());
+
+    QVERIFY(area->closeDockWidgets(/*force=*/false));
+    QVERIFY(!dockA->property("isOpen").toBool());
+    QVERIFY(!dockB->property("isOpen").toBool());
+    QVERIFY(!dockC->property("isOpen").toBool());
+
+    // Delete the dock widgets while the engine is still alive
+    QVERIFY(dockInvoke(dockC, "deleteDockWidget"));
+    QVERIFY(dockInvoke(dockB, "deleteDockWidgetLater"));
+    QTest::qWait(10);
 }
 
 int main(int argc, char *argv[])
