@@ -10,6 +10,7 @@
 */
 
 #include "WindowBeingDragged_p.h"
+#include "CoverageExclusion_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "DragController_p.h"
 #include "Logging_p.h"
@@ -222,7 +223,7 @@ Core::View *WindowBeingDragged::floatingWindowView() const
     return nullptr;
 }
 
-WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
+KDDW_NO_COVERAGE WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     : WindowBeingDragged(draggable)
 {
     if (!isWayland()) {
@@ -256,11 +257,11 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     }
 }
 
-WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
+KDDW_NO_COVERAGE WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
 {
 }
 
-Pixmap WindowBeingDraggedWayland::pixmap() const
+KDDW_NO_COVERAGE Pixmap WindowBeingDraggedWayland::pixmap() const
 {
     QPixmap pixmap(size());
     QPainter p(&pixmap);
@@ -278,7 +279,7 @@ Pixmap WindowBeingDraggedWayland::pixmap() const
     return pixmap;
 }
 
-Vector<QString> WindowBeingDraggedWayland::affinities() const
+KDDW_NO_COVERAGE Vector<QString> WindowBeingDraggedWayland::affinities() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::affinities();
@@ -290,7 +291,7 @@ Vector<QString> WindowBeingDraggedWayland::affinities() const
     return {};
 }
 
-Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
+KDDW_NO_COVERAGE Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::dockWidgets();
@@ -302,7 +303,7 @@ Vector<DockWidget *> WindowBeingDraggedWayland::dockWidgets() const
     return {};
 }
 
-bool WindowBeingDraggedWayland::isInWaylandDrag(Group *group) const
+KDDW_NO_COVERAGE bool WindowBeingDraggedWayland::isInWaylandDrag(Group *group) const
 {
     // Returns whether the specified group is being dragged. We honour 2 cases:
     // - The whole group is being dragged, for example a group of tabs being dragged via titlebar
@@ -310,7 +311,7 @@ bool WindowBeingDraggedWayland::isInWaylandDrag(Group *group) const
     return (group && m_group == group) || (m_dockWidget && m_dockWidget->dptr()->group() == group);
 }
 
-Size WindowBeingDraggedWayland::size() const
+KDDW_NO_COVERAGE Size WindowBeingDraggedWayland::size() const
 {
     if (m_floatingWindow)
         return WindowBeingDragged::size();
@@ -323,7 +324,7 @@ Size WindowBeingDraggedWayland::size() const
     return Size();
 }
 
-Size WindowBeingDraggedWayland::minSize() const
+KDDW_NO_COVERAGE Size WindowBeingDraggedWayland::minSize() const
 {
     if (m_floatingWindow) {
         return WindowBeingDragged::minSize();
@@ -337,7 +338,7 @@ Size WindowBeingDraggedWayland::minSize() const
     return {};
 }
 
-Size WindowBeingDraggedWayland::maxSize() const
+KDDW_NO_COVERAGE Size WindowBeingDraggedWayland::maxSize() const
 {
     if (m_floatingWindow) {
         return WindowBeingDragged::maxSize();
