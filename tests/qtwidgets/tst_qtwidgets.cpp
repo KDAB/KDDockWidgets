@@ -35,6 +35,7 @@
 #include "core/Group.h"
 #include "core/DockWidget.h"
 #include "core/MainWindow.h"
+#include "core/views/MainWindowViewInterface.h"
 #include "core/SideBar.h"
 
 #include "qtwidgets/views/MDIArea.h"
@@ -55,6 +56,7 @@
 
 #include <QObject>
 #include <QPushButton>
+#include <QDockWidget>
 #include <QMenuBar>
 #include <QTabBar>
 #include <QTabWidget>
@@ -250,6 +252,10 @@ private Q_SLOTS:
     void tst_affinityFloatingWindowIndexMismatch();
     void tst_separatorMouse();
     void tst_separatorMouseLazy();
+    void tst_legacyQDockWidgets();
+    void tst_mainWindowMargins();
+    void tst_persistentCentralWidget();
+    void tst_manualInit();
 
 private:
     void separatorMouse(bool lazy);
@@ -3361,6 +3367,93 @@ void TestQtWidgets::tst_separatorMouse()
 void TestQtWidgets::tst_separatorMouseLazy()
 {
     separatorMouse(/*lazy=*/true);
+}
+
+void TestQtWidgets::tst_legacyQDockWidgets()
+{
+    EnsureTopLevelsDeleted e;
+    auto mwPtr = std::make_unique<QtWidgets::MainWindow>("legacy", MainWindowOption_QDockWidgets);
+    auto &mw = *mwPtr;
+    mw.resize(1000, 800);
+
+    auto dock1 = new QDockWidget("d1", &mw);
+    auto dock2 = new QDockWidget("d2", &mw);
+    auto dock3 = new QDockWidget("d3", &mw);
+    auto dock4 = new QDockWidget("d4", &mw);
+    auto dock5 = new QDockWidget("d5", &mw);
+
+    mw.addDockWidget_legacy(Qt::LeftDockWidgetArea, dock1);
+    mw.addDockWidget_legacy(Qt::RightDockWidgetArea, dock2, Qt::Vertical);
+    mw.addDockWidget_legacy(Qt::BottomDockWidgetArea, dock3);
+    mw.show();
+
+    QCOMPARE(mw.dockWidgetArea_legacy(dock1), Qt::LeftDockWidgetArea);
+    QCOMPARE(mw.dockWidgetArea_legacy(dock2), Qt::RightDockWidgetArea);
+    QCOMPARE(mw.dockWidgetArea_legacy(dock3), Qt::BottomDockWidgetArea);
+
+    // tabifyDockWidget_legacy() isn't called: Qt's QMainWindowTabBar destructor intentionally
+    // casts a QMainWindow that's already in its QWidget destructor, which UBSan reports.
+    mw.addDockWidget_legacy(Qt::TopDockWidgetArea, dock4);
+    QVERIFY(mw.tabifiedDockWidgets_legacy(dock1).isEmpty());
+
+    mw.splitDockWidget_split_legacy(dock2, dock5, Qt::Vertical);
+    QCOMPARE(mw.dockWidgetArea_legacy(dock5), Qt::RightDockWidgetArea);
+
+    mw.resizeDocks_legacy({ dock1, dock2 }, { 300, 200 }, Qt::Horizontal);
+
+    mw.removeDockWidget_legacy(dock3);
+    QCOMPARE(mw.dockWidgetArea_legacy(dock3), Qt::NoDockWidgetArea);
+    mw.restoreDockWidget_legacy(dock3);
+
+    // Delete the docks while the main window is still alive, as QMainWindow's layout expects
+    delete dock1;
+    delete dock2;
+    delete dock3;
+    delete dock4;
+    delete dock5;
+
+    mwPtr.reset();
+}
+
+void TestQtWidgets::tst_mainWindowMargins()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto view = static_cast<QtWidgets::MainWindow *>(m->view());
+
+    const QMargins margins(1, 2, 3, 4);
+    view->setCenterWidgetMargins(margins);
+    QCOMPARE(view->centerWidgetMargins(), margins);
+    view->setCenterWidgetMargins(margins); // no-op
+    view->updateMargins();
+
+    view->setContentsMargins(5, 6, 7, 8);
+    QCOMPARE(view->contentsMargins(), QMargins(5, 6, 7, 8));
+
+    QVERIFY(!dynamic_cast<Core::MainWindowViewInterface *>(m->view())->centralAreaGeometry().isEmpty());
+    QVERIFY(view->centralGroup());
+    QVERIFY(view->internalLayout());
+}
+
+void TestQtWidgets::tst_persistentCentralWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralWidget);
+    auto view = static_cast<QtWidgets::MainWindow *>(m->view());
+    QVERIFY(!view->persistentCentralWidget());
+
+    auto button = new QPushButton("central");
+    view->setPersistentCentralWidget(button);
+    QCOMPARE(view->persistentCentralWidget(), button);
+}
+
+void TestQtWidgets::tst_manualInit()
+{
+    EnsureTopLevelsDeleted e;
+    QtWidgets::MainWindow mw("manual", MainWindowOption_ManualInit);
+    mw.manualInit();
+    QVERIFY(mw.centralWidget());
+    QVERIFY(mw.internalLayout());
 }
 
 int main(int argc, char *argv[])
