@@ -36,6 +36,7 @@ private Q_SLOTS:
     void tst_addWidget();
     void tst_addWidgetHidden();
     void tst_segmentedIndicators();
+    void tst_validateInputs();
 };
 
 void TestDropArea::tst_dropAreaCtor()
@@ -123,6 +124,64 @@ void TestDropArea::tst_segmentedIndicators()
     drag(draggable, Point(), center, ButtonAction_Release);
     QVERIFY(!overlay->isVisible());
     QCOMPARE(dock1->dptr()->group()->dockWidgetCount(), 2);
+}
+
+void TestDropArea::tst_validateInputs()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        auto dw1 = createDockWidget("dw1");
+        auto dw2 = createDockWidget("dw2");
+        auto dw3 = createDockWidget("dw3");
+        Core::DropArea da(nullptr, {});
+        Core::DropArea other(nullptr, {});
+        other.addDockWidget(dw3, Location_OnLeft, nullptr);
+
+        {
+            SetExpectedWarning sew("Invalid parameters");
+            da.addDockWidget(dw1, Location_None, nullptr);
+            da.addDockWidget(nullptr, Location_OnLeft, nullptr);
+            da.addDockWidget(dw1, Location_OnLeft, dw1);
+            da._addDockWidget(nullptr, Location_OnLeft, nullptr, {});
+            QVERIFY(!da.containsDockWidget(dw1));
+        }
+
+        {
+            auto group = new Core::Group();
+            SetExpectedWarning sew("not adding to location None");
+            da.addWidget(group->view(), Location_None, nullptr);
+            delete group;
+        }
+
+        {
+            // A dock widget needs to start hidden, as it's the dock widget which creates the group
+            SetExpectedWarning sew("Wrong parameters");
+            da.addWidget(dw1->view(), Location_OnLeft, nullptr);
+            QVERIFY(!da.containsDockWidget(dw1));
+        }
+
+        {
+            SetExpectedWarning sew("Unknown widget type");
+            auto view = Platform::instance()->tests_createView({ true });
+            da.addWidget(view, Location_OnLeft, nullptr);
+            delete view;
+        }
+
+        {
+            // dw3 lives in another layout
+            da.addDockWidget(dw1, Location_OnLeft, nullptr);
+            SetExpectedWarning sew("Doesn't contain relativeTo");
+            da.addDockWidget(dw2, Location_OnRight, dw3);
+            QVERIFY(!da.containsDockWidget(dw2));
+        }
+
+        delete dw1;
+        delete dw2;
+        delete dw3;
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    QTest::qWait(1);
 }
 
 #define KDDW_TEST_NAME TestDropArea

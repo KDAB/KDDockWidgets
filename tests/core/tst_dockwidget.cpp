@@ -18,12 +18,21 @@
 #include "core/TitleBar.h"
 #include "core/ViewFactory.h"
 #include "core/ObjectGuard_p.h"
+#include "core/DockRegistry.h"
+#include "core/MainWindow.h"
+#include "core/SideBar.h"
 #include "Config.h"
 
 #include <QTest>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
+
+static Core::DockWidget *createNotDockable(const QString &name)
+{
+    return Tests::createDockWidget(name, Platform::instance()->tests_createView({ true }),
+                                   DockWidgetOption_NotDockable);
+}
 
 class TestDockWidget : public QObject
 {
@@ -36,6 +45,11 @@ private Q_SLOTS:
     void tst_setAsCurrentTab();
     void tst_dwCloseAndReopen();
     void tst_setSize();
+    void tst_addDockWidgetAsTabErrors();
+    void tst_addDockWidgetToContainingWindow();
+    void tst_mainWindowAddDockWidgetAsTab();
+    void tst_sideBarErrors();
+    void tst_duplicateNames();
 };
 
 void TestDockWidget::tst_dockWidgetCtor()
@@ -201,6 +215,259 @@ void TestDockWidget::tst_setSize()
         const Size size = Size(501, 502);
         dw->view()->setSize(size);
         QCOMPARE(dw->view()->size(), size);
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    QTest::qWait(1);
+}
+
+void TestDockWidget::tst_addDockWidgetAsTabErrors()
+{
+    {
+        Tests::EnsureTopLevelsDeleted e;
+        auto dw1 = Tests::createDockWidget("dw1");
+        auto dw2 = Tests::createDockWidget("dw2");
+
+        {
+            SetExpectedWarning sew("Refusing to add dock widget into itself");
+            dw1->addDockWidgetAsTab(dw1);
+        }
+
+        {
+            SetExpectedWarning sew("dock widget is null");
+            dw1->addDockWidgetAsTab(nullptr);
+        }
+
+        {
+            auto notDockable = createNotDockable("notDockable");
+            {
+                SetExpectedWarning sew("Option_NotDockable not allowed to change");
+                notDockable->setOptions(DockWidgetOption_None);
+            }
+            SetExpectedWarning sew("Refusing to dock non-dockable widget");
+            dw1->addDockWidgetAsTab(notDockable);
+            delete notDockable;
+        }
+
+        dw1->addDockWidgetAsTab(dw2);
+        QCOMPARE(dw1->dptr()->group()->dockWidgetCount(), 2);
+
+        {
+            SetExpectedWarning sew("Already contains");
+            dw1->addDockWidgetAsTab(dw2);
+        }
+        QCOMPARE(dw1->dptr()->group()->dockWidgetCount(), 2);
+
+        delete dw1;
+        delete dw2;
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    QTest::qWait(1);
+}
+
+void TestDockWidget::tst_addDockWidgetToContainingWindow()
+{
+    {
+        Tests::EnsureTopLevelsDeleted e;
+        auto dw1 = Tests::createDockWidget("dw1");
+        auto dw2 = Tests::createDockWidget("dw2");
+        auto dw3 = Tests::createDockWidget("dw3");
+        auto dw4 = Tests::createDockWidget("dw4");
+
+        // Null is a no-op
+        dw1->addDockWidgetToContainingWindow(nullptr, Location_OnRight, nullptr);
+
+        {
+            auto notDockable = createNotDockable("notDockable");
+            SetExpectedWarning sew("Refusing to dock non-dockable widget");
+            dw1->addDockWidgetToContainingWindow(notDockable, Location_OnRight, nullptr);
+            delete notDockable;
+        }
+
+        {
+            dw3->setAffinities({ "other" });
+            SetExpectedWarning sew("Refusing to dock widget with incompatible affinity");
+            dw1->addDockWidgetToContainingWindow(dw3, Location_OnRight, nullptr);
+        }
+
+        // dw1 isn't in a main window, so it's docked into its own floating window
+        dw1->addDockWidgetToContainingWindow(dw2, Location_OnRight, nullptr);
+        QVERIFY(dw1->floatingWindow());
+        QCOMPARE(dw1->floatingWindow(), dw2->floatingWindow());
+
+        // dw4 is in a main window, so the main window API is used
+        auto m = Tests::createMainWindow();
+        m->addDockWidget(dw4, Location_OnLeft);
+        auto dw5 = Tests::createDockWidget("dw5");
+        dw4->addDockWidgetToContainingWindow(dw5, Location_OnRight, nullptr);
+        QCOMPARE(dw5->mainWindow(), m.get());
+
+        delete dw1;
+        delete dw2;
+        delete dw3;
+        delete dw4;
+        delete dw5;
+        m.reset();
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    QTest::qWait(1);
+}
+
+void TestDockWidget::tst_mainWindowAddDockWidgetAsTab()
+{
+    {
+        Tests::EnsureTopLevelsDeleted e;
+
+        // Central group supports tabbing
+        auto m = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "mw1");
+        auto dw1 = Tests::createDockWidget("dw1");
+        auto dw2 = Tests::createDockWidget("dw2");
+        m->addDockWidgetAsTab(dw1);
+        m->addDockWidgetAsTab(dw2);
+        QCOMPARE(dw1->dptr()->group()->dockWidgetCount(), 2);
+        QCOMPARE(dw1->dptr()->group(), dw2->dptr()->group());
+
+        {
+            auto dw3 = Tests::createDockWidget("dw3");
+            dw3->setAffinities({ "other" });
+            SetExpectedWarning sew("Refusing to dock widget with incompatible affinity");
+            m->addDockWidgetAsTab(dw3);
+            delete dw3;
+        }
+
+        {
+            auto dw3 = createNotDockable("dw3");
+            SetExpectedWarning sew("Refusing to dock non-dockable widget");
+            m->addDockWidgetAsTab(dw3);
+            m->addDockWidget(dw3, Location_OnLeft);
+            delete dw3;
+        }
+
+        // Without a central group it's not supported
+        auto m2 = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_None, "mw2");
+        auto dw4 = Tests::createDockWidget("dw4");
+        {
+            SetExpectedWarning sew("Not supported without MainWindowOption_HasCentralGroup");
+            m2->addDockWidgetAsTab(dw4);
+            QVERIFY(!dw4->mainWindow());
+        }
+        {
+            SetExpectedWarning sew("A central group is required");
+            m2->addDockWidgetToSide(dw4, Location_OnLeft);
+        }
+
+        // Neither is it supported with a persistent central widget
+        auto m3 = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralWidget, "mw3");
+        {
+            SetExpectedWarning sew("Not supported with MainWindowOption_HasCentralWidget");
+            m3->addDockWidgetAsTab(dw4);
+        }
+
+        // Not applicable to MDI, silently ignored
+        auto m4 = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_MDI, "mw4");
+        m4->addDockWidgetAsTab(dw4);
+        m4->addDockWidgetToSide(dw4, Location_OnLeft);
+
+        delete dw1;
+        delete dw2;
+        delete dw4;
+        m4.reset();
+        m3.reset();
+        m2.reset();
+        m.reset();
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    QTest::qWait(1);
+}
+
+void TestDockWidget::tst_sideBarErrors()
+{
+    if (Platform::instance()->isQtQuick())
+        QSKIP("Side bars are not implemented for QtQuick");
+
+    {
+        Tests::EnsureTopLevelsDeleted e;
+        Config::self().setFlags(Config::Flag_AutoHideSupport);
+        auto m = Tests::createMainWindow();
+        auto dw1 = Tests::createDockWidget("dw1");
+        auto dw2 = Tests::createDockWidget("dw2");
+        m->addDockWidget(dw1, Location_OnLeft);
+        m->addDockWidget(dw2, Location_OnRight);
+
+        auto sideBar = m->sideBar(SideBarLocation::West);
+        QVERIFY(sideBar);
+
+        // Null is a no-op
+        sideBar->addDockWidget(nullptr);
+
+        sideBar->addDockWidget(dw1);
+        QVERIFY(sideBar->containsDockWidget(dw1));
+        {
+            SetExpectedWarning sew("Already contains dock widget");
+            sideBar->addDockWidget(dw1);
+        }
+
+        {
+            SetExpectedWarning sew("Doesn't contain dock widget");
+            sideBar->removeDockWidget(dw2);
+        }
+
+        sideBar->removeDockWidget(dw1);
+        QVERIFY(!sideBar->containsDockWidget(dw1));
+
+        delete dw1;
+        delete dw2;
+        m.reset();
+    }
+
+    // 1 event loop for DelayedDelete. Avoids LSAN warnings.
+    QTest::qWait(1);
+}
+
+void TestDockWidget::tst_duplicateNames()
+{
+    {
+        Tests::EnsureTopLevelsDeleted e;
+        auto registry = DockRegistry::self();
+        QVERIFY(registry->isSane());
+
+        auto dw1 = Config::self().viewFactory()->createDockWidget("dup")->asDockWidgetController();
+        Core::DockWidget *dw2 = nullptr;
+        {
+            SetExpectedWarning sew("already exists");
+            dw2 = Config::self().viewFactory()->createDockWidget("dup")->asDockWidgetController();
+        }
+
+        {
+            SetExpectedWarning sew("dockWidgets with duplicate names");
+            QVERIFY(!registry->isSane());
+        }
+
+        delete dw2;
+        QVERIFY(registry->isSane());
+
+        auto m1 = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "dupmw");
+        std::unique_ptr<Core::MainWindow> m2;
+        {
+            SetExpectedWarning sew("already exists");
+            m2 = Tests::createMainWindow(Size(1000, 1000), MainWindowOption_HasCentralGroup, "dupmw");
+        }
+
+        {
+            SetExpectedWarning sew("mainWindow with duplicate names");
+            QVERIFY(!registry->isSane());
+        }
+
+        m2.reset();
+        QVERIFY(registry->isSane());
+        QCOMPARE(registry->dockWidgetNames(), Vector<QString>({ "dup" }));
+        QCOMPARE(registry->mainWindowsNames(), Vector<QString>({ "dupmw" }));
+
+        m1.reset();
+        delete dw1;
     }
 
     // 1 event loop for DelayedDelete. Avoids LSAN warnings.
