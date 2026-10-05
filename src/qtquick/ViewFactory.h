@@ -56,13 +56,13 @@ class DOCKS_EXPORT ViewFactory : public Core::ViewFactory
 public:
     ViewFactory() = default;
     ~ViewFactory() override;
-    Core::View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = {},
-                                 LayoutSaverOptions layoutSaverOptions = {},
-                                 Qt::WindowFlags windowFlags = {}) const override;
+    Core::View *createDockWidget(const QString &uniqueName, DockWidgetOptions options = { },
+                                 LayoutSaverOptions layoutSaverOptions = { },
+                                 Qt::WindowFlags windowFlags = { }) const override;
     virtual Core::View *createDockWidget(const QString &uniqueName, QQmlEngine *,
-                                         DockWidgetOptions options = {},
-                                         LayoutSaverOptions layoutSaverOptions = {},
-                                         Qt::WindowFlags windowFlags = {}) const;
+                                         DockWidgetOptions options = { },
+                                         LayoutSaverOptions layoutSaverOptions = { },
+                                         Qt::WindowFlags windowFlags = { }) const;
     using Core::ViewFactory::createFloatingWindow;
     using Core::ViewFactory::createGroup;
     using Core::ViewFactory::createTabBar;
@@ -74,7 +74,7 @@ public:
     Core::View *createSeparator(Core::Separator *, Core::View *parent = nullptr) const override;
     Core::View *createFloatingWindow(Core::FloatingWindow *,
                                      Core::MainWindow *parent = nullptr,
-                                     Qt::WindowFlags windowFlags = {}) const override;
+                                     Qt::WindowFlags windowFlags = { }) const override;
     Core::View *createRubberBand(Core::View *parent) const override;
     Core::View *createSideBar(Core::SideBar *, Core::View *parent) const override;
     Core::View *createDropArea(Core::DropArea *, Core::View *parent) const override;

@@ -114,7 +114,7 @@ std::shared_ptr<Core::View> ViewWrapper::create(QObject *widget)
 std::shared_ptr<Core::View> ViewWrapper::create(QWidget *widget)
 {
     if (!widget)
-        return {};
+        return { };
 
     auto wrapper = new ViewWrapper(widget);
     auto sharedptr = std::shared_ptr<View>(wrapper);
@@ -252,7 +252,7 @@ std::shared_ptr<Core::View> ViewWrapper::rootView() const
     if (auto w = m_widget->window())
         return std::shared_ptr<Core::View>(new ViewWrapper(w));
 
-    return {};
+    return { };
 }
 
 std::shared_ptr<Core::View> ViewWrapper::parentView() const
@@ -260,7 +260,7 @@ std::shared_ptr<Core::View> ViewWrapper::parentView() const
     if (auto p = m_widget->parentWidget())
         return std::shared_ptr<Core::View>(new ViewWrapper(p));
 
-    return {};
+    return { };
 }
 
 std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint localPos) const
@@ -268,7 +268,7 @@ std::shared_ptr<Core::View> ViewWrapper::childViewAt(QPoint localPos) const
     if (QWidget *child = m_widget->childAt(localPos))
         return std::shared_ptr<Core::View>(new ViewWrapper(child));
 
-    return {};
+    return { };
 }
 
 void ViewWrapper::grabMouse()

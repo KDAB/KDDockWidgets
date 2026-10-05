@@ -139,7 +139,7 @@ QString TabBar::text(int index) const
     if (QQuickItem *item = tabAt(index))
         return item->property("text").toString();
 
-    return {};
+    return { };
 }
 
 QRect TabBar::rectForTab(int index) const
@@ -147,7 +147,7 @@ QRect TabBar::rectForTab(int index) const
     if (QQuickItem *item = tabAt(index))
         return item->boundingRect().toRect();
 
-    return {};
+    return { };
 }
 
 QRect TabBar::globalRectForTab(int index) const
@@ -158,7 +158,7 @@ QRect TabBar::globalRectForTab(int index) const
         return r;
     }
 
-    return {};
+    return { };
 }
 
 bool TabBar::event(QEvent *ev)
@@ -357,14 +357,14 @@ QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
     if (row < 0 || row >= d->m_dockWidgets.size())
-        return {};
+        return { };
 
     if (role == Role_Title) {
         Core::DockWidget *dw = d->m_dockWidgets.at(row);
         return dw->title();
     }
 
-    return {};
+    return { };
 }
 
 Core::DockWidget *DockWidgetModel::dockWidgetAt(int index) const

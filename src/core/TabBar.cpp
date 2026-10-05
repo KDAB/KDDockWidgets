@@ -190,16 +190,16 @@ std::unique_ptr<WindowBeingDragged> Core::TabBar::makeWindow()
         if (dock && hasSingleDockWidget() && alwaysShowTabs) {
             // Case #3. window with title bar and single tab, no detaching should happen, just use
             // the title bar.
-            return {};
+            return { };
         }
     }
 
     if (!dock)
-        return {};
+        return { };
 
     FloatingWindow *floatingWindow = group()->detachTab(dock);
     if (!floatingWindow)
-        return {};
+        return { };
 
     auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable *>(floatingWindow)
                                                          : static_cast<Draggable *>(this);
@@ -289,7 +289,7 @@ QString Core::TabBar::text(int index) const
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         return tvi->text(index);
 
-    return {};
+    return { };
 }
 
 Rect Core::TabBar::rectForTab(int index) const
@@ -297,7 +297,7 @@ Rect Core::TabBar::rectForTab(int index) const
     if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
         return tvi->rectForTab(index);
 
-    return {};
+    return { };
 }
 
 DockWidget *TabBar::currentDockWidget() const

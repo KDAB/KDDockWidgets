@@ -66,7 +66,7 @@ void TestDocks::tst_startHidden()
     // A really simple test for InitialVisibilityOption::StartHidden
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {},
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), { }, { },
                                   /*show=*/false);
     m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     delete dock1;
@@ -77,10 +77,10 @@ void TestDocks::tst_startHidden2()
     EnsureTopLevelsDeleted e;
     {
         auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
-                                      {}, false);
-        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
-                                      {}, false);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), { },
+                                      { }, false);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), { },
+                                      { }, false);
 
         auto dropArea = m->dropArea();
         Core::DropArea *layout = dropArea;

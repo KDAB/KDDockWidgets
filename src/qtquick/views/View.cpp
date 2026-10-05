@@ -110,7 +110,7 @@ public:
     static QHash<QObject *, MouseEventRedirector *> s_mouseEventRedirectors;
 };
 
-QHash<QObject *, MouseEventRedirector *> MouseEventRedirector::s_mouseEventRedirectors = {};
+QHash<QObject *, MouseEventRedirector *> MouseEventRedirector::s_mouseEventRedirectors = { };
 
 MouseEventRedirector::~MouseEventRedirector()
 {
@@ -642,7 +642,7 @@ QPoint View::mapFromGlobal(QPoint globalPt) const
 QPoint View::mapTo(Core::View *parent, QPoint pos) const
 {
     if (!parent)
-        return {};
+        return { };
 
     auto parentItem = asQQuickItem(parent);
     return parentItem->mapFromGlobal(QQuickItem::mapToGlobal(pos)).toPoint();
@@ -727,7 +727,7 @@ std::shared_ptr<Core::Window> View::window() const
         return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
-    return {};
+    return { };
 }
 
 std::shared_ptr<Core::View> View::childViewAt(QPoint localPos) const

@@ -185,7 +185,7 @@ Size View::screenSize() const
     if (auto screen = d->screen())
         return screen->size();
 
-    return {};
+    return { };
 }
 
 Controller *View::controller() const
@@ -322,7 +322,7 @@ Size View::Private::parentSize() const
 {
     if (auto p = q->parentView())
         return p->size();
-    return {};
+    return { };
 }
 
 Rect View::Private::windowGeometry() const
@@ -330,7 +330,7 @@ Rect View::Private::windowGeometry() const
     if (Core::Window::Ptr window = q->window())
         return window->geometry();
 
-    return {};
+    return { };
 }
 
 void View::Private::closeRootView()
@@ -425,7 +425,7 @@ std::shared_ptr<Core::Window> View::Private::transientWindow() const
     if (auto w = q->window())
         return w->transientParent();
 
-    return {};
+    return { };
 }
 
 bool View::onResize(int w, int h)

@@ -151,7 +151,7 @@ MainWindow::MainWindow(const QString &uniqueName, MainWindowOptions options,
 
     // Disable QWidgetAnimator. We don't use QDockWidget, but QWidgetAnimator will appear in stack traces
     // which is unneeded.
-    QMainWindow::setDockOptions({});
+    QMainWindow::setDockOptions({ });
 
     m_mainWindow->init(uniqueName);
 
@@ -276,7 +276,7 @@ bool MainWindow::restoreDockWidget_legacy(QDockWidget *dockwidget)
         return QMainWindow::restoreDockWidget(dockwidget);
     } else {
         qFatal("MainWindow::restoreDockWidget_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
-        return {};
+        return { };
     }
 }
 
@@ -295,7 +295,7 @@ Qt::DockWidgetArea MainWindow::dockWidgetArea_legacy(QDockWidget *dockwidget) co
         return QMainWindow::dockWidgetArea(dockwidget);
     } else {
         qFatal("MainWindow::dockWidgetArea_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
-        return {};
+        return { };
     }
 }
 
@@ -324,7 +324,7 @@ QList<QDockWidget *> MainWindow::tabifiedDockWidgets_legacy(QDockWidget *dockwid
         return QMainWindow::tabifiedDockWidgets(dockwidget);
     } else {
         qFatal("MainWindow::tabifiedDockWidgets_legacy: Legacy QDockWidgets are not supported without MainWindowOption_QDockWidgets");
-        return {};
+        return { };
     }
 }
 

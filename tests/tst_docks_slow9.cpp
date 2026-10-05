@@ -119,9 +119,9 @@ void TestDocks::tst_addToSmallMainWindow4()
 
     auto dropArea = m->dropArea();
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
+        "dock1", Platform::instance()->tests_createView({ true, { }, Size(50, 50) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, Size(50, 50) }));
+        "dock2", Platform::instance()->tests_createView({ true, { }, Size(50, 50) }));
     Core::DropArea *layout = dropArea;
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
     WAIT_FOR_RESIZE(m->view());
@@ -142,11 +142,11 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     auto m = createMainWindow(Size(500, 500), MainWindowOption_None);
     const int minHeight = 400;
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
+        "dock1", Platform::instance()->tests_createView({ true, { }, Size(400, minHeight) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
+        "dock2", Platform::instance()->tests_createView({ true, { }, Size(400, minHeight) }));
     auto dock3 = createDockWidget(
-        "dock3", Platform::instance()->tests_createView({ true, {}, Size(400, minHeight) }));
+        "dock3", Platform::instance()->tests_createView({ true, { }, Size(400, minHeight) }));
     auto dropArea = m->dropArea();
     Core::DropArea *layout = dropArea;
 

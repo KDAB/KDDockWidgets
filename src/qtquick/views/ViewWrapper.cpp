@@ -164,7 +164,7 @@ std::shared_ptr<Core::Window> ViewWrapper::window() const
         return std::shared_ptr<Core::Window>(windowqtquick);
     }
 
-    return {};
+    return { };
 }
 
 bool ViewWrapper::isRootView() const
@@ -310,7 +310,7 @@ std::shared_ptr<Core::View> ViewWrapper::rootView() const
         return window->rootView();
 
     qWarning() << Q_FUNC_INFO << "No window present";
-    return {};
+    return { };
 }
 
 std::shared_ptr<Core::View> ViewWrapper::parentView() const
@@ -378,7 +378,7 @@ void ViewWrapper::setWindowTitle(const QString &title)
 QPoint ViewWrapper::mapTo(View *parent, QPoint pos) const
 {
     if (!parent)
-        return {};
+        return { };
 
     auto parentItem = asQQuickItem(parent);
     return parentItem->mapFromGlobal(m_item->mapToGlobal(pos)).toPoint();
@@ -466,7 +466,7 @@ std::shared_ptr<Core::View> ViewWrapper::create(QObject *item)
 std::shared_ptr<Core::View> ViewWrapper::create(QQuickItem *item)
 {
     if (!item)
-        return {};
+        return { };
 
     auto wrapper = new ViewWrapper(item);
     auto sharedptr = std::shared_ptr<View>(wrapper);

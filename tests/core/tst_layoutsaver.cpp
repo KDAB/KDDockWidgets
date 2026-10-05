@@ -223,7 +223,7 @@ void TestLayoutSaver::tst_userData()
     LayoutSaver saver;
     const QByteArray serialized = saver.serializeLayout();
 
-    dw1->setUserData({});
+    dw1->setUserData({ });
     QVERIFY(dw1->userData().isEmpty());
     QVERIFY(saver.restoreLayout(serialized));
 
