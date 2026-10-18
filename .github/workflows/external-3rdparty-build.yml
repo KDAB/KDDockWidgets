@@ -52,3 +52,48 @@ jobs:
 
       - name: Run tests on macOS
         run: ctest --test-dir ./build-dev --verbose -j 4
+
+  # A static KDDW exports its PRIVATE deps in the link interface, so consumers
+  # must not end up with targets that KDDockWidgetsConfig.cmake doesn't find
+  static-install:
+    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-external-3rdparty-build]')"
+    runs-on: macos-15
+    steps:
+      - name: Install Qt 6.7.2
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: 6.7.2
+          cache: true
+
+      - name: Fix CMake # otherwise: Error: cmake is already installed from local/pinned!
+        run: brew uninstall cmake || true
+
+      - name: Install Dependencies
+        run: |
+          brew install nlohmann-json ninja
+          brew tap KDAB/tap
+          brew trust kdab/tap
+          brew install KDBindings
+
+      - name: Checkout sources
+        uses: actions/checkout@v7
+
+      # deleting 3rdparty is an easy way to make sure external worked
+      - name: Delete internal 3rdparty
+        run: |
+          rm -rf src/3rdparty/nlohmann/
+          rm -rf src/3rdparty/kdbindings/
+
+      - name: Configure
+        run: cmake -S . -B ./build-static -G Ninja -DCMAKE_BUILD_TYPE=Release -DKDDockWidgets_QT6=ON -DKDDockWidgets_STATIC=ON -DKDDockWidgets_FRONTENDS=qtwidgets -DKDDockWidgets_EXAMPLES=OFF -DKDDockWidgets_NO_SPDLOG=ON -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/
+
+      - name: Build
+        run: cmake --build ./build-static
+
+      - name: Install
+        run: cmake --install ./build-static
+
+      - name: Build an example against the installed KDDW
+        run: |
+          cmake -G Ninja -S examples/minimal/ -B examples/minimal/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+          cmake --build examples/minimal/b
