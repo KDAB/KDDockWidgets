@@ -91,7 +91,7 @@ set(KDDockWidgets_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(KDDockWidgets_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 
 # set(PROJECT_VERSION ${KDDockWidgets_VERSION})
-set(KDDockWidgets_SOVERSION "3")
+set(KDDockWidgets_SOVERSION "4")
 
 include(FeatureSummary)
 
