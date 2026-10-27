@@ -363,6 +363,12 @@ bool TabBar::isMovingTab() const
     return d->m_isMovingTab;
 }
 
+void TabBar::resetTabDragState()
+{
+    if (auto tvi = dynamic_cast<Core::TabBarViewInterface *>(view()))
+        tvi->resetTabDragState();
+}
+
 TabBar::Private *TabBar::dptr() const
 {
     return d;

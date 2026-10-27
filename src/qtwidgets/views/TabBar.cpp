@@ -25,6 +25,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <QProxyStyle>
+#include <QResizeEvent>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtWidgets;
@@ -217,6 +218,17 @@ void TabBar::insertDockWidget(int index, Core::DockWidget *dw, const QIcon &icon
 {
     auto tabWidget = static_cast<QTabWidget *>(View_qt::asQWidget(m_tabBar->stack()));
     tabWidget->insertTab(index, View_qt::asQWidget(dw), icon, title);
+}
+
+void TabBar::resetTabDragState()
+{
+    QMouseEvent moveEvent(QEvent::MouseMove, QPointF(), QPointF(), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    QTabBar::mouseMoveEvent(&moveEvent);
+
+    QResizeEvent resizeEv(size(), size());
+    resizeEvent(&resizeEv);
+
+    update();
 }
 
 void TabBar::setTabsAreMovable(bool are)

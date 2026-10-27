@@ -37,6 +37,11 @@ public:
     /// Currently only the QtWidgets frontend supports it
     virtual void setTabsAreMovable(bool);
 
+    /// @brief Resets any ongoing tab drag or reordering visual state
+    virtual void resetTabDragState()
+    {
+    }
+
     /// @brief Returns the tab text for the specified index
     /// This is only used by tests, to make sure your tab's text is correct
     virtual QString text(int index) const = 0;

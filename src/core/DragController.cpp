@@ -26,6 +26,7 @@
 #include "core/FloatingWindow.h"
 #include "core/DockWidget_p.h"
 #include "core/ScopedValueRollback_p.h"
+#include "core/TabBar.h"
 
 #include "../qtcommon/DragControllerWayland_p.h"
 #ifdef KDDW_FRONTEND_QTWIDGETS
@@ -168,6 +169,10 @@ StateNone::StateNone(DragController *parent)
 void StateNone::onEntry()
 {
     KDDW_DEBUG("StateNone entered");
+    if (q->m_windowBeingDragged && q->m_draggableGuard) {
+        if (auto tb = dynamic_cast<TabBar *>(q->m_draggable))
+            tb->resetTabDragState();
+    }
     q->m_pressPos = Point();
     q->m_offset = Point();
     q->m_draggable = nullptr;
