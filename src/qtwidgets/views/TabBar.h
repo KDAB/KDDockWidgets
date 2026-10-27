@@ -54,6 +54,7 @@ public:
                           const QString &title) override;
     QTabWidget *tabWidget() const;
     void setTabsAreMovable(bool) override;
+    void resetTabDragState() override;
 
 Q_SIGNALS:
     void dockWidgetInserted(int index);

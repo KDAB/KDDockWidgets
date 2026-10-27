@@ -87,6 +87,9 @@ public:
     /// Returns whether we're inside Core::TabBar::moveTab()
     bool isMovingTab() const;
 
+    /// Resets any ongoing tab drag / slide state back to natural layout
+    void resetTabDragState();
+
     class Private;
     Private *dptr() const;
 
