@@ -24,8 +24,12 @@
 #include "core/Stack.h"
 #include "core/TabBar.h"
 #include "core/TitleBar.h"
+#include "qtcommon/View.h"
 
+#include <QTabBar>
 #include <QTest>
+
+#include <algorithm>
 
 #include <memory>
 
@@ -33,6 +37,20 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Core;
 using namespace KDDockWidgets::Tests;
 using namespace KDDockWidgets::Tests::Wayland;
+
+namespace {
+
+/// Returns whether QTabBar is showing the floating copy of a tab it shows while reordering.
+/// It's a QMovableTabWidget, which has no Q_OBJECT, so look for a plain QWidget child.
+bool isShowingMovingTab(QTabBar *tabBar)
+{
+    const auto children = tabBar->findChildren<QWidget *>(Qt::FindDirectChildrenOnly);
+    return std::any_of(children.cbegin(), children.cend(), [](QWidget *child) {
+        return child->metaObject() == &QWidget::staticMetaObject && child->isVisible();
+    });
+}
+
+}
 
 class TestWayland : public QObject
 {
@@ -44,6 +62,7 @@ private Q_SLOTS:
     void tst_dragDockWidgetOntoAnother();
     void tst_doubleClickTabDetaches();
     void tst_dragTabToEmptySpaceKeepsItDocked();
+    void tst_cancelledTabReorderDragResetsTabBar();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -152,6 +171,52 @@ void TestWayland::tst_dragTabToEmptySpaceKeepsItDocked()
     QVERIFY(!dock2->isFloating());
     QCOMPARE(dock2->dptr()->group(), group);
     QCOMPARE(group->dockWidgetCount(), 2);
+}
+
+void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
+{
+    // Regression test for #762: dragging a tab sideways reorders it within QTabBar, and once past
+    // the last tab KDDW starts its drag too. QTabBar never gets the mouse release, which the drag's
+    // nested event loop consumes, so after a cancelled drag it stays stuck mid-reorder.
+
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::self().flags() | Config::Flag_AllowReorderTabs);
+
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(waitForMapped(m->view()));
+
+    Group *group = dock1->dptr()->group();
+    TabBar *tabBar = group->stack()->tabBar();
+    auto qtabBar = qobject_cast<QTabBar *>(QtCommon::View_qt::asQWidget(tabBar->view()));
+    if (!qtabBar)
+        QSKIP("Only for the QtWidgets frontend");
+    QVERIFY(!isShowingMovingTab(qtabBar));
+
+    // Drag the first tab right, along the tab bar and past the last tab
+    const Point start = tabBar->rectForTab(0).center();
+    const Point end(tabBar->rectForTab(1).right() + 50, start.y());
+    m_input->moveTo(tabBar->view(), start);
+    m_input->press();
+    constexpr int steps = 20;
+    for (int i = 1; i <= steps; ++i)
+        m_input->moveTo(tabBar->view(), start + (end - start) * i / steps);
+    m_input->wait_for_drag_start(/*timeout_msecs=*/5000);
+
+    // Release over no window, which cancels the drag
+    m_input->moveToAbsolute(Point(1500, 900));
+    m_input->release();
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_VERIFY(!DragController::instance()->isDragging());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(group->dockWidgetCount(), 2);
+
+    QEXPECT_FAIL("", "#762: QTabBar is left mid-reorder. Fixed by PR #763", Continue);
+    QVERIFY(!isShowingMovingTab(qtabBar));
 }
 
 #define KDDW_TEST_NAME TestWayland
