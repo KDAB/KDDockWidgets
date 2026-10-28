@@ -254,6 +254,7 @@
       "binaryDir": "${sourceDir}/build-dev",
       "cacheVariables": {
         "KDDockWidgets_QT6": "ON",
+        "KDDockWidgets_WAYLAND_TESTS": "ON",
         "CMAKE_PREFIX_PATH": "$env{QT6_DIR}"
       },
       "inherits": [
