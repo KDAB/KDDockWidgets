@@ -154,6 +154,10 @@ if(KDDW_FRONTEND_QT)
     # Check if includes are installed
     add_subdirectory(includes_test)
 
+    if(KDDockWidgets_WAYLAND_TESTS)
+        add_subdirectory(wayland)
+    endif()
+
 endif()
 
 # qml.exe standalone test

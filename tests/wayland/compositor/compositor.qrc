@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/kddw_test_compositor">
+        <file>main.qml</file>
+    </qresource>
+</RCC>
