@@ -299,6 +299,13 @@ if(KDDockWidgets_WAYLAND_TESTS)
     if(NOT KDDW_FRONTEND_QTWIDGETS)
         message(FATAL_ERROR "Wayland tests require QtWidgets")
     endif()
+
+    if(NOT QT_VERSION_MAJOR EQUAL 6)
+        message(FATAL_ERROR "Wayland tests require Qt6")
+    endif()
+
+    # The test compositor needs PRIVATE_CODE support in the Wayland scanner macros
+    find_package(Qt6 6.8 NO_MODULE REQUIRED COMPONENTS WaylandCompositor)
 endif()
 
 set(${PROJECT_NAME}_LIBRARY_QTID "")
