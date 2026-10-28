@@ -31,11 +31,10 @@ kddw_link_to_kdbindings(tst_wayland)
 kddw_add_nlohmann(tst_wayland)
 set_compiler_flags(tst_wayland)
 
-# Only the QtWidgets frontend is supported for now
 add_test(NAME tst_wayland COMMAND kddw_test_compositor -- $<TARGET_FILE:tst_wayland>)
 
 # For the message telling how to run it, when it's not run through the compositor
 target_compile_definitions(
     tst_wayland PRIVATE KDDW_BUILD_DIR="${CMAKE_BINARY_DIR}" KDDW_TEST_COMPOSITOR="$<TARGET_FILE:kddw_test_compositor>"
 )
-set_tests_properties(tst_wayland PROPERTIES LABELS wayland ENVIRONMENT "KDDW_TEST_FRONTEND=1")
+set_tests_properties(tst_wayland PROPERTIES LABELS wayland)

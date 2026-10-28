@@ -14,6 +14,9 @@
 
 #include "WaylandTestUtils.h"
 #include "../utils.h"
+#ifdef KDDW_HAS_SPDLOG
+#include "../fatal_logger.h"
+#endif
 
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
@@ -74,7 +77,7 @@ void TestWayland::initTestCase()
         const QString message =
             QStringLiteral("tst_wayland needs to run inside kddw_test_compositor. Run it with either:\n"
                            "    ctest --test-dir %1 -L wayland\n"
-                           "    KDDW_TEST_FRONTEND=1 %2 [--visible] [--step-delay <msecs>] -- %3")
+                           "    %2 [--visible] [--step-delay <msecs>] -- %3")
                 .arg(QStringLiteral(KDDW_BUILD_DIR), QStringLiteral(KDDW_TEST_COMPOSITOR),
                      QCoreApplication::applicationFilePath());
         QFAIL(qPrintable(message));
@@ -219,7 +222,19 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
     QVERIFY(!isShowingMovingTab(qtabBar));
 }
 
-#define KDDW_TEST_NAME TestWayland
-#include "../test_main_qt.h"
+int main(int argc, char *argv[])
+{
+#ifdef KDDW_HAS_SPDLOG
+    FatalLogger::create();
+#endif
+
+    // Unlike the other tests, which run for every frontend, only QtWidgets is supported for now
+    Platform::tests_initPlatform(argc, argv, FrontendType::QtWidgets);
+    TestWayland test;
+    const int exitCode = QTest::qExec(&test, argc, argv);
+    Platform::tests_deinitPlatform();
+
+    return exitCode;
+}
 
 #include "tst_wayland.moc"
