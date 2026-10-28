@@ -41,9 +41,17 @@ public:
     /// Moves the pointer to @p localPos, relative to @p view
     void moveTo(Core::View *view, Point localPos);
 
+    /// Moves the pointer to @p pos in the compositor's output coordinates, for example to get
+    /// outside of every window
+    void moveToAbsolute(Point pos);
+
     void press();
     void release();
     void doubleClick();
+
+    /// Presses on @p source at @p pos and moves down until a drag starts.
+    /// Only queues the actions, see commitAndWait().
+    void startDrag(Core::View *source, Point pos);
 
     /// Drags @p source by @p sourcePos and drops it over @p dest at @p destPos.
     /// Positions are relative to each view. Only queues the actions, see commitAndWait().
