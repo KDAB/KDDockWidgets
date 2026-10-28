@@ -425,7 +425,7 @@ macro(set_compiler_flags targetName)
         )
 
         if(NOT WIN32 AND NOT APPLE)
-            target_compile_options(${targetName} PRIVATE -Wall -Wextra -Woverloaded-virtual)
+            target_compile_options(${targetName} PRIVATE -Wall -Wextra $<$<COMPILE_LANGUAGE:CXX>:-Woverloaded-virtual>)
             if(KDDockWidgets_USE_LINKER)
                 target_link_options(${targetName} PRIVATE -fuse-ld=${KDDockWidgets_USE_LINKER})
             elseif(KDDockWidgets_USE_LLD)
