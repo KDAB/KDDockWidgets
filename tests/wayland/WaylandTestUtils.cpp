@@ -85,6 +85,11 @@ void TestInput::moveTo(Core::View *view, Point localPos)
     pointer_move(surfaceFor(view), fixed(pos.x()), fixed(pos.y()));
 }
 
+void TestInput::moveToAbsolute(Point pos)
+{
+    pointer_move_absolute(fixed(pos.x()), fixed(pos.y()));
+}
+
 void TestInput::press()
 {
     pointer_button(BTN_LEFT, button_state_pressed);
@@ -103,16 +108,21 @@ void TestInput::doubleClick()
     }
 }
 
-void TestInput::drag(Core::View *source, Point sourcePos, Core::View *dest, Point destPos)
+void TestInput::startDrag(Core::View *source, Point pos)
 {
-    moveTo(source, sourcePos);
+    moveTo(source, pos);
     press();
 
     // Move past the drag threshold, in small steps like a real mouse would
     for (int i = 1; i <= 10; ++i)
-        moveTo(source, sourcePos + Point(0, 4 * i));
+        moveTo(source, pos + Point(0, 4 * i));
 
     wait_for_drag_start(/*timeout_msecs=*/5000);
+}
+
+void TestInput::drag(Core::View *source, Point sourcePos, Core::View *dest, Point destPos)
+{
+    startDrag(source, sourcePos);
 
     // The pointer can't move smoothly between different windows, as we don't know where they
     // are. Within the same window it can.

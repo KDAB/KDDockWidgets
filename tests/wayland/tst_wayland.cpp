@@ -17,6 +17,7 @@
 
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
+#include "core/DragController_p.h"
 #include "core/Group.h"
 #include "core/MainWindow.h"
 #include "core/Platform.h"
@@ -42,6 +43,7 @@ private Q_SLOTS:
 
     void tst_dragDockWidgetOntoAnother();
     void tst_doubleClickTabDetaches();
+    void tst_dragTabToEmptySpaceKeepsItDocked();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -120,6 +122,36 @@ void TestWayland::tst_doubleClickTabDetaches()
     QVERIFY(!dock1->isFloating());
     QVERIFY(!dock1->isTabbed());
     QVERIFY(dock1->isInMainWindow());
+}
+
+void TestWayland::tst_dragTabToEmptySpaceKeepsItDocked()
+{
+    // Releasing a drag over no window makes the compositor cancel it, so the tab stays put
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(waitForMapped(m->view()));
+
+    int numCanceled = 0;
+    KDBindings::ScopedConnection connection =
+        DragController::instance()->dragCanceled.connect([&numCanceled] { ++numCanceled; });
+
+    Group *group = dock2->dptr()->group();
+    TabBar *tabBar = group->stack()->tabBar();
+    m_input->startDrag(tabBar->view(), tabBar->rectForTab(tabBar->indexOfDockWidget(dock2)).center());
+    m_input->moveToAbsolute(Point(1500, 900)); // The main window is at 0,0 and 800x500
+    m_input->release();
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_COMPARE(numCanceled, 1);
+    QVERIFY(!DragController::instance()->isDragging());
+    QVERIFY(!dock2->isFloating());
+    QCOMPARE(dock2->dptr()->group(), group);
+    QCOMPARE(group->dockWidgetCount(), 2);
 }
 
 #define KDDW_TEST_NAME TestWayland
