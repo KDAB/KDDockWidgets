@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="kddw_test_v1">
+  <copyright>
+    This file is part of KDDockWidgets.
+
+    SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company &lt;info@kdab.com&gt;
+    Author: Sérgio Martins &lt;sergio.martins@kdab.com&gt;
+
+    SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+    Contact KDAB at &lt;info@kdab.com&gt; for commercial licensing options.
+  </copyright>
+
+  <interface name="kddw_test_v1" version="1">
+    <description summary="drive input from KDDockWidgets' Wayland tests">
+      Private protocol implemented by kddw_test_compositor, so tests can inject
+      pointer and keyboard input that the compositor then delivers through the
+      regular wl_pointer, wl_keyboard and wl_data_device paths.
+
+      All requests except commit and destroy are queued. commit plays the
+      queued actions back in order, without blocking the client, which may be
+      inside a nested event loop such as QDrag::exec() while they run. The
+      done event is sent once the whole batch has run, or as soon as one
+      action fails.
+    </description>
+
+    <enum name="button_state">
+      <entry name="released" value="0"/>
+      <entry name="pressed" value="1"/>
+    </enum>
+
+    <enum name="key_state">
+      <entry name="released" value="0"/>
+      <entry name="pressed" value="1"/>
+    </enum>
+
+    <enum name="result">
+      <entry name="ok" value="0"/>
+      <entry name="error" value="1"/>
+    </enum>
+
+    <request name="destroy" type="destructor"/>
+
+    <request name="pointer_move">
+      <description summary="move the pointer to a surface-local position">
+        The position is relative to the surface's top-left corner, so tests
+        don't need to know where the compositor placed their windows.
+      </description>
+      <arg name="surface" type="object" interface="wl_surface"/>
+      <arg name="x" type="fixed"/>
+      <arg name="y" type="fixed"/>
+    </request>
+
+    <request name="pointer_move_absolute">
+      <description summary="move the pointer to a position in output coordinates">
+        Useful to move outside of any surface, for example to release a drag
+        over empty space.
+      </description>
+      <arg name="x" type="fixed"/>
+      <arg name="y" type="fixed"/>
+    </request>
+
+    <request name="pointer_button">
+      <arg name="button" type="uint" summary="Linux evdev button code, such as BTN_LEFT"/>
+      <arg name="state" type="uint" enum="button_state"/>
+    </request>
+
+    <request name="key">
+      <description summary="send a key to the surface that has keyboard focus">
+        Pressing a pointer button over a surface gives it keyboard focus.
+      </description>
+      <arg name="key" type="uint" summary="Linux evdev key code, such as KEY_ESC"/>
+      <arg name="state" type="uint" enum="key_state"/>
+    </request>
+
+    <request name="set_window_position">
+      <description summary="place a toplevel at a position in output coordinates"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+    </request>
+
+    <request name="wait">
+      <arg name="msecs" type="uint"/>
+    </request>
+
+    <request name="wait_for_drag_start">
+      <description summary="wait until a client starts a drag">
+        Waits for a drag started after the last pointer button press. Fails
+        if none starts within timeout_msecs.
+      </description>
+      <arg name="timeout_msecs" type="uint"/>
+    </request>
+
+    <request name="cancel_drag">
+      <description summary="cancel the drag in progress">
+        Makes the drag source receive wl_data_source.cancelled without
+        releasing the button, like pressing Escape on a desktop compositor.
+        Releasing the button over no surface cancels the drag too.
+      </description>
+    </request>
+
+    <request name="screenshot">
+      <description summary="save what the compositor is showing to an image file"/>
+      <arg name="filename" type="string"/>
+    </request>
+
+    <request name="commit">
+      <description summary="play back the queued actions"/>
+      <arg name="serial" type="uint" summary="echoed back in the done event"/>
+    </request>
+
+    <event name="done">
+      <arg name="serial" type="uint"/>
+      <arg name="result" type="uint" enum="result"/>
+      <arg name="message" type="string" summary="empty on success, the reason on error"/>
+    </event>
+  </interface>
+</protocol>
