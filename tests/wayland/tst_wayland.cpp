@@ -20,6 +20,8 @@
 #include "core/Group.h"
 #include "core/MainWindow.h"
 #include "core/Platform.h"
+#include "core/Stack.h"
+#include "core/TabBar.h"
 #include "core/TitleBar.h"
 
 #include <QTest>
@@ -39,6 +41,7 @@ private Q_SLOTS:
     void cleanupTestCase();
 
     void tst_dragDockWidgetOntoAnother();
+    void tst_doubleClickTabDetaches();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -70,6 +73,7 @@ void TestWayland::tst_dragDockWidgetOntoAnother()
 {
     // Drags dock1 by its title bar and drops it onto the center of dock2, so they get tabbed
 
+    EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
@@ -91,6 +95,31 @@ void TestWayland::tst_dragDockWidgetOntoAnother()
     QVERIFY(dock1->isTabbed());
     QVERIFY(dock2->isTabbed());
     QVERIFY(!dock1->isFloating());
+}
+
+void TestWayland::tst_doubleClickTabDetaches()
+{
+    // On Wayland, dragging a tab out to empty space doesn't detach it, as the compositor cancels
+    // drags that aren't dropped onto a window. Double-clicking the tab detaches it instead.
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(waitForMapped(m->view()));
+    QVERIFY(dock2->isTabbed());
+
+    TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
+    m_input->moveTo(tabBar->view(), tabBar->rectForTab(tabBar->indexOfDockWidget(dock2)).center());
+    m_input->doubleClick();
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_VERIFY(dock2->isFloating());
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(dock1->isInMainWindow());
 }
 
 #define KDDW_TEST_NAME TestWayland

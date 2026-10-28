@@ -43,6 +43,7 @@ public:
 
     void press();
     void release();
+    void doubleClick();
 
     /// Drags @p source by @p sourcePos and drops it over @p dest at @p destPos.
     /// Positions are relative to each view. Only queues the actions, see commitAndWait().

@@ -95,6 +95,14 @@ void TestInput::release()
     pointer_button(BTN_LEFT, button_state_released);
 }
 
+void TestInput::doubleClick()
+{
+    for (int i = 0; i < 2; ++i) {
+        press();
+        release();
+    }
+}
+
 void TestInput::drag(Core::View *source, Point sourcePos, Core::View *dest, Point destPos)
 {
     moveTo(source, sourcePos);
