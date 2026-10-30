@@ -1,3 +1,7 @@
+* v2.6.0
+  - qtwidgets: Reset tab to natural position on drag completion
+  - Bump SO version since added new virtual methods
+
 * v2.5.1
   - For packagers:
     - Library soname bump (2.5.0 has an ABI break #760)
