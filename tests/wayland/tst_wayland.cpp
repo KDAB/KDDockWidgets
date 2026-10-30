@@ -218,7 +218,6 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
     QVERIFY(!dock1->isFloating());
     QCOMPARE(group->dockWidgetCount(), 2);
 
-    QEXPECT_FAIL("", "#762: QTabBar is left mid-reorder. Fixed by PR #763", Continue);
     QVERIFY(!isShowingMovingTab(qtabBar));
 }
 
