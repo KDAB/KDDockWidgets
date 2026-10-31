@@ -149,6 +149,8 @@ bool TabBar::event(QEvent *ev)
         parent->setFocusProxy(this);
     } else if (ev->type() == QEvent::Hide) {
         parent->setFocusProxy(nullptr);
+    } else if (ev->type() == QEvent::WindowDeactivate || ev->type() == QEvent::FocusOut) {
+        resetTabDragState();
     }
 
     return result;
