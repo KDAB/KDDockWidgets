@@ -130,7 +130,7 @@ void TestExtension::kddw_test_v1_pointer_move(Resource *resource, struct ::wl_re
         }
 
         movePointerTo(item->mapToScene(item->mapFromSurface(localPos)));
-        done({});
+        done({ });
     });
 }
 
@@ -139,7 +139,7 @@ void TestExtension::kddw_test_v1_pointer_move_absolute(Resource *resource, wl_fi
     const QPointF pos(wl_fixed_to_double(x), wl_fixed_to_double(y));
     enqueue(resource, [this, pos](const Done &done) {
         movePointerTo(pos);
-        done({});
+        done({ });
     });
 }
 
@@ -156,14 +156,14 @@ void TestExtension::kddw_test_v1_pointer_button(Resource *resource, uint32_t but
         if (state == button_state_pressed) {
             qCDebug(lcTestCompositor) << "Press" << qtbutton << "at" << pos;
             m_dragsStartedAtLastPress = m_dragsStarted;
-            QTest::mousePress(m_window, qtbutton, {}, pos);
+            QTest::mousePress(m_window, qtbutton, { }, pos);
         } else {
             qCDebug(lcTestCompositor) << "Release" << qtbutton << "at" << pos;
-            QTest::mouseRelease(m_window, qtbutton, {}, pos);
+            QTest::mouseRelease(m_window, qtbutton, { }, pos);
             m_dragInProgress = false; // Releasing drops or cancels it
         }
 
-        done({});
+        done({ });
     });
 }
 
@@ -185,7 +185,7 @@ void TestExtension::kddw_test_v1_key(Resource *resource, uint32_t key, uint32_t 
         QKeyEvent ev(pressed ? QEvent::KeyPress : QEvent::KeyRelease, modifier.key,
                      m_keyboardModifiers, key + XkbKeycodeOffset, 0, 0);
         seat->sendFullKeyEvent(&ev);
-        done({});
+        done({ });
     });
 }
 
@@ -202,14 +202,14 @@ void TestExtension::kddw_test_v1_set_window_position(Resource *resource, struct 
         }
 
         item->moveItem()->setPosition(QPointF(x, y));
-        done({});
+        done({ });
     });
 }
 
 void TestExtension::kddw_test_v1_wait(Resource *resource, uint32_t msecs)
 {
     enqueue(resource, [this, msecs](const Done &done) {
-        QTimer::singleShot(int(msecs), this, [done] { done({}); });
+        QTimer::singleShot(int(msecs), this, [done] { done({ }); });
     });
 }
 
@@ -223,7 +223,7 @@ void TestExtension::kddw_test_v1_wait_for_drag_start(Resource *resource, uint32_
         *poll = [this, timeout_msecs, done, elapsed, poll] {
             if (m_dragsStarted > m_dragsStartedAtLastPress) {
                 m_dragsStartedAtLastPress = m_dragsStarted;
-                done({});
+                done({ });
                 *poll = nullptr; // break the reference cycle
             } else if (elapsed->elapsed() > timeout_msecs) {
                 done(QStringLiteral("wait_for_drag_start: no drag started within %1ms").arg(timeout_msecs));
@@ -240,7 +240,7 @@ void TestExtension::kddw_test_v1_cancel_drag(Resource *resource)
 {
     enqueue(resource, [this](const Done &done) {
         m_compositor->defaultSeat()->drag()->cancelDrag();
-        done({});
+        done({ });
     });
 }
 
@@ -248,7 +248,7 @@ void TestExtension::kddw_test_v1_screenshot(Resource *resource, const QString &f
 {
     enqueue(resource, [this, filename](const Done &done) {
         if (m_window->grabWindow().save(filename))
-            done({});
+            done({ });
         else
             done(QStringLiteral("screenshot: failed to save %1").arg(filename));
     });
@@ -281,7 +281,7 @@ void TestExtension::runNextBatch()
 void TestExtension::runNextAction()
 {
     if (m_currentBatch.actions.isEmpty()) {
-        finishBatch({});
+        finishBatch({ });
         return;
     }
 
@@ -304,7 +304,7 @@ void TestExtension::finishBatch(const QString &error)
         send_done(m_currentBatch.resource->handle, m_currentBatch.serial,
                   error.isEmpty() ? result_ok : result_error, error);
 
-    m_currentBatch = {};
+    m_currentBatch = { };
 
     // Don't recurse, the next batch might be queued by a client reacting to this done event
     QTimer::singleShot(0, this, &TestExtension::runNextBatch);
@@ -340,5 +340,5 @@ void TestExtension::movePointerTo(QPointF scenePos)
     auto output = static_cast<QWaylandQuickOutput *>(m_compositor->defaultOutput());
     auto item = qobject_cast<QWaylandQuickItem *>(output->pickClickableItem(scenePos));
     if (!item || !item->surface())
-        m_compositor->defaultSeat()->drag()->dragMove(nullptr, {});
+        m_compositor->defaultSeat()->drag()->dragMove(nullptr, { });
 }

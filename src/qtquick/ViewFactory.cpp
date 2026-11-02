@@ -122,7 +122,7 @@ Core::View *ViewFactory::createRubberBand(Core::View *parent) const
 
 Core::View *ViewFactory::createSideBar(Core::SideBar *, Core::View *) const
 {
-    return {};
+    return { };
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
@@ -157,7 +157,7 @@ QIcon ViewFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
     }
 
     if (iconName.isEmpty())
-        return {};
+        return { };
 
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
     if (!scalingFactorIsSupported(dpr))

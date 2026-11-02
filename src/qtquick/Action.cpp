@@ -34,7 +34,7 @@ void Action::setIcon(const KDDockWidgets::Icon &)
 KDDockWidgets::Icon Action::icon() const
 {
     KDDW_ERROR("Not implemented for QtQuick");
-    return {};
+    return { };
 }
 
 bool Action::blockSignals(bool b)

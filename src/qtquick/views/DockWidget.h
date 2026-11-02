@@ -68,8 +68,8 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget(const QString &uniqueName, DockWidgetOptions = {},
-                        LayoutSaverOptions = {}, Qt::WindowFlags = Qt::Tool,
+    explicit DockWidget(const QString &uniqueName, DockWidgetOptions = { },
+                        LayoutSaverOptions = { }, Qt::WindowFlags = Qt::Tool,
                         QQmlEngine *engine = nullptr);
 
     ///@brief destructor

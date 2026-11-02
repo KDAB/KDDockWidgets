@@ -23,7 +23,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
-IndicatorWindowCreationCallback KDDockWidgets::QtQuick::IndicatorWindow::s_quickWindowCreationCallback = {};
+IndicatorWindowCreationCallback KDDockWidgets::QtQuick::IndicatorWindow::s_quickWindowCreationCallback = { };
 
 namespace KDDockWidgets {
 

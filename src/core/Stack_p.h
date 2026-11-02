@@ -47,7 +47,7 @@ public:
     Group *const m_group;
     bool m_tabBarAutoHide = true;
     const StackOptions m_options;
-    TitleBarButtonTypes m_buttonsToHideIfDisabled = {};
+    TitleBarButtonTypes m_buttonsToHideIfDisabled = { };
 };
 
 }

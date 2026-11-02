@@ -92,9 +92,9 @@ public:
 }
 
 inline Core::DockWidget *createDockWidget(const QString &name, QWidget *w,
-                                          DockWidgetOptions options = {},
-                                          LayoutSaverOptions layoutSaverOptions = {},
-                                          bool show = true, const QString &affinityName = {})
+                                          DockWidgetOptions options = { },
+                                          LayoutSaverOptions layoutSaverOptions = { },
+                                          bool show = true, const QString &affinityName = { })
 {
     w->setFocusPolicy(Qt::StrongFocus);
     auto dock = newDockWidget(name, options, layoutSaverOptions);
@@ -730,7 +730,7 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
 
     QWidget container;
     auto lay = new QVBoxLayout(&container);
-    auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", {},
+    auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", { },
                                                     MainWindowOption_None);
     auto qmainwindow = dynamic_cast<QtWidgets::MainWindow *>(m->view());
     lay->addWidget(qmainwindow);
@@ -739,9 +739,9 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     container.show();
     Platform::instance()->tests_waitForResize(m);
     auto dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
+        "dock1", Platform::instance()->tests_createView({ true, { }, QSize(50, 240) }));
     auto dock2 = createDockWidget(
-        "dock2", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
+        "dock2", Platform::instance()->tests_createView({ true, { }, QSize(50, 240) }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
     Platform::instance()->tests_waitForResize(m);
@@ -1048,7 +1048,7 @@ void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     ObjectGuard<Core::DockWidget> dock1 = createDockWidget(
-        "dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+        "dock1", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }),
         DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
 
@@ -1461,8 +1461,8 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
     }
     auto layout = m->multiSplitter();
 
-    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
-    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w1 = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
     auto d3 = createDockWidget("3", w2);
@@ -1536,7 +1536,7 @@ void TestQtWidgets::tst_restoreNonRelativeFloatingWindowGeometry()
     auto dock1 = createDockWidget("1", new QPushButton("1"));
 
     // Also test that invisible dock doesn't change size
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, /*show=*/false);
+    auto dock2 = createDockWidget("2", new QPushButton("2"), { }, { }, /*show=*/false);
 
     LayoutSaver saver(RestoreOption_RelativeToMainWindow);
     saver.dptr()->m_restoreOptions.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry,
@@ -1605,8 +1605,8 @@ void TestQtWidgets::tst_minSizeChanges()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(600, 600), MainWindowOption_None);
     m->show();
-    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
-    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w1 = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
 
     auto d1 = newDockWidget("1");
     d1->setGuestView(w1->asWrapper());
@@ -1640,7 +1640,7 @@ void TestQtWidgets::tst_minSizeChanges()
     QVERIFY(m->height() >= 1600);
 
     // add a small one to the middle
-    auto w3 = Platform::instance()->tests_createView({ true, {}, QSize(100, 100) });
+    auto w3 = Platform::instance()->tests_createView({ true, { }, QSize(100, 100) });
     auto d3 = newDockWidget("3");
     d3->setGuestView(w3->asWrapper());
     m->addDockWidget(d3, Location_OnTop, d1);
@@ -1652,7 +1652,7 @@ void TestQtWidgets::tst_maxSizePropagates()
     EnsureTopLevelsDeleted e;
     auto dock1 = newDockWidget("dock1");
 
-    auto w = Platform::instance()->tests_createView({ true, {}, QSize(200, 200) });
+    auto w = Platform::instance()->tests_createView({ true, { }, QSize(200, 200) });
     w->setMinimumSize(QSize(120, 120));
     w->setMaximumSize(QSize(500, 500));
     dock1->setGuestView(w->asWrapper());
@@ -1734,7 +1734,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dock1 = newDockWidget("dock1");
 
-    auto w = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
     w->setMinimumSize(QSize(120, 100));
     w->setMaximumSize(QSize(300, 150));
     dock1->setGuestView(w->asWrapper());
@@ -1760,9 +1760,9 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
 void TestQtWidgets::tst_addToHiddenMainWindow()
 {
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, {}, false);
-    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
-    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralGroup, { }, false);
+    auto w1 = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, { }, QSize(400, 400) });
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
 
@@ -1781,7 +1781,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dock1 = newDockWidget("dock1");
 
-    auto w = Platform::instance()->tests_createView({ true, {}, QSize(200, 200) });
+    auto w = Platform::instance()->tests_createView({ true, { }, QSize(200, 200) });
     w->setMinimumSize(QSize(120, 120));
     w->setMaximumSize(QSize(300, 500));
     dock1->setGuestView(w->asWrapper());
@@ -1826,7 +1826,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenDropped()
     m1->addDockWidget(dock1, Location_OnTop);
     m1->view()->resize(QSize(2000, 2000));
 
-    auto w2 = Platform::instance()->tests_createView({ true, {}, { 0, 0 } });
+    auto w2 = Platform::instance()->tests_createView({ true, { }, { 0, 0 } });
     dock2->setGuestView(w2->asWrapper());
     const int maxWidth = 200;
     w2->setMaximumSize(QSize(maxWidth, 200));
@@ -1938,7 +1938,7 @@ void TestQtWidgets::tst_complex()
 
     const int num = 21;
     for (int i = 0; i < num; ++i) {
-        auto widget = Platform::instance()->tests_createView({ true, {}, minSizes.at(i) });
+        auto widget = Platform::instance()->tests_createView({ true, { }, minSizes.at(i) });
         auto dw = newDockWidget(QString::number(i));
         dw->setGuestView(widget->asWrapper());
         docks << dw;
@@ -1968,13 +1968,13 @@ void TestQtWidgets::tst_deleteOnClose()
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) {
         return createDockWidget(
-            name, Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+            name, Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }),
             DockWidgetOption_DeleteOnClose);
     });
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     ObjectGuard<Core::DockWidget> dock1 =
-        createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }),
+        createDockWidget("1", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }),
                          DockWidgetOption_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
     m->moveToSideBar(dock1);
@@ -2004,7 +2004,7 @@ void TestQtWidgets::tstCloseNestedMdi()
     auto dock1 = new QtWidgets::DockWidget(QStringLiteral("MyDock1"));
     dock1->setWidget(new QPushButton("1"));
 
-    mdi->addDockWidget(dock1, {});
+    mdi->addDockWidget(dock1, { });
 
     dock1->dockWidget()->titleBar()->onCloseClicked();
     QVERIFY(p);
@@ -2022,7 +2022,7 @@ void TestQtWidgets::tstCloseNestedMDIPropagates()
     auto dock1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock1"));
     auto nonClosableWidget = Platform::instance()->tests_createNonClosableView();
     dock1->dockWidget()->setGuestView(nonClosableWidget->asWrapper());
-    mdi->addDockWidget(dock1, {});
+    mdi->addDockWidget(dock1, { });
 
     auto dock2 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("MyDock2"));
     auto nonClosableWidget2 = Platform::instance()->tests_createNonClosableView();
@@ -2090,7 +2090,7 @@ void TestQtWidgets::tst_crash326()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, false);
+    auto dock1 = createDockWidget("1", new QPushButton("1"), { }, { }, false);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
     ObjectGuard<Group> originalGroup = dock1->d->group();
     dock1->close();
@@ -2114,7 +2114,7 @@ void TestQtWidgets::tst_crash661()
     KDDockWidgets::Config::self().setFlags(flags);
 
     auto m = createMainWindow(QSize(800, 600), MainWindowOption_HasCentralWidget);
-    auto dock1 = createDockWidget("DockWidget1", new QWidget(), {}, {}, false);
+    auto dock1 = createDockWidget("DockWidget1", new QWidget(), { }, { }, false);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     QVERIFY(dock1->isOpen());
 
@@ -2128,10 +2128,10 @@ void TestQtWidgets::tst_crash661()
     QVERIFY(it != buttons.cend());
     QVERIFY((*it)->isVisible());
 
-    QMouseEvent pressEvent(QEvent::MouseButtonPress, QPoint(5, 5), {}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent pressEvent(QEvent::MouseButtonPress, QPoint(5, 5), { }, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     QCoreApplication::sendEvent(*it, &pressEvent);
 
-    QMouseEvent releaseEvent(QEvent::MouseButtonRelease, QPoint(5, 5), {}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent releaseEvent(QEvent::MouseButtonRelease, QPoint(5, 5), { }, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     QCoreApplication::sendEvent(*it, &releaseEvent);
 }
 #endif
@@ -2220,7 +2220,7 @@ void TestQtWidgets::tst_userData()
 
     {
         EnsureTopLevelsDeleted e;
-        auto m = createMainWindow({}, {}, "mw1");
+        auto m = createMainWindow({ }, { }, "mw1");
 
         auto dock1 = createDockWidget("dock1");
         dock1->setUserData(userData1);
@@ -2239,7 +2239,7 @@ void TestQtWidgets::tst_userData()
 
     QVERIFY(!saved.isEmpty());
 
-    auto m = createMainWindow({}, {}, "mw1");
+    auto m = createMainWindow({ }, { }, "mw1");
 
     auto dock1 = createDockWidget("dock1");
     auto dock2 = createDockWidget("dock2");
@@ -2973,7 +2973,7 @@ void TestQtWidgets::tst_neighbourSqueezeStrategy()
     {
         EnsureTopLevelsDeleted e;
         InitialOption::s_defaultNeighbourSqueezeStrategy = NeighbourSqueezeStrategy::ImmediateNeighboursFirst;
-        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+        auto m1 = createMainWindow(QSize(1000, 500), { }, "mw1");
 
         auto d1 = new QtWidgets::DockWidget("d1");
         auto d2 = new QtWidgets::DockWidget("d2");
@@ -3032,7 +3032,7 @@ void TestQtWidgets::tst_addDockWidgetToContainingWindowNested()
     {
         EnsureTopLevelsDeleted e;
 
-        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
+        auto m1 = createMainWindow(QSize(1000, 500), { }, "mw1");
         auto d1 = new QtWidgets::DockWidget("d1");
         auto d2 = new QtWidgets::DockWidget("d2");
 
@@ -3047,8 +3047,8 @@ void TestQtWidgets::tst_addDockWidgetToContainingWindowNested()
         // Tests using addDockWidgetToContainingWindow when dock is nested
         EnsureTopLevelsDeleted e;
 
-        auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
-        auto nestedMainWindow = createMainWindow(QSize(1000, 500), {}, "mw2");
+        auto m1 = createMainWindow(QSize(1000, 500), { }, "mw1");
+        auto nestedMainWindow = createMainWindow(QSize(1000, 500), { }, "mw2");
 
         auto d1 = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Nested MainWindow Dock container"));
         auto nestedMainWindowQWidget = static_cast<QMainWindow *>(QtCommon::View_qt::asQWidget(nestedMainWindow->view()));
@@ -3130,8 +3130,8 @@ void TestQtWidgets::tst_indicatorsNotShowing()
     const Point globalPos = { 600, 300 };
     QCursor::setPos(globalPos);
 
-    auto m1 = createMainWindow(QSize(1000, 500), {}, "mw1");
-    auto m2 = createMainWindow(QSize(1000, 500), {}, "mw2");
+    auto m1 = createMainWindow(QSize(1000, 500), { }, "mw1");
+    auto m2 = createMainWindow(QSize(1000, 500), { }, "mw2");
     // m2->setAffinities({ "m2" });
     auto d2 = new QtWidgets::DockWidget("d2");
     // d2->setAffinities({ "m2" });
@@ -3275,7 +3275,7 @@ void TestQtWidgets::tst_affinityFloatingWindowIndexMismatch()
 {
     EnsureTopLevelsDeleted e;
 
-    auto m = createMainWindow(QSize(1000, 800), {}, "mw1");
+    auto m = createMainWindow(QSize(1000, 800), { }, "mw1");
 
     auto floatA = new QtWidgets::DockWidget("floatA");
     floatA->asDockWidgetController()->setAffinities({ "a1" });

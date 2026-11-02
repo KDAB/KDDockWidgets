@@ -424,7 +424,7 @@ public:
     ~ItemBoxContainer();
     void insertItem(Item *item, int index,
                     const KDDockWidgets::InitialOption &option = KDDockWidgets::DefaultSizeMode::Fair);
-    void insertItem(Item *item, KDDockWidgets::Location, const KDDockWidgets::InitialOption & = {});
+    void insertItem(Item *item, KDDockWidgets::Location, const KDDockWidgets::InitialOption & = { });
 
     static void
     insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,

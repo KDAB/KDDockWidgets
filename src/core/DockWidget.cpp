@@ -404,7 +404,7 @@ Icon DockWidget::icon(IconPlace place) const
     if (place == IconPlace::ToggleAction)
         return d->toggleAction->icon();
 
-    return {};
+    return { };
 }
 
 void DockWidget::forceClose()
@@ -720,7 +720,7 @@ Point DockWidget::Private::defaultCenterPosForFloating()
     // main than the others
     MainWindow *mw = mainWindows.isEmpty() ? nullptr : mainWindows.constFirst();
     if (!mw || !q->isFloating())
-        return {};
+        return { };
 
     return mw->geometry().center();
 }

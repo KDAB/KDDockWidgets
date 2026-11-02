@@ -75,7 +75,7 @@ Rect Controller::rect() const
     if (d->m_view)
         return d->m_view->rect();
 
-    return {};
+    return { };
 }
 
 Point Controller::mapToGlobal(Point localPt) const
