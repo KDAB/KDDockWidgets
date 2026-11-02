@@ -259,7 +259,7 @@ Core::Group::List Layout::groupsFrom(View *groupOrMultiSplitter) const
     if (auto msw = groupOrMultiSplitter->asDropAreaController())
         return msw->groups();
 
-    return {};
+    return { };
 }
 
 Core::Group::List Layout::groups() const

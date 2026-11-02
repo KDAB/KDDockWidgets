@@ -63,12 +63,12 @@ void TestDocks::tst_startHidden3()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {},
-                                  {}, false);
-    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
-                                  {}, false);
-    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {},
-                                  {}, false);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), { },
+                                  { }, false);
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), { },
+                                  { }, false);
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), { },
+                                  { }, false);
 
     auto dropArea = m->dropArea();
     Core::DropArea *layout = dropArea;

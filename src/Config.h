@@ -107,17 +107,19 @@ public:
                                 ///< resize only happens when you release the mouse button.
         Flag_DontUseUtilityFloatingWindows = 0x1000,
         Flag_TitleBarHasMinimizeButton =
-            0x2000 | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize
-                                                         ///< button when floating. This implies
-                                                         ///< Flag_DontUseUtilityFloatingWindows
-                                                         ///< too, otherwise they wouldn't appear in
-                                                         ///< the task bar.
+                0x2000
+            | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize
+                                                  ///< button when floating. This implies
+                                                  ///< Flag_DontUseUtilityFloatingWindows
+                                                  ///< too, otherwise they wouldn't appear in
+                                                  ///< the task bar.
         Flag_TitleBarNoFloatButton = 0x4000, ///< The TitleBar won't show the float button
         Flag_TitleBarShowAutoHide = 0x8000, ///< Supports minimizing dock widgets to the side-bar
         Flag_AutoHideSupport =
-            Flag_TitleBarShowAutoHide | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the
-                                                                    ///< side-bar. This flag also turns off the
-                                                                    ///< float button.
+                Flag_TitleBarShowAutoHide
+            | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the
+                                          ///< side-bar. This flag also turns off the
+                                          ///< float button.
         Flag_KeepAboveIfNotUtilityWindow =
             0x10000, ///< Only meaningful if Flag_DontUseUtilityFloatingWindows is set. If floating
                      ///< windows are normal windows, you might still want them to keep above and

@@ -166,7 +166,7 @@ public:
 
     Point pos() const
     {
-        return {};
+        return { };
     }
 };
 
@@ -218,7 +218,7 @@ public:
 
     Point position() const
     {
-        return {};
+        return { };
     }
 
     void setDropAction(Qt::DropAction)
@@ -245,7 +245,7 @@ class FocusEvent : public Event
 public:
     Qt::FocusReason reason() const
     {
-        return {};
+        return { };
     }
 };
 

@@ -26,7 +26,7 @@ Window::~Window()
 static Core::View *topMostKDDWView(QQuickItem *parent)
 {
     if (!parent)
-        return {};
+        return { };
 
     if (auto v = qobject_cast<QtQuick::View *>(parent))
         return v;
@@ -57,7 +57,7 @@ std::shared_ptr<Core::View> Window::rootView(bool v1Workaround) const
     }
 
     qWarning() << Q_FUNC_INFO << "Window does not have a root";
-    return {};
+    return { };
 }
 
 Core::Window::Ptr Window::transientParent() const

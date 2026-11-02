@@ -45,7 +45,7 @@ class DOCKS_EXPORT FloatingWindow : public QtQuick::View
 public:
     explicit FloatingWindow(Core::FloatingWindow *controller,
                             QtQuick::MainWindow *parent = nullptr,
-                            Qt::WindowFlags flags = {});
+                            Qt::WindowFlags flags = { });
     ~FloatingWindow();
 
     QSize minSize() const override;

@@ -36,11 +36,11 @@ struct LinterConfig
     struct MainWindow
     {
         std::string name;
-        MainWindowOptions options = {};
+        MainWindowOptions options = { };
         bool maximize = false;
     };
 
-    RestoreOptions restoreOptions = {};
+    RestoreOptions restoreOptions = { };
     std::vector<std::string> filesToLint;
     std::vector<MainWindow> mainWindows;
 
@@ -71,10 +71,10 @@ LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QStri
     const auto positionalArguments = parser.positionalArguments();
     if (configFile.isEmpty() && positionalArguments.isEmpty()) {
         qWarning() << "Expected either a config file or positional arguments";
-        return {};
+        return { };
     } else if (!configFile.isEmpty() && !positionalArguments.isEmpty()) {
         qWarning() << "Expected either a config file or positional arguments, not both";
-        return {};
+        return { };
     } else if (!positionalArguments.isEmpty()) {
         std::transform(positionalArguments.begin(), positionalArguments.end(), std::back_inserter(c.filesToLint),
                        [](const QString &str) {
@@ -84,7 +84,7 @@ LinterConfig requestedLinterConfig(const QCommandLineParser &parser, const QStri
         QFile f(configFile);
         if (!f.open(QIODevice::ReadOnly)) {
             qWarning() << "Failed to open" << configFile;
-            return {};
+            return { };
         }
         const QByteArray jsonData = f.readAll();
         QDir::setCurrent(QFileInfo(configFile).path());
@@ -107,7 +107,7 @@ static bool lint(const QString &filename, LinterConfig config, bool isVerbose)
 
     /// MainWindow factory for the easy cases.
     MainWindowFactoryFunc mwFunc = [](const QString &mwName, MainWindowOptions mainWindowOptions) {
-        return Platform::instance()->createMainWindow(mwName, {}, mainWindowOptions);
+        return Platform::instance()->createMainWindow(mwName, { }, mainWindowOptions);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
@@ -119,7 +119,7 @@ static bool lint(const QString &filename, LinterConfig config, bool isVerbose)
         if (isVerbose)
             qDebug() << "Pre-creating main window" << name << "with options" << mw.options;
 
-        auto mainWindow = Platform::instance()->createMainWindow(name, {}, mw.options);
+        auto mainWindow = Platform::instance()->createMainWindow(name, { }, mw.options);
         if (mw.maximize)
             mainWindow->view()->showMaximized();
         else

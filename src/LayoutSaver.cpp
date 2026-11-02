@@ -73,7 +73,7 @@ std::unordered_map<QString, CloseReason> LayoutSaver::Private::s_unrestoredPrope
 
 static InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
 {
-    InternalRestoreOptions ret = {};
+    InternalRestoreOptions ret = { };
     if (options.testFlag(RestoreOption_RelativeToMainWindow)) {
         ret.setFlag(InternalRestoreOption::SkipMainWindowGeometry);
         ret.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry);
@@ -136,7 +136,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::Group &f)
     f.isNull = jsonValue(json, "isNull", true);
     f.objectName = jsonValue(json, "objectName", QString());
     f.geometry = jsonValue(json, "geometry", Rect());
-    f.options = jsonValue(json, "options", QFlags<FrameOption>::Int {});
+    f.options = jsonValue(json, "options", QFlags<FrameOption>::Int { });
     f.currentTabIndex = jsonValue(json, "currentTabIndex", 0);
     f.mainWindowUniqueName = jsonValue(json, "mainWindowUniqueName", QString());
 
@@ -521,7 +521,7 @@ QByteArray LayoutSaver::serializeLayout() const
 {
     if (!d->m_dockRegistry->isSane()) {
         KDDW_ERROR("Refusing to serialize this layout. Check previous warnings.");
-        return {};
+        return { };
     }
 
     LayoutSaver::Layout layout;
@@ -534,7 +534,7 @@ QByteArray LayoutSaver::serializeLayout() const
     const SaveScope scope = d->resolveScope();
 
     if (!d->checkScopeIsRestorable(scope))
-        return {};
+        return { };
 
     const auto mainWindows = d->m_dockRegistry->mainWindows(scope.mainWindowNames);
     layout.mainWindows.reserve(mainWindows.size());
@@ -710,7 +710,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         flags.setFlag(FloatingWindowFlag::StartsMinimized, int(fw.windowState) & int(WindowState::Minimized));
 
         auto floatingWindow =
-            new Core::FloatingWindow({}, parent, flags);
+            new Core::FloatingWindow({ }, parent, flags);
         fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {
@@ -1162,7 +1162,7 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QString &jsonFilena
     const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
 
     if (!ok)
-        return {};
+        return { };
 
     return openedDockWidgetsInLayout(data);
 }
@@ -1171,7 +1171,7 @@ Vector<QString> LayoutSaver::openedDockWidgetsInLayout(const QByteArray &seriali
 {
     LayoutSaver::Layout layout;
     if (!layout.fromJson(serialized))
-        return {};
+        return { };
 
     Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
@@ -1195,7 +1195,7 @@ Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QString &jsonFilen
     const QByteArray data = Platform::instance()->readFile(jsonFilename, /*by-ref*/ ok);
 
     if (!ok)
-        return {};
+        return { };
 
     return sideBarDockWidgetsInLayout(data);
 }
@@ -1204,7 +1204,7 @@ Vector<QString> LayoutSaver::sideBarDockWidgetsInLayout(const QByteArray &serial
 {
     LayoutSaver::Layout layout;
     if (!layout.fromJson(serialized))
-        return {};
+        return { };
 
     Vector<QString> names;
     names.reserve(layout.allDockWidgets.size()); // over-reserve so we have a single allocation
@@ -1233,8 +1233,8 @@ static void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 static void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 {
     layout.serializationVersion = j.value("serializationVersion", 0);
-    layout.mainWindows = j.value("mainWindows", LayoutSaver::MainWindow::List {});
-    layout.allDockWidgets = j.value("allDockWidgets", LayoutSaver::DockWidget::List {});
+    layout.mainWindows = j.value("mainWindows", LayoutSaver::MainWindow::List { });
+    layout.allDockWidgets = j.value("allDockWidgets", LayoutSaver::DockWidget::List { });
 
     layout.closedDockWidgets.clear();
 
@@ -1244,8 +1244,8 @@ static void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
             LayoutSaver::DockWidget::dockWidgetForName(name));
     }
 
-    layout.floatingWindows = j.value("floatingWindows", LayoutSaver::FloatingWindow::List {});
-    layout.screenInfo = j.value("screenInfo", LayoutSaver::ScreenInfo::List {});
+    layout.floatingWindows = j.value("floatingWindows", LayoutSaver::FloatingWindow::List { });
+    layout.screenInfo = j.value("screenInfo", LayoutSaver::ScreenInfo::List { });
 }
 }
 
@@ -1321,7 +1321,7 @@ void LayoutSaver::Layout::scaleSizes(InternalRestoreOptions options)
 LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForIndex(int index) const
 {
     if (index < 0 || index >= mainWindows.size())
-        return {};
+        return { };
 
     return mainWindows.at(index);
 }
@@ -1333,7 +1333,7 @@ LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForName(const QString &un
             return mw;
     }
 
-    return {};
+    return { };
 }
 
 LayoutSaver::MainWindow
@@ -1348,7 +1348,7 @@ LayoutSaver::Layout::parentMainWindowOf(const LayoutSaver::FloatingWindow &fw) c
 LayoutSaver::FloatingWindow LayoutSaver::Layout::floatingWindowForIndex(int index) const
 {
     if (index < 0 || index >= floatingWindows.size())
-        return {};
+        return { };
 
     return floatingWindows.at(index);
 }
@@ -1466,7 +1466,7 @@ bool LayoutSaver::Group::skipsRestore() const
 LayoutSaver::DockWidget::Ptr LayoutSaver::Group::singleDockWidget() const
 {
     if (!hasSingleDockWidget())
-        return {};
+        return { };
 
     return dockWidgets.first();
 }
@@ -1557,7 +1557,7 @@ bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const
 LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() const
 {
     if (!hasSingleDockWidget())
-        return {};
+        return { };
 
     const auto &group = groups.begin()->second;
     return group.singleDockWidget();
@@ -1575,7 +1575,7 @@ LayoutSaver::Group LayoutSaver::MultiSplitter::centralGroup() const
         if (group.options & FrameOption_IsCentralFrame)
             return group;
     }
-    return {};
+    return { };
 }
 
 void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)

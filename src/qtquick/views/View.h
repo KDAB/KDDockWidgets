@@ -62,7 +62,7 @@ public:
     using Core::View::width;
 
     explicit View(Core::Controller *controller, Core::ViewType type,
-                  QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = {});
+                  QQuickItem *parent = nullptr, Qt::WindowFlags windowFlags = { });
 
     ~View() override = default;
 

@@ -141,7 +141,7 @@ void Group::paintEvent(QPaintEvent *)
 QSize Group::maxSizeHint() const
 {
     if (d->freed())
-        return {};
+        return { };
 
     // waste due to QTabWidget margins, tabbar etc.
     const QSize waste = minSize() - m_group->dockWidgetsMinSize();
