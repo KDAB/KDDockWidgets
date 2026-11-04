@@ -1077,7 +1077,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         return nullptr;
     }
 
-    const Vector<QString> affinities = m_windowBeingDragged->floatingWindow()->affinities();
+    const Vector<QString> affinities = m_windowBeingDragged->affinities();
 
     if (auto fw = topLevel->asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities)) {
