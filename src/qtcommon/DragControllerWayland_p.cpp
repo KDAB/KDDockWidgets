@@ -125,7 +125,8 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea,
         return false; // Not for us, some other user drag.
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(), globalEventPos);
+    // Without accepting, the drop is refused on release
+    ev->setAccepted(dropArea->hover(q->m_windowBeingDragged.get(), globalEventPos) != DropLocation_None);
 
     return true;
 }
