@@ -20,6 +20,7 @@
         <file>main343.qml</file>
         <file>main343_2.qml</file>
         <file>main_persistentCentralWidget.qml</file>
+        <file>main_persistentCentralItemComponent.qml</file>
         <file>MyRectangle.qml</file>
 	    <file>main_tst_focusBetweenTabs.qml</file>
         <file>MyRectangle2.qml</file>
