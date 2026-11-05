@@ -107,6 +107,7 @@ private Q_SLOTS:
     /// Calls the DockWidget QML type's source, options, title bar and side bar API
     void tst_dockWidgetInstantiatorExtras();
     void tst_persistentCentralItemFileName();
+    void tst_persistentCentralItemComponent();
 };
 
 
@@ -975,6 +976,40 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     // Same value is a no-op
     area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
     QVERIFY(mainWindow->persistentCentralView() == view);
+}
+
+void TestQtQuick::tst_persistentCentralItemComponent()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_persistentCentralItemComponent.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    auto area = engine.rootObjects().constFirst()->findChild<MainWindowInstantiator *>();
+    QVERIFY(area);
+    auto mainWindow = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+    QVERIFY(mainWindow);
+
+    QQmlComponent *component = area->persistentCentralItemComponent();
+    QVERIFY(component);
+    QPointer<QQuickItem> central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+    QCOMPARE(central->objectName(), QString("central-MyWindowName-1"));
+
+    // Clearing it removes and deletes the item
+    area->setPersistentCentralItemComponent(nullptr);
+    QVERIFY(!mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
+
+    // Setting it after the main window was created
+    area->setPersistentCentralItemComponent(component);
+    central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+
+    // A file replaces it, and our item is deleted
+    area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
+    QVERIFY(mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
 }
 
 void TestQtQuick::tst_dockWidgetInstantiatorExtras()

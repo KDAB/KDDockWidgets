@@ -21,6 +21,8 @@
 #include <QDebug>
 #include <QQmlEngine>
 
+#include <utility>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
@@ -219,13 +221,18 @@ void MainWindowInstantiator::componentComplete()
         view = new QtQuick::MainWindowMDI(m_uniqueName, this);
     } else {
         view = new QtQuick::MainWindow(m_uniqueName, mainWindowOptions, this);
-        if ((mainWindowOptions & MainWindowOption_HasCentralWidget) && !m_persistentWidgetFileName.isEmpty()) {
+        if (m_persistentCentralItemComponent && !m_persistentWidgetFileName.isEmpty()) {
+            qWarning() << Q_FUNC_INFO << "Both persistentCentralItemComponent and persistentCentralItemFileName are set. Using persistentCentralItemComponent.";
+        } else if ((mainWindowOptions & MainWindowOption_HasCentralWidget) && !m_persistentWidgetFileName.isEmpty()) {
             static_cast<QtQuick::MainWindow *>(view)->setPersistentCentralView(m_persistentWidgetFileName);
         }
     }
 
     m_mainWindow = view->asMainWindowController();
     Q_ASSERT(m_mainWindow);
+
+    if (m_persistentCentralItemComponent)
+        applyPersistentCentralItemComponent();
 
     m_mainWindow->setAffinities(m_affinities);
 }
@@ -238,6 +245,11 @@ void MainWindowInstantiator::setPersistentCentralItemFileName(const QString &qml
     if (m_mainWindow) {
         if (auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()))) {
             mwView->setPersistentCentralView(qmlFilename);
+
+            // If the file's item replaced the one from persistentCentralItemComponent, delete ours
+            const auto central = m_mainWindow->persistentCentralView();
+            if (m_centralItemFromComponent && QtQuick::asQQuickItem(central.get()) != m_centralItemFromComponent)
+                std::exchange(m_centralItemFromComponent, nullptr)->deleteLater();
         } else {
             qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
         }
@@ -250,4 +262,52 @@ void MainWindowInstantiator::setPersistentCentralItemFileName(const QString &qml
 QString MainWindowInstantiator::persistentCentralItemFileName() const
 {
     return m_persistentWidgetFileName;
+}
+
+QQmlComponent *MainWindowInstantiator::persistentCentralItemComponent() const
+{
+    return m_persistentCentralItemComponent;
+}
+
+void MainWindowInstantiator::setPersistentCentralItemComponent(QQmlComponent *component)
+{
+    if (m_persistentCentralItemComponent == component)
+        return;
+
+    m_persistentCentralItemComponent = component;
+    if (m_mainWindow)
+        applyPersistentCentralItemComponent();
+
+    Q_EMIT persistentCentralItemComponentChanged();
+}
+
+void MainWindowInstantiator::applyPersistentCentralItemComponent()
+{
+    QQuickItem *item = nullptr;
+    if (m_persistentCentralItemComponent) {
+        if (!(m_mainWindow->options() & MainWindowOption_HasCentralWidget)) {
+            qWarning() << Q_FUNC_INFO << "persistentCentralItemComponent requires MainWindowOption_HasCentralWidget";
+            return;
+        }
+
+        // Use the context where the component was declared, so the item can see the ids there
+        QObject *obj = m_persistentCentralItemComponent->create(m_persistentCentralItemComponent->creationContext());
+        item = qobject_cast<QQuickItem *>(obj);
+        if (!item) {
+            qWarning() << Q_FUNC_INFO << "persistentCentralItemComponent did not create an Item:"
+                       << m_persistentCentralItemComponent->errorString();
+            delete obj;
+            return;
+        }
+
+        m_mainWindow->setPersistentCentralView(QtQuick::View::asQQuickWrapper(item));
+    } else if (m_centralItemFromComponent) {
+        m_mainWindow->setPersistentCentralView(nullptr);
+    }
+
+    // Core::DockWidget::setGuestView() unparents the old item, so nobody else will delete it.
+    // deleteLater(), as we might be called from a handler inside that item.
+    if (m_centralItemFromComponent)
+        m_centralItemFromComponent->deleteLater();
+    m_centralItemFromComponent = item;
 }
