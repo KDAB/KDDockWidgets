@@ -62,7 +62,8 @@ void MainWindow::init(const QString &name)
     d->init();
     d->m_layout = createLayout(this, d->m_options);
 
-    d->m_persistentCentralDockWidget = d->createPersistentCentralDockWidget(d->name);
+    // d->name is only set by setUniqueName() below
+    d->m_persistentCentralDockWidget = d->createPersistentCentralDockWidget(name);
 
     setUniqueName(name);
 

@@ -179,6 +179,7 @@ private Q_SLOTS:
     void tst_toggleTabbed2();
     void tst_resizePropagatesEvenly();
     void tst_persistentCentralWidget();
+    void tst_persistentCentralWidgetTwoMainWindows();
     void tst_titlebarNumDockWidgetsChanged();
     void tst_closed();
     void tst_restoreFlagsFromVersion16();
@@ -6025,6 +6026,40 @@ void TestDocks::tst_persistentCentralWidget()
     QVERIFY(!saved.isEmpty());
 
     QVERIFY(saver.restoreLayout(saved));
+}
+
+void TestDocks::tst_persistentCentralWidgetTwoMainWindows()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "m1");
+    auto m2 = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "m2");
+    auto dw1 = m1->dropArea()->dockWidgets().constFirst();
+    auto dw2 = m2->dropArea()->dockWidgets().constFirst();
+    QCOMPARE(dw1->uniqueName(), QString("m1-persistentCentralDockWidget"));
+    QCOMPARE(dw2->uniqueName(), QString("m2-persistentCentralDockWidget"));
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(saver.restoreLayout(saved));
+    QCOMPARE(dw1->mainWindow(), m1.get());
+    QCOMPARE(dw2->mainWindow(), m2.get());
+
+    // Layouts saved before the fix name both "-persistentCentralDockWidget"
+    QByteArray oldSaved = saved;
+    oldSaved.replace("\"m1-persistentCentralDockWidget\"", "\"-persistentCentralDockWidget\"");
+    oldSaved.replace("\"m2-persistentCentralDockWidget\"", "\"-persistentCentralDockWidget\"");
+    QVERIFY(oldSaved != saved);
+    // A factory that creates any dock widget it's asked for mustn't be asked for the old name
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) {
+        return createDockWidget(name, Platform::instance()->tests_createView({ true }), { }, { }, false);
+    });
+    QVERIFY(saver.restoreLayout(oldSaved));
+    QCOMPARE(dw1->mainWindow(), m1.get());
+    QCOMPARE(dw2->mainWindow(), m2.get());
+    QVERIFY(dw1->isOpen());
+    QVERIFY(dw2->isOpen());
+    QCOMPARE(m1->dropArea()->dockWidgets().size(), 1);
+    QCOMPARE(m2->dropArea()->dockWidgets().size(), 1);
 }
 
 void TestDocks::tst_unfloatTabbedFloatingWidgets()

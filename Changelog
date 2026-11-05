@@ -2,6 +2,8 @@
   - qtquick: New DockingArea.persistentCentralItemComponent, to declare the persistent central item
     inline in QML instead of in a separate file
   - qtwidgets: Reset tab to natural position on drag completion
+  - Fix persistent central widget with more than one main window. Its dock widget
+    is now named after its main window
   - Bump SO version since added new virtual methods
 
 * v2.5.1
