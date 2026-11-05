@@ -21,6 +21,9 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
     , m_dropArea(dropArea)
 {
     Q_ASSERT(dropArea);
+
+    // Wayland docks through QDrag, whose events Qt Quick only sends to items accepting drops
+    QQuickItem::setFlag(ItemAcceptsDrops);
 }
 
 DropArea::~DropArea()
