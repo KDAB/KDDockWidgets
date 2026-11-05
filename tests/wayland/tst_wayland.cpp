@@ -406,8 +406,6 @@ void TestWayland::tst_dragTabOntoMainWindow()
     QVERIFY(m_input->commitAndWait());
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
-    if (Platform::instance()->isQtQuick())
-        QEXPECT_FAIL("", "QtQuick main window drop areas don't receive drags on Wayland", Abort);
     QTRY_COMPARE(dock2->dptr()->group(), group3);
     QCOMPARE(group3->dockWidgetCount(), 2);
     QVERIFY(dock2->isInMainWindow());
