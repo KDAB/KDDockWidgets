@@ -62,6 +62,9 @@ private Q_SLOTS:
     void tst_mainWindowNormalGeometry();
 
     void tst_hoverShowsDropIndicators();
+
+    /// ApplicationWindow's popup overlay covers the whole window and mustn't hide the drop area
+    void tst_hoverShowsDropIndicatorsWithOverlay();
     void tst_titlebarNumDockWidgetsChanged();
     void tst_effectiveVisibilityBug();
 
@@ -222,6 +225,59 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
     auto fw = floatingDockWidget->floatingWindow();
     dragFloatingWindowTo(fw, mainWindowCenterPos);
 
+    QCOMPARE(dock0->dptr()->group()->dockWidgetCount(), 2);
+}
+
+void TestQtQuick::tst_hoverShowsDropIndicatorsWithOverlay()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine;
+    // A Drawer, even closed, keeps the popup overlay visible over the whole window
+    engine.loadData(R"(
+        import QtQuick
+        import QtQuick.Controls
+        import com.kdab.dockwidgets 2.0 as KDDW
+        ApplicationWindow {
+            visible: true
+            width: 1000
+            height: 800
+            Drawer {
+                width: 200
+                height: parent.height
+            }
+            KDDW.DockingArea {
+                anchors.fill: parent
+                uniqueName: "overlayWindow"
+            }
+        }
+    )");
+    QVERIFY(!engine.rootObjects().isEmpty());
+
+    auto window = qobject_cast<QQuickWindow *>(engine.rootObjects().constFirst());
+    QVERIFY(window);
+    auto overlayVisible = [window] {
+        const auto children = window->contentItem()->childItems();
+        return std::any_of(children.cbegin(), children.cend(), [](QQuickItem *item) {
+            return item->inherits("QQuickOverlay") && item->isVisible();
+        });
+    };
+    QTRY_VERIFY(overlayVisible());
+
+    MainWindow *m = DockRegistry::self()->mainWindowByName("overlayWindow");
+    QVERIFY(m);
+    m->window()->window()->setFramePosition(QPoint(500, 800));
+
+    auto dock0 = createDockWidget(
+        "dock0", Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
+    auto floatingDockWidget =
+        createDockWidget("floatingDockWidget",
+                         Platform::instance()->tests_createView({ true, { }, QSize(400, 400) }));
+    m->addDockWidget(dock0, Location_OnLeft);
+
+    const QPoint mainWindowCenterPos = m->mapToGlobal(m->geometry().center());
+    QTest::qWait(100);
+
+    dragFloatingWindowTo(floatingDockWidget->floatingWindow(), mainWindowCenterPos);
     QCOMPARE(dock0->dptr()->group()->dockWidgetCount(), 2);
 }
 
