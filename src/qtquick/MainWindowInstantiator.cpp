@@ -21,8 +21,6 @@
 #include <QDebug>
 #include <QQmlEngine>
 
-#include <utility>
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
@@ -245,11 +243,6 @@ void MainWindowInstantiator::setPersistentCentralItemFileName(const QString &qml
     if (m_mainWindow) {
         if (auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()))) {
             mwView->setPersistentCentralView(qmlFilename);
-
-            // If the file's item replaced the one from persistentCentralItemComponent, delete ours
-            const auto central = m_mainWindow->persistentCentralView();
-            if (m_centralItemFromComponent && QtQuick::asQQuickItem(central.get()) != m_centralItemFromComponent)
-                std::exchange(m_centralItemFromComponent, nullptr)->deleteLater();
         } else {
             qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
         }
@@ -283,7 +276,13 @@ void MainWindowInstantiator::setPersistentCentralItemComponent(QQmlComponent *co
 
 void MainWindowInstantiator::applyPersistentCentralItemComponent()
 {
-    QQuickItem *item = nullptr;
+    auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()));
+    if (!mwView) {
+        qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
+        return;
+    }
+
+    QPointer<QQuickItem> item;
     if (m_persistentCentralItemComponent) {
         if ((m_mainWindow->options() & MainWindowOption_HasCentralWidget) != MainWindowOption_HasCentralWidget) {
             qWarning() << Q_FUNC_INFO << "persistentCentralItemComponent requires MainWindowOption_HasCentralWidget";
@@ -300,14 +299,12 @@ void MainWindowInstantiator::applyPersistentCentralItemComponent()
             return;
         }
 
-        m_mainWindow->setPersistentCentralView(QtQuick::View::asQQuickWrapper(item));
-    } else if (m_centralItemFromComponent) {
-        m_mainWindow->setPersistentCentralView(nullptr);
+        // Deletes the item if refused, which nulls our QPointer
+        mwView->setPersistentCentralView(item);
+    } else if (m_centralItemFromComponent && m_centralItemFromComponent == QtQuick::asQQuickItem(m_mainWindow->persistentCentralView().get())) {
+        // Only remove the central item if it came from the component, not from a file
+        mwView->setPersistentCentralView(nullptr);
     }
 
-    // Core::DockWidget::setGuestView() unparents the old item, so nobody else will delete it.
-    // deleteLater(), as we might be called from a handler inside that item.
-    if (m_centralItemFromComponent)
-        m_centralItemFromComponent->deleteLater();
     m_centralItemFromComponent = item;
 }

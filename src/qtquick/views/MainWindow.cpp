@@ -57,6 +57,9 @@ public:
 
     /// The host QWindow currently being filtered for close events.
     QPointer<QQuickWindow> closeFilterTarget;
+
+    /// The central item we were given ownership of
+    QPointer<QQuickItem> ownedCentralItem;
 };
 }
 
@@ -187,12 +190,26 @@ void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 
 void MainWindow::setPersistentCentralView(const QString &qmlFilename)
 {
-    QQuickItem *guest = QtQuick::View::createItem(plat()->qmlEngine(), qmlFilename);
-    if (guest) {
-        // kddw deals in Core::View, so put it inside one
-        auto wrapper = QtQuick::View::asQQuickWrapper(guest);
-        m_mainWindow->setPersistentCentralView(wrapper);
-    } else {
+    if (QQuickItem *guest = QtQuick::View::createItem(plat()->qmlEngine(), qmlFilename))
+        setPersistentCentralView(guest);
+    else
         KDDW_ERROR("setPersistentCentralView: Failed to create item for {}", qmlFilename);
+}
+
+void MainWindow::setPersistentCentralView(QQuickItem *item)
+{
+    // kddw deals in Core::View, so put it inside one
+    m_mainWindow->setPersistentCentralView(item ? QtQuick::View::asQQuickWrapper(item) : nullptr);
+
+    if (QtQuick::asQQuickItem(m_mainWindow->persistentCentralView().get()) != item) {
+        // Refused, for example without MainWindowOption_HasCentralWidget
+        delete item;
+        return;
     }
+
+    // Core gives the old item back without a parent, so nobody else will delete it.
+    // deleteLater(), as we might be called from a handler inside that item.
+    if (d->ownedCentralItem && d->ownedCentralItem != item)
+        d->ownedCentralItem->deleteLater();
+    d->ownedCentralItem = item;
 }
