@@ -976,6 +976,18 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     // Same value is a no-op
     area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
     QVERIFY(mainWindow->persistentCentralView() == view);
+
+    // Another file replaces it, and the old item is deleted
+    QPointer<QQuickItem> oldItem = QtQuick::asQQuickItem(view.get());
+    area->setPersistentCentralItemFileName(":/MyRectangle.qml");
+    QVERIFY(mainWindow->persistentCentralView() != view);
+    view.reset();
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!oldItem);
+
+    const QMetaObject *mo = area->metaObject();
+    const QMetaProperty prop = mo->property(mo->indexOfProperty("persistentCentralItemFileName"));
+    QCOMPARE(prop.notifySignal().name(), QByteArray("persistentCentralItemFileNameChanged"));
 }
 
 void TestQtQuick::tst_persistentCentralItemComponent()
@@ -1008,6 +1020,17 @@ void TestQtQuick::tst_persistentCentralItemComponent()
     // A file replaces it, and our item is deleted
     area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
     QVERIFY(mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
+
+    // Clearing the component doesn't remove the file's item
+    area->setPersistentCentralItemComponent(nullptr);
+    central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+
+    // The component replaces the file's item, which is deleted
+    area->setPersistentCentralItemComponent(component);
+    QVERIFY(QtQuick::asQQuickItem(mainWindow->persistentCentralView().get()) != central);
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     QVERIFY(!central);
 }

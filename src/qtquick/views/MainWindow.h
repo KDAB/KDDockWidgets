@@ -62,6 +62,9 @@ public:
     /// Se docs for Core::MainWindow::setPersistentCentralView
     void setPersistentCentralView(const QString &qmlFilename);
 
+    /// Same, but takes an item. The main window takes ownership of it. Pass nullptr to remove it.
+    void setPersistentCentralView(QQuickItem *item);
+
 #ifdef Q_MOC_RUN
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
     Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;

@@ -44,7 +44,7 @@ class DOCKS_EXPORT MainWindowInstantiator : public QQuickItem
     Q_OBJECT
     QML_NAMED_ELEMENT(DockingArea)
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(QString persistentCentralItemFileName READ persistentCentralItemFileName WRITE setPersistentCentralItemFileName NOTIFY uniqueNameChanged)
+    Q_PROPERTY(QString persistentCentralItemFileName READ persistentCentralItemFileName WRITE setPersistentCentralItemFileName NOTIFY persistentCentralItemFileNameChanged)
     Q_PROPERTY(QQmlComponent *persistentCentralItemComponent READ persistentCentralItemComponent WRITE setPersistentCentralItemComponent NOTIFY persistentCentralItemComponentChanged)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
@@ -109,7 +109,7 @@ private:
     QString m_uniqueName;
     QString m_persistentWidgetFileName;
     QPointer<QQmlComponent> m_persistentCentralItemComponent;
-    // The item we created from m_persistentCentralItemComponent. We own it.
+    // The item we created from m_persistentCentralItemComponent. QtQuick::MainWindow owns it.
     QPointer<QQuickItem> m_centralItemFromComponent;
     Core::MainWindow *m_mainWindow = nullptr;
     QVector<QString> m_affinities;
