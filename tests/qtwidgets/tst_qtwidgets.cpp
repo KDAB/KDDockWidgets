@@ -249,6 +249,7 @@ private Q_SLOTS:
     void tst_maximumSizePolicy();
     void tst_complex();
     void tst_restoreFloatingMaximizedState();
+    void tst_maximizeButtonFollowsNativeMaximize();
     void tst_findAncestor();
     void tst_affinityWithPersistentCentralGroup();
     void tst_affinityFloatingWindowIndexMismatch();
@@ -1888,6 +1889,34 @@ void TestQtWidgets::tst_restoreFloatingMaximizedState()
 
     dock1->floatingWindow()->view()->showNormal();
     QCOMPARE(dock1->floatingWindow()->view()->normalGeometry(), originalNormalGeometry);
+}
+
+void TestQtWidgets::tst_maximizeButtonFollowsNativeMaximize()
+{
+    // Tests that the maximize button follows window state changes that don't go through QWidget,
+    // like a native maximize via double-click on Windows. See issue #769.
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    Core::FloatingWindow *fw = dock1->floatingWindow();
+    QVERIFY(fw);
+    Core::TitleBar *titleBar = fw->titleBar();
+    QCOMPARE(titleBar->maximizeButtonType(), TitleBarButtonType::Maximize);
+
+    // Bypass QWidget::setWindowState(), so the QWidget only learns about the new state via the
+    // spontaneous QWindowStateChangeEvent, as happens when the window manager maximizes it
+    QWindow *window = QtCommon::View_qt::asQWidget(fw->view())->windowHandle();
+    QVERIFY(window);
+
+    window->showMaximized();
+    QTRY_VERIFY(fw->view()->isMaximized());
+    QEXPECT_FAIL("", "Issue #769, to be fixed", Abort);
+    QCOMPARE(titleBar->maximizeButtonType(), TitleBarButtonType::Normal);
+
+    window->showNormal();
+    QTRY_VERIFY(!fw->view()->isMaximized());
+    QCOMPARE(titleBar->maximizeButtonType(), TitleBarButtonType::Maximize);
 }
 
 void TestQtWidgets::tst_complex()
