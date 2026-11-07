@@ -6200,6 +6200,14 @@ void TestDocks::tst_maximizeButton()
 
     QVERIFY(tb->maximizeButtonVisible());
     QCOMPARE(tb->maximizeButtonType(), TitleBarButtonType::Normal);
+
+    // Now restore
+    tb->onMaximizeClicked();
+
+    WAIT_FOR_RESIZE(dock0->floatingWindow()->view());
+
+    QVERIFY(tb->maximizeButtonVisible());
+    QCOMPARE(tb->maximizeButtonType(), TitleBarButtonType::Maximize);
 }
 
 void TestDocks::tst_restoreAfterUnminimized()
