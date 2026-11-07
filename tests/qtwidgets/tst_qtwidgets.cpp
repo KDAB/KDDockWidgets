@@ -1911,7 +1911,6 @@ void TestQtWidgets::tst_maximizeButtonFollowsNativeMaximize()
 
     window->showMaximized();
     QTRY_VERIFY(fw->view()->isMaximized());
-    QEXPECT_FAIL("", "Issue #769, to be fixed", Abort);
     QCOMPARE(titleBar->maximizeButtonType(), TitleBarButtonType::Normal);
 
     window->showNormal();

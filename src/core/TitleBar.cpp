@@ -315,8 +315,11 @@ void TitleBar::updateMaximizeButton()
     m_maximizeButtonType = TitleBarButtonType::Maximize;
 
     if (auto fw = floatingWindow()) {
-        m_maximizeButtonType =
-            fw->view()->isMaximized() ? TitleBarButtonType::Normal : TitleBarButtonType::Maximize;
+        // Not using View::isMaximized(), as for QtWidgets the QWidget's state is only updated after
+        // windowStateChanged is emitted, when the window manager changes the state (issue #769)
+        m_maximizeButtonType = fw->lastWindowManagerState() == WindowState::Maximized
+            ? TitleBarButtonType::Normal
+            : TitleBarButtonType::Maximize;
         m_maximizeButtonVisible = supportsMaximizeButton();
     }
     const bool isEnabled = true;
