@@ -211,8 +211,9 @@ private:
     Private *const d;
 
 protected:
-    Core::TitleBar *const m_titleBar;
+    // Declared before m_titleBar, as TitleBar's ctor reads it
     WindowState m_lastWindowManagerState = WindowState::None;
+    Core::TitleBar *const m_titleBar;
 
 private:
     KDDW_DELETE_COPY_CTOR(FloatingWindow)
