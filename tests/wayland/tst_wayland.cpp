@@ -29,8 +29,13 @@
 #include "core/TitleBar.h"
 #include "qtcommon/View.h"
 
+#include <qpa/qplatformwindow_p.h>
+
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QTabBar>
 #include <QTest>
+#include <QWidget>
 
 #include <algorithm>
 
@@ -53,6 +58,43 @@ bool isShowingMovingTab(QTabBar *tabBar)
     });
 }
 
+/// A window, not part of KDDW, which accepts any drop. Like the desktop or another application
+/// accepting a drop would.
+class DropAcceptingWindow : public QWidget
+{
+public:
+    DropAcceptingWindow()
+    {
+        setAcceptDrops(true);
+        resize(300, 300);
+    }
+
+    int numDrops = 0;
+
+protected:
+    void dragEnterEvent(QDragEnterEvent *ev) override
+    {
+        ev->acceptProposedAction();
+    }
+
+    void dragMoveEvent(QDragMoveEvent *ev) override
+    {
+        ev->acceptProposedAction();
+    }
+
+    void dropEvent(QDropEvent *ev) override
+    {
+        ++numDrops;
+        ev->acceptProposedAction();
+    }
+};
+
+wl_surface *surfaceFor(QWidget *widget)
+{
+    auto waylandWindow = widget->windowHandle()->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
+    return waylandWindow ? waylandWindow->surface() : nullptr;
+}
+
 }
 
 class TestWayland : public QObject
@@ -66,6 +108,7 @@ private Q_SLOTS:
     void tst_doubleClickTabDetaches();
     void tst_dragTabToEmptySpaceKeepsItDocked();
     void tst_cancelledTabReorderDragResetsTabBar();
+    void tst_tabDroppedOntoForeignWindowResetsTabBar();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -218,6 +261,64 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
     QVERIFY(!dock1->isFloating());
     QCOMPARE(group->dockWidgetCount(), 2);
 
+    QVERIFY(!isShowingMovingTab(qtabBar));
+}
+
+void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
+{
+    // Like tst_cancelledTabReorderDragResetsTabBar, but the tab is dropped onto a window which
+    // accepts the drop, like the desktop or another application might. QDrag::exec() then
+    // doesn't return Qt::IgnoreAction, which mustn't leave DragController stuck in its dragging
+    // state, nor QTabBar stuck mid-reorder (PR #766).
+
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::self().flags() | Config::Flag_AllowReorderTabs);
+
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(waitForMapped(m->view()));
+
+    auto foreignWindow = std::make_unique<DropAcceptingWindow>();
+    foreignWindow->show();
+    QVERIFY(QTest::qWaitForWindowExposed(foreignWindow->windowHandle()));
+
+    // Side by side, so they don't overlap
+    m_input->set_window_position(Wayland::surfaceFor(m->view()), 0, 0);
+    m_input->set_window_position(surfaceFor(foreignWindow.get()), 850, 0);
+    QVERIFY(m_input->commitAndWait());
+
+    Group *group = dock1->dptr()->group();
+    TabBar *tabBar = group->stack()->tabBar();
+    auto qtabBar = qobject_cast<QTabBar *>(QtCommon::View_qt::asQWidget(tabBar->view()));
+    QVERIFY(qtabBar);
+    QVERIFY(!isShowingMovingTab(qtabBar));
+
+    // Drag the first tab right, along the tab bar and past the last tab
+    const Point start = tabBar->rectForTab(0).center();
+    const Point end(tabBar->rectForTab(1).right() + 50, start.y());
+    m_input->moveTo(tabBar->view(), start);
+    m_input->press();
+    constexpr int steps = 20;
+    for (int i = 1; i <= steps; ++i)
+        m_input->moveTo(tabBar->view(), start + (end - start) * i / steps);
+    m_input->wait_for_drag_start(/*timeout_msecs=*/5000);
+
+    // Release over the foreign window, which accepts the drop
+    for (int i = 1; i <= steps; ++i)
+        m_input->pointer_move(surfaceFor(foreignWindow.get()), wl_fixed_from_int(10 * i), wl_fixed_from_int(10 * i));
+    m_input->release();
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_COMPARE(foreignWindow->numDrops, 1);
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(group->dockWidgetCount(), 2);
+
+    QEXPECT_FAIL("", "A drop accepted outside of KDDW leaves DragController in its dragging state", Continue);
+    QTRY_VERIFY(!DragController::instance()->isDragging());
+    QEXPECT_FAIL("", "A drop accepted outside of KDDW leaves QTabBar mid-reorder", Continue);
     QVERIFY(!isShowingMovingTab(qtabBar));
 }
 
