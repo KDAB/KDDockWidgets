@@ -43,7 +43,7 @@ jobs:
 
       - name: Make sure MSVC is found when Ninja generator is in use
         if: ${{ runner.os == 'Windows' }}
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: KDABLabs/msvc-dev-cmd-action@v2
 
       # Regression test for https://github.com/KDAB/KDDockWidgets/issues/733
       # (spdlog's Windows sink drags in <windows.h>, which clashes with our own
