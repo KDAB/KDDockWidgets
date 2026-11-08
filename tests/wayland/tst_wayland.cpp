@@ -316,9 +316,7 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
     QVERIFY(!dock1->isFloating());
     QCOMPARE(group->dockWidgetCount(), 2);
 
-    QEXPECT_FAIL("", "A drop accepted outside of KDDW leaves DragController in its dragging state", Continue);
     QTRY_VERIFY(!DragController::instance()->isDragging());
-    QEXPECT_FAIL("", "A drop accepted outside of KDDW leaves QTabBar mid-reorder", Continue);
     QVERIFY(!isShowingMovingTab(qtabBar));
 }
 
