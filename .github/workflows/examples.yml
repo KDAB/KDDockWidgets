@@ -37,7 +37,7 @@ jobs:
 
       - name: Make sure MSVC is found when Ninja generator is in use
         if: ${{ runner.os == 'Windows' }}
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: KDABLabs/msvc-dev-cmd-action@v2
 
       - name: Install mold linker
         if: ${{ runner.os == 'Linux' }}
