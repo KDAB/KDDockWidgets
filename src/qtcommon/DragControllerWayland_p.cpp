@@ -51,7 +51,9 @@ void StateDraggingWayland::onEntry()
     KDDW_DEBUG("QDrag finished with result={}", int(result));
 
     Platform::instance()->removeGlobalEventFilter(q);
-    if (result == Qt::IgnoreAction)
+    // If we're still dragging then KDDW didn't get the drop. Either the drag was cancelled, or the
+    // drop was accepted by someone else, like the desktop or another application
+    if (result == Qt::IgnoreAction || isActiveState())
         q->dragCanceled.emit();
 }
 
