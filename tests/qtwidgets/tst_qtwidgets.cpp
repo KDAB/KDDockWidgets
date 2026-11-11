@@ -1384,6 +1384,9 @@ void TestQtWidgets::tst_overlayCrash()
     QVERIFY(tb->isVisible());
 
     pressOn(tb->mapToGlobal(QPoint(5, 5)), tb->view());
+
+    // Release, so we don't leave DragController in pre-drag state for the next test
+    releaseOn(tb->mapToGlobal(QPoint(5, 5)), tb->view());
 }
 
 void TestQtWidgets::tst_embeddedMainWindow()
