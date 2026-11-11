@@ -113,7 +113,8 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
     // This is called when using Flag_HideTitleBarWhenTabsVisible
     // For detaching individual tabs, TabBar::makeWindow() is called.
 
-    if (auto fw = view()->rootView()->asFloatingWindowController()) {
+    // Not using rootView(), as with nested main windows the root FloatingWindow isn't ours
+    if (auto fw = d->m_group->floatingWindow()) {
         if (fw->hasSingleGroup()) {
             // We're already in a floating window, and it only has 1 dock widget.
             // So there's no detachment to be made, we just move the window.
@@ -135,7 +136,8 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
 
 bool Stack::isWindow() const
 {
-    if (auto fw = view()->rootView()->asFloatingWindowController()) {
+    // Not using rootView(), as with nested main windows the root FloatingWindow isn't ours
+    if (auto fw = d->m_group->floatingWindow()) {
         // Case of dragging via the tab widget when the title bar is hidden
         return fw->hasSingleGroup();
     }
