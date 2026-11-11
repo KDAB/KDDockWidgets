@@ -210,6 +210,7 @@ private Q_SLOTS:
     void tst_moveTab_data();
     void tst_nestedMainWindowToggle();
     void tst_nestedMainWindowFloatButton();
+    void tst_nestedMainWindowDragEmptyTabBarArea();
     void tst_nestedMainWindowSaveRestore_data();
     void tst_nestedMainWindowSaveRestore();
     void tst_saveWindowWithNestedMainWindow();
@@ -2554,6 +2555,79 @@ void TestQtWidgets::tst_nestedMainWindowFloatButton()
     QVERIFY(!nestedDock->isFloating());
     QVERIFY(!containerDock->dockWidget()->isInMainWindow());
     QVERIFY(nestedDock->dockWidget()->isInMainWindow());
+}
+
+void TestQtWidgets::tst_nestedMainWindowDragEmptyTabBarArea()
+{
+    // #776
+    // A floating dock widget contains a main window, which contains 2 tabbed dock widgets.
+    // Dragging the empty area of the nested tab bar should detach the nested group, not move
+    // the outer floating window.
+
+    EnsureTopLevelsDeleted e;
+    // Implies Flag_HideTitleBarWhenTabsVisible
+    Config::self().setFlags(Config::self().flags() | Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden);
+
+    // So floating windows don't use the nested main window as transient parent
+    auto rootMainWindow = createMainWindow(QSize(500, 500), MainWindowOption_None, "RootMW");
+
+    auto nestedMainWindow = new KDDockWidgets::QtWidgets::MainWindow(QStringLiteral("MW1"));
+    nestedMainWindow->setAffinities({ QStringLiteral("MW1") });
+
+    auto superDock = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("SuperDock"));
+    superDock->setWidget(nestedMainWindow);
+
+    auto subDockA = createDockWidget("SubDockA", new QWidget(), {}, {}, /*show=*/false, QStringLiteral("MW1"));
+    auto subDockB = createDockWidget("SubDockB", new QWidget(), {}, {}, /*show=*/false, QStringLiteral("MW1"));
+    nestedMainWindow->mainWindow()->addDockWidget(subDockA, Location_OnRight);
+    subDockA->addDockWidgetAsTab(subDockB);
+    superDock->open();
+
+    QVERIFY(superDock->isFloating());
+    QVERIFY(subDockA->isInMainWindow());
+    QVERIFY(subDockB->isInMainWindow());
+
+    Core::FloatingWindow *outerFw = superDock->dockWidget()->floatingWindow();
+    QVERIFY(outerFw);
+    QVERIFY(outerFw->hasSingleGroup());
+
+    Core::Group *innerGroup = subDockA->dptr()->group();
+    QCOMPARE(innerGroup, subDockB->dptr()->group());
+    QVERIFY(!innerGroup->floatingWindow());
+    QVERIFY(!innerGroup->titleBar()->isVisible());
+
+    // Press on the empty area to the right of the tabs and drag
+    auto stackView = innerGroup->stack()->view();
+    auto tabBarWidget = QtCommon::View_qt::asQWidget(innerGroup->tabBar()->view());
+    const QPoint localPos(tabBarWidget->geometry().right() + 10, tabBarWidget->geometry().center().y());
+    QVERIFY(innerGroup->stack()->isPositionDraggable(localPos));
+    QVERIFY(!innerGroup->tabBar()->dockWidgetAt(localPos));
+
+    // The nested group is docked, it's not a window.
+    // Stack::isWindow() looks at the root view, which is the outer floating window, so it
+    // wrongly returns true and DragController moves the outer window instead of undocking.
+    QEXPECT_FAIL("", "#776: Stack::isWindow() is true for a stack inside a nested main window", Abort);
+    QVERIFY(!innerGroup->stack()->isWindow());
+
+    const QPoint globalPos = stackView->mapToGlobal(localPos);
+    const QPoint globalDest = globalPos + QPoint(100, 100);
+    const QRect outerFwGeometry = outerFw->geometry();
+
+    pressOn(globalPos, stackView);
+    moveMouseTo(globalDest, stackView);
+    releaseOn(globalDest, stackView);
+
+    // The outer window didn't move
+    QCOMPARE(outerFw->geometry(), outerFwGeometry);
+    QVERIFY(superDock->isFloating());
+
+    // Instead, the nested group was detached into its own floating window
+    QVERIFY(!subDockA->isInMainWindow());
+    QVERIFY(!subDockB->isInMainWindow());
+    Core::FloatingWindow *newFw = subDockA->floatingWindow();
+    QVERIFY(newFw);
+    QVERIFY(newFw != outerFw);
+    QCOMPARE(subDockB->floatingWindow(), newFw);
 }
 
 void TestQtWidgets::tst_nestedMainWindowToggle()
