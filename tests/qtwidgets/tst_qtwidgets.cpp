@@ -2591,6 +2591,11 @@ void TestQtWidgets::tst_nestedMainWindowDragEmptyTabBarArea()
     QVERIFY(outerFw);
     QVERIFY(outerFw->hasSingleGroup());
 
+    // The outer window is placed partially off-screen, which window managers correct
+    // asynchronously. Move it fully on-screen so it stays put during the drag.
+    outerFw->view()->move(50, 50);
+    WAIT_FOR_EVENT(outerFw->view()->window(), Event::Move);
+
     Core::Group *innerGroup = subDockA->dptr()->group();
     QCOMPARE(innerGroup, subDockB->dptr()->group());
     QVERIFY(!innerGroup->floatingWindow());
@@ -2603,10 +2608,7 @@ void TestQtWidgets::tst_nestedMainWindowDragEmptyTabBarArea()
     QVERIFY(innerGroup->stack()->isPositionDraggable(localPos));
     QVERIFY(!innerGroup->tabBar()->dockWidgetAt(localPos));
 
-    // The nested group is docked, it's not a window.
-    // Stack::isWindow() looks at the root view, which is the outer floating window, so it
-    // wrongly returns true and DragController moves the outer window instead of undocking.
-    QEXPECT_FAIL("", "#776: Stack::isWindow() is true for a stack inside a nested main window", Abort);
+    // The nested group is docked, it's not a window
     QVERIFY(!innerGroup->stack()->isWindow());
 
     const QPoint globalPos = stackView->mapToGlobal(localPos);
@@ -2617,8 +2619,12 @@ void TestQtWidgets::tst_nestedMainWindowDragEmptyTabBarArea()
     moveMouseTo(globalDest, stackView);
     releaseOn(globalDest, stackView);
 
-    // The outer window didn't move
-    QCOMPARE(outerFw->geometry(), outerFwGeometry);
+    // The outer window wasn't dragged along. Allow a few pixels of slack, as the window
+    // manager is free to nudge it.
+    const QPoint outerDelta = outerFw->geometry().topLeft() - outerFwGeometry.topLeft();
+    QVERIFY2(outerDelta.manhattanLength() < 10,
+             qPrintable(QStringLiteral("Outer window moved by (%1,%2)").arg(outerDelta.x()).arg(outerDelta.y())));
+    QCOMPARE(outerFw->geometry().size(), outerFwGeometry.size());
     QVERIFY(superDock->isFloating());
 
     // Instead, the nested group was detached into its own floating window
