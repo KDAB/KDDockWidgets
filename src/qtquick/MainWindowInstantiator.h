@@ -27,6 +27,8 @@
 
 #include <QQuickItem>
 #include <QQmlEngine>
+#include <QQmlComponent>
+#include <QPointer>
 
 namespace KDDockWidgets {
 
@@ -42,7 +44,8 @@ class DOCKS_EXPORT MainWindowInstantiator : public QQuickItem
     Q_OBJECT
     QML_NAMED_ELEMENT(DockingArea)
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(QString persistentCentralItemFileName READ persistentCentralItemFileName WRITE setPersistentCentralItemFileName NOTIFY uniqueNameChanged)
+    Q_PROPERTY(QString persistentCentralItemFileName READ persistentCentralItemFileName WRITE setPersistentCentralItemFileName NOTIFY persistentCentralItemFileNameChanged)
+    Q_PROPERTY(QQmlComponent *persistentCentralItemComponent READ persistentCentralItemComponent WRITE setPersistentCentralItemComponent NOTIFY persistentCentralItemComponentChanged)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY
                    optionsChanged)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
@@ -64,6 +67,11 @@ public:
 
     QString persistentCentralItemFileName() const;
     void setPersistentCentralItemFileName(const QString &qmlFilename);
+
+    /// Like persistentCentralItemFileName, but the item is declared inline in QML.
+    /// If both are set before the DockingArea is created, this one wins.
+    QQmlComponent *persistentCentralItemComponent() const;
+    void setPersistentCentralItemComponent(QQmlComponent *);
 
     /// @brief See KDDockWidgets::Core::MainWindow::addDockWidget()
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, KDDockWidgets::Location location,
@@ -93,10 +101,16 @@ Q_SIGNALS:
     void optionsChanged();
     void affinitiesChanged();
     void persistentCentralItemFileNameChanged();
+    void persistentCentralItemComponentChanged();
 
 private:
+    void applyPersistentCentralItemComponent();
+
     QString m_uniqueName;
     QString m_persistentWidgetFileName;
+    QPointer<QQmlComponent> m_persistentCentralItemComponent;
+    // The item we created from m_persistentCentralItemComponent. QtQuick::MainWindow owns it.
+    QPointer<QQuickItem> m_centralItemFromComponent;
     Core::MainWindow *m_mainWindow = nullptr;
     QVector<QString> m_affinities;
     KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;

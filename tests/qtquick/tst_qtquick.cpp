@@ -107,6 +107,8 @@ private Q_SLOTS:
     /// Calls the DockWidget QML type's source, options, title bar and side bar API
     void tst_dockWidgetInstantiatorExtras();
     void tst_persistentCentralItemFileName();
+    void tst_persistentCentralItemComponent();
+    void tst_persistentCentralItemComponentWithoutCentralWidget();
 };
 
 
@@ -975,6 +977,92 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     // Same value is a no-op
     area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
     QVERIFY(mainWindow->persistentCentralView() == view);
+
+    // Another file replaces it, and the old item is deleted
+    QPointer<QQuickItem> oldItem = QtQuick::asQQuickItem(view.get());
+    area->setPersistentCentralItemFileName(":/MyRectangle.qml");
+    QVERIFY(mainWindow->persistentCentralView() != view);
+    view.reset();
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!oldItem);
+
+    const QMetaObject *mo = area->metaObject();
+    const QMetaProperty prop = mo->property(mo->indexOfProperty("persistentCentralItemFileName"));
+    QCOMPARE(prop.notifySignal().name(), QByteArray("persistentCentralItemFileNameChanged"));
+}
+
+void TestQtQuick::tst_persistentCentralItemComponent()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_persistentCentralItemComponent.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    auto area = engine.rootObjects().constFirst()->findChild<MainWindowInstantiator *>();
+    QVERIFY(area);
+    auto mainWindow = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+    QVERIFY(mainWindow);
+
+    QQmlComponent *component = area->persistentCentralItemComponent();
+    QVERIFY(component);
+    QPointer<QQuickItem> central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+    QCOMPARE(central->objectName(), QString("central-MyWindowName-1"));
+
+    // Clearing it removes and deletes the item
+    area->setPersistentCentralItemComponent(nullptr);
+    QVERIFY(!mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
+
+    // Setting it after the main window was created
+    area->setPersistentCentralItemComponent(component);
+    central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+
+    // A file replaces it, and our item is deleted
+    area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
+    QVERIFY(mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
+
+    // Clearing the component doesn't remove the file's item
+    area->setPersistentCentralItemComponent(nullptr);
+    central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+
+    // The component replaces the file's item, which is deleted
+    area->setPersistentCentralItemComponent(component);
+    QVERIFY(QtQuick::asQQuickItem(mainWindow->persistentCentralView().get()) != central);
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
+}
+
+void TestQtQuick::tst_persistentCentralItemComponentWithoutCentralWidget()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine;
+    SetExpectedWarning ignoreWarning("persistentCentralItemComponent requires");
+    // HasCentralGroup alone shares bits with HasCentralWidget
+    engine.loadData(R"(
+        import QtQuick
+        import QtQuick.Controls
+        import com.kdab.dockwidgets 2.0 as KDDW
+        ApplicationWindow {
+            visible: true
+            width: 1000
+            height: 800
+            KDDW.DockingArea {
+                anchors.fill: parent
+                options: KDDW.KDDockWidgets.MainWindowOption_HasCentralGroup
+                uniqueName: "groupOnlyWindow"
+                persistentCentralItemComponent: Rectangle {}
+            }
+        }
+    )");
+    QVERIFY(!engine.rootObjects().isEmpty());
+
+    auto mainWindow = DockRegistry::self()->mainWindowByName("groupOnlyWindow");
+    QVERIFY(mainWindow);
+    QVERIFY(!mainWindow->persistentCentralView());
 }
 
 void TestQtQuick::tst_dockWidgetInstantiatorExtras()

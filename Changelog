@@ -1,4 +1,6 @@
 * v2.6.0
+  - qtquick: New DockingArea.persistentCentralItemComponent, to declare the persistent central item
+    inline in QML instead of in a separate file
   - qtwidgets: Reset tab to natural position on drag completion
   - Fix maximize button icon not updating when maximizing via double-click (#769)
   - Fix dragging the empty tab bar area of a nested main window moving the outer window (#776)
