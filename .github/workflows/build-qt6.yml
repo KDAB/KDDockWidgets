@@ -27,29 +27,23 @@ jobs:
           - windows-2022
           - macos-15
 
+        # These run tests
         preset:
           - name: ci-dev-hardened
             qt_version: "6.10.1"
-          - name: ci-release-qt6
-            qt_version: "6.3.*"
-          - name: ci-qtwidgets-qt6
-            qt_version: "6.3.*"
-          - name: ci-qtquick-qt6
-            qt_version: "6.3.*"
           - name: ci-dev-static-qt6
             qt_version: "6.3.*"
-          - name: ci-release-static-qt6
-            qt_version: "6.3.*"
 
-        # These build without running tests, so on macOS they run nightly instead, in release-build-nightly.yml
-        exclude:
-          - os: macos-15
+        # These only build, without running tests. On macOS and Windows they run nightly instead,
+        # in release-build-nightly.yml, as their runners queue for longer than these take to build
+        include:
+          - os: ubuntu-26.04
             preset: { name: ci-release-qt6, qt_version: "6.3.*" }
-          - os: macos-15
+          - os: ubuntu-26.04
             preset: { name: ci-qtwidgets-qt6, qt_version: "6.3.*" }
-          - os: macos-15
+          - os: ubuntu-26.04
             preset: { name: ci-qtquick-qt6, qt_version: "6.3.*" }
-          - os: macos-15
+          - os: ubuntu-26.04
             preset: { name: ci-release-static-qt6, qt_version: "6.3.*" }
 
     steps:

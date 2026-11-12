@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-# macOS builds that don't run tests. They only catch build breakage, so they run
-# nightly instead of on every PR, to keep the macOS runner queue short.
-# Their Linux and Windows counterparts still run on PRs, in build-qt6.yml and examples.yml.
+# macOS and Windows builds that don't run tests. They only catch build breakage, so they run
+# nightly instead of on every PR, as their runners queue for longer than these take to build.
+# Their Linux counterparts still run on PRs, in build-qt6.yml and examples.yml.
 
 name: Release builds (nightly)
 
@@ -16,10 +16,13 @@ on:
 jobs:
   # Same as build-qt6.yml
   build-qt6:
-    runs-on: macos-15
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - macos-15
+          - windows-2022
         preset:
           - name: ci-release-qt6
             qt_version: "6.3.*"
@@ -38,10 +41,14 @@ jobs:
           cache: true
 
       - name: Install ninja
-        run: brew install ninja
+        uses: turtlesec-no/get-ninja@main
 
       - name: Checkout sources
         uses: actions/checkout@v7
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: KDABLabs/msvc-dev-cmd-action@v2
 
       - name: Configure project
         run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install
@@ -61,6 +68,7 @@ jobs:
         os:
           - macos-26
           - macos-15
+          - windows-2022
         preset:
           - release
           - ci-release-static-qt6
@@ -78,6 +86,10 @@ jobs:
       - name: Install ninja
         uses: turtlesec-no/get-ninja@main
 
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: KDABLabs/msvc-dev-cmd-action@v2
+
       - name: Configure
         run: cmake --preset=${{ matrix.preset }} -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_NO_SPDLOG=ON -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
 
@@ -88,12 +100,13 @@ jobs:
         run: cmake --install build-${{ matrix.preset }}
 
       - name: Build examples
+        shell: bash
         run: |
           cd examples
           for example in dockwidgets mdi minimal mdi_with_docking misc/documents \
                          qtquick/dockwidgets qtquick/cpp qtquick/customplayground qtquick/customseparator \
                          qtquick/customtabbar qtquick/customtitlebar qtquick/fixed_central_widget \
                          qtquick/mdi qtquick/mdi_with_docking; do
-            cmake -G Ninja -S $example/ -B $example/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+            cmake -G Ninja -S $example/ -B $example/b -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/installed/"
             cmake --build $example/b
           done
