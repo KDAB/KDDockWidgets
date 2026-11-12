@@ -1,0 +1,99 @@
+# SPDX-FileCopyrightText: 2026 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+# macOS builds that don't run tests. They only catch build breakage, so they run
+# nightly instead of on every PR, to keep the macOS runner queue short.
+# Their Linux and Windows counterparts still run on PRs, in build-qt6.yml and examples.yml.
+
+name: Release builds (nightly)
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  # Same as build-qt6.yml
+  build-qt6:
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        preset:
+          - name: ci-release-qt6
+            qt_version: "6.3.*"
+          - name: ci-qtwidgets-qt6
+            qt_version: "6.3.*"
+          - name: ci-qtquick-qt6
+            qt_version: "6.3.*"
+          - name: ci-release-static-qt6
+            qt_version: "6.3.*"
+
+    steps:
+      - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ matrix.preset.qt_version }}
+          cache: true
+
+      - name: Install ninja
+        run: brew install ninja
+
+      - name: Checkout sources
+        uses: actions/checkout@v7
+
+      - name: Configure project
+        run: cmake -S . -B ./build-${{ matrix.preset.name }} --preset ${{ matrix.preset.name }} -DCMAKE_INSTALL_PREFIX=install
+
+      - name: Build Project
+        run: cmake --build ./build-${{ matrix.preset.name }}
+
+      - name: Install
+        run: cmake --build ./build-${{ matrix.preset.name }} --target install
+
+  # Same as examples.yml
+  examples:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-26
+          - macos-15
+        preset:
+          - release
+          - ci-release-static-qt6
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          # Qt 6.6 links AGL, which the macOS 26 SDK no longer ships
+          version: ${{ matrix.os == 'macos-26' && '6.10.*' || '6.6' }}
+          cache: true
+
+      - name: Checkout sources
+        uses: actions/checkout@v7
+
+      - name: Install ninja
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Configure
+        run: cmake --preset=${{ matrix.preset }} -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/installed/ -DKDDockWidgets_NO_SPDLOG=ON -DKDDockWidgets_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Build
+        run: cmake --build build-${{ matrix.preset }} --parallel
+
+      - name: Install
+        run: cmake --install build-${{ matrix.preset }}
+
+      - name: Build examples
+        run: |
+          cd examples
+          for example in dockwidgets mdi minimal mdi_with_docking misc/documents \
+                         qtquick/dockwidgets qtquick/cpp qtquick/customplayground qtquick/customseparator \
+                         qtquick/customtabbar qtquick/customtitlebar qtquick/fixed_central_widget \
+                         qtquick/mdi qtquick/mdi_with_docking; do
+            cmake -G Ninja -S $example/ -B $example/b -DCMAKE_PREFIX_PATH=${{ github.workspace }}/installed/
+            cmake --build $example/b
+          done

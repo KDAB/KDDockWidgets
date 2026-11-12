@@ -41,6 +41,17 @@ jobs:
           - name: ci-release-static-qt6
             qt_version: "6.3.*"
 
+        # These build without running tests, so on macOS they run nightly instead, in release-build-nightly.yml
+        exclude:
+          - os: macos-15
+            preset: { name: ci-release-qt6, qt_version: "6.3.*" }
+          - os: macos-15
+            preset: { name: ci-qtwidgets-qt6, qt_version: "6.3.*" }
+          - os: macos-15
+            preset: { name: ci-qtquick-qt6, qt_version: "6.3.*" }
+          - os: macos-15
+            preset: { name: ci-release-static-qt6, qt_version: "6.3.*" }
+
     steps:
       - name: Install Qt ${{ matrix.preset.qt_version }} with options and default aqtversion
         uses: jurplel/install-qt-action@v4
