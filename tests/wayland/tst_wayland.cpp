@@ -21,6 +21,7 @@
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/DragController_p.h"
+#include "core/FloatingWindow.h"
 #include "core/Group.h"
 #include "core/MainWindow.h"
 #include "core/Platform.h"
@@ -28,6 +29,9 @@
 #include "core/TabBar.h"
 #include "core/TitleBar.h"
 #include "qtcommon/View.h"
+#ifdef KDDW_FRONTEND_QTQUICK
+#include "qtquick/views/TabBar.h"
+#endif
 
 #include <qpa/qplatformwindow_p.h>
 
@@ -89,6 +93,18 @@ protected:
     }
 };
 
+/// Returns the center of the tab of @p dw, relative to @p tabBar
+Point tabCenter(TabBar *tabBar, DockWidget *dw)
+{
+    const int index = tabBar->indexOfDockWidget(dw);
+#ifdef KDDW_FRONTEND_QTQUICK
+    // QtQuick's rectForTab() is relative to the tab, not to the tab bar
+    if (auto quickTabBar = dynamic_cast<QtQuick::TabBar *>(tabBar->view()))
+        return tabBar->view()->mapFromGlobal(quickTabBar->globalRectForTab(index).center());
+#endif
+    return tabBar->rectForTab(index).center();
+}
+
 wl_surface *surfaceFor(QWidget *widget)
 {
     auto waylandWindow = widget->windowHandle()->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
@@ -109,6 +125,7 @@ private Q_SLOTS:
     void tst_dragTabToEmptySpaceKeepsItDocked();
     void tst_cancelledTabReorderDragResetsTabBar();
     void tst_tabDroppedOntoForeignWindowResetsTabBar();
+    void tst_dragTabOverDropIndicators();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -327,6 +344,37 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
     QVERIFY(!isShowingMovingTab(qtabBar));
+}
+
+void TestWayland::tst_dragTabOverDropIndicators()
+{
+    // Drags a tab out of a tab group and over the drop indicators of the group next to it.
+    // With QtQuick, WindowBeingDraggedWayland didn't know which dock widget was being dragged,
+    // so it had no size, which crashed (PR #783)
+
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+    dock1->addDockWidgetAsTab(dock2);
+    dock1->addDockWidgetToContainingWindow(dock3, Location_OnRight);
+
+    FloatingWindow *fw = dock1->floatingWindow();
+    QVERIFY(fw);
+    QCOMPARE(dock3->floatingWindow(), fw);
+    fw->view()->setSize(800, 500);
+    QVERIFY(waitForMapped(fw->view()));
+
+    Group *group3 = dock3->dptr()->group();
+    QVERIFY(dock2->dptr()->group() != group3);
+
+    TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
+    m_input->drag(tabBar->view(), tabCenter(tabBar, dock2), group3->view(), group3->view()->rect().center());
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_VERIFY(!DragController::instance()->isDragging());
+    QTRY_COMPARE(dock2->dptr()->group(), group3);
+    QCOMPARE(group3->dockWidgetCount(), 2);
 }
 
 int main(int argc, char *argv[])
