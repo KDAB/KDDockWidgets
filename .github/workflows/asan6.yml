@@ -62,6 +62,7 @@ jobs:
       - name: Run tests
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure -j 4
         env:
+          QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
           LSAN_OPTIONS: detect_leaks=0

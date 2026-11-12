@@ -94,3 +94,5 @@ jobs:
       - name: Run tests on Window/macOS
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') && runner.os != 'Linux' }}
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose --output-on-failure -j 4
+        env:
+          QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise
