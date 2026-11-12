@@ -57,3 +57,5 @@ jobs:
       - name: Run tests
         if: ${{ startsWith(matrix.preset.name, 'ci-dev-') }}
         run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
+        env:
+          QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise

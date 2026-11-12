@@ -75,3 +75,5 @@ jobs:
       - name: Run tests on Window/macOS
         if: ${{ runner.os != 'Linux' }}
         run: ctest --test-dir ./build --verbose --output-on-failure -j 4
+        env:
+          QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise
