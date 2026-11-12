@@ -263,6 +263,7 @@ private Q_SLOTS:
     void tst_stackSwitchTabsViaMenu();
     void tst_stackTabCloseRequested();
     void tst_stackButtons();
+    void tst_clearBreaksPersistentCentralWidget();
 
 private:
     void separatorMouse(bool lazy);
@@ -3704,6 +3705,69 @@ void TestQtWidgets::tst_stackButtons()
     QVERIFY(dock1->isFloating());
 
     delete dock1;
+}
+
+void TestQtWidgets::tst_clearBreaksPersistentCentralWidget()
+{
+    // #685
+    // Tests that DockRegistry::clear() before restoring a layout doesn't break
+    // a persistent central widget (inner MainWindow set as central widget of outer)
+    EnsureTopLevelsDeleted e;
+
+    // Outer MainWindow with affinity0, has central widget option, no docks
+    auto outerMW = createMainWindow(QSize(1200, 1200), MainWindowOption_HasCentralWidget, "outerMW");
+    outerMW->setAffinities({ "affinity0" });
+
+    // Inner MainWindow with affinity1, no central widget option, one dock
+    auto innerMW = createMainWindow(QSize(800, 800), MainWindowOption_None, "innerMW");
+    innerMW->setAffinities({ "affinity1" });
+
+    auto dock1 = new KDDockWidgets::QtWidgets::DockWidget("innerDock1");
+    dock1->setWidget(new QPushButton("inner dock"));
+    dock1->setAffinities({ "affinity1" });
+    innerMW->addDockWidget(dock1->asDockWidgetController(), KDDockWidgets::Location_OnTop);
+
+    // Set inner MainWindow as persistent central widget of outer
+    auto outerQMainWindow = dynamic_cast<QtWidgets::MainWindow *>(outerMW->view());
+    auto innerQMainWindow = dynamic_cast<QtWidgets::MainWindow *>(innerMW->view());
+
+    // some visual cues
+    outerQMainWindow->menuBar()->addMenu("Outer menu");
+    innerQMainWindow->menuBar()->addMenu("Inner menu");
+
+    outerQMainWindow->setPersistentCentralWidget(innerQMainWindow);
+
+    // Verify initial state
+    QCOMPARE(outerQMainWindow->persistentCentralWidget(), innerQMainWindow);
+    QTest::qWait(100);
+    QVERIFY(innerQMainWindow->isVisible());
+
+    // Save layout
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    // Clear and restore — this is what breaks the layout
+    DockRegistry::self()->clear();
+
+    LayoutSaver restorer;
+    restorer.setAffinityNames({ "affinity1" });
+    {
+        SetExpectedWarning sew("The layout was probably saved without that window");
+        QVERIFY(restorer.restoreLayout(saved));
+    }
+
+    // The outer main window should still have its persistent central group
+    QEXPECT_FAIL("", "#685: DockRegistry::clear() breaks the persistent central widget", Continue);
+    QCOMPARE(outerMW->layout()->count(), 1);
+
+    // Verify central widget is still properly set and visible
+    QCOMPARE(outerQMainWindow->persistentCentralWidget(), innerQMainWindow);
+    QVERIFY(innerQMainWindow->isVisible());
+    QVERIFY(innerQMainWindow->parentWidget() != nullptr);
+
+    // The inner MainWindow should still be inside the outer one, not detached
+    QVERIFY(innerQMainWindow->window() == outerQMainWindow->window());
 }
 
 int main(int argc, char *argv[])
