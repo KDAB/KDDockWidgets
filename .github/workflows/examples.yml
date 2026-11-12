@@ -21,8 +21,7 @@ jobs:
       matrix:
         os:
           - ubuntu-26.04
-          - windows-2022
-          # macOS runs nightly instead, in release-build-nightly.yml
+          # macOS and Windows run nightly instead, in release-build-nightly.yml
         preset:
           - release
           - ci-release-static-qt6
@@ -32,10 +31,6 @@ jobs:
         with:
           version: 6.6
           cache: true
-
-      - name: Make sure MSVC is found when Ninja generator is in use
-        if: ${{ runner.os == 'Windows' }}
-        uses: KDABLabs/msvc-dev-cmd-action@v2
 
       - name: Install mold linker
         if: ${{ runner.os == 'Linux' }}
