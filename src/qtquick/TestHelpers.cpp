@@ -25,6 +25,8 @@
 #include <QQuickView>
 #include <QtTest/QTest>
 
+#include <algorithm>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::QtQuick;
 
@@ -79,10 +81,16 @@ void Platform::tests_initPlatform_impl()
 void Platform::tests_deinitPlatform_impl()
 {
     delete m_qmlEngine;
-    auto windows = qGuiApp->topLevelWindows();
-    while (!windows.isEmpty()) {
-        delete windows.first();
-        windows = qGuiApp->topLevelWindows();
+
+    // Except Qt's drag pixmap window, which QPlatformDrag owns and deletes, for example on Wayland
+    while (true) {
+        const auto windows = qGuiApp->topLevelWindows();
+        auto it = std::find_if(windows.cbegin(), windows.cend(), [](QWindow *w) {
+            return !w->inherits("QShapedPixmapWindow");
+        });
+        if (it == windows.cend())
+            break;
+        delete *it;
     }
 
     Platform_qt::tests_deinitPlatform_impl();

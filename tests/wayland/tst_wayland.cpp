@@ -132,6 +132,9 @@ void TestWayland::cleanupTestCase()
 
 void TestWayland::tst_dragDockWidgetOntoAnother()
 {
+    if (!Platform::instance()->isQtWidgets())
+        QSKIP("Not tested with QtQuick yet");
+
     // Drags dock1 by its title bar and drops it onto the center of dock2, so they get tabbed
 
     EnsureTopLevelsDeleted e;
@@ -160,6 +163,9 @@ void TestWayland::tst_dragDockWidgetOntoAnother()
 
 void TestWayland::tst_doubleClickTabDetaches()
 {
+    if (!Platform::instance()->isQtWidgets())
+        QSKIP("Not tested with QtQuick yet");
+
     // On Wayland, dragging a tab out to empty space doesn't detach it, as the compositor cancels
     // drags that aren't dropped onto a window. Double-clicking the tab detaches it instead.
 
@@ -185,6 +191,9 @@ void TestWayland::tst_doubleClickTabDetaches()
 
 void TestWayland::tst_dragTabToEmptySpaceKeepsItDocked()
 {
+    if (!Platform::instance()->isQtWidgets())
+        QSKIP("Not tested with QtQuick yet");
+
     // Releasing a drag over no window makes the compositor cancel it, so the tab stays put
 
     EnsureTopLevelsDeleted e;
@@ -215,6 +224,9 @@ void TestWayland::tst_dragTabToEmptySpaceKeepsItDocked()
 
 void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
 {
+    if (!Platform::instance()->isQtWidgets())
+        QSKIP("Not tested with QtQuick yet");
+
     // Regression test for #762: dragging a tab sideways reorders it within QTabBar, and once past
     // the last tab KDDW starts its drag too. QTabBar never gets the mouse release, which the drag's
     // nested event loop consumes, so after a cancelled drag it stays stuck mid-reorder.
@@ -260,6 +272,9 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
 
 void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
 {
+    if (!Platform::instance()->isQtWidgets())
+        QSKIP("Not tested with QtQuick yet");
+
     // Like tst_cancelledTabReorderDragResetsTabBar, but the tab is dropped onto a window which
     // accepts the drop, like the desktop or another application might. QDrag::exec() then
     // doesn't return Qt::IgnoreAction, which mustn't leave DragController stuck in its dragging
@@ -323,13 +338,16 @@ int main(int argc, char *argv[])
     FatalLogger::create();
 #endif
 
-    // Unlike the other tests, which run for every frontend, only QtWidgets is supported for now
-    Platform::tests_initPlatform(argc, argv, FrontendType::QtWidgets);
-    TestWayland test;
-    const int exitCode = QTest::qExec(&test, argc, argv);
-    Platform::tests_deinitPlatform();
+    for (auto frontend : Platform::frontendTypes()) {
+        Platform::tests_initPlatform(argc, argv, frontend);
+        TestWayland test;
+        const int exitCode = QTest::qExec(&test, argc, argv);
+        Platform::tests_deinitPlatform();
+        if (exitCode != 0)
+            return exitCode;
+    }
 
-    return exitCode;
+    return 0;
 }
 
 #include "tst_wayland.moc"
