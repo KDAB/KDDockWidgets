@@ -6032,14 +6032,9 @@ void TestDocks::tst_persistentCentralWidgetTwoMainWindows()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "m1");
-    auto m2 = [] {
-        // Both persistent central dock widgets get the same name
-        SetExpectedWarning sew("already exists");
-        return createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "m2");
-    }();
+    auto m2 = createMainWindow(Size(500, 500), MainWindowOption_HasCentralWidget, "m2");
     auto dw1 = m1->dropArea()->dockWidgets().constFirst();
     auto dw2 = m2->dropArea()->dockWidgets().constFirst();
-    QEXPECT_FAIL("", "Persistent central dock widget isn't named after its main window", Abort);
     QCOMPARE(dw1->uniqueName(), QString("m1-persistentCentralDockWidget"));
     QCOMPARE(dw2->uniqueName(), QString("m2-persistentCentralDockWidget"));
 
