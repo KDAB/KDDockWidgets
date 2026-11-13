@@ -721,16 +721,16 @@ bool DragController::onDnDEvent(View *view, Event *e)
         KDDW_DEBUG("DragController::onDnDEvent: ev={}, dropArea=", int(e->type()), ( void * )view->asDropAreaController());
 
         if (auto dropArea = qobject_cast<Core::DropArea *>(Core::View::firstParentOfType(view, ViewType::DropArea))) {
+            if (e->type() == Event::DragLeave)
+                return activeState()->handleDragLeave(dropArea);
+
+            // Only now, as a DragLeave isn't a DropEvent and has no position
             auto dropEvent = static_cast<DropEvent *>(e);
             const QPoint globalEventPosition = view->mapToGlobal(Qt5Qt6Compat::eventPos(dropEvent));
 
             switch (int(e->type())) {
             case Event::DragEnter:
                 if (activeState()->handleDragEnter(static_cast<DragMoveEvent *>(e), dropArea, globalEventPosition))
-                    return true;
-                break;
-            case Event::DragLeave:
-                if (activeState()->handleDragLeave(dropArea))
                     return true;
                 break;
             case Event::DragMove:
