@@ -18,15 +18,35 @@
 #include <qpa/qplatformwindow_p.h>
 
 #include <QEventLoop>
+#include <QProcess>
 #include <QTest>
 #include <QTimer>
 
+#include <cerrno>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <vector>
+
+#include <fcntl.h>
 #include <linux/input-event-codes.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests::Wayland;
 
 namespace {
+
+// The compositor started by ensureCompositor(), it exits once s_compositorStdin is closed
+pid_t s_compositorPid = -1;
+int s_compositorStdin = -1;
+
+void stopCompositor()
+{
+    ::close(s_compositorStdin);
+    ::waitpid(s_compositorPid, nullptr, 0);
+}
 
 QWindow *qtWindowFor(Core::View *view)
 {
@@ -167,4 +187,73 @@ bool KDDockWidgets::Tests::Wayland::waitForMapped(Core::View *view)
 {
     QWindow *window = qtWindowFor(view);
     return window && QTest::qWaitForWindowExposed(window);
+}
+
+bool Tests::Wayland::ensureCompositor(const char *compositorPath)
+{
+    if (qEnvironmentVariableIsSet("KDDW_IN_TEST_COMPOSITOR"))
+        return true;
+
+    QList<QByteArray> args = { compositorPath };
+    const auto extraArgs = QProcess::splitCommand(qEnvironmentVariable("KDDW_TEST_COMPOSITOR_ARGS"));
+    for (const QString &arg : extraArgs)
+        args << arg.toLocal8Bit();
+    args << "--serve";
+
+    std::vector<char *> argv;
+    for (QByteArray &arg : args)
+        argv.push_back(arg.data());
+    argv.push_back(nullptr);
+
+    int toCompositor[2];
+    int fromCompositor[2];
+    if (::pipe2(toCompositor, O_CLOEXEC) != 0 || ::pipe2(fromCompositor, O_CLOEXEC) != 0) {
+        std::perror("ensureCompositor: pipe2");
+        return false;
+    }
+
+    const pid_t pid = ::fork();
+    if (pid == -1) {
+        std::perror("ensureCompositor: fork");
+        return false;
+    }
+
+    if (pid == 0) {
+        ::dup2(toCompositor[0], STDIN_FILENO);
+        ::dup2(fromCompositor[1], STDOUT_FILENO);
+        ::execv(compositorPath, argv.data());
+        std::fprintf(stderr, "Failed to start %s: %s\n", compositorPath, std::strerror(errno));
+        ::_exit(127);
+    }
+
+    ::close(toCompositor[0]);
+    ::close(fromCompositor[1]);
+    s_compositorPid = pid;
+    // Kept open for as long as we live. The kernel closes it if we crash, which stops the compositor.
+    s_compositorStdin = toCompositor[1];
+    std::atexit(stopCompositor);
+
+    // The compositor tells us which environment to use, then "READY"
+    FILE *output = ::fdopen(fromCompositor[0], "r");
+    char *line = nullptr;
+    size_t lineCapacity = 0;
+    bool ready = false;
+    while (::getline(&line, &lineCapacity, output) != -1) {
+        const QByteArray entry = QByteArray(line).trimmed();
+        if (entry == "READY") {
+            ready = true;
+            break;
+        }
+
+        const qsizetype equalsPos = entry.indexOf('=');
+        if (equalsPos > 0)
+            qputenv(entry.left(equalsPos).constData(), entry.mid(equalsPos + 1));
+    }
+    std::free(line);
+    std::fclose(output);
+
+    if (!ready)
+        std::fprintf(stderr, "ensureCompositor: %s exited before being ready\n", compositorPath);
+
+    return ready;
 }

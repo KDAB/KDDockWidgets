@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-// Tests that need a real Wayland compositor. Run them through kddw_test_compositor:
-//   kddw_test_compositor -- tst_wayland
+// Tests that need a real Wayland compositor. They start kddw_test_compositor themselves, see
+// ensureCompositor(). Use KDDW_TEST_COMPOSITOR_ARGS="--visible" to watch them.
 
 #include "WaylandTestUtils.h"
 #include "../utils.h"
@@ -117,13 +117,7 @@ private:
 void TestWayland::initTestCase()
 {
     if (Platform::instance()->displayType() != Platform::DisplayType::Wayland) {
-        const QString message =
-            QStringLiteral("tst_wayland needs to run inside kddw_test_compositor. Run it with either:\n"
-                           "    ctest --test-dir %1 -L wayland\n"
-                           "    %2 [--visible] [--step-delay <msecs>] -- %3")
-                .arg(QStringLiteral(KDDW_BUILD_DIR), QStringLiteral(KDDW_TEST_COMPOSITOR),
-                     QCoreApplication::applicationFilePath());
-        QFAIL(qPrintable(message));
+        QFAIL("tst_wayland needs to run against kddw_test_compositor, don't pass -platform");
     }
 
     m_input = std::make_unique<TestInput>();
@@ -322,6 +316,9 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
 
 int main(int argc, char *argv[])
 {
+    if (!ensureCompositor(KDDW_TEST_COMPOSITOR))
+        return 1;
+
 #ifdef KDDW_HAS_SPDLOG
     FatalLogger::create();
 #endif

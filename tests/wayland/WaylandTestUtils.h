@@ -23,6 +23,14 @@ class View;
 
 namespace KDDockWidgets::Tests::Wayland {
 
+/// Makes sure the test runs against kddw_test_compositor. Unless already running inside one,
+/// starts @p compositorPath in --serve mode and sets the environment so the QGuiApplication
+/// created afterwards connects to it. The compositor exits along with the test.
+/// Extra compositor arguments can be passed with KDDW_TEST_COMPOSITOR_ARGS, for example
+/// KDDW_TEST_COMPOSITOR_ARGS="--visible --step-delay 100".
+/// Call before creating the QGuiApplication. Returns false on failure.
+[[nodiscard]] bool ensureCompositor(const char *compositorPath);
+
 /// Client side of kddw-test-v1, see protocol/kddw-test-v1.xml.
 /// Requests are queued by the compositor until commitAndWait() is called.
 class TestInput : public QWaylandClientExtensionTemplate<TestInput>, public QtWayland::kddw_test_v1

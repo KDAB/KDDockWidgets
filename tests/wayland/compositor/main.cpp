@@ -11,9 +11,12 @@
 
 // A minimal Wayland compositor for running KDDW tests against.
 // Usage: kddw_test_compositor [options] -- <test executable> [test args]
+//    or: kddw_test_compositor [options] --serve
 //
-// It runs the test as its only client and exits with the test's exit code. The test drives
-// input through the kddw-test-v1 protocol, see ../protocol/kddw-test-v1.xml.
+// The first form runs the test as its only client and exits with the test's exit code.
+// With --serve it prints the environment a client needs as KEY=VALUE lines followed by
+// "READY", and runs until stdin is closed. Tests use it to start a compositor themselves.
+// The test drives input through the kddw-test-v1 protocol, see ../protocol/kddw-test-v1.xml.
 
 #include "TestExtension.h"
 
@@ -24,12 +27,15 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
+#include <QSocketNotifier>
 #include <QTemporaryDir>
 #include <QTimer>
 #include <QWaylandCompositor>
 #include <QWaylandOutput>
 
 #include <cstdio>
+
+#include <unistd.h>
 
 int main(int argc, char **argv)
 {
@@ -73,11 +79,17 @@ int main(int argc, char **argv)
     const QCommandLineOption stepDelayOption(QStringLiteral("step-delay"),
                                              QStringLiteral("Delay between input actions"),
                                              QStringLiteral("msecs"), QStringLiteral("5"));
-    parser.addOptions({ visibleOption, timeoutOption, sizeOption, stepDelayOption });
+    const QCommandLineOption serveOption(
+        QStringLiteral("serve"),
+        QStringLiteral("Don't start a client. Print the client environment and run until stdin is closed"));
+    parser.addOptions({ visibleOption, timeoutOption, sizeOption, stepDelayOption, serveOption });
     parser.process(app);
 
-    if (clientArgs.isEmpty()) {
-        std::fputs("Missing client. Usage: kddw_test_compositor [options] -- <client> [args]\n", stderr);
+    const bool serve = parser.isSet(serveOption);
+    if (serve == !clientArgs.isEmpty()) {
+        std::fputs("Usage: kddw_test_compositor [options] -- <client> [args]\n"
+                   "       kddw_test_compositor [options] --serve\n",
+                   stderr);
         return 2;
     }
 
@@ -116,16 +128,44 @@ int main(int argc, char **argv)
     extension->setStepDelay(parser.value(stepDelayOption).toInt());
     extension->initialize();
 
+    const QList<std::pair<QString, QString>> clientEnv = {
+        { QStringLiteral("WAYLAND_DISPLAY"), socketName },
+        { QStringLiteral("XDG_RUNTIME_DIR"), runtimeDir.path() },
+        { QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("wayland") },
+        { QStringLiteral("QT_WAYLAND_SHELL_INTEGRATION"), QStringLiteral("xdg-shell") },
+        { QStringLiteral("QT_WAYLAND_DISABLE_WINDOWDECORATION"), QStringLiteral("1") },
+        { QStringLiteral("QT_SCALE_FACTOR"), QStringLiteral("1") },
+        // KDDW tests force the offscreen QPA otherwise
+        { QStringLiteral("KDDW_NO_OFFSCREEN"), QStringLiteral("1") },
+        // So tests know they don't need to start a compositor themselves
+        { QStringLiteral("KDDW_IN_TEST_COMPOSITOR"), QStringLiteral("1") },
+    };
+
+    if (serve) {
+        for (const auto &[name, value] : clientEnv)
+            std::printf("%s=%s\n", qPrintable(name), qPrintable(value));
+        std::puts("READY");
+        std::fflush(stdout);
+        // The client might stop reading stdout, don't risk SIGPIPE
+        ::dup2(STDERR_FILENO, STDOUT_FILENO);
+
+        // The client keeps our stdin open for as long as it's alive, even if it crashes
+        QSocketNotifier stdinNotifier(STDIN_FILENO, QSocketNotifier::Read);
+        QObject::connect(&stdinNotifier, &QSocketNotifier::activated, &app, [&app, &stdinNotifier] {
+            char buf[64];
+            if (::read(STDIN_FILENO, buf, sizeof(buf)) <= 0) {
+                stdinNotifier.setEnabled(false);
+                app.quit();
+            }
+        });
+
+        return app.exec();
+    }
+
     QProcess client;
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert(QStringLiteral("WAYLAND_DISPLAY"), socketName);
-    env.insert(QStringLiteral("XDG_RUNTIME_DIR"), runtimeDir.path());
-    env.insert(QStringLiteral("QT_QPA_PLATFORM"), QStringLiteral("wayland"));
-    env.insert(QStringLiteral("QT_WAYLAND_SHELL_INTEGRATION"), QStringLiteral("xdg-shell"));
-    env.insert(QStringLiteral("QT_WAYLAND_DISABLE_WINDOWDECORATION"), QStringLiteral("1"));
-    env.insert(QStringLiteral("QT_SCALE_FACTOR"), QStringLiteral("1"));
-    // KDDW tests force the offscreen QPA otherwise
-    env.insert(QStringLiteral("KDDW_NO_OFFSCREEN"), QStringLiteral("1"));
+    for (const auto &[name, value] : clientEnv)
+        env.insert(name, value);
     client.setProcessEnvironment(env);
     client.setProcessChannelMode(QProcess::ForwardedChannels);
 
