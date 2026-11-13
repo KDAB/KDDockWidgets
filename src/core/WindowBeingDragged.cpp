@@ -247,11 +247,9 @@ KDDW_NO_COVERAGE WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable 
         // native dragging. Not the case for Wayland. But adding this case for completeness.
         m_floatingWindow = fw;
     } else if (auto tabBar = draggable->asView()->asTabBarController()) {
-        if (Platform::instance()->isQtWidgets())
-            m_dockWidget = tabBar->currentDockWidget();
+        m_dockWidget = tabBar->currentDockWidget();
     } else if (auto stack = draggable->asView()->asStackController()) {
-        if (Platform::instance()->isQtWidgets())
-            m_group = stack->group();
+        m_group = stack->group();
     } else {
         KDDW_ERROR("Unknown draggable {} please fix)", ( void * )draggable);
     }
