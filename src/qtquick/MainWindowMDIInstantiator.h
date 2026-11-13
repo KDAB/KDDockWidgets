@@ -33,7 +33,7 @@ class DOCKS_EXPORT MainWindowMDIInstantiator : public QQuickItem
     Q_OBJECT
     QML_NAMED_ELEMENT(MDIDockingArea)
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(QVector<QString> affinities READ affinities CONSTANT)
+    Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
 public:
     ///@brief ctor, called by QML engine
     MainWindowMDIInstantiator();
@@ -42,6 +42,8 @@ public:
     void setUniqueName(const QString &);
 
     QVector<QString> affinities() const;
+    /// @brief Only applied when the main window is created. Changing it later has no effect.
+    void setAffinities(const QVector<QString> &);
 
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, QPoint localPos, QSize initialSize = {},
                                    KDDockWidgets::InitialVisibilityOption = {});
@@ -55,9 +57,11 @@ protected:
 Q_SIGNALS:
     void uniqueNameChanged();
     void optionsChanged();
+    void affinitiesChanged();
 
 private:
     QString m_uniqueName;
+    QVector<QString> m_affinities;
     Core::MainWindow *m_mainWindow = nullptr;
 };
 
