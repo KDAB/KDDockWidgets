@@ -45,6 +45,14 @@ QVector<QString> MainWindowMDIInstantiator::affinities() const
     return m_mainWindow ? m_mainWindow->affinities() : QVector<QString>();
 }
 
+void MainWindowMDIInstantiator::setAffinities(const QVector<QString> &affinities)
+{
+    if (m_affinities != affinities) {
+        m_affinities = affinities;
+        Q_EMIT affinitiesChanged();
+    }
+}
+
 void MainWindowMDIInstantiator::addDockWidget(QQuickItem *dockWidget, QPoint localPos,
                                               QSize initialSize,
                                               InitialVisibilityOption visibilityOption)
@@ -92,4 +100,5 @@ void MainWindowMDIInstantiator::componentComplete()
 
     Core::View *view = new QtQuick::MainWindowMDI(m_uniqueName, this);
     m_mainWindow = view->asMainWindowController();
+    m_mainWindow->setAffinities(m_affinities);
 }

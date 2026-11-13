@@ -579,31 +579,21 @@ void TestQtQuick::tst_mdiAffinities()
 {
     EnsureTopLevelsDeleted e;
     QQmlApplicationEngine engine;
-    {
-        // QML refuses to assign a read-only property, and warns twice
-        static QtMessageHandler s_previousHandler = nullptr;
-        s_previousHandler = qInstallMessageHandler([](QtMsgType t, const QMessageLogContext &context, const QString &msg) {
-            if (!msg.contains(QLatin1String("failed to load component")) && !msg.contains(QLatin1String("read-only property")))
-                s_previousHandler(t, context, msg);
-        });
-        engine.loadData(R"(
-            import QtQuick
-            import com.kdab.dockwidgets 2.0 as KDDW
-            Window {
-                visible: true
-                width: 800
-                height: 600
-                KDDW.MDIDockingArea {
-                    objectName: "mdiArea"
-                    anchors.fill: parent
-                    uniqueName: "mdiAffinitiesWindow"
-                    affinities: ["editors"]
-                }
+    engine.loadData(R"(
+        import QtQuick
+        import com.kdab.dockwidgets 2.0 as KDDW
+        Window {
+            visible: true
+            width: 800
+            height: 600
+            KDDW.MDIDockingArea {
+                objectName: "mdiArea"
+                anchors.fill: parent
+                uniqueName: "mdiAffinitiesWindow"
+                affinities: ["editors"]
             }
-        )");
-        qInstallMessageHandler(s_previousHandler);
-    }
-    QEXPECT_FAIL("", "MDIDockingArea.affinities is read-only", Abort);
+        }
+    )");
     QVERIFY(!engine.rootObjects().isEmpty());
 
     MainWindow *m = DockRegistry::self()->mainWindowByName("mdiAffinitiesWindow");
