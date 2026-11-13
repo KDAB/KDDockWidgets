@@ -31,10 +31,8 @@ kddw_link_to_kdbindings(tst_wayland)
 kddw_add_nlohmann(tst_wayland)
 set_compiler_flags(tst_wayland)
 
-add_test(NAME tst_wayland COMMAND kddw_test_compositor -- $<TARGET_FILE:tst_wayland>)
-
-# For the message telling how to run it, when it's not run through the compositor
-target_compile_definitions(
-    tst_wayland PRIVATE KDDW_BUILD_DIR="${CMAKE_BINARY_DIR}" KDDW_TEST_COMPOSITOR="$<TARGET_FILE:kddw_test_compositor>"
-)
+# tst_wayland starts the compositor itself, so it's a plain QtTest executable (IDEs can list its slots)
+add_dependencies(tst_wayland kddw_test_compositor)
+target_compile_definitions(tst_wayland PRIVATE KDDW_TEST_COMPOSITOR="$<TARGET_FILE:kddw_test_compositor>")
+add_test(NAME tst_wayland COMMAND tst_wayland)
 set_tests_properties(tst_wayland PROPERTIES LABELS wayland)
