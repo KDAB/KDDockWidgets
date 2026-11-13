@@ -2,6 +2,8 @@
   - qtwidgets: Reset tab to natural position on drag completion
   - Fix maximize button icon not updating when maximizing via double-click (#769)
   - Fix dragging the empty tab bar area of a nested main window moving the outer window (#776)
+  - Fix persistent central widget with more than one main window. Its dock widget
+    is now named after its main window
   - Bump SO version since added new virtual methods
 
 * v2.5.1

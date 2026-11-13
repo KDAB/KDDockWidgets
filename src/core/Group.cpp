@@ -769,6 +769,11 @@ Group *Group::deserialize(const LayoutSaver::Group &f)
     group->setObjectName(f.objectName);
 
     for (const auto &savedDock : std::as_const(f.dockWidgets)) {
+        // Older layouts named every persistent central dock widget like this, without the main
+        // window name. Ours is already in the group, so don't ask the factory to create a new one.
+        if (isPersistentCentralFrame && savedDock->uniqueName == QStringLiteral("-persistentCentralDockWidget"))
+            continue;
+
         if (DockWidget *dw = DockWidget::deserialize(savedDock)) {
             group->addTab(dw);
         }
