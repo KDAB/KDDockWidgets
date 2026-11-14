@@ -126,6 +126,7 @@ private Q_SLOTS:
     void tst_cancelledTabReorderDragResetsTabBar();
     void tst_tabDroppedOntoForeignWindowResetsTabBar();
     void tst_dragTabOverDropIndicators();
+    void tst_dragTabOntoMainWindow();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -375,6 +376,41 @@ void TestWayland::tst_dragTabOverDropIndicators()
     QTRY_VERIFY(!DragController::instance()->isDragging());
     QTRY_COMPARE(dock2->dptr()->group(), group3);
     QCOMPARE(group3->dockWidgetCount(), 2);
+}
+
+void TestWayland::tst_dragTabOntoMainWindow()
+{
+    // Drags a tab out of a floating window and drops it onto a dock widget of a main window.
+    // With QtQuick, the main window's drop area didn't receive the drag, as it lacked
+    // ItemAcceptsDrops. Floating windows were fine, as they wrap theirs in a QML DropArea.
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock3, Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+    FloatingWindow *fw = dock1->floatingWindow();
+    QVERIFY(fw);
+    fw->view()->setSize(500, 400);
+    QVERIFY(waitForMapped(m->view()));
+    QVERIFY(waitForMapped(fw->view()));
+    m_input->set_window_position(Wayland::surfaceFor(m->view()), 0, 0);
+    m_input->set_window_position(Wayland::surfaceFor(fw->view()), 850, 0);
+    QVERIFY(m_input->commitAndWait());
+
+    Group *group3 = dock3->dptr()->group();
+    TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
+    m_input->drag(tabBar->view(), tabCenter(tabBar, dock2), group3->view(), group3->view()->rect().center());
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_VERIFY(!DragController::instance()->isDragging());
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "QtQuick main window drop areas don't receive drags on Wayland", Abort);
+    QTRY_COMPARE(dock2->dptr()->group(), group3);
+    QCOMPARE(group3->dockWidgetCount(), 2);
+    QVERIFY(dock2->isInMainWindow());
 }
 
 int main(int argc, char *argv[])
