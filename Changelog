@@ -5,6 +5,7 @@
   - Fix dragging the empty tab bar area of a nested main window moving the outer window (#776)
   - Fix persistent central widget with more than one main window. Its dock widget
     is now named after its main window
+  - qtquick: Fix ApplicationWindow's popup overlay (Drawer, open Popup) hiding drop indicators
   - Bump SO version since added new virtual methods
 
 * v2.5.1
