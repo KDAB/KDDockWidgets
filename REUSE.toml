@@ -39,6 +39,7 @@ path = [
     ".github/ISSUE_TEMPLATE/config.yml",
     ".github/copilot-instructions.md",
     "src/slint/CLAUDE.md",
+    "AGENTS.md",
     ".qmllint.ini",
     ".zed/debug.json",
 ]
