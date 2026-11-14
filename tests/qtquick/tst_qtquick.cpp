@@ -281,7 +281,6 @@ void TestQtQuick::tst_hoverShowsDropIndicatorsWithOverlay()
     QTest::qWait(100);
 
     dragFloatingWindowTo(floatingDockWidget->floatingWindow(), mainWindowCenterPos);
-    QEXPECT_FAIL("", "ApplicationWindow's overlay hides the drop area", Continue);
     QCOMPARE(dock0->dptr()->group()->dockWidgetCount(), 2);
 }
 

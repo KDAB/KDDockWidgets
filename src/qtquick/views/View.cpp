@@ -743,11 +743,13 @@ std::shared_ptr<Core::View> View::childViewAt(QQuickItem *parent, QPoint localPo
         if (!item)
             return nullptr;
 
-        const auto children = item->childItems();
+        // Paint order, so a later sibling with lower z (e.g. a Control's background) doesn't win
+        const auto children = QQuickItemPrivate::get(item)->paintOrderChildItems();
         QQuickItem *deepest = nullptr;
 
         for (auto child : children) {
-            if (!child->isVisible())
+            // ApplicationWindow's popup overlay covers the whole window and would hide every dock
+            if (!child->isVisible() || child->inherits("QQuickOverlay"))
                 continue;
 
             const QPointF childPos = child->mapFromItem(item, itemPos);
