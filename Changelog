@@ -1,5 +1,6 @@
 * v2.6.0
   - qtquick: Fix leak when replacing DockingArea.persistentCentralItemFileName at runtime
+  - qtquick: Clearing DockingArea.persistentCentralItemFileName now removes the central item
   - qtwidgets: Reset tab to natural position on drag completion
   - qtquick: MDIDockingArea.affinities can now be set from QML
   - qtquick: New QtQuick::MainWindow::setPersistentCentralView(QQuickItem *) overload, which takes ownership of the item

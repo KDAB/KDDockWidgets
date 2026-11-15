@@ -1119,6 +1119,13 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     QVERIFY(QtQuick::asQQuickItem(mainWindow->persistentCentralView().get()) != oldItem);
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     QVERIFY(!oldItem);
+
+    // Clearing it removes and deletes the item
+    oldItem = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    area->setPersistentCentralItemFileName({});
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!mainWindow->persistentCentralView());
+    QVERIFY(!oldItem);
 }
 
 void TestQtQuick::tst_dockWidgetInstantiatorExtras()

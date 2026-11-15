@@ -237,7 +237,10 @@ void MainWindowInstantiator::setPersistentCentralItemFileName(const QString &qml
 
     if (m_mainWindow) {
         if (auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()))) {
-            mwView->setPersistentCentralView(qmlFilename);
+            if (qmlFilename.isEmpty())
+                mwView->setPersistentCentralView(static_cast<QQuickItem *>(nullptr));
+            else
+                mwView->setPersistentCentralView(qmlFilename);
         } else {
             qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
         }
