@@ -2,23 +2,21 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: python, clang-tidy and valgrind
+# clang-tidy (20+ minutes) and valgrind (10+ minutes) are the slowest jobs and were the
+# bottleneck of every PR, so they run nightly instead.
+
+name: python, clang-tidy and valgrind (nightly)
 
 on:
+  schedule:
+    - cron: "0 4 * * *"
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build:
-    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-python_clazy_tidy_valgrind]')"
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os:
           - ubuntu-24.04
