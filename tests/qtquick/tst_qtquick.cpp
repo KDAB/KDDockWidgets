@@ -114,6 +114,7 @@ private Q_SLOTS:
     /// Calls the DockWidget QML type's source, options, title bar and side bar API
     void tst_dockWidgetInstantiatorExtras();
     void tst_persistentCentralItemFileName();
+    void tst_setPersistentCentralViewItem();
 };
 
 
@@ -565,6 +566,44 @@ void TestQtQuick::tst_setPersistentCentralView()
     auto rootItem = layout->rootItem();
     QCOMPARE(rootItem->count_recursive(), 1);
     QCOMPARE(mainWindow->size(), rootItem->size());
+}
+
+void TestQtQuick::tst_setPersistentCentralViewItem()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_persistentCentralWidget.qml");
+    auto mainWindow = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+    QVERIFY(mainWindow);
+    auto mwView = static_cast<QtQuick::MainWindow *>(mainWindow->view());
+    auto centralItem = [mainWindow] {
+        return QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    };
+
+    QPointer<QQuickItem> a = new QQuickItem();
+    QPointer<QQuickItem> b = new QQuickItem();
+    mwView->setPersistentCentralView(a);
+    QCOMPARE(centralItem(), a.data());
+
+    // Replacing deletes the old item
+    mwView->setPersistentCentralView(b);
+    QCOMPARE(centralItem(), b.data());
+
+    // The replaced item is pending deletion, so can't be set again
+    {
+        SetExpectedWarning ignoreWarning("already replaced");
+        mwView->setPersistentCentralView(a);
+    }
+    QCOMPARE(centralItem(), b.data());
+
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!a);
+    QCOMPARE(centralItem(), b.data());
+
+    // nullptr removes it
+    mwView->setPersistentCentralView(nullptr);
+    QVERIFY(!mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!b);
 }
 
 void TestQtQuick::tst_mdiFixedSize()
@@ -1079,7 +1118,6 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     QVERIFY(mainWindow->persistentCentralView());
     QVERIFY(QtQuick::asQQuickItem(mainWindow->persistentCentralView().get()) != oldItem);
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
-    QEXPECT_FAIL("", "The replaced item leaks", Continue);
     QVERIFY(!oldItem);
 }
 
