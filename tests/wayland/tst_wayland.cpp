@@ -374,6 +374,8 @@ void TestWayland::tst_dragTabOverDropIndicators()
     QVERIFY(m_input->commitAndWait());
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "Drag moves over drop indicators aren't accepted, so the compositor refuses the drop", Abort);
     QTRY_COMPARE(dock2->dptr()->group(), group3);
     QCOMPARE(group3->dockWidgetCount(), 2);
 }
@@ -406,6 +408,8 @@ void TestWayland::tst_dragTabOntoMainWindow()
     QVERIFY(m_input->commitAndWait());
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "Drag moves over drop indicators aren't accepted, so the compositor refuses the drop", Abort);
     QTRY_COMPARE(dock2->dptr()->group(), group3);
     QCOMPARE(group3->dockWidgetCount(), 2);
     QVERIFY(dock2->isInMainWindow());

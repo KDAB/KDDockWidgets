@@ -28,6 +28,10 @@ class QWaylandQuickItem;
 class QWaylandSurface;
 QT_END_NAMESPACE
 
+struct wl_object;
+struct wl_protocol_logger;
+struct wl_protocol_logger_message;
+
 /// Server side of kddw-test-v1. Queues the actions a test client requests and plays them back
 /// on commit, as input events to the compositor's window.
 class TestExtension : public QWaylandCompositorExtensionTemplate<TestExtension>,
@@ -36,6 +40,7 @@ class TestExtension : public QWaylandCompositorExtensionTemplate<TestExtension>,
     Q_OBJECT
 public:
     TestExtension(QWaylandCompositor *compositor, QQuickWindow *window);
+    ~TestExtension() override;
     void initialize() override;
 
     /// Delay between two consecutive actions, so the client gets to process each one
@@ -75,6 +80,8 @@ private:
     void finishBatch(const QString &error);
 
     QWaylandQuickItem *itemForSurface(QWaylandSurface *surface) const;
+    void onProtocolMessage(bool isRequest, const wl_protocol_logger_message *message);
+    void releaseButton(Qt::MouseButton button, const Done &done);
     void movePointerTo(QPointF scenePos);
 
     QWaylandCompositor *const m_compositor;
@@ -94,4 +101,11 @@ private:
     int m_dragsStarted = 0;
     int m_dragsStartedAtLastPress = 0;
     bool m_dragInProgress = false;
+
+    // QtWaylandCompositor drops onto the drag's target even if it didn't accept the drop. Desktop
+    // compositors cancel the drag instead, so track the target's last wl_data_offer.accept.
+    wl_protocol_logger *m_protocolLogger = nullptr;
+    const wl_object *m_dragOffer = nullptr; // The offer of the current drag target
+    int m_unansweredDragEvents = 0; // Enter/motion events the target didn't reply to yet
+    bool m_dragTargetAccepts = false;
 };
