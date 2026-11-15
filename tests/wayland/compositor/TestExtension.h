@@ -32,6 +32,8 @@ struct wl_object;
 struct wl_protocol_logger;
 struct wl_protocol_logger_message;
 
+class ToplevelDragManager;
+
 /// Server side of kddw-test-v1. Queues the actions a test client requests and plays them back
 /// on commit, as input events to the compositor's window.
 class TestExtension : public QWaylandCompositorExtensionTemplate<TestExtension>,
@@ -45,6 +47,13 @@ public:
 
     /// Delay between two consecutive actions, so the client gets to process each one
     void setStepDelay(int msecs);
+
+    /// Tells @p manager about pointer moves and when drags end, as it moves the toplevel being
+    /// dragged. Null if the compositor doesn't support xdg-toplevel-drag.
+    void setToplevelDragManager(ToplevelDragManager *manager);
+
+    /// Returns the item showing @p surface in the compositor's window
+    QWaylandQuickItem *itemForSurface(QWaylandSurface *surface) const;
 
 protected:
     void kddw_test_v1_destroy_resource(Resource *resource) override;
@@ -80,13 +89,14 @@ private:
     void runNextAction();
     void finishBatch(const QString &error);
 
-    QWaylandQuickItem *itemForSurface(QWaylandSurface *surface) const;
     void onProtocolMessage(bool isRequest, const wl_protocol_logger_message *message);
     void releaseButton(Qt::MouseButton button, const Done &done);
     void movePointerTo(QPointF scenePos);
+    void cancelDrag();
 
     QWaylandCompositor *const m_compositor;
     QQuickWindow *const m_window;
+    ToplevelDragManager *m_toplevelDragManager = nullptr;
     int m_stepDelay = 5;
 
     QHash<Resource *, QList<Action>> m_pendingActions;

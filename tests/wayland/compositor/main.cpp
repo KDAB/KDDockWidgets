@@ -19,6 +19,9 @@
 // The test drives input through the kddw-test-v1 protocol, see ../protocol/kddw-test-v1.xml.
 
 #include "TestExtension.h"
+#ifdef KDDW_HAS_TOPLEVEL_DRAG
+#include "ToplevelDrag.h"
+#endif
 
 #include <QCommandLineParser>
 #include <QFile>
@@ -82,7 +85,10 @@ int main(int argc, char **argv)
     const QCommandLineOption serveOption(
         QStringLiteral("serve"),
         QStringLiteral("Don't start a client. Print the client environment and run until stdin is closed"));
-    parser.addOptions({ visibleOption, timeoutOption, sizeOption, stepDelayOption, serveOption });
+    const QCommandLineOption noToplevelDragOption(
+        QStringLiteral("no-toplevel-drag"),
+        QStringLiteral("Don't support xdg-toplevel-drag, like some desktop compositors"));
+    parser.addOptions({ visibleOption, timeoutOption, sizeOption, stepDelayOption, serveOption, noToplevelDragOption });
     parser.process(app);
 
     const bool serve = parser.isSet(serveOption);
@@ -127,6 +133,16 @@ int main(int argc, char **argv)
     auto extension = new TestExtension(compositor, window);
     extension->setStepDelay(parser.value(stepDelayOption).toInt());
     extension->initialize();
+
+#ifdef KDDW_HAS_TOPLEVEL_DRAG
+    if (!parser.isSet(noToplevelDragOption)) {
+        auto toplevelDrag = new ToplevelDragManager(compositor, [extension](QWaylandSurface *surface) {
+            return extension->itemForSurface(surface);
+        });
+        toplevelDrag->initialize();
+        extension->setToplevelDragManager(toplevelDrag);
+    }
+#endif
 
     const QList<std::pair<QString, QString>> clientEnv = {
         { QStringLiteral("WAYLAND_DISPLAY"), socketName },
