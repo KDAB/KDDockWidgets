@@ -1070,6 +1070,17 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     // Same value is a no-op
     area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
     QVERIFY(mainWindow->persistentCentralView() == view);
+
+    // Another file name replaces it, and the old item is deleted.
+    // Same file, but the different spelling still loads a new item.
+    QPointer<QQuickItem> oldItem = QtQuick::asQQuickItem(view.get());
+    view.reset();
+    area->setPersistentCentralItemFileName("qrc:/MyRectangle2.qml");
+    QVERIFY(mainWindow->persistentCentralView());
+    QVERIFY(QtQuick::asQQuickItem(mainWindow->persistentCentralView().get()) != oldItem);
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QEXPECT_FAIL("", "The replaced item leaks", Continue);
+    QVERIFY(!oldItem);
 }
 
 void TestQtQuick::tst_dockWidgetInstantiatorExtras()
