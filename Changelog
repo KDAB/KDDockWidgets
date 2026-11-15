@@ -1,6 +1,8 @@
 * v2.6.0
+  - qtquick: Fix leak when replacing DockingArea.persistentCentralItemFileName at runtime
   - qtwidgets: Reset tab to natural position on drag completion
   - qtquick: MDIDockingArea.affinities can now be set from QML
+  - qtquick: New QtQuick::MainWindow::setPersistentCentralView(QQuickItem *) overload, which takes ownership of the item
   - Fix maximize button icon not updating when maximizing via double-click (#769)
   - Fix dragging the empty tab bar area of a nested main window moving the outer window (#776)
   - Fix persistent central widget with more than one main window. Its dock widget
