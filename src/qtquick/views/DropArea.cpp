@@ -10,6 +10,7 @@
 */
 
 #include "DropArea.h"
+#include "core/Utils_p.h"
 #include "core/View_p.h"
 #include "kddockwidgets/core/DropArea.h"
 
@@ -22,8 +23,10 @@ DropArea::DropArea(Core::DropArea *dropArea, Core::View *parent)
 {
     Q_ASSERT(dropArea);
 
-    // Wayland docks through QDrag, whose events Qt Quick only sends to items accepting drops
-    QQuickItem::setFlag(ItemAcceptsDrops);
+    if (isWayland()) {
+        // Wayland docks through QDrag, whose events Qt Quick only sends to items accepting drops
+        QQuickItem::setFlag(ItemAcceptsDrops);
+    }
 }
 
 DropArea::~DropArea()
