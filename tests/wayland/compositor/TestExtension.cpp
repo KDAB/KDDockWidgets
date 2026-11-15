@@ -10,6 +10,7 @@
 */
 
 #include "TestExtension.h"
+#include "ToplevelDrag.h"
 
 #include <QElapsedTimer>
 #include <QImage>
@@ -146,6 +147,11 @@ void TestExtension::setStepDelay(int msecs)
     m_stepDelay = msecs;
 }
 
+void TestExtension::setToplevelDragManager(ToplevelDragManager *manager)
+{
+    m_toplevelDragManager = manager;
+}
+
 void TestExtension::kddw_test_v1_destroy_resource(Resource *resource)
 {
     m_pendingActions.remove(resource);
@@ -223,9 +229,12 @@ void TestExtension::releaseButton(Qt::MouseButton button, const Done &done)
             return;
         }
 
+        if (m_dragInProgress && m_toplevelDragManager)
+            m_toplevelDragManager->dragEnding();
+
         if (m_dragInProgress && m_dragOffer && !m_dragTargetAccepts) {
             qCDebug(lcTestCompositor) << "Drag target refused the drop, cancelling the drag";
-            m_compositor->defaultSeat()->drag()->cancelDrag();
+            cancelDrag();
         }
 
         const QPoint pos = m_pointerPos.toPoint();
@@ -331,9 +340,16 @@ void TestExtension::kddw_test_v1_wait_for_drag_start(Resource *resource, uint32_
 void TestExtension::kddw_test_v1_cancel_drag(Resource *resource)
 {
     enqueue(resource, [this](const Done &done) {
-        m_compositor->defaultSeat()->drag()->cancelDrag();
+        cancelDrag();
         done({});
     });
+}
+
+void TestExtension::cancelDrag()
+{
+    if (m_toplevelDragManager)
+        m_toplevelDragManager->dragEnding();
+    m_compositor->defaultSeat()->drag()->cancelDrag();
 }
 
 void TestExtension::kddw_test_v1_screenshot(Resource *resource, const QString &filename)
@@ -421,6 +437,11 @@ void TestExtension::movePointerTo(QPointF scenePos)
 {
     // Note: QTest treats QPoint(0, 0) as "center of the window"
     m_pointerPos = scenePos;
+
+    // Before the pointer moves, so the drag target is picked with the toplevel already moved
+    if (m_toplevelDragManager)
+        m_toplevelDragManager->pointerMoved(scenePos);
+
     QTest::mouseMove(m_window, scenePos.toPoint());
 
     if (!m_dragInProgress)
