@@ -51,7 +51,7 @@ jobs:
         run: cmake --build ./build-dev
 
       - name: Run tests on macOS
-        run: ctest --test-dir ./build-dev --verbose -j 4
+        run: ctest --test-dir ./build-dev --verbose -j 8
 
   # A static KDDW exports its PRIVATE deps in the link interface, so consumers
   # must not end up with targets that KDDockWidgetsConfig.cmake doesn't find

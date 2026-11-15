@@ -60,7 +60,7 @@ jobs:
         run: cmake --build ./build-${{ matrix.preset.name }} --verbose
 
       - name: Run tests
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure -j 4
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --output-on-failure -j 8
         env:
           QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise
           QT_QPA_PLATFORM: offscreen

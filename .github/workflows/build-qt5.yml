@@ -62,7 +62,7 @@ jobs:
         run: cmake --build ./build-${{ matrix.preset.name }} ${{ matrix.preset.build_preset_arg }}
 
       - name: Run tests
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 8
         env:
           QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise
           LSAN_OPTIONS: detect_leaks=${{ matrix.preset.detect_leaks }}

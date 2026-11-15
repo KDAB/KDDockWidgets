@@ -42,7 +42,7 @@ jobs:
       # Test failures are reported by the other workflows, here we just want the report
       - name: Run tests and generate coverage
         continue-on-error: true
-        run: ./tests/coverage.sh ./build-dev-cov --verbose -j 4
+        run: ./tests/coverage.sh ./build-dev-cov --verbose -j 8
         env:
           QT_QUICK_BACKEND: software
 

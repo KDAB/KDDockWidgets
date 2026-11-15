@@ -87,6 +87,6 @@ jobs:
         run: cmake --build ./build-${{ matrix.preset.name }} --target install
 
       - name: Run tests
-        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 4
+        run: ctest --test-dir ./build-${{ matrix.preset.name }} --verbose -j 8
         env:
           QT_FORCE_STDERR_LOGGING: 1 # QtTest output goes to OutputDebugString on Windows otherwise
