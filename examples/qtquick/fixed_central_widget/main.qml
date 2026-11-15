@@ -37,8 +37,9 @@ ApplicationWindow {
             top: someTopArea.bottom
         }
 
-        persistentCentralItemFileName: ":/CentralWidget.qml"
         options: KDDW.KDDockWidgets.MainWindowOption_HasCentralWidget
+
+        persistentCentralItemComponent: CentralWidget {}
 
         // Each main layout needs a unique id
         uniqueName: "MainLayout-1"

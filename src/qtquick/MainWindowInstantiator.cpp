@@ -219,13 +219,15 @@ void MainWindowInstantiator::componentComplete()
         view = new QtQuick::MainWindowMDI(m_uniqueName, this);
     } else {
         view = new QtQuick::MainWindow(m_uniqueName, mainWindowOptions, this);
-        if ((mainWindowOptions & MainWindowOption_HasCentralWidget) && !m_persistentWidgetFileName.isEmpty()) {
-            static_cast<QtQuick::MainWindow *>(view)->setPersistentCentralView(m_persistentWidgetFileName);
-        }
     }
 
     m_mainWindow = view->asMainWindowController();
     Q_ASSERT(m_mainWindow);
+
+    warnIfBothCentralItemsSet();
+    // Without MainWindowOption_HasCentralWidget a file name alone is silently ignored
+    if (m_persistentCentralItemComponent || (m_mainWindow->options() & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget)
+        updatePersistentCentralItem();
 
     m_mainWindow->setAffinities(m_affinities);
 }
@@ -235,22 +237,84 @@ void MainWindowInstantiator::setPersistentCentralItemFileName(const QString &qml
     if (m_persistentWidgetFileName == qmlFilename)
         return;
 
+    m_persistentWidgetFileName = qmlFilename;
     if (m_mainWindow) {
-        if (auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()))) {
-            if (qmlFilename.isEmpty())
-                mwView->setPersistentCentralView(static_cast<QQuickItem *>(nullptr));
-            else
-                mwView->setPersistentCentralView(qmlFilename);
-        } else {
-            qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
-        }
+        warnIfBothCentralItemsSet();
+        // The component has precedence. The file is only used once the component is cleared.
+        if (!m_persistentCentralItemComponent)
+            updatePersistentCentralItem();
     }
 
-    m_persistentWidgetFileName = qmlFilename;
     Q_EMIT persistentCentralItemFileNameChanged();
 }
 
 QString MainWindowInstantiator::persistentCentralItemFileName() const
 {
     return m_persistentWidgetFileName;
+}
+
+QQmlComponent *MainWindowInstantiator::persistentCentralItemComponent() const
+{
+    return m_persistentCentralItemComponent;
+}
+
+void MainWindowInstantiator::setPersistentCentralItemComponent(QQmlComponent *component)
+{
+    if (m_persistentCentralItemComponent == component)
+        return;
+
+    m_persistentCentralItemComponent = component;
+    if (m_mainWindow) {
+        warnIfBothCentralItemsSet();
+        updatePersistentCentralItem();
+    }
+
+    Q_EMIT persistentCentralItemComponentChanged();
+}
+
+void MainWindowInstantiator::warnIfBothCentralItemsSet() const
+{
+    if (m_persistentCentralItemComponent && !m_persistentWidgetFileName.isEmpty())
+        qWarning() << Q_FUNC_INFO << "Both persistentCentralItemComponent and persistentCentralItemFileName are set. Using persistentCentralItemComponent.";
+}
+
+void MainWindowInstantiator::updatePersistentCentralItem()
+{
+    const bool hasCentralItem = m_persistentCentralItemComponent || !m_persistentWidgetFileName.isEmpty();
+    if (isMDI()) {
+        if (hasCentralItem)
+            qWarning() << Q_FUNC_INFO << "persistentCentralItemComponent and persistentCentralItemFileName aren't supported with MDI";
+        return;
+    }
+
+    if ((m_mainWindow->options() & MainWindowOption_HasCentralWidget) != MainWindowOption_HasCentralWidget) {
+        if (hasCentralItem)
+            qWarning() << Q_FUNC_INFO << "persistentCentralItemComponent and persistentCentralItemFileName require MainWindowOption_HasCentralWidget";
+        return;
+    }
+
+    auto mwView = qobject_cast<QtQuick::MainWindow *>(QtCommon::View_qt::asQObject(m_mainWindow->view()));
+    if (!mwView) {
+        qWarning() << Q_FUNC_INFO << "Expected a QtQuick::MainWindow";
+        return;
+    }
+
+    // The component has precedence over the file name
+    if (m_persistentCentralItemComponent) {
+        // Use the context where the component was declared, so the item can see the ids there
+        QObject *obj = m_persistentCentralItemComponent->create(m_persistentCentralItemComponent->creationContext());
+        auto item = qobject_cast<QQuickItem *>(obj);
+        if (!item) {
+            qWarning() << Q_FUNC_INFO << "persistentCentralItemComponent did not create an Item:"
+                       << m_persistentCentralItemComponent->errorString();
+            delete obj;
+            return;
+        }
+
+        mwView->setPersistentCentralView(item);
+    } else if (!m_persistentWidgetFileName.isEmpty()) {
+        mwView->setPersistentCentralView(m_persistentWidgetFileName);
+    } else {
+        mwView->setPersistentCentralView(static_cast<QQuickItem *>(nullptr));
+    }
 }

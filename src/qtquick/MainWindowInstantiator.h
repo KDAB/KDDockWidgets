@@ -27,6 +27,8 @@
 
 #include <QQuickItem>
 #include <QQmlEngine>
+#include <QQmlComponent>
+#include <QPointer>
 
 namespace KDDockWidgets {
 
@@ -47,6 +49,7 @@ class DOCKS_EXPORT MainWindowInstantiator : public QQuickItem
                    optionsChanged)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
     Q_PROPERTY(QVector<QString> affinities READ affinities WRITE setAffinities NOTIFY affinitiesChanged)
+    Q_PROPERTY(QQmlComponent *persistentCentralItemComponent READ persistentCentralItemComponent WRITE setPersistentCentralItemComponent NOTIFY persistentCentralItemComponentChanged)
 public:
     ///@brief ctor, called by QML engine
     MainWindowInstantiator();
@@ -64,6 +67,12 @@ public:
 
     QString persistentCentralItemFileName() const;
     void setPersistentCentralItemFileName(const QString &qmlFilename);
+
+    /// Like persistentCentralItemFileName, but the item is declared inline in QML.
+    /// If both are set, this one wins and a warning is printed. persistentCentralItemFileName
+    /// is used again once this one is cleared.
+    QQmlComponent *persistentCentralItemComponent() const;
+    void setPersistentCentralItemComponent(QQmlComponent *);
 
     /// @brief See KDDockWidgets::Core::MainWindow::addDockWidget()
     Q_INVOKABLE void addDockWidget(QQuickItem *dockWidget, KDDockWidgets::Location location,
@@ -93,10 +102,15 @@ Q_SIGNALS:
     void optionsChanged();
     void affinitiesChanged();
     void persistentCentralItemFileNameChanged();
+    void persistentCentralItemComponentChanged();
 
 private:
+    void warnIfBothCentralItemsSet() const;
+    void updatePersistentCentralItem();
+
     QString m_uniqueName;
     QString m_persistentWidgetFileName;
+    QPointer<QQmlComponent> m_persistentCentralItemComponent;
     Core::MainWindow *m_mainWindow = nullptr;
     QVector<QString> m_affinities;
     KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;

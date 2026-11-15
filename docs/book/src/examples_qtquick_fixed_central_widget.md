@@ -6,8 +6,10 @@ can't be docked over.
 In main.qml they key source lines for this mode are:
 
 ```
-persistentCentralItemFileName: ":/CentralWidget.qml"
 options: KDDW.KDDockWidgets.MainWindowOption_HasCentralWidget
+persistentCentralItemComponent: CentralWidget {}
 ```
+
+The central item can also be loaded from a file, with `persistentCentralItemFileName: ":/CentralWidget.qml"`.
 
 View the source in [GitHub](https://github.com/KDAB/KDDockWidgets/blob/main/examples/qtquick/fixed_central_widget/main.qml).
