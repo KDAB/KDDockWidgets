@@ -80,6 +80,15 @@
       <arg name="y" type="int"/>
     </request>
 
+    <request name="get_window_position">
+      <description summary="query where a toplevel is">
+        When it runs, the window_position event is sent with the position of
+        the surface's top-left corner, in output coordinates. Fails if the
+        surface is not a mapped toplevel.
+      </description>
+      <arg name="surface" type="object" interface="wl_surface"/>
+    </request>
+
     <request name="wait">
       <arg name="msecs" type="uint"/>
     </request>
@@ -109,6 +118,14 @@
       <description summary="play back the queued actions"/>
       <arg name="serial" type="uint" summary="echoed back in the done event"/>
     </request>
+
+    <event name="window_position">
+      <description summary="reply to get_window_position">
+        Sent before the done event of the batch that contained the request.
+      </description>
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+    </event>
 
     <event name="done">
       <arg name="serial" type="uint"/>

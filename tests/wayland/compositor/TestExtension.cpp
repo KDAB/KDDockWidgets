@@ -26,6 +26,7 @@
 #include <QWaylandSeat>
 #include <QWaylandSurface>
 #include <QWaylandView>
+#include <QWaylandXdgSurface>
 
 #include <linux/input-event-codes.h>
 #include <wayland-server-core.h>
@@ -273,6 +274,26 @@ void TestExtension::kddw_test_v1_set_window_position(Resource *resource, struct 
         }
 
         item->moveItem()->setPosition(QPointF(x, y));
+        done({});
+    });
+}
+
+void TestExtension::kddw_test_v1_get_window_position(Resource *resource, struct ::wl_resource *surface)
+{
+    const QPointer<QWaylandSurface> waylandSurface = QWaylandSurface::fromResource(surface);
+
+    enqueue(resource, [this, waylandSurface](const Done &done) {
+        // Popups have shell surface items too, but they're positioned relative to their parent
+        auto item = qobject_cast<QWaylandQuickShellSurfaceItem *>(itemForSurface(waylandSurface));
+        auto xdgSurface = item ? qobject_cast<QWaylandXdgSurface *>(item->shellSurface()) : nullptr;
+        if (!xdgSurface || !xdgSurface->toplevel()) {
+            done(QStringLiteral("get_window_position: surface is not a mapped toplevel"));
+            return;
+        }
+
+        const QPoint pos = item->mapToScene(item->mapFromSurface(QPointF(0, 0))).toPoint();
+        if (m_currentBatch.resource)
+            send_window_position(m_currentBatch.resource->handle, pos.x(), pos.y());
         done({});
     });
 }

@@ -17,6 +17,8 @@
 
 #include <QtWaylandClient/QWaylandClientExtensionTemplate>
 
+#include <optional>
+
 namespace KDDockWidgets::Core {
 class View;
 }
@@ -65,14 +67,22 @@ public:
     /// Positions are relative to each view. Only queues the actions, see commitAndWait().
     void drag(Core::View *source, Point sourcePos, Core::View *dest, Point destPos);
 
+    /// Returns where the compositor placed the window @p view is in, in output coordinates. That's
+    /// the top-left of its wl_surface, which includes client-side decorations.
+    /// Wayland clients can't know this otherwise. Plays back any queued actions first, so like
+    /// commitAndWait() it can't be called while a drag started by those actions is in progress.
+    [[nodiscard]] std::optional<Point> windowPosition(Core::View *view);
+
 Q_SIGNALS:
     void done(uint serial, uint result, const QString &message);
 
 protected:
     void kddw_test_v1_done(uint32_t serial, uint32_t result, const QString &message) override;
+    void kddw_test_v1_window_position(int32_t x, int32_t y) override;
 
 private:
     uint32_t m_lastSerial = 0;
+    std::optional<Point> m_lastWindowPosition;
 };
 
 /// Returns the wl_surface of the window that @p view is in
