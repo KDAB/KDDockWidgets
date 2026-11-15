@@ -28,6 +28,10 @@
 #include <QWaylandView>
 
 #include <linux/input-event-codes.h>
+#include <wayland-server-core.h>
+
+#include <algorithm>
+#include <cstring>
 
 Q_LOGGING_CATEGORY(lcTestCompositor, "kddw.testcompositor")
 
@@ -89,10 +93,51 @@ TestExtension::TestExtension(QWaylandCompositor *compositor, QQuickWindow *windo
     });
 }
 
+TestExtension::~TestExtension()
+{
+    if (m_protocolLogger)
+        wl_protocol_logger_destroy(m_protocolLogger);
+}
+
 void TestExtension::initialize()
 {
     QWaylandCompositorExtensionTemplate::initialize();
     init(m_compositor->display(), 1);
+
+    m_protocolLogger = wl_display_add_protocol_logger(
+        m_compositor->display(),
+        [](void *userData, wl_protocol_logger_type type, const wl_protocol_logger_message *message) {
+            static_cast<TestExtension *>(userData)->onProtocolMessage(type == WL_PROTOCOL_LOGGER_REQUEST, message);
+        },
+        this);
+}
+
+void TestExtension::onProtocolMessage(bool isRequest, const wl_protocol_logger_message *message)
+{
+    const char *interface = wl_resource_get_class(message->resource);
+    const char *name = message->message->name;
+
+    if (!isRequest && std::strcmp(interface, "wl_data_device") == 0) {
+        if (std::strcmp(name, "enter") == 0) {
+            // enter(serial, surface, x, y, id)
+            m_dragOffer = message->arguments[4].o;
+            m_dragTargetAccepts = false;
+            m_unansweredDragEvents = 1;
+        } else if (std::strcmp(name, "motion") == 0) {
+            if (m_dragOffer)
+                ++m_unansweredDragEvents;
+        } else if (std::strcmp(name, "leave") == 0) {
+            m_dragOffer = nullptr;
+            m_dragTargetAccepts = false;
+            m_unansweredDragEvents = 0;
+        }
+    } else if (isRequest && std::strcmp(interface, "wl_data_offer") == 0 && std::strcmp(name, "accept") == 0) {
+        // accept(serial, mime_type), where a null mime type refuses the drop
+        if (m_dragOffer && reinterpret_cast<const wl_object *>(message->resource) == m_dragOffer) {
+            m_dragTargetAccepts = message->arguments[1].s != nullptr;
+            m_unansweredDragEvents = std::max(0, m_unansweredDragEvents - 1);
+        }
+    }
 }
 
 void TestExtension::setStepDelay(int msecs)
@@ -157,14 +202,40 @@ void TestExtension::kddw_test_v1_pointer_button(Resource *resource, uint32_t but
             qCDebug(lcTestCompositor) << "Press" << qtbutton << "at" << pos;
             m_dragsStartedAtLastPress = m_dragsStarted;
             QTest::mousePress(m_window, qtbutton, {}, pos);
+            done({});
         } else {
-            qCDebug(lcTestCompositor) << "Release" << qtbutton << "at" << pos;
-            QTest::mouseRelease(m_window, qtbutton, {}, pos);
-            m_dragInProgress = false; // Releasing drops or cancels it
+            releaseButton(qtbutton, done);
+        }
+    });
+}
+
+void TestExtension::releaseButton(Qt::MouseButton button, const Done &done)
+{
+    // Wait for the drag target to reply to the last motion, as that decides whether it's a drop
+    auto elapsed = std::make_shared<QElapsedTimer>();
+    elapsed->start();
+
+    auto poll = std::make_shared<std::function<void()>>();
+    *poll = [this, button, done, elapsed, poll] {
+        if (m_dragInProgress && m_unansweredDragEvents > 0 && elapsed->elapsed() < 1000) {
+            QTimer::singleShot(5, this, *poll);
+            return;
         }
 
+        if (m_dragInProgress && m_dragOffer && !m_dragTargetAccepts) {
+            qCDebug(lcTestCompositor) << "Drag target refused the drop, cancelling the drag";
+            m_compositor->defaultSeat()->drag()->cancelDrag();
+        }
+
+        const QPoint pos = m_pointerPos.toPoint();
+        qCDebug(lcTestCompositor) << "Release" << button << "at" << pos;
+        QTest::mouseRelease(m_window, button, {}, pos);
+        m_dragInProgress = false; // Releasing drops or cancels it
+
         done({});
-    });
+        *poll = nullptr; // break the reference cycle
+    };
+    (*poll)();
 }
 
 void TestExtension::kddw_test_v1_key(Resource *resource, uint32_t key, uint32_t state)
