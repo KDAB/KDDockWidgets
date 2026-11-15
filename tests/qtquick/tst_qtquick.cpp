@@ -41,6 +41,8 @@
 #include <QtTest/QTest>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <algorithm>
+#include <QSignalSpy>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
@@ -115,6 +117,14 @@ private Q_SLOTS:
     void tst_dockWidgetInstantiatorExtras();
     void tst_persistentCentralItemFileName();
     void tst_setPersistentCentralViewItem();
+    void tst_persistentCentralItemComponent();
+
+    /// Which central item is shown for each combination of file name, component and options
+    void tst_persistentCentralItemAtStartup_data();
+    void tst_persistentCentralItemAtStartup();
+
+    /// Setting and clearing the file name and the component, after the main window exists
+    void tst_persistentCentralItemBothSet();
 };
 
 
@@ -1126,6 +1136,303 @@ void TestQtQuick::tst_persistentCentralItemFileName()
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     QVERIFY(!mainWindow->persistentCentralView());
     QVERIFY(!oldItem);
+}
+
+namespace {
+
+/// The central item's objectName, "file" for MyRectangle2.qml, or "none"
+QString centralItemName(Core::MainWindow *mainWindow)
+{
+    QQuickItem *item = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    if (!item)
+        return QStringLiteral("none");
+    if (!item->objectName().isEmpty())
+        return item->objectName();
+    QQmlContext *ctx = qmlContext(item);
+    if (ctx && ctx->baseUrl().fileName() == QLatin1String("MyRectangle2.qml"))
+        return QStringLiteral("file");
+    return QStringLiteral("unknown");
+}
+
+/// Captures the warnings mentioning persistentCentralItem while in scope, so each step can check
+/// exactly which ones were printed. Any other warning still reaches the fatal message handler.
+class CentralItemWarnings
+{
+public:
+    CentralItemWarnings()
+    {
+        s_current = this;
+        m_previous = qInstallMessageHandler(handler);
+    }
+
+    ~CentralItemWarnings()
+    {
+        qInstallMessageHandler(m_previous);
+        s_current = nullptr;
+    }
+
+    /// The captured warnings, each replaced by the first pattern it contains
+    QStringList received(const QStringList &patterns) const
+    {
+        QStringList result;
+        for (const QString &msg : m_messages) {
+            auto it = std::find_if(patterns.cbegin(), patterns.cend(), [&msg](const QString &p) { return msg.contains(p); });
+            result << (it == patterns.cend() ? msg : *it);
+        }
+        return result;
+    }
+
+private:
+    static void handler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+    {
+        if (type == QtWarningMsg && msg.contains(QLatin1String("persistentCentralItem")))
+            s_current->m_messages << msg;
+        else
+            s_current->m_previous(type, context, msg);
+    }
+
+    static CentralItemWarnings *s_current;
+    QtMessageHandler m_previous = nullptr;
+    QStringList m_messages;
+    Q_DISABLE_COPY(CentralItemWarnings)
+};
+
+CentralItemWarnings *CentralItemWarnings::s_current = nullptr;
+
+const QString s_bothSetWarning = QStringLiteral("Both persistentCentralItemComponent and persistentCentralItemFileName are set");
+
+}
+
+void TestQtQuick::tst_persistentCentralItemComponent()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main_persistentCentralItemComponent.qml");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    auto area = engine.rootObjects().constFirst()->findChild<MainWindowInstantiator *>();
+    QVERIFY(area);
+    auto mainWindow = DockRegistry::self()->mainWindowByName("MyWindowName-1");
+    QVERIFY(mainWindow);
+    QSignalSpy spy(area, &MainWindowInstantiator::persistentCentralItemComponentChanged);
+
+    QQmlComponent *component = area->persistentCentralItemComponent();
+    QVERIFY(component);
+    QPointer<QQuickItem> central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+    QCOMPARE(central->objectName(), QString("central-MyWindowName-1"));
+
+    // Clearing it removes and deletes the item
+    area->setPersistentCentralItemComponent(nullptr);
+    QCOMPARE(spy.count(), 1);
+    QVERIFY(!mainWindow->persistentCentralView());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!central);
+
+    // Setting it after the main window was created
+    area->setPersistentCentralItemComponent(component);
+    QCOMPARE(spy.count(), 2);
+    central = QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    QVERIFY(central);
+
+    // Same value is a no-op
+    area->setPersistentCentralItemComponent(component);
+    QCOMPARE(spy.count(), 2);
+    QCOMPARE(QtQuick::asQQuickItem(mainWindow->persistentCentralView().get()), central.data());
+}
+
+void TestQtQuick::tst_persistentCentralItemAtStartup_data()
+{
+    QTest::addColumn<bool>("setFile");
+    QTest::addColumn<bool>("setComponent");
+    QTest::addColumn<QString>("options");
+    QTest::addColumn<QString>("expectedItem");
+    QTest::addColumn<QStringList>("expectedWarnings");
+
+    const QString central = QStringLiteral("MainWindowOption_HasCentralWidget");
+    // HasCentralGroup alone shares bits with HasCentralWidget
+    const QString group = QStringLiteral("MainWindowOption_HasCentralGroup");
+    const QString mdi = QStringLiteral("MainWindowOption_MDI");
+    const QString needsCentralWidget = QStringLiteral("require MainWindowOption_HasCentralWidget");
+    const QString noMdi = QStringLiteral("aren't supported with MDI");
+
+    QTest::newRow("neither") << false << false << central << "none" << QStringList();
+    QTest::newRow("file") << true << false << central << "file" << QStringList();
+    QTest::newRow("component") << false << true << central << "component1" << QStringList();
+    QTest::newRow("both") << true << true << central << "component1" << QStringList { s_bothSetWarning };
+
+    // A file alone was always silently ignored without HasCentralWidget
+    QTest::newRow("file, no central widget") << true << false << group << "none" << QStringList();
+    QTest::newRow("component, no central widget") << false << true << group << "none" << QStringList { needsCentralWidget };
+    QTest::newRow("both, no central widget") << true << true << group << "none" << QStringList { s_bothSetWarning, needsCentralWidget };
+
+    QTest::newRow("file, MDI") << true << false << mdi << "none" << QStringList();
+    QTest::newRow("component, MDI") << false << true << mdi << "none" << QStringList { noMdi };
+}
+
+void TestQtQuick::tst_persistentCentralItemAtStartup()
+{
+    QFETCH(bool, setFile);
+    QFETCH(bool, setComponent);
+    QFETCH(QString, options);
+    QFETCH(QString, expectedItem);
+    QFETCH(QStringList, expectedWarnings);
+
+    EnsureTopLevelsDeleted e;
+    const QString qml = QStringLiteral(R"(
+        import QtQuick
+        import QtQuick.Controls
+        import com.kdab.dockwidgets 2.0 as KDDW
+        ApplicationWindow {
+            visible: true
+            width: 1000
+            height: 800
+            KDDW.DockingArea {
+                anchors.fill: parent
+                options: KDDW.KDDockWidgets.%1
+                uniqueName: "startupWindow"
+                %2
+                %3
+            }
+        }
+    )")
+                            .arg(options,
+                                 setFile ? QStringLiteral("persistentCentralItemFileName: \":/MyRectangle2.qml\"") : QString(),
+                                 setComponent ? QStringLiteral("persistentCentralItemComponent: Rectangle { objectName: \"component1\" }") : QString());
+
+    QQmlApplicationEngine engine;
+    {
+        CentralItemWarnings w;
+        engine.loadData(qml.toUtf8());
+        QCOMPARE(w.received(expectedWarnings), expectedWarnings);
+    }
+    QVERIFY(!engine.rootObjects().isEmpty());
+    auto mainWindow = DockRegistry::self()->mainWindowByName("startupWindow");
+    QVERIFY(mainWindow);
+    QCOMPARE(centralItemName(mainWindow), expectedItem);
+}
+
+void TestQtQuick::tst_persistentCentralItemBothSet()
+{
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine;
+    engine.loadData(R"(
+        import QtQuick
+        import QtQuick.Controls
+        import com.kdab.dockwidgets 2.0 as KDDW
+        ApplicationWindow {
+            visible: true
+            width: 1000
+            height: 800
+            property Component component1: Rectangle { objectName: "component1" }
+            property Component component2: Rectangle { objectName: "component2" }
+            KDDW.DockingArea {
+                anchors.fill: parent
+                options: KDDW.KDDockWidgets.MainWindowOption_HasCentralWidget
+                uniqueName: "bothSetWindow"
+            }
+        }
+    )");
+    QVERIFY(!engine.rootObjects().isEmpty());
+    QObject *root = engine.rootObjects().constFirst();
+    auto area = root->findChild<MainWindowInstantiator *>();
+    QVERIFY(area);
+    auto mainWindow = DockRegistry::self()->mainWindowByName("bothSetWindow");
+    QVERIFY(mainWindow);
+    auto component1 = root->property("component1").value<QQmlComponent *>();
+    auto component2 = root->property("component2").value<QQmlComponent *>();
+    QVERIFY(component1);
+    QVERIFY(component2);
+
+    auto currentItem = [mainWindow] {
+        return QtQuick::asQQuickItem(mainWindow->persistentCentralView().get());
+    };
+    auto processDeletes = [] {
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    };
+    const QStringList bothSet = { s_bothSetWarning };
+
+    QCOMPARE(centralItemName(mainWindow), QString("none"));
+
+    // File only
+    area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
+    QCOMPARE(centralItemName(mainWindow), QString("file"));
+    QPointer<QQuickItem> item = currentItem();
+
+    // Setting a component while a file is set: the component wins, the file's item is deleted
+    {
+        CentralItemWarnings w;
+        area->setPersistentCentralItemComponent(component1);
+        QCOMPARE(w.received(bothSet), bothSet);
+    }
+    QCOMPARE(centralItemName(mainWindow), QString("component1"));
+    processDeletes();
+    QVERIFY(!item);
+    item = currentItem();
+
+    // Changing the file while a component is set: the component's item stays
+    {
+        CentralItemWarnings w;
+        area->setPersistentCentralItemFileName("qrc:/MyRectangle2.qml");
+        QCOMPARE(w.received(bothSet), bothSet);
+    }
+    QCOMPARE(currentItem(), item.data());
+
+    // Clearing the file while a component is set: the component's item stays
+    area->setPersistentCentralItemFileName({});
+    QCOMPARE(currentItem(), item.data());
+
+    // Setting a file while a component is set: the component's item stays
+    {
+        CentralItemWarnings w;
+        area->setPersistentCentralItemFileName(":/MyRectangle2.qml");
+        QCOMPARE(w.received(bothSet), bothSet);
+    }
+    QCOMPARE(currentItem(), item.data());
+
+    // Changing the component while a file is set: the new component wins
+    {
+        CentralItemWarnings w;
+        area->setPersistentCentralItemComponent(component2);
+        QCOMPARE(w.received(bothSet), bothSet);
+    }
+    QCOMPARE(centralItemName(mainWindow), QString("component2"));
+    processDeletes();
+    QVERIFY(!item);
+    item = currentItem();
+
+    // Clearing the component while a file is set: the file is used again
+    area->setPersistentCentralItemComponent(nullptr);
+    QCOMPARE(centralItemName(mainWindow), QString("file"));
+    processDeletes();
+    QVERIFY(!item);
+    item = currentItem();
+
+    // Setting the same component again works, as there's no leftover state
+    {
+        CentralItemWarnings w;
+        area->setPersistentCentralItemComponent(component2);
+        QCOMPARE(w.received(bothSet), bothSet);
+    }
+    QCOMPARE(centralItemName(mainWindow), QString("component2"));
+    processDeletes();
+    QVERIFY(!item);
+    item = currentItem();
+
+    // Clearing the file and then the component leaves no central item
+    area->setPersistentCentralItemFileName({});
+    QCOMPARE(currentItem(), item.data());
+    area->setPersistentCentralItemComponent(nullptr);
+    QCOMPARE(centralItemName(mainWindow), QString("none"));
+    processDeletes();
+    QVERIFY(!item);
+
+    // Component only: changing it replaces the item, without warnings
+    area->setPersistentCentralItemComponent(component1);
+    item = currentItem();
+    QCOMPARE(centralItemName(mainWindow), QString("component1"));
+    area->setPersistentCentralItemComponent(component2);
+    QCOMPARE(centralItemName(mainWindow), QString("component2"));
+    processDeletes();
+    QVERIFY(!item);
 }
 
 void TestQtQuick::tst_dockWidgetInstantiatorExtras()
