@@ -1137,7 +1137,6 @@ void TestQtQuick::tst_persistentCentralItemFileNameNotify()
     const QMetaObject *mo = &MainWindowInstantiator::staticMetaObject;
     const QMetaProperty prop = mo->property(mo->indexOfProperty("persistentCentralItemFileName"));
     QVERIFY(prop.isValid());
-    QEXPECT_FAIL("", "Notifies with uniqueNameChanged", Continue);
     QCOMPARE(prop.notifySignal().name(), QByteArray("persistentCentralItemFileNameChanged"));
 }
 

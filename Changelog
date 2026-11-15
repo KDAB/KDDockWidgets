@@ -7,6 +7,7 @@
     is now named after its main window
   - qtquick: Fix ApplicationWindow's popup overlay (Drawer, open Popup) hiding drop indicators
   - Bump SO version since added new virtual methods
+  - qtquick: Fix QML bindings on DockingArea.persistentCentralItemFileName not updating
 
 * v2.5.1
   - For packagers:
