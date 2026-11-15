@@ -77,6 +77,9 @@ private Q_SLOTS:
     void tst_focusBetweenTabs();
     void tst_setPersistentCentralView();
 
+    /// QML bindings on DockingArea.persistentCentralItemFileName need the right NOTIFY signal
+    void tst_persistentCentralItemFileNameNotify();
+
     void tst_mdiFixedSize();
     void tst_mdiInitialSizeFromQml();
     void tst_affinities();
@@ -1127,6 +1130,15 @@ int main(int argc, char *argv[])
     Core::Platform::tests_deinitPlatform();
 
     return exitCode;
+}
+
+void TestQtQuick::tst_persistentCentralItemFileNameNotify()
+{
+    const QMetaObject *mo = &MainWindowInstantiator::staticMetaObject;
+    const QMetaProperty prop = mo->property(mo->indexOfProperty("persistentCentralItemFileName"));
+    QVERIFY(prop.isValid());
+    QEXPECT_FAIL("", "Notifies with uniqueNameChanged", Continue);
+    QCOMPARE(prop.notifySignal().name(), QByteArray("persistentCentralItemFileNameChanged"));
 }
 
 #include "tst_qtquick.moc"
