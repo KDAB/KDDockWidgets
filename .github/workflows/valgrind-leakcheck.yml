@@ -2,21 +2,17 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-name: Valgrind leakcheck
+# LSAN in qt6-asan.yml already catches leaks in the unit tests on every PR, so this runs nightly.
+
+name: Valgrind leakcheck (nightly)
 
 on:
-  push:
-    branches:
-      - main
-      - 2.4
-  pull_request:
-    branches:
-      - main
-      - 2.4
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
-    if: "!contains(github.event.pull_request.title, '[only-') || contains(github.event.pull_request.title, '[only-valgrind-leakcheck]')"
     runs-on: ubuntu-26.04
     strategy:
       fail-fast: true
