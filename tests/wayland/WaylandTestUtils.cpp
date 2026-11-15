@@ -161,6 +161,25 @@ void TestInput::drag(Core::View *source, Point sourcePos, Core::View *dest, Poin
     release();
 }
 
+std::optional<Point> TestInput::windowPosition(Core::View *view)
+{
+    m_lastWindowPosition.reset();
+    wl_surface *surface = surfaceFor(view);
+    if (!surface)
+        return std::nullopt;
+
+    get_window_position(surface);
+    if (!commitAndWait())
+        return std::nullopt;
+
+    return m_lastWindowPosition;
+}
+
+void TestInput::kddw_test_v1_window_position(int32_t x, int32_t y)
+{
+    m_lastWindowPosition = Point(x, y);
+}
+
 void TestInput::kddw_test_v1_done(uint32_t serial, uint32_t result, const QString &message)
 {
     Q_EMIT done(serial, result, message);

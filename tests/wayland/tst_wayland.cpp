@@ -127,6 +127,7 @@ private Q_SLOTS:
     void tst_tabDroppedOntoForeignWindowResetsTabBar();
     void tst_dragTabOverDropIndicators();
     void tst_dragTabOntoMainWindow();
+    void tst_windowPosition();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -409,6 +410,21 @@ void TestWayland::tst_dragTabOntoMainWindow()
     QTRY_COMPARE(dock2->dptr()->group(), group3);
     QCOMPARE(group3->dockWidgetCount(), 2);
     QVERIFY(dock2->isInMainWindow());
+}
+
+void TestWayland::tst_windowPosition()
+{
+    // Tests the test harness itself, which tells us where windows are, as Wayland clients can't know
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    QVERIFY(waitForMapped(m->view()));
+
+    m_input->set_window_position(Wayland::surfaceFor(m->view()), 120, 80);
+    QCOMPARE(m_input->windowPosition(m->view()), Point(120, 80));
+
+    m_input->set_window_position(Wayland::surfaceFor(m->view()), 850, 0);
+    QCOMPARE(m_input->windowPosition(m->view()), Point(850, 0));
 }
 
 int main(int argc, char *argv[])

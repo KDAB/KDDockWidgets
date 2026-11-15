@@ -56,6 +56,7 @@ protected:
     void kddw_test_v1_key(Resource *resource, uint32_t key, uint32_t state) override;
     void kddw_test_v1_set_window_position(Resource *resource, struct ::wl_resource *surface,
                                           int32_t x, int32_t y) override;
+    void kddw_test_v1_get_window_position(Resource *resource, struct ::wl_resource *surface) override;
     void kddw_test_v1_wait(Resource *resource, uint32_t msecs) override;
     void kddw_test_v1_wait_for_drag_start(Resource *resource, uint32_t timeout_msecs) override;
     void kddw_test_v1_cancel_drag(Resource *resource) override;
