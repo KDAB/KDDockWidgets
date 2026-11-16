@@ -42,6 +42,11 @@ void Window::startSystemMove()
     KDDW_ERROR("Not needed in this platform");
 }
 
+bool Window::startSystemResize(Qt::Edges)
+{
+    return false;
+}
+
 Point Window::framePosition() const
 {
     return frameGeometry().topLeft();

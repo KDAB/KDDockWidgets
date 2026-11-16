@@ -184,6 +184,24 @@ bool WidgetResizeHandler::onMouseEvent(View *widget, MouseEvent *e)
         if (!widgetRect.contains(cursorPoint) || e->button() != Qt::LeftButton)
             return false;
 
+        if (m_isTopLevelWindowResizer && isWayland()) {
+            // Wayland windows can't be positioned, so resizing from the left or top edges would
+            // only make the window grow. Let the compositor do it.
+            if (auto window = mTarget->window()) {
+                Qt::Edges edges;
+                if (cursorPos & CursorPosition_Left)
+                    edges |= Qt::LeftEdge;
+                if (cursorPos & CursorPosition_Right)
+                    edges |= Qt::RightEdge;
+                if (cursorPos & CursorPosition_Top)
+                    edges |= Qt::TopEdge;
+                if (cursorPos & CursorPosition_Bottom)
+                    edges |= Qt::BottomEdge;
+                if (window->startSystemResize(edges))
+                    return true;
+            }
+        }
+
         m_resizingInProgress = true;
         if (isMDI())
             DockRegistry::self()->dptr()->groupInMDIResizeChanged.emit();

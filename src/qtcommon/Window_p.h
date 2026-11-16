@@ -62,6 +62,7 @@ public:
     QSize maxSize() const override;
     QPoint fromNativePixels(QPoint) const override;
     void startSystemMove() override;
+    bool startSystemResize(Qt::Edges edges) override;
 
     bool isFullScreen() const override;
 

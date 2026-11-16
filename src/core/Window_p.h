@@ -140,6 +140,11 @@ public:
     /// can get aerosnap on the edges of the screen.
     virtual void startSystemMove();
 
+    /// @brief Starts a native window resize, from @p edges
+    /// Returns false if the platform doesn't support it. Needed on Wayland, where windows
+    /// can't be positioned, so resizing from the left or top edges needs to be done by the compositor.
+    virtual bool startSystemResize(Qt::Edges edges);
+
     /// @brief Returns the client size of this window.
     Size size() const;
 
