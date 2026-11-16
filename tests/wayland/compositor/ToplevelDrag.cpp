@@ -104,10 +104,13 @@ void ToplevelDragManager::pointerMoved(QPointF scenePos)
 
 void ToplevelDragManager::dragEnding()
 {
-    // The toplevel stays where it is. It's only detached once the client destroys the
-    // xdg_toplevel_drag_v1.
+    // The toplevel stays where it is. Forget about it, as the client only destroys the
+    // xdg_toplevel_drag_v1 on wl_data_source's dnd_finished or cancelled, and QtWaylandCompositor
+    // doesn't send dnd_finished. The next drag would move it otherwise.
     m_dragInProgress = false;
     restoreAttachedItem();
+    m_attachedDrag = nullptr;
+    m_attachedToplevel = nullptr;
 }
 
 void ToplevelDragManager::attach(ToplevelDrag *drag, QWaylandXdgToplevel *toplevel, QPoint offset)
