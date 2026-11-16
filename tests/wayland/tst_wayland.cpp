@@ -142,12 +142,12 @@ std::vector<bool> dragModes()
 /// Whether the current run asked for Flag_WaylandToplevelDrag. It's ignored without support.
 bool s_toplevelDragRequested = false;
 
-/// Returns whether xdg-toplevel-drag can be used. Needs a recent enough Qt, and kddw_test_compositor
-/// supports it unless told not to.
+/// Returns whether xdg-toplevel-drag can be used. Needs KDDW to be built with support for it, and
+/// kddw_test_compositor supports it unless started with --no-toplevel-drag.
 bool toplevelDragIsSupported()
 {
 #ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
-    return !qEnvironmentVariable("KDDW_TEST_COMPOSITOR_ARGS").contains(QLatin1String("--no-toplevel-drag"));
+    return compositorHasGlobal("xdg_toplevel_drag_manager_v1");
 #else
     return false;
 #endif
