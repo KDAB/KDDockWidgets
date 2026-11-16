@@ -212,6 +212,8 @@ private Q_SLOTS:
     void tst_draggedOutFollowsPointer();
     void tst_dragFloatingWindowByTitleBar();
     void tst_toplevelDragNeedsSupport();
+    void tst_resizeFloatingWindow_data();
+    void tst_resizeFloatingWindow();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -614,6 +616,85 @@ void TestWayland::tst_toplevelDragNeedsSupport()
     const bool supported = toplevelDragIsSupported();
     QCOMPARE(isToplevelDrag(), supported);
     QCOMPARE(bool(Config::self().flags() & Config::Flag_NativeTitleBar), !supported);
+}
+
+void TestWayland::tst_resizeFloatingWindow_data()
+{
+    QTest::addColumn<int>("edges"); // CursorPosition
+    QTest::addColumn<Point>("delta");
+
+    QTest::newRow("left") << int(CursorPosition_Left) << Point(-100, 0);
+    QTest::newRow("top") << int(CursorPosition_Top) << Point(0, -80);
+    QTest::newRow("right") << int(CursorPosition_Right) << Point(100, 0);
+    QTest::newRow("bottom") << int(CursorPosition_Bottom) << Point(0, 80);
+    QTest::newRow("top-left") << int(CursorPosition_TopLeft) << Point(-100, -80);
+}
+
+void TestWayland::tst_resizeFloatingWindow()
+{
+    // Without the native title bar, KDDW resizes floating windows itself. Wayland windows can't be
+    // positioned though, so resizing from the left or top edges made them grow instead. The
+    // compositor does the resizing now.
+
+    QFETCH(int, edges);
+    QFETCH(Point, delta);
+
+    if (Config::self().flags() & Config::Flag_NativeTitleBar)
+        QSKIP("The native decorations resize floating windows, and kddw_test_compositor disables them");
+
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    FloatingWindow *fw = dock1->floatingWindow();
+    QVERIFY(fw);
+    fw->view()->setSize(400, 300);
+    QVERIFY(waitForMapped(fw->view()));
+    m_input->set_window_position(Wayland::surfaceFor(fw->view()), 300, 200);
+    QVERIFY(m_input->commitAndWait());
+    QTRY_COMPARE(fw->view()->size(), Size(400, 300));
+
+    // Press just inside the edges being dragged
+    const Rect before(Point(300, 200), Size(400, 300));
+    Point pressPos = before.center();
+    if (edges & CursorPosition_Left)
+        pressPos.setX(before.left() + 1);
+    if (edges & CursorPosition_Right)
+        pressPos.setX(before.right() - 1);
+    if (edges & CursorPosition_Top)
+        pressPos.setY(before.top() + 1);
+    if (edges & CursorPosition_Bottom)
+        pressPos.setY(before.bottom() - 1);
+
+    m_input->moveToAbsolute(pressPos);
+    m_input->press();
+    m_input->wait(100); // So the compositor started resizing before the pointer moves
+    constexpr int steps = 20;
+    for (int i = 1; i <= steps; ++i)
+        m_input->moveToAbsolute(pressPos + delta * i / steps);
+    QVERIFY(m_input->commitAndWait());
+
+    // QtWaylandCompositor resizes relative to the pointer's first move, not to where it was pressed
+    const Point resizeDelta = delta - delta / steps;
+
+    Rect expected = before;
+    if (edges & CursorPosition_Left)
+        expected.setLeft(before.left() + resizeDelta.x());
+    if (edges & CursorPosition_Right)
+        expected.setRight(before.right() + resizeDelta.x());
+    if (edges & CursorPosition_Top)
+        expected.setTop(before.top() + resizeDelta.y());
+    if (edges & CursorPosition_Bottom)
+        expected.setBottom(before.bottom() + resizeDelta.y());
+
+    // Only release once resized, as QtWaylandCompositor keeps the opposite edges in place only until
+    // the release, and QtQuick renders the new sizes asynchronously. Checked after the release, so
+    // a failure doesn't leave the button pressed.
+    ( void )QTest::qWaitFor([&] { return fw->view()->size() == expected.size(); });
+    m_input->release();
+    QVERIFY(m_input->commitAndWait());
+
+    QEXPECT_FAIL("", "KDDW moves the window when resizing it, which Wayland ignores", Abort);
+    QTRY_COMPARE(fw->view()->size(), expected.size());
+    QCOMPARE(m_input->windowPosition(fw->view()), expected.topLeft());
 }
 
 int main(int argc, char *argv[])
