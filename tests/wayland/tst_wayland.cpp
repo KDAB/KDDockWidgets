@@ -18,6 +18,7 @@
 #include "../fatal_logger.h"
 #endif
 
+#include "Config.h"
 #include "core/DockWidget.h"
 #include "core/DockWidget_p.h"
 #include "core/DragController_p.h"
@@ -105,6 +106,37 @@ Point tabCenter(TabBar *tabBar, DockWidget *dw)
     return tabBar->rectForTab(index).center();
 }
 
+/// The drag modes to test. Set KDDW_TEST_DRAG_MODE to "pixmap" or "toplevel" to only run one.
+std::vector<bool> dragModes()
+{
+    const QString mode = qEnvironmentVariable("KDDW_TEST_DRAG_MODE");
+    if (mode == QLatin1String("pixmap"))
+        return { false };
+    if (mode == QLatin1String("toplevel"))
+        return { true };
+    if (!mode.isEmpty())
+        qWarning() << "Unknown KDDW_TEST_DRAG_MODE" << mode << "expected pixmap or toplevel";
+
+    return { false, true };
+}
+
+/// Returns whether drags use xdg-toplevel-drag, where the dragged window itself moves, instead
+/// of a pixmap
+bool isToplevelDrag()
+{
+    return Config::self().flags() & Config::Flag_WaylandToplevelDrag;
+}
+
+/// Returns whether @p dw, whose tab was dragged out of @p group and not dropped onto KDDW, is
+/// where it should be. With pixmap drags it stays in @p group. With xdg-toplevel-drag it became a
+/// floating window as soon as the drag started, and stays one.
+bool isWhereUndroppedTabShouldBe(DockWidget *dw, Group *group)
+{
+    if (isToplevelDrag())
+        return dw->isFloating() && dw->dptr()->group() != group;
+    return !dw->isFloating() && dw->dptr()->group() == group;
+}
+
 wl_surface *surfaceFor(QWidget *widget)
 {
     auto waylandWindow = widget->windowHandle()->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
@@ -122,7 +154,7 @@ private Q_SLOTS:
 
     void tst_dragDockWidgetOntoAnother();
     void tst_doubleClickTabDetaches();
-    void tst_dragTabToEmptySpaceKeepsItDocked();
+    void tst_dragTabToEmptySpace();
     void tst_cancelledTabReorderDragResetsTabBar();
     void tst_tabDroppedOntoForeignWindowResetsTabBar();
     void tst_dragTabOverDropIndicators();
@@ -169,8 +201,11 @@ void TestWayland::tst_dragDockWidgetOntoAnother()
     QVERIFY(group1 != group2);
     QVERIFY(!dock1->isTabbed());
 
+    // With xdg-toplevel-drag dock1 leaves the main window as soon as the drag starts, so dock2
+    // takes all of it, and its center moves
+    View *dest = isToplevelDrag() ? m->dropArea()->view() : group2->view();
     View *titleBar = dock1->titleBar()->view();
-    m_input->drag(titleBar, titleBar->rect().center(), group2->view(), group2->view()->rect().center());
+    m_input->drag(titleBar, titleBar->rect().center(), dest, dest->rect().center());
     QVERIFY(m_input->commitAndWait());
 
     QTRY_COMPARE(dock1->dptr()->group(), group2);
@@ -208,12 +243,13 @@ void TestWayland::tst_doubleClickTabDetaches()
     QVERIFY(dock1->isInMainWindow());
 }
 
-void TestWayland::tst_dragTabToEmptySpaceKeepsItDocked()
+void TestWayland::tst_dragTabToEmptySpace()
 {
     if (!Platform::instance()->isQtWidgets())
         QSKIP("Not tested with QtQuick yet");
 
-    // Releasing a drag over no window makes the compositor cancel it, so the tab stays put
+    // Releasing a drag over no window makes the compositor cancel it. With pixmap drags the tab
+    // stays put, with xdg-toplevel-drag it stays a floating window
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
@@ -236,9 +272,8 @@ void TestWayland::tst_dragTabToEmptySpaceKeepsItDocked()
 
     QTRY_COMPARE(numCanceled, 1);
     QVERIFY(!DragController::instance()->isDragging());
-    QVERIFY(!dock2->isFloating());
-    QCOMPARE(dock2->dptr()->group(), group);
-    QCOMPARE(group->dockWidgetCount(), 2);
+    QVERIFY(isWhereUndroppedTabShouldBe(dock2, group));
+    QCOMPARE(group->dockWidgetCount(), isToplevelDrag() ? 1 : 2);
 }
 
 void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
@@ -283,8 +318,8 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
     QVERIFY(m_input->commitAndWait());
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
-    QVERIFY(!dock1->isFloating());
-    QCOMPARE(group->dockWidgetCount(), 2);
+    QVERIFY(isWhereUndroppedTabShouldBe(dock1, group));
+    QCOMPARE(group->dockWidgetCount(), isToplevelDrag() ? 1 : 2);
 
     QVERIFY(!isShowingMovingTab(qtabBar));
 }
@@ -341,8 +376,8 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
     QVERIFY(m_input->commitAndWait());
 
     QTRY_COMPARE(foreignWindow->numDrops, 1);
-    QVERIFY(!dock1->isFloating());
-    QCOMPARE(group->dockWidgetCount(), 2);
+    QVERIFY(isWhereUndroppedTabShouldBe(dock1, group));
+    QCOMPARE(group->dockWidgetCount(), isToplevelDrag() ? 1 : 2);
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
     QVERIFY(!isShowingMovingTab(qtabBar));
@@ -438,11 +473,19 @@ int main(int argc, char *argv[])
 
     for (auto frontend : Platform::frontendTypes()) {
         Platform::tests_initPlatform(argc, argv, frontend);
-        TestWayland test;
-        const int exitCode = QTest::qExec(&test, argc, argv);
+        for (const bool toplevelDrag : dragModes()) {
+            Config::Flags flags = Config::Flag_Default;
+            if (toplevelDrag)
+                flags |= Config::Flag_WaylandToplevelDrag;
+            Config::self().setFlags(flags);
+
+            qInfo().noquote() << "Using" << (toplevelDrag ? "xdg-toplevel-drag" : "pixmap drags");
+            TestWayland test;
+            const int exitCode = QTest::qExec(&test, argc, argv);
+            if (exitCode != 0)
+                return exitCode;
+        }
         Platform::tests_deinitPlatform();
-        if (exitCode != 0)
-            return exitCode;
     }
 
     return 0;
