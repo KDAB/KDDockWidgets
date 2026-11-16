@@ -34,6 +34,11 @@ public:
     bool handleDragLeave(DropArea *) override;
     bool handleDrop(DropEvent *, DropArea *, QPoint globalEventPos) override;
     bool handleMouseMove(QPoint globalPos) override;
+
+private:
+    /// Sets up the drag to use xdg-toplevel-drag, so the window itself is dragged instead of a
+    /// pixmap. Returns false if the window couldn't be created.
+    bool setupToplevelDrag(QMimeData *mimeData);
 };
 
 // A sub-class just so we don't use QMimeData directly. We'll only accept drops if its mime data
@@ -42,15 +47,6 @@ class WaylandMimeData : public QMimeData
 {
     Q_OBJECT
 public:
-};
-
-class StateDraggingWaylandToplevel : public StateDraggingWayland
-{
-    Q_OBJECT
-public:
-    explicit StateDraggingWaylandToplevel(DragController *parent);
-    ~StateDraggingWaylandToplevel() override;
-    void onEntry() override;
 };
 
 }

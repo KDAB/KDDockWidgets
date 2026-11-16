@@ -153,7 +153,6 @@ private:
     friend class StateInternalMDIDragging;
     friend class StateDropped;
     friend class StateDraggingWayland;
-    friend class StateDraggingWaylandToplevel;
     friend class ::TestQtWidgets;
 
     explicit DragController(Core::Object * = nullptr);
