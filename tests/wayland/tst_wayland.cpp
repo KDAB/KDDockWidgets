@@ -208,7 +208,8 @@ private Q_SLOTS:
     void tst_dragTabOverDropIndicators();
     void tst_dragTabOntoMainWindow();
     void tst_windowPosition();
-    void tst_draggedOutTabFollowsPointer();
+    void tst_draggedOutFollowsPointer_data();
+    void tst_draggedOutFollowsPointer();
     void tst_dragFloatingWindowByTitleBar();
     void tst_toplevelDragNeedsSupport();
 
@@ -506,30 +507,52 @@ void TestWayland::tst_windowPosition()
     QCOMPARE(m_input->windowPosition(m->view()), Point(850, 0));
 }
 
-void TestWayland::tst_draggedOutTabFollowsPointer()
+void TestWayland::tst_draggedOutFollowsPointer_data()
 {
-    // With xdg-toplevel-drag a tab dragged out becomes a window which follows the pointer, and
-    // stays where it's released. The pointer needs to be over it, even if the tab was further right
-    // than the new window is wide.
+    QTest::addColumn<int>("location");
+    QTest::addColumn<bool>("dragTab");
+
+    QTest::newRow("tab-on-right") << int(Location_OnRight) << true;
+    QTest::newRow("tab-at-bottom") << int(Location_OnBottom) << true;
+    QTest::newRow("titlebar-at-bottom") << int(Location_OnBottom) << false;
+}
+
+void TestWayland::tst_draggedOutFollowsPointer()
+{
+    // With xdg-toplevel-drag a dock widget dragged out becomes a window which follows the pointer,
+    // and stays where it's released. The pointer needs to be over it, even if it was grabbed further
+    // right or lower than the new window is big.
+
+    QFETCH(int, location);
+    QFETCH(bool, dragTab);
 
     if (!isToplevelDrag())
         QSKIP("Only with xdg-toplevel-drag");
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto m = createMainWindow(Size(1000, 900), MainWindowOption_None);
     auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true }));
-    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock0, Location_OnLeft);
-    m->addDockWidget(dock1, Location_OnRight);
-    dock1->addDockWidgetAsTab(dock2);
+    if (dragTab) {
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        m->addDockWidget(dock1, Location(location));
+        dock1->addDockWidgetAsTab(dock2);
+    } else {
+        m->addDockWidget(dock2, Location(location));
+    }
     QVERIFY(waitForMapped(m->view()));
     m_input->set_window_position(Wayland::surfaceFor(m->view()), 0, 0);
     QVERIFY(m_input->commitAndWait());
 
-    TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
-    m_input->startDrag(tabBar->view(), tabCenter(tabBar, dock2));
-    const Point releasePos(1200, 600);
+    if (dragTab) {
+        TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
+        m_input->startDrag(tabBar->view(), tabCenter(tabBar, dock2));
+    } else {
+        TitleBar *titleBar = dock2->titleBar();
+        m_input->startDrag(titleBar->view(), titleBarCenter(titleBar));
+    }
+    const Point releasePos(1300, 950); // Outside of the main window
     m_input->moveToAbsolute(releasePos);
     m_input->release();
     QVERIFY(m_input->commitAndWait());
@@ -541,6 +564,8 @@ void TestWayland::tst_draggedOutTabFollowsPointer()
     const std::optional<Point> pos = m_input->windowPosition(fw->view());
     QVERIFY(pos);
     const Rect windowRect(*pos, fw->view()->size());
+    QEXPECT_FAIL("tab-at-bottom", "The offset's y is relative to the window the drag started in", Abort);
+    QEXPECT_FAIL("titlebar-at-bottom", "The offset's y is relative to the window the drag started in", Abort);
     QVERIFY2(windowRect.contains(releasePos),
              qPrintable(QStringLiteral("window=%1,%2 %3x%4")
                             .arg(windowRect.x())
