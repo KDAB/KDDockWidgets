@@ -111,6 +111,9 @@ option(KDDockWidgets_PYTHON_BINDINGS "Build python bindings" OFF)
 option(KDDockWidgets_STATIC "Build statically" OFF)
 option(KDDockWidgets_TESTS "Build the tests" OFF)
 option(KDDockWidgets_WAYLAND_TESTS "Build the wayland tests" OFF)
+option(KDDockWidgets_WAYLAND_TOPLEVEL_DRAG
+       "Support Config::Flag_WaylandToplevelDrag on Linux. Uses Qt's private Wayland client API" ON
+)
 option(KDDockWidgets_EXAMPLES "Build the examples" ON)
 option(KDDockWidgets_DOCS "Build the API documentation" OFF)
 option(KDDockWidgets_WERROR "Use -Werror (will be true for developer-mode unconditionally)"
@@ -277,7 +280,8 @@ endif()
 # xdg-toplevel-drag, see Config::Flag_WaylandToplevelDrag. Qt's Wayland client supports it since 6.8, and
 # its private API tells whether the compositor does.
 set(KDDW_HAS_WAYLAND_TOPLEVEL_DRAG OFF)
-if(KDDW_FRONTEND_QT
+if(KDDockWidgets_WAYLAND_TOPLEVEL_DRAG
+   AND KDDW_FRONTEND_QT
    AND CMAKE_SYSTEM_NAME STREQUAL "Linux"
    AND Qt6Core_VERSION VERSION_GREATER_EQUAL "6.8.0"
 )
@@ -287,10 +291,17 @@ if(KDDW_FRONTEND_QT
         find_package(Qt6 ${QT_MIN_VERSION} NO_MODULE QUIET OPTIONAL_COMPONENTS WaylandClientPrivate)
     endif()
 
-    if(TARGET Qt6::WaylandClientPrivate)
+    # Before Qt 6.10 the target exists even if the private headers are packaged separately and
+    # missing
+    set(_qwaylanddisplay_p_h
+        "${QT6_INSTALL_PREFIX}/${QT6_INSTALL_HEADERS}/QtWaylandClient/${Qt6WaylandClient_VERSION}/QtWaylandClient/private/qwaylanddisplay_p.h"
+    )
+    if(TARGET Qt6::WaylandClientPrivate AND EXISTS "${_qwaylanddisplay_p_h}")
         set(KDDW_HAS_WAYLAND_TOPLEVEL_DRAG ON)
     else()
-        message(STATUS "Qt6WaylandClientPrivate not found, Config::Flag_WaylandToplevelDrag won't be supported")
+        message(
+            STATUS "Qt's private Wayland client headers not found, Config::Flag_WaylandToplevelDrag won't be supported"
+        )
     endif()
 endif()
 

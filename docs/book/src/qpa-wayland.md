@@ -40,8 +40,10 @@ moves with the pointer while dragging, instead of a pixmap, like on other platfo
 
 It needs:
 
-- Qt >= 6.8, and Qt6WaylandClientPrivate when building KDDockWidgets, as Qt has no public API to
-  know whether the compositor supports the protocol.
+- Qt >= 6.8, and Qt's private Wayland client headers when building KDDockWidgets, as Qt has no
+  public API to know whether the compositor supports the protocol. KDDockWidgets then links to
+  QtWaylandClient, even if only used on X11. Pass `-DKDDockWidgets_WAYLAND_TOPLEVEL_DRAG=OFF` to
+  CMake to avoid that.
 - A compositor which supports xdg-toplevel-drag.
 
 Otherwise the flag is ignored, with a warning, and the limitations above apply.
