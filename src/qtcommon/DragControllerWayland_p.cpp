@@ -50,6 +50,12 @@ void StateDraggingWayland::onEntry()
         return;
     }
 
+    if (!q->m_draggableGuard) {
+        KDDW_ERROR("Draggable was destroyed, canceling the drag");
+        q->dragCanceled.emit();
+        return;
+    }
+
     ScopedValueRollback guard(DragController::instance()->m_inQDrag, true);
 
     auto mimeData = new WaylandMimeData();
