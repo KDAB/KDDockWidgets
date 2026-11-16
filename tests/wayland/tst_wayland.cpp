@@ -32,12 +32,14 @@
 #include "qtcommon/View.h"
 #ifdef KDDW_FRONTEND_QTQUICK
 #include "qtquick/views/TabBar.h"
+#include "qtquick/views/TitleBar.h"
 #endif
 
 #include <qpa/qplatformwindow_p.h>
 
-#include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QPainter>
+#include <QRasterWindow>
 #include <QTabBar>
 #include <QTest>
 #include <QWidget>
@@ -64,46 +66,63 @@ bool isShowingMovingTab(QTabBar *tabBar)
 }
 
 /// A window, not part of KDDW, which accepts any drop. Like the desktop or another application
-/// accepting a drop would.
-class DropAcceptingWindow : public QWidget
+/// accepting a drop would. Not a QWidget, as QtQuick doesn't create a QApplication.
+class DropAcceptingWindow : public QRasterWindow
 {
 public:
     DropAcceptingWindow()
     {
-        setAcceptDrops(true);
         resize(300, 300);
     }
 
     int numDrops = 0;
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *ev) override
+    bool event(QEvent *ev) override
     {
-        ev->acceptProposedAction();
+        switch (ev->type()) {
+        case QEvent::Drop:
+            ++numDrops;
+            [[fallthrough]];
+        case QEvent::DragEnter:
+        case QEvent::DragMove:
+            static_cast<QDropEvent *>(ev)->acceptProposedAction();
+            return true;
+        default:
+            return QRasterWindow::event(ev);
+        }
     }
 
-    void dragMoveEvent(QDragMoveEvent *ev) override
+    void paintEvent(QPaintEvent *) override
     {
-        ev->acceptProposedAction();
-    }
-
-    void dropEvent(QDropEvent *ev) override
-    {
-        ++numDrops;
-        ev->acceptProposedAction();
+        // Something needs to be drawn for the window to be mapped
+        QPainter(this).fillRect(QRect(QPoint(), size()), Qt::white);
     }
 };
+
+/// Returns the rect of tab @p index, relative to @p tabBar
+Rect tabRect(TabBar *tabBar, int index)
+{
+#ifdef KDDW_FRONTEND_QTQUICK
+    // QtQuick's rectForTab() is relative to the tab, not to the tab bar
+    if (auto quickTabBar = dynamic_cast<QtQuick::TabBar *>(tabBar->view())) {
+        const Rect globalRect = quickTabBar->globalRectForTab(index);
+        return Rect(tabBar->view()->mapFromGlobal(globalRect.topLeft()), globalRect.size());
+    }
+#endif
+    return tabBar->rectForTab(index);
+}
 
 /// Returns the center of the tab of @p dw, relative to @p tabBar
 Point tabCenter(TabBar *tabBar, DockWidget *dw)
 {
-    const int index = tabBar->indexOfDockWidget(dw);
-#ifdef KDDW_FRONTEND_QTQUICK
-    // QtQuick's rectForTab() is relative to the tab, not to the tab bar
-    if (auto quickTabBar = dynamic_cast<QtQuick::TabBar *>(tabBar->view()))
-        return tabBar->view()->mapFromGlobal(quickTabBar->globalRectForTab(index).center());
-#endif
-    return tabBar->rectForTab(index).center();
+    return tabRect(tabBar, tabBar->indexOfDockWidget(dw)).center();
+}
+
+/// Returns the QTabBar of @p tabBar, or nullptr with QtQuick
+QTabBar *qtabBarFor(TabBar *tabBar)
+{
+    return qobject_cast<QTabBar *>(QtCommon::View_qt::asQObject(tabBar->view()));
 }
 
 /// The drag modes to test. Set KDDW_TEST_DRAG_MODE to "pixmap" or "toplevel" to only run one.
@@ -137,9 +156,24 @@ bool isWhereUndroppedTabShouldBe(DockWidget *dw, Group *group)
     return !dw->isFloating() && dw->dptr()->group() == group;
 }
 
-wl_surface *surfaceFor(QWidget *widget)
+/// Returns the center of @p titleBar, relative to its view
+Point titleBarCenter(TitleBar *titleBar)
 {
-    auto waylandWindow = widget->windowHandle()->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
+#ifdef KDDW_FRONTEND_QTQUICK
+    // QtQuick's TitleBar view isn't what's shown, its titleBarQmlItem is
+    if (auto quickTitleBar = dynamic_cast<QtQuick::TitleBar *>(titleBar->view())) {
+        if (auto item = quickTitleBar->property("titleBarQmlItem").value<QQuickItem *>()) {
+            const QPointF center = item->mapToGlobal(item->boundingRect().center());
+            return titleBar->view()->mapFromGlobal(center.toPoint());
+        }
+    }
+#endif
+    return titleBar->view()->rect().center();
+}
+
+wl_surface *surfaceFor(QWindow *window)
+{
+    auto waylandWindow = window->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
     return waylandWindow ? waylandWindow->surface() : nullptr;
 }
 
@@ -183,9 +217,6 @@ void TestWayland::cleanupTestCase()
 
 void TestWayland::tst_dragDockWidgetOntoAnother()
 {
-    if (!Platform::instance()->isQtWidgets())
-        QSKIP("Not tested with QtQuick yet");
-
     // Drags dock1 by its title bar and drops it onto the center of dock2, so they get tabbed
 
     EnsureTopLevelsDeleted e;
@@ -204,8 +235,8 @@ void TestWayland::tst_dragDockWidgetOntoAnother()
     // With xdg-toplevel-drag dock1 leaves the main window as soon as the drag starts, so dock2
     // takes all of it, and its center moves
     View *dest = isToplevelDrag() ? m->dropArea()->view() : group2->view();
-    View *titleBar = dock1->titleBar()->view();
-    m_input->drag(titleBar, titleBar->rect().center(), dest, dest->rect().center());
+    TitleBar *titleBar = dock1->titleBar();
+    m_input->drag(titleBar->view(), titleBarCenter(titleBar), dest, dest->rect().center());
     QVERIFY(m_input->commitAndWait());
 
     QTRY_COMPARE(dock1->dptr()->group(), group2);
@@ -217,9 +248,6 @@ void TestWayland::tst_dragDockWidgetOntoAnother()
 
 void TestWayland::tst_doubleClickTabDetaches()
 {
-    if (!Platform::instance()->isQtWidgets())
-        QSKIP("Not tested with QtQuick yet");
-
     // On Wayland, dragging a tab out to empty space doesn't detach it, as the compositor cancels
     // drags that aren't dropped onto a window. Double-clicking the tab detaches it instead.
 
@@ -233,7 +261,7 @@ void TestWayland::tst_doubleClickTabDetaches()
     QVERIFY(dock2->isTabbed());
 
     TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
-    m_input->moveTo(tabBar->view(), tabBar->rectForTab(tabBar->indexOfDockWidget(dock2)).center());
+    m_input->moveTo(tabBar->view(), tabCenter(tabBar, dock2));
     m_input->doubleClick();
     QVERIFY(m_input->commitAndWait());
 
@@ -245,9 +273,6 @@ void TestWayland::tst_doubleClickTabDetaches()
 
 void TestWayland::tst_dragTabToEmptySpace()
 {
-    if (!Platform::instance()->isQtWidgets())
-        QSKIP("Not tested with QtQuick yet");
-
     // Releasing a drag over no window makes the compositor cancel it. With pixmap drags the tab
     // stays put, with xdg-toplevel-drag it stays a floating window
 
@@ -265,7 +290,7 @@ void TestWayland::tst_dragTabToEmptySpace()
 
     Group *group = dock2->dptr()->group();
     TabBar *tabBar = group->stack()->tabBar();
-    m_input->startDrag(tabBar->view(), tabBar->rectForTab(tabBar->indexOfDockWidget(dock2)).center());
+    m_input->startDrag(tabBar->view(), tabCenter(tabBar, dock2));
     m_input->moveToAbsolute(Point(1500, 900)); // The main window is at 0,0 and 800x500
     m_input->release();
     QVERIFY(m_input->commitAndWait());
@@ -278,12 +303,12 @@ void TestWayland::tst_dragTabToEmptySpace()
 
 void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
 {
-    if (!Platform::instance()->isQtWidgets())
-        QSKIP("Not tested with QtQuick yet");
-
     // Regression test for #762: dragging a tab sideways reorders it within QTabBar, and once past
     // the last tab KDDW starts its drag too. QTabBar never gets the mouse release, which the drag's
     // nested event loop consumes, so after a cancelled drag it stays stuck mid-reorder.
+
+    if (!Platform::instance()->isQtWidgets())
+        QSKIP("QtQuick can't reorder tabs by dragging them");
 
     EnsureTopLevelsDeleted e;
     Config::self().setFlags(Config::self().flags() | Config::Flag_AllowReorderTabs);
@@ -297,9 +322,8 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
 
     Group *group = dock1->dptr()->group();
     TabBar *tabBar = group->stack()->tabBar();
-    auto qtabBar = qobject_cast<QTabBar *>(QtCommon::View_qt::asQWidget(tabBar->view()));
-    if (!qtabBar)
-        QSKIP("Only for the QtWidgets frontend");
+    QTabBar *qtabBar = qtabBarFor(tabBar);
+    QVERIFY(qtabBar);
     QVERIFY(!isShowingMovingTab(qtabBar));
 
     // Drag the first tab right, along the tab bar and past the last tab
@@ -326,16 +350,16 @@ void TestWayland::tst_cancelledTabReorderDragResetsTabBar()
 
 void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
 {
-    if (!Platform::instance()->isQtWidgets())
-        QSKIP("Not tested with QtQuick yet");
-
     // Like tst_cancelledTabReorderDragResetsTabBar, but the tab is dropped onto a window which
     // accepts the drop, like the desktop or another application might. QDrag::exec() then
     // doesn't return Qt::IgnoreAction, which mustn't leave DragController stuck in its dragging
     // state, nor QTabBar stuck mid-reorder (PR #766).
+    // QtQuick can't reorder tabs by dragging them, so there the tab is just dragged off.
 
     EnsureTopLevelsDeleted e;
-    Config::self().setFlags(Config::self().flags() | Config::Flag_AllowReorderTabs);
+    const bool reorderTabs = Platform::instance()->isQtWidgets();
+    if (reorderTabs)
+        Config::self().setFlags(Config::self().flags() | Config::Flag_AllowReorderTabs);
 
     auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
@@ -346,7 +370,7 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
 
     auto foreignWindow = std::make_unique<DropAcceptingWindow>();
     foreignWindow->show();
-    QVERIFY(QTest::qWaitForWindowExposed(foreignWindow->windowHandle()));
+    QVERIFY(QTest::qWaitForWindowExposed(foreignWindow.get()));
 
     // Side by side, so they don't overlap
     m_input->set_window_position(Wayland::surfaceFor(m->view()), 0, 0);
@@ -355,19 +379,22 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
 
     Group *group = dock1->dptr()->group();
     TabBar *tabBar = group->stack()->tabBar();
-    auto qtabBar = qobject_cast<QTabBar *>(QtCommon::View_qt::asQWidget(tabBar->view()));
-    QVERIFY(qtabBar);
-    QVERIFY(!isShowingMovingTab(qtabBar));
+    QTabBar *qtabBar = qtabBarFor(tabBar);
+    QVERIFY(!qtabBar || !isShowingMovingTab(qtabBar));
 
-    // Drag the first tab right, along the tab bar and past the last tab
-    const Point start = tabBar->rectForTab(0).center();
-    const Point end(tabBar->rectForTab(1).right() + 50, start.y());
-    m_input->moveTo(tabBar->view(), start);
-    m_input->press();
     constexpr int steps = 20;
-    for (int i = 1; i <= steps; ++i)
-        m_input->moveTo(tabBar->view(), start + (end - start) * i / steps);
-    m_input->wait_for_drag_start(/*timeout_msecs=*/5000);
+    if (reorderTabs) {
+        // Drag the first tab right, along the tab bar and past the last tab
+        const Point start = tabBar->rectForTab(0).center();
+        const Point end(tabBar->rectForTab(1).right() + 50, start.y());
+        m_input->moveTo(tabBar->view(), start);
+        m_input->press();
+        for (int i = 1; i <= steps; ++i)
+            m_input->moveTo(tabBar->view(), start + (end - start) * i / steps);
+        m_input->wait_for_drag_start(/*timeout_msecs=*/5000);
+    } else {
+        m_input->startDrag(tabBar->view(), tabCenter(tabBar, dock1));
+    }
 
     // Release over the foreign window, which accepts the drop
     for (int i = 1; i <= steps; ++i)
@@ -380,7 +407,7 @@ void TestWayland::tst_tabDroppedOntoForeignWindowResetsTabBar()
     QCOMPARE(group->dockWidgetCount(), isToplevelDrag() ? 1 : 2);
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
-    QVERIFY(!isShowingMovingTab(qtabBar));
+    QVERIFY(!qtabBar || !isShowingMovingTab(qtabBar));
 }
 
 void TestWayland::tst_dragTabOverDropIndicators()
