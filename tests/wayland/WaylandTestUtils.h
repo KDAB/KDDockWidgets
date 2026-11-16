@@ -94,4 +94,7 @@ Point mapToSurface(Core::View *view, Point localPos);
 /// Waits until the window @p view is in has been shown by the compositor
 [[nodiscard]] bool waitForMapped(Core::View *view);
 
+/// Returns whether the compositor advertises the global @p interfaceName, e.g. "xdg_toplevel_drag_manager_v1"
+[[nodiscard]] bool compositorHasGlobal(const char *interfaceName);
+
 }

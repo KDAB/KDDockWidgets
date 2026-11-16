@@ -18,6 +18,7 @@
 #include <qpa/qplatformwindow_p.h>
 
 #include <QEventLoop>
+#include <QGuiApplication>
 #include <QProcess>
 #include <QTest>
 #include <QTimer>
@@ -32,6 +33,7 @@
 #include <linux/input-event-codes.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <wayland-client.h>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests::Wayland;
@@ -206,6 +208,43 @@ bool KDDockWidgets::Tests::Wayland::waitForMapped(Core::View *view)
 {
     QWindow *window = qtWindowFor(view);
     return window && QTest::qWaitForWindowExposed(window);
+}
+
+bool Tests::Wayland::compositorHasGlobal(const char *interfaceName)
+{
+    auto waylandApp = qGuiApp->nativeInterface<QNativeInterface::QWaylandApplication>();
+    if (!waylandApp)
+        return false;
+
+    // A registry of our own, on its own queue, so Qt's event dispatching isn't involved
+    wl_display *display = waylandApp->display();
+    wl_event_queue *queue = wl_display_create_queue(display);
+    auto displayWrapper = static_cast<wl_display *>(wl_proxy_create_wrapper(display));
+    wl_proxy_set_queue(reinterpret_cast<wl_proxy *>(displayWrapper), queue); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
+    wl_registry *registry = wl_display_get_registry(displayWrapper);
+
+    struct Data
+    {
+        const char *interfaceName;
+        bool found = false;
+    } data { interfaceName };
+
+    static const wl_registry_listener listener = {
+        [](void *userData, wl_registry *, uint32_t, const char *interface, uint32_t) {
+            auto d = static_cast<Data *>(userData);
+            if (std::strcmp(interface, d->interfaceName) == 0)
+                d->found = true;
+        },
+        [](void *, wl_registry *, uint32_t) {},
+    };
+    wl_registry_add_listener(registry, &listener, &data);
+    wl_display_roundtrip_queue(display, queue);
+
+    wl_registry_destroy(registry);
+    wl_proxy_wrapper_destroy(displayWrapper);
+    wl_event_queue_destroy(queue);
+
+    return data.found;
 }
 
 bool Tests::Wayland::ensureCompositor(const char *compositorPath)
