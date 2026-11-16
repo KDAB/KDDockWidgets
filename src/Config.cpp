@@ -27,6 +27,7 @@
 #include "core/Platform.h"
 #include "core/View.h"
 #include "core/Logging_p.h"
+#include "qtcommon/DragControllerWayland_p.h"
 
 #include <iostream>
 #include <limits>
@@ -361,6 +362,12 @@ void Config::Private::fixFlags()
     }
 
 #if defined(Q_OS_LINUX)
+    if (KDDockWidgets::isWayland() && (m_flags & Config::Flag_WaylandToplevelDrag)
+        && !Core::isWaylandToplevelDragSupported()) {
+        KDDW_WARN("Config: Ignoring Flag_WaylandToplevelDrag, it needs Qt >= 6.8 and a compositor which supports xdg-toplevel-drag");
+        m_flags = m_flags & ~Flag_WaylandToplevelDrag;
+    }
+
     if (KDDockWidgets::isWayland() && !(m_flags & Config::Flag_WaylandToplevelDrag)) {
         // Native title bar is forced on Wayland. Needed for moving the window.
         // The inner KDDW title bar is used for DnD.
