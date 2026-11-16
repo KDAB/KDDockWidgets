@@ -692,7 +692,6 @@ void TestWayland::tst_resizeFloatingWindow()
     m_input->release();
     QVERIFY(m_input->commitAndWait());
 
-    QEXPECT_FAIL("", "KDDW moves the window when resizing it, which Wayland ignores", Abort);
     QTRY_COMPARE(fw->view()->size(), expected.size());
     QCOMPARE(m_input->windowPosition(fw->view()), expected.topLeft());
 }

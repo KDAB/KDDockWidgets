@@ -50,9 +50,6 @@ Otherwise the flag is ignored, with a warning, and the limitations above apply.
 
 Known limitations:
 
-- Resizing floating windows doesn't work properly. Without the native title bar they have no
-  native decorations, so KDDockWidgets resizes them itself, and it moves the window when resizing
-  from the left or top edges, which Wayland doesn't allow. The window then grows instead.
 - A maximized floating window isn't restored to its normal size before being dragged, like it is
   on other platforms.
 - While dragging, the cursor shows "forbidden" wherever nothing accepts the drop, like over empty

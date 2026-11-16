@@ -165,6 +165,11 @@ void Window::startSystemMove()
     m_window->startSystemMove();
 }
 
+bool Window::startSystemResize(Qt::Edges edges)
+{
+    return m_window->startSystemResize(edges);
+}
+
 void Window::setGeometry(QRect geo)
 {
     m_window->setGeometry(geo);
