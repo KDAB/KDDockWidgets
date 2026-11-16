@@ -194,6 +194,8 @@ private Q_SLOTS:
     void tst_dragTabOverDropIndicators();
     void tst_dragTabOntoMainWindow();
     void tst_windowPosition();
+    void tst_draggedOutTabFollowsPointer();
+    void tst_dragFloatingWindowByTitleBar();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -487,6 +489,81 @@ void TestWayland::tst_windowPosition()
 
     m_input->set_window_position(Wayland::surfaceFor(m->view()), 850, 0);
     QCOMPARE(m_input->windowPosition(m->view()), Point(850, 0));
+}
+
+void TestWayland::tst_draggedOutTabFollowsPointer()
+{
+    // With xdg-toplevel-drag a tab dragged out becomes a window which follows the pointer, and
+    // stays where it's released. The pointer needs to be over it, even if the tab was further right
+    // than the new window is wide.
+
+    if (!isToplevelDrag())
+        QSKIP("Only with xdg-toplevel-drag");
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(800, 500), MainWindowOption_None);
+    auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true }));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    m->addDockWidget(dock0, Location_OnLeft);
+    m->addDockWidget(dock1, Location_OnRight);
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(waitForMapped(m->view()));
+    m_input->set_window_position(Wayland::surfaceFor(m->view()), 0, 0);
+    QVERIFY(m_input->commitAndWait());
+
+    TabBar *tabBar = dock2->dptr()->group()->stack()->tabBar();
+    m_input->startDrag(tabBar->view(), tabCenter(tabBar, dock2));
+    const Point releasePos(1200, 600);
+    m_input->moveToAbsolute(releasePos);
+    m_input->release();
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_VERIFY(!DragController::instance()->isDragging());
+    FloatingWindow *fw = dock2->floatingWindow();
+    QVERIFY(fw);
+
+    const std::optional<Point> pos = m_input->windowPosition(fw->view());
+    QVERIFY(pos);
+    const Rect windowRect(*pos, fw->view()->size());
+    QEXPECT_FAIL("", "The offset given to xdg-toplevel-drag is the cursor position when the drag started", Abort);
+    QVERIFY2(windowRect.contains(releasePos),
+             qPrintable(QStringLiteral("window=%1,%2 %3x%4")
+                            .arg(windowRect.x())
+                            .arg(windowRect.y())
+                            .arg(windowRect.width())
+                            .arg(windowRect.height())));
+}
+
+void TestWayland::tst_dragFloatingWindowByTitleBar()
+{
+    // With xdg-toplevel-drag floating windows are moved by dragging KDDW's title bar, there's no
+    // native one. The pointer stays where it grabbed the title bar.
+
+    if (!isToplevelDrag())
+        QSKIP("Only with xdg-toplevel-drag, otherwise the native title bar moves floating windows");
+
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    FloatingWindow *fw = dock1->floatingWindow();
+    QVERIFY(fw);
+    QVERIFY(waitForMapped(fw->view()));
+    m_input->set_window_position(Wayland::surfaceFor(fw->view()), 100, 100);
+    QVERIFY(m_input->commitAndWait());
+
+    TitleBar *titleBar = fw->titleBar();
+    const Point pressPos = titleBarCenter(titleBar);
+    const Point pressPosInWindow = mapToSurface(titleBar->view(), pressPos);
+    m_input->startDrag(titleBar->view(), pressPos);
+    const Point releasePos(700, 500);
+    m_input->moveToAbsolute(releasePos);
+    m_input->release();
+    QVERIFY(m_input->commitAndWait());
+
+    QTRY_VERIFY(!DragController::instance()->isDragging());
+    QCOMPARE(dock1->floatingWindow(), fw);
+    QEXPECT_FAIL("", "The offset given to xdg-toplevel-drag is the cursor position when the drag started", Abort);
+    QCOMPARE(m_input->windowPosition(fw->view()), releasePos - pressPosInWindow);
 }
 
 int main(int argc, char *argv[])
