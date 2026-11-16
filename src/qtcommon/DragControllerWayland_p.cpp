@@ -149,6 +149,13 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea,
 
 bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
 {
+    // Where the window was grabbed, relative to the window the drag started in. From the global
+    // position, as Draggable::mapToWindow() doesn't account for margins, which QtQuick's floating
+    // windows have. Before makeWindow(), which can move the draggable to another window.
+    Point offset = q->m_offset;
+    if (auto window = q->m_draggable->asView()->window())
+        offset = window->mapFromGlobal(q->m_pressPos);
+
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (!q->m_windowBeingDragged) {
         KDDW_ERROR("StateDraggingWayland: Failed to create window");
@@ -173,6 +180,11 @@ bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
         return false;
     }
 
+    // The window the drag started in can be wider than the new one. Like StateDragging::onEntry(),
+    // keep the pointer over it.
+    if (offset.x() > fw->width())
+        offset.setX(fw->width() / 2);
+
     auto serialize = [](const auto &object) {
         QByteArray data;
         QDataStream dataStream(&data, QIODevice::WriteOnly);
@@ -182,8 +194,7 @@ bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
 
     mimeData->setData(QStringLiteral("application/x-qt-mainwindowdrag-window"),
                       serialize(reinterpret_cast<qintptr>(qtWindow))); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
-    mimeData->setData(QStringLiteral("application/x-qt-mainwindowdrag-position"),
-                      serialize(QCursor::pos()));
+    mimeData->setData(QStringLiteral("application/x-qt-mainwindowdrag-position"), serialize(offset));
 
     return true;
 }

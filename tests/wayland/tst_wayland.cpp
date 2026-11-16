@@ -526,7 +526,6 @@ void TestWayland::tst_draggedOutTabFollowsPointer()
     const std::optional<Point> pos = m_input->windowPosition(fw->view());
     QVERIFY(pos);
     const Rect windowRect(*pos, fw->view()->size());
-    QEXPECT_FAIL("", "The offset given to xdg-toplevel-drag is the cursor position when the drag started", Abort);
     QVERIFY2(windowRect.contains(releasePos),
              qPrintable(QStringLiteral("window=%1,%2 %3x%4")
                             .arg(windowRect.x())
@@ -562,7 +561,6 @@ void TestWayland::tst_dragFloatingWindowByTitleBar()
 
     QTRY_VERIFY(!DragController::instance()->isDragging());
     QCOMPARE(dock1->floatingWindow(), fw);
-    QEXPECT_FAIL("", "The offset given to xdg-toplevel-drag is the cursor position when the drag started", Abort);
     QCOMPARE(m_input->windowPosition(fw->view()), releasePos - pressPosInWindow);
 }
 
