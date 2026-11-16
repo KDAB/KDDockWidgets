@@ -139,6 +139,15 @@ std::vector<bool> dragModes()
     return { false, true };
 }
 
+/// Whether the current run asked for Flag_WaylandToplevelDrag. It's ignored without support.
+bool s_toplevelDragRequested = false;
+
+/// Returns whether xdg-toplevel-drag can be used. kddw_test_compositor supports it unless told not to.
+bool toplevelDragIsSupported()
+{
+    return !qEnvironmentVariable("KDDW_TEST_COMPOSITOR_ARGS").contains(QLatin1String("--no-toplevel-drag"));
+}
+
 /// Returns whether drags use xdg-toplevel-drag, where the dragged window itself moves, instead
 /// of a pixmap
 bool isToplevelDrag()
@@ -196,6 +205,7 @@ private Q_SLOTS:
     void tst_windowPosition();
     void tst_draggedOutTabFollowsPointer();
     void tst_dragFloatingWindowByTitleBar();
+    void tst_toplevelDragNeedsSupport();
 
 private:
     std::unique_ptr<TestInput> m_input;
@@ -564,6 +574,22 @@ void TestWayland::tst_dragFloatingWindowByTitleBar()
     QCOMPARE(m_input->windowPosition(fw->view()), releasePos - pressPosInWindow);
 }
 
+void TestWayland::tst_toplevelDragNeedsSupport()
+{
+    // Without xdg-toplevel-drag support Flag_WaylandToplevelDrag needs to be ignored. Otherwise
+    // the native title bar isn't forced, and floating windows can't be moved.
+    // Run with KDDW_TEST_COMPOSITOR_ARGS=--no-toplevel-drag to test that.
+
+    if (!s_toplevelDragRequested)
+        QSKIP("Only when Flag_WaylandToplevelDrag is set");
+
+    const bool supported = toplevelDragIsSupported();
+    if (!supported)
+        QEXPECT_FAIL("", "Flag_WaylandToplevelDrag is used even if the compositor lacks support", Abort);
+    QCOMPARE(isToplevelDrag(), supported);
+    QCOMPARE(bool(Config::self().flags() & Config::Flag_NativeTitleBar), !supported);
+}
+
 int main(int argc, char *argv[])
 {
     if (!ensureCompositor(KDDW_TEST_COMPOSITOR))
@@ -580,8 +606,9 @@ int main(int argc, char *argv[])
             if (toplevelDrag)
                 flags |= Config::Flag_WaylandToplevelDrag;
             Config::self().setFlags(flags);
+            s_toplevelDragRequested = toplevelDrag;
 
-            qInfo().noquote() << "Using" << (toplevelDrag ? "xdg-toplevel-drag" : "pixmap drags");
+            qInfo().noquote() << "Using" << (isToplevelDrag() ? "xdg-toplevel-drag" : "pixmap drags");
             TestWayland test;
             const int exitCode = QTest::qExec(&test, argc, argv);
             if (exitCode != 0)
