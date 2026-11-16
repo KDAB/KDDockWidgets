@@ -564,8 +564,6 @@ void TestWayland::tst_draggedOutFollowsPointer()
     const std::optional<Point> pos = m_input->windowPosition(fw->view());
     QVERIFY(pos);
     const Rect windowRect(*pos, fw->view()->size());
-    QEXPECT_FAIL("tab-at-bottom", "The offset's y is relative to the window the drag started in", Abort);
-    QEXPECT_FAIL("titlebar-at-bottom", "The offset's y is relative to the window the drag started in", Abort);
     QVERIFY2(windowRect.contains(releasePos),
              qPrintable(QStringLiteral("window=%1,%2 %3x%4")
                             .arg(windowRect.x())

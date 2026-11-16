@@ -162,12 +162,16 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea,
 
 bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
 {
-    // Where the window was grabbed, relative to the window the drag started in. From the global
-    // position, as Draggable::mapToWindow() doesn't account for margins, which QtQuick's floating
-    // windows have. Before makeWindow(), which can move the draggable to another window.
+    // Where the pointer will be in the dragged window. Like StateDragging, when detaching into a
+    // new window, that's where the title bar or tab bar was pressed, so it's near the new window's
+    // top-left. When dragging a floating window it's where it was pressed, so it doesn't jump. That
+    // comes from the global position, as Draggable::mapToWindow() doesn't account for margins,
+    // which QtQuick's floating windows have.
     Point offset = q->m_offset;
-    if (auto window = q->m_draggable->asView()->window())
-        offset = window->mapFromGlobal(q->m_pressPos);
+    if (q->m_draggable->isWindow()) {
+        if (auto window = q->m_draggable->asView()->window())
+            offset = window->mapFromGlobal(q->m_pressPos);
+    }
 
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (!q->m_windowBeingDragged) {
@@ -193,10 +197,12 @@ bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
         return false;
     }
 
-    // The window the drag started in can be wider than the new one. Like StateDragging::onEntry(),
-    // keep the pointer over it.
+    // The draggable can be bigger than the new window. Like StateDragging::onEntry(), keep the
+    // pointer over it.
     if (offset.x() > fw->width())
         offset.setX(fw->width() / 2);
+    if (offset.y() > fw->height())
+        offset.setY(fw->height() / 2);
 
     auto serialize = [](const auto &object) {
         QByteArray data;
