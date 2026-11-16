@@ -14,12 +14,20 @@
 #include "core/ScopedValueRollback_p.h"
 #include "kddockwidgets/core/Platform.h"
 #include "kddockwidgets/core/DropArea.h"
-#include "kddockwidgets/core/FloatingWindow.h"
-#include "qtcommon/Window_p.h"
 #include "Config.h"
 
-#include <QWindow>
+#ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
+#include "core/Utils_p.h"
+#include "kddockwidgets/core/FloatingWindow.h"
+#include "qtcommon/Window_p.h"
+
 #include <QDataStream>
+#include <QWindow>
+
+#include <QtGui/private/qguiapplication_p.h>
+#include <QtWaylandClient/private/qwaylanddisplay_p.h>
+#include <QtWaylandClient/private/qwaylandintegration_p.h>
+#endif
 
 using namespace KDDockWidgets::Core;
 
@@ -48,6 +56,7 @@ void StateDraggingWayland::onEntry()
     Drag drag(this);
     drag.setMimeData(mimeData);
 
+#ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
     // Checked here and not when creating the state, as the DragController can be created before the
     // flags are set. QtQuick's Platform creates it, for example.
     if (Config::self().flags() & Config::Flag_WaylandToplevelDrag) {
@@ -55,7 +64,9 @@ void StateDraggingWayland::onEntry()
             q->dragCanceled.emit();
             return;
         }
-    } else {
+    } else
+#endif
+    {
         q->m_windowBeingDragged =
             std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
         drag.setPixmap(q->m_windowBeingDragged->pixmap());
@@ -147,6 +158,8 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea,
     return true;
 }
 
+#ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
+
 bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
 {
     // Where the window was grabbed, relative to the window the drag started in. From the global
@@ -197,4 +210,19 @@ bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
     mimeData->setData(QStringLiteral("application/x-qt-mainwindowdrag-position"), serialize(offset));
 
     return true;
+}
+
+#endif
+
+bool KDDockWidgets::Core::isWaylandToplevelDragSupported()
+{
+#ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
+    if (!isWayland())
+        return false;
+
+    auto integration = static_cast<QtWaylandClient::QWaylandIntegration *>(QGuiApplicationPrivate::platformIntegration());
+    return integration->display()->hasRegistryGlobal(u"xdg_toplevel_drag_manager_v1");
+#else
+    return false;
+#endif
 }

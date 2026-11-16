@@ -132,7 +132,7 @@ public:
                                                   ///< right clicking on the tab area
         Flag_AutoHideAsTabGroups = 0x100000, ///< If tabbed dockwidgets are sent to/from sidebar, they're all sent and restored together
         Flag_DisableDoubleClick = 0x200000, ///< Do not maximize of float if a title or tab is double-clicked.
-        Flag_WaylandToplevelDrag = 0x400000, ///< EXPERIMENTAL. Uses xdg-toplevel-drag on Wayland so the actual window drags instead of a pixmap. Requires compositor support.
+        Flag_WaylandToplevelDrag = 0x400000, ///< EXPERIMENTAL. Uses xdg-toplevel-drag on Wayland so the actual window drags instead of a pixmap. Ignored without Qt >= 6.8 and Qt6WaylandClientPrivate at build time, or without compositor support.
         Flag_Default = Flag_AeroSnapWithClientDecos ///< The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

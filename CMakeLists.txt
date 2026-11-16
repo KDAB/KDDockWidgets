@@ -274,6 +274,26 @@ if(KDDW_FRONTEND_QTWIDGETS OR KDDW_FRONTEND_QTQUICK)
     set(KDDW_FRONTEND_QT ON)
 endif()
 
+# xdg-toplevel-drag, see Config::Flag_WaylandToplevelDrag. Qt's Wayland client supports it since 6.8, and
+# its private API tells whether the compositor does.
+set(KDDW_HAS_WAYLAND_TOPLEVEL_DRAG OFF)
+if(KDDW_FRONTEND_QT
+   AND CMAKE_SYSTEM_NAME STREQUAL "Linux"
+   AND Qt6Core_VERSION VERSION_GREATER_EQUAL "6.8.0"
+)
+    set(QT_NO_PRIVATE_MODULE_WARNING ON)
+    find_package(Qt6 ${QT_MIN_VERSION} NO_MODULE QUIET OPTIONAL_COMPONENTS WaylandClient)
+    if(Qt6Core_VERSION VERSION_GREATER_EQUAL "6.10.0")
+        find_package(Qt6 ${QT_MIN_VERSION} NO_MODULE QUIET OPTIONAL_COMPONENTS WaylandClientPrivate)
+    endif()
+
+    if(TARGET Qt6::WaylandClientPrivate)
+        set(KDDW_HAS_WAYLAND_TOPLEVEL_DRAG ON)
+    else()
+        message(STATUS "Qt6WaylandClientPrivate not found, Config::Flag_WaylandToplevelDrag won't be supported")
+    endif()
+endif()
+
 if(KDDockWidgets_QML_MODULE AND Qt6Core_VERSION VERSION_LESS "6.8.0")
     # We have workarounds for QTBUG-101146, but only since 6.8 the generated includes are guarded
     # with _has_include

@@ -16,6 +16,11 @@ if (@KDDW_FRONTEND_QTQUICK@)
     find_dependency(Qt@QT_VERSION_MAJOR@QuickControls2 REQUIRED)
 endif()
 
+# Static builds export Qt6::WaylandClientPrivate, which Qt < 6.10 provides in Qt6WaylandClient
+if (@KDDockWidgets_STATIC@ AND @KDDW_HAS_WAYLAND_TOPLEVEL_DRAG@)
+    find_dependency(Qt6WaylandClient REQUIRED)
+endif()
+
 if (@KDDW_FIND_QT_PRIVATE_DEPS@)
     set(QT_NO_PRIVATE_MODULE_WARNING ON)
     find_dependency(Qt6GuiPrivate REQUIRED)
@@ -24,6 +29,9 @@ if (@KDDW_FIND_QT_PRIVATE_DEPS@)
     endif()
     if (@KDDW_FRONTEND_QTQUICK@)
         find_dependency(Qt6QuickPrivate REQUIRED)
+    endif()
+    if (@KDDW_HAS_WAYLAND_TOPLEVEL_DRAG@)
+        find_dependency(Qt6WaylandClientPrivate REQUIRED)
     endif()
 endif()
 

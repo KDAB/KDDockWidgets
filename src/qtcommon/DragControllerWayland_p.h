@@ -36,10 +36,15 @@ public:
     bool handleMouseMove(QPoint globalPos) override;
 
 private:
+#ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
     /// Sets up the drag to use xdg-toplevel-drag, so the window itself is dragged instead of a
     /// pixmap. Returns false if the window couldn't be created.
     bool setupToplevelDrag(QMimeData *mimeData);
+#endif
 };
+
+/// Returns whether xdg-toplevel-drag can be used. Needs Qt >= 6.8 and compositor support.
+bool isWaylandToplevelDragSupported();
 
 // A sub-class just so we don't use QMimeData directly. We'll only accept drops if its mime data
 // Can be qobject_casted to this class. For safety.

@@ -36,3 +36,15 @@ add_dependencies(tst_wayland kddw_test_compositor)
 target_compile_definitions(tst_wayland PRIVATE KDDW_TEST_COMPOSITOR="$<TARGET_FILE:kddw_test_compositor>")
 add_test(NAME tst_wayland COMMAND tst_wayland)
 set_tests_properties(tst_wayland PROPERTIES LABELS wayland)
+
+if(KDDW_HAS_WAYLAND_TOPLEVEL_DRAG AND KDDW_XDG_TOPLEVEL_DRAG_XML)
+    target_compile_definitions(tst_wayland PRIVATE KDDW_HAS_WAYLAND_TOPLEVEL_DRAG)
+
+    # Flag_WaylandToplevelDrag with a compositor that doesn't support it, which needs to be ignored
+    add_test(NAME tst_wayland_no_toplevel_drag COMMAND tst_wayland)
+    set_tests_properties(
+        tst_wayland_no_toplevel_drag
+        PROPERTIES LABELS wayland ENVIRONMENT
+                   "KDDW_TEST_COMPOSITOR_ARGS=--no-toplevel-drag;KDDW_TEST_DRAG_MODE=toplevel"
+    )
+endif()

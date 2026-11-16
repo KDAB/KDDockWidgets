@@ -142,10 +142,15 @@ std::vector<bool> dragModes()
 /// Whether the current run asked for Flag_WaylandToplevelDrag. It's ignored without support.
 bool s_toplevelDragRequested = false;
 
-/// Returns whether xdg-toplevel-drag can be used. kddw_test_compositor supports it unless told not to.
+/// Returns whether xdg-toplevel-drag can be used. Needs a recent enough Qt, and kddw_test_compositor
+/// supports it unless told not to.
 bool toplevelDragIsSupported()
 {
+#ifdef KDDW_HAS_WAYLAND_TOPLEVEL_DRAG
     return !qEnvironmentVariable("KDDW_TEST_COMPOSITOR_ARGS").contains(QLatin1String("--no-toplevel-drag"));
+#else
+    return false;
+#endif
 }
 
 /// Returns whether drags use xdg-toplevel-drag, where the dragged window itself moves, instead
@@ -584,8 +589,6 @@ void TestWayland::tst_toplevelDragNeedsSupport()
         QSKIP("Only when Flag_WaylandToplevelDrag is set");
 
     const bool supported = toplevelDragIsSupported();
-    if (!supported)
-        QEXPECT_FAIL("", "Flag_WaylandToplevelDrag is used even if the compositor lacks support", Abort);
     QCOMPARE(isToplevelDrag(), supported);
     QCOMPARE(bool(Config::self().flags() & Config::Flag_NativeTitleBar), !supported);
 }

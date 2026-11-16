@@ -355,6 +355,11 @@ if(KDDW_FRONTEND_QTQUICK)
     target_compile_definitions(kddockwidgets PUBLIC KDDW_FRONTEND_QTQUICK KDDW_FRONTEND_QT)
 endif()
 
+if(KDDW_HAS_WAYLAND_TOPLEVEL_DRAG)
+    target_link_libraries(kddockwidgets PRIVATE Qt6::WaylandClientPrivate)
+    target_compile_definitions(kddockwidgets PRIVATE KDDW_HAS_WAYLAND_TOPLEVEL_DRAG)
+endif()
+
 if(NOT KDDW_FRONTEND_QT)
     include(GenerateExportHeader)
     generate_export_header(
