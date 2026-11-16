@@ -43,13 +43,23 @@ void StateDraggingWayland::onEntry()
     }
 
     ScopedValueRollback guard(DragController::instance()->m_inQDrag, true);
-    q->m_windowBeingDragged =
-        std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 
     auto mimeData = new WaylandMimeData();
     Drag drag(this);
     drag.setMimeData(mimeData);
-    drag.setPixmap(q->m_windowBeingDragged->pixmap());
+
+    // Checked here and not when creating the state, as the DragController can be created before the
+    // flags are set. QtQuick's Platform creates it, for example.
+    if (Config::self().flags() & Config::Flag_WaylandToplevelDrag) {
+        if (!setupToplevelDrag(mimeData)) {
+            q->dragCanceled.emit();
+            return;
+        }
+    } else {
+        q->m_windowBeingDragged =
+            std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
+        drag.setPixmap(q->m_windowBeingDragged->pixmap());
+    }
 
     Platform::instance()->installGlobalEventFilter(q);
     KDDW_DEBUG("Started QDrag");
@@ -137,52 +147,30 @@ bool StateDraggingWayland::handleDragMove(DragMoveEvent *ev, DropArea *dropArea,
     return true;
 }
 
-StateDraggingWaylandToplevel::StateDraggingWaylandToplevel(DragController *parent)
-    : StateDraggingWayland(parent)
+bool StateDraggingWayland::setupToplevelDrag(QMimeData *mimeData)
 {
-}
-
-StateDraggingWaylandToplevel::~StateDraggingWaylandToplevel()
-{
-}
-
-void StateDraggingWaylandToplevel::onEntry()
-{
-    KDDW_DEBUG("StateDraggingWaylandToplevel entered");
-
-    if (DragController::instance()->m_inQDrag) {
-        KDDW_ERROR("Impossible!");
-        return;
-    }
-
-    ScopedValueRollback guard(DragController::instance()->m_inQDrag, true);
-
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (!q->m_windowBeingDragged) {
-        KDDW_ERROR("StateDraggingWaylandToplevel: Failed to create window");
-        q->dragCanceled.emit();
-        return;
+        KDDW_ERROR("StateDraggingWayland: Failed to create window");
+        return false;
     }
 
     auto fw = q->m_windowBeingDragged->floatingWindow();
     if (!fw) {
-        KDDW_ERROR("StateDraggingWaylandToplevel: No FloatingWindow");
-        q->dragCanceled.emit();
-        return;
+        KDDW_ERROR("StateDraggingWayland: No FloatingWindow");
+        return false;
     }
 
     auto window = fw->view()->window();
     if (!window) {
-        KDDW_ERROR("StateDraggingWaylandToplevel: No window");
-        q->dragCanceled.emit();
-        return;
+        KDDW_ERROR("StateDraggingWayland: No window");
+        return false;
     }
 
     auto qtWindow = static_cast<QtCommon::Window *>(window.get())->qtWindow();
     if (!qtWindow) {
-        KDDW_ERROR("StateDraggingWaylandToplevel: No QWindow");
-        q->dragCanceled.emit();
-        return;
+        KDDW_ERROR("StateDraggingWayland: No QWindow");
+        return false;
     }
 
     auto serialize = [](const auto &object) {
@@ -192,21 +180,10 @@ void StateDraggingWaylandToplevel::onEntry()
         return data;
     };
 
-    auto mimeData = new WaylandMimeData();
     mimeData->setData(QStringLiteral("application/x-qt-mainwindowdrag-window"),
                       serialize(reinterpret_cast<qintptr>(qtWindow))); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
     mimeData->setData(QStringLiteral("application/x-qt-mainwindowdrag-position"),
                       serialize(QCursor::pos()));
 
-    Drag drag(this);
-    drag.setMimeData(mimeData);
-
-    Platform::instance()->installGlobalEventFilter(q);
-    KDDW_DEBUG("Started QDrag (toplevel)");
-    const Qt::DropAction result = drag.exec();
-    KDDW_DEBUG("QDrag (toplevel) finished with result={}", int(result));
-
-    Platform::instance()->removeGlobalEventFilter(q);
-    if (result == Qt::IgnoreAction)
-        q->dragCanceled.emit();
+    return true;
 }
