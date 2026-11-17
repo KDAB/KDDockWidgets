@@ -166,6 +166,7 @@ private Q_SLOTS:
     void tst_titlebar_getter();
     void tst_addingOptionHiddenTabbed();
     void tst_maxSizedHonouredAfterRemoved();
+    void tst_maxSizeHonouredWhenDocked();
     void tst_addDockWidgetAsTabToDockWidget();
     void tst_closeTabHidesDockWidget();
     void tst_propagateSizeHonoursMinSize();
@@ -5306,6 +5307,41 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
     QVERIFY(dock1->dptr()->group()->view()->height()
             <= dock1->dptr()->group()->view()->maxSizeHint().height());
     delete dock2;
+}
+
+void TestDocks::tst_maxSizeHonouredWhenDocked()
+{
+    // Tests that a docked group honours its dock widget's max-size (#262)
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(Size(1000, 1000), MainWindowOption_None);
+    auto dock1 = newDockWidget("dock1");
+    auto guest = Platform::instance()->tests_createView({ true, {}, Size(100, 100) });
+    const int maxWidth = 300;
+    guest->setMaximumSize(Size(maxWidth, Core::Item::hardcodedMaximumSize.height()));
+    dock1->setGuestView(guest->asWrapper());
+
+    auto dock2 = newDockWidget("dock2");
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+
+    // Resize, so the layout redistributes the space
+    m->view()->resize(Size(1200, 1000));
+
+    // Wait for layoutInvalidated, so the layout gets the new constraints
+    QTest::qWait(100);
+
+    QCOMPARE(dock1->view()->maxSizeHint().width(), maxWidth);
+
+    Core::Group *group = dock1->dptr()->group();
+    QVERIFY(group);
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "qtquick: Group doesn't honour its dock widget's max-size when docked", Continue);
+    QVERIFY(group->view()->maxSizeHint().width() < Core::Item::hardcodedMaximumSize.width());
+
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "qtquick: Group doesn't honour its dock widget's max-size when docked", Continue);
+    QVERIFY(dock1->width() <= maxWidth);
 }
 
 void TestDocks::tst_addDockWidgetAsTabToDockWidget()
