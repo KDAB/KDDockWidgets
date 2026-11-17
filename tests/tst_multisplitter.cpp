@@ -91,6 +91,7 @@ private Q_SLOTS:
     void tst_outermostVisibleNeighbor();
     void tst_outermostNeighbor();
     void tst_relativeToHidden();
+    void tst_insertHiddenRelativeToVisible();
     void tst_spuriousResize();
 };
 
@@ -2197,6 +2198,56 @@ void TestLayouting::tst_relativeToHidden()
     QVERIFY(innerContainer->isVertical());
     QCOMPARE(innerContainer->childItems()[0], item1);
     QCOMPARE(innerContainer->childItems()[1], item2);
+}
+
+void TestLayouting::tst_insertHiddenRelativeToVisible()
+{
+    // Tests that inserting a hidden item relative to a visible one doesn't hide the latter.
+    // This happens when relativeTo needs to be wrapped in a new container. Issue #640
+
+    DeleteViews deleteViews;
+    auto root = createRoot();
+    root->setSize({ 1000, 1000 });
+
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+
+    root->insertItem(item3, Location_OnTop);
+    root->insertItem(item1, Location_OnTop);
+    QVERIFY(root->isVertical());
+    QVERIFY(root->checkSanity());
+
+    // root is vertical, so inserting on the right of item1 requires a new horizontal container
+    ItemBoxContainer::insertItemRelativeTo(item2, item1, Location_OnRight,
+                                           InitialVisibilityOption::StartHidden);
+    QVERIFY(!item2->isVisible());
+
+    QEXPECT_FAIL("", "Bug #640, to be fixed", Abort);
+    QVERIFY(item1->isVisible());
+
+    QVERIFY(root->checkSanity());
+    QCOMPARE(root->childItems().size(), 2);
+    auto innerContainer = root->childItems().constFirst()->asBoxContainer();
+    QVERIFY(innerContainer);
+    QVERIFY(static_cast<Item *>(innerContainer)->isVisible());
+    QCOMPARE(innerContainer->childItems().size(), 2);
+    QCOMPARE(innerContainer->childItems()[0], item1);
+    QCOMPARE(innerContainer->childItems()[1], item2);
+
+    // item1 still takes the whole width, since item2 is hidden
+    QCOMPARE(item1->width(), root->width());
+    QVERIFY(item1->geometry().bottom() < item3->geometry().top());
+
+    // Showing item2 puts it on the right of item1, still above item3
+    auto guest2 = item2->guest();
+    item2->turnIntoPlaceholder();
+    item2->restore(guest2);
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->isVisible());
+    QCOMPARE(item2->y(), item1->y());
+    QVERIFY(item2->geometry().left() > item1->geometry().right());
+    QVERIFY(item2->geometry().bottom() < item3->geometry().top());
 }
 
 void TestLayouting::tst_spuriousResize()
