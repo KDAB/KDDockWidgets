@@ -44,7 +44,9 @@ endfunction()
 # Equivalent to CMake's add_test but can enable valgrind
 function(_add_test test)
     if(KDDockWidgets_USE_VALGRIND)
-        add_test(NAME ${test} COMMAND valgrind --leak-check=no --error-exitcode=1 ${CMAKE_BINARY_DIR}/bin/${test})
+        add_test(NAME ${test} COMMAND valgrind --leak-check=no --error-exitcode=1
+                                      --suppressions=${CMAKE_SOURCE_DIR}/valgrind.sup ${CMAKE_BINARY_DIR}/bin/${test}
+        )
     else()
         add_test(NAME ${test} COMMAND ${test})
     endif()

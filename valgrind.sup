@@ -224,3 +224,23 @@
    obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.1
    ...
 }
+
+# False positive in Qt: on 64-bit, QSemaphore::release() publishes the tokens and then calls
+# FUTEX_WAKE_OP on both halves of the counter. The waiter may grab the tokens without sleeping,
+# return and destroy its stack-allocated semaphore first, so the syscall touches a dead stack slot.
+# The op is an atomic OR 0, so it's harmless. Seen as flaky failures in CI.
+{
+   qsemaphore_release_futex_wake
+   Memcheck:Param
+   futex(futex)
+   fun:syscall
+   fun:_ZN10QSemaphore7releaseEi
+}
+
+{
+   qsemaphore_release_futex2_wake
+   Memcheck:Param
+   futex(futex2)
+   fun:syscall
+   fun:_ZN10QSemaphore7releaseEi
+}
