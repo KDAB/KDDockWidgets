@@ -55,6 +55,8 @@ Known limitations:
 - While dragging, the cursor shows "forbidden" wherever nothing accepts the drop, like over empty
   space or the desktop, although releasing there is fine. The compositor picks that cursor. Try fixing it
   upstream, see [QTBUG-152325](https://qt-project.atlassian.net/browse/QTBUG-152325).
+- On GNOME (mutter), dragging an existing floating window doesn't move it, only detaching works.
+  See [mutter#5224](https://gitlab.gnome.org/GNOME/mutter/-/work_items/5224).
 
 All in all it's pretty decent and usable. Any further improvements should be done at the server or
 protocol level now.
