@@ -174,6 +174,14 @@ QSize FloatingWindow::minSize() const
         + QSize(margins * 2, margins * 2);
 }
 
+void FloatingWindow::setMaximumSize(QSize sz)
+{
+    View::setMaximumSize(sz);
+
+    // So the window manager also honours it when resizing natively
+    m_quickWindow->setMaximumSize(sz);
+}
+
 void FloatingWindow::setGeometry(QRect geo)
 {
     // Not needed with QtWidgets, but needed with QtQuick as we don't have layouts

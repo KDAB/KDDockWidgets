@@ -201,6 +201,10 @@ FloatingWindow::FloatingWindow(Rect suggestedGeometry, MainWindow *parent,
     d->numGroupsChanged.connect([this] {
         d->numDockWidgetsChanged.emit();
     });
+
+    // Our max-size depends on having a single dock widget.
+    // Needed by QtQuick, as there's no QLayout to request a relayout.
+    d->numDockWidgetsChanged.connect([this] { updateSizeConstraints(); });
 }
 
 FloatingWindow::FloatingWindow(Core::Group *group, Rect suggestedGeometry,
