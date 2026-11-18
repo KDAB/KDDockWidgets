@@ -5335,12 +5335,7 @@ void TestDocks::tst_maxSizeHonouredWhenDocked()
 
     Core::Group *group = dock1->dptr()->group();
     QVERIFY(group);
-    if (Platform::instance()->isQtQuick())
-        QEXPECT_FAIL("", "qtquick: Group doesn't honour its dock widget's max-size when docked", Continue);
     QVERIFY(group->view()->maxSizeHint().width() < Core::Item::hardcodedMaximumSize.width());
-
-    if (Platform::instance()->isQtQuick())
-        QEXPECT_FAIL("", "qtquick: Group doesn't honour its dock widget's max-size when docked", Continue);
     QVERIFY(dock1->width() <= maxWidth);
 }
 

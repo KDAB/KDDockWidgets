@@ -72,7 +72,6 @@ ApplicationWindow {
                                     Rectangle {
                                         id: guest
                                         property var kddockwidgets_min_size: Qt.size(800, 200)
-                                        // property var kddockwidgets_max_size: Qt.size(800, 400) Not yet supported
                                         color: "#85baa1";
                                         anchors.fill: parent;
                                     }

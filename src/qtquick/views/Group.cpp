@@ -197,22 +197,11 @@ QSize Group::minSize() const
 
 QSize Group::maxSizeHint() const
 {
-    if (isMDI()) {
-        const auto dockwidgets = m_group->dockWidgets();
-        if (dockwidgets.size() == 1) {
-            auto dw = dockwidgets[0];
-            if (dw->inDtor()) {
-                // Destruction case, nothing to do
-                return View::maxSizeHint();
-            }
+    if (Core::View::d->freed())
+        return View::maxSizeHint();
 
-            return (dw->view()->maxSizeHint() + QSize(0, nonContentsHeight())).boundedTo(Core::Item::hardcodedMaximumSize);
-        } else {
-            KDDW_WARN("Group::maxSizeHint: Max size not supported for mixed MDI case yet");
-        }
-    }
-
-    return View::maxSizeHint();
+    const QSize contentsSize = m_group->biggestDockWidgetMaxSize();
+    return (contentsSize + QSize(0, nonContentsHeight())).boundedTo(Core::Item::hardcodedMaximumSize);
 }
 
 QtQuick::TabBar *Group::tabBarObj() const
