@@ -72,8 +72,32 @@ ApplicationWindow {
                                     Rectangle {
                                         id: guest
                                         property var kddockwidgets_min_size: Qt.size(800, 200)
-                                        // property var kddockwidgets_max_size: Qt.size(800, 400) Not yet supported
                                         color: "#85baa1";
+                                        anchors.fill: parent;
+                                    }
+                                }`;
+
+                    var newDW = Qt.createQmlObject(code, root);
+                    newDW.open();
+                }
+            }
+
+            Action {
+                text: qsTr("Create widget with max-size")
+                onTriggered: {
+                    /// Do not use random uuids if you're planing to use layout save/restore!
+                    /// Using them here for convenience of the exercise
+                    var uniqueName = KDDW.Singletons.helpers.generateUuid();
+
+                    var code = `import com.kdab.dockwidgets 2.0 as KDDW;
+                                import QtQuick 2.6;
+                                KDDW.DockWidget {
+                                    uniqueName: "${uniqueName}";
+                                    title: "max-size=" + guest.kddockwidgets_max_size
+                                    Rectangle {
+                                        id: guest
+                                        property var kddockwidgets_max_size: Qt.size(300, 16777215)
+                                        color: "#e9c46a";
                                         anchors.fill: parent;
                                     }
                                 }`;
