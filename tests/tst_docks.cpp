@@ -5358,8 +5358,6 @@ void TestDocks::tst_maxSizeHonouredWhenFloating()
     };
 
     QVERIFY(dock1->floatingWindow());
-    if (Platform::instance()->isQtQuick())
-        QEXPECT_FAIL("", "qtquick: FloatingWindow doesn't honour its dock widget's max-size", Abort);
     QVERIFY(QTest::qWaitFor(hasMaxWidth));
 
     // Max-size isn't honoured when tabbed

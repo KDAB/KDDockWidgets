@@ -49,6 +49,7 @@ public:
     ~FloatingWindow();
 
     QSize minSize() const override;
+    void setMaximumSize(QSize) override;
 
     // QML interface
     KDDockWidgets::QtQuick::TitleBar *titleBar() const;
