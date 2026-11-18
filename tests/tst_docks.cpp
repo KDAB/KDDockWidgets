@@ -167,6 +167,7 @@ private Q_SLOTS:
     void tst_addingOptionHiddenTabbed();
     void tst_maxSizedHonouredAfterRemoved();
     void tst_maxSizeHonouredWhenDocked();
+    void tst_maxSizeHonouredWhenFloating();
     void tst_addDockWidgetAsTabToDockWidget();
     void tst_closeTabHidesDockWidget();
     void tst_propagateSizeHonoursMinSize();
@@ -5337,6 +5338,40 @@ void TestDocks::tst_maxSizeHonouredWhenDocked()
     QVERIFY(group);
     QVERIFY(group->view()->maxSizeHint().width() < Core::Item::hardcodedMaximumSize.width());
     QVERIFY(dock1->width() <= maxWidth);
+}
+
+void TestDocks::tst_maxSizeHonouredWhenFloating()
+{
+    // Tests that a floating window honours its dock widget's max-size (#262)
+
+    EnsureTopLevelsDeleted e;
+    auto dock1 = newDockWidget("dock1");
+    auto guest = Platform::instance()->tests_createView({ true, {}, Size(100, 100) });
+    const int maxWidth = 300;
+    guest->setMaximumSize(Size(maxWidth, Core::Item::hardcodedMaximumSize.height()));
+    dock1->setGuestView(guest->asWrapper());
+    dock1->open();
+
+    auto hasMaxWidth = [dock1] {
+        return dock1->floatingWindow()->view()->maxSizeHint().width() < 500
+            && dock1->window()->maxSizeHint().width() < 500;
+    };
+
+    QVERIFY(dock1->floatingWindow());
+    if (Platform::instance()->isQtQuick())
+        QEXPECT_FAIL("", "qtquick: FloatingWindow doesn't honour its dock widget's max-size", Abort);
+    QVERIFY(QTest::qWaitFor(hasMaxWidth));
+
+    // Max-size isn't honoured when tabbed
+    auto dock2 = newDockWidget("dock2");
+    dock1->addDockWidgetAsTab(dock2);
+    QTest::qWait(100);
+    QVERIFY(!hasMaxWidth());
+
+    dock2->close();
+    QVERIFY(QTest::qWaitFor(hasMaxWidth));
+
+    delete dock2;
 }
 
 void TestDocks::tst_addDockWidgetAsTabToDockWidget()
