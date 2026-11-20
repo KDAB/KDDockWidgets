@@ -24,10 +24,10 @@ endif(NOT Slint_FOUND)
 
 add_executable(slint_standalone_layouting src/main.cpp)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/)
-include_directories(${CMAKE_BINARY_DIR})
-
 target_link_libraries(slint_standalone_layouting PRIVATE Slint::Slint KDAB::kddockwidgets)
+target_include_directories(
+    slint_standalone_layouting PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/ ${CMAKE_BINARY_DIR}
+)
 target_compile_definitions(slint_standalone_layouting PRIVATE SRC_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 slint_target_sources(slint_standalone_layouting ui/appwindow.slint)

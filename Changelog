@@ -22,6 +22,8 @@
     used to crash are now rejected, and restoreLayout() returns false. Before touching any window,
     the layout's item tree is validated, nesting depth is limited, integers are range-checked and
     a dock widget, group or main window appearing more than once is rejected
+  - Fix configuring with CMake >= 4.5 when using our CMakePresets.json, which errored on
+    directory-scoped add_definitions() and include_directories()
 
 * v2.5.1
   - For packagers:

@@ -28,9 +28,9 @@ endif()
 
 set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/resources_example.qrc)
 
-# Just to reuse MyWidget.h
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/)
-
 add_executable(qtwidgets_mdi_with_docking main.cpp ../dockwidgets/MyWidget.cpp ${RESOURCES_EXAMPLE_SRC})
 
 target_link_libraries(qtwidgets_mdi_with_docking PRIVATE KDAB::kddockwidgets)
+
+# Just to reuse MyWidget.h
+target_include_directories(qtwidgets_mdi_with_docking PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/)

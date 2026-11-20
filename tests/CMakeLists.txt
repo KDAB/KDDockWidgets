@@ -16,13 +16,6 @@ if(KDDW_FRONTEND_QT)
     find_package(Qt${QT_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-
-include_directories(..)
-include_directories(../src)
-add_definitions(-DQT_NO_KEYWORDS)
-
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 set(TESTING_SRCS utils.cpp)
 if(KDDockWidgets_HAS_SPDLOG)
@@ -184,3 +177,8 @@ if(KDDW_FRONTEND_QTQUICK
 endif()
 
 #-----------------------------------------------------------------------------
+
+kddw_apply_flags_to_dir(
+    ${CMAKE_CURRENT_SOURCE_DIR} INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/../src ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+)
