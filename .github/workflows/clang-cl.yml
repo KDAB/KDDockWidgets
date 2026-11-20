@@ -21,7 +21,9 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - windows-latest
+          # windows-latest's VS 2026 STL requires a newer clang-cl than the image ships
+          # (STL1000: Unexpected compiler version, expected Clang 22 or newer)
+          - windows-2022
         preset:
           - name: dev-clangcl
         with_spdlog:
