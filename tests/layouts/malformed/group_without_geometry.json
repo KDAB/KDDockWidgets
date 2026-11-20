@@ -1,0 +1,540 @@
+{
+    "allDockWidgets": [
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 400,
+                    "width": 400,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 0,
+                        "mainWindowUniqueName": "mw1"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dw1"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 0,
+                        "mainWindowUniqueName": "mw1"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dw2"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 400,
+                    "width": 400,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 1,
+                        "mainWindowUniqueName": "mw1"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dw3"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 400,
+                    "width": 400,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 2,
+                        "mainWindowUniqueName": "mw1"
+                    }
+                ],
+                "tabIndex": 0,
+                "wasFloating": false
+            },
+            "uniqueName": "dw4"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "indexOfFloatingWindow": 0,
+                        "isFloatingWindow": true,
+                        "itemIndex": 0
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dw5"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "indexOfFloatingWindow": 0,
+                        "isFloatingWindow": true,
+                        "itemIndex": 0
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dw6"
+        },
+        {
+            "lastCloseReason": 0,
+            "lastPosition": {
+                "lastFloatingGeometry": {
+                    "height": 0,
+                    "width": 0,
+                    "x": 0,
+                    "y": 0
+                },
+                "lastOverlayedGeometries": [],
+                "placeholders": [
+                    {
+                        "isFloatingWindow": false,
+                        "itemIndex": 0,
+                        "mainWindowUniqueName": "mw2"
+                    }
+                ],
+                "tabIndex": -1,
+                "wasFloating": false
+            },
+            "uniqueName": "dw7"
+        }
+    ],
+    "closedDockWidgets": [
+        "dw1",
+        "dw4",
+        "dw5"
+    ],
+    "floatingWindows": [
+        {
+            "flags": 0,
+            "geometry": {
+                "height": 400,
+                "width": 400,
+                "x": 0,
+                "y": 0
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "2160": {
+                        "currentTabIndex": 1,
+                        "dockWidgets": [
+                            "dw5",
+                            "dw6"
+                        ],
+                        "geometry": {
+                            "height": 362,
+                            "width": 392,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "2160",
+                        "isNull": false,
+                        "mainWindowUniqueName": "",
+                        "objectName": "dw6",
+                        "options": 0
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "guestId": "2160",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 362,
+                                    "width": 392,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 524317,
+                                    "width": 524314
+                                },
+                                "minSize": {
+                                    "height": 130,
+                                    "width": 127
+                                },
+                                "percentageWithinParent": 1.0
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 362,
+                            "width": 392,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSizeHint": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 400,
+                "width": 400,
+                "x": 0,
+                "y": 0
+            },
+            "parentIndex": 0,
+            "parentMainWindowName": "mw1",
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 800,
+                "width": 800
+            },
+            "windowState": 0
+        }
+    ],
+    "mainWindows": [
+        {
+            "affinities": null,
+            "geometry": {
+                "height": 1000,
+                "width": 1000,
+                "x": 2,
+                "y": 2
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "2489": {
+                        "currentTabIndex": 1,
+                        "dockWidgets": [
+                            "dw1",
+                            "dw2"
+                        ],
+                        "geometry": {
+                            "height": 0,
+                            "width": 0,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "2489",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mw1",
+                        "objectName": "dw2",
+                        "options": 0
+                    },
+                    "2721": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dw3"
+                        ],
+                        "geometry": {
+                            "height": 994,
+                            "width": 496,
+                            "x": 502,
+                            "y": 0
+                        },
+                        "id": "2721",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mw1",
+                        "objectName": "dw3",
+                        "options": 0
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "guestId": "2489",
+                                    "isContainer": false,
+                                    "isVisible": true,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 994,
+                                            "width": 497,
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "maxSizeHint": {
+                                            "height": 524347,
+                                            "width": 524314
+                                        },
+                                        "minSize": {
+                                            "height": 160,
+                                            "width": 127
+                                        },
+                                        "percentageWithinParent": 0.500503524672709
+                                    }
+                                },
+                                {
+                                    "guestId": "2721",
+                                    "isContainer": false,
+                                    "isVisible": true,
+                                    "sizingInfo": {
+                                        "geometry": {
+                                            "height": 994,
+                                            "width": 496,
+                                            "x": 502,
+                                            "y": 0
+                                        },
+                                        "maxSizeHint": {
+                                            "height": 524321,
+                                            "width": 524291
+                                        },
+                                        "minSize": {
+                                            "height": 134,
+                                            "width": 104
+                                        },
+                                        "percentageWithinParent": 0.499496475327291
+                                    }
+                                }
+                            ],
+                            "isContainer": true,
+                            "isVisible": false,
+                            "orientation": 1,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 994,
+                                    "width": 998,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 524321,
+                                    "width": 1048610
+                                },
+                                "minSize": {
+                                    "height": 160,
+                                    "width": 236
+                                },
+                                "percentageWithinParent": 1.0
+                            }
+                        },
+                        {
+                            "isContainer": false,
+                            "isVisible": false,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 494,
+                                    "width": 998,
+                                    "x": 0,
+                                    "y": 500
+                                },
+                                "maxSizeHint": {
+                                    "height": 524277,
+                                    "width": 524267
+                                },
+                                "minSize": {
+                                    "height": 90,
+                                    "width": 80
+                                },
+                                "percentageWithinParent": 0.0
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 994,
+                            "width": 998,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSizeHint": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 1000,
+                "width": 1000,
+                "x": 2,
+                "y": 2
+            },
+            "options": 0,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 800,
+                "width": 800
+            },
+            "uniqueName": "mw1",
+            "windowState": 0
+        },
+        {
+            "affinities": null,
+            "geometry": {
+                "height": 800,
+                "width": 800,
+                "x": 2,
+                "y": 2
+            },
+            "isVisible": true,
+            "multiSplitterLayout": {
+                "frames": {
+                    "1644": {
+                        "currentTabIndex": 0,
+                        "dockWidgets": [
+                            "dw7"
+                        ],
+                        "geometry": {
+                            "height": 794,
+                            "width": 798,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "id": "1644",
+                        "isNull": false,
+                        "mainWindowUniqueName": "mw2",
+                        "objectName": "dw7",
+                        "options": 3
+                    }
+                },
+                "layout": {
+                    "children": [
+                        {
+                            "guestId": "1644",
+                            "isContainer": false,
+                            "isVisible": true,
+                            "sizingInfo": {
+                                "geometry": {
+                                    "height": 794,
+                                    "width": 798,
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "maxSizeHint": {
+                                    "height": 524317,
+                                    "width": 524314
+                                },
+                                "minSize": {
+                                    "height": 130,
+                                    "width": 127
+                                },
+                                "percentageWithinParent": 1.0
+                            }
+                        }
+                    ],
+                    "isContainer": true,
+                    "isVisible": false,
+                    "orientation": 2,
+                    "sizingInfo": {
+                        "geometry": {
+                            "height": 794,
+                            "width": 798,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "maxSizeHint": {
+                            "height": 16777215,
+                            "width": 16777215
+                        },
+                        "minSize": {
+                            "height": 90,
+                            "width": 80
+                        },
+                        "percentageWithinParent": 0.0
+                    }
+                }
+            },
+            "normalGeometry": {
+                "height": 800,
+                "width": 800,
+                "x": 2,
+                "y": 2
+            },
+            "options": 1,
+            "screenIndex": 0,
+            "screenSize": {
+                "height": 800,
+                "width": 800
+            },
+            "uniqueName": "mw2",
+            "windowState": 0
+        }
+    ],
+    "screenInfo": [
+        {
+            "devicePixelRatio": 1.0,
+            "geometry": {
+                "height": 800,
+                "width": 800,
+                "x": 0,
+                "y": 0
+            },
+            "index": 0,
+            "name": ""
+        }
+    ],
+    "serializationVersion": 3
+}
