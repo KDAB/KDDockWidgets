@@ -45,6 +45,25 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         uses: KDABLabs/msvc-dev-cmd-action@v2
 
+      # Cache vcpkg's built packages, so we don't rebuild them on every run.
+      # Rebuilding downloads the ports' patches from github.com/<repo>/commit/<sha>.patch,
+      # which sometimes returns 503 for hours.
+      - name: Get vcpkg commit
+        if: ${{ matrix.with_spdlog }}
+        id: vcpkg
+        shell: pwsh
+        run: |
+          "commit=$(git -C $env:VCPKG_INSTALLATION_ROOT rev-parse HEAD)" >> $env:GITHUB_OUTPUT
+          New-Item -ItemType Directory -Force -Path "${{ github.workspace }}/vcpkg-binary-cache" | Out-Null
+
+      - name: Restore vcpkg packages
+        if: ${{ matrix.with_spdlog }}
+        id: vcpkg-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg-binary-cache
+          key: vcpkg-${{ runner.os }}-${{ steps.vcpkg.outputs.commit }}-spdlog-fmt
+
       # Regression test for https://github.com/KDAB/KDDockWidgets/issues/733
       # (spdlog's Windows sink drags in <windows.h>, which clashes with our own
       # Core::HANDLE typedef when built with clang-cl).
@@ -52,6 +71,16 @@ jobs:
         if: ${{ matrix.with_spdlog }}
         shell: pwsh
         run: vcpkg install spdlog:x64-windows fmt:x64-windows
+        env:
+          VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-binary-cache
+
+      # Save right away rather than at the end of the job, so a later failure doesn't lose a successful build
+      - name: Save vcpkg packages
+        if: ${{ matrix.with_spdlog && steps.vcpkg-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg-binary-cache
+          key: ${{ steps.vcpkg-cache.outputs.cache-primary-key }}
 
       - name: Configure
         shell: pwsh
