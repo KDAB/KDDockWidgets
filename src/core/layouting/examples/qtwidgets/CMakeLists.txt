@@ -32,11 +32,11 @@ set(CMAKE_INCLUDE_CURRENT_DIRS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# For KDBindings
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/)
-
 add_executable(qtwidgets_standalone_layouting main.cpp)
 target_link_libraries(qtwidgets_standalone_layouting PRIVATE KDAB::kddockwidgets)
+
+# For KDBindings
+target_include_directories(qtwidgets_standalone_layouting PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../../3rdparty/)
 
 if(NOT TARGET nlohmann_json::nlohmann_json)
     include(../../../../nlohmann.cmake)

@@ -12,13 +12,6 @@ if(POLICY CMP0043)
     cmake_policy(SET CMP0043 NEW)
 endif()
 
-if(KDDW_FRONTEND_QT)
-    add_definitions(
-        -DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_USE_QSTRINGBUILDER -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
-        -DQT_STRICT_ITERATORS -DQT_NO_KEYWORDS -DQT_NO_FOREACH
-    )
-endif()
-
 set(KDDW_LAYOUTING_SRCS core/layouting/Item.cpp core/layouting/ItemFreeContainer.cpp core/Logging.cpp KDDockWidgets.cpp)
 
 set(KDDW_BACKEND_SRCS
@@ -687,4 +680,17 @@ if(KDDockWidgets_DEVELOPER_MODE AND KDDW_FRONTEND_QTWIDGETS)
         target_link_libraries(kddockwidgets_linter PRIVATE kddockwidgets)
         link_to_nlohman(kddockwidgets_linter)
     endif()
+endif()
+
+if(KDDW_FRONTEND_QT)
+    kddw_apply_flags_to_dir(
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        DEFINITIONS
+        QT_NO_SIGNALS_SLOTS_KEYWORDS
+        QT_USE_QSTRINGBUILDER
+        QT_NO_NARROWING_CONVERSIONS_IN_CONNECT
+        QT_STRICT_ITERATORS
+        QT_NO_KEYWORDS
+        QT_NO_FOREACH
+    )
 endif()

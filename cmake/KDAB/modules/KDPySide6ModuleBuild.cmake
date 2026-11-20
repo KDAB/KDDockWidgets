@@ -66,7 +66,6 @@ set(GENERATOR_EXTRA_FLAGS
 # But the ugly workaround in Python is replaced by a shiboken change.
 if(WIN32 OR DEFINED AVOID_PROTECTED_HACK)
     set(GENERATOR_EXTRA_FLAGS ${GENERATOR_EXTRA_FLAGS} --avoid-protected-hack)
-    add_definitions(-DAVOID_PROTECTED_HACK)
 endif()
 
 # Replace all semicolons in a string with this platform's path separator
@@ -138,6 +137,9 @@ macro(
     set(TARGET_NAME "Py${libraryName}")
     set(MODULE_NAME "${libraryName}")
     add_library(${TARGET_NAME} MODULE ${outputSource})
+    if(WIN32 OR DEFINED AVOID_PROTECTED_HACK)
+        target_compile_definitions(${TARGET_NAME} PRIVATE AVOID_PROTECTED_HACK)
+    endif()
 
     set_target_properties(
         ${TARGET_NAME}

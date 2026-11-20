@@ -154,8 +154,42 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+# Compile definitions and options applied to every target we build, see kddw_apply_flags_to_dir()
+set(KDDW_GLOBAL_COMPILE_DEFINITIONS QT_NO_KEYWORDS)
+set(KDDW_GLOBAL_COMPILE_OPTIONS "")
+
+# CMake 4.5 warns against directory-scoped add_definitions()/include_directories().
+# Appends the given definitions, options and include dirs to every target
+# created in dir and its subdirectories. Call it only after they have all been added.
+function(kddw_apply_flags_to_dir dir)
+    cmake_parse_arguments(PARSE_ARGV 1 ARG "" "" "DEFINITIONS;OPTIONS;INCLUDE_DIRECTORIES")
+
+    get_property(
+        targets
+        DIRECTORY ${dir}
+        PROPERTY BUILDSYSTEM_TARGETS
+    )
+    foreach(target IN LISTS targets)
+        get_target_property(type ${target} TYPE)
+        if(type MATCHES "^(EXECUTABLE|STATIC_LIBRARY|SHARED_LIBRARY|MODULE_LIBRARY|OBJECT_LIBRARY)$")
+            target_compile_definitions(${target} PRIVATE ${ARG_DEFINITIONS})
+            target_compile_options(${target} PRIVATE ${ARG_OPTIONS})
+            target_include_directories(${target} BEFORE PRIVATE ${ARG_INCLUDE_DIRECTORIES})
+        endif()
+    endforeach()
+
+    get_property(
+        subdirs
+        DIRECTORY ${dir}
+        PROPERTY SUBDIRECTORIES
+    )
+    foreach(subdir IN LISTS subdirs)
+        kddw_apply_flags_to_dir(${subdir} ${ARGN})
+    endforeach()
+endfunction()
+
 if(KDDockWidgets_XLib)
-    add_definitions(-DKDDockWidgets_XLIB)
+    list(APPEND KDDW_GLOBAL_COMPILE_DEFINITIONS KDDockWidgets_XLIB)
 endif()
 
 if(MSVC AND MSVC_TOOLSET_VERSION LESS 142)
@@ -186,7 +220,7 @@ if(KDDockWidgets_ENABLE_HARDENED)
         else()
             set(HARDENING_MODE "_LIBCPP_HARDENING_MODE_FAST")
         endif()
-        add_definitions("-D_LIBCPP_HARDENING_MODE=${HARDENING_MODE}")
+        list(APPEND KDDW_GLOBAL_COMPILE_DEFINITIONS "_LIBCPP_HARDENING_MODE=${HARDENING_MODE}")
     endif()
 endif()
 
@@ -353,8 +387,6 @@ if(KDDW_FRONTEND_QT)
 endif()
 set(KDDockWidgets_LIBRARY_QTID "${${PROJECT_NAME}_LIBRARY_QTID}")
 
-add_definitions(-DQT_NO_KEYWORDS)
-
 option(KDockWidgets_PRETTY_QTWIDGETS_HEADERS
        "Install DockWidget.h and MainWindow.h as synonyms to the *.h counterparts." ${KDDW_FRONTEND_QTWIDGETS}
 )
@@ -420,10 +452,10 @@ if(KDDockWidgets_DEVELOPER_MODE)
     endif()
 
     # Enable assert() in developer mode, regardless of debug vs release
-    add_definitions(-UNDEBUG)
+    list(APPEND KDDW_GLOBAL_COMPILE_OPTIONS -UNDEBUG)
 
     # Enable Qml debugger in developer mode
-    add_definitions(-DQT_QML_DEBUG)
+    list(APPEND KDDW_GLOBAL_COMPILE_DEFINITIONS QT_QML_DEBUG)
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -645,6 +677,10 @@ endif()
 if(KDDockWidgets_DOCS)
     add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()
+
+kddw_apply_flags_to_dir(
+    ${CMAKE_CURRENT_SOURCE_DIR} DEFINITIONS ${KDDW_GLOBAL_COMPILE_DEFINITIONS} OPTIONS ${KDDW_GLOBAL_COMPILE_OPTIONS}
+)
 
 if(KDDockWidgets_IS_ROOT_PROJECT)
     # Add uninstall target (not for submodules since parent projects typically have uninstall too)
