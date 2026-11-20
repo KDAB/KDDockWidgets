@@ -18,6 +18,10 @@
   - Bump SO version since added new virtual methods
   - qtquick: Fix QML bindings on DockingArea.persistentCentralItemFileName not updating
   - qtquick: Honour the guest item's max-size (kddockwidgets_max_size) when docked or floating (#262)
+  - LayoutSaver: Harden restoring against malformed or malicious JSON. Corrupted layouts which
+    used to crash are now rejected, and restoreLayout() returns false. Before touching any window,
+    the layout's item tree is validated, nesting depth is limited, integers are range-checked and
+    a dock widget, group or main window appearing more than once is rejected
 
 * v2.5.1
   - For packagers:

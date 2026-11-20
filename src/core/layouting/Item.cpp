@@ -3635,6 +3635,161 @@ void ItemBoxContainer::fillFromJson(const nlohmann::json &j,
     }
 }
 
+namespace {
+
+/// Real layouts don't come near this, but the layouting code recurses through the hierarchy
+constexpr int s_maxNestingDepth = 64;
+
+struct ValidatedItem
+{
+    bool isVisible = false;
+    Size size;
+    Size minSize;
+};
+
+bool validationError(const char *msg)
+{
+    KDDW_ERROR("Invalid layout: {}", msg);
+    return false;
+}
+
+/// Returns whether @p key is either absent from @p j, or satisfies @p predicate
+template<typename Predicate>
+bool isAbsentOr(const nlohmann::json &j, const char *key, Predicate predicate)
+{
+    const auto it = j.find(key);
+    return it == j.end() || predicate(*it);
+}
+
+bool validateItemJson(const nlohmann::json &j, bool isRoot, int depth, Vector<QString> &guestIds,
+                      ValidatedItem &result)
+{
+    if (!j.is_object())
+        return validationError("Item is not an object");
+
+    if (depth > s_maxNestingDepth)
+        return validationError("Too much nesting");
+
+    const auto isBool = [](const nlohmann::json &v) { return v.is_boolean(); };
+    if (!isAbsentOr(j, "isContainer", isBool) || !isAbsentOr(j, "isVisible", isBool))
+        return validationError("Expected a boolean");
+
+    if (!isAbsentOr(j, "guestId", [](const nlohmann::json &v) { return v.is_string(); }))
+        return validationError("Expected guestId to be a string");
+
+    SizingInfo sizingInfo;
+    try {
+        sizingInfo = j.value("sizingInfo", SizingInfo());
+    } catch (const std::exception &) {
+        return validationError("Invalid sizingInfo");
+    }
+
+    // Sizes can be negative, for instance, an absent minSize is Size(-1, -1)
+    const Size size = sizingInfo.geometry.size();
+    const Size minSize = sizingInfo.minSize;
+
+    const bool isContainer = isRoot || j.value("isContainer", false);
+    if (isRoot && !j.value("isContainer", true))
+        return validationError("Root item is not a container");
+
+    const QString guestId = j.value("guestId", QString());
+    result.size = size;
+
+    if (!isContainer) {
+        // Placeholders have no guest, and are invisible
+        result.isVisible = j.value("isVisible", false);
+        result.minSize = minSize;
+
+        if (result.isVisible != !guestId.isEmpty())
+            return validationError("Only visible items have a guest");
+
+        if (!guestId.isEmpty())
+            guestIds.push_back(guestId);
+
+        if (result.isVisible && size.isEmpty())
+            return validationError("Visible item without size");
+
+        return true;
+    }
+
+    if (!guestId.isEmpty())
+        return validationError("Container with guest");
+
+    const auto orientationIt = j.find("orientation");
+    if (orientationIt == j.end() || !orientationIt->is_number_integer())
+        return validationError("Container without orientation");
+
+    const auto orientation = orientationIt->get<std::int64_t>();
+    if (orientation != Qt::Horizontal && orientation != Qt::Vertical)
+        return validationError("Invalid orientation");
+
+    // Same orientation as the parent is fine, simplify() takes care of it
+    const auto o = Qt::Orientation(orientation);
+
+    const auto childrenIt = j.find("children");
+    if (childrenIt != j.end() && !childrenIt->is_array())
+        return validationError("Expected children to be an array");
+
+    const bool hasChildren = childrenIt != j.end() && !childrenIt->empty();
+    if (!isRoot && !hasChildren)
+        return validationError("Empty container");
+
+    // Same math as ItemBoxContainer's minSize(), but without overflowing
+    std::int64_t childrenLength = 0;
+    std::int64_t minLength = 0;
+    std::int64_t minLengthMagnitude = 0; // Partial sums can't overflow if this doesn't
+    std::int64_t minBreadth = 0;
+    int numVisibleChildren = 0;
+
+    if (hasChildren) {
+        for (const auto &child : *childrenIt) {
+            ValidatedItem validatedChild;
+            if (!validateItemJson(child, /*isRoot=*/false, depth + 1, guestIds, validatedChild))
+                return false;
+
+            if (!validatedChild.isVisible)
+                continue;
+
+            ++numVisibleChildren;
+            childrenLength += Core::length(validatedChild.size, o);
+            minLength += Core::length(validatedChild.minSize, o);
+            minLengthMagnitude += std::abs(Core::length(validatedChild.minSize, o));
+            minBreadth = std::max<std::int64_t>(minBreadth, Core::length(validatedChild.minSize, oppositeOrientation(o)));
+        }
+    }
+
+    result.isVisible = numVisibleChildren > 0;
+    if (!result.isVisible)
+        return true;
+
+    const std::int64_t separatorWaste = std::int64_t(Item::layoutSpacing) * (numVisibleChildren - 1);
+    minLength += separatorWaste;
+    minLengthMagnitude += separatorWaste;
+
+    if (size.isEmpty())
+        return validationError("Visible container without size");
+
+    // Percentages are calculated from these lengths, they can't add up to more than 100%.
+    // Separators aren't included, as the layout might have been saved with a different thickness.
+    if (childrenLength > Core::length(size, o))
+        return validationError("Children don't fit in their container");
+
+    if (minLengthMagnitude > s_maxSerializedLength)
+        return validationError("Minimum size is too big");
+
+    result.minSize = o == Qt::Vertical ? Size(int(minBreadth), int(minLength)) : Size(int(minLength), int(minBreadth));
+
+    return true;
+}
+
+}
+
+bool ItemBoxContainer::isValidJson(const nlohmann::json &json, Vector<QString> &guestIds)
+{
+    ValidatedItem root;
+    return validateItemJson(json, /*isRoot=*/true, 0, guestIds, root);
+}
+
 bool ItemBoxContainer::Private::isDummy() const
 {
     return q->host() == nullptr;

@@ -456,6 +456,11 @@ public:
     void to_json(nlohmann::json &) const override;
     void fillFromJson(const nlohmann::json &,
                       const std::unordered_map<QString, LayoutingGuest *> &) override;
+
+    /// Returns whether @p json, which might come from an untrusted file, can be safely passed to
+    /// fillFromJson() of a root container. The guest ids it references are appended to @p guestIds
+    static bool isValidJson(const nlohmann::json &json, Vector<QString> &guestIds);
+
     void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;
