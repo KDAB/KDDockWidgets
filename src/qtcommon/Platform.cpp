@@ -414,8 +414,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
 #endif
 
     if (t == QtWarningMsg) {
-        const std::string expectedWarning = Core::Platform::instance()->m_expectedWarning;
-        if (!expectedWarning.empty() && msg.contains(QString::fromStdString(expectedWarning)))
+        if (Core::Platform::instance()->tolerateWarning(msg.toStdString()))
             return;
 
         if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {

@@ -26,8 +26,7 @@ void FatalLogger::log(const spdlog::details::log_msg &msg)
         return;
     }
 
-    const std::string expectedWarning = Core::Platform::instance()->m_expectedWarning;
-    if (!expectedWarning.empty() && stringContains(std::string_view(msg.payload.data(), msg.payload.size()), expectedWarning)) {
+    if (Core::Platform::instance()->tolerateWarning(std::string_view(msg.payload.data(), msg.payload.size()))) {
         // It's whitelisted, downgrade to warning level
         spdlog::details::log_msg copy = msg;
         copy.level = spdlog::level::warn;

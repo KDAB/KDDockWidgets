@@ -16,6 +16,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/QtCompat_p.h"
 
+#include <string>
+#include <string_view>
 #include <vector>
 
 namespace KDDockWidgets {
@@ -258,6 +260,25 @@ public:
     static void tests_deinitPlatform();
 
     std::string m_expectedWarning;
+
+    /// Set m_expectedWarning to this to tolerate any warning or error
+    static constexpr const char *AnyWarning = "*";
+
+    /// The warnings which were tolerated since m_expectedWarning was set
+    std::vector<std::string> m_toleratedWarnings;
+
+    /// Returns whether @p msg matches m_expectedWarning, and records it if so
+    bool tolerateWarning(std::string_view msg)
+    {
+        if (m_expectedWarning.empty())
+            return false;
+
+        if (m_expectedWarning != AnyWarning && msg.find(m_expectedWarning) == std::string_view::npos)
+            return false;
+
+        m_toleratedWarnings.emplace_back(msg);
+        return true;
+    }
 #endif
 
 #ifdef DOCKS_TESTING_METHODS
@@ -332,11 +353,13 @@ struct SetExpectedWarning
     {
         if (!s.empty())
             Platform::instance()->m_expectedWarning = s;
+        Platform::instance()->m_toleratedWarnings.clear();
     }
 
     ~SetExpectedWarning()
     {
         Platform::instance()->m_expectedWarning.clear();
+        Platform::instance()->m_toleratedWarnings.clear();
     }
 
     KDDW_DELETE_COPY_CTOR(SetExpectedWarning)
