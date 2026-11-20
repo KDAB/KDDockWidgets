@@ -40,8 +40,10 @@ jobs:
           qt-flavor: "${{ matrix.qt-flavor }}"
 
       # kddw asan build already has ubsan, while Qt has dedicated
+      # -Wno-error=non-target-directive: The sanitized Qt's Qt6Config.cmake includes ECMEnableSanitizers.cmake,
+      # which calls link_libraries(). CMake >= 4.5 warns about it and our presets turn dev warnings into errors.
       - name: Configure project
-        run: cmake -S . -B ./build-dev-asan --preset dev-asan
+        run: cmake -S . -B ./build-dev-asan --preset dev-asan -Wno-error=non-target-directive
 
       - name: Build Project
         run: cmake --build ./build-dev-asan ${{ matrix.preset.build_preset_arg }}
