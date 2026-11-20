@@ -39,8 +39,13 @@
 
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <cmath>
+#include <limits>
 #include <qtestsupport_core.h>
+#include <stdexcept>
+#include <type_traits>
+#include <unordered_set>
 #include <utility>
 
 /**
@@ -99,13 +104,36 @@ bool LayoutSaver::Private::s_restoreInProgress = false;
 
 namespace KDDockWidgets {
 
+template<typename T, bool = std::is_enum_v<T>>
+struct IntegerType
+{
+    using type = T;
+};
+
+template<typename T>
+struct IntegerType<T, true>
+{
+    using type = std::underlying_type_t<T>;
+};
+
 template<typename T>
 static T jsonValue(const nlohmann::json &json, const char *name, const T &defaultValue)
 {
     try {
-        // value can throw if the type has "null" value, for instance.
-        return json.value(name, defaultValue);
-    } catch (...) {
+        if constexpr (std::is_enum_v<T> || ( std::is_integral_v<T> && !std::is_same_v<T, bool> )) {
+            // nlohmann's conversion from double to integer is UB when it doesn't fit
+            using Int = typename IntegerType<T>::type;
+            static_assert(sizeof(Int) <= 4);
+            const auto it = json.find(name);
+            if (it == json.end() || it->is_null())
+                return defaultValue;
+            return T(jsonToInteger(*it, std::numeric_limits<Int>::min(), std::numeric_limits<Int>::max()));
+        } else {
+            return json.value(name, defaultValue);
+        }
+    } catch (const nlohmann::json::type_error &) {
+        // Be lenient with the wrong type, for instance "null", and use the default.
+        // Other exceptions, like values out of range, reject the layout.
         return defaultValue;
     }
 }
@@ -175,7 +203,7 @@ static void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 
     auto &frms = *it;
     if (!frms.is_object())
-        KDDW_ERROR("Unexpected not object");
+        throw std::invalid_argument("Expected frames to be an object");
 
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
@@ -292,7 +320,7 @@ static void to_json(nlohmann::json &json, const LayoutSaver::ScreenInfo &screenI
 
 static void from_json(const nlohmann::json &j, LayoutSaver::ScreenInfo &screenInfo)
 {
-    screenInfo.index = j.value("index", 0);
+    screenInfo.index = jsonInt(j, "index", 0);
     screenInfo.geometry = j.value("geometry", Rect());
     screenInfo.name = j.value("name", QString());
     screenInfo.devicePixelRatio = j.value("devicePixelRatio", 1.0);
@@ -325,10 +353,35 @@ static void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
     json["placeholders"] = pos.placeholders;
 }
 
+/// Saved as an array of [location, geometry] pairs.
+/// Not using nlohmann's conversion, as it's UB for a location that's a double which doesn't fit in an int.
+static std::unordered_map<SideBarLocation, Rect> overlayedGeometriesFromJson(const nlohmann::json &json)
+{
+    std::unordered_map<SideBarLocation, Rect> geometries;
+    const auto it = json.find("lastOverlayedGeometries");
+    if (it == json.end() || !it->is_array())
+        return geometries;
+
+    try {
+        for (const auto &pair : *it) {
+            if (!pair.is_array() || pair.size() != 2)
+                return {};
+
+            const auto location = SideBarLocation(jsonToInteger(pair[0], std::numeric_limits<int>::min(), std::numeric_limits<int>::max()));
+            geometries[location] = pair[1].get<Rect>();
+        }
+    } catch (const nlohmann::json::type_error &) {
+        // Lenient, like jsonValue()
+        return {};
+    }
+
+    return geometries;
+}
+
 static void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
 {
     pos.lastFloatingGeometry = jsonValue(json, "lastFloatingGeometry", Rect());
-    pos.lastOverlayedGeometries = jsonValue(json, "lastOverlayedGeometries", std::unordered_map<KDDockWidgets::SideBarLocation, Rect>());
+    pos.lastOverlayedGeometries = overlayedGeometriesFromJson(json);
     pos.tabIndex = jsonValue(json, "tabIndex", 0);
     pos.wasFloating = jsonValue(json, "wasFloating", false);
     pos.placeholders = jsonValue(json, "placeholders", LayoutSaver::Placeholder::List());
@@ -1153,6 +1206,72 @@ bool LayoutSaver::Layout::isValid() const
             return false;
     }
 
+    std::unordered_set<QString> mainWindowNames;
+    for (const auto &mw : mainWindows) {
+        if (!mainWindowNames.insert(mw.uniqueName).second) {
+            KDDW_ERROR("Invalid layout: Main window {} appears more than once", mw.uniqueName);
+            return false;
+        }
+    }
+
+    // A dock widget can only be in one place
+    std::unordered_set<QString> dockWidgetNames;
+    auto addDockWidget = [&dockWidgetNames](const QString &name) {
+        if (dockWidgetNames.insert(name).second)
+            return true;
+
+        KDDW_ERROR("Invalid layout: Dock widget {} appears more than once", name);
+        return false;
+    };
+
+    // @p mainWindowName is empty for floating windows
+    auto addGroups = [&addDockWidget](const LayoutSaver::MultiSplitter &multiSplitter,
+                                      const QString &mainWindowName) {
+        bool hasPersistentCentralGroup = false;
+        for (const auto &it : multiSplitter.groups) {
+            const LayoutSaver::Group &group = it.second;
+            const bool isCentralGroup = group.options & FrameOption_IsCentralFrame;
+
+            if (isCentralGroup && !group.mainWindowUniqueName.isEmpty()) {
+                // Group::deserialize() reuses the main window's existing central group, instead of
+                // creating one. So only that main window can have it, once.
+                if (group.mainWindowUniqueName != mainWindowName || hasPersistentCentralGroup) {
+                    KDDW_ERROR("Invalid layout: Unexpected central group for main window {}",
+                               group.mainWindowUniqueName);
+                    return false;
+                }
+                hasPersistentCentralGroup = true;
+            }
+
+            for (const auto &dw : group.dockWidgets) {
+                // Older layouts named every persistent central dock widget like this
+                if (isCentralGroup && dw->uniqueName == QLatin1String("-persistentCentralDockWidget"))
+                    continue;
+
+                if (!addDockWidget(dw->uniqueName))
+                    return false;
+            }
+        }
+        return true;
+    };
+
+    for (const auto &mw : mainWindows) {
+        if (!addGroups(mw.multiSplitterLayout, mw.uniqueName))
+            return false;
+
+        for (const auto &it : mw.dockWidgetsPerSideBar) {
+            for (const QString &name : it.second) {
+                if (!addDockWidget(name))
+                    return false;
+            }
+        }
+    }
+
+    for (const auto &fw : floatingWindows) {
+        if (!addGroups(fw.multiSplitterLayout, {}))
+            return false;
+    }
+
     return true;
 }
 
@@ -1232,7 +1351,7 @@ static void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 
 static void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 {
-    layout.serializationVersion = j.value("serializationVersion", 0);
+    layout.serializationVersion = jsonInt(j, "serializationVersion", 0);
     layout.mainWindows = j.value("mainWindows", LayoutSaver::MainWindow::List {});
     layout.allDockWidgets = j.value("allDockWidgets", LayoutSaver::DockWidget::List {});
 
@@ -1257,7 +1376,23 @@ QByteArray LayoutSaver::Layout::toJson() const
 
 bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
 {
-    nlohmann::json json = nlohmann::json::parse(jsonData, nullptr, /*allow_exceptions=*/false);
+    // nlohmann's parser handles any depth, but copying and converting the result recurses, so a
+    // deeply nested document would overflow the stack. Real layouts are nowhere near this deep.
+    static constexpr int maxDepth = 256; // static, so MSVC doesn't require capturing it
+    bool tooDeep = false;
+    const nlohmann::json::parser_callback_t limitDepth =
+        [&tooDeep](int depth, nlohmann::json::parse_event_t, nlohmann::json &) {
+            if (depth > maxDepth)
+                tooDeep = true;
+            return !tooDeep;
+        };
+
+    nlohmann::json json = nlohmann::json::parse(jsonData, limitDepth, /*allow_exceptions=*/false);
+    if (tooDeep) {
+        KDDW_ERROR("LayoutSaver::Layout::fromJson: JSON is too deep");
+        return false;
+    }
+
     if (json.is_discarded()) {
         return false;
     }
@@ -1546,7 +1681,46 @@ void LayoutSaver::MainWindow::scaleSizes()
 
 bool LayoutSaver::MultiSplitter::isValid() const
 {
-    return layout.is_object() && !layout.empty();
+    if (!layout.is_object() || layout.empty())
+        return false;
+
+    Vector<QString> guestIds;
+    if (!Core::ItemBoxContainer::isValidJson(layout, guestIds))
+        return false;
+
+    // Each group must be in the layout exactly once. Otherwise we'd create groups that are never
+    // parented, or put the same group in two places.
+    std::unordered_set<QString> groupIds;
+    for (const auto &it : groups) {
+        // Group::deserialize() would fail half-way through restoring otherwise
+        if (!it.second.isValid())
+            return false;
+
+        if (!groupIds.insert(it.second.id).second) {
+            KDDW_ERROR("Invalid layout: Duplicate group id {}", it.second.id);
+            return false;
+        }
+    }
+
+    std::unordered_set<QString> referencedIds;
+    for (const QString &guestId : std::as_const(guestIds)) {
+        if (!referencedIds.insert(guestId).second) {
+            KDDW_ERROR("Invalid layout: Group {} is referenced more than once", guestId);
+            return false;
+        }
+
+        if (groupIds.find(guestId) == groupIds.cend()) {
+            KDDW_ERROR("Invalid layout: Unknown group {}", guestId);
+            return false;
+        }
+    }
+
+    if (referencedIds.size() != groupIds.size()) {
+        KDDW_ERROR("Invalid layout: Some groups aren't in the layout");
+        return false;
+    }
+
+    return true;
 }
 
 bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const
@@ -1623,6 +1797,12 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, Rect savedMai
     mainWindowChangedScreen = currentScreenIndex != screenIndex;
 }
 
+/// Converting a double which doesn't fit to int is UB. Factors can be big if the saved geometry is tiny.
+static int boundedInt(double value)
+{
+    return int(std::clamp(value, double(-s_maxSerializedLength), double(s_maxSerializedLength)));
+}
+
 void LayoutSaver::ScalingInfo::translatePos(Point &pt) const
 {
     const int deltaX = pt.x() - savedMainWindowGeometry.x();
@@ -1631,8 +1811,8 @@ void LayoutSaver::ScalingInfo::translatePos(Point &pt) const
     const double newDeltaX = deltaX * widthFactor;
     const double newDeltaY = deltaY * heightFactor;
 
-    pt.setX(int(std::ceil(savedMainWindowGeometry.x() + newDeltaX)));
-    pt.setY(int(std::ceil(savedMainWindowGeometry.y() + newDeltaY)));
+    pt.setX(boundedInt(std::ceil(savedMainWindowGeometry.x() + newDeltaX)));
+    pt.setY(boundedInt(std::ceil(savedMainWindowGeometry.y() + newDeltaY)));
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(Point &pt) const
@@ -1642,8 +1822,8 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(Point &pt) const
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(Size &sz) const
 {
-    sz.setWidth(int(widthFactor * sz.width()));
-    sz.setHeight(int(heightFactor * sz.height()));
+    sz.setWidth(boundedInt(widthFactor * sz.width()));
+    sz.setHeight(boundedInt(heightFactor * sz.height()));
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(Rect &rect) const

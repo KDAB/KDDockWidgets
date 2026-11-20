@@ -15,12 +15,61 @@
 #include "QtCompat_p.h"
 
 #include <nlohmann/json.hpp>
+
+#include <cstdint>
+#include <limits>
+#include <stdexcept>
 #if defined(KDDW_FRONTEND_QT) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QVariant>
 #include <QVariantMap>
 #endif
 
 namespace KDDockWidgets {
+
+/// Bigger than any screen, and than Item::hardcodedMaximumSize plus some margins.
+/// Small enough that the arithmetic done on saved geometries can't overflow.
+constexpr int s_maxSerializedLength = 1 << 25;
+
+/// Converts @p v to an integer in [min, max]
+/// Throws nlohmann::json::type_error if it's not a number, std::out_of_range if it doesn't fit.
+/// Unlike nlohmann's get<int>(), which is undefined behaviour for doubles that don't fit.
+inline std::int64_t jsonToInteger(const nlohmann::json &v, std::int64_t min, std::int64_t max)
+{
+    if (v.is_number_unsigned()) {
+        const auto u = v.get<std::uint64_t>();
+        if (max < 0 || u > std::uint64_t(max))
+            throw std::out_of_range("Integer out of range");
+        return std::int64_t(u);
+    }
+
+    if (v.is_number_integer()) {
+        const auto i = v.get<std::int64_t>();
+        if (i < min || i > max)
+            throw std::out_of_range("Integer out of range");
+        return i;
+    }
+
+    if (v.is_number_float()) {
+        const auto d = v.get<double>();
+        // Also catches NaN
+        if (!(d >= double(min) && d <= double(max)))
+            throw std::out_of_range("Number out of range");
+        return std::int64_t(d);
+    }
+
+    return v.get<std::int64_t>(); // throws type_error
+}
+
+/// Reads @p key from object @p j. A missing or null value results in @p defaultValue.
+inline int jsonInt(const nlohmann::json &j, const char *key, int defaultValue,
+                   int min = (std::numeric_limits<int>::min)(), int max = (std::numeric_limits<int>::max)())
+{
+    const auto it = j.find(key);
+    if (it == j.end() || it->is_null())
+        return defaultValue;
+
+    return int(jsonToInteger(*it, min, max));
+}
 
 inline void to_json(nlohmann::json &j, Size size)
 {
@@ -31,8 +80,8 @@ inline void to_json(nlohmann::json &j, Size size)
 inline void from_json(const nlohmann::json &j, Size &size)
 {
     Size s;
-    size.setWidth(j.value("width", s.width()));
-    size.setHeight(j.value("height", s.height()));
+    size.setWidth(jsonInt(j, "width", s.width(), -s_maxSerializedLength, s_maxSerializedLength));
+    size.setHeight(jsonInt(j, "height", s.height(), -s_maxSerializedLength, s_maxSerializedLength));
 }
 
 inline void to_json(nlohmann::json &j, Rect rect)
@@ -46,10 +95,10 @@ inline void to_json(nlohmann::json &j, Rect rect)
 inline void from_json(const nlohmann::json &j, Rect &rect)
 {
     Rect r;
-    rect.setX(j.value("x", r.x()));
-    rect.setY(j.value("y", r.y()));
-    rect.setWidth(j.value("width", r.width()));
-    rect.setHeight(j.value("height", r.height()));
+    rect.setX(jsonInt(j, "x", r.x(), -s_maxSerializedLength, s_maxSerializedLength));
+    rect.setY(jsonInt(j, "y", r.y(), -s_maxSerializedLength, s_maxSerializedLength));
+    rect.setWidth(jsonInt(j, "width", r.width(), -s_maxSerializedLength, s_maxSerializedLength));
+    rect.setHeight(jsonInt(j, "height", r.height(), -s_maxSerializedLength, s_maxSerializedLength));
 }
 
 }

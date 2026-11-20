@@ -779,7 +779,10 @@ void TestDocks::tst_restoreWithInvalidCurrentTab()
         else
             QVERIFY(restorer.restoreLayout(data));
 
-        delete DockRegistry::self()->mainwindows().first();
+        // In strict mode the layout is rejected before the main window is even created
+        const auto mainWindows = DockRegistry::self()->mainwindows();
+        if (!mainWindows.isEmpty())
+            delete mainWindows.first();
     };
 
     // We test both in strict mode and in non-strict mode. Since neither should crash.
