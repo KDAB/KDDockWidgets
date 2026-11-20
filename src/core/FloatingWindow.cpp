@@ -44,6 +44,7 @@
 #include <Windows.h>
 #endif
 
+#include <cstdint>
 #include <limits>
 
 using namespace KDDockWidgets;
@@ -741,7 +742,7 @@ void FloatingWindow::ensureRectIsOnScreen(Rect &geometry)
     if (screens.empty())
         return;
 
-    int nearestDistSq = std::numeric_limits<int>::max();
+    std::int64_t nearestDistSq = std::numeric_limits<std::int64_t>::max();
     int nearestIndex = -1;
 
     const int screenCount = screens.count();
@@ -754,7 +755,7 @@ void FloatingWindow::ensureRectIsOnScreen(Rect &geometry)
 
         // Find the nearest screen, so we can move the geometry onto it
         const Point dist2D = geometry.center() - scrGeom.center();
-        const int distSq = (dist2D.x() * dist2D.x()) + (dist2D.y() * dist2D.y());
+        const std::int64_t distSq = (std::int64_t(dist2D.x()) * dist2D.x()) + (std::int64_t(dist2D.y()) * dist2D.y());
         if (distSq < nearestDistSq) {
             nearestDistSq = distSq;
             nearestIndex = i;
