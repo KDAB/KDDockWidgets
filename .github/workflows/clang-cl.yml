@@ -61,7 +61,7 @@ jobs:
       - name: Restore vcpkg packages
         if: ${{ matrix.with_spdlog }}
         id: vcpkg-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ${{ github.workspace }}/vcpkg-binary-cache
           key: vcpkg-${{ runner.os }}-${{ steps.vcpkg.outputs.commit }}-spdlog-fmt
@@ -79,7 +79,7 @@ jobs:
       # Save right away rather than at the end of the job, so a later failure doesn't lose a successful build
       - name: Save vcpkg packages
         if: ${{ matrix.with_spdlog && steps.vcpkg-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: ${{ github.workspace }}/vcpkg-binary-cache
           key: ${{ steps.vcpkg-cache.outputs.cache-primary-key }}
